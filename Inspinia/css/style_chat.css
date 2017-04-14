@@ -1,0 +1,77 @@
+
+body{
+    background: grey;
+}
+
+#container{
+    width: 40%;
+    background:white;
+    margin: 0 auto;
+    padding: 20px ;
+}
+
+#chat_box{
+    width: 90%;
+    height: 400px;
+}
+
+
+.message-edit{
+    margin-left:6%;
+}
+
+
+.message-delete{
+    margin-left:1%;
+}
+
+/*input[type='text']{*/
+/*width: 100%;*/
+/*height: 40px;*/
+/*border: 1px solid grey;*/
+    /*-webkit-border-radius:5px;*/
+    /*-moz-border-radius:5px;*/
+    /*border-radius:5px;*/
+/*}*/
+
+/*input[type='submit']{*/
+    /*width: 100%;*/
+    /*height: 40px;*/
+    /*border: 1px solid grey;*/
+    /*-webkit-border-radius:5px;*/
+    /*-moz-border-radius:5px;*/
+    /*border-radius:5px;*/
+    /*color:white;*/
+    /*background-color:#1ab394 ;*/
+/*}*/
+
+/*textarea{*/
+    /*width: 100%;*/
+    /*height: 40px;*/
+    /*border: 1px solid grey;*/
+    /*-webkit-border-radius:5px;*/
+    /*-moz-border-radius:5px;*/
+    /*border-radius:5px;*/
+/*}*/
+
+#chat_data{
+    width:100%;
+    padding:5px ;
+    margin-bottom: 5px;
+    border-bottom: 1px solid green;
+font-weight: bold;
+}
+
+.span_name{
+    color:mediumspringgreen ;
+}
+
+.span_message{
+    color:black ;
+
+}
+
+.span_time{
+    color:purple ;
+float:right;
+}

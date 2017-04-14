@@ -1,0 +1,65 @@
+*.idea
+*.zip
+*.gz
+log/*.log
+log/*.log.[0-9]
+*.tmp
+log/*.txt
+logs/log.txt
+# Word temporary
+~$*.doc*
+
+# Excel temporary
+~$*.xls*
+
+# Excel Backup File
+*.xlk
+
+sql/test
+
+includes/mpdf60/
+
+learning/
+
+inspinia/img/
+
+transmed/img/
+
+# Windows image file caches
+Thumbs.db
+ehthumbs.db
+
+# Folder config file
+Desktop.ini
+
+# Recycle Bin used on file shares
+$RECYCLE.BIN/
+
+# Windows Installer files
+*.cab
+*.msi
+*.msm
+*.msp
+
+# Windows shortcuts
+*.lnk
+
+*.jpg
+*.bmp
+*.png
+*.gif
+*.mp4
+*.mov
+
+db_connection.php
+new_ByB_project/
+smartAdmin/
+SmartAdmin_Full_Version_html/
+0000000.php
+0_forms.php
+config.php
+config_mail.php
+/includes/config_transmed.php
+/sandbox/
+/Minton_full_version/
+/jquery/

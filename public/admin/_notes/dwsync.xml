@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<dwsync>
+<file name="delete_blacklist.php" server="93.88.240.147" local="130884655859695197" remote="130884896400000000" Dst="2" />
+<file name="delete_client.php" server="93.88.240.147" local="130884655859725218" remote="130884896400000000" Dst="2" />
+<file name="delete_failed_logins.php" server="93.88.240.147" local="130884655859755239" remote="130884896400000000" Dst="2" />
+<file name="delete_user.php" server="93.88.240.147" local="130884655860115500" remote="130884896400000000" Dst="2" />
+<file name="edit_client.php" server="93.88.240.147" local="130884655860165535" remote="130884896400000000" Dst="2" />
+<file name="edit_user.php" server="93.88.240.147" local="130884655861018042" remote="130884896400000000" Dst="2" />
+<file name="index.php" server="93.88.240.147" local="130888230293219741" remote="130888242000000000" Dst="2" />
+<file name="logfile.php" server="93.88.240.147" local="130884655861288243" remote="130884896400000000" Dst="2" />
+<file name="login.php" server="93.88.240.147" local="130874012682307866" remote="130884896400000000" Dst="2" />
+<file name="login_forgot_password_email.php" server="93.88.240.147" local="130874012682317873" remote="130884896400000000" Dst="2" />
+<file name="login_forgot_password_user.php" server="93.88.240.147" local="130874012682357893" remote="130884896400000000" Dst="2" />
+<file name="login_reset_password.php" server="93.88.240.147" local="130874012682367900" remote="130884896400000000" Dst="2" />
+<file name="logout.php" server="93.88.240.147" local="130869762699254822" remote="130884896400000000" Dst="2" />
+<file name="manage_blacklist_ip.php" server="93.88.240.147" local="130884655861358280" remote="130884896400000000" Dst="2" />
+<file name="manage_clients.php" server="93.88.240.147" local="130886425839573438" remote="130888242000000000" Dst="2" />
+<file name="manage_failed_logins.php" server="93.88.240.147" local="130884655861493384" remote="130884896400000000" Dst="2" />
+<file name="manage_user.php" server="93.88.240.147" local="130884655861563425" remote="130884896400000000" Dst="2" />
+<file name="manage_user_type.php" server="93.88.240.147" local="130884655861628476" remote="130884896400000000" Dst="2" />
+<file name="new_client.php" server="93.88.240.147" local="130889549065054803" remote="130889560800000000" Dst="2" />
+<file name="new_user.php" server="93.88.240.147" local="130884853779924329" remote="130884896400000000" Dst="2" />
+<file name="photo.php" server="93.88.240.147" local="130869762699575050" remote="130884896400000000" Dst="2" />
+<file name="rajah_project.php" server="93.88.240.147" local="130869762699595064" remote="130884896400000000" Dst="2" />
+<file name="upload.php" server="93.88.240.147" local="130884853779954351" remote="130884896400000000" Dst="2" />
+<file name="delete_link.php" server="93.88.240.147" local="130885694842943218" remote="130888242000000000" Dst="2" />
+<file name="edit_link.php" server="93.88.240.147" local="130885694843133336" remote="130888242000000000" Dst="2" />
+<file name="manage_Links.php" server="93.88.240.147" local="130889231891775412" remote="130889233200000000" Dst="2" />
+<file name="new_link.php" server="93.88.240.147" local="130889528820668930" remote="130889560800000000" Dst="2" />
+<file name="manage_links_category.php" server="93.88.240.147" local="130889252897843798" remote="130889253600000000" Dst="2" />
+<file name="manage_links.php" server="93.88.240.147" local="130889250919237416" remote="130889253600000000" Dst="2" />
+</dwsync>

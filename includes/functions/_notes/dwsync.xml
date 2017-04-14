@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<dwsync>
+<file name="functions.php" server="93.88.240.147" local="130884655858984692" remote="130884895800000000" Dst="2" />
+<file name="reset_token_functions.php" server="93.88.240.147" local="130874012675062429" remote="130884895800000000" Dst="2" />
+<file name="security_allowed_get.php" server="93.88.240.147" local="130874012675062429" remote="130884895800000000" Dst="2" />
+<file name="security_csrf_token_functions.php" server="93.88.240.147" local="130874012675072419" remote="130884895800000000" Dst="2" />
+<file name="security_mcrypt_functions.php" server="93.88.240.147" local="130874012675082448" remote="130884895800000000" Dst="2" />
+<file name="security_request_forgery_functions.php" server="93.88.240.147" local="130874012675082448" remote="130884895800000000" Dst="2" />
+</dwsync>
