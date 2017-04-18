@@ -265,7 +265,8 @@ if ($layout_context=="public"){
 
                         <ul class="dropdown-menu">
                             <!-- --><?php //echo $Nav->menu_item('','transmed','manage_ajax.php?class_name=TransportChauffeur','../transmed/admin') ?>
-                            <li><a href="<?php echo $Nav->http . "transmed/"; ?>index.php">Public Transmed</a></li>
+
+                            <li><a href="<?php echo $Nav->http . "transmed/"; ?>index.php">Public Transmed </a></li>
                             <li><a href="<?php echo $Nav->http . "transmed/admin/"; ?>index.php">Admin Transmed</a></li>
                             <?php echo $Nav->menu_item('', 'Chauffeur', 'manage_ajax.php?class_name=TransportChauffeur', 'admin') ?>
                             <?php echo $Nav->menu_item('', 'Transport Type', 'manage_ajax.php?class_name=TransportType', 'admin') ?>
@@ -447,7 +448,7 @@ if ($layout_context=="public"){
 
     <?php if (isset($layout_context) && $layout_context == "admin") { ?>
 
-  <?php if($sub_menu){ ?>
+        <?php if (isset($sub_menu)) { ?>
 
 
         <ol class="breadcrumb">
@@ -464,7 +465,7 @@ if ($layout_context=="public"){
                     <ul class="dropdown-menu" role="menu">
 
                     <li><a href="<?php echo $path_admin;?>0_test_validation.php">0_test_validation</a></li>
-                    <li><a href="<?php echo $path_admin;?>0_modele.php">0_modele</a></li>
+                        <li><a href="<?php echo $path_admin; ?>0_modele.php?cl=ViewModelByChauffeur">0_modele</a></li>
                     <li><a href="<?php echo $path_admin;?>0_forms.php">0_forms</a></li>
                     <li><a href="<?php echo $path_admin;?>0_forms_from_class.php">0_forms_from_class</a></li>
                         <li><a href="<?php echo $path_admin;?>0_modele4.php">0_modele4</a></li>

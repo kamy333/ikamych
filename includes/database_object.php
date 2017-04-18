@@ -1257,7 +1257,8 @@ class DatabaseObject
 
     public static function form_structure()
     {
-        $classes = static::$all_class;
+//        $classes = static::$all_class;
+        $classes = MyClasses::$all_class;
         $output = "";
         $output .= "<form  class='form-inline' name='" . get_called_class() . "' method='get' action=''>";
         $output .= "<select  class='form-control' name='" . "class_name" . "' >";

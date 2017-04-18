@@ -7,6 +7,7 @@
 <?php
 
 $class_name = MyClasses::redirect_disable_class();
+//$class_name ="ViewTransportModelPivot";
 call_user_func_array(array($class_name, 'change_to_unique_data'), ['transport']);
 
 

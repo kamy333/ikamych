@@ -12,7 +12,7 @@ class ViewTransportModel extends TransportProgrammingModel
     protected static $table_name = "transport_model";
 
     protected static $db_fields = array(
-        'PrimaryKey', 'heure', 'jour', 'client_id', 'pseudo', 'client_sort', 'web_view', 'modele_id',
+        'PrimaryKey', 'heure', 'jour', 'client_id', 'visible', 'pseudo', 'client_sort', 'web_view', 'modele_id',
         'inverse_address', 'depart', 'arrivee', 'liste_restrictive', 'prix_course',
         'default_depart', 'default_arrivee', 'default_price', 'remarque', 'chauffeur_id', 'client_habituel', 'Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi',);
 
@@ -21,6 +21,9 @@ class ViewTransportModel extends TransportProgrammingModel
         'PrimaryKey', 'heure', 'jour', 'client_id', 'pseudo', 'client_sort', 'web_view', 'modele_id',
         'inverse_address', 'depart', 'arrivee', 'liste_restrictive', 'prix_course',
         'default_depart', 'default_arrivee', 'default_price', 'remarque', 'chauffeur_id', 'client_habituel', 'Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi',);
+
+    protected static $db_field_table_display_chauffeur_header = ['jour', 'heure',];
+    protected static $db_field_table_display_chauffeur = ['jour', 'heure',];
 
     protected static $required_fields = [];
 
@@ -32,6 +35,7 @@ class ViewTransportModel extends TransportProgrammingModel
     public $pseudo;
     public $liste_restrictive;
     public $client_sort;
+    public $visible;
     public $web_view;
     public $modele_id;
     public $inverse_address;

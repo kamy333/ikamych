@@ -31,6 +31,9 @@ class MyClasses
         "ViewTransportModelPivotNo",
         "ViewTransportModelPivotYes",
         "ViewTransportSummaryCourseDateProgram",
+        "ViewTransportModelByChauffeur",
+        "ViewTransportModelByClient",
+
 
         'Comment','Photos') ;
 
@@ -51,7 +54,10 @@ class MyClasses
         "ViewPivot" => "ViewTransportModelPivot",
         "ViewPivotNo" => "ViewTransportModelPivotNo",
         "ViewPivotYes" => "ViewTransportModelPivotYes",
-        "ViewSummary" => "ViewTransportSummaryCourseDateProgram"
+        "ViewSummary" => "ViewTransportSummaryCourseDateProgram",
+        "ViewModelByChauffeur" => "ViewTransportModelByChauffeur",
+        "ViewModelByClient" => "ViewTransportModelByClient"
+
 
 
 //        "Note"=>"Note",

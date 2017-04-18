@@ -7,6 +7,8 @@ DROP VIEW IF EXISTS mycigarette_view_by_day;
 DROP VIEW IF EXISTS mycigarette_view_by_month;
 DROP VIEW IF EXISTS mycigarette_view_by_year;
 DROP VIEW IF EXISTS transport_model;
+DROP VIEW IF EXISTS transport_model_visible_no;
+DROP VIEW IF EXISTS transport_model_visible_yes;
 DROP VIEW IF EXISTS transport_model_pivot;
 DROP VIEW IF EXISTS transport_model_pivot_visible_yes;
 DROP VIEW IF EXISTS transport_model_pivot_visible_no;
@@ -43,18 +45,18 @@ CREATE VIEW `mycigarette_view_by_year` AS (select year(`mycigarette`.`cig_date`)
 
 
 CREATE VIEW `transport_model_visible_no` AS 
-select concat_ws('-',`p`.`heure`,`c`.`pseudo`,`c`.`id`) AS `PrimaryKey`,
-`p`.`heure` AS `heure`,
-`p`.`week_day_rank_id` AS `jour`,
-`p`.`client_id` AS `client_id`,
-`c`.`pseudo` AS `pseudo`,
-  `c`.`liste_restrictive`                                    AS `liste_restrictive`,
-  `c`.`liste_rank`                                           AS `client_sort`,
-  `c`.`web_view`                                             AS `web_view`,
-  `p`.`id`                                                   AS `modele_id`,
-  `p`.`inverse_address`                                      AS `inverse_address`,
-  `p`.`depart`                                               AS `depart`,
-  `p`.`arrivee`                                              AS `arrivee`,
+selectconcat_ws('-',`p`.`heure`,`c`.`pseudo`,`c`.`id`) AS `PrimaryKey`,
+      `p`.`heure`                                      AS `heure`,
+      `p`.`week_day_rank_id`                           AS `jour`,
+      `p`.`client_id`                                  AS `client_id`,
+      `c`.`pseudo`                                     AS `pseudo`,
+      `c`.`liste_restrictive`                          AS `liste_restrictive`,
+      `c`.`liste_rank`                                 AS `client_sort`,
+      `c`.`web_view`                                   AS `web_view`,
+      `p`.`id`                                         AS `modele_id`,
+      `p`.`inverse_address`                            AS `inverse_address`,
+      `p`.`depart`                                     AS `depart`,
+      `p`.`arrivee`                                    AS `arrivee`,
   `p`.`prix_course`                                          AS `prix_course`,
   `c`.`default_depart`                                       AS `default_depart`,
   `c`.`default_arrivee`                                      AS `default_arrivee`,
@@ -69,8 +71,8 @@ select concat_ws('-',`p`.`heure`,`c`.`pseudo`,`c`.`id`) AS `PrimaryKey`,
   (case when (`p`.`week_day_rank_id` = 3) then `p`.`id` end) AS `Mercredi`,
   (case when (`p`.`week_day_rank_id` = 4) then `p`.`id` end) AS `Jeudi`,
   (case when (`p`.`week_day_rank_id` = 5) then `p`.`id` end) AS `Vendredi`,
-  (CASE WHEN (`p`.`week_day_rank_id` = 6)
-    THEN `p`.`id` END)                                       AS `Samedi`
+      (CASE WHEN (`p`.`week_day_rank_id` = 6)
+    THEN `p`.`id` END)                          AS `Samedi`
 from (`transport_clients` `c` 
 join `transport_programming_model` `p` 
 on((`c`.`id` = `p`.`client_id`))) 
@@ -87,9 +89,10 @@ order by `p`.`heure`,`p`.`week_day_rank_id`,`c`.`liste_rank`;
 CREATE  VIEW `transport_model_visible_yes` AS 
 select
   concat_ws('-',`p`.`heure`,`c`.`pseudo`,`c`.`id`)           AS `PrimaryKey`,
-  `p`.`heure`                                                AS `heure`, `p`.`week_day_rank_id` AS `jour`,
+  `p`.`heure`                                                AS `heure`,
+  `p`.`week_day_rank_id`                                     AS `jour`,
   `p`.`client_id`                                            AS `client_id`,
-`c`.`pseudo` AS `pseudo`,
+  `c`.`pseudo`                                               AS `pseudo`,
   `c`.`liste_restrictive`                                    AS `liste_restrictive`,
   `c`.`liste_rank`                                           AS `client_sort`,
   `c`.`web_view`                                             AS `web_view`,
@@ -124,16 +127,20 @@ order by `p`.`heure`,`p`.`week_day_rank_id`,`c`.`liste_rank`;
 
 
 
-CREATE VIEW `transport_model` AS 
-selectconcat_ws('-',`p`.`heure`,`c`.`pseudo`,`c`.`id`)           AS `PrimaryKey`,
-      `p`.`heure`                                                AS `heure`, `p`.`week_day_rank_id` AS `jour`,
-      `p`.`client_id`                                            AS `client_id`, `c`.`pseudo` AS `pseudo`,
-      `c`.`liste_restrictive`                                    AS `liste_restrictive`,
-      `c`.`liste_rank`                                           AS `client_sort`,
-      `c`.`web_view`                                             AS `web_view`,
-      `p`.`id`                                                   AS `modele_id`,
-      `p`.`inverse_address`                                      AS `inverse_address`,
-      `p`.`depart`                                               AS `depart`,
+CREATE VIEW `transport_model` AS
+  SELECT
+    concat_ws('-', `p`.`heure`, `c`.`pseudo`, `c`.`id`) AS `PrimaryKey`,
+    `p`.`heure`                                         AS `heure`,
+    `p`.`week_day_rank_id`                              AS `jour`,
+    `p`.`client_id`                                     AS `client_id`,
+    `c`.`pseudo`                                        AS `pseudo`,
+    `p`.`visible`                                       AS `visible`,
+    `c`.`liste_restrictive`                             AS `liste_restrictive`,
+    `c`.`liste_rank`                                    AS `client_sort`,
+    `c`.`web_view`                                      AS `web_view`,
+    `p`.`id`                                            AS `modele_id`,
+    `p`.`inverse_address`                               AS `inverse_address`,
+    `p`.`depart`                                        AS `depart`,
       `p`.`arrivee`                                              AS `arrivee`,
       `p`.`prix_course`                                          AS `prix_course`,
       `c`.`default_depart`                                       AS `default_depart`,
@@ -152,9 +159,9 @@ selectconcat_ws('-',`p`.`heure`,`c`.`pseudo`,`c`.`id`)           AS `PrimaryKey`
       (CASE WHEN (`p`.`week_day_rank_id` = 6)
         THEN `p`.`id` END)                                       AS `Samedi`
 
-from (`transport_clients` `c` join `transport_programming_model` `p` 
-on((`c`.`id` = `p`.`client_id`))) 
-order by `p`.`heure`,`p`.`week_day_rank_id`,`c`.`liste_rank`;
+  from (`transport_clients` `c` join `transport_programming_model` `p`
+on((`c`.`id` = `p`.`client_id`)))
+  order by `p`.`heure`,`p`.`week_day_rank_id`,`c`.`liste_rank`;
 
 -- --------------------------------------------------------
 

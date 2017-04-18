@@ -15,7 +15,7 @@
 defined('DS') ? null : define('DS', DIRECTORY_SEPARATOR);
 defined('SITE_URL') ? null : define("SITE_URL", "http://".$_SERVER['SERVER_NAME']);
 defined('SITE_ROOT') ? null : define('SITE_ROOT', realpath(dirname(__FILE__).DS."..".DS));
-defined('MY_URL_PUBLIC') ? null : define('MY_URL_PUBLIC',SITE_URL.'/rajah_production/public/');
+defined('MY_URL_PUBLIC') ? null : define('MY_URL_PUBLIC', SITE_URL . '/ikamych/public/');
 defined('MY_URL_ADMIN') ? null : define('MY_URL_ADMIN',MY_URL_PUBLIC.'admin/');
 
 
@@ -27,7 +27,7 @@ $server_phpstorm = "PhpStorm 2016.1.2";
 
     if ($server_name === $server_local || $server_name === $server_phpstorm) {
 
-    defined('SESSION_PATH')? null : define('SESSION_PATH', 'C:' . DS . 'xampp' . DS . 'tmp' . DS . 'session_rajah');
+        defined('SESSION_PATH') ? null : define('SESSION_PATH', 'C:' . DS . 'xampp' . DS . 'tmp' . DS . 'session_kamy');
 
 //    defined('MY_URL_PUBLIC') ? null : define('MY_URL_PUBLIC','http://localhost/rajah_production/public/');
 //    defined('MY_URL_ADMIN') ? null : define('MY_URL_ADMIN',MY_URL_PUBLIC.'admin/');
@@ -185,6 +185,8 @@ require_once(LIB_PATH . DS . 'transport' . DS . 'ViewTransportModelPivot.php');
 require_once(LIB_PATH . DS . 'transport' . DS . 'ViewTransportModelPivotNo.php');
 require_once(LIB_PATH . DS . 'transport' . DS . 'ViewTransportModelPivotYes.php');
 require_once(LIB_PATH . DS . 'transport' . DS . 'ViewTransportSummaryCourseDateProgram.php');
+require_once(LIB_PATH . DS . 'transport' . DS . 'ViewTransportModelByChauffeur.php');
+
 
 
 ?>

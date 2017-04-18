@@ -45,6 +45,20 @@ $(document).ready(function () {
 
         });
 
+        $("#show-client-form").on("click", function () {
+            event.preventDefault();
+            $("#form-find-by-client").toggleClass('hidden');
+            // if ($(this).text() === "Show Date"){
+            //     $(this).text("Hide Date");
+            //
+            // }
+            // else {
+            //     $(this).text("Show Date");
+            // }
+
+        });
+
+
         $(".addDate-course").on("click", function () {
             event.preventDefault();
             alert(this.parent.text());

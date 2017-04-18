@@ -36,6 +36,7 @@ class TransportProgrammingModel extends DatabaseObject
 
 
     protected static $table_name = "transport_programming_model";
+
     protected static $db_fields = array('id', 'visible', 'week_day_rank_id', 'client_habituel', 'client_id', 'heure', 'inverse_address', 'depart', 'arrivee', 'prix_course', 'chauffeur_id', 'type_transport_id', 'remarque', 'input_date', 'modification_time', 'username');
     protected static $required_fields = array('visible', 'week_day_rank_id', 'client_habituel', 'client_id', 'heure', 'inverse_address', 'depart', 'arrivee', 'chauffeur_id', 'type_transport_id',);
     protected static $db_fields_table_display_short = array('id', 'visible', 'week_day_rank_id', 'client_habituel', 'client_id', 'heure', 'inverse_address', 'depart', 'arrivee', 'prix_course', 'chauffeur_id', 'type_transport_id', 'remarque');
@@ -364,6 +365,24 @@ public $next_day;
         return $output;
     }
 
+    public static function nav_visible()
+    {
+        $title = "";
+
+        $href_all = $_SERVER["PHP_SELF"] . "?cl=ViewPivot";
+        $href_yes = $_SERVER["PHP_SELF"] . "?cl=ViewPivotYes";
+        $href_no = $_SERVER["PHP_SELF"] . "?cl=ViewPivotNo";
+
+
+        $title .= "&emsp;<span><a href='{$href_all}'><button style='width: 5em' class='btn btn-primary'>all</button></a></span>";
+        $title .= "&emsp;<span><a  href='{$href_yes}'><button style='width: 5em' class='btn btn-info'>active</button></a></span>";
+        $title .= "&emsp;<span><a  href='{$href_no}'><button style='width: 5em' class='btn btn-danger'>inactive</button></span></a></span>";
+        $title .= "&emsp;<span><a><button style='width: 7em' id='show-dates' class='btn btn-warning '>Show Date</button></a></span>";
+        $title .= "&emsp;<span><a   href='#'><button style='width: 7em' id='show-client-form' class='btn btn-danger '>Client</button></a></span>";
+
+        return $title;
+    }
+
     public static function main_display()
     {
 //        return static::create_calendar_french();
@@ -484,8 +503,6 @@ public $next_day;
 
     }
 
-
-
     public function form_validation()
     {
         $valid = new FormValidation();
@@ -571,7 +588,6 @@ public $next_day;
 
     }
 
-
     public static function reverse_visible($id=0)
     {
        global $session;
@@ -622,6 +638,194 @@ public $next_day;
     }
 
 
+    public static function model_modal_element(TransportProgrammingModel $model, $item)
+    {
+//        $model = TransportProgrammingModel::find_by_id((int) $model_id);
+        $output = "";
+
+//        $data_target = get_called_class() . "-modal-id-" . $model->id;
+        $data_target = "TransportProgrammingModel" . "-modal-id-" . $model->id;
+
+        $data_target_new_form = $data_target . "-new_form_model";
+        $data_target_edit_form = $data_target . "-edit_form_model";
 
 
+        $title = $item->web_view . " Model ID (" . $model->id . ")";
+        $title_new_form = "New Model";
+        $title_edit_form = $item->web_view . " Model ID (" . $model->id . ")";
+
+
+        $title_comment = " DE " . $model->depart . " A " . $model->arrivee . " <b>a</b> " . hr_mn_to_text($model->heure, 'h');
+        $title_comment_new_form = null;
+        $title_comment_edit_form = " DE " . $model->depart . " A " . $model->arrivee . " <b><u>a</u></b> " . hr_mn_to_text($model->heure, 'h');
+
+//        call_user_func_array(array(get_called_class(), 'change_to_unique_data'), ['transport']);
+        call_user_func_array(array("TransportProgrammingModel", 'change_to_unique_data'), ['transport']);
+
+
+        $body = static::data_report_modal($model);
+
+        $footer = "<div class=\"btn-group\">";
+
+
+//                        copy_record
+        $href_copy1 = "<a class='remove-href' href='transport.php?class_name=TransportProgrammingModel&action=new&duplicate_record=true&id={$model->id}'>";
+        $href_copy2 = "</a>";
+        $footer .= $href_copy1;
+        $footer .= "<button  type='button' data-toggle='modal' data-model-id='{$model->id}' data-target='#{$data_target_new_form}' class='btn btn-primary btn-sm'>" . "Copy" . "</button>";
+        $footer .= $href_copy2;
+
+
+        $href_new1 = "<a class='remove-href' href='transport.php?class_name=TransportProgrammingModel&action=new'>";
+        $href_new2 = "</a>";
+
+        $footer .= $href_new1;
+        $footer .= "<button  type='button' data-toggle='modal' data-model-id='{$model->id}' data-target='#{$data_target_new_form}' class='btn btn-success btn-sm'>" . "New" . "</button>";
+        $footer .= $href_new2;
+
+
+        $href_edit1 = "<a class='remove-href' href='transport.php?class_name=TransportProgrammingModel&action=edit&id={$model->id}'>";
+        $href_edit2 = "</a>";
+
+        $footer .= $href_edit1;
+        $footer .= "<button  type='button' data-toggle='modal' data-model-id='{$model->id}'     data-target='#{$data_target_new_form}' class='btn btn-info  btn-sm'>" . "edit" . "</button>";
+        $footer .= $href_edit2;
+
+        $href_delete1 = "<a class='remove-href' onclick=\"return confirm('Are you sure?')\" data-has-confirm-button=''  href='transport.php?class_name=TransportProgrammingModel&action=delete_record&id={$model->id}'>";
+        $href_delete2 = "</a>";
+
+        $footer .= $href_delete1;
+        $footer .= "<button   type='button' data-model-id='{$model->id}'  class='btn btn-danger  btn-sm'>" . "delete" . "</button>";
+        $footer .= $href_delete2;
+
+
+        $footer .= "</div>";
+
+        $footer_new_form = '';
+        $footer_edit_form = '';
+
+//                        $body_new_form = call_user_func(array(get_called_class(), 'Create_form'));
+        $body_new_form = call_user_func_array(array("TransportProgrammingModel", 'Create_form'), []);
+
+//                        $_GET['id']=$model->id;
+        $body_edit_form = call_user_func_array(array("TransportProgrammingModel", 'Create_form'), [$model->id]);
+//                         unset($_GET['id'])   ;
+
+//
+//        $output .= static::model_modal($data_target, $title, $title_comment, $body, $footer);
+//        $output .= static::model_modal($data_target_new_form, $title_new_form, $title_comment_new_form, $body_new_form, $footer_new_form);
+//        $output .= static::model_modal($data_target_edit_form, $title_edit_form, $title_comment_edit_form, $body_edit_form, $footer_edit_form);
+
+        $output .= TransportProgrammingModel::model_modal($data_target, $title, $title_comment, $body, $footer);
+        $output .= TransportProgrammingModel::model_modal($data_target_new_form, $title_new_form, $title_comment_new_form, $body_new_form, $footer_new_form);
+        $output .= TransportProgrammingModel::model_modal($data_target_edit_form, $title_edit_form, $title_comment_edit_form, $body_edit_form, $footer_edit_form);
+
+        return $output;
+
+    }
+
+    public static function model_modal($data_target = null, $title = null, $title_comment = null, $body = null, $footer = null)
+    {
+
+        $output = "";
+
+        if (is_null($data_target)) {
+            $data_target = "mymodal";
+        }
+
+        $output .= Modal::new_modal_large($data_target, $title, $title_comment, $body, $footer);
+
+        return $output;
+
+    }
+
+
+    public static function data_report_modal(TransportProgrammingModel $model)
+    {
+
+        $exclude = ['id', 'week_day_rank_id', 'client_habituel', 'client_id', 'inverse_address', 'chauffeur_id', 'type_transport_id', 'input_date', 'modification_time', 'username'];
+
+        $output = "";
+        $model->set_up_display();
+        $model->heure = hr_mn_to_text($model->heure, 'h');
+//        $model->input_date=strftime("%A %d %b %y",strtotime($model->input_date));
+//        $model->modification_time=strftime("%A %d %b %y - %H:%M:",strtotime($model->modification_time));
+
+        $chauffeur = TransportChauffeur::find_by_id($model->chauffeur_id);
+        $transport_type = TransportType::find_by_id($model->type_transport_id);
+
+//        $model->chauffeur_name = 2;
+//        $model->type_transport = 5;
+
+//        $output .= "<div class=\"ibox-content no-padding\">";
+
+        $output .= "<a href='transport.php?class_name=TransportProgrammingModel&action=reverse_visible&id={$model->id}'>
+<button style='width: 8em' type='button' data-model-id='{$model->id}'  class='btn btn-{$model->color}'>" . " VISIBLE " . "</button>
+</a>";
+
+
+        $day = strtotime("next " . day_eng($model->week_day_rank_id));
+//        $day_full_wk_en[$a];
+        $date = strftime("%d/%m/%Y", $day);
+
+
+        $output .= "<div class='form-group model-pivot-date' id='data_{$model->id}'>
+                                <div class='input-group date  model-pivot-date'>
+                                    <span class='input-group-addon'><i class='fa fa-calendar'></i></span><input type='text' class='form-control' value='{$date}' >
+                                </div>
+                            </div>";
+
+        $output .= "<ul class='list-group'>";
+        $output .= "<li class='list-group-item'><b>Chauffeur:</b> " . $chauffeur->chauffeur_name . "</li>";
+        $output .= "<li class='list-group-item'><b>type transport:</b> " . $transport_type->type_transport . "</li>";
+
+        foreach (TransportProgrammingModel::$db_fields as $field) {
+            if (!in_array($field, $exclude)) {
+                $output .= "<li class='list-group-item'><b>$field:</b> " . $model->$field . "</li>";
+            }
+        }
+        $output .= "</ul>";
+//        $output .= "</div>";
+
+
+        return $output;
+
+    }
+
+    public static function form_client()
+    {
+
+        /** @noinspection SqlResolve */
+        $sql = "SELECT DISTINCT client_id FROM " . self::$table_name . " ORDER BY client_id";
+        $clients = static::find_by_sql($sql);
+
+        $output = "";
+        $myClass = "ViewModelByChauffeur";
+        if (isset($_GET["cl"])) {
+            $myClass = MyClasses::find_short_class($_GET["cl"]);
+        }
+        if (isset($_GET["class_name"])) {
+            $myClass = $_GET["class_name"];
+        }
+//
+//        $page=$_SERVER['PHP_SELF']."?class_name=ViewTransportModelPivot";
+        $output .= "<form class='form-inline'  method='get' action='transport.php'>
+        <div class='form-group'>
+        <input type='text' class='hidden' name='class_name' value='$myClass'>
+        <select name='client_id'   class='form-control'>";
+
+        foreach ($clients as $client) {
+            $trp_clients = TransportClient::find_by_id((int)$client->client_id);
+            $output .= "<option value='{$client->client_id}'>{$trp_clients->web_view}</option>";
+        }
+
+        $output .= "
+        </select>
+    </div>
+    <button type='submit' class='btn btn-default'>Send</button>
+</form>";
+
+
+        return "<span class='hidden' id='form-find-by-client'>" . $output . "</span>";
+    }
 }

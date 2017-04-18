@@ -39,7 +39,6 @@ if(isset($_GET['class_name'])){
 }
 
 
-
 //
 //echo Category::class_structure();
 //echo Category1::class_structure();
