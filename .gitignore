@@ -8,6 +8,8 @@ log/*.txt
 logs/log.txt
 # Word temporary
 ~$*.doc*
+# *.[oa]
+# *~
 
 # Excel temporary
 ~$*.xls*
@@ -63,3 +65,4 @@ config_mail.php
 /sandbox/
 /Minton_full_version/
 /jquery/
+Inspinia_Full_Version_2

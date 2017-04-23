@@ -54,7 +54,7 @@ class DatabaseObject
     {
         global $session;
 
-        if ($data == "data" || $data == 'ajax'|| $data=='tramsport') {
+        if ($data == "data" || $data == 'ajax' || $data == 'transport') {
 
             static::change_to_unique_data($data);
 

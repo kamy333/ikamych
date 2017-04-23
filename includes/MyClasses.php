@@ -32,7 +32,6 @@ class MyClasses
         "ViewTransportModelPivotYes",
         "ViewTransportSummaryCourseDateProgram",
         "ViewTransportModelByChauffeur",
-        "ViewTransportModelByClient",
 
 
         'Comment','Photos') ;
@@ -47,7 +46,7 @@ class MyClasses
         "Model" => "TransportProgrammingModel",
         "Chauffeur" => "TransportChauffeur",
         "TransportType" => "TransportType",
-        "tClient" => "TransportType",
+        "tClient" => "TransportClient",
         "ViewModel" => "ViewTransportModel",
         "ViewVisibleNo" => "ViewTransportModelVisibleNo",
         "ViewVisibleYes" => "ViewTransportModelVisibleYes",
@@ -56,7 +55,6 @@ class MyClasses
         "ViewPivotYes" => "ViewTransportModelPivotYes",
         "ViewSummary" => "ViewTransportSummaryCourseDateProgram",
         "ViewModelByChauffeur" => "ViewTransportModelByChauffeur",
-        "ViewModelByClient" => "ViewTransportModelByClient"
 
 
 
@@ -170,7 +168,13 @@ class MyClasses
 
     }
 
-
+    public static $transmed_class = [
+        'TransportChauffeur',
+        'TransportClient',
+        'TransportProgramming',
+        'TransportProgrammingModel',
+        'TransportType',
+    ];
 
 
 }

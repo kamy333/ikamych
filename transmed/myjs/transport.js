@@ -30,6 +30,9 @@ $(document).ready(function () {
 
         $("tr.table-dates").on("click", function () {
             event.preventDefault();
+            // $("input.addDate-course").on("click", function () {
+            //     alert("x");
+            // });
         });
 
         $("#show-dates").on("click", function () {
@@ -37,32 +40,25 @@ $(document).ready(function () {
             $( "tr.tr-table-dates" ).toggleClass( 'hidden' );
             if ($(this).text() === "Show Date"){
                 $(this).text("Hide Date");
-
             }
             else {
                 $(this).text("Show Date");
             }
-
         });
 
         $("#show-client-form").on("click", function () {
             event.preventDefault();
             $("#form-find-by-client").toggleClass('hidden');
-            // if ($(this).text() === "Show Date"){
-            //     $(this).text("Hide Date");
-            //
-            // }
-            // else {
-            //     $(this).text("Show Date");
-            // }
-
         });
 
 
         $(".addDate-course").on("click", function () {
             event.preventDefault();
-            alert(this.parent.text());
-            alert("x");
+            id = $(this).data("dateformid");
+            id1 = $(".theDate-" + id).val();
+            alert(id1);
+
+
         });
 
 

@@ -15,7 +15,7 @@ class TransportChauffeur extends DatabaseObject
 
     protected static $db_fields = array('id','chauffeur_name','initial','company','user_id','modification_time','username');
 
-    protected static $required_fields = array('id','chauffeur_name','initial','company',);
+    protected static $required_fields = array('chauffeur_name', 'initial', 'company',);
 
     protected static $db_fields_table_display_short =  array('id','chauffeur_name','initial','company','user_id','username','modification_time');
 
@@ -123,7 +123,6 @@ class TransportChauffeur extends DatabaseObject
     );
 
 
-    public static $db_field_search =array('search_all','download_csv');
 
 
     public static $page_name="Chauffeur";
@@ -156,11 +155,14 @@ public $username;
     }
 
     public static function  table_nav_additional(){
+        global $Nav;
+//        $path= $Nav->http.$Nav->folder."/";
+
         $output="</a><span>&nbsp;</span>";
-        $output.="<a  class=\"btn btn-primary\"  href=\"". static::$page_new ."\">Add To Do ". " </a><span>&nbsp;</span>";
-        $output.="<a  class=\"btn btn-primary\"  href=\"".TransportChauffeur::$page_new ."\">Add New Person ". " </a></a><span>&nbsp;</span>";
-        $output.="<a  class=\"btn btn-primary\"  href=\"". MyExpense::$page_manage ."\">View Expense ". " </a><span>&nbsp;</span>";
-        $output.="<a  class=\"btn btn-primary\"  href=\"". MyExpensePerson::$page_manage ."\">View Person ". " </a>";
+        $output .= "<a  class=\"btn btn-primary\"  href=\"" . TransportType::$page_new . "\">Add New TransportType " . " </a><span>&nbsp;</span>";
+        $output .= "<a  class=\"btn btn-primary\"  href=\"" . TransportProgramming::$page_manage . "\">Course " . " </a><span>&nbsp;</span>";
+        $output .= "<a  class=\"btn btn-primary\"  href=\"" . TransportProgrammingModel::$page_manage . "\">Model " . " </a><span>&nbsp;</span>";
+
         return $output;
     }
 

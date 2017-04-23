@@ -14,11 +14,7 @@
                     <a aria-expanded="false" role="button" href="<?php echo $path_admin; ?>index.php">Admin </a>
                 </li>
 
-                <?php if (User::is_admin()) { ?>
-                    <li class="">
-                        <a aria-expanded="false" role="button"
-                           href="<?php echo "/smartAdmin/"//.$path;?>index.php?class=2">SmartAdmin</a></li>
-                <?php } ?>
+
                 <li>
                     <a aria-expanded="false" role="button"
                        href="<?php echo $path_public; ?>myLinks.php?category=Others">Links</a>
@@ -75,13 +71,15 @@
                         <ul role="menu" class="dropdown-menu">
 
 
-                            <?php foreach (MyClasses::$all_class as $class) {
+                            <?php foreach (MyClasses::$transmed_class as $class) {
                                 if (!in_array($class, MyClasses::$disable_db_classes)) {
 //                            echo $Nav->menu_item($class, 'New ' . $class, 'new_data.php', 'admin');
                                     echo $Nav->menu_item($class, '' . $class, 'manage_ajax.php', 'admin');
                                 }
                             }
                             unset($class);
+
+
                             ?>
                         </ul>
                     </li>
@@ -100,7 +98,7 @@
             <ul class="nav navbar-top-links navbar-right">
 
                 <?php
-                echo "<li>Bienvenuue sur $logo</li>";
+                echo "<li>Bienvenue sur $logo</li>";
                 if (isset($_SESSION["user_id"])) {
                     echo Chat::get_chat();
                     echo Notification::get_notification();

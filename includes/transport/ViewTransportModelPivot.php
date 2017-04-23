@@ -136,9 +136,9 @@ class ViewTransportModelPivot extends TransportProgrammingModel
         $output .= "<th class='text-center' style='vertical-align: middle'>" . "Date" . "</th>";
 
        $i=-1;
-
         foreach (static::$db_fields as $field) {
 
+            $color_button = "default";
 
 
             if (in_array($field, $day_full_wk_fr)) {
@@ -147,6 +147,7 @@ class ViewTransportModelPivot extends TransportProgrammingModel
                     $take="next"." " . day_eng($i);
                 } elseif($i==$now_day_no) {
                     $take="today";
+                    $color_button = "info";
 
                 } else {
                     $take="last"." " . day_eng($i);
@@ -157,24 +158,25 @@ class ViewTransportModelPivot extends TransportProgrammingModel
 
                 $date = strftime("%d/%m/%Y", $day);
 
-
                 $output .= "<th class='text-center' style='vertical-align: middle'>" .
                     " 
-<div class='form-group'  id='data_1'>
-<form method='post' class='formDate'  action='transport.php?class_name=TransportProgrammingModel'>
+<div class='form-group'  id='data_$i'>
+  <form method='post' class='formDate form-inline'  action='transport.php?class_name=TransportProgrammingModel'>
 
-                  <div class='input-group date  model-pivot-date'>                                                              
-                                         <span class='input-group-addon'><i class='fa fa-calendar'></i></span>               
-                <input type='text' class='form-control' name='date' value='{$date}'>
-                                                  
-
-                  </div>
+        <div class='input-group date  model-pivot-date'>                                                              
+                <span class='input-group-addon'><i class='fa fa-calendar'></i></span>               
+                <input type='text' class='form-control theDate-$i' name='date' value='{$date}'>                                  
+        
+        </div>
                   
-                  <div class='row'>
-  <div class='input-group-addon'><input type='submit' class='btn btn-default addDate-course' name='submit' value='Ajouter'></div>
-                   </div>
+         
+             <div class='input-group-addon'>
+                 <input type='submit' class='btn btn-{$color_button} addDate-course' data-dateformid='$i' name='submit' value='Ajouter'>
+             </div>
+         
                           
-  </form>        </div>      
+  </form> 
+</div>      
                 
                             ";
                 $output .= "</th>";

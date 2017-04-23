@@ -2135,7 +2135,7 @@ SELECT DISTINCT
   sum(nbre_horaire)        AS totalHours
 FROM heure_presence
 GROUP BY Year, Month, Week
-ORDER BY date_presence DESC
+ORDER BY date_presence DESC;
 
 SELECT DISTINCT
   date_presence            AS Date1,
@@ -2144,7 +2144,7 @@ SELECT DISTINCT
   sum(nbre_horaire)        AS totalHours
 FROM heure_presence
 GROUP BY Year, MonthName
-ORDER BY date_presence DESC
+ORDER BY date_presence DESC;
 
 
 DROP TABLE IF EXISTS note;
@@ -2161,6 +2161,179 @@ CREATE TABLE IF NOT EXISTS `note` (
   `due_date`          DATE                NOT NULL,
   PRIMARY KEY (`id`),
   KEY `user_id` (`user_id`)
+)
+  ENGINE = InnoDB
+  DEFAULT CHARSET = utf8
+  AUTO_INCREMENT = 1;
+
+
+DROP TABLE IF EXISTS transport_article;
+DROP TABLE IF EXISTS transport_type_facturation;
+DROP TABLE IF EXISTS transport_zone;
+DROP TABLE IF EXISTS transport_addresse;
+DROP TABLE IF EXISTS transport_type_pricing;
+DROP TABLE IF EXISTS transport_clients_access;
+
+
+CREATE TABLE IF NOT EXISTS `transport_zone` (
+  `id`                INT(11) UNSIGNED NOT NULL   AUTO_INCREMENT,
+  `zone`              VARCHAR(255) UNIQUE         DEFAULT NOT NULL,
+  `zone_exception`    VARCHAR(255) UNIQUE         DEFAULT NOT NULL,
+  `rank`              INT(11)          NOT NULL   DEFAULT '1',
+  `comment`           TEXT,
+  `username`          VARCHAR(255)                DEFAULT NOT NULL,
+  `input_date`        DATE             NOT NULL,
+  `modification_time` TIMESTAMP        NOT NULL   DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+)
+  ENGINE = InnoDB
+  DEFAULT CHARSET = utf8
+  AUTO_INCREMENT = 1;
+
+
+CREATE TABLE IF NOT EXISTS `transport_article` (
+  `id`                INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `zone_depart_id`    INT(11) UNSIGNED          DEFAULT NOT NULL,
+  `zone_arrivee_id`   INT(11) UNSIGNED          DEFAULT NOT NULL,
+  `zone_depart`       VARCHAR(255)              DEFAULT NOT NULL,
+  `zone_arrivee`      VARCHAR(255)              DEFAULT NOT NULL,
+  `zone_nom`          VARCHAR(255) UNIQUE       DEFAULT NOT NULL,
+  `currency_id`       INT(11)                   DEFAULT 1,
+  `prix_course`       DECIMAL(10, 2)            DEFAULT '0.00',
+  `rank`              INT(11)          NOT NULL DEFAULT '1',
+  `comment`           TEXT,
+  `username`          VARCHAR(255)              DEFAULT NOT NULL,
+  `input_date`        DATE             NOT NULL,
+  `modification_time` TIMESTAMP        NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `currency_id` (`currency_id`)
+)
+  ENGINE = InnoDB
+  DEFAULT CHARSET = utf8
+  AUTO_INCREMENT = 1;
+
+ALTER TABLE `transport_article`
+  ADD CONSTRAINT `transport_article_ibfk_1` FOREIGN KEY (`currency_id`) REFERENCES `currency` (`id`);
+
+ALTER TABLE `transport_article`
+  ADD CONSTRAINT `transport_article_ibfk_2` FOREIGN KEY (`zone_depart_id`) REFERENCES `transport_zone` (`id`);
+
+
+ALTER TABLE `transport_article`
+  ADD CONSTRAINT `transport_article_ibfk_3` FOREIGN KEY (`zone_arrivee_id`) REFERENCES `transport_zone` (`id`);
+
+
+CREATE TABLE IF NOT EXISTS `transport_addresse` (
+  `id`                INT(11) UNSIGNED    NOT NULL      AUTO_INCREMENT,
+  `adresse`           VARCHAR(255) UNIQUE               DEFAULT NOT NULL,
+  `zone_id`           INT(11)                           DEFAULT NOT NULL,
+  `zone`              VARCHAR(255) UNIQUE               DEFAULT NOT NULL,
+  `zone_client`       TINYINT(1) UNSIGNED NOT NULL      DEFAULT 0,
+  `rank`              INT(11)             NOT NULL      DEFAULT 500,
+  `comment`           TEXT,
+  `username`          VARCHAR(255)                      DEFAULT NOT NULL,
+  `input_date`        TIMESTAMP           NOT NULL      DEFAULT CURRENT_TIMESTAMP,
+  `modification_time` TIMESTAMP           NOT NULL      DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+)
+  ENGINE = InnoDB
+  DEFAULT CHARSET = utf8
+  AUTO_INCREMENT = 1;
+
+
+ALTER TABLE `transport_addresse`
+  ADD CONSTRAINT `transport_addresse_ibfk_3` FOREIGN KEY (`zone_id`) REFERENCES `transport_zone` (`id`);
+
+
+CREATE TABLE IF NOT EXISTS `transport_type_facturation` (
+  `id`                      INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `type_facturation`        VARCHAR(255) UNIQUE       DEFAULT NOT NULL,
+  `type_facture_nom`        VARCHAR(255) UNIQUE       DEFAULT NOT NULL,
+  `report_name_facturation` VARCHAR(255) UNIQUE       DEFAULT NOT NULL,
+  `rank`                    INT(11)          NOT NULL DEFAULT 500,
+  `comment`                 TEXT,
+  `username`                VARCHAR(255)              DEFAULT NOT NULL,
+  `input_date`              TIMESTAMP        NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `modification_time`       TIMESTAMP        NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+)
+  ENGINE = InnoDB
+  DEFAULT CHARSET = utf8
+  AUTO_INCREMENT = 1;
+
+
+CREATE TABLE IF NOT EXISTS `transport_type_pricing` (
+  `id`                INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `type_pricing`      VARCHAR(255) UNIQUE       DEFAULT NOT NULL,
+  `type_pricing_nom`  VARCHAR(255) UNIQUE       DEFAULT NOT NULL,
+  `rank`              INT(11)          NOT NULL DEFAULT 500,
+  `comment`           TEXT,
+  `username`          VARCHAR(255)              DEFAULT NOT NULL,
+  `input_date`        TIMESTAMP        NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `modification_time` TIMESTAMP        NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+)
+  ENGINE = InnoDB
+  DEFAULT CHARSET = utf8
+  AUTO_INCREMENT = 1;
+
+
+CREATE TABLE IF NOT EXISTS `transport_clients_access` (
+  `id`                   INT(11) UNSIGNED    NOT NULL    AUTO_INCREMENT,
+  Client_ID              INT(11) UNSIGNED    NOT NULL,
+  Pseudo                 VARCHAR(255) UNIQUE             DEFAULT NOT NULL,
+  Pseudo_Consolide       VARCHAR(255)                    DEFAULT NULL,
+  Genre                  VARCHAR(255)                    DEFAULT NULL,
+  Nom                    VARCHAR(255)                    DEFAULT NULL,
+  Prenom                 VARCHAR(255)                    DEFAULT NULL,
+  Adresse                VARCHAR(255)                    DEFAULT NULL,
+  Residence              VARCHAR(255)                    DEFAULT NULL,
+  Service                VARCHAR(255)                    DEFAULT NULL,
+  Tel_Privee             VARCHAR(255)                    DEFAULT NULL,
+  CCP                    VARCHAR(255)                    DEFAULT NULL,
+  Ville                  VARCHAR(255)                    DEFAULT NULL,
+  Pays                   VARCHAR(255)                    DEFAULT NULL,
+  Date_Entree            DATE                            DEFAULT NULL,
+  Date_Mise_A_Jour       DATE                            DEFAULT NULL,
+  Frequence_Facturation  VARCHAR(255)                    DEFAULT NULL,
+  Client_CloturerYesNo   TINYINT(1) UNSIGNED NOT NULL    DEFAULT 0,
+  FacturationYesNo       TINYINT(1) UNSIGNED NOT NULL    DEFAULT 0,
+  Type_Facturation       VARCHAR(255)                    DEFAULT NULL,
+  ListeBon_YesNo         TINYINT(1) UNSIGNED NOT NULL    DEFAULT 0,
+  ListePatient_YesNo     TINYINT(1) UNSIGNED NOT NULL    DEFAULT 0,
+  AdresseEnvoie_YesNo    TINYINT(1) UNSIGNED NOT NULL    DEFAULT 0,
+  AdresseEnvoie_1        VARCHAR(255)                    DEFAULT NULL,
+  AdresseEnvoie_2        VARCHAR(255)                    DEFAULT NULL,
+  AdresseEnvoie_3        VARCHAR(255)                    DEFAULT NULL,
+  AdresseEnvoie_4        VARCHAR(255)                    DEFAULT NULL,
+  AdresseConcerne_5      VARCHAR(255)                    DEFAULT NULL,
+  AdresseConcerne_6      VARCHAR(255)                    DEFAULT NULL,
+  Mobile                 VARCHAR(255)                    DEFAULT NULL,
+  Fax                    VARCHAR(255)                    DEFAULT NULL,
+  Email                  VARCHAR(255)                    DEFAULT NULL,
+  Bon                    VARCHAR(255)                    DEFAULT NULL,
+  No_AVS                 VARCHAR(255)                    DEFAULT NULL,
+  No_AI                  VARCHAR(255)                    DEFAULT NULL,
+  OCPA                   VARCHAR(255)                    DEFAULT NULL,
+  Police_Assurance       VARCHAR(255)                    DEFAULT NULL,
+  Nom_Assureur           VARCHAR(255)                    DEFAULT NULL,
+  Payeur_Assurance       VARCHAR(255)                    DEFAULT NULL,
+  Transport              VARCHAR(255)                    DEFAULT NULL,
+  Date_de_Naissance      VARCHAR(255)                    DEFAULT NULL,
+  ParcoursDe             VARCHAR(255)                    DEFAULT NULL,
+  ParcoursA              VARCHAR(255)                    DEFAULT NULL,
+  Habituel_Chauffeur     VARCHAR(255)                    DEFAULT NULL,
+  Habituel_HeureDepart   VARCHAR(255)                    DEFAULT NULL,
+  Habituel_HeureRetour   VARCHAR(255)                    DEFAULT NULL,
+  Habituel_AllerRetour   VARCHAR(255)                    DEFAULT NULL,
+  Habituel_PrixCourse    DECIMAL(10, 2)                  DEFAULT '0.00',
+  Habituel_TypeTransport VARCHAR(255)                    DEFAULT NULL,
+  Habituel_Bon           VARCHAR(255)                    DEFAULT NULL,
+  Dernier_De             VARCHAR(255)                    DEFAULT NULL,
+  Dernier_A              VARCHAR(255)                    DEFAULT NULL,
+  Commentaires           TEXT,
+  EntryBy                VARCHAR(255)                    DEFAULT NULL,
+  PRIMARY KEY (`id`)
 )
   ENGINE = InnoDB
   DEFAULT CHARSET = utf8

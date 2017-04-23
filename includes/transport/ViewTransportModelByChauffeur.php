@@ -29,6 +29,9 @@ class ViewTransportModelByChauffeur extends ViewTransportModel
         $sql = "SELECT DISTINCT chauffeur_id FROM " . static::$table_name . " {$query_string}  ORDER BY chauffeur_id ASC";
 //        $sql="SELECT DISTINCT chauffeur_id FROM transport_programming_model"." {$jour} {$visible} ORDER BY chauffeur_id ASC";
 
+//        echo "$query_string"."<br>";
+//        echo "$sql"."<br>";
+
         $chauffeurs = static::find_by_sql($sql);
 
         $col_sql = "";
@@ -189,9 +192,13 @@ class ViewTransportModelByChauffeur extends ViewTransportModel
 
         $query_string = static::query_string();
 
+        if ($col_sql) {
+            $col_sql = "," . $col_sql;
+        }
 
-        $sql = "SELECT *,{$col_sql} FROM " . static::$table_name . " {$query_string}
+        $sql = "SELECT * {$col_sql} FROM " . static::$table_name . " {$query_string}
          ORDER BY jour ASC, heure ASC";
+
         $models = self::find_by_sql($sql);
 //        echo "<br>".$sql;
 

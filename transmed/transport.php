@@ -11,8 +11,6 @@ $class_name = MyClasses::redirect_disable_class();
 call_user_func_array(array($class_name, 'change_to_unique_data'), ['transport']);
 
 
-//$url = clean_query_string('http://' . $_SERVER['SERVER_NAME'] . $_SERVER['PHP_SELF'] . "?" . "class_name=" . u($class_name) . "&id=" . u($_GET['id']) . "&test.sql=1");
-
 
 if (isset($_GET['id'])&& isset($_GET['action'])&& $_GET['action']=="edit" &&  !isset($_GET['duplicate_record'])    ) {
 
@@ -52,7 +50,6 @@ if (request_is_post() && request_is_same_domain()) {
 
         }
 
-        //todo complete valid like pseudo
 
         $valid = $new_item->form_validation();
 
@@ -62,21 +59,12 @@ if (request_is_post() && request_is_same_domain()) {
                 $session->ok(true);
                 unset($_POST);
                 redirect_to($class_name::$page_manage);
-//                echo " <script> location.replace(\"transport.php?class_name={$class_name}\"); </script>";
 
             } else {
                 $session->message($class_name . $new_item->pseudo . " " . "$text_post1 failed or maybe nothing changed");
 //                redirect_to($_SERVER['PHP_SELF']."?".$_SERVER['QUERY_STRING']);
                 unset($_POST);
                 redirect_to($_SERVER['PHP_SELF'] . "?class_name={$class_name}");
-//                echo '<script type="text/javascript">location.reload(true);</script>';
-//                 echo '<script type="text/javascript">alert("hi");</script>';
-//
-//                $secondsWait = 1;
-//                echo date('Y-m-d H:i:s');
-//                echo '<meta http-equiv="refresh" content="'.$secondsWait.'">';
-//                echo " <script> location.replace(\"transport.php?class_name={$class_name}\"); </script>";
-
 
             }
 
@@ -88,20 +76,26 @@ if (request_is_post() && request_is_same_domain()) {
 }
 } else {
     if (request_is_get()) {
-        if (isset($_GET['id']) && isset( $_GET['action']) && $_GET['action']=="edit") {
-//            $id = $_GET['id'];
-//            $get_item = $class_name::find_by_id($id);
+        if (isset($_GET['id']) && isset($_GET['action']) && $_GET['action'] == "reverse_visible") {
+            $id = (int)$_GET['id'];
+            call_user_func_array([$class_name, "reverse_visible"], [$id]);
+            redirect_to("transport.php?class_name={$class_name}");
+
+            unset($_GET);
+            redirect_to('index.php');
+
         }
+        if (isset($_GET['id']) && isset($_GET['action']) && $_GET['action'] == "delete_record") {
 
+            $id = (int)$_GET['id'];
+            call_user_func_array([$class_name, "delete_record"], [$id]);
+            redirect_to("transport.php?class_name={$class_name}");
 
+        }
     }
 
 }
 ?>
-
-
-
-
 
 
 
@@ -140,39 +134,6 @@ if (request_is_post() && request_is_same_domain()) {
                 echo ibox( $content,12,'');
 
                 echo "</div>";
-
-            } elseif( isset($_GET['id']) && isset($_GET['action']) && $_GET['action']=="reverse_visible" ){
-                $id=(int)$_GET['id'];
-                call_user_func_array([$class_name, "reverse_visible"], [$id]);
-//                echo isset($valid) ? $valid->form_errors() : "" ;
-//                echo isset($valid) ? $valid->form_warnings() : "";
-//                echo isset($message) ? $message : "";
-//
-//                echo  call_user_func_array([$class_name, "main_display"], []);
-
-                if($_SERVER['SERVER_NAME']=='localhost'){
-                    echo " <script> location.replace(\"transport.php?class_name={$class_name}\"); </script>";
-                }else{
-                    redirect_to("transport.php?class_name={$class_name}");
-
-                }
-
-
-                unset($_GET);
-                redirect_to('index.php');
-
-            } elseif(isset($_GET['id']) && isset($_GET['action']) && $_GET['action']=="delete_record" ){
-//               echo "xxxxx";
-//               return;
-                $id=(int)$_GET['id'];
-                 call_user_func_array([$class_name, "delete_record"], [$id]);
-
-
-                 if($_SERVER['SERVER_NAME']=='localhost'){
-         echo " <script> location.replace(\"transport.php?class_name={$class_name}\"); </script>";
-                }else{
-         redirect_to("transport.php?class_name={$class_name}");
-                }
 
             } else {
                 echo  call_user_func_array([$class_name, "main_display"], []);

@@ -392,7 +392,8 @@ public $warnings=array();
     }
 
 
-    public function validate_Date($fields_with_dates, $format = 'YYYY-MM-DD') {
+    public function validate_Date($fields_with_dates, $format = 'YYYY-MM-DD', $return_value = false)
+    {
     $year=""; $day=""; $month="";
    // $field="Date" ;
 
@@ -417,21 +418,26 @@ public $warnings=array();
 
 
                } else {
-                   return true;
+
+                   if ($return_value) {
+                       $_POST[$field] = $year . "-" . $month . "-" . $day;
+                   }
+//                   return true;
                }
 
            } else{
                $this->errors[$field] = $this->fieldname_as_text($field) . " is not valid date";
+
            }
 
                }
 
 
 
-
     }
 
-    function validate_time($fields_with_times = [], $warning_me = false)
+
+    public function validate_time($fields_with_times = [], $warning_me = false)
     {
         if (!is_array($fields_with_times)) {
             $field_time = $fields_with_times;
@@ -450,7 +456,7 @@ public $warnings=array();
 
     }
 
-    function validate_time_individual($myTime, $field, $warning_me = false)
+    protected function validate_time_individual($myTime, $field, $warning_me = false)
     {
 
         $myTime=substr($myTime, 0,8);

@@ -48,6 +48,7 @@ class ViewTransportModel extends TransportProgrammingModel
     public $remarque;
     public $chauffeur_id;
     public $client_habituel;
+
     public $Dimanche;
     public $Lundi;
     public $Mardi;
