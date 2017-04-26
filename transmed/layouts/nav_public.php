@@ -100,7 +100,7 @@
                 <?php
                 echo "<li>Bienvenue sur $logo</li>";
                 if (isset($_SESSION["user_id"])) {
-                    echo Chat::get_chat();
+                    echo Message::get_chat();
                     echo Notification::get_notification();
 
 //                echo "<li><a href='{$path_admin}logout.php'><i class=\"fa fa-sign-out\"></i> $user->username</a></li>";

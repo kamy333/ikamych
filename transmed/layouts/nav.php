@@ -25,7 +25,7 @@
 
 
                 <?php if ($session->is_logged_in()) { ?>
-                    <?php echo Chat::get_chat(); ?>
+                    <?php echo Message::get_chat(); ?>
 
 
                 <?php } // end of message chat when $session->is_logged_in() ?>

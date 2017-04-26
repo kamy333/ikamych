@@ -6,10 +6,11 @@
  * Date: 4/23/2017
  * Time: 4:59 AM
  */
-class TransportClientAccess
+class DatabaseClient extends DatabaseObject
 {
 
-    protected static $table_name = "transport_type_facturation";
+    protected static $table_name = "DatabaseClient";
+
 
 
     protected static $db_fields = [

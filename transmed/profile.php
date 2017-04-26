@@ -309,7 +309,7 @@ echo Note::smallNotelist();
 echo "</div>";
 
 echo "<div id='messagesChat'>";
-echo Chat::get_chat_body();
+echo Message::get_chat_body();
 echo "</div>";
 
 //HeurePresence::update_all();

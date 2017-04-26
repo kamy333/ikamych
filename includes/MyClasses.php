@@ -11,7 +11,7 @@ class MyClasses
 {
 
     public static $all_class=array(
-        'HeurePresence', 'Note', 'ToDoList', 'Chat', 'ChatFriend', 'Notification',
+        'HeurePresence', 'Note', 'ToDoList', 'Message', 'Chat', 'ChatFriend', 'Notification',
         'User', 'UserType',
         'Links','LinksCategory','Category1','Category2',
         'Project','Client','InvoiceActual', 'Category','InvoiceEstimate','Currency',
@@ -33,6 +33,10 @@ class MyClasses
         "ViewTransportSummaryCourseDateProgram",
         "ViewTransportModelByChauffeur",
 
+        'DatabaseClient', 'DatabaseCourse', 'DatabaseCourse_Programe',
+        'DatabaseFacturation', 'DatabasePaiement', 'T_Adresse', 'T_Aller_Retour', 'T_Chauffeur',
+        'T_Frequence_Facturation', 'T_Genre', 'T_heure', 'T_Pays', 'T_Prix_Course', 'T_Transport',
+        'T_Type_Facturation',
 
         'Comment','Photos') ;
 

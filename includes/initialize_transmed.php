@@ -86,7 +86,7 @@ require_once(LIB_PATH.DS . 'functions'.DS."reset_token_functions.php");
 //require_once(LIB_PATH.DS . "function_links.php"); //todo clean up and move to function
 
 
-require_once(LIB_PATH . DS . 'config.php');
+require_once(LIB_PATH . DS . 'config_transmed.php');
 
 $use_database_mysqli=false;
 
@@ -142,6 +142,7 @@ require_once(LIB_PATH.DS.'MyExpenseType.php');
 require_once(LIB_PATH.DS.'MyHouseExpenseType.php');
 require_once(LIB_PATH.DS.'MyExpense.php');
 require_once(LIB_PATH.DS.'MyHouseExpense.php');
+require_once(LIB_PATH . DS . 'Message.php');
 require_once(LIB_PATH.DS.'Chat.php');
 require_once(LIB_PATH.DS.'ChatFriend.php');
 
@@ -150,23 +151,31 @@ require_once(LIB_PATH.DS.'Notification.php');
 require_once(LIB_PATH.DS.'Photo.php');
 require_once(LIB_PATH.DS.'Comment.php');
 
-require_once(LIB_PATH.DS.'transport'.DS.'TransportChauffeur.php');
-require_once(LIB_PATH.DS.'transport'.DS.'TransportClient.php');
-require_once(LIB_PATH.DS.'transport'.DS.'TransportType.php');
-require_once(LIB_PATH.DS.'transport'.DS.'TransportProgramming.php');
-require_once(LIB_PATH.DS.'transport'.DS.'TransportProgrammingModel.php');
+require_once(LIB_PATH . DS . 'transport' . DS . 'DatabaseObjectAccess.php');
 
-
-require_once(LIB_PATH . DS . 'transport' . DS . 'ViewTransportModel.php');
-require_once(LIB_PATH . DS . 'transport' . DS . 'ViewTransportModelVisibleNo.php');
-require_once(LIB_PATH . DS . 'transport' . DS . 'ViewTransportModelVisibleYes.php');
-
-require_once(LIB_PATH . DS . 'transport' . DS . 'ViewTransportModelPivot.php');
-
-require_once(LIB_PATH . DS . 'transport' . DS . 'ViewTransportModelPivotNo.php');
-require_once(LIB_PATH . DS . 'transport' . DS . 'ViewTransportModelPivotYes.php');
-require_once(LIB_PATH . DS . 'transport' . DS . 'ViewTransportSummaryCourseDateProgram.php');
-require_once(LIB_PATH . DS . 'transport' . DS . 'ViewTransportModelByChauffeur.php');
+DatabaseObjectAccess::require_file();
+//
+//foreach (DatabaseObjectAccess::$class as $file) {
+//    require_once(LIB_PATH.DS.'transport'.DS."$file.php");
+//}
+//
+//require_once(LIB_PATH.DS.'transport'.DS.'TransportChauffeur.php');
+//require_once(LIB_PATH.DS.'transport'.DS.'TransportClient.php');
+//require_once(LIB_PATH.DS.'transport'.DS.'TransportType.php');
+//require_once(LIB_PATH.DS.'transport'.DS.'TransportProgramming.php');
+//require_once(LIB_PATH.DS.'transport'.DS.'TransportProgrammingModel.php');
+//
+//
+//require_once(LIB_PATH . DS . 'transport' . DS . 'ViewTransportModel.php');
+//require_once(LIB_PATH . DS . 'transport' . DS . 'ViewTransportModelVisibleNo.php');
+//require_once(LIB_PATH . DS . 'transport' . DS . 'ViewTransportModelVisibleYes.php');
+//
+//require_once(LIB_PATH . DS . 'transport' . DS . 'ViewTransportModelPivot.php');
+//
+//require_once(LIB_PATH . DS . 'transport' . DS . 'ViewTransportModelPivotNo.php');
+//require_once(LIB_PATH . DS . 'transport' . DS . 'ViewTransportModelPivotYes.php');
+//require_once(LIB_PATH . DS . 'transport' . DS . 'ViewTransportSummaryCourseDateProgram.php');
+//require_once(LIB_PATH . DS . 'transport' . DS . 'ViewTransportModelByChauffeur.php');
 
 
 //require_once(LIB_PATH.DS.'photograph.php');

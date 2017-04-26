@@ -66,3 +66,6 @@ config_mail.php
 /Minton_full_version/
 /jquery/
 Inspinia_Full_Version_2
+vendor
+
+/transmed/xml/transmed/*
