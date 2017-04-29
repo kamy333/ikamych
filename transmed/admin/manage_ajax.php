@@ -12,6 +12,7 @@ if (isset($_GET['class_name'])) {
     $class_name = $_GET['class_name'];
 //    $is_data=true;
     call_user_func_array(array($class_name, 'change_to_unique_data'), ['ajax']);
+//    call_user_func_array(array($class_name, 'complete_class_info'), []);
 
     HeurePresence::quickaddhours();
     HeurePresence::quicksubstracthours();

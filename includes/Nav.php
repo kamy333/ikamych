@@ -98,6 +98,7 @@ class SmartNav
     public $current_page;
     public $current_page_php;
     public $folder;
+    public $server_name;
 
     function __construct()
     {
@@ -123,7 +124,7 @@ class SmartNav
 //     echo "  \$pos3 $pos3"."<br>";
 //     echo "  \$pos4 $pos4"."<br>";
         $pos_Dif2 = $pos4 - $pos3;
-
+        $this->server_name = $_SERVER['SERVER_NAME'];
 
         if ($_SERVER['SERVER_NAME'] == $server_local) {
             $this->folder = substr($_SERVER["PHP_SELF"], $pos3 + 1, $pos_Dif2 - 1);

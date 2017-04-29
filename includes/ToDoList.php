@@ -22,11 +22,13 @@ class ToDoList extends DatabaseObject
         "progress" => "5"
     );
     public static $db_field_search = array('search_all', 'todo', 'done', 'due_date', 'rank', 'web_address', 'download_csv');
+
     public static $page_name = "ToDo List";
     public static $page_manage = "manage_ToDoList.php";
     public static $page_new = "new_ToDoList.php";
     public static $page_edit = "edit_ToDoList.php";
     public static $page_delete = "delete_ToDoList.php";
+
     public static $form_class_dependency = array();
     public static $per_page;
     protected static $table_name = "to_do_list";

@@ -85,22 +85,24 @@ public $warnings=array();
 
         $msg_presence=array();
 
-        foreach($required_fields as $field) {
-            $value = trim($_POST[$field]);
-            if (!$this->has_presence($value)) {
-                if ($warning_me) {
-                    $this->warnings[$field] = $this->fieldname_as_text($field) . " can't be blank";
-                    //  $msg_presence[$field]=get_warning_error($warnings[$field],$warning_me);
-                    $msg_presence[$field]=$this->warnings[$field];
+        if (is_array($required_fields)) {
+            foreach ($required_fields as $field) {
+                $value = trim($_POST[$field]);
+                if (!$this->has_presence($value)) {
+                    if ($warning_me) {
+                        $this->warnings[$field] = $this->fieldname_as_text($field) . " can't be blank";
+                        //  $msg_presence[$field]=get_warning_error($warnings[$field],$warning_me);
+                        $msg_presence[$field] = $this->warnings[$field];
 
-                }else{
-                    $this->errors[$field] = $this->fieldname_as_text($field) . " can't be blank";
-                    //   $msg_presence[$field]=get_warning_error($errors[$field],$warning_me);;
-                    $msg_presence[$field]=$this->errors[$field];
+                    } else {
+                        $this->errors[$field] = $this->fieldname_as_text($field) . " can't be blank";
+                        //   $msg_presence[$field]=get_warning_error($errors[$field],$warning_me);;
+                        $msg_presence[$field] = $this->errors[$field];
 
+
+                    }
 
                 }
-
             }
         }
 

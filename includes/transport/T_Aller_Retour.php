@@ -14,6 +14,14 @@ class T_Aller_Retour extends DatabaseObjectAccess
         'Aller_Retour_ID',
 
     ];
+    protected static $db_fields_table_display_short = ['id', 'Aller_Retour',
+        'Aller_Retour_ID',
+
+    ];
+    protected static $db_fields_table_display_full = ['id', 'Aller_Retour',
+        'Aller_Retour_ID',
+
+    ];
 
     public $id;
 

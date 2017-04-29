@@ -36,10 +36,21 @@ DROP TABLE IF EXISTS transport_type_pricing;
 
 DROP TABLE IF EXISTS DatabaseCourse_Programe;
 DROP TABLE IF EXISTS DatabaseCourse;
-DROP TABLE IF EXISTS DatabaseFacturation;
+DROP TABLE IF EXISTS DataBaseFacturation;
 DROP TABLE IF EXISTS DatabasePaiement;
-DROP TABLE IF EXISTS DatabaseClient;
+DROP TABLE IF EXISTS DataBaseClient;
 
+DROP TABLE IF EXISTS T_Adresse;
+DROP TABLE IF EXISTS T_Aller_Retour;
+DROP TABLE IF EXISTS T_Chauffeur;
+DROP TABLE IF EXISTS T_Frequence_Facturation;
+DROP TABLE IF EXISTS T_Genre;
+DROP TABLE IF EXISTS T_Heure;
+DROP TABLE IF EXISTS T_Pays;
+DROP TABLE IF EXISTS T_Prix_Course;
+DROP TABLE IF EXISTS T_Type_Transport;
+DROP TABLE IF EXISTS T_Type_Facturation;
+DROP TABLE IF EXISTS T_Ville;
 
 DROP TABLE IF EXISTS transport_programming;
 DROP TABLE IF EXISTS transport_programming_model;
@@ -1837,18 +1848,105 @@ CREATE TABLE IF NOT EXISTS `transport_type_pricing` (
   DEFAULT CHARSET = utf8
   AUTO_INCREMENT = 1;
 
-CREATE TABLE IF NOT EXISTS `DatabasePaiement` (
-  `id`          INT(11) UNSIGNED NOT NULL          AUTO_INCREMENT,
-  ID_p          INT(11) UNSIGNED NOT NULL,
-  Num_Facture   INT(11) UNSIGNED NOT NULL,
-  Pseudo        VARCHAR(255)                       DEFAULT NULL,
-  Paiement      DECIMAL(10, 2)                     DEFAULT '0.00',
-  Date_Paiement DATE                               DEFAULT NULL,
-  Type_Paiement VARCHAR(255)                       DEFAULT NULL,
-  Lien_Pdf      VARCHAR(255)                       DEFAULT NULL,
-  Date_Saisie   DATE                               DEFAULT NULL,
-  Entry_By      VARCHAR(255)                       DEFAULT NULL,
+CREATE TABLE IF NOT EXISTS `T_Adresse` (
+  `id`  INT(11) UNSIGNED    NOT NULL          AUTO_INCREMENT,
+  Annee INT(11) UNSIGNED    NOT NULL,
+  De_A  VARCHAR(255) UNIQUE NOT NULL,
+  PRIMARY KEY (`id`)
+)
+  ENGINE = InnoDB
+  DEFAULT CHARSET = utf8
+  AUTO_INCREMENT = 1;
 
+CREATE TABLE IF NOT EXISTS `T_Aller_Retour` (
+  `id`            INT(11) UNSIGNED    NOT NULL          AUTO_INCREMENT,
+  Aller_Retour    VARCHAR(255) UNIQUE NOT NULL,
+  Aller_Retour_ID INT(11) UNSIGNED    NOT NULL,
+  PRIMARY KEY (`id`)
+)
+  ENGINE = InnoDB
+  DEFAULT CHARSET = utf8
+  AUTO_INCREMENT = 1;
+
+CREATE TABLE IF NOT EXISTS `T_Chauffeur` (
+  `id`         INT(11) UNSIGNED    NOT NULL          AUTO_INCREMENT,
+  Chauffeur_ID INT(11) UNSIGNED    NOT NULL,
+  Chauffeur    VARCHAR(255) UNIQUE NOT NULL,
+  Company      VARCHAR(255)                          DEFAULT NULL,
+  PRIMARY KEY (`id`)
+)
+  ENGINE = InnoDB
+  DEFAULT CHARSET = utf8
+  AUTO_INCREMENT = 1;
+
+CREATE TABLE IF NOT EXISTS `T_Frequence_Facturation` (
+  `id`                       INT(11) UNSIGNED    NOT NULL          AUTO_INCREMENT,
+  FrequenceID                INT(11) UNSIGNED    NOT NULL,
+  Frequence_Facturation      VARCHAR(255) UNIQUE NOT NULL,
+  Note_Frequence_Facturation VARCHAR(255)                          DEFAULT NULL,
+  PRIMARY KEY (`id`)
+)
+  ENGINE = InnoDB
+  DEFAULT CHARSET = utf8
+  AUTO_INCREMENT = 1;
+
+CREATE TABLE IF NOT EXISTS `T_Genre` (
+  `id`     INT(11) UNSIGNED NOT NULL          AUTO_INCREMENT,
+  Genre_ID INT(11) UNSIGNED NOT NULL,
+  Genre    VARCHAR(255)                       DEFAULT NULL,
+  Genre1   VARCHAR(255)                       DEFAULT NULL,
+  Genre2   VARCHAR(255)                       DEFAULT NULL,
+  PRIMARY KEY (`id`)
+)
+  ENGINE = InnoDB
+  DEFAULT CHARSET = utf8
+  AUTO_INCREMENT = 1;
+
+CREATE TABLE IF NOT EXISTS `T_Heure` (
+  `id`         INT(11) UNSIGNED    NOT NULL          AUTO_INCREMENT,
+  Heure        VARCHAR(255) UNIQUE NOT NULL,
+  Heure_format TIME                                  DEFAULT '8:00',
+  Heure_ID     INT(11) UNSIGNED    NOT NULL,
+  PRIMARY KEY (`id`)
+)
+  ENGINE = InnoDB
+  DEFAULT CHARSET = utf8
+  AUTO_INCREMENT = 1;
+
+CREATE TABLE IF NOT EXISTS `T_Prix_Course` (
+  `id`           INT(11) UNSIGNED NOT NULL          AUTO_INCREMENT,
+  Prix_Course    DECIMAL(10, 2)                     DEFAULT '0.00',
+  Prix_Course_ID INT(11) UNSIGNED NOT NULL,
+  PRIMARY KEY (`id`)
+)
+  ENGINE = InnoDB
+  DEFAULT CHARSET = utf8
+  AUTO_INCREMENT = 1;
+
+CREATE TABLE IF NOT EXISTS `T_Pays` (
+  `id`    INT(11) UNSIGNED    NOT NULL          AUTO_INCREMENT,
+  Pays    VARCHAR(255) UNIQUE NOT NULL,
+  Pays_ID INT(11) UNSIGNED    NOT NULL,
+  PRIMARY KEY (`id`)
+)
+  ENGINE = InnoDB
+  DEFAULT CHARSET = utf8
+  AUTO_INCREMENT = 1;
+
+CREATE TABLE IF NOT EXISTS `T_Type_Transport` (
+  `id`              INT(11) UNSIGNED NOT NULL          AUTO_INCREMENT,
+  Type_Transport_ID INT(11) UNSIGNED NOT NULL,
+  Type_Transport    VARCHAR(255) UNIQUE                DEFAULT NULL,
+  PRIMARY KEY (`id`)
+)
+  ENGINE = InnoDB
+  DEFAULT CHARSET = utf8
+  AUTO_INCREMENT = 1;
+
+CREATE TABLE IF NOT EXISTS `T_Ville` (
+  `id`     INT(11) UNSIGNED    NOT NULL          AUTO_INCREMENT,
+  Ville    VARCHAR(255) UNIQUE NOT NULL,
+  Ville_ID INT(11) UNSIGNED    NOT NULL,
   PRIMARY KEY (`id`)
 )
   ENGINE = InnoDB
@@ -1856,32 +1954,123 @@ CREATE TABLE IF NOT EXISTS `DatabasePaiement` (
   AUTO_INCREMENT = 1;
 
 
-CREATE TABLE IF NOT EXISTS `DatabaseFacturation` (
-  `id`               INT(11) UNSIGNED NOT NULL          AUTO_INCREMENT,
-  Facture_ID         INT(11) UNSIGNED NOT NULL,
-  Facture_ID_Client  INT(11) UNSIGNED NOT NULL,
-  Date_Saisie        DATE                               DEFAULT NULL,
-  Pseudo             VARCHAR(255)                       DEFAULT NULL,
-  Ref_Facture        VARCHAR(255)                       DEFAULT NULL,
-  Montant            DECIMAL(10, 2)                     DEFAULT '0.00',
-  Statut             VARCHAR(255)                       DEFAULT NULL,
-  Date_Fact_Envoi    DATE                               DEFAULT NULL,
-  Fact_Date_Paiement DATE                               DEFAULT NULL,
-  Date_Rappel        DATE                               DEFAULT NULL,
-  No_BVR             VARCHAR(255)                       DEFAULT NULL,
-  Course_Periode_Du  DATE                               DEFAULT NULL,
-  Course_Periode_Au  DATE                               DEFAULT NULL,
-  Remarque_Fact      VARCHAR(255)                       DEFAULT NULL,
-  Ref_Fact_MsftWord  VARCHAR(255)                       DEFAULT NULL,
-  NombreCourse       INT(11) UNSIGNED NOT NULL,
-  Pseudo_Consolide   VARCHAR(255)                       DEFAULT NULL,
-  Alerte             VARCHAR(255)                       DEFAULT NULL,
-  Num_Facture        VARCHAR(255)                       DEFAULT NULL,
-  Num_Facture_Pseudo VARCHAR(255)                       DEFAULT NULL,
-  Champ1             VARCHAR(255)                       DEFAULT NULL,
-  Champ2             VARCHAR(255)                       DEFAULT NULL,
-  Champ3             VARCHAR(255)                       DEFAULT NULL,
+CREATE TABLE IF NOT EXISTS `T_Type_Facturation` (
+  `id`                  INT(11) UNSIGNED NOT NULL          AUTO_INCREMENT,
+  TypeFacturationID     INT(11) UNSIGNED NOT NULL,
+  Type_Facturation      VARCHAR(255) UNIQUE                DEFAULT NULL,
+  TypeFactureNom        VARCHAR(255)                       DEFAULT NULL,
+  ReportNameFacturation VARCHAR(255)                       DEFAULT NULL,
+  Note_Type_Facturation VARCHAR(255)                       DEFAULT NULL,
+  PRIMARY KEY (`id`)
+)
+  ENGINE = InnoDB
+  DEFAULT CHARSET = utf8
+  AUTO_INCREMENT = 1;
 
+
+CREATE TABLE IF NOT EXISTS `DataBaseClient` (
+  `id`                   INT(11) UNSIGNED     NOT NULL          AUTO_INCREMENT,
+  Client_ID              INT(11) UNSIGNED     NOT NULL,
+  Pseudo                 VARCHAR(255) UNIQUE  NOT NULL,
+  Pseudo_Consolide       VARCHAR(255)                           DEFAULT NULL,
+  Genre                  VARCHAR(255)                           DEFAULT NULL,
+  Nom                    VARCHAR(255)                           DEFAULT NULL,
+  Prenom                 VARCHAR(255)                           DEFAULT NULL,
+  Adresse                VARCHAR(255)                           DEFAULT NULL,
+  Residence              VARCHAR(255)                           DEFAULT NULL,
+  Service                VARCHAR(255)                           DEFAULT NULL,
+  Tel_Privee             VARCHAR(255)                           DEFAULT NULL,
+  CCP                    VARCHAR(255)                           DEFAULT NULL,
+  Ville                  VARCHAR(255)                           DEFAULT NULL,
+  Pays                   VARCHAR(255)                           DEFAULT NULL,
+  Date_Entree            DATE                                   DEFAULT NULL,
+  Date_Mise_A_Jour       DATE                                   DEFAULT NULL,
+  Frequence_Facturation  VARCHAR(255)                           DEFAULT NULL,
+  Client_CloturerYesNo   TINYINT(1) UNSIGNED  NOT NULL          DEFAULT 0,
+  FacturationYesNo       TINYINT(1) UNSIGNED  NOT NULL          DEFAULT 0,
+  Type_Facturation       VARCHAR(255)                           DEFAULT NULL,
+  ListeBon_YesNo         TINYINT(1) UNSIGNED  NOT NULL          DEFAULT 0,
+  ListePatient_YesNo     TINYINT(1) UNSIGNED  NOT NULL          DEFAULT 0,
+  AdresseEnvoie_YesNo    TINYINT(1) UNSIGNED  NOT NULL          DEFAULT 0,
+  AdresseEnvoie_1        VARCHAR(255)                           DEFAULT NULL,
+  AdresseEnvoie_2        VARCHAR(255)                           DEFAULT NULL,
+  AdresseEnvoie_3        VARCHAR(255)                           DEFAULT NULL,
+  AdresseEnvoie_4        VARCHAR(255)                           DEFAULT NULL,
+  AdresseConcerne_5      VARCHAR(255)                           DEFAULT NULL,
+  AdresseConcerne_6      VARCHAR(255)                           DEFAULT NULL,
+  Mobile                 VARCHAR(255)                           DEFAULT NULL,
+  Fax                    VARCHAR(255)                           DEFAULT NULL,
+  Email                  VARCHAR(255)                           DEFAULT NULL,
+  Bon                    VARCHAR(255)                           DEFAULT NULL,
+  No_AVS                 VARCHAR(255)                           DEFAULT NULL,
+  No_AI                  VARCHAR(255)                           DEFAULT NULL,
+  OCPA                   VARCHAR(255)                           DEFAULT NULL,
+  Police_Assurance       VARCHAR(255)                           DEFAULT NULL,
+  Nom_Assureur           VARCHAR(255)                           DEFAULT NULL,
+  Payeur_Assurance       VARCHAR(255)                           DEFAULT NULL,
+  Transport              VARCHAR(255)                           DEFAULT NULL,
+  Date_de_Naissance      VARCHAR(255)                           DEFAULT NULL,
+  ParcoursDe             VARCHAR(255)                           DEFAULT NULL,
+  ParcoursA              VARCHAR(255)                           DEFAULT NULL,
+  Habituel_Chauffeur     VARCHAR(255)                           DEFAULT NULL,
+  Habituel_HeureDepart   VARCHAR(255)                           DEFAULT NULL,
+  Habituel_HeureRetour   VARCHAR(255)                           DEFAULT NULL,
+  Habituel_AllerRetour   VARCHAR(255)                           DEFAULT NULL,
+  Habituel_PrixCourse    DECIMAL(10, 2)                         DEFAULT '0.00',
+  Habituel_TypeTransport VARCHAR(255)                           DEFAULT NULL,
+  Habituel_Bon           VARCHAR(255)                           DEFAULT NULL,
+  Dernier_De             VARCHAR(255)                           DEFAULT NULL,
+  Dernier_A              VARCHAR(255)                           DEFAULT NULL,
+  Commentaires           TEXT,
+  EntryBy                VARCHAR(255)                           DEFAULT NULL,
+  PRIMARY KEY (`id`)
+)
+  ENGINE = InnoDB
+  DEFAULT CHARSET = utf8
+  AUTO_INCREMENT = 1;
+
+
+CREATE TABLE IF NOT EXISTS `DatabaseCourse` (
+  `id`                     INT(11) UNSIGNED    NOT NULL          AUTO_INCREMENT,
+  CourseID                 INT(11) UNSIGNED    NOT NULL,
+  StautCourse              VARCHAR(255)                          DEFAULT NULL,
+  Pseudo                   VARCHAR(255),
+  Date                     DATE                                  DEFAULT NULL,
+  Aller_Retour             VARCHAR(255)                          DEFAULT NULL,
+  Heure                    VARCHAR(255)                          DEFAULT NULL,
+  Depart                   VARCHAR(255)                          DEFAULT NULL,
+  Arrivee                  VARCHAR(255)                          DEFAULT NULL,
+  Prix_Course              DECIMAL(10, 2)                        DEFAULT '0.00',
+  Type_Transport           VARCHAR(255)                          DEFAULT NULL,
+  Chauffeur                VARCHAR(255)                          DEFAULT NULL,
+  Bon_No                   VARCHAR(255)                          DEFAULT NULL,
+  Nom_Patient              VARCHAR(255)                          DEFAULT NULL,
+  Autres_prestations       VARCHAR(255)                          DEFAULT NULL,
+  Remarque                 VARCHAR(255)                          DEFAULT NULL,
+  Facture_ID               INT(11) UNSIGNED    NOT NULL,
+  Facture_ID_Client        INT(11) UNSIGNED    NOT NULL,
+  Facture_Ref              VARCHAR(255)                          DEFAULT NULL,
+  Fact_ouverte             TINYINT(1) UNSIGNED NOT NULL          DEFAULT 0,
+  Date_Saisie              VARCHAR(255)                          DEFAULT NULL,
+  EntryBy                  VARCHAR(255)                          DEFAULT NULL,
+  Annee                    INT(11) UNSIGNED    NOT NULL,
+  Mois                     INT(11) UNSIGNED    NOT NULL,
+  Jour                     INT(11) UNSIGNED    NOT NULL,
+  Semaine                  VARCHAR(255)                          DEFAULT NULL,
+  Mois_Nom                 VARCHAR(255)                          DEFAULT NULL,
+  Année_Mois               VARCHAR(255)                          DEFAULT NULL,
+  Pseudo_Annee_Mois        VARCHAR(255)                          DEFAULT NULL,
+  Année_Mois_Nom           VARCHAR(255)                          DEFAULT NULL,
+  Pseudo_Mois_Annee_Nom    VARCHAR(255)                          DEFAULT NULL,
+  Chauffeur_Annee_Mois     VARCHAR(255)                          DEFAULT NULL,
+  Chauffeur_Mois_Annee_Nom VARCHAR(255)                          DEFAULT NULL,
+  Username                 VARCHAR(255)                          DEFAULT NULL,
+  Trimestre                VARCHAR(255)                          DEFAULT NULL,
+  Jour_ddd                 VARCHAR(255)                          DEFAULT NULL,
+  jour_dddd                VARCHAR(255)                          DEFAULT NULL,
+  JourNo_w                 VARCHAR(255)                          DEFAULT NULL,
+  SemaineAnnee_ww          VARCHAR(255)                          DEFAULT NULL,
+  NojourdeAnnee            VARCHAR(255)                          DEFAULT NULL,
   PRIMARY KEY (`id`)
 )
   ENGINE = InnoDB
@@ -1893,7 +2082,7 @@ CREATE TABLE IF NOT EXISTS `DatabaseCourse_Programe` (
   `id`                   INT(11) UNSIGNED    NOT NULL          AUTO_INCREMENT,
   CourseID               INT(11) UNSIGNED    NOT NULL,
   StatutCourse           VARCHAR(255)                          DEFAULT NULL,
-  Pseudo                 VARCHAR(255)                          DEFAULT NULL,
+  Pseudo                 VARCHAR(255),
   Date                   DATE                                  DEFAULT NULL,
   Heure                  VARCHAR(255)                          DEFAULT NULL,
   Heure_Arrive           VARCHAR(255)                          DEFAULT NULL,
@@ -1943,54 +2132,6 @@ CREATE TABLE IF NOT EXISTS `DatabaseCourse_Programe` (
   Dernier_De             VARCHAR(255)                          DEFAULT NULL,
   Dernier_A              VARCHAR(255)                          DEFAULT NULL,
   Commentaires           VARCHAR(255)                          DEFAULT NULL,
-
-  PRIMARY KEY (`id`)
-)
-  ENGINE = InnoDB
-  DEFAULT CHARSET = utf8
-  AUTO_INCREMENT = 1;
-
-CREATE TABLE IF NOT EXISTS `DatabaseCourse` (
-  `id`                     INT(11) UNSIGNED    NOT NULL          AUTO_INCREMENT,
-  CourseID                 INT(11) UNSIGNED    NOT NULL,
-  StautCourse              VARCHAR(255)                          DEFAULT NULL,
-  Pseudo                   VARCHAR(255)                          DEFAULT NULL,
-  Date                     DATE                                  DEFAULT NULL,
-  Aller_Retour             VARCHAR(255)                          DEFAULT NULL,
-  Heure                    VARCHAR(255)                          DEFAULT NULL,
-  Depart                   VARCHAR(255)                          DEFAULT NULL,
-  Arrivee                  VARCHAR(255)                          DEFAULT NULL,
-  Prix_Course              DECIMAL(10, 2)                        DEFAULT '0.00',
-  Type_Transport           VARCHAR(255)                          DEFAULT NULL,
-  Chauffeur                VARCHAR(255)                          DEFAULT NULL,
-  Bon_No                   VARCHAR(255)                          DEFAULT NULL,
-  Nom_Patient              VARCHAR(255)                          DEFAULT NULL,
-  Autres_prestations       VARCHAR(255)                          DEFAULT NULL,
-  Remarque                 VARCHAR(255)                          DEFAULT NULL,
-  Facture_ID               INT(11) UNSIGNED    NOT NULL,
-  Facture_ID_Client        INT(11) UNSIGNED    NOT NULL,
-  Facture_Ref              VARCHAR(255)                          DEFAULT NULL,
-  Fact_ouverte             TINYINT(1) UNSIGNED NOT NULL          DEFAULT 0,
-  Date_Saisie              VARCHAR(255)                          DEFAULT NULL,
-  EntryBy                  VARCHAR(255)                          DEFAULT NULL,
-  Annee                    INT(11) UNSIGNED    NOT NULL,
-  Mois                     INT(11) UNSIGNED    NOT NULL,
-  Jour                     INT(11) UNSIGNED    NOT NULL,
-  Semaine                  VARCHAR(255)                          DEFAULT NULL,
-  Mois_Nom                 VARCHAR(255)                          DEFAULT NULL,
-  Année_Mois               VARCHAR(255)                          DEFAULT NULL,
-  Pseudo_Annee_Mois        VARCHAR(255)                          DEFAULT NULL,
-  Année_Mois_Nom           VARCHAR(255)                          DEFAULT NULL,
-  Pseudo_Mois_Annee_Nom    VARCHAR(255)                          DEFAULT NULL,
-  Chauffeur_Annee_Mois     VARCHAR(255)                          DEFAULT NULL,
-  Chauffeur_Mois_Annee_Nom VARCHAR(255)                          DEFAULT NULL,
-  Username                 VARCHAR(255)                          DEFAULT NULL,
-  Trimestre                VARCHAR(255)                          DEFAULT NULL,
-  Jour_ddd                 VARCHAR(255)                          DEFAULT NULL,
-  jour_dddd                VARCHAR(255)                          DEFAULT NULL,
-  JourNo_w                 VARCHAR(255)                          DEFAULT NULL,
-  SemaineAnnee_ww          VARCHAR(255)                          DEFAULT NULL,
-
   PRIMARY KEY (`id`)
 )
   ENGINE = InnoDB
@@ -1998,61 +2139,50 @@ CREATE TABLE IF NOT EXISTS `DatabaseCourse` (
   AUTO_INCREMENT = 1;
 
 
-CREATE TABLE IF NOT EXISTS `DatabaseClient` (
-  `id`                   INT(11) UNSIGNED                       NOT NULL          AUTO_INCREMENT,
-  Client_ID              INT(11) UNSIGNED                       NOT NULL,
-  Pseudo                 VARCHAR(255) UNIQUE                    NOT NULL,
-  Pseudo_Consolide       VARCHAR(255)                                             DEFAULT NULL,
-  Genre                  VARCHAR(255)                                             DEFAULT NULL,
-  Nom                    VARCHAR(255)                                             DEFAULT NULL,
-  Prenom                 VARCHAR(255)                                             DEFAULT NULL,
-  Adresse                VARCHAR(255)                                             DEFAULT NULL,
-  Residence              VARCHAR(255)                                             DEFAULT NULL,
-  Service                VARCHAR(255)                                             DEFAULT NULL,
-  Tel_Privee             VARCHAR(255)                                             DEFAULT NULL,
-  CCP                    VARCHAR(255)                                             DEFAULT NULL,
-  Ville                  VARCHAR(255)                                             DEFAULT NULL,
-  Pays                   VARCHAR(255)                                             DEFAULT NULL,
-  Date_Entree            DATE                                                     DEFAULT NULL,
-  Date_Mise_A_Jour       DATE                                                     DEFAULT NULL,
-  Frequence_Facturation  VARCHAR(255)                                             DEFAULT NULL,
-  Client_CloturerYesNo   TINYINT(1) UNSIGNED                    NOT NULL          DEFAULT 0,
-  FacturationYesNo       TINYINT(1) UNSIGNED                    NOT NULL          DEFAULT 0,
-  Type_Facturation       VARCHAR(255)                                             DEFAULT NULL,
-  ListeBon_YesNo         TINYINT(1) UNSIGNED                    NOT NULL          DEFAULT 0,
-  ListePatient_YesNo     TINYINT(1) UNSIGNED                    NOT NULL          DEFAULT 0,
-  AdresseEnvoie_YesNo    TINYINT(1) UNSIGNED                    NOT NULL          DEFAULT 0,
-  AdresseEnvoie_1        VARCHAR(255)                                             DEFAULT NULL,
-  AdresseEnvoie_2        VARCHAR(255)                                             DEFAULT NULL,
-  AdresseEnvoie_3        VARCHAR(255)                                             DEFAULT NULL,
-  AdresseEnvoie_4        VARCHAR(255)                                             DEFAULT NULL,
-  AdresseConcerne_5      VARCHAR(255)                                             DEFAULT NULL,
-  AdresseConcerne_6      VARCHAR(255)                                             DEFAULT NULL,
-  Mobile                 VARCHAR(255)                                             DEFAULT NULL,
-  Fax                    VARCHAR(255)                                             DEFAULT NULL,
-  Email                  VARCHAR(255)                                             DEFAULT NULL,
-  Bon                    VARCHAR(255)                                             DEFAULT NULL,
-  No_AVS                 VARCHAR(255)                                             DEFAULT NULL,
-  No_AI                  VARCHAR(255)                                             DEFAULT NULL,
-  OCPA                   VARCHAR(255)                                             DEFAULT NULL,
-  Police_Assurance       VARCHAR(255)                                             DEFAULT NULL,
-  Nom_Assureur           VARCHAR(255)                                             DEFAULT NULL,
-  Payeur_Assurance       VARCHAR(255)                                             DEFAULT NULL,
-  Transport              VARCHAR(255)                                             DEFAULT NULL,
-  Date_de_Naissance      VARCHAR(255)                                             DEFAULT NULL,
-  ParcoursDe             VARCHAR(255)                                             DEFAULT NULL,
-  ParcoursA              VARCHAR(255)                                             DEFAULT NULL,
-  Habituel_Chauffeur     VARCHAR(255)                                             DEFAULT NULL,
-  Habituel_HeureDepart   VARCHAR(255)                                             DEFAULT NULL,
-  Habituel_HeureRetour   VARCHAR(255)                                             DEFAULT NULL,
-  Habituel_AllerRetour   VARCHAR(255)                                             DEFAULT NULL,
-  Habituel_PrixCourse    DECIMAL(10, 2)                                           DEFAULT '0.00',
-  Habituel_TypeTransport VARCHAR(255)                                             DEFAULT NULL,
-  Habituel_Bon           VARCHAR(255)                                             DEFAULT NULL,
-  Dernier_De             VARCHAR(255)                                             DEFAULT NULL,
-  Dernier_A              VARCHAR(255)                                             DEFAULT NULL,
-  Commentaires           TEXT,
-  EntryBy                VARCHAR(255)                                             DEFAULT NULL,
+CREATE TABLE IF NOT EXISTS `DataBaseFacturation` (
+  `id`               INT(11) UNSIGNED NOT NULL          AUTO_INCREMENT,
+  Facture_ID         INT(11) UNSIGNED NOT NULL,
+  Facture_ID_Client  INT(11) UNSIGNED NOT NULL,
+  Date_Saisie        DATE                               DEFAULT NULL,
+  Pseudo             VARCHAR(255),
+  Ref_Facture        VARCHAR(255)                       DEFAULT NULL,
+  Montant            DECIMAL(10, 2)                     DEFAULT '0.00',
+  Statut             VARCHAR(255)                       DEFAULT NULL,
+  Date_Fact_Envoi    DATE                               DEFAULT NULL,
+  Fact_Date_Paiement DATE                               DEFAULT NULL,
+  Date_Rappel        DATE                               DEFAULT NULL,
+  No_BVR             VARCHAR(255)                       DEFAULT NULL,
+  Course_Periode_Du  DATE                               DEFAULT NULL,
+  Course_Periode_Au  DATE                               DEFAULT NULL,
+  Remarque_Fact      VARCHAR(255)                       DEFAULT NULL,
+  Ref_Fact_MsftWord  VARCHAR(255)                       DEFAULT NULL,
+  NombreCourse       INT(11) UNSIGNED NOT NULL,
+  Pseudo_Consolide   VARCHAR(255)                       DEFAULT NULL,
+  Alerte             VARCHAR(255)                       DEFAULT NULL,
+  Num_Facture        VARCHAR(255)                       DEFAULT NULL,
+  Num_Facture_Pseudo VARCHAR(255)                       DEFAULT NULL,
+  Champ1             VARCHAR(255)                       DEFAULT NULL,
+  Champ2             VARCHAR(255)                       DEFAULT NULL,
+  Champ3             VARCHAR(255)                       DEFAULT NULL,
+  PRIMARY KEY (`id`)
+
+)
+  ENGINE = InnoDB
+  DEFAULT CHARSET = utf8
+  AUTO_INCREMENT = 1;
+
+
+CREATE TABLE IF NOT EXISTS `DatabasePaiement` (
+  `id`          INT(11) UNSIGNED NOT NULL          AUTO_INCREMENT,
+  ID_p          INT(11) UNSIGNED NOT NULL,
+  Num_Facture   INT(11) UNSIGNED NOT NULL,
+  Pseudo        VARCHAR(255),
+  Paiement      DECIMAL(10, 2)                     DEFAULT '0.00',
+  Date_Paiement DATE                               DEFAULT NULL,
+  Type_Paiement VARCHAR(255)                       DEFAULT NULL,
+  Lien_Pdf      VARCHAR(255)                       DEFAULT NULL,
+  Date_Saisie   DATE                               DEFAULT NULL,
+  Entry_By      VARCHAR(255)                       DEFAULT NULL,
   PRIMARY KEY (`id`)
 )
   ENGINE = InnoDB
@@ -2349,20 +2479,368 @@ ALTER TABLE `transport_article`
 ALTER TABLE `transport_article`
   ADD CONSTRAINT `transport_article_ibfk_3` FOREIGN KEY (`zone_arrivee_id`) REFERENCES `transport_zone` (`id`);
 
+#
+# ALTER TABLE `DatabaseCourse`
+#   ADD CONSTRAINT `DatabaseCourse_ibfk_1` FOREIGN KEY (`Pseudo`) REFERENCES `DataBaseClient` (`Pseudo`);
+#
+#
+# ALTER TABLE `DatabaseCourse_Programe`
+#   ADD CONSTRAINT `DatabaseCourse_Programe_ibfk_1` FOREIGN KEY (`Pseudo`) REFERENCES `DataBaseClient` (`Pseudo`);
+#
+# ALTER TABLE `DatabaseFacturation`
+#   ADD CONSTRAINT `DatabaseFacturation_ibfk_1` FOREIGN KEY (`Pseudo`) REFERENCES `DataBaseClient` (`Pseudo`);
+#
+#
+# ALTER TABLE `DatabasePaiement`
+#   ADD CONSTRAINT `DatabasePaiement_ibfk_1` FOREIGN KEY (`Pseudo`) REFERENCES `DataBaseClient` (`Pseudo`);
+#
+# --
+-- Structure for view `mycigarette_view_by_day`
+--
 
-ALTER TABLE `DatabaseCourse`
-  ADD CONSTRAINT `DatabaseCourse_ibfk_3` FOREIGN KEY (`Pseudo`) REFERENCES `DatabaseClient` (`Pseudo`);
+DROP VIEW IF EXISTS transport_model;
+DROP VIEW IF EXISTS transport_model_visible_no;
+DROP VIEW IF EXISTS transport_model_visible_yes;
+DROP VIEW IF EXISTS transport_model_pivot;
+DROP VIEW IF EXISTS transport_model_pivot_visible_yes;
+DROP VIEW IF EXISTS transport_model_pivot_visible_no;
+DROP VIEW IF EXISTS transport_summary_by_course_date_program;
 
 
-ALTER TABLE `DatabaseCourse_Programe`
-  ADD CONSTRAINT `DatabaseCourse_Programe_ibfk_3` FOREIGN KEY (`Pseudo`) REFERENCES `DatabaseClient` (`Pseudo`);
+CREATE VIEW `transport_model_visible_no` AS
+  SELECT
+    concat_ws('-', `p`.`heure`, `c`.`pseudo`, `c`.`id`) AS `PrimaryKey`,
+    `p`.`heure`                                         AS `heure`,
+    `p`.`week_day_rank_id`                              AS `jour`,
+    `p`.`client_id`                                     AS `client_id`,
+    `c`.`pseudo`                                        AS `pseudo`,
+    `c`.`liste_restrictive`                             AS `liste_restrictive`,
+    `c`.`liste_rank`                                    AS `client_sort`,
+    `c`.`web_view`                                      AS `web_view`,
+    `p`.`id`                                            AS `modele_id`,
+    `p`.`inverse_address`                               AS `inverse_address`,
+    `p`.`depart`                                        AS `depart`,
+    `p`.`arrivee`                                       AS `arrivee`,
+    `p`.`prix_course`                                   AS `prix_course`,
+    `c`.`default_depart`                                AS `default_depart`,
+    `c`.`default_arrivee`                               AS `default_arrivee`,
+    `c`.`default_price`                                 AS `default_price`,
+    `p`.`remarque`                                      AS `remarque`,
+    `p`.`chauffeur_id`                                  AS `chauffeur_id`,
+    `p`.`client_habituel`                               AS `client_habituel`,
+    (CASE WHEN (`p`.`week_day_rank_id` = 0)
+      THEN `p`.`id` END)                                AS `Dimanche`,
+    (CASE WHEN (`p`.`week_day_rank_id` = 1)
+      THEN `p`.`id` END)                                AS `Lundi`,
+    (CASE WHEN (`p`.`week_day_rank_id` = 2)
+      THEN `p`.`id` END)                                AS `Mardi`,
+    (CASE WHEN (`p`.`week_day_rank_id` = 3)
+      THEN `p`.`id` END)                                AS `Mercredi`,
+    (CASE WHEN (`p`.`week_day_rank_id` = 4)
+      THEN `p`.`id` END)                                AS `Jeudi`,
+    (CASE WHEN (`p`.`week_day_rank_id` = 5)
+      THEN `p`.`id` END)                                AS `Vendredi`,
+    (CASE WHEN (`p`.`week_day_rank_id` = 6)
+      THEN `p`.`id` END)                                AS `Samedi`
+  FROM (`transport_clients` `c`
+    JOIN `transport_programming_model` `p`
+      ON ((`c`.`id` = `p`.`client_id`)))
+  WHERE (`p`.`visible` = 0)
+  ORDER BY `p`.`heure`, `p`.`week_day_rank_id`, `c`.`liste_rank`;
 
-ALTER TABLE `DatabaseFacturation`
-  ADD CONSTRAINT `DatabaseFacturation_Programe_ibfk_3` FOREIGN KEY (`Pseudo`) REFERENCES `DatabaseClient` (`Pseudo`);
+-- --------------------------------------------------------
+
+--
+-- Structure for view `transport_model_visible_yes`
+--
 
 
-ALTER TABLE `DatabasePaiement`
-  ADD CONSTRAINT `DatabaseFacturation_Programe_ibfk_3` FOREIGN KEY (`Pseudo`) REFERENCES `DatabaseClient` (`Pseudo`);
+CREATE VIEW `transport_model_visible_yes` AS
+  SELECT
+    concat_ws('-', `p`.`heure`, `c`.`pseudo`, `c`.`id`) AS `PrimaryKey`,
+    `p`.`heure`                                         AS `heure`,
+    `p`.`week_day_rank_id`                              AS `jour`,
+    `p`.`client_id`                                     AS `client_id`,
+    `c`.`pseudo`                                        AS `pseudo`,
+    `c`.`liste_restrictive`                             AS `liste_restrictive`,
+    `c`.`liste_rank`                                    AS `client_sort`,
+    `c`.`web_view`                                      AS `web_view`,
+    `p`.`id`                                            AS `modele_id`,
+    `p`.`inverse_address`                               AS `inverse_address`,
+    `p`.`depart`                                        AS `depart`,
+    `p`.`arrivee`                                       AS `arrivee`,
+    `p`.`prix_course`                                   AS `prix_course`,
+    `c`.`default_depart`                                AS `default_depart`,
+    `c`.`default_arrivee`                               AS `default_arrivee`,
+    `c`.`default_price`                                 AS `default_price`,
+    `p`.`remarque`                                      AS `remarque`,
+    `p`.`chauffeur_id`                                  AS `chauffeur_id`,
+    `p`.`client_habituel`                               AS `client_habituel`,
+
+    (CASE WHEN (`p`.`week_day_rank_id` = 0)
+      THEN `p`.`id` END)                                AS `Dimanche`,
+    (CASE WHEN (`p`.`week_day_rank_id` = 1)
+      THEN `p`.`id` END)                                AS `Lundi`,
+    (CASE WHEN (`p`.`week_day_rank_id` = 2)
+      THEN `p`.`id` END)                                AS `Mardi`,
+    (CASE WHEN (`p`.`week_day_rank_id` = 3)
+      THEN `p`.`id` END)                                AS `Mercredi`,
+    (CASE WHEN (`p`.`week_day_rank_id` = 4)
+      THEN `p`.`id` END)                                AS `Jeudi`,
+    (CASE WHEN (`p`.`week_day_rank_id` = 5)
+      THEN `p`.`id` END)                                AS `Vendredi`,
+    (CASE WHEN (`p`.`week_day_rank_id` = 6)
+      THEN `p`.`id` END)                                AS `Samedi`
+  FROM (`transport_clients` `c`
+    JOIN `transport_programming_model` `p`
+      ON ((`c`.`id` = `p`.`client_id`)))
+  WHERE (`p`.`visible` = 1)
+  ORDER BY `p`.`heure`, `p`.`week_day_rank_id`, `c`.`liste_rank`;
+
+-- --------------------------------------------------------
+
+
+CREATE VIEW `transport_model` AS
+  SELECT
+    concat_ws('-', `p`.`heure`, `c`.`pseudo`, `c`.`id`) AS `PrimaryKey`,
+    `p`.`heure`                                         AS `heure`,
+    `p`.`week_day_rank_id`                              AS `jour`,
+    `p`.`client_id`                                     AS `client_id`,
+    `c`.`pseudo`                                        AS `pseudo`,
+    `p`.`visible`                                       AS `visible`,
+    `c`.`liste_restrictive`                             AS `liste_restrictive`,
+    `c`.`liste_rank`                                    AS `client_sort`,
+    `c`.`web_view`                                      AS `web_view`,
+    `p`.`id`                                            AS `modele_id`,
+    `p`.`inverse_address`                               AS `inverse_address`,
+    `p`.`depart`                                        AS `depart`,
+    `p`.`arrivee`                                       AS `arrivee`,
+    `p`.`prix_course`                                   AS `prix_course`,
+    `c`.`default_depart`                                AS `default_depart`,
+    `c`.`default_arrivee`                               AS `default_arrivee`,
+    `c`.`default_price`                                 AS `default_price`,
+    `p`.`remarque`                                      AS `remarque`,
+    `p`.`chauffeur_id`                                  AS `chauffeur_id`,
+    `p`.`client_habituel`                               AS `client_habituel`,
+    (CASE WHEN (`p`.`week_day_rank_id` = 0)
+      THEN `p`.`id` END)                                AS `Dimanche`,
+    (CASE WHEN (`p`.`week_day_rank_id` = 1)
+      THEN `p`.`id` END)                                AS `Lundi`,
+    (CASE WHEN (`p`.`week_day_rank_id` = 2)
+      THEN `p`.`id` END)                                AS `Mardi`,
+    (CASE WHEN (`p`.`week_day_rank_id` = 3)
+      THEN `p`.`id` END)                                AS `Mercredi`,
+    (CASE WHEN (`p`.`week_day_rank_id` = 4)
+      THEN `p`.`id` END)                                AS `Jeudi`,
+    (CASE WHEN (`p`.`week_day_rank_id` = 5)
+      THEN `p`.`id` END)                                AS `Vendredi`,
+    (CASE WHEN (`p`.`week_day_rank_id` = 6)
+      THEN `p`.`id` END)                                AS `Samedi`
+
+  FROM (`transport_clients` `c`
+    JOIN `transport_programming_model` `p`
+      ON ((`c`.`id` = `p`.`client_id`)))
+  ORDER BY `p`.`heure`, `p`.`week_day_rank_id`, `c`.`liste_rank`;
+
+-- --------------------------------------------------------
+
+--
+-- Structure for view `transport_model_pivot`
+--
+
+
+CREATE VIEW `transport_model_pivot` AS (
+  SELECT
+    `transport_model`.`heure`         AS `heure`,
+    `transport_model`.`pseudo`        AS `pseudo`,
+    `transport_model`.`web_view`      AS `web_view`,
+    `transport_model`.`client_id`     AS `client_id`,
+    max(`transport_model`.`Lundi`)    AS `Lundi`,
+    max(`transport_model`.`Mardi`)    AS `Mardi`,
+    max(`transport_model`.`Mercredi`) AS `Mercredi`,
+    max(`transport_model`.`Jeudi`)    AS `Jeudi`,
+    max(`transport_model`.`Vendredi`) AS `Vendredi`,
+    max(`transport_model`.`Samedi`)   AS `Samedi`,
+    max(`transport_model`.`Dimanche`) AS `Dimanche`
+  FROM `transport_model`
+  GROUP BY `transport_model`.`heure`, `transport_model`.`pseudo`, `transport_model`.`web_view`,
+    `transport_model`.`client_id`);
+
+-- --------------------------------------------------------
+
+--
+-- Structure for view `transport_model_pivot_visible_no`
+--
+
+
+CREATE VIEW `transport_model_pivot_visible_no` AS (
+  SELECT
+    `transport_model_visible_no`.`heure`         AS `heure`,
+    `transport_model_visible_no`.`pseudo`        AS `pseudo`,
+    `transport_model_visible_no`.`web_view`      AS `web_view`,
+    `transport_model_visible_no`.`client_id`     AS `client_id`,
+    max(`transport_model_visible_no`.`Lundi`)    AS `Lundi`,
+    max(`transport_model_visible_no`.`Mardi`)    AS `Mardi`,
+    max(`transport_model_visible_no`.`Mercredi`) AS `Mercredi`,
+    max(`transport_model_visible_no`.`Jeudi`)    AS `Jeudi`,
+    max(`transport_model_visible_no`.`Vendredi`) AS `Vendredi`,
+    max(`transport_model_visible_no`.`Samedi`)   AS `Samedi`,
+    max(`transport_model_visible_no`.`Dimanche`) AS `Dimanche`
+  FROM `transport_model_visible_no`
+  GROUP BY `transport_model_visible_no`.`heure`, `transport_model_visible_no`.`pseudo`,
+    `transport_model_visible_no`.`web_view`, `transport_model_visible_no`.`client_id`);
+
+-- --------------------------------------------------------
+
+--
+-- Structure for view `transport_model_pivot_visible_yes`
+--
+
+
+CREATE VIEW `transport_model_pivot_visible_yes` AS (
+  SELECT
+    `transport_model_visible_yes`.`heure`         AS `heure`,
+    `transport_model_visible_yes`.`pseudo`        AS `pseudo`,
+    `transport_model_visible_yes`.`web_view`      AS `web_view`,
+    `transport_model_visible_yes`.`client_id`     AS `client_id`,
+    max(`transport_model_visible_yes`.`Lundi`)    AS `Lundi`,
+    max(`transport_model_visible_yes`.`Mardi`)    AS `Mardi`,
+    max(`transport_model_visible_yes`.`Mercredi`) AS `Mercredi`,
+    max(`transport_model_visible_yes`.`Jeudi`)    AS `Jeudi`,
+    max(`transport_model_visible_yes`.`Vendredi`) AS `Vendredi`,
+    max(`transport_model_visible_yes`.`Samedi`)   AS `Samedi`,
+    max(`transport_model_visible_yes`.`Dimanche`) AS `Dimanche`
+  FROM `transport_model_visible_yes`
+  GROUP BY `transport_model_visible_yes`.`heure`, `transport_model_visible_yes`.`pseudo`,
+    `transport_model_visible_yes`.`web_view`, `transport_model_visible_yes`.`client_id`);
+
+-- --------------------------------------------------------
+
+--
+-- Structure for view `transport_model_visible_no`
+--
+
+
+--
+-- Structure for view `transport_summary_by_course_date_program`
+--
+
+
+CREATE VIEW `transport_summary_by_course_date_program` AS
+  SELECT DISTINCT
+    `transport_programming`.
+    `course_date`                                                                                           AS `course_date`,
+    (`transport_programming`.`course_date` -
+     INTERVAL 1 DAY)                                                                                        AS `day_before`,
+    (`transport_programming`.`course_date` +
+     INTERVAL 1 DAY)                                                                                        AS `day_after`,
+    unix_timestamp(
+        `transport_programming`.`course_date`)                                                              AS `date_unix`,
+    cast(now() AS
+         DATE)                                                                                              AS `today`,
+    (to_days(`transport_programming`.`course_date`) - to_days(
+        now()))                                                                                             AS `diff`,
+    (CASE
+     WHEN ((to_days(`transport_programming`.`course_date`) - to_days(now())) = -(1))
+       THEN 'yesterday'
+     WHEN ((to_days(`transport_programming`.`course_date`) - to_days(now())) = 1)
+       THEN 'tomorrow'
+     WHEN ((to_days(`transport_programming`.`course_date`) - to_days(now())) < 0)
+       THEN concat((to_days(`transport_programming`.`course_date`) - to_days(now())), ' day')
+     WHEN ((to_days(`transport_programming`.`course_date`) - to_days(now())) > 0)
+       THEN concat('+', (to_days(`transport_programming`.`course_date`) - to_days(now())), ' day')
+     WHEN ((to_days(`transport_programming`.`course_date`) - to_days(now())) = 0)
+       THEN 'now'
+     ELSE 'now' END)                                                                                        AS `str_time`,
+    (CASE WHEN ((to_days(`transport_programming`.`course_date`) - to_days(now())) = -(1))
+      THEN 'hier'
+     WHEN ((to_days(`transport_programming`.`course_date`) - to_days(now())) = 1)
+       THEN 'demain'
+     WHEN ((to_days(`transport_programming`.`course_date`) - to_days(now())) < 0)
+       THEN concat('il y a ', -((to_days(`transport_programming`.`course_date`) - to_days(now()))), ' jours')
+     WHEN ((to_days(`transport_programming`.`course_date`) - to_days(now())) > 0)
+       THEN concat('dans ', (to_days(`transport_programming`.`course_date`) - to_days(now())), ' jours')
+     WHEN ((to_days(`transport_programming`.`course_date`) - to_days(now())) = 0)
+       THEN 'aujourd\'hui'
+     ELSE 'now' END)                                                                                        AS `str_time_fr`,
+    date_format(`transport_programming`.`course_date`, get_format(DATE,
+                                                                  'EUR'))                                   AS `date_format`,
+    sec_to_time(((time_to_sec(now()) DIV 900) *
+                 900))                                                                                      AS `now_round_time`,
+    replace(substr(sec_to_time(((time_to_sec(now()) DIV 900) * 900)), 1, 5), ':',
+            'h')                                                                                            AS `now_time_transmed`,
+    monthname(
+        `transport_programming`.`course_date`)                                                              AS `monthname`,
+    year(
+        `transport_programming`.`course_date`)                                                              AS `year`,
+    week(`transport_programming`.`course_date`,
+         0)                                                                                                 AS `week`,
+    count(
+        `transport_programming`.`course_date`)                                                              AS `total_course`,
+    sum(if((`transport_programming`.`validated_chauffeur` = 0), 1,
+           0))                                                                                              AS `valid_chauf_0`,
+    sum(if((`transport_programming`.`validated_chauffeur` = 1), 1,
+           0))                                                                                              AS `valid_chauf_1`,
+    sum(if((`transport_programming`.`validated_chauffeur` = 2), 1,
+           0))                                                                                              AS `valid_chauf_2`,
+    sum(if((`transport_programming`.`validated_mgr` = 0), 1,
+           0))                                                                                              AS `valid_mgr_0`,
+    sum(if((`transport_programming`.`validated_mgr` = 1), 1,
+           0))                                                                                              AS `valid_mgr_1`,
+    sum(if((`transport_programming`.`validated_final` = 0), 1,
+           0))                                                                                              AS `valid_fina1_0`,
+    sum(if((`transport_programming`.`validated_final` = 1), 1,
+           0))                                                                                              AS `valid_fina1_1`,
+    sum(if((`transport_programming`.`prix_course` = 0), 1,
+           0))                                                                                              AS `prix_course_0`,
+    sum(((`transport_programming`.`chauffeur_id` = '') OR isnull(
+        `transport_programming`.`chauffeur_id`)))                                                           AS `erreur_chauffeur`,
+    sum(((`transport_programming`.`depart` = '') OR isnull(`transport_programming`.`depart`) OR
+         (`transport_programming`.`arrivee` = '') OR isnull(
+             `transport_programming`.`arrivee`)))                                                           AS `erreur_address`,
+    sum(((`transport_programming`.`pseudo` = 'autres') OR ((`transport_programming`.`pseudo` = 'colline') AND
+                                                           ((`transport_programming`.`pseudo_autres` = '') OR isnull(
+                                                               `transport_programming`.`pseudo_autres`))))) AS `erreur_autres`,
+    sum((((`transport_programming`.`pseudo` = 'tour_patient')
+          OR (`transport_programming`.`pseudo` = 'tag')
+          OR (`transport_programming`.`pseudo` = 'partners')
+          OR (`transport_programming`.`pseudo` = 'mines_icbl')
+          OR (`transport_programming`.`pseudo` = 'cash')
+          OR (`transport_programming`.`pseudo` = 'aude')
+          OR (`transport_programming`.`pseudo` = 'aloha'))
+         AND ((`transport_programming`.`nom_patient` = '')
+              OR isnull(
+                  `transport_programming`.`nom_patient`))))                                                 AS `erreur_patients`,
+    sum(((`transport_programming`.`pseudo` = 'tour_sang')
+         OR ((`transport_programming`.`pseudo` = 'carouge_sang')
+             AND ((`transport_programming`.`bon_no` = '')
+                  OR isnull(
+                      `transport_programming`.`bon_no`)))))                                                 AS `erreur_sang`,
+    sum(((`transport_programming`.`depart` = '')
+         OR isnull(`transport_programming`.`depart`)
+         OR (`transport_programming`.`arrivee` = '')
+         OR isnull(`transport_programming`.`arrivee`)
+         OR (((`transport_programming`.`pseudo` = 'tour_patient')
+              OR (`transport_programming`.`pseudo` = 'tag')
+              OR (`transport_programming`.`pseudo` = 'partners')
+              OR (`transport_programming`.`pseudo` = 'mines_icbl')
+              OR (`transport_programming`.`pseudo` = 'cash')
+              OR (`transport_programming`.`pseudo` = 'aude')
+              OR (`transport_programming`.`pseudo` = 'aloha'))
+             AND ((`transport_programming`.`nom_patient` = '')
+                  OR isnull(`transport_programming`.`nom_patient`)))
+         OR (`transport_programming`.`pseudo` = 'autres')
+         OR ((`transport_programming`.`pseudo` = 'colline')
+             AND ((`transport_programming`.`pseudo_autres` = '')
+                  OR isnull(`transport_programming`.`pseudo_autres`)))
+         OR (`transport_programming`.`pseudo` = 'tour_sang')
+         OR ((`transport_programming`.`pseudo` = 'carouge_sang')
+             AND ((`transport_programming`.`bon_no` = '')
+                  OR isnull(
+                      `transport_programming`.`bon_no`)))))                                                 AS `erreur_general`
+  FROM `transport_programming`
+  GROUP BY `transport_programming`.`course_date`
+  ORDER BY `transport_programming`.`course_date` DESC;
 
 
 /*!40101 SET CHARACTER_SET_CLIENT = @OLD_CHARACTER_SET_CLIENT */;

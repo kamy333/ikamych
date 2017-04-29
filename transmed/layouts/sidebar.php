@@ -92,10 +92,20 @@
                         <?php echo $Nav->menu_item('TransportType', 'Transport Type', 'class_manage.php') ?>
                         <?php echo $Nav->menu_item('Chat', 'Chat', 'chat.php') ?>
 
-                        <?php foreach (MyClasses::$all_class as $class) {
+
+                        <?php foreach (MyClasses::$class_access as $class) {
                             if (!in_array($class, MyClasses::$disable_db_classes)) {
 //                            echo $Nav->menu_item($class,'Manage '.$class,'manage_data.php','admin');
-                                echo $Nav->menu_item($class, "<span style='color:red'>Manage</span>" . $class, 'manage_ajax.php', 'admin');
+                                echo $Nav->menu_item($class, "" . $class, 'class_manage.php', 'admin');
+
+                            }
+                        }
+                        unset($class) ?>
+
+                        <?php foreach (MyClasses::$class_transmed as $class) {
+                            if (!in_array($class, MyClasses::$disable_db_classes)) {
+//                            echo $Nav->menu_item($class,'Manage '.$class,'manage_data.php','admin');
+                                echo $Nav->menu_item($class, "" . $class, 'class_manage.php', 'admin');
 
                             }
                         }

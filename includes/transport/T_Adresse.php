@@ -14,6 +14,12 @@ class T_Adresse extends DatabaseObjectAccess
     protected static $db_fields = ['id', 'Annee',
         'De_A',
     ];
+    protected static $db_fields_table_display_short = ['id', 'Annee',
+        'De_A',
+    ];
+    protected static $db_fields_table_display_full = ['id', 'Annee',
+        'De_A',
+    ];
 
     public $id;
 

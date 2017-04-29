@@ -26,6 +26,35 @@ class DatabaseCourse extends DatabaseObjectAccess
 
     ];
 
+    protected static $db_fields_table_display_short = [
+        'id',
+        'CourseID', 'StautCourse', 'Pseudo', 'Date',
+        'Aller_Retour', 'Heure', 'Depart', 'Arrivee',
+        'Prix_Course', 'Type_Transport', 'Chauffeur', 'Bon_No',
+        'Nom_Patient', 'Autres_prestations', 'Remarque', 'Facture_ID',
+        'Facture_ID_Client', 'Facture_Ref', 'Fact_ouverte', 'Date_Saisie',
+        'EntryBy', 'Annee', 'Mois', 'Jour', 'Semaine',
+        'Mois_Nom', 'Année_Mois', 'Pseudo_Annee_Mois', 'Année_Mois_Nom',
+        'Pseudo_Mois_Annee_Nom', 'Chauffeur_Annee_Mois', 'Chauffeur_Mois_Annee_Nom',
+        'Username', 'Trimestre', 'Jour_ddd', 'jour_dddd', 'JourNo_w', 'SemaineAnnee_ww', 'NojourdeAnnee',
+
+    ];
+
+    protected static $db_fields_table_display_full = [
+        'id',
+        'CourseID', 'StautCourse', 'Pseudo', 'Date',
+        'Aller_Retour', 'Heure', 'Depart', 'Arrivee',
+        'Prix_Course', 'Type_Transport', 'Chauffeur', 'Bon_No',
+        'Nom_Patient', 'Autres_prestations', 'Remarque', 'Facture_ID',
+        'Facture_ID_Client', 'Facture_Ref', 'Fact_ouverte', 'Date_Saisie',
+        'EntryBy', 'Annee', 'Mois', 'Jour', 'Semaine',
+        'Mois_Nom', 'Année_Mois', 'Pseudo_Annee_Mois', 'Année_Mois_Nom',
+        'Pseudo_Mois_Annee_Nom', 'Chauffeur_Annee_Mois', 'Chauffeur_Mois_Annee_Nom',
+        'Username', 'Trimestre', 'Jour_ddd', 'jour_dddd', 'JourNo_w', 'SemaineAnnee_ww', 'NojourdeAnnee',
+
+    ];
+    public static $per_page = 100;
+
 
     public $id;
     public $CourseID;

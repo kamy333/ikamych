@@ -6,10 +6,11 @@
  * Date: 4/23/2017
  * Time: 4:59 AM
  */
-class DatabaseClient extends DatabaseObject
+class DataBaseClient extends DatabaseObjectAccess
 {
 
-    protected static $table_name = "DatabaseClient";
+    protected static $table_name = "DataBaseClient";
+
 
 
 
@@ -28,6 +29,43 @@ class DatabaseClient extends DatabaseObject
         'Dernier_De', 'Dernier_A', 'Commentaires', 'EntryBy',
 
     ];
+
+    protected static $db_fields_table_display_short = [
+        'id',
+        'Client_ID', 'Pseudo', 'Pseudo_Consolide', 'Genre', 'Nom',
+        'Prenom', 'Adresse', 'Residence', 'Service', 'Tel_Privee', 'CCP',
+        'Ville', 'Pays', 'Date_Entree', 'Date_Mise_A_Jour', 'Frequence_Facturation',
+        'Client_CloturerYesNo', 'FacturationYesNo', 'Type_Facturation', 'ListeBon_YesNo',
+        'ListePatient_YesNo', 'AdresseEnvoie_YesNo', 'AdresseEnvoie_1', 'AdresseEnvoie_2',
+        'AdresseEnvoie_3', 'AdresseEnvoie_4', 'AdresseConcerne_5', 'AdresseConcerne_6',
+        'Mobile', 'Fax', 'Email', 'Bon', 'No_AVS', 'No_AI',
+        'OCPA', 'Police_Assurance', 'Nom_Assureur', 'Payeur_Assurance', 'Transport', 'Date_de_Naissance',
+        'ParcoursDe', 'ParcoursA', 'Habituel_Chauffeur', 'Habituel_HeureDepart', 'Habituel_HeureRetour',
+        'Habituel_AllerRetour', 'Habituel_PrixCourse', 'Habituel_TypeTransport', 'Habituel_Bon',
+        'Dernier_De', 'Dernier_A', 'Commentaires', 'EntryBy',
+
+    ];
+
+    protected static $db_fields_table_display_full = [
+        'id',
+        'Client_ID', 'Pseudo', 'Pseudo_Consolide', 'Genre', 'Nom',
+        'Prenom', 'Adresse', 'Residence', 'Service', 'Tel_Privee', 'CCP',
+        'Ville', 'Pays', 'Date_Entree', 'Date_Mise_A_Jour', 'Frequence_Facturation',
+        'Client_CloturerYesNo', 'FacturationYesNo', 'Type_Facturation', 'ListeBon_YesNo',
+        'ListePatient_YesNo', 'AdresseEnvoie_YesNo', 'AdresseEnvoie_1', 'AdresseEnvoie_2',
+        'AdresseEnvoie_3', 'AdresseEnvoie_4', 'AdresseConcerne_5', 'AdresseConcerne_6',
+        'Mobile', 'Fax', 'Email', 'Bon', 'No_AVS', 'No_AI',
+        'OCPA', 'Police_Assurance', 'Nom_Assureur', 'Payeur_Assurance', 'Transport', 'Date_de_Naissance',
+        'ParcoursDe', 'ParcoursA', 'Habituel_Chauffeur', 'Habituel_HeureDepart', 'Habituel_HeureRetour',
+        'Habituel_AllerRetour', 'Habituel_PrixCourse', 'Habituel_TypeTransport', 'Habituel_Bon',
+        'Dernier_De', 'Dernier_A', 'Commentaires', 'EntryBy',
+
+    ];
+
+
+    public static $page_name = "Client Access";
+
+    public static $per_page = 20;
 
 
     public $id;

@@ -11,6 +11,8 @@ class T_Prix_Course extends DatabaseObjectAccess
     protected static $table_name = "T_Prix_Course";
 
     protected static $db_fields = ['id', 'Prix_Course', 'Prix_Course_ID',];
+    protected static $db_fields_table_display_short = ['id', 'Prix_Course', 'Prix_Course_ID',];
+    protected static $db_fields_table_display_full = ['id', 'Prix_Course', 'Prix_Course_ID',];
 
     public $id;
     public $Prix_Course;

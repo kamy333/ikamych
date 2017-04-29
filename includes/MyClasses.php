@@ -33,10 +33,10 @@ class MyClasses
         "ViewTransportSummaryCourseDateProgram",
         "ViewTransportModelByChauffeur",
 
-        'DatabaseClient', 'DatabaseCourse', 'DatabaseCourse_Programe',
-        'DatabaseFacturation', 'DatabasePaiement', 'T_Adresse', 'T_Aller_Retour', 'T_Chauffeur',
-        'T_Frequence_Facturation', 'T_Genre', 'T_heure', 'T_Pays', 'T_Prix_Course', 'T_Transport',
-        'T_Type_Facturation',
+        'DataBaseClient', 'DatabaseCourse', 'DatabaseCourse_Programe',
+        'DataBaseFacturation', 'DatabasePaiement',
+        'T_Adresse', 'T_Aller_Retour', 'T_Chauffeur',
+        'T_Frequence_Facturation', 'T_Genre', 'T_Heure', 'T_Pays', 'T_Prix_Course', 'T_Type_Transport', 'T_Ville', 'T_Type_Facturation',
 
         'Comment','Photos') ;
 
@@ -180,5 +180,13 @@ class MyClasses
         'TransportType',
     ];
 
+    public static $class_access = [
+        'DataBaseClient', 'DatabaseCourse', 'DatabaseCourse_Programe',
+        'DataBaseFacturation', 'DatabasePaiement',
+        'T_Adresse', 'T_Aller_Retour', 'T_Chauffeur',
+        'T_Frequence_Facturation', 'T_Genre', 'T_Heure', 'T_Pays', 'T_Prix_Course', 'T_Type_Transport', 'T_Ville', 'T_Type_Facturation'
+    ];
 
+    public static $class_transmed = ['TransportChauffeur', 'TransportClient', 'TransportType', 'TransportProgramming', 'TransportProgrammingModel', 'ViewTransportModel', 'ViewTransportModel', 'ViewTransportModelVisibleNo', 'ViewTransportModelVisibleYes', 'ViewTransportModelPivot', 'ViewTransportModelPivotNo', 'ViewTransportModelPivotYes', 'ViewTransportSummaryCourseDateProgram', 'ViewTransportModelByChauffeur'
+    ];
 }

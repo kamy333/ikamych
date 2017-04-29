@@ -16,6 +16,18 @@ class T_Frequence_Facturation extends DatabaseObjectAccess
         'Note_Frequence_Facturation',
 
     ];
+    protected static $db_fields_table_display_short = ['id',
+        'FrequenceID',
+        'Frequence_Facturation',
+        'Note_Frequence_Facturation',
+
+    ];
+    protected static $db_fields_table_display_full = ['id',
+        'FrequenceID',
+        'Frequence_Facturation',
+        'Note_Frequence_Facturation',
+
+    ];
 
     public $id;
     public $FrequenceID;

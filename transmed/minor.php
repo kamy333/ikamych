@@ -26,7 +26,7 @@
 
 
                 <?php
-
+                T_Genre::import_tables();
 
                 ?>
 

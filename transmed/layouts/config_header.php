@@ -71,7 +71,10 @@ $class_array_setup_transport = array('TransportChauffeur', 'TransportClient', 'T
         'ViewTransportModelPivot', //parent
         "ViewTransportModelPivotNo",
         "ViewTransportModelPivotYes",
-        "ViewTransportSummaryCourseDateProgram",);
+    "ViewTransportSummaryCourseDateProgram", 'DataBaseClient', 'DatabaseCourse', 'DatabaseCourse_Programe',
+    'DataBaseFacturation', 'DatabasePaiement',
+    'T_Adresse', 'T_Aller_Retour', 'T_Chauffeur',
+    'T_Frequence_Facturation', 'T_Genre', 'T_Heure', 'T_Pays', 'T_Prix_Course', 'T_Type_Transport', 'T_Ville', 'T_Type_Facturation',);
 
 
 if(!isset($class_name)){

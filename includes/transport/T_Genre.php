@@ -13,6 +13,12 @@ class T_Genre extends DatabaseObjectAccess
     protected static $db_fields = ['id', 'Genre_ID', 'Genre', 'Genre1',
         'Genre2',
     ];
+    protected static $db_fields_table_display_short = ['id', 'Genre_ID', 'Genre', 'Genre1',
+        'Genre2',
+    ];
+    protected static $db_fields_table_display_full = ['id', 'Genre_ID', 'Genre', 'Genre1',
+        'Genre2',
+    ];
 
     public $id;
     public $Genre_ID;

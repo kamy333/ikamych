@@ -29,6 +29,7 @@
                             <?php echo $Nav->menu_item('', 'Full version Inspinia', 'http://www.ikamy.ch/Inspinia_Full_Version/', 'none', true) ?>
 
                             <li><a href="<?php echo $path; ?>index_old.php">Old public Layout</a></li>
+                            <li><a href="<?php echo $path_public; ?>test.php">Test</a></li>
                             <li><a href="<?php echo $path_public; ?>minor.php">Minor</a></li>
                             <li><a href="<?php echo $path_public; ?>landing.php">Landing Page</a></li>
                             <li><a href="<?php echo $path_public; ?>off_canvas_menu.php">Canvas view</a></li>
@@ -71,7 +72,15 @@
                         <ul role="menu" class="dropdown-menu">
 
 
-                            <?php foreach (MyClasses::$transmed_class as $class) {
+                            <?php foreach (MyClasses::$class_access as $class) {
+                                if (!in_array($class, MyClasses::$disable_db_classes)) {
+//                            echo $Nav->menu_item($class, 'New ' . $class, 'new_data.php', 'admin');
+                                    echo $Nav->menu_item($class, '' . $class, 'manage_ajax.php', 'admin');
+                                }
+                            }
+                            unset($class);
+
+                            foreach (MyClasses::$transmed_class as $class) {
                                 if (!in_array($class, MyClasses::$disable_db_classes)) {
 //                            echo $Nav->menu_item($class, 'New ' . $class, 'new_data.php', 'admin');
                                     echo $Nav->menu_item($class, '' . $class, 'manage_ajax.php', 'admin');

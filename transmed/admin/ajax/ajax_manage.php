@@ -21,6 +21,7 @@ if (isset($_GET['class_name'])) {
 $query_string = remove_get(array('view', 'page', $class_name));
 
 $view_full_table = !empty($_GET) ? (int)$_GET["view"] : 0;
+$offset = '';
 if ($view_full_table == 1) {
     $page_link_view = $class_name::$page_manage . $query_string . "page=" . u($page) . "&view=" . u(0);
     $page_link_text = $class_name::$page_name . " short view";

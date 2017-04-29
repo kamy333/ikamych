@@ -235,6 +235,18 @@ if ($layout_context == "public") {
                             <?php echo $Nav->menu_item('', 'Course', 'manage_ajax.php?class_name=TransportProgramming', 'admin') ?>
                             <?php echo $Nav->menu_item('', 'Model', 'manage_ajax.php?class_name=TransportProgrammingModel', 'admin') ?>
                             <?php echo "<li class=\"divider\"></li>"; ?>
+                            <?php
+                            foreach (MyClasses::$class_access as $class) {
+                                if (!in_array($class, MyClasses::$disable_db_classes)) {
+                                    //                            echo $Nav->menu_item($class, 'New ' . $class, 'new_data.php', 'admin');
+                                    echo $Nav->menu_item($class, '' . $class, 'manage_ajax.php', 'admin');
+                                }
+                            }
+                            unset($class);
+
+                            ?>
+                            <?php echo "<li class=\"divider\"></li>"; ?>
+
                             <?php echo $Nav->menu_item('', 'New Chauffeur', 'new_ajax.php?class_name=TransportChauffeur', 'admin') ?>
                             <?php echo $Nav->menu_item('', 'New Transport Type', 'new_ajax.php?class_name=TransportType', 'admin') ?>
                             <?php echo $Nav->menu_item('', 'New Client', 'new_ajax.php?class_name=Client', 'admin') ?>

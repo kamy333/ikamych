@@ -14,24 +14,42 @@
             <div class="col-md-6 col-xs-4">
                 <h2 class="text-center  ">
                     <span class="hidden-sm hidden-xs">
-                    Manage <?php echo $class_name::$page_name; ?>
+                    Manage <?php
+
+                        if (isset($class_name)) {
+                            echo $class_name::$page_name;
+                        }
+
+                        ?>
                         <?php echo str_repeat("&nbsp;", 3); ?>
                     </span>
                     <span>
-                    <?php echo $class_name::get_modal_search() ?>
+                    <?php if (isset($class_name)) {
+                        echo $class_name::get_modal_search();
+                    } ?>
             </span>
                 </h2>
 
             </div>
             <div class=" pull-right  col-xs-4 text-right">
                 <span><a class="btn btn-primary btn-xm" style="width: 7em;"
-                         href="<?php echo $page_link_view; ?>"><?php echo $page_link_text; ?></a></span><?php // echo str_repeat("&nbsp;", 7); ?>
+                         href="<?php echo $page_link_view; ?>">
+                        <?php if (isset($page_link_text)) {
+                            echo $page_link_text;
+                        } ?></a></span><?php // echo str_repeat("&nbsp;", 7); ?>
             </div>
         </div>
         <?php
 
         //if (isset($page_link_view)) {
-        echo call_user_func_array(array($class_name, 'table_nav'), [$page_link_view, $page_link_text, $offset]);
+
+        if (isset($class_name)) {
+            if (isset($page_link_text)) {
+                if (isset($offset)) {
+                    echo call_user_func_array(array($class_name, 'table_nav'), [$page_link_view, $page_link_text, $offset]);
+                }
+            }
+        }
         //}
 
         ?>
@@ -62,13 +80,23 @@
         $output .= "<div id=\"table_result\">";
 
         $output .= "<div class='row'>";
-        $output .= "<div class='col-md-7 {$offset}' id='pagination' >";
-        $output .= call_user_func_array(array($class_name, 'display_pagination'), []);
+        $output .= "<div class='col-md-7";
+
+        if (isset($offset)) {
+            $output .= $offset;
+        }
+
+        $output .= "' id='pagination' >";
+        if (isset($class_name)) {
+            $output .= call_user_func_array(array($class_name, 'display_pagination'), []);
+        }
         $output .= "</div>";
         $output .= "</div>";
 
         $output .= "<div class='row'>";
-        $output .= call_user_func_array(array($class_name, 'display_all'), ['', $view_full_table]);
+        if (isset($class_name)) {
+            $output .= call_user_func_array(array($class_name, 'display_all'), ['', $view_full_table]);
+        }
         $output .= "</div>";
 
         $output .= "</div>";//<!--end of table_result-->
@@ -152,13 +180,21 @@
 
             <?php
             echo "<div class=\"row\">";
+            if (!isset($offset)) {
+                $offset = "";
+            }
             echo "<div class=\"col-md-7 {$offset}\" id='pagination' >";
-            echo call_user_func_array(array($class_name, 'display_pagination'), []);
+
+            if (isset($class_name)) {
+                echo call_user_func_array(array($class_name, 'display_pagination'), []);
+            }
             echo "</div>";
             echo "</div>";
 
             echo "<div class=\"row\">";
-            echo call_user_func_array(array($class_name, 'display_all'), ['', $view_full_table]);
+            if (isset($class_name)) {
+                echo call_user_func_array(array($class_name, 'display_all'), ['', $view_full_table]);
+            }
             echo "</div>";
             ?>
 

@@ -593,8 +593,10 @@ class DatabaseObject
 
     public static function get_form_properties_search($name)
     {
-        return static::$form_properties_search[$name];
-        //   return $form_prop;
+        if (isset(static::$form_properties_search[$name])) {
+            return static::$form_properties_search[$name];
+        }
+        return false;
     }
 
     public static function get_form_properties($name)
@@ -997,6 +999,7 @@ class DatabaseObject
         $output .= "<tr>";
 
         foreach ($table_field as $fieldname) {
+            $alt_fieldname = $fieldname;
             if (property_exists(new static, $fieldname)) {
                 if (isset(static::$db_field_exclude_table_display_sort) && in_array($fieldname, static::$db_field_exclude_table_display_sort)) {
                     $fieldname = str_replace("_", " ", $fieldname);
@@ -1031,6 +1034,7 @@ class DatabaseObject
                     $new_query_ASC .= "<span class='glyphicon glyphicon-triangle-bottom' style='color: white' aria-hidden='true'></span></a>";
 
 //        $new_query_DESC="<a href='".$_SERVER["PHP_SELF"]."".$query_string."page=".u(1)."&order_name=".u($fieldname)."&order_type=".u('DESC')."'>'";
+
                     $new_query_DESC = "<a class='ajax-pagination' href='" . $href . "'>";
                     $new_query_DESC .= "<span class='glyphicon glyphicon-triangle-top' style='color: white'  aria-hidden='true'></span></a>";
 
@@ -1038,13 +1042,33 @@ class DatabaseObject
                     $fieldname = ucfirst($fieldname);
 
                     if(isset($text_th)){
+//                        echo $text_th;
                         $fieldname=$text_th;
                         $fieldname = str_replace("_", " ", $fieldname);
                         $fieldname = ucfirst($fieldname);
                         unset($text_th);
                     }
 
-                    $output .= "<th class='text-center' style='vertical-align:middle;background-color:=red;white-space:nowrap;'>" . $new_query_ASC . "&nbsp;" . $fieldname . $new_query_DESC . "&nbsp;" . "</th>";
+
+                    if (isset($_GET['order_type']) && isset($_GET['order_name']) && $_GET['order_name'] == $alt_fieldname) {
+
+                        if ($_GET['order_type'] === "ASC") {
+                            $new_query_ASC = "";
+                            $output .= "<th class='text-center' style='vertical-align:middle;background-color:=red;white-space:nowrap;'>" . $new_query_ASC . "&nbsp;" . $fieldname . $new_query_DESC . "&nbsp;" . "</th>";
+
+                        } elseif ($_GET['order_type'] === "DESC") {
+                            $new_query_DESC = "";
+                            $output .= "<th class='text-center' style='vertical-align:middle;background-color:=red;white-space:nowrap;'>" . $new_query_ASC . "&nbsp;" . $fieldname . $new_query_DESC . "&nbsp;" . "</th>";
+
+                        } else {
+
+                        }
+                    } else {
+                        $output .= "<th class='text-center' style='vertical-align:middle;background-color:=red;white-space:nowrap;'>" . $new_query_ASC . "&nbsp;" . $fieldname . $new_query_DESC . "&nbsp;" . "</th>";
+
+                    }
+
+
                 }
 
 

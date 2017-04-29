@@ -16,6 +16,18 @@ class T_Chauffeur extends DatabaseObjectAccess
         'Company',
 
     ];
+    protected static $db_fields_table_display_short = ['id',
+        'Chauffeur_ID',
+        'Chauffeur',
+        'Company',
+
+    ];
+    protected static $db_fields_table_display_full = ['id',
+        'Chauffeur_ID',
+        'Chauffeur',
+        'Company',
+
+    ];
 
     public $id;
     public $Chauffeur_ID;

@@ -13,6 +13,15 @@ class T_Pays extends DatabaseObjectAccess
     protected static $db_fields = ['id', 'Pays',
         'Pays_ID',
     ];
+    protected static $db_fields_table_display_short = ['id', 'Pays',
+        'Pays_ID',
+    ];
+    protected static $db_fields_table_display_full = ['id', 'Pays',
+        'Pays_ID',
+    ];
+
     public $id;
+    public $Pays;
+    public $Pays_ID;
 
 }
