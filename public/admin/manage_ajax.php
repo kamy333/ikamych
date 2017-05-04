@@ -23,12 +23,15 @@ if(isset($_GET['class_name'])) {
 }
 
 
-$page= !empty($_GET['page'])? (int) $_GET["page"]:1;
+//$page= !empty($_GET['page'])? (int) $_GET["page"]:1;
+
+
+$page = (!empty($_GET['page']) && isset($_GET)) ? (int)$_GET["page"] : 1;
 
 
 $query_string=remove_get(array('view','page',$class_name));
 
-$view_full_table=!empty($_GET)? (int) $_GET["view"] :0;
+$view_full_table = (!empty($_GET) && isset($_GET)) ? (int)$_GET["view"] : 0;
 
 if($view_full_table==1){
     if (isset($page)) {

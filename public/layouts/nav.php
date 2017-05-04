@@ -203,7 +203,7 @@ if ($layout_context=="public"){
                 <?php echo "<li class=\"divider\"></li>"; ?>
                 <?php echo $Nav->menu_item('','Users','manage_user.php','admin'); ?>
                 <?php echo "<li class=\"divider\">Links</li>"; ?>
-                <?php echo $Nav->menu_item('','Links','manage_links.php','admin'); ?>
+                <?php echo $Nav->menu_item('', 'Links', 'DataBaseClient.php', 'admin'); ?>
                 <?php echo $Nav->menu_item('','Links Category','manage_links_category.php','admin'); ?>
                 <?php echo "<li class=\"divider\"></li>"; ?>
                 <?php echo $Nav->menu_item('','Invoice Send','manage_invoice_send.php','admin'); ?>
@@ -268,6 +268,10 @@ if ($layout_context=="public"){
 
                             <li><a href="<?php echo $Nav->http . "transmed/"; ?>index.php">Public Transmed </a></li>
                             <li><a href="<?php echo $Nav->http . "transmed/admin/"; ?>index.php">Admin Transmed</a></li>
+                            <li><a href="<?php echo $Nav->http . "transmed/"; ?>import_access.php">Import Access</a>
+                            </li>
+                            <li><a href="<?php echo $Nav->http . "transmed/"; ?>comparatif.php">Import Access</a></li>
+
                             <?php echo $Nav->menu_item('', 'Chauffeur', 'manage_ajax.php?class_name=TransportChauffeur', 'admin') ?>
                             <?php echo $Nav->menu_item('', 'Transport Type', 'manage_ajax.php?class_name=TransportType', 'admin') ?>
                             <?php echo $Nav->menu_item('', 'Client', 'manage_ajax.php?class_name=Client', 'admin') ?>

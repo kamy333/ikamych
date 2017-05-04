@@ -62,6 +62,10 @@ $class_array_setup_kamy=array('MyExpensePerson','MyExpenseType');
 $class_array_setup_transport=array('TransportChauffeur','TransportClient','TransportType',
     'TransportProgramming','TransportProgrammingModel');
 
+if (!isset($class_name)) {
+    $class_name = "";
+
+}
 
 
 if(in_array($class_name,$class_array_setup_transport)){

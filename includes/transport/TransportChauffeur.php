@@ -13,7 +13,7 @@ class TransportChauffeur extends DatabaseObject
     protected static $table_name="transport_chauffeurs";
 
 
-    protected static $db_fields = array('id','chauffeur_name','initial','company','user_id','modification_time','username');
+    protected static $db_fields = array('id', 'chauffeur_name', 'initial', 'company', 'user_id', 'input_date', 'modification_time', 'username');
 
     protected static $required_fields = array('chauffeur_name', 'initial', 'company',);
 
@@ -142,6 +142,29 @@ public $user_id;
 public $input_date;
 public $modification_time;
 public $username;
+
+
+    public function set_up_display()
+    {
+        global $session;
+        if (!isset($this->initial)) {
+            $this->initial = substr(md5(uniqid(mt_rand(), true)), 0, 3);
+        }
+
+        if (!isset($this->username)) {
+            $this->username = $session->username;
+        }
+
+//    modification_time
+        if (!isset($this->modification_time)) {
+            $this->modification_time = now_sql() . ' ' . now_time();
+        }
+
+        if (!isset($this->input_date)) {
+            $this->input_date = now_sql();
+        }
+
+    }
 
 
     public  function form_validation() {

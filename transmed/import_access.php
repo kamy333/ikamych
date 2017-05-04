@@ -2,7 +2,18 @@
 <?php if (!User::is_admin()) {
     redirect_to("index.php");
 }
+if (isset($_GET['class_name']) && isset($_GET['action'])) {
+    echo "<a href='test.php'>reload</a><hr>";
+    $class_name = $_GET['class_name'];
+    echo $action = $_GET['action'];
+    echo call_user_func_array([$class_name, $action], []);
 
+    unset($_GET['action']);
+    redirect_to("admin/manage_ajax.php?class_name=$class_name");
+
+    $offset = "";
+
+}
 
 
 ?>
@@ -24,10 +35,16 @@
                 <h1>Welcome to <?php echo LOGO; ?> </h1>
 
                 <?php
-                //                echo "<pre>";
-                //                log_action('DatabaseObjectAccess','find_difference_xml_web_tables');
-                echo DatabaseObjectAccess::find_difference_xml_web_tables();
-                //                echo "</pre>";
+
+
+                echo DatabaseObjectAccess::links();
+
+
+                if (isset($_GET['class_name'])) {
+                    $class_name = $_GET['class_name'];
+//                    redirect_to("test.php?class_name=$class_name");
+                }
+
 
                 ?>
 

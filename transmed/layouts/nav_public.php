@@ -27,6 +27,8 @@
                             Public <span class="caret"></span></a>
                         <ul role="menu" class="dropdown-menu">
                             <?php echo $Nav->menu_item('', 'Full version Inspinia', 'http://www.ikamy.ch/Inspinia_Full_Version/', 'none', true) ?>
+                            <li><a href="<?php echo $path_public; ?>import_access.php">Import</a></li>
+                            <li><a href="<?php echo $path_public; ?>comparatif.php">comparatif</a></li>
 
                             <li><a href="<?php echo $path; ?>index_old.php">Old public Layout</a></li>
                             <li><a href="<?php echo $path_public; ?>test.php">Test</a></li>

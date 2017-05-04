@@ -200,7 +200,7 @@ class Links extends DatabaseObject {
 
 
     public static $page_name="Links";
-    public static $page_manage="manage_links.php";
+    public static $page_manage = "DataBaseClient.php";
     public static $page_new="new_link.php";
     public static $page_edit="edit_link.php";
     public static $page_delete="delete_link.php";

@@ -26,7 +26,7 @@
 
 
                 <?php
-                T_Genre::import_tables();
+                //                T_Genre::import_tables();
 
                 ?>
 
@@ -96,14 +96,14 @@
                     echo "<b>SITE_ROOT</b>  " . SITE_ROOT . '<br>';
                     echo "<b>MY_URL_PUBLIC</b>  " . MY_URL_PUBLIC . '<br>';
                     echo "<b>MY_URL_ADMIN</b>  " . MY_URL_ADMIN . '<br>';
-                    echo $_SERVER["PHP_SELF"] . '<br>';
+                    echo "SERVER PHP_SELF  " . $_SERVER["PHP_SELF"] . '<br>';
                     echo $Nav->public_menu("public_gallery") . '<br>';
                     echo $Nav->public_menu("Admin_class") . '<br>';
-                    echo $Nav;
-                    echo $_SERVER['QUERY_STRING'];
-
+                    echo "Nav" . $Nav . '<hr>';
+                    echo "\SERVER['QUERY_STRING'] " . $_SERVER['QUERY_STRING'];
+                    echo "SERVER DOC ROOT  " . $_SERVER['DOCUMENT_ROOT'];
                     echo "<hr>";
-                    echo $Nav->folder . "<br>";
+                    echo "\$Nav->folder " . $Nav->folder . "<br>";
 
                     ?>
 

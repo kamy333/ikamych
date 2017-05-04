@@ -52,6 +52,7 @@ class SmartNav
                  'index_gallery5'=>'Lycée Français de Jérusalem',
                  'index_gallery7'=>'Maman Bozorgue',
                  'index_gallery8'=>'Film',
+                 'index_gallery9' => 'Pablo Enregistrement',
              )
          ),
              "Admin_class"=>array(
@@ -201,11 +202,14 @@ public  function  public_menu($name="public_gallery",$env='public'){
 $array_class=array();
     foreach (static::$menus[$name]['link']  as $page=>$page_title) {
 //    echo $page.'<br>';
-     $len_query_str=strlen(static::$menus[$name]['query_string']);
-     $len_page=strlen($page)  ;
-        if($len_query_str>0){
-        $pos= strpos($page , $query_str=static::$menus[$name]['query_string']."=");
-            array_push($array_class,substr($page,$pos+$len_query_str+1,$len_page-$pos));
+        if (isset(static::$menus[$name]['query_string'])) {
+            $len_query_str = strlen(static::$menus[$name]['query_string']);
+            $len_page = strlen($page);
+            if ($len_query_str > 0) {
+                $pos = strpos($page, $query_str = static::$menus[$name]['query_string'] . "=");
+                array_push($array_class, substr($page, $pos + $len_query_str + 1, $len_page - $pos));
+            }
+
         }
 
     }
@@ -213,8 +217,13 @@ $array_class=array();
 
 
     $class="";
+    if (isset(static::$menus[$name]['query_string'])) {
+        $query_string = static::$menus[$name]['query_string'];
+    } else {
+        $query_string = "";
+    }
 
-      $query_string=static::$menus[$name]['query_string'];
+
 //    echo $query_string;
 
     if(in_array($this->current_page,array_keys(static::$menus[$name]['link'])) )

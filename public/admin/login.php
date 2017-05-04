@@ -46,10 +46,10 @@ if(request_is_post() && request_is_same_domain()) {
                 if ($found_user) {
                     $failed_login->clear_failed_logins($username);
                     $session->login($found_user);
-                    log_action('Login', "{$found_user->username} logged in.");
+                    log_action('Login', "{$found_user->username} logged in from public.");
                     redirect_to("index.php");
                 } else {
-                    log_action('Login failed', "{$username} logged in failed.");
+                    log_action('Login failed', "{$username} logged in failed from public.");
                     $failed_login->record_failed_login($username);
                     $blacklist_ip->add_ip_to_blacklist();
                     $message = "Username/password combination incorrect.";

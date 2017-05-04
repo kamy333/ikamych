@@ -114,7 +114,20 @@
                     </ul>
                 </li>
 
+                <li class="<?php echo $class_transport_admin_active; ?>">
+                    <a href="<?php echo $path_admin; ?>index.php"><i class="fa fa-taxi"></i> <span class="nav-label">Transport Admin</span>
+                        <span class="fa arrow"></span></a>
 
+                    <ul class="nav nav-second-level <?php echo $class_admin_collapse; ?>">
+
+                        <?php echo $Nav->menu_item('', 'Import', 'import_access.php', 'public') ?>
+                        <?php echo $Nav->menu_item('', ' Comparatif', 'comparatif.php', 'public') ?>
+
+
+                    </ul>
+
+
+                </li>
                 <li class="<?php echo $class_admin_active; ?>">
 
                     <a href="<?php echo $path_admin; ?>index.php"><i class="fa fa-database"></i> <span
@@ -124,9 +137,6 @@
 
                         <?php echo $Nav->menu_item('User', 'Users', 'class_manage.php') ?>
                         <?php echo $Nav->menu_item('Client', 'Clients', 'class_manage.php') ?>
-                        <?php echo $Nav->menu_item('Project', 'Projects', 'class_manage.php') ?>
-                        <?php echo $Nav->menu_item('InvoiceActual', 'Invoice Actual', 'class_manage.php') ?>
-                        <?php echo $Nav->menu_item('InvoiceSend', 'Invoice Send', 'class_manage.php') ?>
                         <?php echo $Nav->menu_item('Chat', 'Chat', 'class_manage.php') ?>
                         <?php echo $Nav->menu_item('Notification', 'Notifications', 'class_manage.php') ?>
 
@@ -140,13 +150,7 @@
                     <ul class="nav nav-second-level <?php echo $class_kamy_collapse; ?>">
 
                         <?php echo $Nav->menu_item('Links', 'Links', 'class_manage.php') ?>
-                        <?php echo $Nav->menu_item('MyExpense', 'Expense', 'class_manage.php') ?>
                         <?php echo $Nav->menu_item('ToDoList', 'ToDoList', 'class_manage.php') ?>
-                        <?php echo $Nav->menu_item('MyHouseExpense', 'HouseExpense', 'class_manage.php') ?>
-                        <?php echo $Nav->menu_item('MyCigarette', 'Cigarette', 'class_manage.php') ?>
-                        <?php echo $Nav->menu_item('MyCigaretteDay', 'Cigarette Day', 'class_manage.php') ?>
-                        <?php echo $Nav->menu_item('MyCigaretteMonth', 'Cigarette Month', 'class_manage.php') ?>
-                        <?php echo $Nav->menu_item('MyCigaretteYear', 'Cigarette Year', 'class_manage.php') ?>
 
 
                     </ul>
@@ -198,13 +202,6 @@
                         <ul class="nav nav-third-level">
 
                             <?php echo $Nav->menu_item('', 'Home public', 'index.php', 'public') ?>
-                            <?php echo $Nav->menu_item('', 'Desiree Wedding', 'index_gallery.php', 'public') ?>
-                            <?php echo $Nav->menu_item('', 'Familly', 'index_gallery2.php', 'public') ?>
-                            <?php echo $Nav->menu_item('', 'Friends', 'index_gallery3.php', 'public') ?>
-                            <?php echo $Nav->menu_item('', 'My page', 'index_gallery4.php', 'public') ?>
-                            <?php echo $Nav->menu_item('', 'Lycée Français de Jérusalem', 'index_gallery5.php', 'public') ?>
-                            <?php echo $Nav->menu_item('', 'Bralia', 'index_gallery6.php', 'public') ?>
-                            <?php echo $Nav->menu_item('', 'Maman Bozorgue', 'index_gallery7.php', 'public') ?>
 
                         </ul>
                     </li>
@@ -225,12 +222,6 @@
                             <ul class="nav nav-third-level">
 
                                 <?php echo $Nav->menu_item('User', 'Users', 'class_manage.php') ?>
-                                <?php echo $Nav->menu_item('Client', 'Clients', 'class_manage.php') ?>
-                                <?php echo $Nav->menu_item('Project', 'Projects', 'class_manage.php') ?>
-                                <?php echo $Nav->menu_item('InvoiceActual', 'Invoice Actual', 'class_manage.php') ?>
-                                <?php echo $Nav->menu_item('InvoiceSend', 'Invoice Send', 'class_manage.php') ?>
-                                <?php echo $Nav->menu_item('Chat', 'Chat', 'class_manage.php') ?>
-                                <?php echo $Nav->menu_item('Notification', 'Notifications', 'class_manage.php') ?>
 
 
                             </ul>
@@ -243,9 +234,6 @@
 
 
                                 <?php echo $Nav->menu_item('Currency', 'Currency', 'class_manage.php') ?>
-                                <?php echo $Nav->menu_item('Category', 'Category', 'class_manage.php') ?>
-                                <?php echo $Nav->menu_item('Category1', 'Category1', 'class_manage.php') ?>
-                                <?php echo $Nav->menu_item('Category2', 'Category2', 'class_manage.php') ?>
                                 <?php echo $Nav->menu_item('UserType', 'User Type', 'class_manage.php') ?>
                                 <span class="label label-primary pull-right">FULL</span>
                             </ul>
@@ -269,12 +257,7 @@
 
                                 <?php echo $Nav->menu_item('Links', 'Links', 'class_manage.php') ?>
                                 <?php echo $Nav->menu_item('MyExpense', 'Expense', 'class_manage.php') ?>
-                                <?php echo $Nav->menu_item('ToDoList', 'ToDoList', 'class_manage.php') ?>
-                                <?php echo $Nav->menu_item('MyHouseExpense', 'HouseExpense', 'class_manage.php') ?>
-                                <?php echo $Nav->menu_item('MyCigarette', 'Cigarette', 'class_manage.php') ?>
-                                <?php echo $Nav->menu_item('MyCigaretteDay', 'Cigarette Day', 'class_manage.php') ?>
-                                <?php echo $Nav->menu_item('MyCigaretteMonth', 'Cigarette Month', 'class_manage.php') ?>
-                                <?php echo $Nav->menu_item('MyCigaretteYear', 'Cigarette Year', 'class_manage.php') ?>
+
 
 
                             </ul>
@@ -283,9 +266,12 @@
                         <li>
                             <a href="#">Set Up Kamy<span class="fa arrow"></span></a>
                             <ul class="nav nav-third-level">
-                                <?php echo $Nav->menu_item('MyExpensePerson', 'Expense Person', 'class_manage.php') ?>
-                                <?php echo $Nav->menu_item('MyExpenseType', 'Expense Type', 'class_manage.php') ?>
-                                <?php echo $Nav->menu_item('MyHouseExpenseType', 'House Expense Type', 'class_manage.php') ?>
+                                <?php echo $Nav->menu_item('', 'Import', 'import_access.php', 'public') ?>
+                                <?php echo $Nav->menu_item('', ' Comparatif', 'comparatif.php', 'public') ?>
+
+
+
+
                             </ul>
                         </li>
                     </ul>

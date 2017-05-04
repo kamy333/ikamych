@@ -114,6 +114,46 @@ function datetime_to_text($datetime="") {
     return strftime("%B %d, %Y at %I:%M %p", $unix_datetime);
 }
 
+
+function date_format_to_sql($date, $format = 'YYYY-MM-DD')
+{
+    $year = "";
+    $day = "";
+    $month = "";
+    // $field="Date" ;
+
+    $mydate = trim($date);
+    if ($format == 'YYYY-MM-DD') list($year, $month, $day) = explode('-', $mydate);
+    if ($format == 'YYYY/MM/DD') list($year, $month, $day) = explode('/', $mydate);
+    if ($format == 'YYYY.MM.DD') list($year, $month, $day) = explode('.', $mydate);
+
+    if ($format == 'DD-MM-YYYY') list($day, $month, $year) = explode('-', $mydate);
+    if ($format == 'DD/MM/YYYY') list($day, $month, $year) = explode('/', $mydate);
+    if ($format == 'DD.MM.YYYY') list($day, $month, $year) = explode('.', $mydate);
+
+    if ($format == 'MM-DD-YYYY') list($month, $day, $year) = explode('-', $mydate);
+    if ($format == 'MM/DD/YYYY') list($month, $day, $year) = explode('/', $mydate);
+    if ($format == 'MM.DD.YYYY') list($month, $day, $year) = explode('.', $mydate);
+
+    if (is_numeric($year) && is_numeric($month) && is_numeric($day)) {
+        if (!checkdate($month, $day, $year)) {
+            exit("error date look format");
+
+        } else {
+
+
+            return $year . "-" . $month . "-" . $day;
+
+//                   return true;
+        }
+
+    } else {
+        exit("error date");
+    }
+
+
+}
+
 function hr_mn_to_text($time_sql, $semicolon = ":")
 {
 //  $semicolon=="h"
@@ -593,9 +633,6 @@ function check_request(){
 
 }
 
-
-
-
 function get_picture_folder_blueimp_gallery($img_folder="",$title="",$default_path="public"){
 //    global $folder_project_name;
     $dir=SITE_ROOT.DS.$default_path.DS."/img/".$img_folder;
@@ -614,7 +651,6 @@ function get_picture_folder_blueimp_gallery($img_folder="",$title="",$default_pa
     }
     return $output;
 }
-
 
 function get_picture_folder_bootstrap_gallery($img_folder="",$alt="image",$default_path="public",$caption=true){
 //    global $folder_project_name;
@@ -644,6 +680,41 @@ function get_picture_folder_bootstrap_gallery($img_folder="",$alt="image",$defau
     return $output;
 }
 
+function get_mp3($img_folder = "", $title = "", $default_path = "public")
+{//    global $folder_project_name;
+    $dir = SITE_ROOT . DS . $default_path . DS . "/img/" . $img_folder;
+
+
+    $output = "<div>";
+//    $output.= $title;
+    if (is_dir($dir)) {
+        $dir_array = scandir($dir);
+        foreach ($dir_array as $file) {
+            if (stripos($file, '.') > 0) {
+                $ext = pathinfo($file, PATHINFO_EXTENSION);
+//                $output .="<br>". $title." - img/$img_folder/ {$file}<br>";
+
+                if ($ext == 'MP3' || $ext == 'mp3') {
+//                    $output .= "<a href='img/$img_folder/{$file}' title=\"{$title}\" data-gallery=''><img src='img/$img_folder/{$file}' style='width: 10em;height: 10em' ></a>";
+
+                    $output .= "<div class='col-md-5 col-offset-1'>";
+
+                    $output .= "<h3>" . "img/$img_folder/{$file}</h3>";
+                    $output .= "<audio controls >
+                <source src='img/$img_folder/{$file}' type='audio/mpeg'>
+                Your browser does not support the audio element.
+            </audio>  ";
+                    $output .= "</div>";
+
+
+                }
+            }
+        }
+    }
+
+    $output .= "</div>";
+    return $output;
+}
 
 function get_picture_array($img_folder=""){
     global $Nav;
@@ -696,7 +767,6 @@ function get_picture_array($img_folder=""){
 
 }
 
-
 function blueimp_lightBoxGallery($content=""){
     $output="";
     $output.="<div class=\"lightBoxGallery\">";
@@ -742,7 +812,9 @@ function get_gallery_array($no=1){
             'index_gallery4'=>'myPage',
             'index_gallery5'=>'Lycée Français de Jérusalem',
             'index_gallery7'=>'Maman Bozorgue',
-            'index_gallery8'=>'Film');
+            'index_gallery8' => 'Film',
+            'index_gallery9' => 'Pablo Audio'
+        );
     } elseif($no===2){
         $pages=array(
             'index'=>'Home',
@@ -753,7 +825,6 @@ function get_gallery_array($no=1){
     return $pages;
 
 }
-
 
 function gallery_menu_list($no=1){
     global $active_menu_clean;
@@ -786,7 +857,6 @@ function gallery_menu_list($no=1){
 
 }
 
-
 function gallery_button($no=1){
     global $session;
 
@@ -817,6 +887,7 @@ function gallery_button($no=1){
 
 
 }
+
 function admin_button(){
 
 
@@ -850,7 +921,6 @@ function admin_button(){
 
 
 }
-
 
 function ibox($content = "Missing content", $col = 5, $h5 = "Header",
               array $options = ['tools' => true, 'collapse-link' => true, 'dropdown-toggle' => true, 'dropdown-menu' => false, 'close-link' => true, 'fullscreen-link' => true]

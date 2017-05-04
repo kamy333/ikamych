@@ -165,7 +165,7 @@ class ViewTransportModelPivot extends TransportProgrammingModel
 
         <div class='input-group date  model-pivot-date'>                                                              
                 <span class='input-group-addon'><i class='fa fa-calendar'></i></span>               
-                <input type='text' class='form-control theDate-$i' name='date' value='{$date}'>                                  
+                    <input type='text' class='form-control theDate-$i' name='date' value='{$date}'>                    <input type='text' class='hidden' name='week_day_rank_id' value='$i' >
         
         </div>
                   

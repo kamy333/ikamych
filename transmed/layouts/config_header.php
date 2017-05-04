@@ -77,6 +77,11 @@ $class_array_setup_transport = array('TransportChauffeur', 'TransportClient', 'T
     'T_Frequence_Facturation', 'T_Genre', 'T_Heure', 'T_Pays', 'T_Prix_Course', 'T_Type_Transport', 'T_Ville', 'T_Type_Facturation',);
 
 
+$class_array_setup_transport_admin = array(
+    'import_access', 'comparatif'
+);
+
+
 if(!isset($class_name)){
     $class_name="";
 
@@ -89,6 +94,17 @@ if (in_array($class_name, $class_array_setup_transport)) {
     $class_transport_active = "";
     $class_transport_collapse = " collapse";
 }
+
+
+if (in_array($Nav->current_page, $class_array_setup_transport_admin)) {
+    $class_transport_admin_active = " active";
+    $class_transport_admin_collapse = "";
+} else {
+    $class_transport_admin_active = "";
+    $class_transport_admin_collapse = " collapse";
+}
+
+
 
 if (in_array($class_name, $class_array_admin)) {
     $class_admin_active = " active";

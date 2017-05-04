@@ -69,3 +69,5 @@ Inspinia_Full_Version_2
 vendor
 
 /transmed/xml/transmed/*
+/includes/transmed_config/config_transmed.php
+/includes/transmed_config/

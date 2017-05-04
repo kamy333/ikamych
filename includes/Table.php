@@ -14,7 +14,7 @@ public static $table_striped="table-striped";
  public static function  full_table_class()  {
      $output="";
      $output.=self::$table." ";
-//     $output.=self::$table_bordered." ";
+     $output .= self::$table_bordered . " ";
      $output.=self::$table_responsive." ";
      $output.=self::$table_hover." ";
      $output.=self::$table_condensed." ";
@@ -111,10 +111,29 @@ return $output;
 public static function modal($content,$l){
     $output = "";
     
-    
+
     
 }
 
+    public $fieldname;
+    public $href_asc;
+    public $href_desc;
+
+
+    public function head()
+    {
+        $output = "";
+        $output .= "<div class='table-responsive'>";
+        $output .= "<table class='table table-striped table-bordered table-hover table-condensed '>";
+        $output .= "<tr>";
+        $output .= "<th class='text-center' style='vertical-align:middle;white-space:nowrap;'>" . $this->fieldname . "</th>";
+
+
+        $output .= "</table>";
+
+        return $output;
+
+    }
 
 }
 

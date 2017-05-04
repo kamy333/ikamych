@@ -1,5 +1,6 @@
 <?php
-require_once("config.php");
+
+//require_once("config.php");
 
 
 
@@ -71,7 +72,7 @@ class MySQLDatabase
     {
 
         global $Nav;
-        if ($Nav->server_name !== "localhost") {
+        if ($Nav->server_name == "localhost") {
             $output = "<br><b><span style='color: deepskyblue'> query failed.</span></b><br>" . mysqli_error($this->connection);
             $output .= "<br><b><span style='color: deepskyblue'>last query executed sql:</span></b> <br>" . $this->last_query;
         } else {

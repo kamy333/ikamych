@@ -34,8 +34,7 @@ function button_color($color, $txt = "xxx", $href = false, $href_env = "")
 }
 
 ?>
-
-
+<?php //   echo __DIR__;  ?>
     <div class="wrapper wrapper-content">
 
         <div class="container">

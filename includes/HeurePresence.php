@@ -279,7 +279,7 @@ $('.clockpicker').clockpicker({    placement:'top',    align: 'bottom',    donet
         $hour = "";
 
 
-        if (isset($_GET) && $_GET['class_name'] === 'HeurePresence' && $_GET['action'] == 'quickaddhours') {
+        if (isset($_GET) && isset($_GET['class_name']) && isset($_GET['action']) && $_GET['class_name'] === 'HeurePresence' && $_GET['action'] == 'quickaddhours') {
 
 
             if (isset($_GET['add_hour']) || isset($_GET['add_minute'])) {
@@ -351,7 +351,7 @@ $('.clockpicker').clockpicker({    placement:'top',    align: 'bottom',    donet
         $hour = "";
 
 
-        if (isset($_GET) && $_GET['class_name'] === 'HeurePresence' && $_GET['action'] == 'quicksubstracthours') {
+        if (isset($_GET) && isset($_GET['class_name']) && isset($_GET['action']) && $_GET['class_name'] === 'HeurePresence' && $_GET['action'] == 'quicksubstracthours') {
 
             if (isset($_GET['add_hour']) || isset($_GET['add_minute'])) {
                 if (isset($_GET['add_hour'])) {

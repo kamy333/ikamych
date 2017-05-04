@@ -65,7 +65,12 @@
 
 </head>
 
-<?php if ($menu_canvas) {
+<?php
+
+if (!isset($menu_canvas)) {
+    $menu_canvas = "";
+}
+if ($menu_canvas) {
     echo "<body class=\"canvas-menu\">";
 
 } else {

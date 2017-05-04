@@ -7,7 +7,6 @@ if (User::is_employee() || User::is_secretary() || User::is_visitor()) {
 
 MyClasses::redirect_disable_class();
 
-
 if (isset($_GET['class_name'])) {
     $class_name = $_GET['class_name'];
 //    $is_data=true;
@@ -27,11 +26,11 @@ if (isset($_GET['class_name'])) {
 
 
 $page = !empty($_GET['page']) ? (int)$_GET["page"] : 1;
-
+$view_full_table = !empty($_GET) ? (int)$_GET["view"] : 0;
 
 $query_string = remove_get(array('view', 'page', $class_name));
 
-$view_full_table = !empty($_GET) ? (int)$_GET["view"] : 0;
+
 
 $page_link_view=""; //initial variable
 if ($view_full_table == 1) {
@@ -117,6 +116,12 @@ echo call_user_func_array(array($class_name, 'table_nav'), [$page_link_view, $pa
     echo call_user_func_array(array($class_name, 'display_pagination'), []);
     echo "</div>";
     echo "</div>";
+
+    //    echo "<div class='row'>";
+    //    echo "<div class=\"col-md-7 {$offset}\" id='paginator' >";
+    //    echo call_user_func_array(array($class_name, 'display_paginator'), []);
+    //    echo "</div>";
+    //    echo "</div>";
 
     echo "<div class='row'>";
     echo call_user_func_array(array($class_name, 'display_all'), ['', $view_full_table]);

@@ -1,7 +1,7 @@
 <?php
 // If it's going to need the database, then it's 
 // probably smart to require it before we start.
-//require_once(LIB_PATH.DS.'database.php');
+//require_once(LIB_PATH.DS.'database_transmed.php');
 
 class DatabaseObject
 {
@@ -307,12 +307,11 @@ class DatabaseObject
         return $output;
     }
 
-    public static function Create_form($copy=true)
+    public static function Create_form($copy = true)
     {
         global $Nav;
 //        if($Nav->)
 //        echo $_SERVER['PHP_SELF'];
-
 
 
         if (isset($_GET['id']) && !isset($_GET['duplicate_record'])) {
@@ -511,10 +510,10 @@ class DatabaseObject
 
             $type_text = array("text", 'password', 'email', 'search', 'date', 'datetime', 'datetime-local', 'color', 'button', 'file', 'hidden', 'image', 'month', 'number', 'range', 'reset', 'search', 'submit', 'tel', 'url');
 
-            if (is_array($vars) ) {
+            if (is_array($vars)) {
                 $type = $vars['type'];
             } else {
-                $type="";
+                $type = "";
 //                echo "ERROR ".__LINE__.__CLASS__ ;
 
             }
@@ -601,7 +600,7 @@ class DatabaseObject
 
     public static function get_form_properties($name)
     {
-        return isset (static::$form_properties[$name])? static::$form_properties[$name] :"";
+        return isset (static::$form_properties[$name]) ? static::$form_properties[$name] : "";
 
 
         //   return $form_prop;
@@ -752,8 +751,37 @@ class DatabaseObject
 
     }
 
+
+    static public function display_paginator($pagination = "", $page = "")
+    {
+
+        $pages = static::NewPaginator();
+        $output = "";
+        $output = "<div id=''>";
+        $output .= " <nav>";
+        $output .= " <ul class='pagination'>";
+
+        $output .= $pages->display_pages();
+        $output .= "<span class=\"\">" . $pages->display_jump_menu() . $pages->display_items_per_page() . "</span>";
+        $output .= "       </ul>";
+        $output .= "    </nav>";
+        $output .= "</div>";
+
+        return $output;
+    }
+
+
     static public function display_pagination($pagination = "", $page = "")
     {
+        $where = get_where_string(get_called_class());
+        $total_count = static::count_all_where($where);
+
+        if ($total_count > 1000) {
+            return self::display_paginator();
+        }
+
+
+
 
         $pagination = static::NewPagination();
         $page = static::getPagePagination();
@@ -811,11 +839,28 @@ class DatabaseObject
 
     public static function NewPagination()
     {
+
         $where = get_where_string(get_called_class());
         $per_page = static::$pagination_per_page;
         $total_count = static::count_all_where($where);
         $page = static::getPagePagination();
+
         return new Pagination($page, $per_page, $total_count);
+    }
+
+    public static function NewPaginator()
+    {
+
+        $where = get_where_string(get_called_class());
+        $total_count = static::count_all_where($where);
+        return new Paginator($total_count, 5, array(20, 15, 3, 6, 9, 12, 25, 50, 100, 250, 'All'));
+    }
+
+
+    public static function getPagePagination()
+    {
+        return !empty($_GET['page']) ? (int)$_GET["page"] : 1;
+
     }
 
     public static function count_all_where($where = '')
@@ -825,14 +870,10 @@ class DatabaseObject
         $result_set = $database->query("SELECT count(*) FROM {$table} {$where} ");
         $row = $database->fetch_array($result_set);
         return $row ? array_shift($row) : false;
+//        return $where;
 
     }
 
-    public static function getPagePagination()
-    {
-        return !empty($_GET['page']) ? (int)$_GET["page"] : 1;
-
-    }
 
     public static function display_all($object_all = "", $long_short = 0, $edit = true)
     {
@@ -932,24 +973,24 @@ class DatabaseObject
         // <!-- Default panel contents -->
 
         $output .= "<div class='panel-heading'>"
-            ."<div class='row'>"
-            ."<div id='panel-heading-search' class='col-md-12 text-center'>"
-            . "<a  class='btn btn-default ajax-pagination' style='color:blue;font-size:1.3em;' href='" . clean_query_string(static::$page_manage) . "'>Manage " . static::$page_name . "</a> " ;
+            . "<div class='row'>"
+            . "<div id='panel-heading-search' class='col-md-12 text-center'>"
+            . "<a  class='btn btn-default ajax-pagination' style='color:blue;font-size:1.3em;' href='" . clean_query_string(static::$page_manage) . "'>Manage " . static::$page_name . "</a> ";
 
-        $output .=  static::get_modal_search();
+        $output .= static::get_modal_search();
         $output .= "</div>";
 
 
         $output .= "<div class='pull-right'>";
-        $output .= "<form id=\"form-table-search-new\" class=\"form-inline\" style=\"display: none\">
-    <div class=\"form-group\">
-        <label class=\"sr-only\" for=\"search\">type search</label>
-        <div class=\"input-group\">
-            <input type=\"search\" class=\"form-control\" id=\"input-search\" placeholder=\"Search...\">
+        $output .= "<form id='form-table-search-new' class='form-inline' style='display: none'>
+    <div class='form-group'>
+        <label class='sr-only' for='search'>type search</label>
+        <div class='input-group'>
+            <input type='search' class='form-control' id='input-search' placeholder='Search...'>
         </div>
     </div>
-    <button id='button-search' type=\"submit\" class=\"btn btn-primary \"";
-        $output .= " data-href='".$_SERVER['QUERY_STRING']."''";
+    <button id='button-search' type='submit' class='btn btn-primary'";
+        $output .= " data-href='" . $_SERVER['QUERY_STRING'] . "''";
         $output .= ">
     <span class='glyphicon glyphicon-search' style='color: whitesmoke' aria-hidden='true' ";
         $output .= "  >
@@ -957,19 +998,9 @@ class DatabaseObject
         </form>";
 
         $output .= "</div>"; // end of pull-right
-
-
         $output .= "</div>";
-//        $output="form a"
-
-        $output .= "";
-        $output .= "";
-        $output .= "";
-        $output .= "";
-        $output .= "";
-
-
         $output .= "</div>";
+
 
         $output .= " <div class='panel-body'>";
         $where = get_where_string(get_called_class());
@@ -990,11 +1021,10 @@ class DatabaseObject
                 $output .= "<b>" . h($key_clean) . "&nbsp;<span style='color:blue;'>&nbsp;" . h(urldecode($_GET[$key])) . "</span></b> | ";
             }
         }
-        //  $output.="<p>hi</p>";
         $output .= "</div>";
 
-        $output .= "<div class='table-responsive'>";
 
+        $output .= "<div class='table-responsive'>";
         $output .= "<table class='table table-striped table-bordered table-hover table-condensed '>";
         $output .= "<tr>";
 
@@ -1018,22 +1048,20 @@ class DatabaseObject
                         $fieldname = static::$db_field_include_table_display_sort[$fieldname];
 //                        var_dump($fieldname);
 //                        var_dump(array_keys(static::$db_field_include_table_display_sort,$fieldname));
-                        $text_th= array_keys(static::$db_field_include_table_display_sort,$fieldname);
-                        $text_th=$text_th[0];
+                        $text_th = array_keys(static::$db_field_include_table_display_sort, $fieldname);
+                        $text_th = $text_th[0];
 //                        var_dump($text_th);
 
                     }
 
                     $href = clean_query_string($_SERVER["PHP_SELF"] . "" . $query_string . "page=" . u(1) . "&order_name=" . u($fieldname) . "&order_type=" . u('ASC') . "&class_name=" . get_called_class());
 
-//                    $new_query_ASC="<a href='".$_SERVER["PHP_SELF"]."".$query_string."page=".u(1)."&order_name=".u($fieldname)."&order_type=".u('ASC')."'>'";
                     $new_query_ASC = "<a class='ajax-pagination' href='" . $href . "'>";
 
                     $href = clean_query_string($_SERVER["PHP_SELF"] . "" . $query_string . "page=" . u(1) . "&order_name=" . u($fieldname) . "&order_type=" . u('DESC') . "&class_name=" . get_called_class());
 
                     $new_query_ASC .= "<span class='glyphicon glyphicon-triangle-bottom' style='color: white' aria-hidden='true'></span></a>";
 
-//        $new_query_DESC="<a href='".$_SERVER["PHP_SELF"]."".$query_string."page=".u(1)."&order_name=".u($fieldname)."&order_type=".u('DESC')."'>'";
 
                     $new_query_DESC = "<a class='ajax-pagination' href='" . $href . "'>";
                     $new_query_DESC .= "<span class='glyphicon glyphicon-triangle-top' style='color: white'  aria-hidden='true'></span></a>";
@@ -1041,9 +1069,9 @@ class DatabaseObject
                     $fieldname = str_replace("_", " ", $fieldname);
                     $fieldname = ucfirst($fieldname);
 
-                    if(isset($text_th)){
+                    if (isset($text_th)) {
 //                        echo $text_th;
-                        $fieldname=$text_th;
+                        $fieldname = $text_th;
                         $fieldname = str_replace("_", " ", $fieldname);
                         $fieldname = ucfirst($fieldname);
                         unset($text_th);
@@ -1054,11 +1082,11 @@ class DatabaseObject
 
                         if ($_GET['order_type'] === "ASC") {
                             $new_query_ASC = "";
-                            $output .= "<th class='text-center' style='vertical-align:middle;background-color:=red;white-space:nowrap;'>" . $new_query_ASC . "&nbsp;" . $fieldname . $new_query_DESC . "&nbsp;" . "</th>";
+                            $output .= "<th class='text-center' style='vertical-align:middle;background-color:cornflowerblue;white-space:nowrap;'>" . $new_query_ASC . "&nbsp;" . $fieldname . $new_query_DESC . "&nbsp;" . "</th>";
 
                         } elseif ($_GET['order_type'] === "DESC") {
                             $new_query_DESC = "";
-                            $output .= "<th class='text-center' style='vertical-align:middle;background-color:=red;white-space:nowrap;'>" . $new_query_ASC . "&nbsp;" . $fieldname . $new_query_DESC . "&nbsp;" . "</th>";
+                            $output .= "<th class='text-center' style='vertical-align:middle;background-color:cornflowerblue;white-space:nowrap;'>" . $new_query_ASC . "&nbsp;<strong>" . $fieldname . $new_query_DESC . "&nbsp;</strong>" . "</th>";
 
                         } else {
 

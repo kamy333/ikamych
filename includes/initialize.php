@@ -48,6 +48,7 @@ $server_phpstorm = "PhpStorm 2016.1.2";
 defined('BR') ? null : define('BR','<br>');
 
 defined('LIB_PATH') ? null : define('LIB_PATH', SITE_ROOT.DS.'includes');
+defined('LIB_PATH_VENDOR') ? null : define('LIB_PATH_VENDOR', SITE_ROOT . DS . 'vendor');
 
 defined('PATH_UPLOAD') ? null : define('PATH_UPLOAD', SITE_ROOT.DS.'uploads');
 
@@ -107,6 +108,7 @@ require_once(LIB_PATH.DS . 'functions'.DS."reset_token_functions.php");
 
 
 require_once(LIB_PATH.DS.'config.php');
+require LIB_PATH_VENDOR . DS . 'autoload.php';
 
 $use_database_mysqli=false;
 
@@ -119,6 +121,8 @@ if($use_database_mysqli){
 
 require_once(LIB_PATH.DS.'database_object.php');
 require_once(LIB_PATH.DS.'pagination.php');
+require_once(LIB_PATH . DS . 'paginator.class.php');
+
 require_once(LIB_PATH.DS.'Form.php');
 require_once(LIB_PATH.DS.'FormValidation.php');
 require_once(LIB_PATH.DS.'Table.php');

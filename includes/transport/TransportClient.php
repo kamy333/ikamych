@@ -11,7 +11,7 @@ class TransportClient extends DatabaseObject
 
 protected static $table_name="transport_clients";
 
-    protected static $db_fields = array('id','pseudo','liste_restrictive','web_view','last_name','first_name','address','cp','city','country','default_price','default_depart','default_arrivee','liste_rank','remarque','input_date','modification_time','username');
+    protected static $db_fields = array('id', 'pseudo', 'liste_restrictive', 'web_view', 'last_name', 'first_name', 'address', 'cp', 'city', 'country', 'default_price', 'default_depart', 'default_arrivee', 'default_transport_type', 'liste_rank', 'remarque', 'input_date', 'modification_time', 'username');
 
 
 
@@ -338,6 +338,7 @@ public $country  ;
 public $default_price  ;
 public $default_depart  ;
 public $default_arrivee  ;
+    public $default_transport_type;
 public $liste_rank  ;
 public $remarque;
 public $input_date;

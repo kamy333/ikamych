@@ -25,7 +25,7 @@ class T_Aller_Retour extends DatabaseObjectAccess
 
     public $id;
 
-    public $Annee;
-    public $De_A;
+    public $Aller_Retour;
+    public $Aller_Retour_ID;
 
 }

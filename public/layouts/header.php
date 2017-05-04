@@ -7,12 +7,11 @@
 ?>
 <?php $page_name = $_SERVER['PHP_SELF'];?>
 
-
 <!-- TODO stylesheet footer  header below layout context -->
 <?php if (!isset($layout_header)) {$layout_header = "normal";	}?>
 
 <!doctype html>
-<html lang="en" <?php echo $angular ? "ng-app='myApp'" :"";?>>
+<html lang="en" <?php echo (isset($angular)) ? "ng-app='myApp'" : ""; ?>>
 <head>
 <!--    <meta charset="utf-8">-->
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />

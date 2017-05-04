@@ -838,6 +838,7 @@ CREATE TABLE `transport_clients` (
   `default_price`     DECIMAL(10, 2)            DEFAULT '0.00',
   `default_depart`    VARCHAR(70)               DEFAULT NULL,
   `default_arrivee`   VARCHAR(70)               DEFAULT NULL,
+
   `liste_rank`        INT(11)                   DEFAULT NULL,
   `remarque`          TEXT,
   `input_date`        DATE                      DEFAULT NULL,
@@ -1573,6 +1574,11 @@ INSERT INTO `transport_clients` VALUES
   (243, 'ZAKAR', 0, 'ZAKAR Thérèse', 'ZAKAR', 'Thérèse', 'Rue Du Bois-Melly 2', '1205', 'Genève', 'Suisse', NULL, NULL,
    NULL, 200, NULL, NULL, '0000-00-00 00:00:00', NULL);
 
+
+ALTER TABLE `transport_clients`
+  ADD `default_transport_type` VARCHAR(255) NULL DEFAULT NULL
+  AFTER `default_arrivee`;
+
 -- --------------------------------------------------------
 
 --
@@ -1653,7 +1659,7 @@ CREATE TABLE `transport_type` (
 -- Dumping data for table `transport_type`
 --
 
-INSERT INTO `transport_type` VALUES (1, 'standard', '2017-04-05', '2017-04-05 02:52:53', 'kamy');
+INSERT INTO `transport_type` VALUES (1, 'Standard', '2017-04-05', '2017-04-05 02:52:53', 'kamy');
 
 -- --------------------------------------------------------
 
