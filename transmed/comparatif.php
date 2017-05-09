@@ -25,6 +25,8 @@
                 <?php
                 //                echo "<pre>";
                 //                log_action('DatabaseObjectAccess','find_difference_xml_web_tables');
+                //                TransportClient::update_db_records_tables();
+
                 echo DatabaseObjectAccess::find_difference_xml_web_tables();
                 //                echo "</pre>";
 

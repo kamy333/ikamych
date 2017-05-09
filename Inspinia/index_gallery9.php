@@ -27,31 +27,16 @@ if (!User::is_admin()) {
 
             <?php
 
+            $directories = ['A', 'B', 'C', 'D'];
 
-            $h2 = "A";
-            $fol = "VOICE/A";
-            echo get_mp3($fol, $h2, $folder_project_name);
-            echo "<hr>";
-            unset($h2);
-            unset($fol);
+            foreach ($directories as $directory) {
+                $h2 = $directory;
+                $fol = "VOICE/$directory";
+                echo get_mp3($fol, $h2, $folder_project_name);
+                echo "<hr>";
+            }
+
             //
-            //$h2="B";
-            //$fol="VOICE/B";
-            //echo get_mp3($fol,$h2,$folder_project_name);
-            //unset($h2);
-            //unset($fol);
-
-            $h2 = "C";
-            $fol = "VOICE/C";
-            echo get_mp3($fol, $h2, $folder_project_name);
-            unset($h2);
-            unset($fol);
-
-            $h2 = "D";
-            $fol = "VOICE/D";
-            echo get_mp3($fol, $h2, $folder_project_name);
-            unset($h2);
-            unset($fol);
 
 
             ?>

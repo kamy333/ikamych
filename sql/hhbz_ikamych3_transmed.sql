@@ -1596,7 +1596,7 @@ CREATE TABLE `transport_programming` (
   `pseudo`              VARCHAR(50)               DEFAULT NULL,
   `pseudo_autres`       VARCHAR(50)               DEFAULT NULL,
   `heure`               VARCHAR(5)       NOT NULL,
-  `aller_retour`        VARCHAR(20)      NOT NULL DEFAULT 'AllerSimple',
+  `aller_retour`        TINYINT(1)       NOT NULL DEFAULT '0',
   `chauffeur_id`        INT(11) UNSIGNED          DEFAULT NULL,
   `depart`              VARCHAR(70)               DEFAULT NULL,
   `arrivee`             VARCHAR(70)               DEFAULT NULL,
@@ -1613,6 +1613,36 @@ CREATE TABLE `transport_programming` (
   DEFAULT CHARSET = utf8;
 
 -- --------------------------------------------------------
+ALTER TABLE `transport_programming`
+  ADD `drive_mode` TINYINT(1) NOT NULL DEFAULT 0
+  AFTER `heure`;
+
+
+ALTER TABLE `transport_programming`
+  ADD `start_drive` DATETIME NULL DEFAULT NULL
+  AFTER `arrivee`;
+
+ALTER TABLE `transport_programming`
+  ADD `end_drive` DATETIME NULL DEFAULT NULL
+  AFTER `arrivee`;
+
+ALTER TABLE `transport_programming`
+  ADD `aller_appel` TINYINT(1) NOT NULL DEFAULT 0
+  AFTER `aller_retour`;
+
+ALTER TABLE `transport_programming`
+  ADD `retour_appel` TINYINT(1) NOT NULL DEFAULT 0
+  AFTER `aller_retour`;
+
+# ALTER TABLE `transport_programming` DROP `aller_retour_origin_id`;
+# ALTER TABLE `transport_programming` DROP `aller_retour_yes_no`;
+
+ALTER TABLE `transport_programming`
+  ADD `aller_retour_origin_id` INT(11) NOT NULL DEFAULT 0
+  AFTER `aller_retour`;
+
+
+
 
 --
 -- Table structure for table `transport_programming_model`
@@ -1638,6 +1668,11 @@ CREATE TABLE `transport_programming_model` (
 )
   ENGINE = InnoDB
   DEFAULT CHARSET = utf8;
+
+
+ALTER TABLE `transport_programming_model`
+  ADD `appel` TINYINT(1) NOT NULL DEFAULT 0
+  AFTER `arrivee`;
 
 -- --------------------------------------------------------
 

@@ -71,6 +71,7 @@ class Form extends DatabaseObject{
 //$radio=array(0,array("label_text"=>"Visible","name"=>"visible","label"=>"oui","value"="0","for"=>"visible_no","default"=>true))
 //todo
     public $radio=array();
+    public $checkboxinline = array();
 
     public function __construct(){
         //  settype($this->required,"bool");
@@ -110,7 +111,7 @@ class Form extends DatabaseObject{
 
             $output.="<label ";
             if($this->form_format_type==self::FORM_HORIZONTAL){
-                $output .= "< class='{$this->col_sm_label} control-label' ";
+                $output .= " class='{$this->col_sm_label} control-label' ";
             } else {
                 $output.="class='sr-only'";
             }
@@ -119,7 +120,7 @@ class Form extends DatabaseObject{
 
 
             for($i=0; $i < count($this->radio); $i++){
-                $output.="   <label class='radio-inline' for='{$this->radio[$i][1]['id']}'>";
+                $output .= " <div class='radio radio-primary radio-inline'>";
                 $output.="    <input type='radio' name='{$this->radio[$i][1]['name']}' value='{$this->radio[$i][1]['value']}'";
 
 
@@ -127,7 +128,8 @@ class Form extends DatabaseObject{
 
                 if(isset($_POST[$this->radio[$i][1]['name']]) ){
                     if ($_POST[$this->radio[$i][1]['name']] == $this->radio[$i][1]['value']) {
-                        $output.= " checked"; }
+                        $output .= " checked ";
+                    }
                 } else {
                     if (isset($this->value)) {
                         if ($this->value == $this->radio[$i][1]['value']) {
@@ -139,8 +141,11 @@ class Form extends DatabaseObject{
 
 
                 $output.="   id='{$this->radio[$i][1]['id']}'  />";
+                $output .= "   <label for='{$this->radio[$i][1]['id']}'>";
                 $output.=$this->radio[$i][1]["label_radio"];
                 $output.=" </label>";
+
+                $output .= "</div>";
             }
 
 
@@ -553,7 +558,106 @@ class Form extends DatabaseObject{
 
     }
 
-public function textarea(){
+
+    public function checkbox()
+    {
+        $output = "";
+
+        if (isset($this->name) && isset($this->label_text)) {
+
+            $output .= "
+  <div class='form-group'>
+    <div class='col-sm-offset-3 col-sm-9'>
+<div class='switch'>
+                                <div class='checkbox  checkbox-primary'>
+                                    <input type='checkbox' name='{$this->name}' checked class='onoffswitch-checkbox' id='{$this->name}'>
+                                    <label class='onoffswitch-label' for='{$this->name}'>
+                                   
+                                  {$this->label_text}</label>
+                                </div>
+                            </div>
+                            
+                             </div>
+    </div>";
+        }
+        return $output;
+    }
+
+
+    public function checkboxinline()
+    {
+        $output = "";
+        if (isset($this->checkboxinline)) {
+            $output .= "<div ";
+            $output .= "class='form-group ";
+
+            if (isset($this->add_class)) {
+                $output .= $this->add_class;
+            }
+            $output .= "'";
+            $output .= ">";
+
+
+            $output .= "<label ";
+            if ($this->form_format_type == self::FORM_HORIZONTAL) {
+                $output .= " class='{$this->col_sm_label} control-label' ";
+            } else {
+                $output .= "class='sr-only'";
+            }
+            $output .= ">{$this->checkboxinline[0][1]['label_all']}</label>";
+
+//            $output.="<div class='checkbox checkbox-inline'>
+//                                            <input type='checkbox' id='inlineCheckbox1' value='option1'>
+//                                            <label for='inlineCheckbox1'> Inline One </label>
+//                                        </div>
+//                                        <div class='checkbox checkbox-success checkbox-inline'>
+//                                            <input type='checkbox' id='inlineCheckbox2' value='option1' checked=''>
+//                                            <label for='inlineCheckbox2'> Inline Two </label>
+//                                        </div>
+//                                        <div class='checkbox checkbox-inline'>
+//                                            <input type='checkbox' id='inlineCheckbox3' value='option1'>
+//                                            <label for='inlineCheckbox3'> Inline Three </label>
+//                                        </div>";
+
+            for ($i = 0; $i < count($this->checkboxinline); $i++) {
+                $output .= "<div class='checkbox checkbox-primary checkbox-inline'>";
+                $output .= "    <input type='checkbox' name='{$this->checkboxinline[$i][1]['name']}' value='{$this->checkboxinline[$i][1]['value']}'";
+
+
+                if (isset($_POST[$this->checkboxinline[$i][1]['name']])) {
+                    if ($_POST[$this->checkboxinline[$i][1]['name']] == $this->checkboxinline[$i][1]['value']) {
+                        $output .= " checked ";
+                    }
+                } else {
+                    if (isset($this->value)) {
+                        if ($this->value == $this->checkboxinline[$i][1]['value']) {
+                            $output .= " checked ";
+                        }
+
+                    }
+                }
+
+
+                $output .= "   id='{$this->checkboxinline[$i][1]['id']}'  />";
+                $output .= "   <label  for='{$this->checkboxinline[$i][1]['id']}'>";
+                $output .= $this->checkboxinline[$i][1]["label_checkbox"];
+                $output .= " </label>";
+                $output .= "</div>";
+            }
+
+
+            $output .= "</div>";
+
+            return $output;
+        } else {
+            $output = "error";
+            return $output;
+        }
+    }
+
+
+    public function textarea()
+    {
 $output="";
 
 $output.="<div class='form-group'>";

@@ -52,14 +52,14 @@ $(document).ready(function () {
         });
 
 
-        $(".addDate-course").on("click", function () {
-            event.preventDefault();
-            id = $(this).data("dateformid");
-            id1 = $(".theDate-" + id).val();
-            alert(id1);
-
-
-        });
+        // $(".addDate-course").on("click", function () {
+        //     event.preventDefault();
+        //     id = $(this).data("dateformid");
+        //     id1 = $(".theDate-" + id).val();
+        //     alert(id1);
+        //
+        //
+        // });
 
 
     }

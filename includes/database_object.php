@@ -503,7 +503,7 @@ class DatabaseObject
             }
 
 // clockwise special hour format
-            $type_exception = array('radio', 'checkbox', 'textarea');
+            $type_exception = array('radio', 'checkbox', 'checkboxinline', 'textarea');
 
 //must be one of the following input to use ->text() todo checkbox
             $type_no_exception = array("text", 'password', 'email', 'select', 'search', 'date', 'datetime', 'datetime-local', 'color', 'button', 'file', 'hidden', 'image', 'month', 'number', 'range', 'reset', 'search', 'submit', 'tel', 'file', 'url', 'selectchosen', 'time', 'datetime-local', 'clockwise');
@@ -546,6 +546,26 @@ class DatabaseObject
             } elseif ($type == "combox") {
                 //todo need to add forms
 
+            } elseif ($type == "checkbox") {
+                foreach ($vars as $attr => $val) {
+
+                    $form->$attr = $val;
+                }
+
+
+            } elseif ($type == "checkboxinline") {
+                foreach ($vars as $attr => $val) {
+                    if (is_array($val)) {
+                        foreach ($val as $attr2 => $val2) {
+                            $form->checkboxinline[(int)$attr] = $val;
+//                        $form->radio[$attr] = $val;
+                        }
+                    } else {
+                        $form->checkboxinline[(int)$attr] = $val;
+                    }
+
+                }
+
             } else {
             }
 
@@ -577,6 +597,10 @@ class DatabaseObject
                 $output = $form->textarea();
             } elseif ($type == "clockwise") {
                 $output = $form->clockwise();
+            } elseif ($type == "checkbox") {
+                $output = $form->checkbox();
+            } elseif ($type == "checkboxinline") {
+                $output = $form->checkboxinline();
             } else {
 
             }

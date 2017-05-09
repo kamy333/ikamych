@@ -908,3 +908,12 @@
 2017-05-04 18:09:15 | log: DataBaseClient with 1377 records - TransportClient with 1377 records - Difference Of 0
 2017-05-04 18:09:15 | log: T_Chauffeur with 21 records - TransportChauffeur with 21 records - Difference Of 0
 2017-05-04 18:09:15 | log: T_Type_Transport with 4 records - TransportType with 4 records - Difference Of 0
+2017-05-05 03:26:12 | log: DataBaseClient with 1377 records - TransportClient with 1377 records - Difference Of 0
+2017-05-05 03:26:12 | log: T_Chauffeur with 21 records - TransportChauffeur with 21 records - Difference Of 0
+2017-05-05 03:26:12 | log: T_Type_Transport with 4 records - TransportType with 4 records - Difference Of 0
+2017-05-05 05:09:35 | log: DataBaseClient with 1377 records - TransportClient with 1377 records - Difference Of 0
+2017-05-05 05:09:35 | log: T_Chauffeur with 21 records - TransportChauffeur with 21 records - Difference Of 0
+2017-05-05 05:09:35 | log: T_Type_Transport with 4 records - TransportType with 4 records - Difference Of 0
+2017-05-08 11:01:31 | log: DataBaseClient with 1377 records - TransportClient with 1377 records - Difference Of 0
+2017-05-08 11:01:31 | log: T_Chauffeur with 21 records - TransportChauffeur with 21 records - Difference Of 0
+2017-05-08 11:01:31 | log: T_Type_Transport with 4 records - TransportType with 4 records - Difference Of 0

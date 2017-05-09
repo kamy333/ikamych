@@ -98,92 +98,6 @@ if (request_is_post() && request_is_same_domain()) {
 <?php echo isset($message) ? output_message($message) : ""; ?>
 <?php checking(false); ?>
 
-<!--<div class="col-md-4">-->
-<!--    <p>-->
-<!--        A placeholder value can be defined and will be displayed until a selection is made.-->
-<!--    </p>-->
-<!--    <select class="select2_demo_3 form-control">-->
-<!--        <option></option>-->
-<!--        <option value="Bahamas">Bahamas</option>-->
-<!--        <option value="Bahrain">Bahrain</option>-->
-<!--        <option value="Bangladesh">Bangladesh</option>-->
-<!--        <option value="Barbados">Barbados</option>-->
-<!--        <option value="Belarus">Belarus</option>-->
-<!--        <option value="Belgium">Belgium</option>-->
-<!--        <option value="Belize">Belize</option>-->
-<!--        <option value="Benin">Benin</option>-->
-<!--    </select>-->
-<!---->
-<!--</div>-->
-
-<!--<div class="ibox float-e-margins">
-    <div class="ibox-title">
-        <h5>Chosen select <small>http://harvesthq.github.io/chosen/</small></h5>
-        <div class="ibox-tools">
-            <a class="collapse-link">
-                <i class="fa fa-chevron-up"></i>
-            </a>
-            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                <i class="fa fa-wrench"></i>
-            </a>
-            <ul class="dropdown-menu dropdown-user">
-                <li><a href="#">Config option 1</a>
-                </li>
-                <li><a href="#">Config option 2</a>
-                </li>
-            </ul>
-            <a class="close-link">
-                <i class="fa fa-times"></i>
-            </a>
-        </div>
-    </div>
-    <div class="ibox-content">
-        <p>
-            With chosen select uesr can fase chose from large in select input.
-        </p>
-        <div class="form-group">
-            <label class="font-noraml">Basic example</label>
-            <div class="input-group">
-                <select data-placeholder="Choose a Country..." class="chosen-select" style="width:350px;" tabindex="2">
-                    <option value="">Select</option>
-                    <option value="United States">United States</option>
-
-                    <option value="Cayman Islands">Cayman Islands</option>
-                    <option value="Central African Republic">Central African Republic</option>
-                    <option value="Chad">Chad</option>
-                    <option value="Chile">Chile</option>
-                    <option value="China">China</option>
-                    <option value="Christmas Island">Christmas Island</option>
-                    <option value="Cocos (Keeling) Islands">Cocos (Keeling) Islands</option>
-
-                      </select>
-            </div>
-        </div>
-        <div class="form-group">
-            <label class="font-noraml">Multi select</label>
-            <div class="input-group">
-                <select data-placeholder="Choose a Country..." class="chosen-select" multiple style="width:350px;" tabindex="4">
-                    <option value="">Select</option>
-                    <option value="United States">United States</option>
-                    <option value="United Kingdom">United Kingdom</option>
-                       <option value="Norway">Norway</option>
-                    <option value="Oman">Oman</option>
-
-                    <option value="Saint Kitts and Nevis">Saint Kitts and Nevis</option>
-                    <option value="Saint Lucia">Saint Lucia</option>
-                    <option value="Saint Martin (French part)">Saint Martin (French part)</option>
-                      <option value="South Georgia and The South Sandwich Islands">South Georgia and The South Sandwich Islands</option>
-                    <option value="South Sudan">South Sudan</option>
-                    <option value="Spain">Spain</option>
-                    <option value="Sri Lanka">Sri Lanka</option>
-                 <option value="Zimbabwe">Zimbabwe</option>
-                </select>
-            </div>
-        </div>
-
-    </div>
-</div>-->
-
 
 <div class="wrapper wrapper-content animated fadeInRight">
 
@@ -199,36 +113,22 @@ if (request_is_post() && request_is_same_domain()) {
                     <div class="background_light_blue">
 
 
-                        <form name="form_client" class="form-horizontal" method="post"
-                              action="<?php echo $post_link; ?>">
-
-                            <!--                                    <fieldset id="login" title="Client">-->
-                            <!--                                        <legend class="text-center" style="color: #0000ff">-->
-                            <?php //echo $page1 . $class_name::$page_name ?><!--</legend>-->
 
 
                             <?php
+                            echo call_user_func(array($class_name, 'Create_form'));
+                            ?>
 
 
-                            echo Table::ibox_table($class_name::construct_form($get_item), 'Edit ' . $class_name, 12);
-                            echo Form::form_id();
-                            echo csrf_token_tag(); ?>
 
 
-                            <!--                                    </fieldset>-->
 
-
-                            <div class="col-sm-offset-3 col-sm-7 col-xs-3">
-                                <button type="submit" name="submit"
-                                        class="btn btn-primary"><?php echo $page . " " . $class_name; ?></button>
-                            </div>
 
                             <div class="text-right ">
                                 <a href="<?php echo $class_name::$page_manage; ?>" class="btn btn-info " role="button">Cancel</a>
                             </div>
 
 
-                        </form>
                     </div>
                 </div>
 

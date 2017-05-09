@@ -10,7 +10,13 @@ $class_name = MyClasses::redirect_disable_class();
 //$class_name ="ViewTransportModelPivot";
 call_user_func_array(array($class_name, 'change_to_unique_data'), ['transport']);
 
+if (method_exists($class_name, 'updateDefiningTiming') && isset($_GET['action']) && $_GET['action'] == "updateDefiningTiming") {
+    call_user_func_array(array($class_name, 'updateDefiningTiming'), ['']);
+}
 
+if (method_exists($class_name, 'updateValidation') && isset($_GET['action']) && $_GET['action'] == "updateValidation") {
+    call_user_func_array(array($class_name, 'updateValidation'), ['']);
+}
 
 if (isset($_GET['id'])&& isset($_GET['action'])&& $_GET['action']=="edit" &&  !isset($_GET['duplicate_record'])    ) {
 
@@ -33,9 +39,6 @@ if (isset($_GET['id'])&& isset($_GET['action'])&& $_GET['action']=="edit" &&  !i
 
 
 if (request_is_post() && request_is_same_domain()) {
-
-
-
 
     if (!csrf_token_is_valid() || !csrf_token_is_recent()) {
         $message = "Sorry, request was not valid.";

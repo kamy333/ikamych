@@ -11,7 +11,7 @@ class TransportProgrammingModel extends DatabaseObject
 
     public static $fields_numeric=array('id','user_id','week_day_rank_id','client_id','chauffeur_id','type_transport_id','prix_course');
     public static $fields_numeric_format=array('prix_course');
-    public static $get_form_element = array('id', 'visible', 'week_day_rank_id', 'client_habituel', 'client_id', 'heure', 'inverse_address', 'depart', 'arrivee', 'prix_course', 'chauffeur_id', 'type_transport_id', 'remarque');
+    public static $get_form_element = array('id', 'visible', 'week_day_rank_id', 'client_habituel', 'client_id', 'heure', 'inverse_address', 'depart', 'arrivee', 'appel', 'prix_course', 'chauffeur_id', 'type_transport_id', 'remarque');
     public static $get_form_element_chauffeur = array('id', 'visible', 'week_day_rank_id', 'client_habituel', 'client_id', 'heure', 'inverse_address', 'depart', 'arrivee', 'prix_course', 'chauffeur_id', 'type_transport_id', 'remarque');
     public static $get_form_element_others=array();
     public static $form_default_value=array(
@@ -37,10 +37,10 @@ class TransportProgrammingModel extends DatabaseObject
 
     protected static $table_name = "transport_programming_model";
 
-    protected static $db_fields = array('id', 'visible', 'week_day_rank_id', 'client_habituel', 'client_id', 'heure', 'inverse_address', 'depart', 'arrivee', 'prix_course', 'chauffeur_id', 'type_transport_id', 'remarque', 'input_date', 'modification_time', 'username');
+    protected static $db_fields = array('id', 'visible', 'week_day_rank_id', 'client_habituel', 'client_id', 'heure', 'inverse_address', 'depart', 'arrivee', 'appel', 'prix_course', 'chauffeur_id', 'type_transport_id', 'remarque', 'input_date', 'modification_time', 'username');
     protected static $required_fields = array('visible', 'week_day_rank_id', 'client_habituel', 'client_id', 'heure', 'inverse_address', 'depart', 'arrivee', 'chauffeur_id', 'type_transport_id',);
-    protected static $db_fields_table_display_short = array('id', 'visible', 'week_day_rank_id', 'client_habituel', 'client_id', 'heure', 'inverse_address', 'depart', 'arrivee', 'prix_course', 'chauffeur_id', 'type_transport_id', 'remarque');
-    protected static $db_fields_table_display_full = array('id', 'visible', 'week_day_rank_id', 'client_habituel', 'client_id', 'heure', 'inverse_address', 'depart', 'arrivee', 'prix_course', 'chauffeur_id', 'type_transport_id', 'remarque', 'input_date', 'modification_time', 'username');
+    protected static $db_fields_table_display_short = array('id', 'visible', 'week_day_rank_id', 'client_habituel', 'client_id', 'heure', 'inverse_address', 'depart', 'arrivee', 'appel', 'prix_course', 'chauffeur_id', 'type_transport_id', 'remarque');
+    protected static $db_fields_table_display_full = array('id', 'visible', 'week_day_rank_id', 'client_habituel', 'client_id', 'heure', 'inverse_address', 'depart', 'arrivee', 'appel', 'prix_course', 'chauffeur_id', 'type_transport_id', 'remarque', 'input_date', 'modification_time', 'username');
     protected static $db_field_exclude_table_display_sort = array();
     protected static $form_properties= array(
         "visible" =>array("type"=>"radio",
@@ -338,7 +338,7 @@ public $remarque  ;
 public $input_date;
 public $modification_time;
 public $username;
-
+    public $appel;
 
 public $color;
 

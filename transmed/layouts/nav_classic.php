@@ -227,6 +227,11 @@ if ($layout_context == "public") {
                             <!-- --><?php //echo $Nav->menu_item('','transmed','manage_ajax.php?class_name=TransportChauffeur','../transmed/admin') ?>
                             <li><a href="<?php echo $Nav->http . "transmed/"; ?>index.php">Public Transmed</a></li>
                             <li><a href="<?php echo $Nav->http . "transmed/admin/"; ?>index.php">Admin Transmed</a></li>
+                            <?php echo $Nav->menu_item('Course', 'Course', 'transport.php', 'public') ?>
+                            <?php echo $Nav->menu_item('Model', 'Model', 'transport.php', 'public') ?>
+
+
+
                             <li><a href="<?php echo $Nav->http . "transmed/"; ?>import_access.php">Import Access</a>
                             </li>
                             <li><a href="<?php echo $Nav->http . "transmed/"; ?>comparatif.php">comparatif</a></li>

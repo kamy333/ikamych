@@ -123,6 +123,8 @@ function date_format_to_sql($date, $format = 'YYYY-MM-DD')
     // $field="Date" ;
 
     $mydate = trim($date);
+
+//    return;
     if ($format == 'YYYY-MM-DD') list($year, $month, $day) = explode('-', $mydate);
     if ($format == 'YYYY/MM/DD') list($year, $month, $day) = explode('/', $mydate);
     if ($format == 'YYYY.MM.DD') list($year, $month, $day) = explode('.', $mydate);
@@ -135,6 +137,17 @@ function date_format_to_sql($date, $format = 'YYYY-MM-DD')
     if ($format == 'MM/DD/YYYY') list($month, $day, $year) = explode('/', $mydate);
     if ($format == 'MM.DD.YYYY') list($month, $day, $year) = explode('.', $mydate);
 
+//    echo $date;
+//    echo $format;
+//   echo $year;
+//  echo  $month ;
+//  echo  $day;
+//    echo $year=(int)$year;
+//    echo  $month=(int)$month ;
+//    echo  $day=(int)$day;
+
+
+//    return;
     if (is_numeric($year) && is_numeric($month) && is_numeric($day)) {
         if (!checkdate($month, $day, $year)) {
             exit("error date look format");

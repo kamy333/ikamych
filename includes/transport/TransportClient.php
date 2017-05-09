@@ -378,7 +378,36 @@ public $username;
         $output.="<a  class=\"btn btn-primary\"  href=\"". MyExpensePerson::$page_manage ."\">View Person ". " </a>";
         return $output;
     }
-    
-    
+
+    protected function set_up_display()
+    {
+        if (empty($this->web_view)) {
+            if (empty($this->last_name)) {
+                $this->web_view = $this->pseudo;
+            } else {
+                $this->web_view = $this->last_name;
+            }
+        }
+    }
+
+
+    public static function update_db_records_tables()
+    {
+        $clients = static::find_all();
+
+        foreach ($clients as $client) {
+            if (empty($client->web_view)) {
+                if (empty($client->last_name)) {
+                    $client->web_view = $client->pseudo;
+                } else {
+                    $client->web_view = $client->last_name;
+                }
+
+                $client->save();
+            }
+        }
+
+
+    }
     
 }

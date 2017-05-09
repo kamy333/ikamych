@@ -1833,10 +1833,13 @@
                                             <label></label>
                                         </div>
                                         <p>Inline radios</p>
+
                                         <div class="radio radio-info radio-inline">
                                             <input type="radio" id="inlineRadio1" value="option1" name="radioInline" checked="">
                                             <label for="inlineRadio1"> Inline One </label>
                                         </div>
+
+
                                         <div class="radio radio-inline">
                                             <input type="radio" id="inlineRadio2" value="option2" name="radioInline">
                                             <label for="inlineRadio2"> Inline Two </label>

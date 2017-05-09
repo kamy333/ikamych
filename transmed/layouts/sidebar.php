@@ -119,7 +119,8 @@
                         <span class="fa arrow"></span></a>
 
                     <ul class="nav nav-second-level <?php echo $class_admin_collapse; ?>">
-
+                        <?php echo $Nav->menu_item('Course', 'Course', 'transport.php', 'public') ?>
+                        <?php echo $Nav->menu_item('Model', 'Model', 'transport.php', 'public') ?>
                         <?php echo $Nav->menu_item('', 'Import', 'import_access.php', 'public') ?>
                         <?php echo $Nav->menu_item('', ' Comparatif', 'comparatif.php', 'public') ?>
 

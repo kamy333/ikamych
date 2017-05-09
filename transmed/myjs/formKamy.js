@@ -153,7 +153,7 @@ $(document).ready(function () {
         startDate: moment().subtract(29, 'days'),
         endDate: moment(),
         minDate: '01/01/2012',
-        maxDate: '12/31/2015',
+        maxDate: '12/31/2018',
         dateLimit: {days: 60},
         showDropdowns: true,
         showWeekNumbers: true,

@@ -222,6 +222,7 @@ class Chat extends DatabaseObject {
     public static function get_chat_body(){
         global $session;
 
+        /** @noinspection SqlResolve */
         $sql="SELECT * FROM ".static::$table_name.' WHERE to_user_id ='.$session->user_id." ORDER BY input_date DESC";
         $output="";
 

@@ -178,6 +178,11 @@ class DatabaseObjectAccess extends DatabaseObject
         return $output;
     }
 
+    public static function update_db_records_tables()
+    {
+        //to be used to update
+    }
+
     public static function add_db_records_tables()
     {
 
@@ -208,6 +213,8 @@ class DatabaseObjectAccess extends DatabaseObject
 
         }
         array_push($result, $i++ . ' OK ' . get_called_class());
+
+        static::update_db_records_tables();
 
         return $result;
 

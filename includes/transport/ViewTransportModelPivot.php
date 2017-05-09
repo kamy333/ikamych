@@ -75,6 +75,7 @@ class ViewTransportModelPivot extends TransportProgrammingModel
 
         $sql = "SELECT * FROM " . static::$table_name . $q;
         $items = self::find_by_sql($sql);
+        global $Nav;
 
         $day_wk_fr = ["Dim", "Lun", "Mar", "Mer", "Jeu", "Ven", "Sam"];
         $day_full_wk_fr = ["Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"];
@@ -161,14 +162,14 @@ class ViewTransportModelPivot extends TransportProgrammingModel
                 $output .= "<th class='text-center' style='vertical-align: middle'>" .
                     " 
 <div class='form-group'  id='data_$i'>
-  <form method='post' class='formDate form-inline'  action='transport.php?class_name=TransportProgrammingModel'>
+  <form method='post' class='formDate form-inline'  action='{$Nav->path_admin}model_course.php?class_name=TransportProgrammingModel'>
 
         <div class='input-group date  model-pivot-date'>                                                              
                 <span class='input-group-addon'><i class='fa fa-calendar'></i></span>               
-                    <input type='text' class='form-control theDate-$i' name='date' value='{$date}'>                    <input type='text' class='hidden' name='week_day_rank_id' value='$i' >
-        
-        </div>
-                  
+   <input type='text' class='form-control theDate-$i' name='date1' value='{$date}'>
+             </div>
+    <input type='text' class='hidden' name='week_day_rank_id' value='$i' >
+   <input type='text' class='hidden' name='class_name' value='TransportProgrammingModel' >               
          
              <div class='input-group-addon'>
                  <input type='submit' class='btn btn-{$color_button} addDate-course' data-dateformid='$i' name='submit' value='Ajouter'>
@@ -176,9 +177,7 @@ class ViewTransportModelPivot extends TransportProgrammingModel
          
                           
   </form> 
-</div>      
-                
-                            ";
+</div>";
                 $output .= "</th>";
 
 

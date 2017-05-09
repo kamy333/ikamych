@@ -48,8 +48,8 @@
                         <ul role="menu" class="dropdown-menu">
 
 
-                            <?php echo $Nav->menu_item('', 'Model', 'transport.php?cl=Model', 'none', false) ?>
-                            <?php echo $Nav->menu_item('', 'Courses', 'transport.php?cl=Course', 'none', false) ?>
+                            <?php echo $Nav->menu_item('Course', 'Course', 'transport.php', 'public') ?>
+                            <?php echo $Nav->menu_item('Model', 'Model', 'transport.php', 'public') ?>
                             <?php echo $Nav->menu_item('', 'Clients', 'transport.php?cl=tClient', 'none', false) ?>
                             <?php echo $Nav->menu_item('', 'Chauffeur', 'transport.php?cl=Chauffeur', 'none', false) ?>
                             <?php echo $Nav->menu_item('', 'Transport Type', 'transport.php?cl=TransportType', 'none', false) ?>

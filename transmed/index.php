@@ -58,7 +58,7 @@ function button_color($color, $txt = "xxx", $href = false, $href_env = "")
                 <div class="row bg-white">
                     <p class="text-center">Transport</p>
                     <?php echo button_color('success', 'Model', 'transport.php?cl=Model', ''); ?>
-                    <?php echo button_color('primary', 'Courses', 'transport.php?cl=Course', ''); ?>
+                    <?php echo button_color('primary', 'Courses', 'transport.php?class_name=Course', ''); ?>
                     <?php echo button_color('primary', 'Clients', 'transport.php?cl=tClient', ''); ?>
                     <?php echo button_color('danger', 'Chauffeur', 'transport.php?cl=Chauffeur', ''); ?>
                     <?php echo button_color('warning', 'Transport Type', 'transport.php?cl=TransportType', ''); ?>
