@@ -271,6 +271,7 @@ $(document).ready(function () {
         });
 
 
+
     }
 
     function addAllListeners() {
@@ -356,10 +357,13 @@ $(document).ready(function () {
 
         $.post(newUrl, form_data, function (data, status, xhr) {
             xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-            if (xhr.readyState == 4 && xhr.status == 200) {
+            if (xhr.readyState === 4 && xhr.status === 200) {
                 hideSpinner();
                 enableSubmitButton();
                 var json = data;
+
+                console.log(json);
+
                 if (json.hasOwnProperty('errors') && json.errors.length > 0) {
 
                     alertError(json.errors);
@@ -395,6 +399,7 @@ $(document).ready(function () {
     function removeListenersPostForm() {
         $("#update-form-button , #add-form-button").off("click");
         $("#cancel-update-new").off("click");
+
 
 
     }

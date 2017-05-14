@@ -11,6 +11,7 @@ class ViewTransportModel extends TransportProgrammingModel
 
     protected static $table_name = "transport_model";
 
+
     protected static $db_fields = array(
         'PrimaryKey', 'heure', 'jour', 'client_id', 'visible', 'pseudo', 'client_sort', 'web_view', 'modele_id',
         'inverse_address', 'depart', 'arrivee', 'liste_restrictive', 'prix_course',

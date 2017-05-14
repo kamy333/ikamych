@@ -13,7 +13,9 @@
 
 
 <!-- Mainly scripts -->
-<script src="js/jquery-2.1.1.js"></script>
+<!--<script src="js/jquery-2.1.1.js"></script>-->
+<script src="js/jquery-3.1.1.min.js"></script>
+
 <!--<script src="//code.jquery.com/jquery-1.12.4.js"></script>-->
 <script src="js/bootstrap.min.js"></script>
 <script src="js/plugins/metisMenu/jquery.metisMenu.js"></script>
@@ -150,6 +152,9 @@ unset($pages) ?>
 
     <!-- Date range use moment.js same as full calendar plugin -->
     <script src="<?php echo $Nav->path_public; ?>js/plugins/fullcalendar/moment.min.js"></script>
+
+    <!-- Typehead -->
+    <script src="<?php echo $Nav->path_public; ?>js/plugins/typehead/bootstrap3-typeahead.min.js"></script>
 
     <!-- Date range picker -->
     <script src="<?php echo $Nav->path_public; ?>js/plugins/daterangepicker/daterangepicker.js"></script>

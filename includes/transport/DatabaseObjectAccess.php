@@ -24,7 +24,7 @@ class DatabaseObjectAccess extends DatabaseObject
         'T_Frequence_Facturation', 'T_Genre', 'T_Heure', 'T_Pays', 'T_Prix_Course', 'T_Ville', 'T_Type_Facturation'
     ];
 
-    public static $class_transmed = ['TransportChauffeur', 'TransportClient', 'TransportType', 'TransportProgramming', 'TransportProgrammingModel', 'ViewTransportModel', 'ViewTransportModel', 'ViewTransportModelVisibleNo', 'ViewTransportModelVisibleYes', 'ViewTransportModelPivot', 'ViewTransportModelPivotNo', 'ViewTransportModelPivotYes', 'ViewTransportSummaryCourseDateProgram', 'ViewTransportModelByChauffeur', "Course", "Model"
+    public static $class_transmed = ['TransportChauffeur', 'TransportClient', 'TransportType', 'TransportProgramming', 'TransportProgrammingModel', 'ViewTransportModel', 'ViewTransportModel', 'ViewTransportModelVisibleNo', 'ViewTransportModelVisibleYes', 'ViewTransportModelPivot', 'ViewTransportModelPivotNo', 'ViewTransportModelPivotYes', 'ViewTransportSummaryCourseDateProgram', 'ViewTransportModelByChauffeur', "Course", "Model", "ViewTransportAdresse", "CourseByChauffeur"
     ];
 
     public static function require_file()

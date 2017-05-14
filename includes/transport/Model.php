@@ -21,23 +21,33 @@ class Model extends TransportProgrammingModel
 //    public static $fields_numeric_float = array('prix_course');
 
 
-    public static function export_to_course_all($week_day_rank, $date_sql, $visible = 1)
+    public static function export_to_course_all($week_day_rank, $date_sql, $visible = 1, $id = null)
     {
 
         global $session;
+        $username = User::find_by_id($session->user_id)->username;
+
+
 
         $day_no = (int)e(trim($week_day_rank));
         $visible = (int)e(trim($visible));;
         $date = e($date_sql);
 
-        $AR = T_Aller_Retour::find_by_id(1);
-        $aller_retour = $AR->Aller_Retour;
-
+//        $AR = T_Aller_Retour::find_by_id(1);
+//        $aller_retour = $AR->Aller_Retour;
+        $aller_retour = 0;
         $countCourse = Course::count_all_where("WHERE course_date='" . $date . "'");
 
+        if (is_null($id)) {
+            /** @noinspection SqlResolve */
+            $sql = "SELECT * FROM " . static::$table_name . " WHERE week_day_rank_id= " . $day_no . " AND visible=" . $visible;
 
-        /** @noinspection SqlResolve */
-        $sql = "SELECT * FROM " . static::$table_name . " WHERE week_day_rank_id= " . $day_no . " AND visible=" . $visible;
+        } else {
+            /** @noinspection SqlResolve */
+            $sql = "SELECT * FROM " . static::$table_name . " WHERE week_day_rank_id= " . $day_no . " AND id=" . e($id);
+        }
+
+//        echo $sql;
 
         $models = static::find_by_sql($sql);
         $equivalences = static::$table_equivalence["Model/Course"];
@@ -56,7 +66,13 @@ class Model extends TransportProgrammingModel
 //                add date indenpendantly since not included in model
                 $course->course_date = $date;
                 $course->aller_retour = $aller_retour;
-
+                $course->drive_mode = 0;
+                $course->aller_retour = 0;
+                $course->appel = 0;
+                $course->aller_retour_origin_id = 0;
+                $course->retour_appel = 0;
+                $course->input_date = now_sql();
+                $course->username = $username;
             }
 //            echo '<pre>';
 //            var_dump($model);

@@ -42,6 +42,7 @@ class DatabaseObject
     protected static $field_replace_display = null;
     protected static $form_properties;
     protected static $form_properties_search;
+    public static $db_fields_not_set_post = [];
 
     public static function post_form_class()
     {
@@ -450,6 +451,8 @@ class DatabaseObject
 
             $get_item ? $value = $get_item->$val : $value = $myvalue;
             $output .= static::get_form($val, $value);
+
+//            echo $get_item->aller_appel;
 //            if($get_item->id==1){
 ////                var_dump(static::get_form($val, $value));
 //
@@ -572,6 +575,8 @@ class DatabaseObject
 
 //to do
             if (!empty($value) || (int)$value === 0) {
+//                echo "<script>alert('DDD $name ----$value')</script>";
+
                 $form->value = $value;
             } else {
                 if ($type == "number") {

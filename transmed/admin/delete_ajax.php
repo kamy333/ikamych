@@ -1,4 +1,5 @@
-<?php require_once('../../includes/initialize_transmed.php'); ?>
+<?php require_once('../../includes/initialize_transmed.php');
+?>
 <?php $session->confirmation_protected_page(); ?>
 <?php if (User::is_employee() || User::is_visitor()) {
     redirect_to('index.php');

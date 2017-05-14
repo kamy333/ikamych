@@ -1642,6 +1642,9 @@ ALTER TABLE `transport_programming`
   AFTER `aller_retour`;
 
 
+ALTER TABLE `transport_programming`
+  ADD `appel` TINYINT(1) NOT NULL DEFAULT 0
+  AFTER `aller_retour`;
 
 
 --
@@ -2546,6 +2549,32 @@ DROP VIEW IF EXISTS transport_model_pivot;
 DROP VIEW IF EXISTS transport_model_pivot_visible_yes;
 DROP VIEW IF EXISTS transport_model_pivot_visible_no;
 DROP VIEW IF EXISTS transport_summary_by_course_date_program;
+
+DROP VIEW IF EXISTS transport_view_adresse;
+
+
+CREATE VIEW transport_view_adresse AS
+  (SELECT DISTINCT
+     c.Pseudo AS pseudo,
+     c.Depart AS adresse
+   FROM DatabaseCourse AS c)
+  UNION
+  (SELECT DISTINCT
+     c.Pseudo  AS pseudo,
+     c.Arrivee AS adresse
+   FROM DatabaseCourse AS c)
+  UNION
+  (SELECT DISTINCT
+     t.pseudo AS pseudo,
+     t.depart AS adresse
+   FROM transport_programming AS t)
+  UNION
+  (SELECT DISTINCT
+     t.pseudo  AS pseudo,
+     t.arrivee AS adresse
+   FROM transport_programming AS t)
+
+  ORDER BY pseudo;
 
 
 CREATE VIEW `transport_model_visible_no` AS

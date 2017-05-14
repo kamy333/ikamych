@@ -142,7 +142,7 @@ class ToDoList extends DatabaseObject
         "rank" => array("type" => "select",
             "name" => 'rank',
             "id" => "search_rank",
-            "class" => "MyExpenseType",
+            "class" => "ToDoList",
             "label_text" => "",
             "select_option_text" => 'rank',
             'field_option_0' => "rank",

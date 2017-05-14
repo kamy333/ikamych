@@ -298,22 +298,21 @@ Tout le monde boit, et le juif va voir Dieudonné pour le remercier très chaleu
 Ce dernier le remercie encore plus chaleureusement. N’y comprenant rien, Dieudonné se tourne vers le barman :
 – Je comprend pas, pourquoi il me remercie ce mec ?
 – C’est parce que c’est lui le patron !";
-echo htmlentities($text,ENT_COMPAT,"utf-8");
+echo "<pre>" . h($text) . "</pre><hr>";
 
-echo "<hr>";
 $text="- Deux juifs se rencontrent sur le quai d'une gare:
 - Où vas-tu ?
 - Je vais à Cracovie.
 - Tu me dis que tu vas à Cracovie, pour que je crois que tu vas à Lodz, alors que je sais que tu vas à Cracovie. Alors pourquoi mens-tu ?";
-echo htmlentities($text,ENT_COMPAT,"utf-8");
-echo "<hr>";
+echo "<pre>" . h($text) . "</pre><hr>";
+
 $text="A la sortie de la deuxième guerre mondiale, l'employé demande au candidat juif à l’émigration :
 - Dans quel pays voulez vous vous rendre ?
 - En Australie.
 - En Australie ? mais c'est loin !
 - Loin d'où ?";
-echo htmlentities($text,ENT_COMPAT,"utf-8");
-echo "<hr>";
+echo "<pre>" . h($text) . "</pre><hr>";
+
 $text="Au sentier a Paris un commerçant chinois va voir son voisin Élie pour se plaindre qu'il s'est encore fait cambrioler pour la 37eme fois ce trimestre alors que tous les autres commerçant juif eux presque pas.
 Élie le console comme il peut et lui dit:
 -Mais qu'est ce que je peut faite pour toi? En quoi puis je t'aider?
@@ -329,8 +328,8 @@ Une semaine après lui avoir fourni la Mezouza le chinois revient voir Élie qui
 - Mais pourquoi? Si cela t'a protégé des cambrioleurs!?
 - Protection cambriolage parfait! Mais toute la journée beaucoup trop de rabbins venir demander tsedaka!!!!
 ";
-echo htmlentities($text,ENT_COMPAT,"utf-8");
-echo "<hr>";
+echo "<pre>" . h($text) . "</pre><hr>";
+
 $text="3 mères juives discutent de leur fils respectifs...
 La première:
 - Moi mon fils, il et tellement riche qu'il pourrait acheter Paris!
@@ -338,12 +337,27 @@ La seconde, un peu vexée:
 - Moi mon fils, il a tellement d'argent qu'il pourrait s'offrir Paris ET New-York!
 Alors la troisième termine:
 - Et qu'est ce qui vous fait croire que mon fils a envie de vendre?";
-echo htmlentities($text,ENT_COMPAT,"utf-8");
-echo "<hr>";
+echo "<pre>" . h($text) . "</pre><hr>";
+
 
 $text="C’est un curé et un rabbin, très bons amis. Le curé dit à son ami rabbin : « tu sais, je connais une magouille pour ne pas payer au restaurant : il suffit d’attendre que tous les clients soient partis et que le restaurant ferme ses portes, tu vas voir ! ». Ils se rendent donc au restaurant, commandent, dinent et attendent que tous les clients soient partis jusqu’à presque fermeture des portes ! Un serveur dit : ' ces messieurs ont-ils réglé ? ' Et le rabbin répond : « oui et nous attendons toujours notre monnaie ! »";
-echo htmlentities($text,ENT_COMPAT,"utf-8");
-echo "<hr>";
+echo "<pre>" . h($text) . "</pre><hr>";
+
+
+$text = "Enfin la vérité, toute la vérité sur la mort de Yasser Arafat, le leader palestinien.
+Arafat, hospitalisé à Paris, se réveille d'un premier coma et interroge son médecin :
+- Docteur, qui êtes-vous ?
+- Je suis le professeur Israël. (Véridique !)
+L'émotion est trop forte. C'est l'alerte cardiaque à nouveau. Les médecins se précipitent et réussissent à réanimer le leader palestinien.
+- Où suis-je ? demande-t-il alors.
+- Vous êtes à Villejuif, répondent en choeur les médecins.
+Nouvelle alerte... Le cardiologue prévient:
+- Encore une alerte comme celle-ci et je ne réponds plus de rien...
+Arafat ouvre alors une dernière fois les yeux :
+- Quel temps fait-il dehors ?
+Et tous de répondre en coeur:
+- Maussade..";
+echo "<pre>" . h($text) . "</pre><hr>";
 
 $text=" Deux hommes opposés par une affaire consultent un rabbin du tribunal rabbinique. Chacun défend alors son point de vue.
 Après que le premier ait parlé, le rabbi lui dit:
@@ -354,8 +368,8 @@ Un des élèves du Rabbi lui demande alors:
 - Rabbi, il n'est pas possible que les deux aient raison.
 Alors le rabbi, après un moment de réflexion répond:
 - C'est vrai, toi aussi tu as raison.";
-echo htmlentities($text,ENT_COMPAT,"utf-8");
-echo "<hr>";
+echo "<pre>" . h($text) . "</pre><hr>";
+
 $text="Bientôt Kippour... voilà une blague qui est un grand classique, et qui nous fait rire tous les ans....
 -----------------
 En prévision de Kippour, nous vous demandons de bien vouloir remplir ce formulaire et de le renvoyer dans les plus brefs délais
@@ -424,8 +438,8 @@ _________________________
 _________________________
 Signature : _______________________________________
 Montant du don fait à la synagogue :_____________";
-echo htmlentities($text,ENT_COMPAT,"utf-8");
-echo "<hr>";
+echo "<pre>" . h($text) . "</pre><hr>";
+
 $text="
 Moché et Sarah fêtent leurs 25 années de mariage. L'événement est de taille et pourtant Sarah ne semble pas très heureuse. Moché lui demande:
 - Sarah, qu'est-ce que tu as ? C'est nos 25 ans de mariage et tu ne parais pas heureuse.
@@ -433,8 +447,8 @@ La larme à l'oeil, Sarah chuchote avec des trémolos dans la voix:
 - Oh si Moché, je suis heureuse mais c'est que tu vois, Moché, en 25 de mariage, tu ne m'as jamais rien acheté !!
 Abasourdi, Moché s'exclame:
 - Mais Sarah, tu ne m'as jamais dit que tu avais quelque chose à vendre? ";
-echo htmlentities($text,ENT_COMPAT,"utf-8");
-echo "<hr>";
+echo "<pre>" . h($text) . "</pre><hr>";
+
 ?>
 
 </div>

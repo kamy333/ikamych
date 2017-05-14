@@ -56,8 +56,22 @@ if (request_is_post() && request_is_same_domain()) {
         $expected_fields = $class_name::get_table_field();
         foreach ($expected_fields as $field) {
             if (isset($_POST[$field])) {
-                $new_item->$field = trim($_POST{$field});
-                array_push($result_array, $field . ' = ' . $new_item->$field . "<br>");
+                if (in_array($field, $class_name::$db_fields_not_set_post)) {
+                    $new_item->$field = 1;
+                    array_push($result_array, $field . ' = ' . $new_item->$field . "<br>");
+
+                } else {
+
+                    $new_item->$field = trim($_POST{$field});
+                    array_push($result_array, $field . ' = ' . $new_item->$field . "<br>");
+                }
+
+            } else {
+                if (in_array($field, $class_name::$db_fields_not_set_post)) {
+                    $new_item->$field = 0;
+                    array_push($result_array, $field . ' = ' . $new_item->$field . "<br>");
+
+                }
             }
 
         }
@@ -72,9 +86,11 @@ if (request_is_post() && request_is_same_domain()) {
 
         }
 
+//        $new_item->set_up_display();
         $valid = $new_item->form_validation();
 
         $result_join = join(',', $result_array);
+
 
 
         if (empty($valid->errors)) {
@@ -92,7 +108,8 @@ if (request_is_post() && request_is_same_domain()) {
 
 
             } else {
-
+//                echo json_encode(array("success" => 'xxxxxxxxxxxxxxxxxxx'));
+//                return;
                 $message = $class_name . " " . "$text_post1 failed or maybe nothing changed";
                 $my_error = "<span style='font-size: larger'>" . $message . "</strong></span>";
                 $my_error .= "<ul>";

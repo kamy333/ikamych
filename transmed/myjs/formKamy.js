@@ -78,7 +78,7 @@ $(document).ready(function () {
     $( ".input-group.date.model-pivot-date" ).datepicker( "option", "dateFormat", "DD/MM/YY" ).datepicker({
         todayBtn: "linked",
         keyboardNavigation: false,
-        forceParse: false,
+        forceParse: true,
         calendarWeeks: true,
         format: "DD/MM/YY"  ,
         autoclose: true
@@ -149,11 +149,11 @@ $(document).ready(function () {
     // $('#reportrange span').html(moment().subtract(29, 'days').format('MMMM D, YYYY') + ' - ' + moment().format('MMMM D, YYYY'));
 
     $('#reportrange').daterangepicker({
-        format: 'MM/DD/YYYY',
+        format: 'DD/MM/YYYY',
         startDate: moment().subtract(29, 'days'),
         endDate: moment(),
         minDate: '01/01/2012',
-        maxDate: '12/31/2018',
+        maxDate: '31/12/2018',
         dateLimit: {days: 60},
         showDropdowns: true,
         showWeekNumbers: true,
@@ -186,7 +186,7 @@ $(document).ready(function () {
         }
     }, function (start, end, label) {
         console.log(start.toISOString(), end.toISOString(), label);
-        $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
+        $('#reportrange span').html(start.format('D MMMM, YYYY') + ' - ' + end.format(' D MMMM, YYYY'));
     });
 
     $(".select2_demo_1").select2();

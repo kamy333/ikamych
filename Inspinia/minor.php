@@ -16,35 +16,8 @@
 <div class="wrapper wrapper-content animated fadeInRight">
         <div class="row">
 
+
             <div class="row">
-                <?php
-                $content=UpdateUserProfile::form_change_password();
-                echo Table::ibox_table($content,'Change your password',4,3);
-                unset($content);
-
-                $content=UpdateUserProfile::form_additional_info();
-                echo Table::ibox_table($content,'Change your personal info',6,3);
-
-
-
-                ?>
-            <?php
-
-            $user=User::find_by_id($session->user_id);
-//            $user=new User();
-//            $array_header(i)
-            $output = "";
-            $output .= $user->id;
-            $output.=$user->username;
-            $output .= $user->first_name;
-            $output .= $user->last_name;
-
-
-            echo Table::ibox_table($output,'User information',3);
-
-            ?>
-        </div>
-                <div class="row">
 
                     <div class="col-lg-4">
                         <div class="contact-box">

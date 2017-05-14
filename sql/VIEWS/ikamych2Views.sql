@@ -14,6 +14,31 @@ DROP VIEW IF EXISTS transport_model_pivot_visible_yes;
 DROP VIEW IF EXISTS transport_model_pivot_visible_no;
 DROP VIEW IF EXISTS transport_summary_by_course_date_program;
 
+DROP VIEW IF EXISTS transport_view_adresse;
+
+
+CREATE VIEW transport_view_adresse AS
+  (SELECT DISTINCT
+     c.Pseudo AS pseudo,
+     c.Depart AS adresse
+   FROM DatabaseCourse AS c)
+  UNION
+  (SELECT DISTINCT
+     c.Pseudo  AS pseudo,
+     c.Arrivee AS adresse
+   FROM DatabaseCourse AS c)
+  UNION
+  (SELECT DISTINCT
+     t.pseudo AS pseudo,
+     t.depart AS adresse
+   FROM transport_programming AS t)
+  UNION
+  (SELECT DISTINCT
+     t.pseudo  AS pseudo,
+     t.arrivee AS adresse
+   FROM transport_programming AS t)
+
+  ORDER BY pseudo;
 
 
 CREATE VIEW  `mycigarette_view_by_day` AS (select year(`mycigarette`.`cig_date`) AS `year`,monthname(`mycigarette`.`cig_date`) AS `month`,`mycigarette`.`cig_date` AS `date`,sum(`mycigarette`.`number_cig`) AS `total` from `mycigarette` group by `mycigarette`.`cig_date` desc);
@@ -58,22 +83,22 @@ CREATE VIEW `transport_model_visible_no` AS
       `p`.`inverse_address`                            AS `inverse_address`,
       `p`.`depart`                                     AS `depart`,
       `p`.`arrivee`                                    AS `arrivee`,
-  `p`.`prix_course`                                          AS `prix_course`,
-  `c`.`default_depart`                                       AS `default_depart`,
-  `c`.`default_arrivee`                                      AS `default_arrivee`,
-  `c`.`default_price`                                        AS `default_price`,
-  `p`.`remarque`                                             AS `remarque`,
-  `p`.`chauffeur_id`                                         AS `chauffeur_id`,
-  `p`.`client_habituel`                                      AS `client_habituel`,
-  (CASE WHEN (`p`.`week_day_rank_id` = 0)
-    THEN `p`.`id` END)                                       AS `Dimanche`,
-  (case when (`p`.`week_day_rank_id` = 1) then `p`.`id` end) AS `Lundi`,
-  (case when (`p`.`week_day_rank_id` = 2) then `p`.`id` end) AS `Mardi`,
-  (case when (`p`.`week_day_rank_id` = 3) then `p`.`id` end) AS `Mercredi`,
-  (case when (`p`.`week_day_rank_id` = 4) then `p`.`id` end) AS `Jeudi`,
-  (case when (`p`.`week_day_rank_id` = 5) then `p`.`id` end) AS `Vendredi`,
-      (CASE WHEN (`p`.`week_day_rank_id` = 6)
-    THEN `p`.`id` END)                          AS `Samedi`
+    `p`.`prix_course`                                          AS `prix_course`,
+    `c`.`default_depart`                                       AS `default_depart`,
+    `c`.`default_arrivee`                                      AS `default_arrivee`,
+    `c`.`default_price`                                        AS `default_price`,
+    `p`.`remarque`                                             AS `remarque`,
+    `p`.`chauffeur_id`                                         AS `chauffeur_id`,
+    `p`.`client_habituel`                                      AS `client_habituel`,
+    (CASE WHEN (`p`.`week_day_rank_id` = 0)
+      THEN `p`.`id` END)                                       AS `Dimanche`,
+    (case when (`p`.`week_day_rank_id` = 1) then `p`.`id` end) AS `Lundi`,
+    (case when (`p`.`week_day_rank_id` = 2) then `p`.`id` end) AS `Mardi`,
+    (case when (`p`.`week_day_rank_id` = 3) then `p`.`id` end) AS `Mercredi`,
+    (case when (`p`.`week_day_rank_id` = 4) then `p`.`id` end) AS `Jeudi`,
+    (case when (`p`.`week_day_rank_id` = 5) then `p`.`id` end) AS `Vendredi`,
+    (CASE WHEN (`p`.`week_day_rank_id` = 6)
+    THEN `p`.`id` END)                                         AS `Samedi`
   from (`transport_clients` `c`
 join `transport_programming_model` `p` 
 on((`c`.`id` = `p`.`client_id`))) 

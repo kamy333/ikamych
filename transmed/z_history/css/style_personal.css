@@ -1,0 +1,241 @@
+a > button.index-page {
+    width: 10em;
+    /*height: 10em;*/
+    margin-left: 1em;
+    margin-top: 2em;
+
+}
+
+.kamy-navbar-inverse {
+    background-color: blue;
+    color: white;
+    /*border-bottom-style: ridge;*/
+
+}
+
+.huge {
+    font-size: 50px;
+    line-height: normal;
+}
+
+.huge {
+    font-size: 40px;
+}
+
+.panel-green {
+    border-color: #5cb85c;
+}
+
+.panel-green .panel-heading {
+    border-color: #5cb85c;
+    color: #fff;
+    background-color: #5cb85c;
+}
+
+.panel-green a {
+    color: #5cb85c;
+}
+
+.panel-green a:hover {
+    color: #3d8b3d;
+}
+
+.panel-red {
+    border-color: #d9534f;
+}
+
+.panel-red .panel-heading {
+    border-color: #d9534f;
+    color: #fff;
+    background-color: #d9534f;
+}
+
+.panel-red a {
+    color: #d9534f;
+}
+
+.panel-red a:hover {
+    color: #b52b27;
+}
+
+.panel-yellow {
+    border-color: #f0ad4e;
+}
+
+.panel-yellow .panel-heading {
+    border-color: #f0ad4e;
+    color: #fff;
+    background-color: #f0ad4e;
+}
+
+.panel-yellow a {
+    color: #f0ad4e;
+}
+
+.panel-yellow a:hover {
+    color: #df8a13;
+}
+
+.panel-blue {
+    border-color: #337ab7;
+}
+
+.panel-blue .panel-heading {
+    border-color: #337ab7;
+    color: #fff;
+    background-color: #337ab7;
+}
+
+.panel-blue a {
+    color: #337ab7;
+}
+
+.panel-blue a:hover {
+    color: lightskyblue;
+}
+
+.panel-darkgray {
+    border-color: #a9a9a9;
+}
+
+.panel-darkgray .panel-heading {
+    border-color: #a9a9a9;
+    color: #fff;
+    background-color: #a9a9a9;
+}
+
+.panel-darkgray a {
+    color: #a9a9a9;
+}
+
+.panel-darkgray a:hover {
+    color: #778899;
+}
+
+.panel-purple {
+    border-color: #800080;
+}
+
+.panel-purple .panel-heading {
+    border-color: #800080;
+    color: #fff;
+    background-color: #800080;
+}
+
+.panel-purple a {
+    color: #800080;
+}
+
+.panel-purple a:hover {
+    color: #f08080;
+}
+
+.panel-palevioletred {
+    border-color: palevioletred;
+}
+
+.panel-palevioletred .panel-heading {
+    border-color: palevioletred;
+    color: #fff;
+    background-color: palevioletred;
+}
+
+.panel-palevioletred a {
+    color: palevioletred;
+}
+
+.panel-palevioletred a:hover {
+    color: purple;
+}
+
+.panel-black {
+    border-color: #2a2725;
+}
+
+.panel-black .panel-heading {
+    border-color: #2a2725;
+    color: #fff;
+    background-color: #2a2725;
+}
+
+.panel-black a {
+    color: #2a2725;
+}
+
+.panel-black a:hover {
+    color: palevioletred;
+}
+
+.panel-darkred {
+    border-color: brown;
+}
+
+.panel-darkred .panel-heading {
+    border-color: brown;
+    color: #fff;
+    background-color: brown;
+}
+
+.panel-darkred a {
+    color: brown;
+}
+
+.panel-darkred a:hover {
+    color: palevioletred;
+}
+
+.panel-darkgreen {
+    border-color: darkgreen;
+}
+
+.panel-darkgreen .panel-heading {
+    border-color: darkgreen;
+    color: #fff;
+    background-color: darkgreen;
+}
+
+.panel-darkgreen a {
+    color: darkgreen;
+}
+
+.panel-darkgreen a:hover {
+    color: palevioletred;
+}
+
+.panel-darkblue {
+    border-color: darkblue;
+}
+
+.panel-darkblue .panel-heading {
+    border-color: darkblue;
+    color: #fff;
+    background-color: darkblue;
+}
+
+.panel-darkblue a {
+    color: darkblue;
+}
+
+.panel-darkblue a:hover {
+    color: blue;
+}
+
+.panel-darkgrey {
+    border-color: darkgrey;
+}
+
+.panel-darkgrey .panel-heading {
+    border-color: darkgrey;
+    color: #fff;
+    background-color: darkgrey;
+}
+
+.panel-darkgrey a {
+    color: darkblue;
+}
+
+.panel-darkgrey a:hover {
+    color: grey;
+}
+
+

@@ -145,6 +145,7 @@ if(User::is_admin()){
 //    echo $Nav->menu_item('','SmartAdmin','http://www.ikamy.ch/smartAdmin/','none',true);
 //    echo $Nav->menu_item('','SmartAdmin full version','http://www.ikamy.ch/SmartAdmin_Full_Version_html/','none',true) ;
     echo $Nav->menu_item('', 'Inspinia Full', '../Inspinia_Full_Version/index.php', 'public', true);
+    echo $Nav->menu_item('', 'Inspinia Full2', '../Inspinia_Full_Version_2/index.html', 'public', true);
     echo $Nav->menu_item('','SmartAdmin','../smartAdmin/index.php','public',true);
     echo $Nav->menu_item('','Minton','../minton/Admin/Blue_PHP/index.php','public');
     echo $Nav->menu_item('','Minton Full','../Minton_Full_Version/index.php','public',true);

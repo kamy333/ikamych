@@ -76,6 +76,7 @@ if (request_is_post() && request_is_same_domain()) {
         }
 
 
+
     }
 
 }
@@ -84,7 +85,7 @@ if (request_is_post() && request_is_same_domain()) {
 ?>
 
 <?php $layout_context = "admin"; ?>
-<?php $active_menu = "adminNew"; ?>
+<?php $active_menu = "newdata"; ?>
 <?php $stylesheets = ""; ?>
 <?php $fluid_view = true; ?>
 <?php $javascript = $class_name; ?>

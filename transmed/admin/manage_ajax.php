@@ -7,14 +7,14 @@ if (User::is_employee() || User::is_secretary() || User::is_visitor()) {
 
 MyClasses::redirect_disable_class();
 
+
 if (isset($_GET['class_name'])) {
     $class_name = $_GET['class_name'];
 //    $is_data=true;
     call_user_func_array(array($class_name, 'change_to_unique_data'), ['ajax']);
-//    call_user_func_array(array($class_name, 'complete_class_info'), []);
 
-    HeurePresence::quickaddhours();
-    HeurePresence::quicksubstracthours();
+//    HeurePresence::quickaddhours();
+//    HeurePresence::quicksubstracthours();
 
 } else {
     $session->message('Error message contact your admin ');
@@ -25,14 +25,16 @@ if (isset($_GET['class_name'])) {
 }
 
 
-$page = !empty($_GET['page']) ? (int)$_GET["page"] : 1;
-$view_full_table = !empty($_GET) ? (int)$_GET["view"] : 0;
+//$page= !empty($_GET['page'])? (int) $_GET["page"]:1;
+
+
+$page = (!empty($_GET['page']) && isset($_GET)) ? (int)$_GET["page"] : 1;
+
 
 $query_string = remove_get(array('view', 'page', $class_name));
 
+$view_full_table = (!empty($_GET) && isset($_GET)) ? (int)$_GET["view"] : 0;
 
-
-$page_link_view=""; //initial variable
 if ($view_full_table == 1) {
     if (isset($page)) {
         $page_link_view = $class_name::$page_manage . $query_string . "page=" . u($page) . "&view=" . u(0);
@@ -54,7 +56,7 @@ if ($view_full_table == 1) {
 <?php //var_dump($users) ?>
 
 <?php $layout_context = "admin"; ?>
-<?php $active_menu = "admin" ?>
+<?php $active_menu = "data" ?>
 <?php $stylesheets = "" //custom_form  ?>
 <?php $view_full_table == 1 ? $fluid_view = true : $fluid_view = false; ?>
 <?php $javascript = "ajax" ?>
@@ -68,6 +70,7 @@ if ($view_full_table == 1) {
         echo $message;
     } ?>
 </div>
+
 
 
 <?php
@@ -111,19 +114,13 @@ echo call_user_func_array(array($class_name, 'table_nav'), [$page_link_view, $pa
 
 
     <?php
-    echo "<div class='row'>";
+    echo "<div class=\"row\">";
     echo "<div class=\"col-md-7 {$offset}\" id='pagination' >";
     echo call_user_func_array(array($class_name, 'display_pagination'), []);
     echo "</div>";
     echo "</div>";
 
-    //    echo "<div class='row'>";
-    //    echo "<div class=\"col-md-7 {$offset}\" id='paginator' >";
-    //    echo call_user_func_array(array($class_name, 'display_paginator'), []);
-    //    echo "</div>";
-    //    echo "</div>";
-
-    echo "<div class='row'>";
+    echo "<div class=\"row\">";
     echo call_user_func_array(array($class_name, 'display_all'), ['', $view_full_table]);
     echo "</div>";
     ?>

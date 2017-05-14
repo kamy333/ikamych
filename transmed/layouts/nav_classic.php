@@ -88,7 +88,11 @@ if ($layout_context == "public") {
                             echo $Nav->menu_item('', 'Inspinia', '../inspinia/index.php', 'public');
                             echo $Nav->menu_item('', 'SmartAdmin', '../smartAdmin/index.php', 'public');
                             echo $Nav->menu_item('', 'Minton', '../minton/index.php', 'public');
-                            echo $Nav->menu_item('', 'Inspinia Full', '../inspinia_Full_Version/index.php', 'public');
+                            echo $Nav->menu_item('', 'Inspinia Full', '../inspinia_Full_Version/index.php', 'public', true);
+
+                            echo $Nav->menu_item('', 'Inspinia Full2', '../Inspinia_Full_Version_2/index.html', 'public', true);
+
+
                             echo $Nav->menu_item('', 'SmartAdmin Full', '../SmartAdmin_Full_Version/index.php', 'public');
                             echo $Nav->menu_item('', 'Minton Full', '../Minton_Full_Version/index.php', 'public');
                             echo $Nav->menu_item('', 'Your info', 'some_data.php', 'public');
@@ -428,7 +432,7 @@ if ($layout_context == "public") {
 
     <?php if (isset($layout_context) && $layout_context == "admin") { ?>
 
-        <?php if ($sub_menu) { ?>
+        <?php if (isset($sub_menu) && $sub_menu) { ?>
 
 
             <ol class="breadcrumb">

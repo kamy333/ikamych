@@ -32,6 +32,8 @@ class MyClasses
         "ViewTransportModelPivotYes",
         "ViewTransportSummaryCourseDateProgram",
         "ViewTransportModelByChauffeur",
+        "ViewTransportAdresse",
+        "CourseByChauffeur",
 
         'DataBaseClient', 'DatabaseCourse', 'DatabaseCourse_Programe',
         'DataBaseFacturation', 'DatabasePaiement',
@@ -180,7 +182,7 @@ class MyClasses
         'TransportProgramming',
         'TransportProgrammingModel',
         'TransportType',
-        "Course", "Model"
+        "Course", "Model", "ViewTransportAdresse", "CourseByChauffeur"
     ];
 
     public static $class_access = [
@@ -190,6 +192,6 @@ class MyClasses
         'T_Frequence_Facturation', 'T_Genre', 'T_Heure', 'T_Pays', 'T_Prix_Course', 'T_Type_Transport', 'T_Ville', 'T_Type_Facturation'
     ];
 
-    public static $class_transmed = ['TransportChauffeur', 'TransportClient', 'TransportType', 'TransportProgramming', 'TransportProgrammingModel', 'ViewTransportModel', 'ViewTransportModel', 'ViewTransportModelVisibleNo', 'ViewTransportModelVisibleYes', 'ViewTransportModelPivot', 'ViewTransportModelPivotNo', 'ViewTransportModelPivotYes', 'ViewTransportSummaryCourseDateProgram', 'ViewTransportModelByChauffeur', "Course", "Model"
+    public static $class_transmed = ['TransportChauffeur', 'TransportClient', 'TransportType', 'TransportProgramming', 'TransportProgrammingModel', 'ViewTransportModel', 'ViewTransportModel', 'ViewTransportModelVisibleNo', 'ViewTransportModelVisibleYes', 'ViewTransportModelPivot', 'ViewTransportModelPivotNo', 'ViewTransportModelPivotYes', 'ViewTransportSummaryCourseDateProgram', 'ViewTransportModelByChauffeur', "Course", "Model", "ViewTransportAdresse", "CourseByChauffeur"
     ];
 }

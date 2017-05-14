@@ -18,6 +18,11 @@ if (method_exists($class_name, 'updateValidation') && isset($_GET['action']) && 
     call_user_func_array(array($class_name, 'updateValidation'), ['']);
 }
 
+if (method_exists($class_name, 'updateAppel') && isset($_GET['action']) && $_GET['action'] == "updateAppel") {
+    call_user_func_array(array($class_name, 'updateAppel'), ['']);
+}
+
+
 if (isset($_GET['id'])&& isset($_GET['action'])&& $_GET['action']=="edit" &&  !isset($_GET['duplicate_record'])    ) {
 
 
@@ -138,9 +143,17 @@ if (request_is_post() && request_is_same_domain()) {
 
                 echo "</div>";
 
+            } elseif (isset($_GET['action']) && $_GET['action'] == "links_for_id" && isset($_GET['id'])) {
+
+                echo call_user_func_array([$class_name, "links_for_id"], []);
+
+
             } else {
                 echo  call_user_func_array([$class_name, "main_display"], []);
-            } ?>
+            }
+
+
+            ?>
         </div>
 
 

@@ -26,7 +26,10 @@
                     <a aria-expanded="false" role="button" href="#" class="dropdown-toggle" data-toggle="dropdown"> Public <span class="caret"></span></a>
                     <ul role="menu" class="dropdown-menu">
                         <?php echo $Nav->menu_item('','Full version Inspinia','http://www.ikamy.ch/Inspinia_Full_Version/','none',true) ?>
+                        <?php
+                        echo $Nav->menu_item('', 'Inspinia Full2', '../Inspinia_Full_Version_2/index.html', 'public', true);
 
+                        ?>
                         <li><a href="<?php echo $path;?>index_old.php">Old public Layout</a></li>
                         <li><a href="<?php echo $path_public;?>minor.php">Minor</a></li>
                         <li><a href="<?php echo $path_public;?>landing.php">Landing Page</a></li>

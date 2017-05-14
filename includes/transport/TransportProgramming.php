@@ -10,20 +10,22 @@ class TransportProgramming extends DatabaseObject
 {
     protected static $table_name = "transport_programming";
 
-    protected static $db_fields = array('id', 'validated_chauffeur', 'validated_mgr', 'validated_final', 'course_date', 'model_id', 'client_id', 'pseudo', 'pseudo_autres', 'heure', 'drive_mode', 'aller_retour', 'start_drive', 'end_drive', 'aller_retour_origin_id', 'aller_appel', 'retour_appel', 'chauffeur_id', 'depart', 'arrivee', 'type_transport_id', 'nom_patient', 'bon_no', 'prix_course', 'remarque', 'input_date', 'modification_time');
+    protected static $db_fields = array('id', 'validated_chauffeur', 'validated_mgr', 'validated_final', 'course_date', 'model_id', 'client_id', 'pseudo', 'pseudo_autres', 'heure', 'drive_mode', 'start_drive', 'end_drive', 'aller_retour', 'aller_retour_origin_id', 'aller_appel', 'retour_appel', 'appel', 'chauffeur_id', 'depart', 'arrivee', 'type_transport_id', 'nom_patient', 'bon_no', 'prix_course', 'remarque', 'input_date', 'modification_time', 'username');
 
 
-    protected static $required_fields = array('course_date', 'client_id', 'heure', 'aller_retour', 'chauffeur_id', 'depart', 'arrivee', 'type_transport_id',);
+    public static $db_fields_not_set_post = ['aller_appel', 'retour_appel'];
+
+    protected static $required_fields = array('course_date', 'client_id', 'heure', 'aller_retour', 'chauffeur_id', 'type_transport_id',);
 
 
-    protected static $db_fields_table_display_short = array('id',
-        'validated_chauffeur', 'validated_mgr', 'validated_final', 'course_date', 'model_id', 'client_id', 'pseudo', 'pseudo_autres', 'heure', 'aller_retour', 'chauffeur_id', 'depart', 'arrivee', 'type_transport_id', 'nom_patient', 'bon_no', 'prix_course', 'remarque', 'input_date', 'modification_time');
+    protected static $db_fields_table_display_short = array('id', 'aller_retour', 'appel', 'aller_appel', 'retour_appel',
+        'validated_chauffeur', 'validated_mgr', 'validated_final', 'course_date', 'model_id', 'client_id', 'pseudo', 'heure', 'chauffeur_id', 'depart', 'arrivee', 'type_transport_id', 'prix_course',);
 
 
-    protected static $db_fields_table_display_full = array('id', 'validated_chauffeur', 'validated_mgr', 'validated_final', 'course_date', 'model_id', 'client_id', 'pseudo', 'pseudo_autres', 'heure', 'aller_retour', 'drive_mode', 'start_drive', 'end_drive', 'aller_retour_origin_id', 'aller_appel', 'retour_appel', 'chauffeur_id', 'depart', 'arrivee', 'type_transport_id', 'nom_patient', 'bon_no', 'prix_course', 'remarque', 'input_date', 'modification_time');
+    protected static $db_fields_table_display_full = array('id', 'validated_chauffeur', 'validated_mgr', 'validated_final', 'course_date', 'model_id', 'client_id', 'pseudo', 'pseudo_autres', 'heure', 'aller_retour', 'appel', 'aller_appel', 'retour_appel', 'drive_mode', 'start_drive', 'end_drive', 'aller_retour_origin_id', 'chauffeur_id', 'depart', 'arrivee', 'type_transport_id', 'nom_patient', 'bon_no', 'prix_course', 'remarque', 'input_date', 'modification_time');
 
 
-    public static $fields_numeric = array('id', 'user_id', 'model_id', 'client_id', 'chauffeur_id', 'type_transport_id', 'prix_course', 'aller_retour_origin_id', 'aller_appel', 'retour_appel');
+    public static $fields_numeric = array('id', 'user_id', 'model_id', 'client_id', 'chauffeur_id', 'type_transport_id', 'prix_course', 'aller_retour', 'aller_retour_origin_id', 'appel', 'aller_appel', 'retour_appel');
 
 //    public static $fields_numeric_integer = array('id', 'user_id', 'model_id', 'client_id', 'chauffeur_id', 'type_transport_id');
 //
@@ -32,9 +34,9 @@ class TransportProgramming extends DatabaseObject
 
     public static $fields_numeric_format = array('prix_course');
 
-    public static $get_form_element = array('chauffeur_id', 'course_date', 'type_transport_id', 'client_id', 'pseudo_autres', 'heure', 'aller_retour', 'appel', 'aller_appel', 'retour_appel', 'depart', 'arrivee', 'nom_patient', 'bon_no', 'prix_course');
+    public static $get_form_element = array('chauffeur_id', 'course_date', 'type_transport_id', 'client_id', 'pseudo_autres', 'heure', 'aller_retour', 'aller_appel', 'retour_appel', 'depart', 'arrivee', 'nom_patient', 'bon_no', 'prix_course');
 
-    public static $get_form_element_chauffeur = array('chauffeur_id', 'course_date', 'type_transport_id', 'client_id', 'pseudo_autres', 'heure', 'aller_retour', 'aller_appel', 'depart', 'arrivee', 'type_transport_id', 'nom_patient', 'bon_no', 'prix_course');
+    public static $get_form_element_chauffeur = array('chauffeur_id', 'course_date', 'type_transport_id', 'client_id', 'pseudo_autres', 'heure', 'aller_retour', 'appel', 'aller_appel', 'depart', 'arrivee', 'type_transport_id', 'nom_patient', 'bon_no', 'prix_course');
 
 
     public static $get_form_element_others = array();
@@ -46,7 +48,10 @@ class TransportProgramming extends DatabaseObject
         "validated_final" => "0",
         "type_transport_id" => "1",
         "chauffeur_id" => "1",
-        "aller_retour" => "AllerSimple"
+        "aller_retour" => "0",
+        "aller_appel" => "0",
+        "retour_appel" => "0",
+        "appel" => 0,
 
     );
     public static $db_field_search = array('search_all', 'download_csv');
@@ -142,40 +147,6 @@ class TransportProgramming extends DatabaseObject
             "placeholder" => "Course Date",
             "required" => true,
         ),
-//        "aller_appel" => array("type" => "checkbox",
-//            "name" => 'aller_appel',
-//            "label_text" => "Aller appel",
-//            "value" => " checked ",
-//
-//        ),
-//        "retour_appel" => array("type" => "checkbox",
-//            "name" => 'retour_appel',
-//            "label_text" => "Retour appel",
-//            "value" => " checked ",
-//
-//        ),
-
-
-//    il faudra avoir pour inline un nom différent
-        "appel" => array("type" => "checkboxinline",
-            array(0,
-                array(
-                    "label_all" => "Appel",
-                    "name" => "aller_appel",
-                    "label_checkbox" => "Aller Appel",
-                    "value" => "1",
-                    "id" => "aller_appel",
-                    "default" => false)),
-            array(1,
-                array(
-                    "label_all" => "Appel",
-                    "name" => "retour_appel",
-                    "label_checkbox" => "Retour appel",
-                    "value" => "1",
-                    "id" => "retour_appel",
-                    "default" => false)),
-
-        ),
 
 
         "client_id" => array("type" => "selectchosen",
@@ -212,9 +183,9 @@ class TransportProgramming extends DatabaseObject
             "required" => false,
         ),
         "heure" => array("type" => "clockwise",
-            "name"=>'heure',
+            "name" => 'heure',
             "label_text" => "Heure depart",
-            "placeholder"=>"Heure",
+            "placeholder" => "Heure",
             "script" => "
 <script type=\"text/javascript\">
 $('.clockpicker').clockpicker({    placement:'top',    align: 'bottom',    donetext: 'Done'});
@@ -228,7 +199,7 @@ $('.clockpicker').clockpicker({    placement:'top',    align: 'bottom',    donet
                     "label_all" => "Aller Retour",
                     "name" => "aller_retour",
                     "label_radio" => "Non",
-                    "value" => "AllerSimple",
+                    "value" => "0",
                     "id" => "aller_retour_no",
                     "default" => true)),
             array(1,
@@ -236,10 +207,81 @@ $('.clockpicker').clockpicker({    placement:'top',    align: 'bottom',    donet
                     "label_all" => "Aller Retour",
                     "name" => "aller_retour",
                     "label_radio" => "Oui",
-                    "value" => "AllerRetour",
+                    "value" => "1",
                     "id" => "aller_retour_yes",
                     "default" => false)),
         ),
+        "aller_appel" => array("type" => "checkbox",
+            "name" => 'aller_appel',
+            "label_text" => "Aller appel",
+
+        ),
+        "retour_appel" => array("type" => "checkbox",
+            "name" => 'retour_appel',
+            "label_text" => "Retour appel",
+
+        ),
+
+
+        "appel" => array("type" => "radio",
+            array(0,
+                array(
+                    "label_all" => "Sur Appel",
+                    "name" => "appel",
+                    "label_radio" => "Aucun",
+                    "value" => "0",
+                    "id" => "appel_Aucun",
+                    "default" => true)),
+            array(1,
+                array(
+                    "label_all" => "Sur Appel",
+                    "name" => "appel",
+                    "label_radio" => "Aller",
+                    "value" => "1",
+                    "id" => "appel_Aller",
+                    "default" => false)),
+            array(2,
+                array(
+                    "label_all" => "Sur Appel",
+                    "name" => "appel",
+                    "label_radio" => "Retour",
+                    "value" => "2",
+                    "id" => "appel_Retour",
+                    "default" => true)),
+            array(3,
+                array(
+                    "label_all" => "Sur Appel",
+                    "name" => "appel",
+                    "label_radio" => "Tous",
+                    "value" => "3",
+                    "id" => "appel_Tous",
+                    "default" => true)),
+        ),
+
+//    il faudra avoir pour inline un nom différent
+//        "appel" => array("type" => "checkboxinline",
+//            array(0,
+//                array(
+//                    "label_all" => "Appel",
+//                    "name" => "aller_appel",
+//                    "label_checkbox" => "Aller Appel",
+//                    "value" => "0",
+//                    "checked"=>false,
+//                    "id" => "aller_appel",
+//                    "default" => false,
+//                )),
+//            array(1,
+//                array(
+//                    "label_all" => "Appel",
+//                    "name" => "retour_appel",
+//                    "label_checkbox" => "Retour appel",
+//                    "value" => "0",
+//                    "checked"=>false,
+//                    "id" => "retour_appel",
+//                    "default" => false,
+//                )),
+//
+//        ),
         "depart" => array("type" => "text",
             "name" => 'depart',
             "label_text" => "Depart",
@@ -374,12 +416,12 @@ $('.clockpicker').clockpicker({    placement:'top',    align: 'bottom',    donet
     public $modification_time;
     public $username;
 
-
+    public $drive_mode;
     public $start_drive;
     public $end_drive;
     public $aller_retour_origin_id;
 
-
+    public $appel;
     public $retour_appel;
     public $aller_appel;
 
@@ -389,7 +431,25 @@ $('.clockpicker').clockpicker({    placement:'top',    align: 'bottom',    donet
     public function form_validation()
     {
         $valid = new FormValidation();
-        $valid->validate_presences(self::$required_fields);
+        $valid->validate_presences(static::$required_fields);
+
+//        if(!isset($this->aller_appel)){
+//            $this->aller_appel =0;
+//        }
+//
+//        if(!isset($this->retour_appel)){
+//            $this->retour_appel =0;
+//        }
+
+//        if(!isset($_POST['aller_appel'])){
+//            $this->aller_appel =0;
+//        }
+//
+//        if(!isset($_POST['retour_appel'])){
+//            $this->retour_appel =0;
+//        }
+
+        return $valid;
 
     }
 
@@ -408,31 +468,64 @@ $('.clockpicker').clockpicker({    placement:'top',    align: 'bottom',    donet
             $this->validated_final = 0;
         }
 
-        $AR = T_Aller_Retour::find_by_id(1);
-        $aller_retour = $AR->Aller_Retour;
+
+//        $AR = T_Aller_Retour::find_by_id(1);
+//        $aller_retour = $AR->Aller_Retour;
+////
+//        log_debug("aller_appel",$this->aller_appel);
+//        log_debug("aller_retour_origin_id",$this->aller_retour_origin_id);
+
+//        if(isset($_POST['retour_appel'])){
+//            log_debug("isset retour_appel",$this->retour_appel);
+//            return;
+//        } else{
+//            log_debug("NOT isset retour_appel",$this->retour_appel);
+//
+//        }
+//
+//        if(isset($_POST['retour_appel'])){
+//            log_debug("isset retour_appel",$this->retour_appel);
+//            return;
+//        } else{
+//            log_debug("NOT isset retour_appel",$this->retour_appel);
+//
+//        }
+
 
         if (!isset($this->aller_retour)) {
-            $this->aller_retour = $aller_retour;
+            $this->aller_retour = 0;
         }
 
-        if (!isset($this->aller_retour_origin_id)) {
-            if ($aller_retour == $AR->Aller_Retour) {
-                $this->aller_retour_origin_id = 0;
-            } else {
-                $this->aller_retour_origin_id = $this->id;
-
-            }
+        if (!isset($this->aller_appel)) {
+            $this->aller_appel = 0;
         }
 
-        if (!isset($this->aller_retour_yes_no)) {
-            if ($aller_retour == $AR->Aller_Retour) {
-                $this->aller_retour_yes_no = 0;
-            } else {
-                $this->aller_retour_yes_no = 1;
-
-            }
-
+        if (!isset($this->retour_appel)) {
+            $this->retour_appel = 0;
         }
+//
+//        if(isset($this->aller_appel) && $this->aller_appel=='on'){
+//            $this->aller_appel=1;
+//        } else{
+//            $this->aller_appel=0;
+//        }
+//
+//        if(isset($this->retour_appel) && $this->retour_appel=='on'){
+//            $this->retour_appel=1;
+//        } else {
+//            $this->retour_appel=0;
+//
+//        }
+////
+//        if (!isset($this->aller_retour_origin_id)) {
+//            if ($aller_retour == $AR->Aller_Retour) {
+//                $this->aller_retour_origin_id = 0;
+//            } else {
+//                $this->aller_retour_origin_id = $this->id;
+//
+//            }
+////        }
+
 
         if (!isset($this->type_transport_id)) {
             $this->type_transport_id = 1;
@@ -465,7 +558,6 @@ $('.clockpicker').clockpicker({    placement:'top',    align: 'bottom',    donet
             $this->pseudo = $client->pseudo;
 
         }
-
 
 
     }

@@ -1,3 +1,4 @@
+
 <?php
 
 require_once('../../includes/initialize_transmed.php');
@@ -78,6 +79,7 @@ if (request_is_post() && request_is_same_domain()) {
             }
 
 
+
         }
 
 
@@ -90,9 +92,11 @@ if (request_is_post() && request_is_same_domain()) {
         }
 
 
+
     }
 
 }
+
 
 
 ?>
@@ -103,7 +107,7 @@ if (request_is_post() && request_is_same_domain()) {
 <?php $fluid_view = true; ?>
 <?php $javascript = ""; ?>
 <?php $incl_message_error = true; ?>
-
+<?php //include_layout_template('header_2.php'); ?>
 <?php include(SITE_ROOT . DS . 'transmed' . DS . 'layouts' . DS . "header_classic.php") ?>
 <?php include(SITE_ROOT . DS . 'transmed' . DS . 'layouts' . DS . "nav_classic.php") ?>
 

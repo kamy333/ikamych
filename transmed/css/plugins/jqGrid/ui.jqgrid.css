@@ -10,7 +10,6 @@
     padding: 0;
     font-size: 11px;
 }
-
 /* caption*/
 .ui-jqgrid .ui-jqgrid-titlebar {
     padding: .3em .2em .2em .3em;
@@ -47,7 +46,6 @@
 .ui-jqgrid .ui-jqgrid-titlebar-close:hover {
     padding: 0;
 }
-
 /* header*/
 .ui-jqgrid .ui-jqgrid-hdiv {
     position: relative;
@@ -260,7 +258,6 @@ tr.ui-search-toolbar select {
     border: 0 none;
     z-index: 99999;
 }
-
 /* footer */
 .ui-jqgrid .ui-jqgrid-sdiv {
     position: relative;
@@ -301,7 +298,6 @@ tr.ui-search-toolbar select {
     border-left-color: inherit;
     border-left-style: solid;
 }
-
 /* Pager*/
 .ui-jqgrid .ui-jqgrid-pager {
     border-left: 0 none !important;
@@ -430,7 +426,6 @@ tr.ui-search-toolbar select {
     float: left;
     margin: 0 2px;
 }
-
 /*subgrid*/
 .ui-jqgrid .ui-jqgrid-btable .ui-sgcollapsed span {
     display: block;
@@ -467,7 +462,6 @@ tr.ui-search-toolbar select {
 .ui-jqgrid .ui-th-subgrid {
     height: 20px;
 }
-
 /* loading */
 .ui-jqgrid .loading {
     position: absolute;
@@ -488,7 +482,6 @@ tr.ui-search-toolbar select {
     display: none;
     z-index: 100;
 }
-
 /* IE * html .jqgrid-overlay {width: expression(this.parentNode.offsetWidth+'px');height: expression(this.parentNode.offsetHeight+'px');} */
 * .jqgrid-overlay iframe {
     position: absolute;
@@ -496,7 +489,6 @@ tr.ui-search-toolbar select {
     left: 0;
     z-index: -1;
 }
-
 /* IE width: expression(this.parentNode.offsetWidth+'px');height: expression(this.parentNode.offsetHeight+'px');}*/
 /* end loading div */
 /* toolbar */
@@ -506,7 +498,6 @@ tr.ui-search-toolbar select {
     height: 21px;
     overflow: hidden;
 }
-
 /*Modal Window */
 .ui-jqdialog {
     display: none;
@@ -574,7 +565,6 @@ tr.ui-search-toolbar select {
     bottom: -3px;
     right: -3px
 }
-
 /* end Modal window*/
 /* Form edit */
 .ui-jqdialog-content .FormGrid {
@@ -691,20 +681,17 @@ tr.ui-search-toolbar select {
     padding: 0;
     width: 15px;
 }
-
 /* End Eorm edit */
 /*.ui-jqgrid .edit-cell {}*/
 .ui-jqgrid .selected-row, div.ui-jqgrid .selected-row td {
     font-style: normal;
     border-left: 0 none;
 }
-
 /* inline edit actions button*/
 .ui-inline-del.ui-state-hover span, .ui-inline-edit.ui-state-hover span,
 .ui-inline-save.ui-state-hover span, .ui-inline-cancel.ui-state-hover span {
     margin: -1px;
 }
-
 /* Tree Grid */
 .ui-jqgrid .tree-wrap {
     float: left;
@@ -738,7 +725,6 @@ tr.ui-search-toolbar select {
 .ui-jqgrid .treeclick {
     cursor: pointer;
 }
-
 /* moda dialog */
 * iframe.jqm {
     position: absolute;
@@ -746,7 +732,6 @@ tr.ui-search-toolbar select {
     left: 0;
     z-index: -1;
 }
-
 /*	 width: expression(this.parentNode.offsetWidth+'px');height: expression(this.parentNode.offsetHeight+'px');}*/
 .ui-jqgrid-dnd tr td {
     border-right-width: 1px;
@@ -754,7 +739,6 @@ tr.ui-search-toolbar select {
     border-right-style: solid;
     height: 20px
 }
-
 /* RTL Support */
 .ui-jqgrid .ui-jqgrid-caption-rtl {
     text-align: right;
@@ -819,8 +803,7 @@ a.g-menu-item, a.soptclass, a.clearsearchclass {
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
-}
-
+} 
 .ui-jqgrid .ui-jqgrid-view input,
 .ui-jqgrid .ui-jqgrid-view select,
 .ui-jqgrid .ui-jqgrid-view textarea,

@@ -180,6 +180,10 @@ unset($pages) ?>
     <!-- Select2 -->
     <script src="<?php echo $Nav->path_public; ?>js/plugins/select2/select2.full.min.js"></script>
 
+    <!-- Typehead -->
+    <script src="<?php echo $Nav->path_public; ?>js/plugins/typehead/bootstrap3-typeahead.min.js"></script>
+
+
     <!-- TouchSpin -->
     <script src="<?php echo $Nav->path_public; ?>js/plugins/touchspin/jquery.bootstrap-touchspin.min.js"></script>
 

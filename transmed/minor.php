@@ -42,7 +42,12 @@
                 // setlocale(LC_TIME, 'fr');
                 // setlocale(LC_TIME, 'fra_fra');
                 # Examples using current time
+                //                  Course::view_by_Chauffeur();
 
+                //                echo ViewTransportAdresse::data_source('NAFISSPOUR');
+                echo "<hr>";
+                echo ViewTransportAdresse::jason('NAFISSPOUR');
+                echo "<hr>";
 
                 echo strftime('%Y-%m-%d %H:%M:%S');  // 2015-03-02 17:58:50
                 echo "<br>";

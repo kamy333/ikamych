@@ -4,34 +4,7 @@
 <?php include_once(NAV_PUBLIC) ?>
 
 <?php
-function button_color($color, $txt = "xxx", $href = false, $href_env = "")
-{
-    global $Nav;
-    $bootstrap = ['primary', 'success', 'info', 'danger', 'warning'];
 
-    if (in_array($color, $bootstrap)) {
-        $class = "btn btn-{$color} btn-lg index-page";
-        $style = "";
-    } else {
-        $class = "btn btn-lg  index-page";
-        $style = "background-color:{$color}; color:white;";
-    }
-
-    if ($href) {
-        if ($href_env) {
-            $new_href = $Nav->http . $Nav->folder . "/" . $href_env . "/" . $href;
-        } else {
-            $new_href = $Nav->http . $Nav->folder . "/" . $href;
-
-        }
-    } else {
-        $new_href = "#";
-    }
-
-    return "<a href='{$new_href}'><button class='{$class}' style='{$style}' role='button' >{$txt}</button></a>";
-
-
-}
 
 ?>
 <?php //   echo __DIR__;  ?>
@@ -89,9 +62,9 @@ function button_color($color, $txt = "xxx", $href = false, $href_env = "")
                     <?php echo button_color('primary', 'Profile', 'profile.php?', ''); ?>
                     <?php echo button_color('primary', 'Profile', 'profile.php?', ''); ?>
 
-                    <?php echo button_color('success', 'Messages', 'manage_ajax.php?cl=Message ', 'admin'); ?>
+                    <?php echo button_color('success', 'Messages', 'manage_ajax.php?class_nane=Message ', 'admin'); ?>
                     <?php echo button_color('info', 'Notifications', 'manage_ajax.php?class_name=Notification', 'admin'); ?>
-                    <?php echo button_color('danger', 'To Dos', 'manage_ajax.php?cl=ToDo', 'admin'); ?>
+                    <?php echo button_color('danger', 'To Dos', 'manage_ajax.php?class_name=ToDoList', 'admin'); ?>
                     <?php echo button_color('warning', 'Heure presences', 'manage_ajax.php?class_name=HeurePresence', 'admin'); ?>
 
 
