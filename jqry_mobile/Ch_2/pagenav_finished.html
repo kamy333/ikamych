@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>jQuery Mobile Page Navigation</title>
+
+    <!-- the three things that jQuery Mobile needs to work -->
+    <link rel="stylesheet" href="../jquery.mobile-1.4.2/jquery.mobile-1.4.2.css"/>
+    <script src="../jquery-1.11.0.js" type="text/javascript"></script>
+    <script src="../jquery.mobile-1.4.2/jquery.mobile-1.4.2.js" type="text/javascript"></script>
+    <meta name="viewport" content="width=device-width"/>
+</head>
+<body>
+<!-- Internal page that links to an external page -->
+<section id="internalpage" data-role="page">
+    <header data-role="header">
+        <h1>External Page Linking</h1>
+    </header>
+    <div class="ui-content">
+        <p>This is page 1. There are two links: one to a page that is part of this site, one that is not.</p>
+        <p><a href="externalpage1.html">Link to an external page</a></p>
+        <p><a href="externalpage2.html" rel="external">Link to an external page outside of jQuery Mobile system</a></p>
+    </div>
+</section>
+</body>
+</html>

@@ -205,11 +205,11 @@ $(document).ready(function () {
     $(".touchspin2").TouchSpin({
         min: 0,
         max: 100,
-        step: 0.1,
-        decimals: 2,
+        step: 1,
+        decimals: 0,
         boostat: 5,
         maxboostedstep: 10,
-        postfix: '%',
+        postfix: '',
         buttondown_class: 'btn btn-white',
         buttonup_class: 'btn btn-white'
     });
@@ -220,6 +220,13 @@ $(document).ready(function () {
         buttonup_class: 'btn btn-white'
     });
 
+    $("input[name='typeActionMinuteFromNow'],input[name='typeActionMinuteFromDate']").TouchSpin({
+        min: -1000000000,
+        max: 1000000000,
+        stepinterval: 50,
+        maxboostedstep: 10000000,
+        prefix: ''
+    });
 
 });
 

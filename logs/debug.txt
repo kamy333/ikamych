@@ -4802,3 +4802,31 @@
 2017-05-12 06:55:50 | log: DataBaseClient with 1377 records - TransportClient with 1377 records - Difference Of 0
 2017-05-12 06:55:50 | log: T_Chauffeur with 21 records - TransportChauffeur with 21 records - Difference Of 0
 2017-05-12 06:55:50 | log: T_Type_Transport with 4 records - TransportType with 4 records - Difference Of 0
+2017-05-14 11:03:26 | log: DataBaseClient with 1377 records - TransportClient with 1377 records - Difference Of 0
+2017-05-14 11:03:26 | log: T_Chauffeur with 21 records - TransportChauffeur with 21 records - Difference Of 0
+2017-05-14 11:03:26 | log: T_Type_Transport with 4 records - TransportType with 4 records - Difference Of 0
+2017-05-14 12:21:57 | log: DataBaseClient with 1377 records - TransportClient with 1377 records - Difference Of 0
+2017-05-14 12:21:57 | log: T_Chauffeur with 21 records - TransportChauffeur with 21 records - Difference Of 0
+2017-05-14 12:21:57 | log: T_Type_Transport with 4 records - TransportType with 4 records - Difference Of 0
+2017-05-14 12:46:33 | log: DataBaseClient with 1377 records - TransportClient with 1377 records - Difference Of 0
+2017-05-14 12:46:33 | log: T_Chauffeur with 21 records - TransportChauffeur with 21 records - Difference Of 0
+2017-05-14 12:46:33 | log: T_Type_Transport with 4 records - TransportType with 4 records - Difference Of 0
+2017-05-14 12:46:40 | log: DataBaseClient with 1377 records - TransportClient with 1377 records - Difference Of 0
+2017-05-14 12:46:40 | log: T_Chauffeur with 21 records - TransportChauffeur with 21 records - Difference Of 0
+2017-05-14 12:46:40 | log: T_Type_Transport with 4 records - TransportType with 4 records - Difference Of 0
+2017-05-14 12:46:47 | log: DataBaseClient with 1377 records - TransportClient with 1377 records - Difference Of 0
+2017-05-14 12:46:47 | log: T_Chauffeur with 21 records - TransportChauffeur with 21 records - Difference Of 0
+2017-05-14 12:46:47 | log: T_Type_Transport with 4 records - TransportType with 4 records - Difference Of 0
+2017-05-14 17:49:35 | log: DataBaseClient with 1377 records - TransportClient with 1377 records - Difference Of 0
+2017-05-14 17:49:35 | log: T_Chauffeur with 21 records - TransportChauffeur with 21 records - Difference Of 0
+2017-05-14 17:49:35 | log: T_Type_Transport with 4 records - TransportType with 4 records - Difference Of 0
+2017-05-14 17:50:25 | log: DataBaseClient with 1377 records - TransportClient with 1377 records - Difference Of 0
+2017-05-14 17:50:25 | log: T_Chauffeur with 21 records - TransportChauffeur with 21 records - Difference Of 0
+2017-05-14 17:50:25 | log: T_Type_Transport with 4 records - TransportType with 4 records - Difference Of 0
+2017-05-14 17:51:10 | log: DataBaseClient with 1377 records - TransportClient with 1373 records - Difference Of 4Table DataBaseClient 1377  4  1373Table TransportClient Total records 1373  of which 1373 found in DataBaseClient with a dif of 0 which need to be removedVoulez-vous effacer les 0 données du web TransportClient non existant dans access DataBaseClient? &nbsp;Delete TransportClientVoulez-vous effacer les 4 données de Access DataBaseClient non existant dans access TransportClient? &nbsp;Delete DataBaseClientVoulez-vous ajouter les 4 données sur web TransportClient existant dans access DataBaseClient? &nbsp;Ajouter TransportClientVoulez-vous ajouter les 0 données sur Access DataBaseClient existant dans access TransportClient? &nbsp;Ajouter DataBaseClientTransportClient 0 données à effacer car inexistant dans DataBaseClient Access
+            DataBaseClient 4 données manquante dans TransportClientDataBaseClient 1373 données trouvés dans TransportClient
+2017-05-14 17:51:10 | log: T_Chauffeur with 21 records - TransportChauffeur with 21 records - Difference Of 0
+2017-05-14 17:51:10 | log: T_Type_Transport with 4 records - TransportType with 4 records - Difference Of 0
+2017-05-14 17:51:19 | log: DataBaseClient with 1377 records - TransportClient with 1377 records - Difference Of 0
+2017-05-14 17:51:19 | log: T_Chauffeur with 21 records - TransportChauffeur with 21 records - Difference Of 0
+2017-05-14 17:51:19 | log: T_Type_Transport with 4 records - TransportType with 4 records - Difference Of 0

@@ -10,6 +10,11 @@ MyClasses::redirect_disable_class();
 
 if (isset($_GET['class_name'])) {
     $class_name = $_GET['class_name'];
+    if (!in_array($class_name, MyClasses::$transmed_class)) {
+        $session->message('Error message contact your admin ');
+        redirect_to('index.php');
+
+    }
     call_user_func_array(array($class_name, 'change_to_unique_data'), ['ajax']);
     $is_data = true;
 } else {

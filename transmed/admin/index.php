@@ -18,6 +18,13 @@ if (User::is_employee() || !User::is_admin() || User::is_secretary()) {
 <?php include(SIDEBAR) ?>
 <?php include(NAV) ?>
 
+<?php echo isset($valid) ? $valid->form_errors() : "" ?>
+<?php echo isset($valid) ? $valid->form_warnings() : "" ?>
+
+
+<?php if (!empty($message)) {
+    echo $message;
+} ?>
 
 <!--    <div class="wrapper wrapper-content animated fadeInRight">-->
 <!--        <div class="row">-->

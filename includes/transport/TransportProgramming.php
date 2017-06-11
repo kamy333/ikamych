@@ -548,7 +548,9 @@ $('.clockpicker').clockpicker({    placement:'top',    align: 'bottom',    donet
         }
 
         if (!isset($this->heure)) {
-            $this->heure = "0:00"; //autres
+            $this->heure = "00:00"; //autres
+        } else {
+            $this->heure = substr($this->heure, 0, 5);
         }
 
 

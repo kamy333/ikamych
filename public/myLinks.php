@@ -244,20 +244,41 @@
 <div class="row">
 
 
+</div>
 
-<div class="col-md-8 text-justify" style="border-style: dotted;border-color: #0000ff; padding: 2em 2em 2em 2em;">
-<h4>blague</h4>
+     <?php
+     $text = "\"JUIF ? » par Alain Finkelkraut
+Pour Alain Finkelkraut, \"c'est quand on n'est pas pratiquant que l'identité juive vous colle à la peau\". J'aime ce texte qui définit la condition de nombreux Juifs d'Europe, laïcs, intellectuels, humanistes, artistes, démocrates, libres penseurs, etc., mais profondément attachés à leur culture et à leur mémoire. Être juif sans pratiquer n'est une contradiction que pour ceux qui n'ont pas conscience de la dimension d'une identité qui ne se limite pas à une appartenance religieuse.
+« Je crois que c’est quand on n’est pas pratiquant que l’identité juive vous colle à la peau parce que, pour un pratiquant, c’est Dieu qui colle : le pratiquant est celui dont l’existence se tient toute entière, se déroule devant Dieu. Mon existence avance comme elle le peut, Dieu n’est pas son témoin et, en même temps, je me sens juif, parce que je ne suis pas un juif pratiquant, je suis un juif identitaire. Qu’est-ce que ça veut dire? Non que la judéité soit une propriété, une manière d’être, qu’elle constitue mon caractère, si c’est vrai je n’en sais rien. Être juif, pour moi, c’est me sentir impliqué, concerné, compromis parfois, par ce que font les autres juifs. C’est un sentiment d’appartenance, d’affiliation et dans cette affiliation, il y a, par exemple, le lien torturé à Israël. Il y a un fait de sollicitude, d’inquiétude, d’admiration et parfois, d’impatience critique. Et puis aussi, si mon existence ne se tient pas devant Dieu, elle se tient, peut-être, devant les grands-parents que je n’ai jamais eus. Raymond Aaron disait : « Si, par extraordinaire, je devais apparaître devant mon grand-père qui vivait à Rambervillers, encore fidèle à la tradition, je voudrais, devant lui, ne pas avoir honte. Je voudrais lui donner le sentiment que, n’étant plus juif comme il l’était, je suis resté d’une certaine manière fidèle. » Je n’ai pas connu mes grands-parents, mais je pense à eux. Si je devais apparaître devant eux, eux qui étaient, en effet, encore fidèle à la tradition – l’un d’entre eux aimait les textes sacrés –, je souhaiterais qu’ils pensent, que je suis, à ma façon, dans la culture, et en France, resté fidèle. » 
+Alain Finkelkraut";
+     echo "<pre>" . $text . "</pre><hr>";
 
-<p>Le rabbin avec f2, le chauffeur vila</p>
+     $text = "";
+     echo "<pre>" . $text . "</pre><hr>";
 
-<p>"Quelques Juifs (genre apprentis Inglorious Basterds) organisent secrètement un attentat contre Adolf
-Hitler qui doit passer en voiture près de leur schtettl à midi. Ils préparent leur arme de
+
+     $text = "";
+     echo "<pre>" . $text . "</pre><hr>";
+
+
+     $text = "<p>\"Quelques Juifs (genre apprentis Inglorious Basterds) organisent secrètement un attentat contre Adolf Hitler qui doit passer en voiture près de leur schtettl à midi. Ils préparent leur arme de
 destruction massive, la planquent sous le pont à l'entrée du village et attendent. Passe midi, 12.30, 13
-heures, Hitler n'arrive pas... Ils commencent à s'inquiéter et l'un dit à l'autre: "Pourvu
-qu'il ne lui soit rien arrivé!"</p>
-<hr>
-<p>Une des préférées de mon père (rapportée ici par Emmanuelle Attali) :
-Salomon est sur son lit de mort. Sa fidèle Sarah se tient comme il se doit auprès de lui, et se saisit
+heures, Hitler n'arrive pas... Ils commencent à s'inquiéter et l'un dit à l'autre: \"Pourvu qu'il ne lui soit rien arrivé!\"</p>";
+     //echo "<pre>" . h($text) . "</pre><hr>";
+     echo "<pre>" . $text . "</pre><hr>";
+
+     $text = "Une charmante demoiselle un peu court vêtue monte dans un bus à Jerusalem. 
+Un orthodoxe assis à côté d'elle, au bout de deux stations lui tend une pomme.
+-Merci, mais pourquoi me donnez vous une pomme?
+-C'est en mangeant la pomme que notre mère Eve a pris conscience qu'elle était nue.
+Deux stations plus tard la demoiselle lui rend la pomme.
+-Pourquoi me rendez vous la pomme?
+-C'est en mangeant la pomme que notre père Adam pris conscience que désormais il devrait travailler.";
+
+     echo "<pre>" . $text . "</pre><hr>";
+
+
+     $text = "Salomon est sur son lit de mort. Sa fidèle Sarah se tient comme il se doit auprès de lui, et se saisit
 tendrement de sa main. Salomon lève vers elle un regard attendri et demande à sa femme d'une voix
 fatiguée : <br>
 - Dis moi, Sarah, mon amour, ma vie, quand nous vivions en Pologne et que les paysans du village voisin ont fait un
@@ -273,10 +294,11 @@ n'est-ce pas ?<br>
 - Mais oui, Salomon, évidemment que j'étais avec toi !<br>
 - Alors, tu sais quoi, Sarah, mon amour ... je crois que maintenant, tu peux me lâcher la main ... parce
 qu'à force, après toutes ces épreuves que nous avons traversées ensemble ... je me demande
-quand même si ce n'est pas toi qui me portes la poisse !!!</p>
+quand même si ce n'est pas toi qui me portes la poisse !!!</p> ";
+     echo "<pre>" . $text . "</pre><hr>";
 
-<hr>
-    Histoire juive :<br>
+
+     $text = "Histoire juive :<br>
 
     Ca se passe dans les années 70 . Des immigrants juifs soviétiques arrivent en Israël. Un journaliste les interroge:<br>
     - Comment ca va l'antisémitisme en URSS?<br>
@@ -286,11 +308,18 @@ quand même si ce n'est pas toi qui me portes la poisse !!!</p>
     - Et l'économie?<br>
     - On ne peut pas se plaindre<br>
     Eh bien alors, demande le journaliste pourquoi êtes vous venus en Israël?<br>
-    - Parce qu'ici on peut se plaindre<br>
+    - Parce qu'ici on peut se plaindre<br>";
 
-</div>
+     echo "<pre>" . $text . "</pre><hr>";
 
-<?php
+     $text = "Encore aujourd'hui, de nombreuses personnes, en écrivant le chiffre sept, utilisent une barre supplémentaire horizontale au milieu du chiffre.La plupart des typographies l'ont fait disparaître aujourd'hui, comme vous pouvez le constater ici: 7
+Mais savez-vous pourquoi cette barre a survécu jusqu'à nos jours?Il faut remonter bien loin, aux temps bibliques.Lorsque Moise eut gravi le mont Sinaï et que les 10 commandements lui furent dictés, il redescendit vers son peuple et leur lut, à haute et forte voix, chaque commandement. Arrivé au septième, il annonça :
+Tu ne désireras pas la femme de ton prochain. \"Et là, de nombreuses voix s'élevèrent parmi le peuple lui criant : \"Barre le sept, barre le sept !!!
+( 7 13 amusant! merci Jean-Marc: bonne fête de Shavouoth à toi )";
+
+     echo "<pre>" . $text . "</pre><hr>";
+
+
 $text="C’est Dieudonné qui boit une bière dans un bar, lorsque rentre un Juif avec une kippa. Alors, Dieudonné annonce très fort :
 – Tournée général, sauf pour le juif !
 Tout le monde boit, et le juif va voir Dieudonné pour le remercier très chaleureusement. Alors, Dieudonné crie encore plus fort :
@@ -329,6 +358,21 @@ Une semaine après lui avoir fourni la Mezouza le chinois revient voir Élie qui
 - Protection cambriolage parfait! Mais toute la journée beaucoup trop de rabbins venir demander tsedaka!!!!
 ";
 echo "<pre>" . h($text) . "</pre><hr>";
+
+     $text = "Un vieil homme juif de 82 ans, est assis dans un bar juste à côté de la table d'une magnifique jeune femme avec une poitrine extraordinaire.
+il lui dit : \" Mademoiselle, si vous me laissez mordiller juste un de vos seins je vous donne 1000 €\"
+\"êtes-vous fou? \" répondit-elle et elle sort du bar.
+Le vieux juif la suit et en arrivant au coin de la rue, il lui répète : \"si vous me laissez mordiller vos deux seins je vous donne 10.000 €\".
+\" Écoutez Monsieur, je ne suis pas ce genre de femme\".
+\" Mademoiselle, j’augmente mon offre à 100.000 €, à mon âge c’est le seul fantasme que je puisse me permettre\".
+Elle réfléchit un instant et elle lui dit: \" d’accord pour 100.000 €, mais juste une fois, mais pas ici : allons dans l’allée un peu plus sombre, là-bas\".
+Ils vont dans l’allée, elle enlève sa blouse et révèle cette magnifique poitrine...
+Aussitôt qu’il voit cela le vieux commence à les caresser doucement, à les embrasser, à les lécher, à se passer le visage sur ses seins.
+Finalement la fille qui s'impatiente, lui dit: 
+\"Est-ce que vous allez les mordiller finalement ?
+\"Non\", dit le vieux \" finalement, c’est trop cher.";
+     echo "<pre>" . h($text) . "</pre><hr>";
+
 
 $text="3 mères juives discutent de leur fils respectifs...
 La première:
@@ -439,6 +483,29 @@ _________________________
 Signature : _______________________________________
 Montant du don fait à la synagogue :_____________";
 echo "<pre>" . h($text) . "</pre><hr>";
+
+     $text = "Pendant la répétition du mariage, le futur marié prend le rabbin à part et lui dit à l'oreille :
+\"Écoutez Monsieur le rabbin, voici un billet de 500 Euros.\"
+En échange, je voudrais que vous modifiiez un peu le schéma classique de la cérémonie... 
+En particulier, je voudrais que quand vous vous adresserez à moi, vous laissiez tomber la partie
+ où je dois promettre \"d'aimer, honorer et respecter mon épouse,
+  renoncer aux autres femmes et lui être fidèle à jamais\".
+Le rabbin prend le billet sans mot dire, et le futur marié s'en va satisfait et confiant.
+Le jour du mariage, le moment fatidique de la promesse approche.
+ Le rabbin se tourne vers le marié et lui dit en le regardant droit dans les yeux :
+\"Promets-tu de te prosterner devant elle, d'obéir à chacun de ses ordres,
+ de lui apporter le petit déjeuner au lit tous les matins et de jurer 
+ devant Dieu et ta femme exceptionnelle que jamais, au grand jamais, 
+ tu ne regarderas une autre femme ?\"
+Le jeune gars ravale sa salive, rougit, regarde autour de lui 
+avec angoisse et répond d'une voix à peine perceptible :
+\"Oui je le promets.\"
+A la fin de la cérémonie, le marié s'approche du rabbin et lui dit :
+\"On avait fait un marché !?!\"
+Alors le rabbin lui met son billet de 500 Euros dans la poche et murmure à son oreille :
+\"Elle m'a fait une meilleure offre......\"";
+
+     echo "<pre>" . h($text) . "</pre><hr>";
 
 $text="
 Moché et Sarah fêtent leurs 25 années de mariage. L'événement est de taille et pourtant Sarah ne semble pas très heureuse. Moché lui demande:

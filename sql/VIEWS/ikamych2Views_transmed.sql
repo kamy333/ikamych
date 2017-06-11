@@ -2,6 +2,7 @@
 -- Structure for view `mycigarette_view_by_day`
 --
 
+
 DROP VIEW IF EXISTS transport_model;
 DROP VIEW IF EXISTS transport_model_visible_no;
 DROP VIEW IF EXISTS transport_model_visible_yes;

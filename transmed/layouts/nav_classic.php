@@ -90,7 +90,7 @@ if ($layout_context == "public") {
                             echo $Nav->menu_item('', 'Minton', '../minton/index.php', 'public');
                             echo $Nav->menu_item('', 'Inspinia Full', '../inspinia_Full_Version/index.php', 'public', true);
 
-                            echo $Nav->menu_item('', 'Inspinia Full2', '../Inspinia_Full_Version_2/index.html', 'public', true);
+                            echo $Nav->menu_item('', 'Inspinia Full2', '../Inspinia_Full_Version_2/index.php', 'public', true);
 
 
                             echo $Nav->menu_item('', 'SmartAdmin Full', '../SmartAdmin_Full_Version/index.php', 'public');
@@ -171,7 +171,7 @@ if ($layout_context == "public") {
 
                         <ul class="dropdown-menu">
 
-                            <?php foreach (MyClasses::$all_class as $class) {
+                            <?php foreach (MyClasses::$transmed_class as $class) {
                                 if (!in_array($class, MyClasses::$disable_db_classes)) {
 //                            echo $Nav->menu_item($class,'Manage '.$class,'manage_data.php','admin');
                                     echo $Nav->menu_item($class, 'Manage ' . $class, 'manage_ajax.php', 'admin');
@@ -231,6 +231,8 @@ if ($layout_context == "public") {
                             <!-- --><?php //echo $Nav->menu_item('','transmed','manage_ajax.php?class_name=TransportChauffeur','../transmed/admin') ?>
                             <li><a href="<?php echo $Nav->http . "transmed/"; ?>index.php">Public Transmed</a></li>
                             <li><a href="<?php echo $Nav->http . "transmed/admin/"; ?>index.php">Admin Transmed</a></li>
+                            <?php echo $Nav->menu_item('CourseCalendar', 'CourseCalendar', 'calendar.php', 'public') ?>
+
                             <?php echo $Nav->menu_item('Course', 'Course', 'transport.php', 'public') ?>
                             <?php echo $Nav->menu_item('Model', 'Model', 'transport.php', 'public') ?>
 

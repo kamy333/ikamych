@@ -4,21 +4,20 @@
  * User: Kamran
  * Date: 12/9/2016
  * Time: 3:02 PM
-
-*/
+ */
 //todo complete
 class MyClasses
 {
 
-    public static $all_class=array(
+    public static $all_class = array(
         'HeurePresence', 'Note', 'ToDoList', 'Message', 'Chat', 'ChatFriend', 'Notification',
         'User', 'UserType',
-        'Links','LinksCategory','Category1','Category2',
-        'Project','Client','InvoiceActual', 'Category','InvoiceEstimate','Currency',
+        'Links', 'LinksCategory', 'Category1', 'Category2',
+        'Project', 'Client', 'InvoiceActual', 'Category', 'InvoiceEstimate', 'Currency',
         'MyCigarette',
-        'MyExpense','MyExpensePerson','MyExpenseType','MyHouseExpense',
+        'MyExpense', 'MyExpensePerson', 'MyExpenseType', 'MyHouseExpense',
         'MyHouseExpenseType',
-        'FailedLogin','BlacklistIp',
+        'FailedLogin', 'BlacklistIp',
         'TransportChauffeur',
         'TransportClient',
         'TransportProgramming',
@@ -33,16 +32,24 @@ class MyClasses
         "ViewTransportSummaryCourseDateProgram",
         "ViewTransportModelByChauffeur",
         "ViewTransportAdresse",
-        "CourseByChauffeur",
 
         'DataBaseClient', 'DatabaseCourse', 'DatabaseCourse_Programe',
         'DataBaseFacturation', 'DatabasePaiement',
         'T_Adresse', 'T_Aller_Retour', 'T_Chauffeur',
         'T_Frequence_Facturation', 'T_Genre', 'T_Heure', 'T_Pays', 'T_Prix_Course', 'T_Type_Transport', 'T_Ville', 'T_Type_Facturation',
 
-        "Course", "Model",
 
-        'Comment','Photos') ;
+        "Model",
+        "Course",
+        "CourseByChauffeur",
+        "CourseForm",
+        "CourseMobile",
+        "CourseListePatient",
+        "CourseSang",
+        "CourseStandard",
+
+
+        'Comment', 'Photos');
 
 
     public static $short_class = [
@@ -65,7 +72,6 @@ class MyClasses
         "ViewModelByChauffeur" => "ViewTransportModelByChauffeur",
 
 
-
 //        "Note"=>"Note",
 
 
@@ -82,9 +88,9 @@ class MyClasses
 
     }
 
-    public static $disable_db_classes=array(
+    public static $disable_db_classes = array(
 //        'User',
-        'Comment','InvoiceEstimate','Photos',
+        'Comment', 'InvoiceEstimate', 'Photos',
 //        'FailedLogin','BlacklistIp',
 //        'TransportChauffeur',
 //        'TransportClient',
@@ -94,30 +100,31 @@ class MyClasses
         '');
 
 
-    public static $helpers_class=array('DatabaseObject','Database','SmartNav','Pagination','Session','Table','Form','FormValidation','Modal','MyPHPMailer');
+    public static $helpers_class = array('DatabaseObject', 'Database', 'SmartNav', 'Pagination', 'Session', 'Table', 'Form', 'FormValidation', 'Modal', 'MyPHPMailer');
 
-    public static $menu_data_manage=[];
+    public static $menu_data_manage = [];
 
 
-    public static function redirect_disable_class(){
-            global $session;
+    public static function redirect_disable_class()
+    {
+        global $session;
 
         static::short_class_check();
-        if (!isset($_GET['class_name'])){
+        if (!isset($_GET['class_name'])) {
             $session->message('Sorry that was an invalid request');
             redirect_to('index.php');
 
         }
 
-        if (isset($_GET['class_name'])&& !in_array($_GET['class_name'],static::$all_class)) {
-            $session->message('Sorry that was an invalid request '.$_GET['class_name']);
+        if (isset($_GET['class_name']) && !in_array($_GET['class_name'], static::$all_class)) {
+            $session->message('Sorry that was an invalid request ' . $_GET['class_name']);
             redirect_to('index.php');
 
         }
 
-            if (isset($_GET['class_name'])&& in_array($_GET['class_name'],static::$disable_db_classes)){
-                $session->message('Sorry request for '.$_GET['class_name'].' not accessible from here');
-                redirect_to('index.php');
+        if (isset($_GET['class_name']) && in_array($_GET['class_name'], static::$disable_db_classes)) {
+            $session->message('Sorry request for ' . $_GET['class_name'] . ' not accessible from here');
+            redirect_to('index.php');
 
         }
 
@@ -153,7 +160,6 @@ class MyClasses
     }
 
 
-
     public static function find_get_class_name()
     {
         if (isset($_GET["cl"])) {
@@ -176,22 +182,58 @@ class MyClasses
 
     }
 
+
+    public static function require_file()
+    {
+
+        foreach (self::$class_access as $file) {
+            require_once(LIB_PATH . DS . 'transport' . DS . "$file.php");
+        }
+
+        foreach (self::$class_transmed as $file) {
+            require_once(LIB_PATH . DS . 'transport' . DS . "$file.php");
+        }
+
+
+    }
+
     public static $transmed_class = [
         'TransportChauffeur',
         'TransportClient',
         'TransportProgramming',
         'TransportProgrammingModel',
         'TransportType',
-        "Course", "Model", "ViewTransportAdresse", "CourseByChauffeur"
+        "Course",
+        "Model",
+        "ViewTransportAdresse",
+        "CourseByChauffeur",
+        "CourseForm",
+        "CourseMobile",
+        "CourseListePatient",
+        "CourseSang",
+        "CourseStandard",
+        "Chat", "ChatFriend", "Currency", "Message", "Note", "Notification", "ToDoList"
     ];
 
     public static $class_access = [
         'DataBaseClient', 'DatabaseCourse', 'DatabaseCourse_Programe',
         'DataBaseFacturation', 'DatabasePaiement',
         'T_Adresse', 'T_Aller_Retour', 'T_Chauffeur',
-        'T_Frequence_Facturation', 'T_Genre', 'T_Heure', 'T_Pays', 'T_Prix_Course', 'T_Type_Transport', 'T_Ville', 'T_Type_Facturation'
+        'T_Frequence_Facturation', 'T_Genre', 'T_Heure', 'T_Pays', 'T_Prix_Course', 'T_Type_Facturation', 'T_Type_Transport', 'T_Ville'
     ];
 
-    public static $class_transmed = ['TransportChauffeur', 'TransportClient', 'TransportType', 'TransportProgramming', 'TransportProgrammingModel', 'ViewTransportModel', 'ViewTransportModel', 'ViewTransportModelVisibleNo', 'ViewTransportModelVisibleYes', 'ViewTransportModelPivot', 'ViewTransportModelPivotNo', 'ViewTransportModelPivotYes', 'ViewTransportSummaryCourseDateProgram', 'ViewTransportModelByChauffeur', "Course", "Model", "ViewTransportAdresse", "CourseByChauffeur"
+    public static $class_transmed = [
+        'TransportChauffeur', 'TransportClient', 'TransportType', 'TransportProgramming', 'TransportProgrammingModel', 'ViewTransportModel', 'ViewTransportModel', 'ViewTransportModelVisibleNo', 'ViewTransportModelVisibleYes', 'ViewTransportModelPivot', 'ViewTransportModelPivotNo', 'ViewTransportModelPivotYes', 'ViewTransportSummaryCourseDateProgram', 'ViewTransportModelByChauffeur',
+        "Course",
+        "Model",
+        "ViewTransportAdresse",
+        "CourseByChauffeur",
+        "CourseForm",
+        "CourseMobile",
+        "CourseListePatient",
+        "CourseSang",
+        "CourseStandard",
     ];
+
+
 }
