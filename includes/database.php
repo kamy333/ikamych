@@ -76,7 +76,7 @@ class MySQLDatabase
             $output = "<br><b><span style='color: deepskyblue'> query failed.</span></b><br>" . mysqli_error($this->connection);
             $output .= "<br><b><span style='color: deepskyblue'>last query executed sql:</span></b> <br>" . $this->last_query;
         } else {
-            $output = "<br><b><span style='color: deepskyblue'> query failed contact system Admin.</span></b><br>";
+            $output = "<br><b><span style='color: deepskyblue'> query failed contact system Admin.</span></b><br>" . $this->last_query;;
         }
         if (!$result) {
 

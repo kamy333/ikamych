@@ -75,13 +75,13 @@ function admin_panel($class_name, $panel_color = "primary", $symbol = 'users', $
     </div>
 
     <div class="row">
-        <?php echo admin_panel("TransportChauffeur", "primary", "adn", "Chauffeurs", "Total Chauffeurs"); ?>
-        <?php echo admin_panel("TransportClient", "darkgray", "adn", "Transport Clients", "Total Transport Clients"); ?>
         <?php echo admin_panel("TransportProgramming", "blue", "adn", "Transport Programming", "Total Transport Programming"); ?>
         <?php echo admin_panel("TransportProgrammingModel", "darkblue", "adn", "Transport Programming Model", "Total Transport Programming Model"); ?>
+        <?php echo admin_panel("TransportChauffeur", "primary", "adn", "Chauffeurs", "Total Chauffeurs"); ?>
+        <?php echo admin_panel("TransportClient", "darkgray", "adn", "Transport Clients", "Total Transport Clients"); ?>
         <?php echo admin_panel("TransportType", "palevioletred", "adn", "Transport Type", "Total Transport Type"); ?>
     </div> <!--First Row-->
-
+    <hr>
 
     <?php
 
@@ -116,7 +116,7 @@ function admin_panel($class_name, $panel_color = "primary", $symbol = 'users', $
 
     ?>
 
-
+    <hr>
 
     <?php ?>
     <?php echo admin_panel("Message", "green", "envelope", "Messages", "Total Messages"); ?>

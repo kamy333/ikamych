@@ -27,7 +27,7 @@
                             Public <span class="caret"></span></a>
                         <ul role="menu" class="dropdown-menu">
                             <?php echo $Nav->menu_item('', 'Full version Inspinia', 'http://www.ikamy.ch/Inspinia_Full_Version/', 'none', true);
-                            echo $Nav->menu_item('', 'Inspinia Full2', '../Inspinia_Full_Version_2/index.html', 'public', true);
+                            echo $Nav->menu_item('', 'Inspinia Full2', '../Inspinia_Full_Version_2/index.php', 'public', true);
                             ?>
                             <li><a href="<?php echo $path_public; ?>import_access.php">Import</a></li>
                             <li><a href="<?php echo $path_public; ?>comparatif.php">comparatif</a></li>
@@ -49,10 +49,12 @@
                             Transport <span class="caret"></span></a>
                         <ul role="menu" class="dropdown-menu">
 
-
+                            <?php echo $Nav->menu_item('CourseCalendar', 'CourseCalendar', 'calendar.php', 'public') ?>
                             <?php echo $Nav->menu_item('Course', 'Course', 'transport.php', 'public') ?>
                             <?php echo $Nav->menu_item('Model', 'Model', 'transport.php', 'public') ?>
                             <?php echo $Nav->menu_item('', 'Clients', 'transport.php?cl=tClient', 'none', false) ?>
+
+
                             <?php echo $Nav->menu_item('', 'Chauffeur', 'transport.php?cl=Chauffeur', 'none', false) ?>
                             <?php echo $Nav->menu_item('', 'Transport Type', 'transport.php?cl=TransportType', 'none', false) ?>
                             <?php echo "<li class=\"divider\"></li>"; ?>

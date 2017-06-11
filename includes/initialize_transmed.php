@@ -165,7 +165,8 @@ require_once(LIB_PATH . DS . 'Comment.php');
 
 require_once(LIB_PATH . DS . 'transport' . DS . 'DatabaseObjectAccess.php');
 
-DatabaseObjectAccess::require_file();
+MyClasses::require_file();
+
 //
 //foreach (DatabaseObjectAccess::$class as $file) {
 //    require_once(LIB_PATH.DS.'transport'.DS."$file.php");

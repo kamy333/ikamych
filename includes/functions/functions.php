@@ -215,9 +215,15 @@ function now_sql($date = false)
     return strftime("%Y-%m-%d",time());
 }
 
-function now_time()
+function now_time($s = false)
 {
-    return date('H:i:s', time());
+    if ($s) {
+        return date('H:i:s', time());
+
+    } else {
+        return date('H:i', time());
+
+    }
 }
 
 function date_sql($date = false)
@@ -1039,16 +1045,16 @@ function ibox($content = "Missing content", $col = 5, $h5 = "Header",
     return $output;
 }
 
-function button_color($color, $txt = "xxx", $href = false, $href_env = "", $others_a = "")
+function button_color($color, $txt = "xxx", $href = false, $href_env = "", $others_a = "", $btn_length = "btn-lg")
 {
     global $Nav;
     $bootstrap = ['primary', 'success', 'info', 'danger', 'warning'];
 
     if (in_array($color, $bootstrap)) {
-        $class = "btn btn-{$color} btn-lg index-page";
+        $class = "btn btn-{$color} {$btn_length} index-page";
         $style = "";
     } else {
-        $class = "btn btn-lg  index-page";
+        $class = "btn  {$btn_length}  index-page";
         $style = "background-color:{$color}; color:white;";
     }
 
@@ -1068,6 +1074,37 @@ function button_color($color, $txt = "xxx", $href = false, $href_env = "", $othe
 
 
 }
+
+
+function button_color_mobile($color, $txt = "xxx", $href = false, $href_env = "", $others_a = "", $btn_length = "btn-lg")
+{
+    global $Nav;
+    $bootstrap = ['primary', 'success', 'info', 'danger', 'warning'];
+
+
+    $class = "ui-btn ";
+    $style = "background-color:{$color}; color:white;";
+
+
+    if ($href) {
+        if ($href_env) {
+            $new_href = $Nav->http . $Nav->folder . "/" . $href_env . "/" . $href;
+        } else {
+            $new_href = $Nav->http . $Nav->folder . "/" . $href;
+
+        }
+    } else {
+        $new_href = "#";
+    }
+
+//    $others_a if wanting to attr in a like ''  onclick="return confirm('Delete Are you sure?')"
+    return "<a {$others_a} href='{$new_href}'><button class='{$class}' style='{$style}' role='button' >{$txt}</button></a>";
+
+
+}
+
+
+
 
 function yes_no($int, $lang = 'e')
 {
@@ -1132,7 +1169,7 @@ function remove_accents($str, $utf8 = true)
 {
     $str = (string)$str;
 
-    echo $str;
+//    echo $str;
 //    return;
 
     if (is_null($utf8)) {

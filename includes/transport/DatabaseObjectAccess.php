@@ -11,35 +11,31 @@ class DatabaseObjectAccess extends DatabaseObject
 
     public static $table_equivalence = [
         'DataBaseClient/TransportClient' =>
-            ['Pseudo/pseudo', 'liste_restrictive', 'Nom/last_name', 'Prenom/first_name', 'Adresse/address', 'CCP/cp', 'Ville/city', 'Pays/country', 'Habituel_PrixCourse/default_price', 'ParcoursDe/default_depart', 'Habituel_TypeTransport/default_transport_type', 'ParcoursA/default_arrivee', 'Commentaires/remarque',],
+            ['Pseudo/pseudo', 'Nom/last_name', 'Prenom/first_name', 'Adresse/address', 'CCP/cp', 'Ville/city', 'Pays/country', 'Habituel_PrixCourse/default_price', 'ParcoursDe/default_depart', 'Habituel_TypeTransport/default_transport_type', 'ParcoursA/default_arrivee', 'Commentaires/remarque',],
 
         'T_Chauffeur/TransportChauffeur' => ['Chauffeur/chauffeur_name', 'Company/company',],
         'T_Type_Transport/TransportType' => ['Type_Transport/type_transport',],
     ];
 
-    public static $class_access = [
-        'DataBaseClient', 'T_Chauffeur', 'T_Type_Transport', 'DatabaseCourse', 'DatabaseCourse_Programe',
-        'DataBaseFacturation', 'DatabasePaiement',
-        'T_Adresse', 'T_Aller_Retour',
-        'T_Frequence_Facturation', 'T_Genre', 'T_Heure', 'T_Pays', 'T_Prix_Course', 'T_Ville', 'T_Type_Facturation'
-    ];
+//    public static $class_access = [
+//        'DataBaseClient', 'T_Chauffeur', 'T_Type_Transport', 'DatabaseCourse', 'DatabaseCourse_Programe',
+//        'DataBaseFacturation', 'DatabasePaiement',
+//        'T_Adresse', 'T_Aller_Retour',
+//        'T_Frequence_Facturation', 'T_Genre', 'T_Heure', 'T_Pays', 'T_Prix_Course', 'T_Ville', 'T_Type_Facturation'
+//    ];
 
-    public static $class_transmed = ['TransportChauffeur', 'TransportClient', 'TransportType', 'TransportProgramming', 'TransportProgrammingModel', 'ViewTransportModel', 'ViewTransportModel', 'ViewTransportModelVisibleNo', 'ViewTransportModelVisibleYes', 'ViewTransportModelPivot', 'ViewTransportModelPivotNo', 'ViewTransportModelPivotYes', 'ViewTransportSummaryCourseDateProgram', 'ViewTransportModelByChauffeur', "Course", "Model", "ViewTransportAdresse", "CourseByChauffeur"
-    ];
-
-    public static function require_file()
-    {
-
-        foreach (self::$class_access as $file) {
-            require_once(LIB_PATH . DS . 'transport' . DS . "$file.php");
-        }
-
-        foreach (self::$class_transmed as $file) {
-            require_once(LIB_PATH . DS . 'transport' . DS . "$file.php");
-        }
+//    public static $class_transmed = [
+//        'TransportChauffeur', 'TransportClient', 'TransportType', 'TransportProgramming', 'TransportProgrammingModel', 'ViewTransportModel', 'ViewTransportModel', 'ViewTransportModelVisibleNo', 'ViewTransportModelVisibleYes', 'ViewTransportModelPivot', 'ViewTransportModelPivotNo', 'ViewTransportModelPivotYes', 'ViewTransportSummaryCourseDateProgram', 'ViewTransportModelByChauffeur', "Course",
+//        "Model", "ViewTransportAdresse", "CourseByChauffeur",
+//
+//        "CourseForm",
+//        "CourseMobile",
+//        "CourseListePatient",
+//        "CourseSang",
+//        "CourseStandard",
+//    ];
 
 
-    }
 
     public static function links()
     {

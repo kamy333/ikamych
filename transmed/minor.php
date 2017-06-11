@@ -46,7 +46,11 @@
 
                 //                echo ViewTransportAdresse::data_source('NAFISSPOUR');
                 echo "<hr>";
-                echo ViewTransportAdresse::jason('NAFISSPOUR');
+                echo ViewTransportAdresse::json_external('NAFISSPOUR');
+                echo "<hr>";
+
+                echo "<hr>";
+                echo ViewTransportAdresse::json('NAFISSPOUR');
                 echo "<hr>";
 
                 echo strftime('%Y-%m-%d %H:%M:%S');  // 2015-03-02 17:58:50

@@ -272,7 +272,8 @@ $array_class=array();
             $the_page=substr($page,0,$pos).'.php'.$query_string;
 
         }else {
-            $the_page=$page;}
+            $the_page = $page . ".php";
+        }
 
         if ($page===$this->current_page) { $class="active";} else { $class="";}
 

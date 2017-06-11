@@ -70,7 +70,7 @@ $class_array_setup_transport = array('TransportChauffeur', 'TransportClient', 'T
         "ViewTransportModelVisibleYes",
         'ViewTransportModelPivot', //parent
         "ViewTransportModelPivotNo",
-        "ViewTransportModelPivotYes",
+    "ViewTransportModelPivotYes", "ViewTransportAdresse", "CourseByChauffeur",
     "ViewTransportSummaryCourseDateProgram", 'DataBaseClient', 'DatabaseCourse', 'DatabaseCourse_Programe',
     'DataBaseFacturation', 'DatabasePaiement',
     'T_Adresse', 'T_Aller_Retour', 'T_Chauffeur',
@@ -78,6 +78,7 @@ $class_array_setup_transport = array('TransportChauffeur', 'TransportClient', 'T
 
 
 $class_array_setup_transport_admin = array(
+    "Course", "Model",
     'import_access', 'comparatif'
 );
 

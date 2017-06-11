@@ -22,6 +22,11 @@ if (method_exists($class_name, 'updateAppel') && isset($_GET['action']) && $_GET
     call_user_func_array(array($class_name, 'updateAppel'), ['']);
 }
 
+if (method_exists($class_name, 'updateCourse') && isset($_GET['action']) && $_GET['action'] == "updateCourse") {
+    call_user_func_array(array($class_name, 'updateCourse'), ['']);
+}
+
+
 
 if (isset($_GET['id'])&& isset($_GET['action'])&& $_GET['action']=="edit" &&  !isset($_GET['duplicate_record'])    ) {
 
