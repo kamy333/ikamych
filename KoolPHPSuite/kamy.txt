@@ -1,0 +1,1 @@
+It contains free basic controls: Ajax, AutoComplete, ComboBox, ImageView, Tabs, SlideMenu, Menu. Also it contains the trial controls from KoolPHP UI Professional package: Grid, PivotTable, Chart, TreeGrid, Form, Uploader, TreeView, ListBox, Calendar.

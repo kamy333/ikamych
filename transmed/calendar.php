@@ -88,96 +88,108 @@ class CourseCalendar extends CourseByChauffeur
         $prevDateCalendarHour = "";
         $prevDateCourseHour = "";
 
+//        $textCalendarHour=0;
 
-        for ($i = 0; $i < 24; $i++) {
-            $dateCalendar = Carbon::createFromFormat('Y-m-d', $date_str)->setTime($i, 0, 0);
+//        $output_1 .= "";
+//        $output .= "<td  class='text-center' style='vertical-align: middle;' >" . $textCalendarHour . "</td>";
+//
+//        for ($j = 0; $j <= $addColumn; $j++) {
+//            $output .= "<td></td>";
+//        }
+//
 
-//            $output .= "<tr>";
-            if ($ViewCalendarHour) {
-                $textCalendarHour = $dateCalendar->hour . ":00A";
-            } else {
-                $textCalendarHour = "";
+        $k = 0;
 
+        foreach ($courses as $course) {
+
+
+            $dateCourse = Carbon::createFromFormat('Y-m-d H:i', $course->course_date . " " . substr($course->heure, 0, 5));
+
+
+            static::create_properties($course);
+            static::info($course);
+            $course->set_up_display();
+
+
+            $output .= "<tr>";
+
+
+            if ($dateCourse->hour !== $k && $k < 24) {
+
+                $output .= "<td  class='text-center' style='vertical-align: middle;' >" . $k . ":00</td>";
+
+                for ($j = 0; $j <= $addColumn; $j++) {
+                    $output .= "<td>$k</td>";
+                }
+//                    $output .= $output_1;
+//                    $k++;
+                $k++;
+                continue;
             }
-            $output_1 .= "<td  class='text-center' style='vertical-align: middle;' >" . $textCalendarHour . "</td>";
 
-            for ($j = 0; $j <= $addColumn; $j++) {
-                $output_1 .= "<td></td>";
+
+            if ($dateCourse->hour > $k && $k < 24) {
+
+                $output .= "<td  class='text-center' style='vertical-align: middle;' >" . $k . ":00</td>";
+
+                for ($j = 0; $j <= $addColumn; $j++) {
+                    $output .= "<td>2</td>";
+                }
+//                    $output .= $output_1;
+//                    $k++;
+                $k++;
+                continue;
             }
-//            $output .= "</tr>";
 
 
-            foreach ($courses as $course) {
 
-                $dateCourse = Carbon::createFromFormat('Y-m-d H:i', $course->course_date . " " . substr($course->heure, 0, 5));
-
-
-                static::create_properties($course);
-                static::info($course);
-                $course->set_up_display();
-
-                $output .= "<tr>";
-
-                if ($dateCalendar->hour == $dateCourse->hour) {
+                foreach (static::$db_field_table_display_chauffeur as $field) {
 
 
-                    foreach (static::$db_field_table_display_chauffeur as $field) {
-//                        $data_target = get_called_class() . "-modal-id-" . $course->id;
+
+                    $output .= "<td class='text-center' style='vertical-align: middle;'>";
 
 
-                        $output .= "<td class='text-center' style='vertical-align: middle;'>";
+                    switch ($field) {
 
+                        case "H":
 
-                        switch ($field) {
+                            if ($prevDateCourseHour !== $dateCourse->hour) {
+                                $output .= $dateCourse->hour . ":00B2";
+                            }
 
-                            case "H":
-
-                                if ($prevDateCourseHour !== $dateCourse->hour) {
-                                    $output .= $dateCourse->hour . ":00B";
-                                }
-
-                                break;
-                            case "heure":
+                            break;
+                        case "heure":
 
 //                                $output .= hr_mn_to_text($course->$field . ':');
-                                break;
+                            break;
 
-                            default:
-                                if (isset($course->$field) && !empty($course->$field)) {
-                                    $href = "" . static::$page_report . "?class_name=Course&action=links_for_id&id=$course->id";
-
-
-                                    $output .= "<a href='$href'><button style='width: 12em;background-color:$course->color2;color:$course->color' type='button'  class='btn btn-{$course->color2}'>" . "<span class='badge  pull-left'>" . $course->heure . "</span>&nbsp;&nbsp;" . $course->pseudo . " " . "</button></a>";
+                        default:
+                            if (isset($course->$field) && !empty($course->$field)) {
+                                $href = "" . static::$page_report . "?class_name=Course&action=links_for_id&id=$course->id";
 
 
-                                }
+                                $output .= "<a href='$href'><button style='width: 12em;background-color:$course->color2;color:$course->color' type='button'  class='btn btn-{$course->color2}'>" . "<span class='badge  pull-left'>" . $course->heure . "</span>&nbsp;&nbsp;" . $course->pseudo . " " . "</button></a>";
 
-                        }
 
-                        $output .= "</td>";
+                            }
 
                     }
 
+                    $output .= "</td>";
 
-                } else {
-
-                    if ($prevDateCalendarHour !== $dateCalendar->hour && $prevDateCourseHour !== $dateCourse->hour) {
-
-                        $output .= $output_1;
-
-                    }
+                }
 
 
-                } //
-                $output_1 = "";
-                $output .= "</tr>";
-                $prevDateCalendarHour = $dateCalendar->hour;
-                $prevDateCourseHour = $dateCourse->hour;
 
 
-            } //end of course
+            $output_1 = "";
+            $output .= "</tr>";
+//                $prevDateCalendarHour = $dateCalendar->hour;
+            $prevDateCourseHour = $dateCourse->hour;
 
-        } // end of $i to 24
+
+        } //end of course
 
 
         $output .= "</tbody>";
@@ -214,49 +226,6 @@ class CourseCalendar extends CourseByChauffeur
     }
 
 
-    public static function main_display()
-    {
-//        return static::display_calendar();
-
-        if (isset($_GET['course_date_french'])) {
-            $_GET['course_date'] = date_format_to_sql(urldecode($_GET['course_date_french']), $format = 'DD/MM/YYYY');
-//            static::$date = Carbon::createFromFormat('Y-m-d', $date)->setTime(0, 0, 0);
-
-        }
-
-        if (isset($_GET['course_date'])) {
-            if ($_GET['course_date'] == "tomorrow") {
-                static::$date = Carbon::tomorrow();
-//                static::set_date();
-                return static::get_tomorrow();
-            } elseif ($_GET['course_date'] == "yesterday") {
-                static::$date = Carbon::yesterday();
-//                static::set_date();
-                return static::get_yesterday();
-            } elseif ($_GET['course_date'] == "today") {
-                static::$date = Carbon::today();
-//                static::set_date();
-                return static::get_today();
-            } else {
-                $date = $_GET['course_date'];
-
-
-                static::$date = Carbon::createFromFormat('Y-m-d', $date)->setTime(0, 0, 0);
-//                static::set_date();
-//                return static::get_date($date);
-//                return static::view_by_Chauffeur();
-                return static::view_by_Chauffeur();
-
-            }
-
-        } else {
-            static::$date = Carbon::today();;
-//            static::set_date();
-//            return static::view_by_Chauffeur();
-            return static::view_by_Chauffeur();
-
-        }
-    }
 
     public static function view_by_Chauffeur_v1_ok()
     {
@@ -789,6 +758,586 @@ class CourseCalendar extends CourseByChauffeur
 
     }
 
+    public static function view_by_Chauffeur_v4_ok()
+    {
+        $ibox = false;
+
+        Carbon::setLocale('fr');
+
+        if (isset(static::$date)) {
+            $date = static::$date;
+        } else {
+            $date = Carbon::today();
+            static::$date = $date;
+        }
+
+
+        $date_str = $date->toDateString();
+
+        $output = "";
+
+        $countBefore = count(static::$db_field_table_display_chauffeur_header);
+        $col_sql = static::get_chauffeur_column();
+        $countAfter = count(static::$db_field_table_display_chauffeur_header);
+
+        $addColumn = $countAfter - $countBefore;
+
+        $query_string = static::query_string();
+
+
+        if ($col_sql) {
+            $col_sql = "," . $col_sql;
+        }
+
+        $sql = "SELECT * {$col_sql} FROM " . static::$table_name . " {$query_string} WHERE course_date='{$date_str}'  ORDER BY heure ASC, chauffeur_id ASC";
+
+        $courses = static::find_by_sql($sql);
+        $output .= static::header_list_ul();
+
+
+        if (!$ibox) {
+            $output .= "<div class='col-lg-12  white-bg'>";
+            $output .= "<div class='text-center m-t-lg'>";
+        }
+        $output .= "<div class='table-responsive'>";
+        $output .= "<table class='table table-striped table-bordered table-hover table-condensed '>";
+
+        $output .= "<thead>";
+        $output .= "<tr>";
+
+        $a = 0;
+        foreach (static::$db_field_table_display_chauffeur_header as $item) {
+            if ($a <= 1) {
+                $output .= "<th class='text-center'  style='width:0.2%;vertical-align: middle'>";
+
+            } else {
+                $output .= "<th class='text-center'  style='width:1%;vertical-align: middle'>";
+
+            }
+
+            $output .= $item;
+            $output .= "</th>";
+            $a++;
+        }
+        unset($a);
+
+        $output .= "</tr>";
+        $output .= "</thead>";
+
+        $output .= "<tbody>";
+
+        $dateNow = Carbon::now();
+
+        $output_1 = "";
+        $ViewCalendarHour = true;
+        $prevDateCalendarHour = "";
+        $prevDateCourseHour = "";
+
+
+        for ($i = 0; $i < 24; $i++) {
+            $dateCalendar = Carbon::createFromFormat('Y-m-d', $date_str)->setTime($i, 0, 0);
+
+//            $output .= "<tr>";
+            if ($ViewCalendarHour) {
+                $textCalendarHour = $dateCalendar->hour . ":00A";
+            } else {
+                $textCalendarHour = "";
+
+            }
+            $output_1 .= "<td  class='text-center' style='vertical-align: middle;' >" . $textCalendarHour . "</td>";
+
+            for ($j = 0; $j <= $addColumn; $j++) {
+                $output_1 .= "<td></td>";
+            }
+//            $output .= "</tr>";
+
+
+            foreach ($courses as $course) {
+
+                $dateCourse = Carbon::createFromFormat('Y-m-d H:i', $course->course_date . " " . substr($course->heure, 0, 5));
+
+
+                static::create_properties($course);
+                static::info($course);
+                $course->set_up_display();
+
+                $output .= "<tr>";
+
+                if ($dateCalendar->hour == $dateCourse->hour) {
+
+
+                    foreach (static::$db_field_table_display_chauffeur as $field) {
+//                        $data_target = get_called_class() . "-modal-id-" . $course->id;
+
+
+                        $output .= "<td class='text-center' style='vertical-align: middle;'>";
+
+
+                        switch ($field) {
+
+                            case "H":
+
+                                if ($prevDateCourseHour !== $dateCourse->hour) {
+                                    $output .= $dateCourse->hour . ":00B";
+                                }
+
+                                break;
+                            case "heure":
+
+//                                $output .= hr_mn_to_text($course->$field . ':');
+                                break;
+
+                            default:
+                                if (isset($course->$field) && !empty($course->$field)) {
+                                    $href = "" . static::$page_report . "?class_name=Course&action=links_for_id&id=$course->id";
+
+
+                                    $output .= "<a href='$href'><button style='width: 12em;background-color:$course->color2;color:$course->color' type='button'  class='btn btn-{$course->color2}'>" . "<span class='badge  pull-left'>" . $course->heure . "</span>&nbsp;&nbsp;" . $course->pseudo . " " . "</button></a>";
+
+
+                                }
+
+                        }
+
+                        $output .= "</td>";
+
+                    }
+
+
+                } else {
+
+                    if ($prevDateCalendarHour !== $dateCalendar->hour && $prevDateCourseHour !== $dateCourse->hour) {
+
+                        $output .= $output_1;
+
+                    }
+
+
+                } //
+                $output_1 = "";
+                $output .= "</tr>";
+                $prevDateCalendarHour = $dateCalendar->hour;
+                $prevDateCourseHour = $dateCourse->hour;
+
+
+            } //end of course
+
+        } // end of $i to 24
+
+
+        $output .= "</tbody>";
+        $output .= "</table>";
+        $output .= "</div>";
+
+
+        if (!$ibox) {
+            $output .= "</div>";
+            $output .= "</div>";
+        }
+
+
+        if (!$ibox) {
+            return $output;
+        } else {
+            return ibox($output, 12, '');
+
+        }
+
+    }
+
+    public static function view_by_Chauffeur_v5_ok()
+    {
+        $ibox = false;
+
+        Carbon::setLocale('fr');
+
+        if (isset(static::$date)) {
+            $date = static::$date;
+        } else {
+            $date = Carbon::today();
+            static::$date = $date;
+        }
+
+
+        $date_str = $date->toDateString();
+
+        $output = "";
+
+        $countBefore = count(static::$db_field_table_display_chauffeur_header);
+        $col_sql = static::get_chauffeur_column();
+        $countAfter = count(static::$db_field_table_display_chauffeur_header);
+
+        $addColumn = $countAfter - $countBefore;
+
+        $query_string = static::query_string();
+
+
+        if ($col_sql) {
+            $col_sql = "," . $col_sql;
+        }
+
+        $sql = "SELECT * {$col_sql} FROM " . static::$table_name . " {$query_string} WHERE course_date='{$date_str}'  ORDER BY heure ASC, chauffeur_id ASC";
+
+        $courses = static::find_by_sql($sql);
+        $output .= static::header_list_ul();
+
+
+        if (!$ibox) {
+            $output .= "<div class='col-lg-12  white-bg'>";
+            $output .= "<div class='text-center m-t-lg'>";
+        }
+        $output .= "<div class='table-responsive'>";
+        $output .= "<table class='table table-striped table-bordered table-hover table-condensed '>";
+
+        $output .= "<thead>";
+        $output .= "<tr>";
+
+        $a = 0;
+        foreach (static::$db_field_table_display_chauffeur_header as $item) {
+            if ($a <= 1) {
+                $output .= "<th class='text-center'  style='width:0.2%;vertical-align: middle'>";
+
+            } else {
+                $output .= "<th class='text-center'  style='width:1%;vertical-align: middle'>";
+
+            }
+
+            $output .= $item;
+            $output .= "</th>";
+            $a++;
+        }
+        unset($a);
+
+        $output .= "</tr>";
+        $output .= "</thead>";
+
+        $output .= "<tbody>";
+
+        $dateNow = Carbon::now();
+
+        $output_1 = "";
+        $ViewCalendarHour = true;
+        $prevDateCalendarHour = "";
+        $prevDateCourseHour = "";
+
+
+        for ($i = 0; $i < 24; $i++) {
+            $dateCalendar = Carbon::createFromFormat('Y-m-d', $date_str)->setTime($i, 0, 0);
+
+//            $output .= "<tr>";
+            if ($ViewCalendarHour) {
+                $textCalendarHour = $dateCalendar->hour . ":00A";
+            } else {
+                $textCalendarHour = "";
+
+            }
+            $output_1 .= "<td  class='text-center' style='vertical-align: middle;' >" . $textCalendarHour . "</td>";
+
+            for ($j = 0; $j <= $addColumn; $j++) {
+                $output_1 .= "<td></td>";
+            }
+//            $output .= "</tr>";
+
+
+            foreach ($courses as $course) {
+
+                $dateCourse = Carbon::createFromFormat('Y-m-d H:i', $course->course_date . " " . substr($course->heure, 0, 5));
+
+
+                static::create_properties($course);
+                static::info($course);
+                $course->set_up_display();
+
+                $output .= "<tr>";
+
+                if ($dateCalendar->hour == $dateCourse->hour) {
+
+
+                    foreach (static::$db_field_table_display_chauffeur as $field) {
+//                        $data_target = get_called_class() . "-modal-id-" . $course->id;
+
+
+                        $output .= "<td class='text-center' style='vertical-align: middle;'>";
+
+
+                        switch ($field) {
+
+                            case "H":
+
+                                if ($prevDateCourseHour !== $dateCourse->hour) {
+                                    $output .= $dateCourse->hour . ":00B";
+                                }
+
+                                break;
+                            case "heure":
+
+                                $output .= hr_mn_to_text($course->$field . ':');
+                                break;
+
+                            default:
+                                if (isset($course->$field) && !empty($course->$field)) {
+                                    $href = "" . static::$page_report . "?class_name=Course&action=links_for_id&id=$course->id";
+
+
+                                    $output .= "<a href='$href'><button style='width: 12em;background-color:$course->color2;color:$course->color' type='button'  class='btn btn-{$course->color2}'>" . "<span class='badge  pull-left'>" . $course->heure . "</span>&nbsp;&nbsp;" . $course->pseudo . " " . "</button></a>";
+
+
+                                }
+
+                        }
+
+                        $output .= "</td>";
+
+                    }
+
+
+                } else {
+
+                    if ($prevDateCalendarHour !== $dateCalendar->hour || $prevDateCourseHour !== $dateCourse->hour) {
+                        $output .= "<tr>";
+                        $output .= $output_1;
+                        $output .= "</tr>";
+                    }
+
+
+                } //
+                $output_1 = "";
+                $output .= "</tr>";
+                $prevDateCalendarHour = $dateCalendar->hour;
+                $prevDateCourseHour = $dateCourse->hour;
+
+
+            } //end of course
+
+        } // end of $i to 24
+
+
+        $output .= "</tbody>";
+        $output .= "</table>";
+        $output .= "</div>";
+
+
+        if (!$ibox) {
+            $output .= "</div>";
+            $output .= "</div>";
+        }
+
+
+        if (!$ibox) {
+            return $output;
+        } else {
+            return ibox($output, 12, '');
+
+        }
+
+    }
+
+    public static function view_by_Chauffeur_v6_ok()
+    {
+        $ibox = false;
+
+        Carbon::setLocale('fr');
+
+        if (isset(static::$date)) {
+            $date = static::$date;
+        } else {
+            $date = Carbon::today();
+            static::$date = $date;
+        }
+
+
+        $date_str = $date->toDateString();
+
+        $output = "";
+        $output2 = "";
+
+        $countBefore = count(static::$db_field_table_display_chauffeur_header);
+        $col_sql = static::get_chauffeur_column();
+        $countAfter = count(static::$db_field_table_display_chauffeur_header);
+
+        $addColumn = $countAfter - $countBefore;
+
+        $query_string = static::query_string();
+
+
+        if ($col_sql) {
+            $col_sql = "," . $col_sql;
+        }
+
+        $sql = "SELECT * {$col_sql} FROM " . static::$table_name . " {$query_string} WHERE course_date='{$date_str}'  ORDER BY heure ASC, chauffeur_id ASC";
+
+        $courses = static::find_by_sql($sql);
+        $output .= static::header_list_ul();
+
+
+        if (!$ibox) {
+            $output .= "<div class='col-lg-12  white-bg'>";
+            $output .= "<div class='text-center m-t-lg'>";
+        }
+        $output .= "<div class='table-responsive'>";
+        $output .= "<table class='table table-striped table-bordered table-hover table-condensed '>";
+
+        $output .= "<thead>";
+        $output .= "<tr>";
+
+        $a = 0;
+        foreach (static::$db_field_table_display_chauffeur_header as $item) {
+            if ($a <= 1) {
+                $output .= "<th class='text-center'  style='width:0.2%;vertical-align: middle'>";
+
+            } else {
+                $output .= "<th class='text-center'  style='width:1%;vertical-align: middle'>";
+
+            }
+
+            $output .= $item;
+            $output .= "</th>";
+            $a++;
+        }
+        unset($a);
+
+        $output .= "</tr>";
+        $output .= "</thead>";
+
+        $output .= "<tbody>";
+
+        $dateNow = Carbon::now();
+
+        $output_1 = "";
+        $ViewCalendarHour = true;
+        $prevDateCalendarHour = "";
+        $prevDateCourseHour = "";
+
+$myCourse=[];
+
+        for ($i = 0; $i < 24; $i++) {
+            $dateCalendar = Carbon::createFromFormat('Y-m-d', $date_str)->setTime($i, 0, 0);
+
+//            $output .= "<tr>";
+            if ($ViewCalendarHour) {
+                $textCalendarHour = $dateCalendar->hour . ":00A";
+            } else {
+                $textCalendarHour = "";
+
+            }
+            $output_1 .= "<td  class='text-center' style='vertical-align: middle;' >" . $textCalendarHour . "</td>";
+
+            for ($j = 0; $j <= $addColumn; $j++) {
+                $output_1 .= "<td></td>";
+            }
+//            $output .= "</tr>";
+
+
+            foreach ($courses as $course) {
+
+                $dateCourse = Carbon::createFromFormat('Y-m-d H:i', $course->course_date . " " . substr($course->heure, 0, 5));
+
+
+                static::create_properties($course);
+                static::info($course);
+                $course->set_up_display();
+
+                $output .= "<tr>";
+
+                if ($dateCalendar->hour == $dateCourse->hour) {
+
+
+                    foreach (static::$db_field_table_display_chauffeur as $field) {
+//                        $data_target = get_called_class() . "-modal-id-" . $course->id;
+
+
+                        $output .= "<td class='text-center' style='vertical-align: middle;'>";
+                        $output2 = "<td class='text-center' style='vertical-align: middle;'>";
+
+
+                        switch ($field) {
+
+                            case "H":
+
+                                if ($prevDateCourseHour !== $dateCourse->hour) {
+                                    $output .= $dateCourse->hour . ":00B";
+                                    $output2 .= $dateCourse->hour . ":00B";
+
+                                }
+
+                                break;
+                            case "heure":
+
+                                $output .= hr_mn_to_text($course->$field . ':');
+                                $output2 .= hr_mn_to_text($course->$field . ':');
+
+                                break;
+
+                            default:
+                                if (isset($course->$field) && !empty($course->$field)) {
+                                    $href = "" . static::$page_report . "?class_name=Course&action=links_for_id&id=$course->id";
+
+
+                                    $output .= "<a href='$href'><button style='width: 12em;background-color:$course->color2;color:$course->color' type='button'  class='btn btn-{$course->color2}'>" . "<span class='badge  pull-left'>" . $course->heure . "</span>&nbsp;&nbsp;" . $course->pseudo . " " . "</button></a>";
+
+                                    $output2 .= "<a href='$href'><button style='width: 12em;background-color:$course->color2;color:$course->color' type='button'  class='btn btn-{$course->color2}'>" . "<span class='badge  pull-left'>" . $course->heure . "</span>&nbsp;&nbsp;" . $course->pseudo . " " . "</button></a>";
+
+
+                                }
+
+
+                        }
+
+                        $output .= "</td>";
+                        $output2 .= "</td>";
+                        array_push($myCourse, $output2);
+
+                    }
+
+
+                } else {
+
+                    if ($prevDateCalendarHour !== $dateCalendar->hour || $prevDateCourseHour !== $dateCourse->hour) {
+                        $output .= "<tr>";
+                        $output .= $output_1;
+                        $output .= "</tr>";
+                        array_push($myCourse, $output_1);
+
+                    }
+
+
+                } //
+                $output_1 = "";
+                $output .= "</tr>";
+                $prevDateCalendarHour = $dateCalendar->hour;
+                $prevDateCourseHour = $dateCourse->hour;
+
+
+            } //end of course
+
+        } // end of $i to 24
+
+
+        $output .= "</tbody>";
+        $output .= "</table>";
+        $output .= "</div>";
+
+
+        if (!$ibox) {
+            $output .= "</div>";
+            $output .= "</div>";
+        }
+
+
+        if (!$ibox) {
+            echo "<pre>";
+            echo print_r($myCourse);
+            echo "</pre>";
+
+//            return $output;
+
+        } else {
+            return ibox($output, 12, '');
+
+        }
+
+    }
+
 
     public static function get_course()
     {
@@ -1120,6 +1669,53 @@ class CourseCalendar extends CourseByChauffeur
 
 //echo current($courses[5])."<br>x";
     }
+
+    public static function main_display()
+    {
+//        return static::display_calendar();
+
+        if (isset($_GET['course_date_french'])) {
+            $_GET['course_date'] = date_format_to_sql(urldecode($_GET['course_date_french']), $format = 'DD/MM/YYYY');
+//            static::$date = Carbon::createFromFormat('Y-m-d', $date)->setTime(0, 0, 0);
+
+        }
+
+        if (isset($_GET['course_date'])) {
+            if ($_GET['course_date'] == "tomorrow") {
+                static::$date = Carbon::tomorrow();
+//                static::set_date();
+                return static::get_tomorrow();
+            } elseif ($_GET['course_date'] == "yesterday") {
+                static::$date = Carbon::yesterday();
+//                static::set_date();
+                return static::get_yesterday();
+            } elseif ($_GET['course_date'] == "today") {
+                static::$date = Carbon::today();
+//                static::set_date();
+                return static::get_today();
+            } else {
+                $date = $_GET['course_date'];
+
+
+                static::$date = Carbon::createFromFormat('Y-m-d', $date)->setTime(0, 0, 0);
+//                static::set_date();
+//                return static::get_date($date);
+//                return static::view_by_Chauffeur();
+//                return static::view_by_Chauffeur();
+                return static::view_by_Chauffeur_v6_ok();
+
+            }
+
+        } else {
+            static::$date = Carbon::today();;
+//            static::set_date();
+//            return static::view_by_Chauffeur();
+//            return static::view_by_Chauffeur();
+            return static::view_by_Chauffeur_v6_ok();
+
+        }
+    }
+
 
 }
 
