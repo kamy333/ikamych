@@ -16,7 +16,7 @@ class HeurePresence extends DatabaseObject
         "user_id" => "2",
         "date_presence" => "now()",
         "date_presence_fin" => "now()",
-        "person_id" => "6",
+        "person_id" => "8",
         "heure_debut" => "timeNoSecond()",
         "heure_fin" => "timeNoSecond()",
     );
@@ -324,6 +324,8 @@ $('.clockpicker').clockpicker({    placement:'top',    align: 'bottom',    donet
 
             }
 //            $me->date_presence_fin=$me->date_presence;
+            $me->person_id=8;
+
             $me->save();
             unset($_GET);
         }

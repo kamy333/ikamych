@@ -81,6 +81,9 @@ if ($layout_context=="public"){
 
                             echo $Nav->menu_item('','SmartAdmin Full','../SmartAdmin_Full_Version/index.php','public');
                             echo $Nav->menu_item('','Minton Full','../Minton_Full_Version/index.php','public');
+
+
+
                             echo $Nav->menu_item('','Your info','some_data.php','public');
 
                         }
@@ -139,9 +142,10 @@ if ($layout_context=="public"){
 
                 <li
                     <?php if ( isset($active_menu) && $active_menu=="lesson"){echo " class=\"dropdown active\"";} else {echo " class=\" dropdown\"";}?>
-                    ><a href="#" data-toggle="dropdown">Lesson<span class="caret"></span></a>
+                    ><a href="#" data-toggle="dropdown">Other<span class="caret"></span></a>
 
                     <ul class="dropdown-menu">
+                        <li><a href="<?php echo $path_public;?>antisemitism_1.php">Antisemitism 1</a></li>
                         <li><a href="<?php echo $path_public;?>lesson_git.php">Git</a></li>
                         <li><a href="<?php echo $path_public;?>lesson_OOP_PHP.php">OOP PHP</a></li>
 
