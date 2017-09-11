@@ -11,6 +11,9 @@
 <?php include(SITE_ROOT.DS.'public'.DS.'layouts'.DS."header.php") ?>
 <?php include(SITE_ROOT.DS.'public'.DS.'layouts'.DS."nav.php") ?>
 
+<h1 class="text-center">Jokes and Quotes</h1>
+
+
 <div class="row">
     <?php echo $session->message(); ?>
     <?php  echo isset($valid)? $valid->form_errors():"" ?>

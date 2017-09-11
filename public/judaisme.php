@@ -11,6 +11,7 @@
 <?php include(SITE_ROOT . DS . 'public' . DS . 'layouts' . DS . "header.php") ?>
 <?php include(SITE_ROOT . DS . 'public' . DS . 'layouts' . DS . "nav.php") ?>
 
+<h1 class="text-center">Judaisme</h1>
 
 <div class="row">
     <?php echo $session->message(); ?>

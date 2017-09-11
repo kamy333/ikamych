@@ -11,13 +11,14 @@
 <?php include(SITE_ROOT . DS . 'public' . DS . 'layouts' . DS . "header.php") ?>
 <?php include(SITE_ROOT . DS . 'public' . DS . 'layouts' . DS . "nav.php") ?>
 
+<h1 class="text-center">BHL</h1>
 
 <div class="row">
     <?php echo $session->message(); ?>
     <?php echo isset($valid) ? $valid->form_errors() : "" ?>
 </div>
 
-<h1 class="text-center">BHL</h1>
+
 
 <div class="row">
     <div class="col-lg-12" style="padding: 2em">

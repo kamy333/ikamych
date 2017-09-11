@@ -151,6 +151,8 @@ if ($layout_context=="public"){
                         <li><a href="<?php echo $path_public;?>jokes_quotes.php">Jokes Quotes</a></li>
                         <li><a href="<?php echo $path_public;?>juif_arabe1.php">Juif Arabe</a></li>
                         <li><a href="<?php echo $path_public;?>bhl.php">BHL</a></li>
+                        <li><a href="<?php echo $path_public;?>psychologie.php">Psychologie</a></li>
+                        <li class="divider"></li>
                         <li><a href="<?php echo $path_public;?>lesson_git.php">Git</a></li>
                         <li><a href="<?php echo $path_public;?>lesson_OOP_PHP.php">OOP PHP</a></li>
 

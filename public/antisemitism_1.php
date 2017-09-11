@@ -11,6 +11,7 @@
 <?php include(SITE_ROOT . DS . 'public' . DS . 'layouts' . DS . "header.php") ?>
 <?php include(SITE_ROOT . DS . 'public' . DS . 'layouts' . DS . "nav.php") ?>
 
+<h1 class="text-center">Antisemitisme</h1>
 
 <div class="row">
     <?php echo $session->message(); ?>
@@ -28,6 +29,35 @@
         echo "" . $text . "<hr>";
         ?>
     </div>
+    <div class="col-lg-4 col-lg-offset-1" style="background-color: #f1ffff;margin-top: 2em;padding: 2em">
+       <h4 class="text-center">Left-Wing Antisemitism</h4>
+        <?php
+
+        $text = "On peut télécharger le journal à l’adresse suivante:<a href='http://www.workersliberty.org/system/files/wl57.pdf'>http://www.workersliberty.org/system/files/wl57.pdf</a>";
+        $text.="<br>Le journal Workers' Liberty, organe du parti trotskyste britannique Alliance for Workers' Liberty (AWL), consacre son numéro d’août 2017 à une ferme dénonciation de «l’antisémitisme de gauche».<br>
+
+Voici la «une» très parlante de ce numéro, qui s’ouvre sur un éditorial de Sean Matgamna, le principal dirigeant et théoricien de l’AWL. (Extrait: « The distinction between “anti-Zionism” and antisemitism, is, increasingly, a small one. On some of the pseudo-Left it is ceasing to exist, or already, more or less, has. »)
+<br>
+Ce numéro de Workers' Liberty contient – entre autres – un long article intitulé “Trotsky and the Jewish question”, où on lit notamment:
+<br>
+The German socialist leader August Bebel once memorably
+defined left-wing antisemitism as “the socialism of idiots”.
+Much of the Trotskyist movement has fallen into an anti-Zionism
+which is “the anti-imperialism of idiots”. In fact, into antisemitism.
+Its stance is not, of course, racist, but it means
+comprehensive hostility to most Jews alive, in whose post-Holocaust
+Jewish identity Israel has a central place.
+All of this has nothing to do with Trotsky’s politics, or with
+his developing position on the question. It is “the Trotskyism
+of idiots”! Bits and pieces of Trotskyist politics are deployed
+one-sidedly and used in the service of vicarious Arab chauvinism.
+
+";
+        echo "" . $text . "<hr>";
+        ?>
+    </div>
+
+
 
     <div class="col-lg-11 col-lg-offset-1 col-md-11 col-md-offset-1 col-sm-5">
         <div class="col-lg-3 ">

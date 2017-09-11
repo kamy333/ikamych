@@ -11,44 +11,39 @@
 <?php include(SITE_ROOT . DS . 'public' . DS . 'layouts' . DS . "header.php") ?>
 <?php include(SITE_ROOT . DS . 'public' . DS . 'layouts' . DS . "nav.php") ?>
 
-<h1 class="text-center">Shoah</h1>
-
+<h1 class="text-center">Psychology</h1>
 
 <div class="row">
     <?php echo $session->message(); ?>
     <?php echo isset($valid) ? $valid->form_errors() : "" ?>
 </div>
 
-
 <div class="row">
     <div class="col-lg-4 col-lg-offset-1" style="background-color: #f1ffff;margin-top: 2em;padding: 2em">
 
+
+            <p>Thought process</p>
+            <div class="fb-video" data-href="https://www.facebook.com/yitzgo/videos/1690269407933525/?hc_ref=ARTzcVQS5UdKB_ORqEKmwJv8qtAmRwVUl951lQAWGaDayz97-j5AB7QJksf26zcWq0k&pnref=story"
+                 data-width="3000" data-show-text="true">
+                <div class="fb-xfbml-parse-ignore">
+                    <blockquote cite="https://www.facebook.com/julcoh/videos/10152434170565251/"><a
+                            href="https://www.facebook.com/julcoh/videos/10152434170565251/">I truly believe these 8:54 minutes could change your life!
+                            please 👉 TAG A FRIEND to spread this important mind shift.
+                            LIKE Yitz Goldberg for more..</a>
+                        <p></p>Interview <a href="#" role="button"></a></blockquote>
+                </div>
+            </div>
+
+
+
         <?php
 
-        $text = "<h4>Shoah par balle , Père Patrick Desbois</h4>
- <a href=\"http://www.dailymail.co.uk/news/article-3205754/Blood-oozed-soil-grave-sites-pits-alive-secrets-Ukraine-s-shameful-Holocaust-Bullets-killing-centre-1-6million-Jews-executed.html\">Holaucaust in Ukraine</a><br>
- 
- 
- ";
+        $text = "<div class=\"row\">
+    <?php echo $session->message(); ?>
+    <?php echo isset($valid) ? $valid->form_errors() : \"\" ?>
+</div>";
         echo "" . $text . "<hr>";
         ?>
-    </div>
-        <div class="col-lg-6 " style="background-color: #ffe2ee;margin-top: 2em;padding: 2em">
-
-            <?php
-
-            $text = "Réflexions sur le nazisme , à l'occasion de la parution du livre éponyme de Saul Friedländer.<br>"
-
-            ." <a href=\"https://www.franceculture.fr/emissions/repliques/reflexions-sur-le-nazisme\">Répliques  par Alain Finkielkraut  le samedi de 9h00 à 10h00 51min</a><br>".
-"<iframe src=\"https://www.franceculture.fr/player/export-reecouter?content=9687ed77-9c3c-4b9b-9a27-ba918eb441d0\" width=\"481\" frameborder=\"0\" scrolling=\"no\" height=\"137\"></iframe>"
-                .""
-            ;
-            echo "" . $text . "<hr>";
-            ?>
-
-
-
-
     </div>
 </div>
 
