@@ -3,6 +3,7 @@
       "mpdf/mpdf": "^6.1",
       "nesbot/carbon": "~1.21",
       "jenssegers/date": "^3.2",
-      "jimmiw/php-time-ago": "^2.0"
+      "jimmiw/php-time-ago": "^2.0",
+      "google/apiclient": "^2.0"
     }
 }

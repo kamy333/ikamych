@@ -13,13 +13,101 @@
 
 <h1 class="text-center">Antisemitisme</h1>
 
+
+
 <div class="row">
     <?php echo $session->message(); ?>
     <?php echo isset($valid) ? $valid->form_errors() : "" ?>
 </div>
 
 
+
+
+
+
 <div class="row">
+    <div class="col-lg-4 col-lg-offset-1" style="background-color: #f1ffff;margin-top: 2em;padding: 2em">
+        <?php
+        $text = "<a href='http://www.europe1.fr/politique/valls-insulte-par-melenchon-je-le-connais-bien-cest-parfaitement-maitrise-3461990'>Europe1 Valks</a>";
+        $text .= "";
+        echo "" . $text . "<hr>";
+        ?>
+    </div>
+    <div class="col-lg-10 col-lg-offset-1" style="background-color: #f1ffff;margin-top: 2em;padding: 2em">
+        <?php
+        $text = "<a href='#'></a>";
+        $text .= "Élisabeth Badinter - Antisémitisme - \"Ne laissez pas les juifs mener seuls ce combat\"
+
+La philosophe Élisabeth Badinter s’émeut de la non-mobilisation face aux violences antisémites des dix dernières années. Et analyse les changements politiques qui l’expliquent.<br>
+Au cours des dernières décennies, vous ne vous êtes jamais exprimée publiquement -que ce soit sous forme d’entretien ou de texte- sur la question de l’antisémitisme. Pourquoi le faire aujourd’hui?<br><br>
+
+Ce qui m’a décidée, c’est ce qui s’est passé avec Sarah Halimi. Le silence médiatique et politique qui a entouré le martyr de cette femme [NDLR: rouée de coups pendant une heure puis défenestrée au cri d' »Allahou Akbar » la nuit du 4 avril dernier] m’a énormément perturbée.<br>
+Je n’ai pas compris comment, en France, on a pu passer sous silence pendant deux longs mois un acte aussi atroce. Je n’ai pas compris que les premiers articles de fond et enquêtes -en dehors de la presse communautaire- n’aient paru qu’à la fin de mai. Oui, c’est cela qui m’a menée à une réflexion profonde, puis à une prise de parole dont je n’avais pas nécessairement envie jusqu’alors. J’y étais réticente, car je ne veux en aucune sorte porter ombrage à mon pays vis-à-vis de l’étranger.<br>
+Je sais à quel point la presse américaine, notamment, est friande des condamnations successives et excessives de la France sur cette question. Cela me désole, car la France n’est pas antisémite. Néanmoins, après Sarah Halimi, oui, j’ai ressenti le besoin de parler. 
+<br><br>
+Réticente jusqu’à présent à s’exprimer sur l’antisémitisme en France, Elisabeth Badinter a éprouvé le « besoin de parler après le meurtre de Sarah Halimi », en avril, et le silence de la communauté nationale qui a suivi.
+afp.com/Loic Venance<br><br>
+
+Concernant cet assassinat, justement, certains expliquent le silence par la prudence: la charge d’antisémitisme n’avait à l’époque pas été retenue par le procureur -le parquet a demandé, depuis, que l’acte soit requalifié… Qu’en pensez-vous?<br><br>
+
+La prudence est le propre de la justice. Mais ma question est simple: pourquoi la presse n’a-t-elle pas enquêté, sans a-priori? Pourquoi n’a-t-on pas entendu les hommes et femmes politiques « demander des réponses », eux qui savent généralement si bien le faire? Enfin, les premiers éléments montraient qu’une femme de 65 ans avait été rouée de coups, défenestrée, que les témoins avaient entendu des choses comme « c’est pour venger mon peuple »…
+Et la presse n’enquête pas? Ne va pas interroger le voisinage? A ce point de silence, c’est qu’on a choisi de ne pas enquêter! Au départ, j’ai même cru que c’était une « fake news », tellement le crime était énorme et tellement personne n’en parlait. Certains m’ont également expliqué que le meurtre avait eu lieu quinze jours avant la présidentielle, et que médias comme politiques ne voulaient pas rejouer l’épisode du fait divers ultraviolent qui avait influencé la fin de la campagne de 2002 [NDLR: le passage à tabac d’un retraité]. Désolée, mais cela ne me suffit pas… <br>
+En mai 1990, 34 sépultures juives sont profanées à Carpentras. Des manifestations sont alors organisées, dont une à Paris, qui réunit 200000 personnes, en présence du président François Mitterrand. En 2006, le calvaire d’un jeune juif, Ilan Halimi, torturé et tué par le « gang des barbares », ne suscite pas la même mobilisation. Qu’est-ce qui a changé entre-temps?<br>
+En 1990, l’émotion autour de la profanation de Carpentras -perpétrée par des skinheads- s’est vite cristallisée autour de l’antilepénisme. L’ensemble de la gauche pouvait donc défiler unie, sans ombre au tableau. Pour Ilan Halimi -kidnappé, torturé, massacré parce que juif et que « les juifs ont de l’argent »-, on découvre que l’extrême droite n’a plus le monopole de l’antisémitisme dans ce pays.<br>
+Youssouf Fofana et son « gang des barbares » sont des jeunes de banlieue. En conséquence, la gauche n’a plus l’épouvantail fédérateur d’extrême droite pour défiler. C’est pourquoi la manifestation in memoriam qui suit la mort d’Ilan Halimi -bien maigrelette par rapport à Carpentras- est essentiellement une manifestation communautaire, et non un grand rassemblement républicain et universaliste.<br> 
+Il y a de l’émotion dans le pays, certes, de la stupeur face à l’acharnement sadique dont ce jeune juif a été l’objet. Mais pas de manifestation. Pour moi, ces années signent le basculement d’une partie des nouvelles générations, et particulièrement celles de gauche, pour qui l’antisionisme est aujourd’hui plus important que la lutte contre l’antisémitisme. C’est un changement historique majeur. Depuis l’affaire Dreyfus, le combat contre l’antisémitisme a été porté par les forces de gauche, qui, bon an mal an, étaient unies sur ce thème. C’était presque un marqueur. Depuis, il y a eu scission. La gauche « à la Manuel Valls » est restée fidèle à ce combat, mais d’autres sont gênés, notamment parce que, pour eux, Israël est le mal absolu, et que les juifs sont forcément associés à la politique d’Israël. A côté de tout cela, il y a une masse silencieuse qui regrette ces violences, mais qui ne se sent pas obligée de manifester.
+<br>
+Comment expliquer « le silence de la communauté nationale »
+<br>
+Plus que l’antisionisme, n’y a-t-il pas aussi un bug de la gauche, qui ne parvient pas à gérer deux antiracismes de front? La plupart des violences contre les juifs étant désormais le fait d’agresseurs islamistes, elle craint -et c’est louable- la stigmatisation, et choisit donc de se taire, afin de ne pas « jeter de l’huile sur le feu »…
+Oui, c’est en effet la position officielle de beaucoup. Ne pas jeter de l’huile sur le feu. Et j’ajouterai, pour certains: le souci d’être toujours du côté des plus faibles, des plus « victimes », tous les musulmans étant, dans leur esprit, les nouveaux damnés de la terre. Précisons deux choses: bien sûr que les Français arabo-musulmans sont eux aussi victimes de racisme, et qu’il faut le condamner à toute force. Bien sûr, aussi, qu’il ne faut en aucun cas accuser d’antisémitisme tous les musulmans. Voilà, c’est simple, et c’est clair. Une fois ces deux évidences posées, expliquez-moi, néanmoins, ce qui peut justifier le silence de la communauté nationale après Ilan Halimi, ou après Mohamed Merah?
+<br>
+Ce sont quand même deux événements qui ont suscité beaucoup d’émotion et fait beaucoup de bruit…
+<br>
+Les gouvernements font leur devoir. Les hommages officiels sont toujours impeccablement rendus. Mais -comment dire?- ça n’imprime pas les cerveaux. Nous avons tous, Français, des images chocs des attentats terroristes qui nous hantent. Des images que nous reconstituons dans notre tête, mais qu’on ne peut pas oublier.
+On ne peut oublier ni ces amas de cadavres, les uns sur les autres au Bataclan, ni ce prêtre égorgé pendant son office, ni les journalistes de Charlie, exécutés les uns après les autres dans leur salle de rédaction, ni ce camion qui écrase des bébés à Nice… Ce sont des images gravées. 
+Mais je ne m’explique pas pourquoi l’exécution par Mohamed Merah de trois enfants dans la cour d’une école juive ne semble pas imprimer autant. Pourquoi cet acte de nature nazie, qui consiste à rattraper par les cheveux une petite fille de 7 ans, pour lui tirer une balle dans la tête à bout portant, ne s’incruste pas autant dans la mémoire collective.
+Cessons de nous « aligner sur cette minorité intolérante! »
+<br>
+Ça n' »imprime » pas autant?
+<br>
+Je vais vous citer deux oublis qui m’ont particulièrement marquée, et qui illustrent cela. Deux oublis provenant de personnes que je ne soupçonne au reste en rien d’antisémitisme. D’abord, le 13 juillet dernier, l’ex-secrétaire d’Etat à l’Aide aux victimes déclare, sur France info, que l’attentat de Nice est terrible, car « c’est le premier attentat qui a volontairement touché des enfants ».
+<br>
+Excusez- moi: la ministre des victimes qui oublie qu’il y a eu trois enfants juifs délibérément ciblés et assassinés, c’est stupéfiant, non? Et les journalistes présents dans le studio n’ont pas particulièrement sursauté, l’un croyant même bon de préciser: « Le premier en Europe, car, malheureusement, des enfants sont touchés par des attentats de ce genre dans d’autres pays qu’en Europe. »
+<br>
+Le deuxième oubli concerne la tribune publiée par des intellectuels français musulmans dans Le Journal du dimanche du 26 juillet 2016. C’est un bon texte, sur la nécessité de réformer l’islam de France, et sur la responsabilité qu’ils sont prêts à y prendre. Mais, dans l’entame de cette tribune, alors qu’ils listent les victimes des attentats des dernières années -« caricaturistes, jeunes écoutant de la musique, couple de policiers, enfants, femmes et hommes assistant à la célébration de la fête nationale, prêtre célébrant la messe »-, ils ne disent pas un mot des victimes juives, de Merah ou de l’Hyper Cacher. 
+<br><br>
+« Un malheureux oubli », ont-ils fait valoir par la suite. Ça signifie quelque chose, un oubli. On n’oublie jamais un rendez-vous d’amour, mais on oublie parfois un rendez-vous chez le dentiste! Cet oubli-là, dans cette tribune, m’a beaucoup attristée. Dans un texte en réponse, Philippe Val a émis l’hypothèse que cette omission avait été consentie pour ne pas heurter la partie minoritaire des musulmans qui ne veulent pas entendre parler de juifs.
+Est-ce l’explication? En tout cas, il faudrait tout de même que l’on cesse de s’aligner sur cette minorité intolérante! Dans certains quartiers, elle dicte tant sa loi qu’il ne fait pas bon y être juif. Et des proviseurs d’établissement public s’y voient contraints d’orienter les enfants juifs vers les écoles confessionnelles, faute de pouvoir assurer leur sécurité dans cette enceinte de la République. « Qui mène ce combat aujourd’hui? »
+<br>
+N’y a-t-il pas, parallèlement, un mouvement de communautarisation des Français juifs?
+<br>
+C’est vrai pour une partie d’entre eux. Mais il y a bien d’autres communautarismes qui ont émergé depuis les années 1990. Et c’est cette tendance générale que je regrette infiniment, car elle affaiblit le sentiment de solidarité nationale. De même, je suis toujours troublée quand je vois brandir dans les manifestations des drapeaux étrangers, fussent-ils israéliens, palestiniens, ou autres.
+<br>
+Lorsqu’on parle d’antisémitisme, on entend souvent dire que la communauté juive « exagère » ou « dramatise »… Qu’en dites-vous?
+<br>
+Vous vous souvenez des manifestations propalestiniennes de juillet 2014? On y a entendu des cris: « Dehors les juifs! », et même « A mort les juifs! »… Dites-moi: de quelle autre catégorie de Français entend-on scander cela dans les rues? Dans une manifestation, en plus, où l’on pouvait trouver des personnalités que l’on pensait insoupçonnables, et qui n’ont pas eu un mot de condamnation… Certains argueront que ces cris-là étaient le fait de quelques-uns, qu’ils relevaient de l’anecdote. Encore une fois, ce qui ne relève pas de l’anecdote, c’est le silence qui leur fait suite.
+D’une certaine façon, on a le sentiment que la masse silencieuse renvoie tout cela à des « affaires entre les juifs et les Arabes ». « C’est compliqué, entend-on, ils ont leurs conflits »… Depuis quand peut-on crier « A mort les juifs! » sans que ça fasse frissonner? Je sais bien que, pour les nouvelles générations, la guerre 39-45, c’est aussi lointain que la Saint-Barthélemy, mais tout de même! Où sont les gardiens de la lutte? Qui mène ce combat aujourd’hui? Tout se passe comme si depuis Ilan Halimi, on considère que l’antisémitisme est le problème des seuls juifs.
+<br>
+Pour vous, on a abandonné l’antisémitisme à une gestion communautaire?
+<br>
+Oh, il y a encore de grandes et belles voix qui s’élèvent, et il faut leur rendre un juste hommage. Des voix comme celles de Jacques Julliard, Marcel Gauchet, Jean-Pierre Le Goff, Michel Onfray, Sonia Mabrouk, Paul Thibaud, qui ont signé l’appel des intellectuels (1) pour exiger que la vérité soit faite sur le meurtre de Sarah Halimi.
+<br>
+J’ai été très émue en entendant, dans un documentaire, le témoignage du maire de Sarcelles, François Pupponi, désespéré de ne pouvoir répondre aux souffrances des habitants juifs de la ville, hier sereins, et aujourd’hui angoissés -quand ils ne sont pas partis… Sa tristesse et sa fraternité étaient sincères, et au moins ne niait- il pas le problème. Mais oui, je constate que ces voix se raréfient. Je dis à mes concitoyens: ne laissez pas les juifs mener seuls ce combat. Sans quoi il est perdu d’avance.";
+        echo "" . $text . "<hr>";
+        ?>
+    </div>
+
+
+<div class="row">
+
+    <div class="col-lg-4 col-lg-offset-1" style="background-color: #f1ffff;margin-top: 2em;padding: 2em">
+        <?php
+        $text = "Le racisme est une manière de déléguer à l'autre le dégoût qu'on a de soi-même. (Robert Sabatier)";
+        echo "" . $text . "<hr>";
+        ?>
+    </div>
+
 
     <div class="col-lg-4 col-lg-offset-1" style="background-color: #f1ffff;margin-top: 2em;padding: 2em">
         <?php

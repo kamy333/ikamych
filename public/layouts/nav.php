@@ -145,8 +145,14 @@ if ($layout_context=="public"){
                     ><a href="#" data-toggle="dropdown">Other<span class="caret"></span></a>
 
                     <ul class="dropdown-menu">
+                        <li><a href="<?php echo $path_public;?>transmed_form.php">Transmed_form</a></li>
+                        <li><a href="<?php echo $path_public;?>transmed_form2.php">Transmed_form2</a></li>
+
+                        <li class="divider"></li>
+
                         <li><a href="<?php echo $path_public;?>judaisme.php">Judaisme</a></li>
-                        <li><a href="<?php echo $path_public;?>antisemitism_1.php">Antisemitism 1</a></li>
+                        <li><a href="<?php echo $path_public;?>antisemitism_1.php">Antisemitism</a></li>
+                        <li><a href="<?php echo $path_public;?>antisionism.php">Antisionism 1</a></li>
                         <li><a href="<?php echo $path_public;?>shoah.php">Shoah</a></li>
                         <li><a href="<?php echo $path_public;?>jokes_quotes.php">Jokes Quotes</a></li>
                         <li><a href="<?php echo $path_public;?>juif_arabe1.php">Juif Arabe</a></li>

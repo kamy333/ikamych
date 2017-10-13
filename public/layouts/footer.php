@@ -25,7 +25,52 @@
 
 
 
-<?php     if (substr($Nav->current_page, 0,7)=="manage_" ||
+<?php
+
+if ($Nav->current_page=="transmed_form2"){
+?>
+    <script>
+
+        function ttd(data){
+            return "<td>"+data+"</td>";
+        }
+
+        var myHttp='<?php echo $http;  ?>';
+//            alert(myHttp);
+        $.getJSON(myHttp,function (data) {
+            var d=data.feed.entry;
+
+            var myFirst;
+            var myLast;
+            var myEmail;
+            var myApproved;
+            var myAge;
+            var mytd;
+
+            jQuery.each(d,function()
+            {
+                myFirst=ttd(this['gsx$first']['$t']);
+                myLast=ttd(this['gsx$last']['$t']);
+                myEmail=ttd(this['gsx$email']['$t']);
+                myApproved=ttd(this['gsx$approved']['$t']);
+                myAge=ttd(this['gsx$age']['$t']);
+                myTd=myFirst+myLast+myEmail+myApproved+myAge;
+//                console.log(myFirst);
+                $('#myTable').find('tr:last').after('<tr>'+myTd+'</tr>');
+            });
+
+            console.log(d);
+        });
+
+
+
+    </script>
+ <?php } ?>
+
+
+
+<?php
+if (substr($Nav->current_page, 0,7)=="manage_" ||
 substr($Nav->current_page, 0,4)=="new_" ||
     substr($Nav->current_page, 0, 5) == "edit_"
     || $Nav->current_page == 'profile'
