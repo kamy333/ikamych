@@ -100,7 +100,7 @@ if (request_is_post() && request_is_same_domain()) {
 //            $user->unset_required_fields("username","password",'nom','email',);
             $user->unset_required_fields("password", 'nom', 'user_type_id');
 
-            $valid->validate_presences("first_name", "last_name", "email");
+            $valid->validate_presences(["first_name", "last_name", "email"]);
             $valid->validate_email(array('email'));
 
             $user->unset_table_fields(array("hashed_password", "user_image", "username", "nom"));

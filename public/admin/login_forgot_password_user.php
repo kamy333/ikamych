@@ -25,7 +25,7 @@ $new_password=null;
 
       $username=trim($_POST['username']);
       $valid=new FormValidation();
-       $valid->validate_presences('username') ;
+       $valid->validate_presences(['username']) ;
 
       if(empty($valid->errors)){
         $user=User::find_by_username($username);

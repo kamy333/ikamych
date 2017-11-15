@@ -23,7 +23,7 @@ $new_password=null;
 
           $username=trim($_POST['email']);
           $valid=new FormValidation();
-          $valid->validate_presences('email') ;
+          $valid->validate_presences(['email']) ;
           $valid->validate_email('email') ;
 
           if(empty($valid->errors)){

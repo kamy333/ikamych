@@ -32,9 +32,27 @@
 <?php echo isset($valid) ? $valid->form_errors() : "" ?>
 <?php echo isset($valid) ? $valid->form_warnings() : "" ?>
 
-<?php if (isset($message)) {
-    echo $message;
-}
+<?php if (isset($message)) {echo $message;} ?>
+
+
+<h3 class="text-center">Profile</h3>
+
+<div class="row" style="margin-bottom: 2em  ">
+    <div class="col-md-4">
+<a class="btn btn-primary" role="button" href="https://www.ikamy.ch/Inspinia/profile.php">Go to profile page</a>
+</div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+<?php if(User::is_kamy()){ ?>
+
+<a class="btn btn-default" role="button" data-toggle="collapse" href="#collapseExample1" aria-expanded="false" aria-controls="collapseExample1">Details Heure Presence</a>
+
+    <div class="collapse" id="collapseExample1">
+
+
+<?php
 //echo "<div class='row'>";
 
 //
@@ -42,17 +60,17 @@
 //echo "</div>";
 //HeurePresence::update_all();
 
-echo HeurePresence::short_form();
-
-
-echo "<div class='row'>";
+    echo HeurePresence::short_form();
+    echo "<div class='row'>";
 //echo HeurePresence::aside_right();
-echo HeurePresence::report_period();
+    echo HeurePresence::report_period();
 //echo HeurePresence::aside_right();
-echo "</div>";
+    echo "</div>";
+    echo "</div>";
 
-
+}
 ?>
-
+    </div>
+    </div>
 
 <?php include(SITE_ROOT . DS . 'public' . DS . 'layouts' . DS . "footer.php") ?>

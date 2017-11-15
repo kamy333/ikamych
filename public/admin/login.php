@@ -25,7 +25,7 @@ if(request_is_post() && request_is_same_domain()) {
 
         $valid=new FormValidation();
 
-        $valid->validate_presences('username','password');
+        $valid->validate_presences(['username','password']);
 
         $failed_login=new FailedLogin();
             if(empty($valid->errors)) {

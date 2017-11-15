@@ -78,7 +78,7 @@ public $warnings=array();
 
     }
 
-    public function validate_presences($required_fields, $warning_me=false) {
+    public function validate_presences(array $required_fields, $warning_me=false) {
         // second arg to get as warning
 //        $this->errors;
 //        $this->warnings;

@@ -141,7 +141,7 @@ if ($layout_context=="public"){
 
 
                 <li
-                    <?php if ( isset($active_menu) && $active_menu=="lesson"){echo " class=\"dropdown active\"";} else {echo " class=\" dropdown\"";}?>
+                    <?php if ( isset($active_menu) && $active_menu=="Others"){echo " class=\"dropdown active\"";} else {echo " class=\" dropdown\"";}?>
                     ><a href="#" data-toggle="dropdown">Other<span class="caret"></span></a>
 
                     <ul class="dropdown-menu">

@@ -3,7 +3,7 @@
 <?php $class_name = "Links"; ?>
 
 <?php $layout_context = "public"; ?>
-<?php $active_menu = "links"; ?>
+<?php $active_menu = "Others"; ?>
 <?php $stylesheets = ""; ?>
 <?php $fluid_view = true; ?>
 <?php $javascript = ""; ?>

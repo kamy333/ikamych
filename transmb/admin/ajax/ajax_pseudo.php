@@ -22,6 +22,10 @@ $q = trim(e($_REQUEST["q"]));
 
 
 $hint = "";
+$hint2 = "";
+
+if(strlen(trim($q))<3){return;}
+
 
 if (strlen(trim($q)) > 2 && $q !== "") {
 
@@ -32,6 +36,8 @@ if (strlen(trim($q)) > 2 && $q !== "") {
     if ($clients) {
         foreach ($clients as $client) {
             $hint .= "<li class='hint-pseudo' style='list-style-type: none;background-color: #00a0df;color: white'>" . $client->pseudo . "</li>";
+            $hint2 .= "<option value='" . $client->pseudo . "'></option>";
+
 
 
         }
@@ -58,5 +64,6 @@ if (strlen(trim($q)) > 2 && $q !== "") {
 //}
 
 // Output "no suggestion" if no hint was found or output correct values
-echo $hint === "" ? "no suggestion" : "<ul>" . $hint . "</ul>";
+//echo $hint === "" ? "no suggestion" : "<ul>" . $hint . "</ul>";
+echo $hint2 === "" ? "no suggestion" : "<datalist id='input-pseudo'>" . $hint2 . "</datalist>";
 ?>

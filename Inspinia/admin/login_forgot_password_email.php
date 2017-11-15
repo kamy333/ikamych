@@ -16,7 +16,7 @@ if(request_is_post()&& request_is_same_domain()){
 
         $username=trim($_POST['email']);
         $valid=new FormValidation();
-        $valid->validate_presences('email') ;
+        $valid->validate_presences(['email']) ;
         $valid->validate_email('email') ;
 
         if(empty($valid->errors)){

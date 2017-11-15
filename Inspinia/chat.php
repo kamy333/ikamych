@@ -166,14 +166,15 @@ function small_chat_wrapper(){
 
 ?>
 
+<?php if(User::is_kamy()){ ?>
 
     <div class="small-chat-box fadeInRight animated">
 
         <div class="heading" draggable="true">
             <small class="chat-date pull-right">
-                02.19.2015
+                <?php echo $today = date("M.d.Y");   ?>
             </small>
-            Small chat
+            Small chat not active
         </div>
 
         <div class="content">
@@ -185,7 +186,7 @@ function small_chat_wrapper(){
                     </small>
                 </div>
                 <div class="chat-message active">
-                    Lorem Ipsum is simply dummy text input.
+                    Je dois travailer sur le small chat
                 </div>
 
             </div>
@@ -254,6 +255,8 @@ function small_chat_wrapper(){
 
         </a>
     </div>
+
+    <?php } ?>
     <!---->
     <!--</body>-->
     <!--</html>-->

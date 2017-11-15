@@ -572,7 +572,7 @@ class Form extends DatabaseObject
             } elseif (isset($this->value) && $this->value == 1) {
                 $output .= " checked ";
             } else {
-
+                $output .= "";
             }
 
             $output .= ">";

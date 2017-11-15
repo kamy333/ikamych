@@ -3,7 +3,7 @@
 <?php $class_name = "Links"; ?>
 
 <?php $layout_context = "public"; ?>
-<?php $active_menu = "links"; ?>
+<?php $active_menu = "Others"; ?>
 <?php $stylesheets = ""; ?>
 <?php $fluid_view = true; ?>
 <?php $javascript = ""; ?>
@@ -18,7 +18,20 @@
     <?php echo isset($valid) ? $valid->form_errors() : "" ?>
 </div>
 
+<div class="row">
+    <a href="/public/testinput.php">testinput.php</a>
+</div>
 
+<div class="row">
+    <form class="form-inline" action="transmed_form.php" method="get" name="pseudo-search">
+        <div class="form-group">
+            <label for="exampleInputName2">Name</label>
+            <input type="text" class="form-control" id="pseudo" name="pseudo" placeholder="Jane Doe">
+        </div>
+
+        <button type="submit" name="submit" class="btn btn-default">Send</button>
+    </form>
+</div>
 
 <div class="row">
     <div class="col-lg-5 col-lg-offset-1" style="background-color: #fff9fb;margin-top: 2em;padding: 2em">
