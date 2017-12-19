@@ -267,33 +267,3 @@ $("#ionrange_5").ionRangeSlider({
 });
 
 $(".dial").knob();
-
-// $("#basic_slider").noUiSlider({
-//     start: 40,
-//     behaviour: 'tap',
-//     connect: 'upper',
-//     range: {
-//         'min':  20,
-//         'max':  80
-//     }
-// });
-
-// $("#range_slider").noUiSlider({
-//     start: [ 40, 60 ],
-//     behaviour: 'drag',
-//     connect: true,
-//     range: {
-//         'min':  20,
-//         'max':  80
-//     }
-// });
-
-// $("#drag-fixed").noUiSlider({
-//     start: [ 40, 60 ],
-//     behaviour: 'drag-fixed',
-//     connect: true,
-//     range: {
-//         'min':  20,
-//         'max':  80
-//     }
-// });

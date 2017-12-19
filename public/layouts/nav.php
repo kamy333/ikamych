@@ -162,6 +162,12 @@ if ($layout_context=="public"){
                         <li><a href="<?php echo $path_public;?>lesson_git.php">Git</a></li>
                         <li><a href="<?php echo $path_public;?>lesson_OOP_PHP.php">OOP PHP</a></li>
 
+                        <?php if (User::is_kamy()) { ?>
+                            <li class="divider"></li>
+                            <li><a href="<?php echo $path_public; ?>facebook_injure">OOP PHP</a></li>
+
+                        <?php } ?>
+
 
                     </ul>
                 </li>
@@ -478,13 +484,6 @@ if ($layout_context=="public"){
 
 
 <?php if(isset($incl_message_error) &&($incl_message_error)) {?>
-
-    <!--    <div class="row">-->
-    <!--        --><?php //echo message(); ?>
-    <!--        --><?php //if(isset($errors)) echo form_errors($errors); ?>
-    <!--        --><?php //if(isset($warnings)) echo form_warnings($warnings); ?>
-    <!---->
-    <!--    </div>-->
 
 
 <?php } ?>

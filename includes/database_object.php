@@ -29,7 +29,7 @@ class DatabaseObject
     public static $get_form_element_all;
     public static $form_default_value;
 
-    public static $all_class = array('ToDoList', 'User', 'UserType', 'Client', 'Category', 'BlacklistIp', 'Links', 'LinksCategory', 'Project', 'Category1', 'Category2', 'InvoiceActual', 'InvoiceEstimate', 'FailedLogin', 'MyCigarette', 'MyExpense', 'MyExpensePerson', 'MyExpenseType', 'MyHouseExpense', 'MyHouseExpenseType', 'Chat', 'ChatFriend', 'Notification', 'TransportChauffeur', 'TransportClient', 'TransportProgramming', 'TransportProgrammingModel', 'TransportType');
+//    public static $all_class = array('Article','ToDoList', 'User', 'UserType', 'Client', 'Category', 'BlacklistIp', 'Links', 'LinksCategory', 'Project', 'Category1', 'Category2', 'InvoiceActual', 'InvoiceEstimate', 'FailedLogin', 'MyCigarette', 'MyExpense', 'MyExpensePerson', 'MyExpenseType', 'MyHouseExpense', 'MyHouseExpenseType', 'Chat', 'ChatFriend', 'Notification', 'TransportChauffeur', 'TransportClient', 'TransportProgramming', 'TransportProgrammingModel', 'TransportType');
 
     protected static $table_name; // used for form new the related links put class dependency in array
     protected static $existing_password;

@@ -5,6 +5,18 @@
 <?php echo gallery_button();?>
     <div class="row">
 
+        <div class="col-lg-8 col-lg-offset-2" style="margin-top: 2em;padding: 2em;background-color: white">
+
+
+            <?php
+            //          $text = "<a href='#'></a>";
+            $text .= "<p>Je t'aime dans le temps. Je t'aimerai jusqu'au bout du temps. Et quand le temps sera écoulé, alors, je t'aurai aimée. Et rien de cet amour, comme rien de ce qui a été, ne pourra jamais être effacé.<p>
+	<div class='pull-right'><p>Jean d'Ormesson <small>(16 juin 1925 - 5 décembre 2017)</small></p>
+		<small><i>-Un jour je m'en irai sans avoir tout dit.</i></small></div>";
+            echo "" . $text . "<hr>";
+            ?>
+        </div>
+
         <div class="pull-right">
             <p class="text-center">Music here!</p>
             <audio controls>
@@ -70,7 +82,7 @@
                 <div class="ibox float-e-margins" ">
                 <div class="ibox-content">
 
-                    <div class="fb-video" data-href="https://www.facebook.com/TheFeverEvent/videos/220888771587991/?pnref=story" data-width="500" data-show-text="false"><div class="fb-xfbml-parse-ignore"><blockquote cite="https://www.facebook.com/TheFeverEvent/videos/220888771587991/"><a href="https://www.facebook.com/TheFeverEvent/videos/220888771587991/"></a><p>Tom Browne - Funkin&#039; For Jamaica (1980)</p>Posted by <a href="https://www.facebook.com/TheFeverEvent/">The Fever</a> on Friday, February 12, 2016</blockquote></div></div>
+                    <!--                    <div class="fb-video" data-href="https://www.facebook.com/TheFeverEvent/videos/220888771587991/?pnref=story" data-width="500" data-show-text="false"><div class="fb-xfbml-parse-ignore"><blockquote cite="https://www.facebook.com/TheFeverEvent/videos/220888771587991/"><a href="https://www.facebook.com/TheFeverEvent/videos/220888771587991/"></a><p>Tom Browne - Funkin&#039; For Jamaica (1980)</p>Posted by <a href="https://www.facebook.com/TheFeverEvent/">The Fever</a> on Friday, February 12, 2016</blockquote></div></div>-->
 
                     <div class="fb-video col-md-offset-1" data-href="https://www.facebook.com/TheFeverEvent/videos/219946731682195/?pnref=story" data-width="500" data-show-text="false"><div class="fb-xfbml-parse-ignore"><blockquote cite="https://www.facebook.com/TheFeverEvent/videos/219946731682195/?pnref=story"><a href="https://www.facebook.com/TheFeverEvent/videos/219946731682195/?pnref=story"></a><p>Alex Green</p>Posted by <a href="https://www.facebook.com/TheFeverEvent/">The Fever</a> on Friday, October 28, 2016</blockquote></div></div>
 
@@ -120,26 +132,6 @@
                 </div>
             </div>
 
-
-            <div class="col-lg-4 col-md-4">
-                <div class="ibox float-e-margins">
-
-                    <div class="ibox-content">
-                        <div class="text-center m-t-lg">
-                            <!-- The Gallery as inline carousel, can be positioned anywhere on the page -->                                 Videos - click inside to start video
-                            <div id="blueimp-video-carousel" class="blueimp-gallery blueimp-gallery-controls blueimp-gallery-carousel">
-                                <div class="slides"></div>
-                                <h3 class="title"></h3>
-                                <a class="prev">‹</a>
-                                <a class="next">›</a>
-                                <a class="play-pause"></a>
-                            </div>
-
-
-                        </div>
-                    </div>
-                </div>
-            </div>
 
 
 

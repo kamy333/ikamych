@@ -20,13 +20,49 @@
     <?php echo isset($valid) ? $valid->form_errors() : "" ?>
 </div>
 
+<div class="row">
+    <div class="col-lg-4 col-lg-offset-1" style="background-color: #f1ffff;margin-top: 2em;padding: 2em">
 
 
+        <?php
+        $text = "<a href='https://www.letemps.ch/opinions/2009/04/20/antiracisme-devoye-perversion-mots'>Opinions  L’antiracisme dévoyé par la perversion des mots</a>";
+        $text .= "
 
+<br> 
+Jean-Claude Buhrer
+Publié lundi 20 avril 2009 à 00:43.
+OPINION
+L’antiracisme dévoyé par la perversion des mots
+
+Jean-Claude Buhrer, ancien correspondant du «Monde» à l’ONU, constate que la manipulation langagière conduit à vider les droits de l’homme de leur sens premier
+<br> 
+
+«Quand une société se corrompt, c’est le langage qui se gangrène en premier», disait Octavio Paz, prix Nobel mexicain de littérature. A en juger par les tiraillements récurrents qui ont émaillé ses travaux préparatoires et les incertitudes qui auront subsisté jusqu’à la dernière minute, ce propos pourrait fort bien s’appliquer à la Conférence de suivi contre le racisme, dite Durban 2, qui s’ouvre aujourd’hui au Palais des nations à Genève, sans que personne ne se hasarde à en prédire l’issue en fin de semaine. C’est que la conférence proprement dite de Durban, entachée par des débordements antisémites et d’inquiétantes dérives verbales, n’a pas fini de laisser des traces et l’ONU est encore loin d’en avoir amorti le choc.
+<br>
+Déjà au cours des travaux préparatoires, le groupe islamique s’était employé à gommer toute référence à cette forme particulière de racisme qu’est l’antisémitisme, lui opposant systématiquement les néologismes «anti-arabisme» et «islamophobie», de création récente, afin de vider le terme de son sens communément admis. Prétextant que «les Arabes constituent la majorité écrasante des Sémites», ses représentants n’ont pas hésité à avancer une proposition visant à «combattre les pratiques sionistes contre le sémitisme.» Commentaire d’un observateur: «Les tentatives visant à amputer l’antisémitisme de son plein sens ne sont pas uniquement antisémites, elles sont aussi antisémantiques.» En même temps, plusieurs paragraphes participaient d’une tentative de banalisation de la Shoah. «Par une manipulation du langage, notait un diplomate, on assiste à une entreprise de relativisme historique, visant à dénigrer la réalité du génocide perpétré par les nazis.»
+<br>
+De plus, sans reculer devant l’amalgame, un discours unilatéral s’est acharné à plaquer sur le Proche-Orient les schémas en usage en Afrique du Sud à l’époque de l’apartheid – ce qui est aussi une insulte à ses victimes, et s’est fait au détriment de toute autre cause. Ainsi détournés de leur sens originel, les mots ne veulent plus rien dire, jusqu’à en perdre toute signification de par leur banalisation. Devant ces dérapages, il aura fallu une ferme intervention du président de la Commission des droits de l’homme du Rwanda pour rappeler la singularité de chacun des mots shoah, apartheid ou génocide rwandais, autant d’armes contre «le révisionnisme, le négationnisme et la minimisation».
+<br>
+Comme si les dérapages de Durban n’avaient servi à rien, les mêmes travers ont refait surface lors de la préparation de la conférence de suivi. D’ailleurs, la haut-commissaire, Navanethem Pillay, a elle-même reconnu que les objectifs fixés à Durban n’ont pas été atteints. Durban I n’a pas réussi à empêcher les 300 000 morts du Darfour, la poursuite des tueries au Sri Lanka, ni les conflits qui ravagent la République démocratique du Congo et qui tuent «plus de personnes tous les six mois que le tsunami de 2004», selon l’Unicef. Sans parler des multiples victimes du racisme à travers le monde qui peuvent toujours attendre.
+<br>
+Les principales pierres d’achoppement demeurent la mise en accusation d’Israël et la diffamation des religions, chevaux de bataille préférés de l’Organisation de la conférence islamique (OCI). Fer de lance de cette remise en cause des acquis de la laïcité et d’intrusion de la religion à l’ONU, le mot «islamophobie», introduit pour la première fois dans un texte onusien à Durban. Selon ce terme, développé en Iran sous le régime khomeinyste afin de museler ses adversaires et d’étouffer toute critique, est «islamophobe» celui qui conteste la lapidation des femmes adultères ou d’autres châtiments corporels, ainsi que les dispositions prévues par la charia. Sous couvert de lutte contre la diffamation des religions, l’OCI cherche à faire passer de nouvelles normes anti-blasphème – celui-ci étant assimilé à du racisme – remettant en cause l’universalité des droits de l’homme et restreignant la liberté d’expression. Or, les droits de l’homme s’appliquent aux individus, et non aux religions ou croyances.
+<br>
+Faute de pouvoir agir sur la réalité bien réelle du racisme, un comité ad hoc, présidé par l’ambassadeur d’Algérie, a été chargé de rédiger des normes complémentaires sur le racisme. Insistant lourdement sur la diffamation des religions, ce comité a donné une nouvelle définition de l’antisémitisme, «d’abord dirigé contre les Arabes et, par extension, contre tous les musulmans». Dans la foulée, l’OCI a fait adopter une modification du mandat du rapporteur sur la liberté d’expression, désormais chargé de faire la chasse à ceux qui en abusent.
+<br>
+Cette novlangue à la manière d’Orwell a sans doute encore de beaux jours devant elle avec la présence à la conférence du président iranien, sans compter les émissaires de toutes les dictatures coalisés pour imposer leur loi commune. A force de concessions dans le but de ne pas rompre un dialogue impossible, les démocraties n’ont plus qu’à bien se tenir…
+<br>
+
+\"";
+        echo "" . $text . "<hr>";
+        ?>
+    </div>
+</div>
 
 
 <div class="row">
     <div class="col-lg-4 col-lg-offset-1" style="background-color: #f1ffff;margin-top: 2em;padding: 2em">
+
+
         <?php
         $text = "<a href='http://www.europe1.fr/politique/valls-insulte-par-melenchon-je-le-connais-bien-cest-parfaitement-maitrise-3461990'>Europe1 Valks</a>";
         $text .= "";
@@ -99,30 +135,30 @@ J’ai été très émue en entendant, dans un documentaire, le témoignage du m
     </div>
 
 
-<div class="row">
+    <div class="row">
 
-    <div class="col-lg-4 col-lg-offset-1" style="background-color: #f1ffff;margin-top: 2em;padding: 2em">
-        <?php
-        $text = "Le racisme est une manière de déléguer à l'autre le dégoût qu'on a de soi-même. (Robert Sabatier)";
-        echo "" . $text . "<hr>";
-        ?>
-    </div>
+        <div class="col-lg-4 col-lg-offset-1" style="background-color: #f1ffff;margin-top: 2em;padding: 2em">
+            <?php
+            $text = "Le racisme est une manière de déléguer à l'autre le dégoût qu'on a de soi-même. (Robert Sabatier)";
+            echo "" . $text . "<hr>";
+            ?>
+        </div>
 
 
-    <div class="col-lg-4 col-lg-offset-1" style="background-color: #f1ffff;margin-top: 2em;padding: 2em">
-        <?php
+        <div class="col-lg-4 col-lg-offset-1" style="background-color: #f1ffff;margin-top: 2em;padding: 2em">
+            <?php
 
-        $text = "Le 26 avril 2012, Claude Askolovitch publie une tribune violente dans Marianne où il traite le président du CRIF Richard Prasquier, de « salaud » pour n’avoir, selon lui, pas condamné le score élevé de Marine Le Pen au premier tour de l’élection présidentielle dans un article paru dans le journal israélien Haaretz.
+            $text = "Le 26 avril 2012, Claude Askolovitch publie une tribune violente dans Marianne où il traite le président du CRIF Richard Prasquier, de « salaud » pour n’avoir, selon lui, pas condamné le score élevé de Marine Le Pen au premier tour de l’élection présidentielle dans un article paru dans le journal israélien Haaretz.
 « Il est incapable, dans un texte adressé à un journal israélien, de condamner la violence faite à la France quand un leader politique est considéré comme « normal » en ne détestant que les musulmans. Incapable de dire que notre pays est malade, même quand les juifs ne sont pas les premières cibles (…) Il a oublié que des jeunes juifs, dans les années 80, fondaient SOS racisme avec des militants beurs et de gauche (…) Richard Prasquier ne comptabilise que les injures faites aux siens. Seuls ses morts valent un Kaddish. Il se s’alarme que si les juifs sont touchés (…) la morale et la raison de Prasquier s’arrêtent aux portes du ghetto (…) Aujourd’hui, la détestation des musulmans, subreptice ou revendiquée, grimée de laïcité ou affichée en haine de l’autre, fait partie du débat public, Marine Le Pen le démontre, un certain sarkozysme s’en est emparé, Richard Prasquier le confirme. Sartre écrivait également de belles choses sur les salauds qui détournent la tête quand le mal court. Le ghetto aussi compte ses salauds »,";
-        echo "" . $text . "<hr>";
-        ?>
-    </div>
-    <div class="col-lg-4 col-lg-offset-1" style="background-color: #f1ffff;margin-top: 2em;padding: 2em">
-       <h4 class="text-center">Left-Wing Antisemitism</h4>
-        <?php
+            echo "" . $text . "<hr>";
+            ?>
+        </div>
+        <div class="col-lg-4 col-lg-offset-1" style="background-color: #f1ffff;margin-top: 2em;padding: 2em">
+            <h4 class="text-center">Left-Wing Antisemitism</h4>
+            <?php
 
-        $text = "On peut télécharger le journal à l’adresse suivante:<a href='http://www.workersliberty.org/system/files/wl57.pdf'>http://www.workersliberty.org/system/files/wl57.pdf</a>";
-        $text.="<br>Le journal Workers' Liberty, organe du parti trotskyste britannique Alliance for Workers' Liberty (AWL), consacre son numéro d’août 2017 à une ferme dénonciation de «l’antisémitisme de gauche».<br>
+            $text = "On peut télécharger le journal à l’adresse suivante:<a href='http://www.workersliberty.org/system/files/wl57.pdf'>http://www.workersliberty.org/system/files/wl57.pdf</a>";
+            $text.="<br>Le journal Workers' Liberty, organe du parti trotskyste britannique Alliance for Workers' Liberty (AWL), consacre son numéro d’août 2017 à une ferme dénonciation de «l’antisémitisme de gauche».<br>
 
 Voici la «une» très parlante de ce numéro, qui s’ouvre sur un éditorial de Sean Matgamna, le principal dirigeant et théoricien de l’AWL. (Extrait: « The distinction between “anti-Zionism” and antisemitism, is, increasingly, a small one. On some of the pseudo-Left it is ceasing to exist, or already, more or less, has. »)
 <br>
@@ -141,67 +177,66 @@ of idiots”! Bits and pieces of Trotskyist politics are deployed
 one-sidedly and used in the service of vicarious Arab chauvinism.
 
 ";
-        echo "" . $text . "<hr>";
-        ?>
-    </div>
-
-
-
-    <div class="col-lg-11 col-lg-offset-1 col-md-11 col-md-offset-1 col-sm-5">
-        <div class="col-lg-3 ">
-            <p>Discours Emmanuel Macron du Vel d'Hiv 17 juillet 2017</p>
-            <iframe width="560" height="315" src="https://www.youtube.com/embed/hB2j5zhXKmg" frameborder="0"
-                    allowfullscreen></iframe>
+            echo "" . $text . "<hr>";
+            ?>
         </div>
 
-        <div class="col-lg-3 col-lg-offset-1">
-            <p>Discours Emmanuel Macron Ouradour sur Glane 2017</p>
-            <iframe width="560" height="315" src="https://www.youtube.com/embed/CanRyS9jn2Y" frameborder="0"
-                    allowfullscreen></iframe>
-        </div>
-        <div class="col-lg-3  col-lg-offset-1">
-            <p>Alexandre Dujardin</p>
 
-            <div class="fb-video" data-href="https://www.facebook.com/julcoh/videos/10152434170565251/"
-                 data-width="3000" data-show-text="true">
-                <div class="fb-xfbml-parse-ignore">
-                    <blockquote cite="https://www.facebook.com/julcoh/videos/10152434170565251/"><a
-                                href="https://www.facebook.com/julcoh/videos/10152434170565251/">Captured by Julien
-                            Cohen</a>
-                        <p></p>Interview <a href="#" role="button">Alexandre Dujardin</a></blockquote>
+        <div class="col-lg-11 col-lg-offset-1 col-md-11 col-md-offset-1 col-sm-5">
+            <div class="col-lg-3 ">
+                <p>Discours Emmanuel Macron du Vel d'Hiv 17 juillet 2017</p>
+                <iframe width="560" height="315" src="https://www.youtube.com/embed/hB2j5zhXKmg" frameborder="0"
+                        allowfullscreen></iframe>
+            </div>
+
+            <div class="col-lg-3 col-lg-offset-1">
+                <p>Discours Emmanuel Macron Ouradour sur Glane 2017</p>
+                <iframe width="560" height="315" src="https://www.youtube.com/embed/CanRyS9jn2Y" frameborder="0"
+                        allowfullscreen></iframe>
+            </div>
+            <div class="col-lg-3  col-lg-offset-1">
+                <p>Alexandre Dujardin</p>
+
+                <div class="fb-video" data-href="https://www.facebook.com/julcoh/videos/10152434170565251/"
+                     data-width="3000" data-show-text="true">
+                    <div class="fb-xfbml-parse-ignore">
+                        <blockquote cite="https://www.facebook.com/julcoh/videos/10152434170565251/"><a
+                                    href="https://www.facebook.com/julcoh/videos/10152434170565251/">Captured by Julien
+                                Cohen</a>
+                            <p></p>Interview <a href="#" role="button">Alexandre Dujardin</a></blockquote>
+                    </div>
                 </div>
             </div>
+
+        </div>
+</div>
+
+
+    <div class="row">
+        <div class="col-lg-6  col-lg-offset-2" style="background-color: #ffffd4">
+            <p>Rabbi Sacks’ brilliant speech
+                <a href="http://www.israelvideonetwork.com/rabbi-sacks-brilliant-speech-on-antisemitism-silenced-the-eu/"
+                   class="h"> speech </a>on Antisemitism silenced the EU</p>
+
         </div>
 
     </div>
-</div>
 
 
-<div class="row">
-    <div class="col-lg-6  col-lg-offset-2" style="background-color: #ffffd4">
-        <p>Rabbi Sacks’ brilliant speech
-            <a href="http://www.israelvideonetwork.com/rabbi-sacks-brilliant-speech-on-antisemitism-silenced-the-eu/"
-               class="h"> speech </a>on Antisemitism silenced the EU</p>
+    <div class="row">
+        <div class="col-lg-6  col-lg-offset-2" style="background-color: #ffffd4">
+            <p>Histoire du peuple juif en
+                <a href="http://www.odyeda.com/fr/" class="h"> 1 page </a>.</p>
 
-    </div>
-
-</div>
-
-
-<div class="row">
-    <div class="col-lg-6  col-lg-offset-2" style="background-color: #ffffd4">
-        <p>Histoire du peuple juif en
-            <a href="http://www.odyeda.com/fr/" class="h"> 1 page </a>.</p>
+        </div>
 
     </div>
 
-</div>
-
-<div class="row">
-    <div class="col-lg-4 col-lg-offset-1" style="background-color: #f1ffff">
-        <!--        <div class="col-lg-12">-->
-        <?php
-        $text = "<p><strong>L'antisémitisme et les sémites. Bref mémo de Meïr Waintrater.</strong></p>
+    <div class="row">
+        <div class="col-lg-4 col-lg-offset-1" style="background-color: #f1ffff">
+            <!--        <div class="col-lg-12">-->
+            <?php
+            $text = "<p><strong>L'antisémitisme et les sémites. Bref mémo de Meïr Waintrater.</strong></p>
             
             <p>Meïr Waintrater SUR L'ANTISÉMITISME ET SUR LES «SÉMITES»</p>
 
@@ -212,14 +247,14 @@ one-sidedly and used in the service of vicarious Arab chauvinism.
             <p>2. Le mot «sémite» désigne un groupe de langues (dont l’hébreu, l’arabe et l’araméen), et non pas des peuples. Englober les Juifs, les Arabes, etc. sous le nom de «sémites» est une pratique qui correspond à la pensée racialisante de la fin du XIXe siècle, et qui n’a pas sa place dans la culture contemporaine.</p>
 
             <p>3. Bref: ni les Arabes ni les Juifs ne sont des «sémites», et l’antisémitisme ne désigne pas la haine des «sémites». Si les gens veulent perdre leur temps à discuter, qu'ils se trouvent d'autres sujets plus intéressants.</p>";
-        //            echo "<pre>" . $text . "</pre><hr>";
-        echo "" . $text . "<hr>";
-        ?>
+            //            echo "<pre>" . $text . "</pre><hr>";
+            echo "" . $text . "<hr>";
+            ?>
 
-    </div>
-    <div class="col-lg-4 col-lg-offset-1" style="background-color: #f1ffff">
-        <?php
-        $text = "<p><strong>René Bellaiche
+        </div>
+        <div class="col-lg-4 col-lg-offset-1" style="background-color: #f1ffff">
+            <?php
+            $text = "<p><strong>René Bellaiche
 January 18, 2016 · Paris, France · 
 SUR L'ANTISEMITISME</strong></p>
 
@@ -230,19 +265,19 @@ SUR L'ANTISEMITISME</strong></p>
 <p>C'est alors qu'a commencé à poindre, via la renaissance d'un Etat juif, la troisième mouture de l'antijudaïsme : l'antisionisme, qui ne s'attaque pas au judaïsme en tant que religion ou en tant que \"race\", mais en tant que nation, qu'entité politique.</p>
 
 <p>La passion antijuive renaît toujours, comme le Phénix, de ses cendres, métamorphosée. Son dernier avatar n'est pas le moins dangereux, parce qu'il se veut le plus \"objectif\".</p>";
-        echo "" . $text . "<hr>";
+            echo "" . $text . "<hr>";
 
 
-        ?>
-    </div>
+            ?>
+        </div>
 </div>
 
-<div class="row">
+    <div class="row">
 
-    <div class="col-lg-4 col-lg-offset-1" style="background-color: #f1ffff;margin-top: 2em;padding: 2em">
-        <?php
+        <div class="col-lg-4 col-lg-offset-1" style="background-color: #f1ffff;margin-top: 2em;padding: 2em">
+            <?php
 
-        $text = "il y a eu des juifs à l'origine qui se sont convertis aux christianisme et qui ont participé à des exactions contre leurs communautés. Pareil pour les pays musulmans ou des juifs se sont convertis à l'Islam et ne sont pas tendre et pensent \"que les juifs sont pervertis\". J’en connais un personnellement. Et puis de nos jours lorsque on est athée et qu’on veut se détacher on ne va pas se convertir mais on essaie de saboter tout ce qui vient de son identité par ex Ce renier peut se trouver dans toutes les cultures , ce n’est pas que chez les juifs.
+            $text = "il y a eu des juifs à l'origine qui se sont convertis aux christianisme et qui ont participé à des exactions contre leurs communautés. Pareil pour les pays musulmans ou des juifs se sont convertis à l'Islam et ne sont pas tendre et pensent \"que les juifs sont pervertis\". J’en connais un personnellement. Et puis de nos jours lorsque on est athée et qu’on veut se détacher on ne va pas se convertir mais on essaie de saboter tout ce qui vient de son identité par ex Ce renier peut se trouver dans toutes les cultures , ce n’est pas que chez les juifs.
 
 un résumé entendu sur ce sujet
 L’antisémitisme a connu 3 phases dans l’histoire, en premier il est religieux , puis par la racialisation qui va jusqu’à son apogée avec le nazisme et enfin de nos jours à cause de son état. 
@@ -254,14 +289,14 @@ Bref on peut en discuter à n’en pas finir mais bien sûr vous ne croyez pas �
 Est-ce que la colonisation est condamnable ? oui Est-ce un gouvernement de droite ? peut-on critiquer ?oui 
 
 En tous les cas entre votre discours ou celui des Islamistes ou des militants actifs du BDS et qui prend une telle ampleur en Europe, on se dit que pour les juifs heureusement qu’Israël existe , car oui c’est aussi un état refuge.";
-        echo "" . $text . "<hr>";
-        ?>
-    </div>
+            echo "" . $text . "<hr>";
+            ?>
+        </div>
 
-    <div class="col-lg-4 col-lg-offset-1" style="background-color: #f1ffff;margin-top: 2em;padding: 2em">
-        <a href="http://www.cgt.fr/IMG/pdf/2017_extremedroite_n14_fiche_fc_rc.pdf">cgt</a>
-        <?php
-        $text = "\"Il y a en France une tradition antisémite ancienne et ancrée qui, comme le racisme, traverse toute la société et tous les courants politiques, y compris à gauche.\"
+        <div class="col-lg-4 col-lg-offset-1" style="background-color: #f1ffff;margin-top: 2em;padding: 2em">
+            <a href="http://www.cgt.fr/IMG/pdf/2017_extremedroite_n14_fiche_fc_rc.pdf">cgt</a>
+            <?php
+            $text = "\"Il y a en France une tradition antisémite ancienne et ancrée qui, comme le racisme, traverse toute la société et tous les courants politiques, y compris à gauche.\"
 [...]
 \"ANTISÉMITISME ET RACISME : DEUX IDÉOLOGIES DE HAINE, MAIS AVEC CHACUNE LEUR LOGIQUE PROPRE
 Si historiquement le racisme et l’antisémitisme se sont construits en visant des minorités différentes (l’ensemble des populations « non occidentales » pour le premier, les Juifs pour le second), la vraie différence réside dans la manière d’appréhender ces minorités. Le racisme est une idéologie de l’exploitation et de l’inégalité : certaines populations sont jugées inférieures, et à ce titre sont surexploitées, économiquement et socialement. La logique antisémite présente quant à elle les minorités ciblées comme des « corps étrangers », des parasites, à qui l’on prête une volonté de domination et l’origine des problèmes d’une société. C’est donc une logique complotiste et d’extermination : il faut se débarrasser des catégories mises en cause, qui n’auraient aucune place dans la société et dont l’existence même est posée comme problématique.
@@ -271,14 +306,14 @@ Via Logan Shafir
 www.cgt.fr
 CGT.FR
 ";
-        echo "" . $text . "<hr>";
-        ?>
-    </div>
+            echo "" . $text . "<hr>";
+            ?>
+        </div>
 
-    <div class="col-lg-4 col-lg-offset-1" style="background-color: #f1ffff;margin-top: 2em;padding: 2em">
+        <div class="col-lg-4 col-lg-offset-1" style="background-color: #f1ffff;margin-top: 2em;padding: 2em">
 
-        <?php
-        $text = "<p><strong>antisémitisme, racisme, sémite.. ne jouons pas sur les mots !
+            <?php
+            $text = "<p><strong>antisémitisme, racisme, sémite.. ne jouons pas sur les mots !
 By Sophie Ernst on Thursday, August 16, 2012 at 2:32pm</strong></p>
 <p>A propos des termes \"antisémitisme\", \"sémite\", \"racisme\",\"judéophobie\"... comment se sortir des polémiques sur les mots ? </p>
  
@@ -297,51 +332,51 @@ Alors voici quelques élucidations des termes en question.</p>
  
  
 <p>Dire que l'antisémitisme est différent, comme réalité et comme concept, de l'anti-judaïsme traditionnel de la chrétienté, ou de la judéophobie contemporaine qui se développe dans les pays musulmans, ou du racisme anti-noir ou anti-arabe, ou de la xénophobie, ce n'est pas pour hiérarchiser les haines sur une échelle du plus ou moins grave, du plus ou moins répréhensible, du plus ou moins dangereux. Absolument pas. Mais ça ne fonctionne pas pareil et ça c'est très important pour des raisons pratiques, ce n'est pas par goût oiseux des petites nuances sémantiques raffinées ! on a affaire à des variantes historiques, et si on veut lutter contre ces fléaux, il vaut mieux connaître leur logique exacte. On pourrait dire que ce n'est pas le même scénario, et du coup, à chaque fois, pas le même type de clientèle, de psychologie, de manifestations, de contre-poison.  </p>";
-        echo "" . $text . "<hr>";
+            echo "" . $text . "<hr>";
 
 
-        ?>
-    </div>
+            ?>
+        </div>
 </div>
 
-<div class="col-lg-4 col-lg-offset-1" style="background-color: #f1ffff;margin-top: 2em;padding: 2em">
+    <div class="col-lg-4 col-lg-offset-1" style="background-color: #f1ffff;margin-top: 2em;padding: 2em">
 
-    <?php
-    $text = "<strong>L.F. Céline / L'École des cadavres, Paris, 1938, p. 151</strong><br>
+        <?php
+        $text = "<strong>L.F. Céline / L'École des cadavres, Paris, 1938, p. 151</strong><br>
 NB/ je connais encore quelques non juifs et quelques juifs qui continuent d'encenser le talent, que dis-je... le \"génie\" (!?) de cette ordure qui se croyait si malin et inventeur d'un style* (*dont on remarque ici d'ailleurs l'extrême pauvreté)...<br>
 \"Les juifs, racialement, sont des monstres, des hybrides, des loupés tiraillés qui doivent disparaître. Dans l'élevage humain, ce ne sont, tout bluff à part, que bâtards gangrèneux, ravageurs, pourrisseurs. Le juif n'a jamais été persécuté par les aryens. Il s'est persécuté lui-même. Il est le damné des tiraillements de sa viande d'hybride […]<br>
 Je me sens très ami d'Hitler, très ami de tous les Allemands, je trouve que ce sont des frères, qu'ils ont bien raison d'être racistes. Ça me ferait énormément de peine si jamais ils étaient battus. Je trouve que nos vrais ennemis c'est les Juifs et les francs-maçons. Que la guerre c'est la guerre des Juifs et des francs-maçons, que c'est pas du tout la nôtre. Que c'est un crime qu'on nous oblige à porter les armes contre des personnes de notre race, qui nous demandent rien, que c'est juste pour faire plaisir aux détrousseurs du ghetto. Que c'est la dégringolade au dernier cran de la dégueulasserie\".
 ";
-    echo "" . $text ;
-
-    ?>
-
-</div>
-
-<div class="row">
-    <div class="col-lg-4 col-lg-offset-1" style="background-color: #f1ffff;margin-top: 2em;padding: 2em">
-        <?php
-        $text = "<strong>REPONSE A UN AMI DISTINGUANT L'ANTISIONISME DE L'ANTISEMITISME</strong>
-        <p>Le mot \"sioniste\" est employé aujourd'hui à tort et à travers pour signifier exactement ce que le mot\" juif\" signifie dans la bouche ou sous la plume de l'antisémite : le tort et le travers, justement, c'est-à-dire le Mal. L'antisémitisme, \"grillé\" par le nazisme et la Shoah, a refait surface depuis quelques décennies sous une appellation différente et se voulant justement sans rapport aucun avec l'antisémitisme, dépourvu de la moindre hostilité envers les juifs en tant que peuple, \"race \"ou religion. Sa grande astuce étant d'enrôler des intellectuels juifs en mal de notoriété pour lui servir de caution : des juifs sont antisionistes, donc l'antisionisme n'est pas antijuif. Syllogisme qui ne trompe que les dupes, mais ils sont nombreux et influents, et l'imposture a fait flores. Heureusement, tout a une fin, et son succès même et ses inévitables excès sont en train de lui arracher son masque et de mettre au jour sa véritable identité : l'antisémitisme pur et dur.</p>
-        <p>Il n'y a aucune raison quand on dénonce la politique d'un pays de se proclamer anti-quelque chose, par exemple, s'il s'agit de la France, antifranciste : il suffit de dire qu'on est contre sa politique, ou contre le dirigeant qui la conduit et l'incarne. Israël est le seul pays dont l'opposition à sa politique porte un nom, ce qui en fait une opposition en soi, et non à une politique. Bref, ceux qui dénoncent la politique israélienne en se proclamant antisionistes ne dénoncent pas la politique d'Israël mais, implicitement, son existence. La majorité des juifs du monde habitant Israël, et cet Etat étant aux juifs ce que l'Etat du Vatican est aux chrétiens, l'antisionisme est donc objectivement le refus de l'existence de 7 millions de juifs et du centre de la judéité, qui pourrait conduire, si les circonstances s'y prêtaient, à la destruction de l'Etat hébreu et de ses habitants, c'est-à-dire à une nouvelle Shoah.
-            Il est tout à fait permis, et même nécessaire, de critiquer la politique israélienne, le \"grignotage \"de la Cisjordanie et tout ce qu'on voudra, mais à condition que cette critique porte sur des aspects précis, parce que, imprécise, sous le nom d'antisionisme, elle est forcément globale, c'est-à-dire essentielle, et ne peut porter que sur l'être même de l'Etat juif.</p>";
-        echo "" . $text . "<hr>";
+        echo "" . $text ;
 
         ?>
+
     </div>
 
     <div class="row">
-        <div class="col-lg-11 col-lg-offset-1 col-md-11 col-md-offset-1 col-sm-5">
-            <div class="col-lg-3 ">
-                <p>Left antisemitism in Britain</p>
-                <iframe width="560" height="315" src="https://www.youtube.com/embed/te684rBHzOA" frameborder="0"
-                        allowfullscreen></iframe>
-            </div>
+        <div class="col-lg-4 col-lg-offset-1" style="background-color: #f1ffff;margin-top: 2em;padding: 2em">
+            <?php
+            $text = "<strong>REPONSE A UN AMI DISTINGUANT L'ANTISIONISME DE L'ANTISEMITISME</strong>
+        <p>Le mot \"sioniste\" est employé aujourd'hui à tort et à travers pour signifier exactement ce que le mot\" juif\" signifie dans la bouche ou sous la plume de l'antisémite : le tort et le travers, justement, c'est-à-dire le Mal. L'antisémitisme, \"grillé\" par le nazisme et la Shoah, a refait surface depuis quelques décennies sous une appellation différente et se voulant justement sans rapport aucun avec l'antisémitisme, dépourvu de la moindre hostilité envers les juifs en tant que peuple, \"race \"ou religion. Sa grande astuce étant d'enrôler des intellectuels juifs en mal de notoriété pour lui servir de caution : des juifs sont antisionistes, donc l'antisionisme n'est pas antijuif. Syllogisme qui ne trompe que les dupes, mais ils sont nombreux et influents, et l'imposture a fait flores. Heureusement, tout a une fin, et son succès même et ses inévitables excès sont en train de lui arracher son masque et de mettre au jour sa véritable identité : l'antisémitisme pur et dur.</p>
+        <p>Il n'y a aucune raison quand on dénonce la politique d'un pays de se proclamer anti-quelque chose, par exemple, s'il s'agit de la France, antifranciste : il suffit de dire qu'on est contre sa politique, ou contre le dirigeant qui la conduit et l'incarne. Israël est le seul pays dont l'opposition à sa politique porte un nom, ce qui en fait une opposition en soi, et non à une politique. Bref, ceux qui dénoncent la politique israélienne en se proclamant antisionistes ne dénoncent pas la politique d'Israël mais, implicitement, son existence. La majorité des juifs du monde habitant Israël, et cet Etat étant aux juifs ce que l'Etat du Vatican est aux chrétiens, l'antisionisme est donc objectivement le refus de l'existence de 7 millions de juifs et du centre de la judéité, qui pourrait conduire, si les circonstances s'y prêtaient, à la destruction de l'Etat hébreu et de ses habitants, c'est-à-dire à une nouvelle Shoah.
+            Il est tout à fait permis, et même nécessaire, de critiquer la politique israélienne, le \"grignotage \"de la Cisjordanie et tout ce qu'on voudra, mais à condition que cette critique porte sur des aspects précis, parce que, imprécise, sous le nom d'antisionisme, elle est forcément globale, c'est-à-dire essentielle, et ne peut porter que sur l'être même de l'Etat juif.</p>";
+            echo "" . $text . "<hr>";
 
-            <div class="col-lg-4 col-lg-offset-1" style="background-color: #f1ffff;margin-top: 2em;padding: 2em">
-                <?php
+            ?>
+        </div>
 
-                $text = "<strong>INTERNATIONAL DEFINITION OF ANTISEMITISM</strong>
+        <div class="row">
+            <div class="col-lg-11 col-lg-offset-1 col-md-11 col-md-offset-1 col-sm-5">
+                <div class="col-lg-3 ">
+                    <p>Left antisemitism in Britain</p>
+                    <iframe width="560" height="315" src="https://www.youtube.com/embed/te684rBHzOA" frameborder="0"
+                            allowfullscreen></iframe>
+                </div>
+
+                <div class="col-lg-4 col-lg-offset-1" style="background-color: #f1ffff;margin-top: 2em;padding: 2em">
+                    <?php
+
+                    $text = "<strong>INTERNATIONAL DEFINITION OF ANTISEMITISM</strong>
 Antisemitism is a certain perception of Jews, which may be expressed as hatred toward Jews. Rhetorical and physical manifestations of antisemitism are directed toward Jewish or non-Jewish individuals and/or their property, toward Jewish community institutions and religious facilities.<br>
 Manifestations might include the targeting of the state of Israel, conceived as a Jewish collectivity. However, criticism of Israel similar to that levelled against any other country cannot be regarded as antisemitic. Antisemitism frequently charges Jews with conspiring to harm humanity, and it is often used to blame Jews for “why things go wrong.” It is expressed in speech, writing, visual forms and action, and employs sinister stereotypes and negative character traits.<br>
 Contemporary examples of antisemitism in public life, the media, schools, the workplace, and in the religious sphere could, taking into account the overall context, include, but are not limited to:
@@ -357,30 +392,28 @@ Using the symbols and images associated with classic antisemitism (e.g. claims o
 Drawing comparisons of contemporary Israeli policy to that of the Nazis.<br>
 Holding Jews collectively responsible for actions of the state of Israel.﻿
 ";
-                echo "" . $text . "<hr>";
+                    echo "" . $text . "<hr>";
 
 
-                ?>
+                    ?>
+                </div>
+
+
             </div>
-
-
-
-
         </div>
-    </div>
 
 
-    <div id="fb-root"></div>
-    <script>(function (d, s, id) {
-            var js, fjs = d.getElementsByTagName(s)[0];
-            if (d.getElementById(id)) return;
-            js = d.createElement(s);
-            js.id = id;
-            js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.6";
-            fjs.parentNode.insertBefore(js, fjs);
-        }(document, 'script', 'facebook-jssdk'));</script>
+        <div id="fb-root"></div>
+        <script>(function (d, s, id) {
+                var js, fjs = d.getElementsByTagName(s)[0];
+                if (d.getElementById(id)) return;
+                js = d.createElement(s);
+                js.id = id;
+                js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.6";
+                fjs.parentNode.insertBefore(js, fjs);
+            }(document, 'script', 'facebook-jssdk'));</script>
 
 
-    <?php include(SITE_ROOT . DS . 'public' . DS . 'layouts' . DS . "footer.php") ?>
+        <?php include(SITE_ROOT . DS . 'public' . DS . 'layouts' . DS . "footer.php") ?>
 
 

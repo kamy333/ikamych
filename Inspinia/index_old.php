@@ -21,10 +21,12 @@
                     </h1>
                     <small>
                         My World is now in web development and design!
-                        <?php echo $user->full_name();
-                        echo $user->user_type; //var_dump($user);?>
+                        <?php if (isset($user)) {
+                            echo $user->full_name();
+                            echo $user->user_type; //var_dump($user);
+                        } ?>
 
-                        yo!
+
                         
                         <span><img alt="image" class=""  style='width:2em;height:2em;' src="<?php echo $path;?>img/admin.jpg" /></span>
                     </small>

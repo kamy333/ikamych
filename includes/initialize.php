@@ -134,6 +134,7 @@ require_once(LIB_PATH.DS.'phpmailer'.DS.'language'.DS.'phpmailer.lang-am.php');
 require_once(LIB_PATH.DS.'MyPHPMailer.php');
 
 require_once(LIB_PATH.DS.'Nav.php');
+require_once(LIB_PATH . DS . 'Upload.php');
 
             // load database-related classes
 require_once(LIB_PATH.DS.'user.php');
@@ -170,6 +171,7 @@ require_once(LIB_PATH.DS.'Chat.php');
 require_once(LIB_PATH.DS.'ChatFriend.php');
 
 require_once(LIB_PATH.DS.'Notification.php');
+require_once(LIB_PATH . DS . 'Article.php');
 
 require_once(LIB_PATH.DS.'Photo.php');
 require_once(LIB_PATH.DS.'Comment.php');

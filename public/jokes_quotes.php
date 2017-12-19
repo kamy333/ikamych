@@ -56,7 +56,24 @@
 
 
 <div class="row">
+    <div class="col-lg-4 col-lg-offset-1" style="background-color: #f1ffff;margin-top: 2em;padding: 2em">
 
+
+        <?php
+        //          $text = "<a href='#'></a>";
+        $text = "Il y a quelques années le Hamas avait décidé d’envoyer \"un cadeau\" au Président de l’Etat d’Israël. Il lui a envoyé une belle boite accompagnée d’une carte.
+Le président ouvrit la boite et observa qu’elle contenait des crottes de merde.
+Sur la carte était écrit : \"Pour vous et le fier peuple d’Israël\".
+Le président d’Israël, Monsieur Shimon Peres, personne expérimentée et sage, décida de répondre et d'envoyer au Hamas un très joli paquet accompagné d’une carte.
+Les leaders du Hamas furent très surpris de recevoir le paquet ; ils l’ouvrirent avec beaucoup de précautions craignant qu’il ne contienne une bombe.
+Ils découvrirent qu’il contenait une petite \"puce\" rechargeable à l’énergie solaire et pouvant stocker 1800 Terabyte, et un écran 3D capable de fonctionner sur n’importe quel type de téléphone mobile, tablette ou PC.
+En d’autres termes l’invention technologique la plus avancée,développée en Israël.
+Les leaders du Hamas furent très impressionnés.
+Ils lisent alors la carte qui disait :
+Chaque leader offre le meilleur de ce que son peuple produit.";
+        echo "" . $text . "<hr>";
+        ?>
+    </div>
 
 
     <div class="col-lg-4" style="background-color: #f1ffff;margin-top: 2em;margin-right: 2em;padding: 2em">

@@ -122,6 +122,7 @@ require_once(LIB_PATH . DS . 'phpmailer' . DS . 'language' . DS . 'phpmailer.lan
 require_once(LIB_PATH . DS . 'MyPHPMailer.php');
 
 require_once(LIB_PATH . DS . 'Nav.php');
+require_once(LIB_PATH . DS . 'Upload.php');
 
 // load database-related classes
 require_once(LIB_PATH . DS . 'user.php');

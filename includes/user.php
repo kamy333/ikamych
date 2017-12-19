@@ -385,6 +385,8 @@ class User extends DatabaseObject {
     public $unread_message;
 //    public $img;
     public $unread_notification;
+
+
     public $upload_directory="uploads";
     public $full_path_directory=PATH_UPLOAD;
     public $image_placeholder="https://www.mountaineers.org/images/placeholder-images/placeholder-400-x-400/image_preview";
@@ -401,6 +403,8 @@ class User extends DatabaseObject {
         UPLOAD_ERR_CANT_WRITE   => "Can't write to disk.",
         UPLOAD_ERR_EXTENSION 	=> "File upload stopped by extension."
     );
+
+
     protected $hashed_password;
 
     public static function add_soustract_message( $user_id,$operator=1){
