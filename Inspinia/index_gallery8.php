@@ -38,6 +38,9 @@ function google_drive_video($title="",$src="",$width=640,$height=480,$col=null){
 
 ?>
     <!--<p id="side-menu"></p>-->
+
+<?php // https://www.youtube.com/watch?v=scXfKLWisGU how to embed video?>
+
 <?php echo gallery_button();?>
 
     <div class="wrapper wrapper-content">

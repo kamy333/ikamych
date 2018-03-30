@@ -148,23 +148,32 @@ if ($layout_context=="public"){
                         <li><a href="<?php echo $path_public;?>transmed_form.php">Transmed_form</a></li>
                         <li><a href="<?php echo $path_public;?>transmed_form2.php">Transmed_form2</a></li>
 
+
+                        <li class="divider"></li>
+                        <li><a href="<?php echo $path_public; ?>braliajordanie.php">Voyage Bralia Jordanie</a></li>
+                        <li><a href="<?php echo $path_public; ?>bralialoirezoo.php">Voyage Bralia Loire Zoo</a></li>
+
                         <li class="divider"></li>
 
                         <li><a href="<?php echo $path_public;?>judaisme.php">Judaisme</a></li>
+                        <li><a href="<?php echo $path_public; ?>juif_iran.php">Juifs d'Iran</a></li>
                         <li><a href="<?php echo $path_public;?>antisemitism_1.php">Antisemitism</a></li>
                         <li><a href="<?php echo $path_public;?>antisionism.php">Antisionism 1</a></li>
                         <li><a href="<?php echo $path_public;?>shoah.php">Shoah</a></li>
                         <li><a href="<?php echo $path_public;?>jokes_quotes.php">Jokes Quotes</a></li>
-                        <li><a href="<?php echo $path_public;?>juif_arabe1.php">Juif Arabe</a></li>
+                        <li><a href="<?php echo $path_public; ?>juif_arabe1.php">Juifs Arabe</a></li>
                         <li><a href="<?php echo $path_public;?>bhl.php">BHL</a></li>
                         <li><a href="<?php echo $path_public;?>psychologie.php">Psychologie</a></li>
                         <li class="divider"></li>
+                        <li><a href="<?php echo $path_public; ?>programmingbooks2.php">Programming books2</a></li>
+                        <li><a href="<?php echo $path_public; ?>programmingbooks.php">Programming books</a></li>
                         <li><a href="<?php echo $path_public;?>lesson_git.php">Git</a></li>
                         <li><a href="<?php echo $path_public;?>lesson_OOP_PHP.php">OOP PHP</a></li>
 
                         <?php if (User::is_kamy()) { ?>
                             <li class="divider"></li>
-                            <li><a href="<?php echo $path_public; ?>facebook_injure">OOP PHP</a></li>
+                            <li><a href="<?php echo $path_public; ?>facebook_injure.php">Propos amis</a></li>
+                            <li><a href="<?php echo $path_public; ?>kamy_memories.php">Kamy memoire</a></li>
 
                         <?php } ?>
 
@@ -236,6 +245,7 @@ if ($layout_context=="public"){
 
                             <?php if(isset($session->user_id) and $user->is_admin() ) { ?>
                                 <?php echo $Nav->menu_item('','Log File','logfile.php','admin'); ?>
+                    <?php echo $Nav->menu_item('', 'Log Views File', 'logfileviews.php', 'admin'); ?>
                     <?php echo $Nav->menu_item('', 'Log Debug File', 'logfileDebug.php', 'admin'); ?>
 
                 <?php } ?>
@@ -388,6 +398,7 @@ if ($layout_context=="public"){
                                         logins</a></li>
                                 <li><a href="<?php echo $path_admin; ?>manage_user_type.php">Manage User Type</a></li>
                                 <li><a href="<?php echo $path_admin; ?>logfile.php">Log File</a></li>
+                                <?php echo $Nav->menu_item('', 'Log Views File', 'logfileviews.php', 'admin'); ?>
                                 <?php echo $Nav->menu_item('', 'Log Debug File', 'logfileDebug.php', 'admin'); ?>
 
                                 <li class="divider"></li>

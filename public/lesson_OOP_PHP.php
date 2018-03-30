@@ -19,13 +19,15 @@
 <div class="row">
 <div class="col-lg-4 " style="background-color: #f1ffff;margin-top: 2em;padding: 2em">
     <?php
-    $text = "<div><a  class='btn btn-primary' role='button' href='/uploads/PHP+Objects_Patterns_and_Practice_5thEdition.pdf'>PHP <br>Objects Patterns and Practice<br> 5th Edition .pdf</a>&nbsp; ";
+    //    $text = "<div><a  class='btn btn-primary' role='button' href='/uploads/PHP+Objects_Patterns_and_Practice_5thEdition.pdf'>PHP <br>Objects Patterns and Practice<br> 5th Edition .pdf</a>&nbsp; ";
+
+    $text = "<div><a  class='btn btn-primary' role='button' href='/public/img/books/PHP+Objects_Patterns_and_Practice_5thEdition.pdf'>PHP <br>Objects Patterns and Practice<br> 5th Edition .pdf</a>&nbsp; ";
 
 
     $text .= "<br>    <a class='btn btn-default' role='button' target='_blank' href='https://github.com/Apress/php-objects-patterns-practice-16/blob/master/source/test/ch03/Batch01Test.php'>Source Code</a>";
 
 
-//    echo "" . $text . "";
+    //    echo "" . $text . "";
 
         if(User::is_kamy() ||User::is_admin()){
             $text.="<a class='btn btn-default' role='button' href=\"https://drive.google.com/file/d/0B71yHaesAeDTT2hzck95TEtrems/view?usp=sharing\">GoogleDrive</a>";
@@ -178,6 +180,12 @@ echo "</div>";
 </div>
 
 </div>
+
+<div class="row">
+
+
+</div>
+<?php echo str_repeat("<br>", 5) ?>
 
 <div class="container">
 

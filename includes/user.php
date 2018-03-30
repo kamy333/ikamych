@@ -517,6 +517,18 @@ class User extends DatabaseObject {
         }
     }
 
+    public static function is_djamila()
+    {
+        if (isset($_SESSION) && isset($_SESSION['user_id'])) {
+            $found_user = self::find_by_id($_SESSION["user_id"]);
+            if ($found_user->username == 'djamila' || $found_user->username == 'kamy' || $found_user->username == 'admin') {
+                return true;
+            } else {
+                return false;
+            }
+        }
+    }
+
     // not used but could be set ny magic set and get
 
     public static function is_secretary(){

@@ -18,7 +18,15 @@
     <?php echo isset($valid) ? $valid->form_errors() : "" ?>
 </div>
 
+<div class="col-lg-4 col-lg-offset-1" style="background-color: #f1ffff;margin-top: 2em;padding: 2em">
 
+
+    <?php
+
+    $text = "L’antisionisme est une aubaine car il nous donne la permission, et même le droit, et même le devoir d’être antisémites au nom de la démocratie. L’antisionisme est l’antisémitisme justifié, mis enfin à la portée de tous. Il est la permission d’être démocratiquement antisémite. Et si les juifs étaient eux-mêmes des nazis ? Ce serait merveilleux. (Vladimir Jankélévitch, 1986)";
+    echo "" . $text . "<hr>";
+    ?>
+</div>
 
 <div class="row">
 <div class="col-lg-4 col-lg-offset-1" style="background-color: #f1ffff;margin-top: 2em;padding: 2em">

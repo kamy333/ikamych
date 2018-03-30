@@ -46,28 +46,19 @@
                         </ul>
                     </li>
                 <?php } ?>
-                <!---->
-                <!--                <li class="dropdown">-->
-                <!--                    <a aria-expanded="false" role="button" href="#" class="dropdown-toggle" data-toggle="dropdown">-->
-                <!--                        Desiree's Book <span class="caret"></span></a>-->
-                <!--                    <ul role="menu" class="dropdown-menu">-->
-                <!--                        <li><a href="-->
-                <?php //echo $path; ?><!--index_gallery.php">Gallery</a></li>-->
-                <!--                    </ul>-->
-                <!--                </li>-->
+
 
                 <?php
                 echo $Nav->public_menu("public_gallery");
                 if (User::is_bralia()) {
                     echo $Nav->menu_item('', 'Bralia', 'index_gallery6.php', 'public');
                     echo $Nav->menu_item('', 'Chat', 'chat.php', 'public');
-                    if (User::is_admin()) {
-//                            echo $Nav->menu_item('','ChatTest','chat2.php','public');
-                    }
-
                 }
 
-                //                    echo  $Nav->public_menu("Admin_class");
+                if (User::is_djamila()) {
+                    echo $Nav->menu_item('', 'Djamila', 'index_gallery12.php', 'public');
+                    echo $Nav->menu_item('', 'Chat Djam', 'chat_djamila.php', 'public');
+                }
                 ?>
 
                 <?php if(User::is_manager()) {?>

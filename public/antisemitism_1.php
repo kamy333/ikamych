@@ -19,11 +19,45 @@
     <?php echo $session->message(); ?>
     <?php echo isset($valid) ? $valid->form_errors() : "" ?>
 </div>
-
 <div class="row">
     <div class="col-lg-4 col-lg-offset-1" style="background-color: #f1ffff;margin-top: 2em;padding: 2em">
 
+        <iframe src="https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2F151446978204%2Fvideos%2F10156026457398205%2F&show_text=0&width=560"
+                width="560" height="409" style="border:none;overflow:hidden" scrolling="no" frameborder="0"
+                allowTransparency="true" allowFullScreen="true"></iframe>
+    </div>
 
+
+    <div class="col-lg-4 col-lg-offset-1" style="background-color: #f1ffff;margin-top: 2em;padding: 2em">
+
+
+        <?php
+        $link = "<a href='http://www.slate.fr/story/159637/antisemitisme-gauche-francaise-europeenne-juifs-israel'>antisemitisme-gauche-francaise-europeenne-juifs-israel</a>";
+        $img = " <img src=\" \" alt=\" \">";
+        $text = $link . "";
+        echo "" . $text . "<hr>";
+        //                              echo "" . ebook($link,$text,4) . "<hr>";
+        ?>
+    </div>
+
+    <div class="col-lg-4 col-lg-offset-1" style="background-color: #f1ffff;margin-top: 2em;padding: 2em">
+
+        <?php
+        $link = "<a href='#'></a>";
+        $img = " <img src=\" \" alt=\" \">";
+        $text = $link . "
+   <p> <span style='color: blue'> René Bellaiche</span> La liberté d'expression s'arrête où commence l'expression de la haine, liberticide par essence. Il ne faut pas se résigner, mais utiliser tous les moyens légaux possibles pour s'opposer à cette réédition. Cette \"littérature\" est aussi dangereuse pour l'esprit que les drogues dures pour le corps.</p>
+    
+     <p> <span style='color: blue'> René Bellaiche</span> L'\"art\" n'est pas une valeur en soi : tuer avec... art ne change rien au caractère criminel du meurtre. Nous payons les conséquences de la sacralisation de l'art, devenu l'ersatz du sacré depuis la \"mort\" de Dieu.</p>
+     
+     <p> <span style='color: blue'> René Bellaiche</span> La morale doit primer l'art sur l'échelle des valeurs, ou alors il faut faire son deuil de la civilisation.</p>
+    ";
+        echo "" . $text . "<hr>";
+        ?>
+    </div>
+
+
+    <div class="col-lg-4 col-lg-offset-1" style="background-color: #f1ffff;margin-top: 2em;padding: 2em">
         <?php
         $text = "<a href='https://www.letemps.ch/opinions/2009/04/20/antiracisme-devoye-perversion-mots'>Opinions  L’antiracisme dévoyé par la perversion des mots</a>";
         $text .= "

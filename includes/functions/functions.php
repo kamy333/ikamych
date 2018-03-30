@@ -103,6 +103,26 @@ function log_debug($action, $message = "")
     }
 }
 
+function log_views($action, $message = "")
+{
+
+
+    $logfile = SITE_ROOT . DS . 'logs' . DS . 'views.txt';
+    $new = file_exists($logfile) ? false : true;
+    if ($handle = fopen($logfile, 'a')) { // append
+        $timestamp = strftime("%Y-%m-%d %H:%M:%S", time());
+        $content = "{$timestamp} | {$action}: {$message} \n";
+        fwrite($handle, $content);
+        fclose($handle);
+        if ($new) {
+            chmod($logfile, 0755);
+        }
+    } else {
+        echo "Could not open log views file for writing.";
+    }
+}
+
+
 function is_ajax_request() {
     return isset($_SERVER['HTTP_X_REQUESTED_WITH']) &&
         $_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest';
@@ -747,7 +767,7 @@ function get_picture_array($img_folder=""){
         foreach($dir_array as $file) {
             if(stripos($file, '.') > 0) {
                 $ext = pathinfo($file, PATHINFO_EXTENSION);
-                $file_no_ext= str_replace(".".$ext, "", $file);;
+                $file_no_ext = str_replace("." . $ext, "", $file);
 
 
                 $alt=trim(substr($file_no_ext,3,100));
@@ -826,13 +846,15 @@ function get_gallery_array($no=1){
             'index'=>'Home',
             'index_gallery6'=>'Bralia',
             'index_gallery'=>'Desiree Wedding',
+            'index_gallery10' => 'Samira Wedding',
             'index_gallery2'=>'Family',
             'index_gallery3'=>'Friends',
             'index_gallery4'=>'myPage',
             'index_gallery5'=>'Lycée Français de Jérusalem',
             'index_gallery7'=>'Maman Bozorgue',
             'index_gallery8' => 'Film',
-            'index_gallery9' => 'Pablo Audio'
+            'index_gallery9' => 'Pablo Audio',
+            'index_gallery12' => 'Djamila'
         );
     } elseif($no===2){
         $pages=array(
@@ -859,10 +881,19 @@ function gallery_menu_list($no=1){
     foreach ($pages as $page=>$pa){
         if ($page===$p) { $class="active";} else { $class="";}
 
-        if ($page=='index_gallery6' && (User::is_bralia())){
-            $output.="<li class='$class'><a  href=\"$path_public $page.php\">$pa</a></li>";
+        if ($page == 'index_gallery6' && (User::is_bralia())) {
+            $output .= "<li class='$class'><a  href=\"$path_public $page.php\">$pa</a></li>";
+        } elseif ($page == 'index_gallery12' && (User::is_djamila())) {
+            $output .= "<li class='$class'><a  href=\"$path_public $page.php\">$pa</a></li>";
+        } elseif ($page == 'index_gallery9' && (User::is_admin())) {
+            $output .= "<li class='$class'><a  href=\"$path_public $page.php\">$pa</a></li>";
         } elseif($page=='index_gallery6'){
             $output.="";
+        } elseif ($page == 'index_gallery9') {
+            $output .= "";
+        } elseif ($page == 'index_gallery12') {
+            $output .= "";
+
         } else {
             $output.="<li class='$class'><a  href=\"$path_public $page.php\">$pa</a></li>";}
 
@@ -1306,6 +1337,80 @@ function remove_accents($str, $utf8 = true)
 }
 
 //- remove_accents()
+
+
+function ebook($link = "", $text = "", $id = 0, $source = "")
+{
+    $output = "";
+    $output .= $link;
+    $output .= "<a class='btn btn-default' role='button' data-toggle='collapse' href='#collapseExample" . $id . "' aria-expanded='false' aria-controls='collapseExample" . $id . "'>";
+    $output .= " ?</a>";
+    $output .= "<div class=\"collapse\" id=\"collapseExample" . $id . "\">
+            <div class=\"well\">
+             $source
+             $text
+            </div>
+
+        </div>";
+
+    return $output;
+}
+
+
+function get_ebooks($img_folder = "")
+{
+
+    global $Nav;
+    $default_path = $Nav->folder;
+    $dir = SITE_ROOT . DS . $default_path . DS . "/img/" . $img_folder;
+    $picture_array = array();
+//    $output="";
+    if (is_dir($dir)) {
+        $dir_array = scandir($dir);
+        foreach ($dir_array as $file) {
+            if (stripos($file, '.') > 0) {
+                $ext = pathinfo($file, PATHINFO_EXTENSION);
+                $file_no_ext = str_replace("." . $ext, "", $file);
+
+
+                $alt = trim(substr($file_no_ext, 3, 100));
+                $alt = str_replace("_", " ", $alt);
+                $alt = ucfirst($alt);
+
+
+                if ($ext == 'jpg' || $ext == 'JPG' || $ext == 'png' || $ext == 'PNG' || 'pdf') {
+
+                    $img_html = "<img alt=\"{$file_no_ext}\" class=\"img-responsive\" src='img/$img_folder/{$file}' style='width: 30em;height: 20em' >";
+
+                    $img_src = "<img src='img/$img_folder/{$file}' alt='{$alt}' class='img-responsive pull-left'> ";
+                    $full_path = "img/$img_folder/{$file}";
+                    $output = array(
+                        "img_tag" => $img_html,
+                        'img_file' => $file,
+                        "img_name" => $file_no_ext,
+                        "img_ext" => $ext,
+                        "img_folder" => $Nav->folder,
+                        "img_path" => $dir,
+                        "img_src" => $img_src,
+                        "img_alt" => $alt,
+                        "full_path" => $full_path,
+                        "href" => "<a href='$full_path'>$file_no_ext</a>"
+                    );
+
+
+                    array_push($picture_array, $output);
+
+
+                }
+            }
+        }
+    }
+    return $picture_array;
+
+
+}
+
+
 
 
 ?>

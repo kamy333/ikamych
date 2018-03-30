@@ -63,7 +63,30 @@
 
             </div>
 
-            <div class="row">
+        <!--        <iframe src="https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2FDailyViralStories%2Fvideos%2F1688674661198638%2F&show_text=1&width=476" width="476" height="593" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true" allowFullScreen="true"></iframe>-->
+        <!--        -->
+
+        <div class="row">
+            <div class="col-lg-12 col-lg-offset-3" style="margin-top: 2em;margin-bottom: 2em;">
+                <!-- Your embedded video player code -->
+                <div class="fb-video" data-href="https://www.facebook.com/DailyViralStories/videos/1688674661198638/"
+                     data-width="500" data-show-text="false">
+                    <div class="fb-xfbml-parse-ignore">
+                        <blockquote cite="https://www.facebook.com/DailyViralStories/videos/1688674661198638/">
+                            <a href="https://www.facebook.com/DailyViralStories/videos/1688674661198638/">How to Share
+                                With Just Friends</a>
+                            <p>How to share with just friends.</p>
+                            Posted by <a href="https://www.facebook.com/facebook/">Facebook</a> on Friday, December 5,
+                            2014
+                        </blockquote>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+
+        <div class="row">
                 <div class="col-lg-12 ">
                     <div class="ibox float-e-margins" ">
                     <div class="ibox-content">

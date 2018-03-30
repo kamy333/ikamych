@@ -1,6 +1,11 @@
 <?php if (!isset($layout_context)) {
     $layout_context = "public";
 } ?>
+
+<?php if (!isset($lang)) {
+    $lang = "en";
+} ?>
+
 <?php // if (isset($_SESSION["nom"])) {$nom=$_SESSION["nom"]; } else { $nom=false;}?>
 <?php // if (isset($_SESSION["username"])) {$username=$_SESSION["username"]; } else { $username=false;}?>
 
@@ -15,7 +20,7 @@
 } ?>
 
 <!doctype html>
-<html lang="en" <?php echo (isset($angular)) ? "ng-app='myApp'" : ""; ?>>
+<html lang="<?php echo $lang; ?>" <?php echo (isset($angular)) ? "ng-app='myApp'" : ""; ?>>
 <head>
     <!--    <meta charset="utf-8">-->
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>

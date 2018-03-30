@@ -44,10 +44,18 @@ class Session {
 		$this->check_login();
         $this->check_info();
         $this->set_referrer();
+
+//        echo $this->user_id;
+//        $username=User::find_by_id($this->user_id);
+//        log_views("Views ".$_SERVER['PHP_SELF'],"User: ".$this->user_id.$username->username);
+
     if($this->logged_in) {
       // actions to take right away if user is logged in
+        log_views("Views | " . $_SERVER['PHP_SELF'], "UserId: " . $this->user_id);
     } else {
       // actions to take right away if user is not logged in
+        $ip = $_SERVER['REMOTE_ADDR'];
+        log_views("Views | " . $_SERVER['PHP_SELF'], "IP ({$ip}) UserId: " . $this->user_id);
     }
 	}
 

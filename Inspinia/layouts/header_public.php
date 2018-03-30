@@ -26,10 +26,21 @@
         <link href="css/plugins/summernote/summernote-bs3.css" rel="stylesheet">
         <link href="<?php echo $path;?>css/style_chat.css" rel="stylesheet">
         <?php include_once (SITE_ROOT.DS.$folder_project_name.DS.'layouts_addon'.DS."js_php".DS.'chat.php');?>
-
         <?php $body_onload=" onload=\"ajax()\" " ?>
-
     <?php } unset($pages) ?>
+
+
+    <?php $pages = array('chat_djamila') ?>
+    <?php if (in_array($active_menu_clean, $pages)) { ?>
+        <link href="css/plugins/summernote/summernote.css" rel="stylesheet">
+        <link href="css/plugins/summernote/summernote-bs3.css" rel="stylesheet">
+        <link href="<?php echo $path; ?>css/style_chat.css" rel="stylesheet">
+        <?php include_once(SITE_ROOT . DS . $folder_project_name . DS . 'layouts_addon' . DS . "js_php" . DS . 'chat_djam.php'); ?>
+        <?php $body_onload = " onload=\"ajax()\" " ?>
+    <?php }
+    unset($pages) ?>
+
+
 
 
     <?php $pages=array('index') ?>
@@ -42,7 +53,7 @@
 
 
 
-    <?php $pages=array('index','index_gallery','index_gallery2','index_gallery3','index_gallery5','index_gallery6',
+    <?php $pages = array('index', 'index_gallery', 'index_gallery10', 'index_gallery2', 'index_gallery3', 'index_gallery5', 'index_gallery6',
         'index_gallery7') ?>
     <?php if(in_array($active_menu_clean,$pages) ) { ?>
    <?php include (SITE_ROOT.DS.$folder_project_name.DS.'layouts_addon'.DS."css_php".DS.'blueimpVideo.php');?>

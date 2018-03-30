@@ -24,13 +24,14 @@ class SmartNav
              'index'=>'Home',
              'index_gallery6'=>'Bralia',
              'index_gallery'=>'Desiree Wedding',
+             'index_gallery10' => 'Samira Wedding',
              'index_gallery2'=>'Family',
              'index_gallery3'=>'Friends',
              'index_gallery4'=>'My Page',
              'index_gallery5'=>'Lycée Français de Jérusalem',
              'index_gallery7'=>'Maman Bozorgue',
              'index_gallery8'=>'Film',
-
+             'index_gallery11' => 'Film Classic',
          )
  ),
          "admin_public_menu"=>array(
@@ -46,6 +47,7 @@ class SmartNav
                  'index'=>'Home',
                  'index_gallery6'=>'Bralia',
                  'index_gallery'=>'Desiree Wedding',
+                 'index_gallery10' => 'Samita Wedding',
                  'index_gallery2'=>'Family',
                  'index_gallery3'=>'Friends',
                  'index_gallery4'=>'My Page',

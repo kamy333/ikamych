@@ -483,7 +483,8 @@ GROUP BY person_id,ccy_id;";
                 $output.="<td class='text-center'>{$ccy}</td>";
                 $output.="<td class='text-center'>{$result->itemsCount}</td>";
                 $output.="<td class='text-right'>".number_format($result->amount,2)."</td>";
-                $output.="<td class='text-right'>".number_format($result->amountCHF,2)."</td>";
+                $output .= "<td class='text-right'>" . $result->expense_type_id . "</td>";
+
                 $output.="</tr>";
 
                 unset($ccy);
@@ -550,6 +551,8 @@ GROUP BY ccy_id;";
                 $output.="<td class='text-center'>{$result->itemsCount}</td>";
                 $output.="<td class='text-right'>".number_format($result->amount,2)."</td>";
                 $output.="<td class='text-right'>".number_format($result->amountCHF,2)."</td>";
+                $output .= "<td class='text-right'>" . $result->expense_type_id . "</td>";
+
                 $output.="</tr>";
 
                 unset($ccy);
@@ -687,6 +690,99 @@ GROUP BY expense_type_id;";
 
 
     }
+
+
+    public static function aPerson(int $personId, $NOT = true, $exclude = "34,32,39,24,26")
+    {
+        $output = "";
+
+        if ($NOT) {
+            $newNot = "NOT";
+        } else {
+            $newNot = "";
+        }
+
+
+        $sql = "SELECT t1.id ,t1.person_id,t1.ccy_id,t2.person_name,t1.comment,t1.expense_date,t1.amount,t1.rate,t1.expense_type_id,t1.amount * t1.rate AS amountCHF
+FROM myexpense AS t1
+  INNER JOIN myexpense_person AS t2
+    ON t1.person_id = t2.id
+WHERE t1.person_id=$personId
+AND t1.id $newNot IN ($exclude)";
+
+
+        $table_class = Table::full_table_class();
+
+        $output .= "<table class='$table_class '>";
+        $output .= "<tr>
+                          <th class='text-center'>id" . "</th>
+                          <th class='text-center'>Name" . "</th>
+                          <th class='text-center'>Comment" . "</th>
+                          <th class='text-center'>Date" . "</th>
+                          <th class='text-center'>Amount" . "</th>
+                          <th class='text-center'>Fx" . "</th>
+                          <th class='text-center'>Amt CHF" . "</th>
+                          <th class='text-center'>Type" . "</th>
+                          </tr>";
+
+        $results = static::find_by_sql($sql);
+        if ($results) {
+
+            foreach ($results as $result) {
+
+                $myperson = MyExpensePerson::find_by_id($result->person_id);
+                $person = $myperson->person_name;
+
+                $mytype = MyExpenseType::find_by_id($result->expense_type_id);
+                $type = $mytype->expense_type;
+
+                $output .= "<tr>";
+                $output .= "<td class='text-center'>{$result->id}</td>";
+                $output .= "<td class='text-center'>{$person}</td>";
+                $output .= "<td class='text-center'>{$result->comment}</td>";;
+                $output .= "<td class='text-center'>{$result->expense_date}</td>";
+                $output .= "<td class='text-right'>" . number_format($result->amount, 2) . "</td>";
+                $output .= "<td class='text-center'>{$result->rate}</td>";
+
+                $output .= "<td class='text-right'>" . number_format($result->amountCHF, 2) . "</td>";
+//                $output.="<td class='text-center'>{$result->expense_type_id}</td>";
+                $output .= "<td class='text-center'>{$type}</td>";
+
+                $href = clean_query_string("class_edit.php?class_name=" . get_called_class() . "&id=" . urlencode($result->id));
+
+//            $output .= "<td class='text-center'><a class='btn btn-primary table-btn' style='width: 5em' href='" . "class_edit?class_name=" . get_called_class() . "&id=" . urlencode($this->id) . "'>Edit</a></td>";
+
+                $output .= "<td class='text-center'><a class='btn btn-primary table-btn' style='width: 5em' href='" . $href . "'>Edit</a></td>";
+
+                $href = clean_query_string("class_delete.php?class_name=" . get_called_class() . "&id=" . urlencode($result->id));
+
+                $output .= "<td class='text-center'><a class='btn btn-danger table-btn' href='class_delete?class_name=" . get_called_class() . "&id=" . urlencode($result->id) . "'>Delete</a></td>";
+
+
+                $output .= "</tr>";
+
+                unset($ccy);
+                unset($person);
+            }
+        }
+
+        unset($results);
+//      $ql=  "SELECT sum({$field}) FROM {$table} {$where} "
+        $sum = number_format(static::sum_field_where($field = "amount * rate", "WHERE person_id=$personId
+AND id $newNot IN ($exclude)"), 2);
+
+        $output .= "<tr>";
+        $output .= "<td class='text-center'><strong>Total</strong></td>";
+        $output .= str_repeat("<td></td>", 5);
+        $output .= "<td class='text-right'><strong>" . $sum . "</strong></td>";
+        $output .= "</tr>";
+
+        $output .= "</table>";
+        return $output;
+
+
+    }
+
 
 
 }

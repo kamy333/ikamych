@@ -111,4 +111,5 @@ if (isset($_POST["submit"])) {
     </div>
 </div>
 
-<?php //include(SITE_ROOT.DS.'public'.DS.'layouts'.DS."footer.php") ?>
+<?php echo str_repeat("<br>", 20) ?>
+<?php include(SITE_ROOT . DS . 'public' . DS . 'layouts' . DS . "footer.php") ?>

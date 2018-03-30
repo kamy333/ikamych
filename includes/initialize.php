@@ -169,6 +169,8 @@ require_once(LIB_PATH.DS.'MyExpense.php');
 require_once(LIB_PATH.DS.'MyHouseExpense.php');
 require_once(LIB_PATH.DS.'Chat.php');
 require_once(LIB_PATH.DS.'ChatFriend.php');
+require_once(LIB_PATH . DS . 'ChatFriendDjamila.php');
+
 
 require_once(LIB_PATH.DS.'Notification.php');
 require_once(LIB_PATH . DS . 'Article.php');

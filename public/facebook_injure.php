@@ -46,8 +46,22 @@
 
     </div>
 
+    <img src="/public/img/facebook/2017-12-22_4-19-45%20philipprMoine.png" height="600" width="600" alt="">
 
 </div>
+
+<div class="col-lg-4 col-lg-offset-1" style="background-color: #f1ffff;margin-top: 2em;padding: 2em">
+
+    <img src="/public/img/facebook/2017-12-23_11-43-55Bellaiche.png" height="600" width="600" alt="">
+
+    <?php
+    $text = "<a href='#'></a>";
+    $text .= "";
+    echo "" . $text . "<hr>";
+    ?>
+</div>
+
+
 <!--<script>-->
 <!---->
 <!--    (function($) {-->
