@@ -545,13 +545,64 @@ Over the course of reading this book, you will learn the theoretical implication
     <?php
     $link = "Advanced+Excel+Essentials.pdf";
     $link = "<a  class='btn btn-primary' role='button'  href='/public/img/books/{$link}'>{$link}</a>";
-    $img = " <img src=\"https://github.com/apress/adv-excel-esntls\" alt=\" \">";
-    $source = "<a  class=\"btn btn - info\" role=\"button\"  href=\"\">Source</a>";
+    $img = " <img src=\"\" alt=\" \">";
+    $source = "<a  class=\"btn btn - info\" role=\"button\"  href=\"https://github.com/apress/adv-excel-esntls\">Source</a>";
     $text = $link . "";
     echo "" . ebook($link, $text, 23, $source) . "<hr>";
     ?>
 </div>
 
+
+<div class="col-lg-3 " style="background-color: #f1ffff;margin-top: 2em;padding: 2em">
+
+    <?php
+    $link = "Microsoft+Office+Programming+Guide+fo.pdf";
+    $link = "<a  class='btn btn-primary' role='button'  href='/public/img/books/{$link}'>{$link}</a>";
+    $img = " <img src=\"\" alt=\" \">";
+    $source = "<a  class=\"btn btn - info\" role=\"button\"  href=\"https://github.com/apress/msft-office-programming\">Source</a>";
+    $text = $link . "";
+    echo "" . ebook($link, $text, 24, $source) . "<hr>";
+    ?>
+</div>
+
+
+<div class="col-lg-3 " style="background-color: #f1ffff;margin-top: 2em;padding: 2em">
+
+    <?php
+    $link = "Microsoft+Word+Secrets.pdf";
+    $link = "<a  class='btn btn-primary' role='button'  href='/public/img/books/{$link}'>{$link}</a>";
+    $img = " <img src=\" \" alt=\" \">";
+    $source = "<a  class=\"btn btn - info\" role=\"button\"  href=\"https://github.com/apress/msft-word-secrets\">Source</a>";
+    $text = $link . "";
+    echo "" . ebook($link, $text, 24, $source) . "<hr>";
+    ?>
+
+</div>
+
+<div class="col-lg-3 " style="background-color: #f1ffff;margin-top: 2em;padding: 2em">
+
+    <?php
+    $link = "The+Basics+of+Financial+Modeling.pdf";
+    $link = "<a  class='btn btn-primary' role='button'  href='/public/img/books/{$link}'>{$link}</a>";
+    $img = " <img src=\"\" alt=\" \">";
+    $source = "<a  class=\"btn btn - info\" role=\"button\"  href=\"https://github.com/apress/basics-of-financial-modeling\">Source</a>";
+    $text = $link . "";
+    echo "" . ebook($link, $text, 24, $source) . "<hr>";
+    ?>
+</div>
+
+
+<div class="col-lg-3 " style="background-color: #f1ffff;margin-top: 2em;padding: 2em">
+
+    <?php
+    $link = "Introducing+Ethereum+and+Solidity.pdf";
+    $link = "<a  class='btn btn-primary' role='button'  href='/public/img/books/{$link}'>{$link}</a>";
+    $img = " <img src=\"\" alt=\" \">";
+    $source = "<a  class=\"btn btn - info\" role=\"button\"  href=\"https://github.com/apress/introducing-ethereum-solidity \">Source</a>";
+    $text = $link . "";
+    echo "" . ebook($link, $text, 24, $source) . "<hr>";
+    ?>
+</div>
 
 <div class="col-lg-3 " style="background-color: #f1ffff;margin-top: 2em;padding: 2em">
 
@@ -565,6 +616,29 @@ Over the course of reading this book, you will learn the theoretical implication
     ?>
 </div>
 
+<div class="col-lg-3 " style="background-color: #f1ffff;margin-top: 2em;padding: 2em">
+
+    <?php
+    $link = "";
+    $link = "<a  class='btn btn-primary' role='button'  href='/public/img/books/{$link}'>{$link}</a>";
+    $img = " <img src=\" \" alt=\" \">";
+    $source = "<a  class=\"btn btn - info\" role=\"button\"  href=\"\">Source</a>";
+    $text = $link . "";
+    echo "" . ebook($link, $text, 24, $source) . "<hr>";
+    ?>
+</div>
+
+<div class="col-lg-3 " style="background-color: #f1ffff;margin-top: 2em;padding: 2em">
+
+    <?php
+    $link = "";
+    $link = "<a  class='btn btn-primary' role='button'  href='/public/img/books/{$link}'>{$link}</a>";
+    $img = " <img src=\" \" alt=\" \">";
+    $source = "<a  class=\"btn btn - info\" role=\"button\"  href=\"\">Source</a>";
+    $text = $link . "";
+    echo "" . ebook($link, $text, 24, $source) . "<hr>";
+    ?>
+</div>
 
 <?php include(SITE_ROOT . DS . 'public' . DS . 'layouts' . DS . "footer.php") ?>
 

@@ -32,6 +32,7 @@ class SmartNav
              'index_gallery7'=>'Maman Bozorgue',
              'index_gallery8'=>'Film',
              'index_gallery11' => 'Film Classic',
+             'index_gallery13' => 'Marco',
          )
  ),
          "admin_public_menu"=>array(

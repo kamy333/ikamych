@@ -18,6 +18,7 @@
     <?php echo isset($valid) ? $valid->form_errors() : "" ?>
 </div>
 
+
 <div class="col-lg-4 col-lg-offset-1" style="background-color: #f1ffff;margin-top: 2em;padding: 2em">
 
 

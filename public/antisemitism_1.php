@@ -32,6 +32,30 @@
 
 
         <?php
+        $link = "<a href='#'></a>";
+        $img = " <img src=\" \" alt=\" \">";
+        $text = $link . "POURQUOI N'AIME-T-ON PAS LES JUIFS ?\"
+DELPHINE HORVILLEUR
+
+Delphine HORVILLEUR est rabbin du Mouvement juif libéral de France (MJLF) et directrice de la rédaction de « Tenou'a » (www.tenoua.org). Elle a publié, avec Rachid Benzine, « Des mille et une façons d'être juif ou musulman » (Seuil). BALTEL/SIPA
+Parce qu'ils ne sont pas Gentils », disait Jacques Lacan. Ce jeu de mots pose avec humour une question fondamentale : celle de la pérennité du mal. Qu'est-ce qui fait qu'à travers le temps jamais cette haine ne s'épuise, et qu'elle renaisse toujours, tel un Phénix, des cendres de l'Histoire ? Nul ne peut commencer à y répondre s'il n'admet d'abord la spécificité de l'antisémitisme : la haine des juifs n'est jamais un racisme ordinaire.
+Là où le raciste, convaincu de sa supériorité physique, culturelle ou morale, fait de l'autre un « moins que lui », l'antisémite souffre souvent au contraire d'un étrange complexe d'infériorité.
+Il reproche au juif d'être là où lui-même aurait « dû » être, d'avoir usurpé une place confortable qui aurait « dû » être la sienne, d'avoir comploté pour au final être un peu mieux loti que lui... ou parfois même d'avoir un peu trop souffert au point d'éclipser sa propre douleur, moins « grandiose ». Bref, le juif est souvent pour l'antisémite celui qui « est » ou celui qui « a » ce qu'il aurait dû être ou avoir. Et cette jalousie viscérale, cette envie ancestrale, reste étonnamment en vie dans ce qu'on nomme aujourd'hui le « nouvel antisémitisme ». Sa nouveauté n'est nulle part si ce n'est peut-être dans une revendication plus directe de la part de certains antisémites d'appartenir à un groupe discriminé, qui leur tient lieu de profond support identitaire.
+Et voilà comment certains passent à l'acte comme s'ils vengeaient d'abord une injustice, comme s'il s'agissait presque d'une légitime défense. Obscène renversement des responsabilités qui fait que l'agressé, peu importe son âge, est perçu comme pas tout à fait innocent aux yeux de son agresseur. Et ce dernier est un peu moins coupable, pense-t-il, au nom d'humiliations sociales, coloniales, ou même proche-orientales (!) qu'il convoque comme autant de douleurs qu'il se charge héroïquement de venger.
+Me revient en mémoire un étrange fait divers. En 2016, plusieurs jeunes agressent violemment un homme à Bussy-Saint-Georges, parce qu'ils le croient « juif et donc riche ». La police retrouve un SMS sur le téléphone d'un des agresseurs : « Les juifs, je les ais », écrit-il avec une faute d'orthographe. Une haine qui dit bien son nom : la conviction que l'on n'a pas ce que l'autre a. Une jalousie, en un mot, à l'égard de celui qui vient incarner mon manque et mon incomplétude.
+Pas surprenant, dès lors, que l'antisémitisme prospère toujours là où l'armature et le lien social se fissurent. Il s'agit toujours de consolider une identité sur le dos d'un autre, de rendre cet autre coupable de la faille existentielle avec laquelle il est si fatigant de vivre. Et au final de se défausser sur lui de toute responsabilité personnelle, qui disparaîtra en même temps que celui qui dorénavant l'incarne.
+Voilà comment dans l'Histoire, le juif fut tour à tour accusé d'être un peu trop bourgeois ou un peu trop révolutionnaire, d'être trop riche ou bien de vivre aux dépens d'un autre, d'être un peu trop viril ou trop féminin, obsédé par le sexe ou apathique, un peu trop visible ou à l'inverse beaucoup trop discret et indiscernable, bref d'être tour à tour une chose et son contraire.
+C'est exactement ce qu'énonce déjà dans la Bible le plus célèbre des antisémites. On le croise dans le Livre d'Esther sous les traits d'un homme nommé Haman, un conseiller à la cour d'un souverain perse. Haman hait les juifs, rêve de les anéantir et leur reproche d'« être disséminé[s] au coeur de la nation [...] mais d'être à part de toutes les autres nations » (Esther 3.😎. Dans la Bible, ce « Gentil », qui ne l'est pas du tout, reproche précisément aux juifs d'être un peu trop comme les autres et pas assez comme les autres, à la fois à part et indiscernable.
+En un temps de communautarisme où les « identités » se consolident les unes contre les autres, rien d'étonnant à ce que les mêmes arguments resurgissent. Si le juif incarne ce qui dans la nation tolère la faille et le mélange, c'est-à-dire une certaine porosité du monde, le haïr permet de s'imaginer que l'on peut exister sans l'autre.g";
+        echo "" . $text . "<hr>";
+        //                          echo "" . ebook($link,$text,4) . "<hr>";
+        ?>
+    </div>
+
+    <div class="col-lg-4 col-lg-offset-1" style="background-color: #f1ffff;margin-top: 2em;padding: 2em">
+
+
+        <?php
         $link = "<a href='http://www.slate.fr/story/159637/antisemitisme-gauche-francaise-europeenne-juifs-israel'>antisemitisme-gauche-francaise-europeenne-juifs-israel</a>";
         $img = " <img src=\" \" alt=\" \">";
         $text = $link . "";

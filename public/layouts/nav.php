@@ -155,6 +155,7 @@ if ($layout_context=="public"){
 
                         <li class="divider"></li>
 
+
                         <li><a href="<?php echo $path_public;?>judaisme.php">Judaisme</a></li>
                         <li><a href="<?php echo $path_public; ?>juif_iran.php">Juifs d'Iran</a></li>
                         <li><a href="<?php echo $path_public;?>antisemitism_1.php">Antisemitism</a></li>
