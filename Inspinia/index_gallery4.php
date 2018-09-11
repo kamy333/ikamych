@@ -44,9 +44,7 @@
                         <div class="fb-video"
                              data-href="https://www.facebook.com/albert.tabibian/videos/vb.1270734952/10206162000150236/?type=2&amp;theater" data-width="500" data-show-text="true"><div class="fb-xfbml-parse-ignore"><blockquote cite="https://www.facebook.com/albert.tabibian/videos/10206162000150236/"><a href="https://www.facebook.com/albert.tabibian/videos/10206162000150236/">Captured by Albert Tabibian</a><p></p>Posted by <a href="#" role="button">Albert Tabibian</a> on Tuesday, April 19, 2016</blockquote></div></div>
                     </div>
-                            <div class="col-md-4 col-md-offset-1">
-                        <div class="fb-video" data-href="https://www.facebook.com/TheFeverEvent/videos/220888771587991/?pnref=story" data-width="500" data-show-text="true"><div class="fb-xfbml-parse-ignore"><blockquote cite="https://www.facebook.com/TheFeverEvent/videos/220888771587991/"><a href="https://www.facebook.com/TheFeverEvent/videos/220888771587991/"></a><p>Tom Browne - Funkin&#039; For Jamaica (1980)</p>Posted by <a href="https://www.facebook.com/TheFeverEvent/">The Fever</a> on Friday, February 12, 2016</blockquote></div></div>
-                            </div>
+
 
                     </div>
                 </div>

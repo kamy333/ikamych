@@ -21,6 +21,109 @@
 
 
 <div class="row">
+    <div class="col-lg-8 col-lg-offset-2" style="background-color: #f1ffff;margin-top: 2em;padding: 2em">
+
+
+        <?php
+        $text = "<a href='#'></a>";
+        $text .= "<p><i> Kacimi-El-Hassani est un écrivain et dramaturge né en 1955, à la zaouïa d'El Hamel, une cité des Hauts plateaux d'Algérie. Il est notamment l’auteur d’une encyclopédie du Monde arabe parue aux éditions Milan, 2001. Il indique en commentaire de son post partagé ci-dessous que sa source serait l'Observatoire du Moyen-Orient.</i></p><br><br>
+<b>Mohamed Kacimi
+L'APARTHEID INFLIGÉ AUX PALESTINIENS DANS LES PAYS ARABES</b>
+<br><br>
+<b>Jordanie :</b>
+1967: la Jordanie a refusé d'autoriser les habitants de Gaza qui sont venus après la guerre des Six Jours à devenir des citoyens jordaniens . Aujourd'hui, quelque 165000 Palestiniens en Jordanie ne peuvent pas devenir des citoyens ni obtenir aucun des services gouvernementaux .
+<br><br>
+1970: 3500-5000 Palestiniens ont été tués et 20 000 Palestiniens expulsés , leurs camps démolis, dans les événements de Septembre Noir .
+<br><br>
+1988: la Jordanie a révoqué la citoyenneté de millions de Palestiniens de Cisjordanie suite à leur déclaration d'«indépendance». Comme d'habitude, cette decision avait été justifiée comme étant pour leur propre bien .
+<br><br>
+2010: la Jordanie a continué à révoquer la citoyenneté pour des milliers d'autres Palestiniens
+<br><br>
+2012: la Jordanie a adopté une loi électorale qui limite de fait ( la région de Russeifa, 700 000 habitants, majoritairement des palestiniens citoyens jordaniens, n'est représentée que par 2 députés) le nombre des membres palestiniens du Parlement à moins de 10 %
+<br><br>
+2013: la Jordanie met les réfugiés palestiniens de Syrie dans des camps spéciaux qu'ils ne peuvent pas quitter , séparés des autres réfugiés , et renvoie des centaines ou des milliers d'autres en Syrie, vers les périls de la guerre.
+<br><br>
+2014 : Les Palestiniens qui sont citoyens se voient encore refuser l'égalité des droits dans l'armée , pour ​​l'obtention de bourses d'études et l'admissions dans certaines universités publiques , entre autres domaines .
+<br><br>
+<b>Egypte :</b>
+
+1948: Tous les réfugiés de Palestine qui ont atteint l'Egypte avaient été internés dans des camps et
+les hommes ont été contraints de retourner en Palestine pour combattre .
+<br><br>
+1949: Expulsion de tous les palestiniens des camps égyptiens vers Gaza . Très peu d'Arabes palestiniens ont été laissés en Egypte .
+<br><br>
+1949-1967 Loi martiale et couvre feu imposés à Gaza
+<br><br>
+1950: l'Egypte a refusé toute présence de l'UNRWA sur son territoire , la reléguant à Gaza . Privant ainsi les réfugiés palestiniens restants de toute aide.
+<br><br>
+1949 - 1956 : Les Palestiniens en Egypte ont été interdits de scolarité et l'emploi.
+<br><br>
+2013: Des centaines de réfugiés palestiniens de Syrie ont été placés en prison alors qu'ils tentent d'entrer en Égypte
+<br><br>
+2013- aujourd'hui : l'Egypte a pratiquement fermé la frontière de Rafah avec Gaza , même en limitant les patients hospitalisés de voyager , emprisonnant de fait 1,7 millions de Gazaouis .
+<br><br>
+<b>Liban :</b>
+<br><br>
+1950-1958 : A délivré des documents de voyage à sens unique pour les Palestiniens pour quitter le pays
+<br><br>
+1962 Les Palestiniens ont été classés comme des «étrangers» :
+73 catégories d'emplois avaient été interdites aux Palestiniens jusqu'en 2010 , maintenant ce sont
+\"seulement\" 50 emplois qui leurs sont inaccessibles-comme aux étrangers , alors que la plupart est née au Liban de parents nés eux aussi au Liban!
+Ils sont toujours interdits de travailler comme médecins , journalistes , pharmaciens ou avocats .
+Ils ne sont pas autorisés à construire de nouvelles maisons ni propriétés, ni même de réparer leurs maisons.
+<br><br>
+La loi martiale est imposée dans les camps de réfugiés . L'Armée empêche les gens d'entrer et de sortir. Limitations des écoles pour les «étrangers» palestiniens. Ils ne sont pas autorisés à vivre à l'extérieur des camps de réfugiés , qui à leur tour n'ont pas le droit de s'agrandir . La population des camps est maintenant le triple de l'origine. Les Palestiniens ne sont pas autorisés à créer des organisations .
+<br><br>
+1975-1978 : Au moins 5000 Palestiniens ont été tués dans la guerre civile libanaise
+<br><br>
+1985-1988 : des milliers de morts dans la «guerre des camps
+<br><br>
+1995 : la loi interdit aux Palestiniens d'entrer dans le pays sans visa , et les visas n'ont pas été délivrés . Les palestiniens originaires du Liban qui avaient travaillé puis qui ont été expulsés des pays du Golfe ne pouvaient pas retourner au Liban . (Loi abrogée en 1999 . )
+<br><br>
+2005: Des lois spécifiques interdisant aux étrangers qui ne sont pas «les ressortissants d' un État reconnu » - les Palestiniens - de posséder des biens . Celui qui en possèdait précédemment ne peut plus le transmettre à ses enfants.
+<br><br>
+2007: 31 000 Palestiniens sont sans abri parce que l'armée libanaise a détruit le camp de Nahr el Bared
+<br><br>
+2013: Les quelque 50 000 réfugiés palestiniens en provenance de Syrie sont traités différemment des autres réfugiés syriens ; les visas temporaires de trés court terme et coûteux en font de fait des criminels
+<br><br>
+2013: Le Liban commence à refouler les réfugiés palestiniens de Syrie à la frontière
+<br><br>
+<b>Koweït :</b>
+<br><br>
+1991 : 400 000 Palestiniens ont été harcelés et chassés du pays .
+<br><br>
+<b>Libye :</b>
+<br><br>
+1994-5 : Expulsion de 30 000 Palestiniens , un grand nombre a été chassé de leurs emplois et leurs maisons confisquées
+Les pays arabes ont refusé de prendre des nouveaux réfugiés . Des centaines ont été bloqués dans le désert ou sur la mer. . Finalement, la Libye a permis à certains de rester mais a gardé la menace de les expulser à nouveau . En fin de compte environ 15 000 ont été forcés d'aller aux pays arabes pour lesquels ils avaient des documents que ce soit des pays du Golfe, et les pays occidentaux .
+<br><br>
+2011: les Palestiniens ont été forcés de payer un impôt spécial de 1550 $.
+<br><br>
+2012: Beaucoup de Palestiniens ont perdu leurs maisons et des propriétés ont été revendiqués par d'autres , dans le sillage de la révolution et de l'effondrement du système judiciaire .
+<br><br>
+<b>Irak :</b>
+<br><br>
+Début des années 1950 : Expulsion des travailleurs palestiniens en grève , avec l'Arabie Saoudite et la Libye ..
+<br><br>
+2005: Après que Saddam Hussein soit chassé du pouvoir , les Palestiniens en Irak ont été soumis à l'enlèvement , la prise d'otages , le meurtre et la torture par des groupes armés . Les politiciens eux s'en moquaient . Environ 15 000 ont été forcés de quitter l'Irak . Des milliers ont été bloqués dans des camps dans le désert entre l'Irak et la Syrie , car aucun pays arabe ne leur avait accordé de visa.
+<br><br>
+<b>Qatar :</b>
+<br><br>
+1994 : Refus d'accorder des visas aux travailleurs Palestiniens.C'est en Janvier 2014 qu'enfin ce pays leur accordera 20 000 visas.
+<br><br>
+<b>Syrie :</b>
+<br><br>
+1970: les Palestiniens ne peuvent pas voter , ne peuvent pas se présenter aux élections , ne peuvent pas posséder des terres agricoles , ne peuvent détenir plus d'un bien ..
+<br><br>
+2005-2008: la Syrie n'a pas permis aux milliers de réfugiés arabes palestiniens fuyant l'Irak d'entrer dans le pays .
+<br><br>
+2012- aujourd'hui: Quelques 2000 Palestiniens ont été tués jusqu'à présent dans la guerre de Syrie . Environ 50 sont morts de faim alors que l'armée interdit l'entrée de tous les aliments et de l'eau dans le camp de Yarmouk . Leurs droits ont été restreints d'avantage et le restant de moins en moins appliqué.";
+        echo "" . $text . "<hr>";
+        ?>
+    </div>
+</div>
+
+<div class="row">
 
     <div class="col-lg-10 col-lg-offset-2" style="background-color: #f1ffff;margin-top: 2em;padding: 2em">
         <h4> <a href="http://frblogs.timesofisrael.com/comment-le-monde-arabe-a-perdu-ses-juifs/">Comment le monde arabe a perdu ses Juifs</a></h4>

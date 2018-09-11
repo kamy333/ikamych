@@ -156,6 +156,7 @@ if (substr($Nav->current_page, 0, 7) == "manage_" ||
 
 <script src="<?php echo $Nav->path_public; ?>js/test_tooltips.js"></script>
 
+<?php echo str_repeat("<br>", 50) ?>
 
 </body>
 

@@ -110,5 +110,6 @@ if(request_is_post() && request_is_same_domain()) {
 
 </div>
 
+
 <?php //include_layout_template('admin_footer.php'); ?>
 <?php include(SITE_ROOT.DS.'public'.DS.'layouts'.DS."footer.php") ?>

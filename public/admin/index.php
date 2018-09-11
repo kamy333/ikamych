@@ -28,7 +28,26 @@ if(User::is_visitor() ){ redirect_to('../../Inspinia/index.php');}
 
 <div class="row">
 
-   
+    <?php
+    //    class Foo {
+    //        public static $staticProperty = 'foobar';
+    //
+    //        public $property = 'barfoo';
+    //        protected $privateProperty = 'foofoo';
+    //    }
+    //
+    //    $reflectionClass = new ReflectionClass('DatabaseObject');
+    //
+    //    var_dump($reflectionClass->getProperty('staticProperty')->getValue());
+    //    var_dump($reflectionClass->getProperty('property')->getValue(new DatabaseObject));
+    //
+    //    $reflectionProperty = $reflectionClass->getProperty('privateProperty');
+    //    $reflectionProperty->setAccessible(true);
+    //    var_dump($reflectionProperty->getValue(new DatabaseObject));
+    //    ?>
+
+
+
     
 <?php
 echo DatabaseObject::form_structure();
@@ -38,29 +57,17 @@ if(isset($_GET['class_name'])){
     echo $class_name::class_structure();
 }
 
+    //    $reflectionClass = new ReflectionClass('User');
+    //
+    //    var_dump($reflectionClass->getProperty('staticProperty')->getValue());
+    //    var_dump($reflectionClass->getProperty('property')->getValue(new User));
+    //
+    //    $reflectionProperty = $reflectionClass->getProperty('privateProperty');
+    //    $reflectionProperty->setAccessible(true);
+    //    var_dump($reflectionProperty->getValue(new User));
+    //
 
-//
-//echo Category::class_structure();
-//echo Category1::class_structure();
-//echo Category2::class_structure();
-//
-//echo User::class_structure();
-//echo Chat::class_structure();
-////echo ChatFriend::class_structure();
-//
-//echo Client::class_structure();
-//echo Comment::class_structure();
-//echo Currency::class_structure();
-//
-//echo FailedLogin::class_structure();
-//echo InvoiceActual::class_structure();
-//echo InvoiceEstimate::class_structure();
-//echo InvoiceSend::class_structure();
-//
-//echo Links::class_structure();
-//echo LinksCategory::class_structure();
-//echo MyCigarette::class_structure();
-//echo MyExpense::class_structure();
+
 
 
 ?>

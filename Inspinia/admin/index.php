@@ -73,7 +73,7 @@ if(User::is_employee() || !User::is_admin() ||  User::is_secretary()){ redirect_
 
 
             <?php
-            $exclude = "10,11,29,43,44,45";
+            $exclude = "10,11,29,43,44,45,58,63";
             echo Table::ibox_table(myExpense::aPerson(2, true, $exclude), "Maman Include", 12, 0) ?>
             <?php echo Table::ibox_table(myExpense::aPerson(2, false, $exclude), "Maman Exclude", 12, 0) ?>
 

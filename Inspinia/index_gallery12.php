@@ -42,8 +42,22 @@
                 $fol = "Djamila/2018_02_23";
 
                 echo blueimp_wrapper($h2, blueimp_lightBoxGallery(get_picture_folder_blueimp_gallery($fol, $h2, $folder_project_name))); ?>
+            </div>
 
+            <div class="ibox-content">
+                <?php $h2 = "Djamila saut parachute 24-04-2018";
+                $fol = "Djamila/2018_04_24";
 
+                echo blueimp_wrapper($h2, blueimp_lightBoxGallery(get_picture_folder_blueimp_gallery($fol, $h2, $folder_project_name))); ?>
+            </div>
+
+            <div class="ibox-content">
+                <?php $h2 = "Djamila Chaussure 17-06-2018";
+                $fol = "Djamila/2018_06_17";
+
+                echo blueimp_wrapper($h2, blueimp_lightBoxGallery(get_picture_folder_blueimp_gallery($fol, $h2, $folder_project_name)));
+                $h2 = ""; ?>
+            </div>
                 <?php
 
 
