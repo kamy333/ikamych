@@ -152,6 +152,7 @@ if ($layout_context=="public"){
                         <li class="divider"></li>
                         <li><a href="<?php echo $path_public; ?>braliacuba.php">Voyage Bralia Cuba Mexique</a></li>
                         <li><a href="<?php echo $path_public; ?>braliajordanie.php">Voyage Bralia Jordanie</a></li>
+                        <li><a href="<?php echo $path_public; ?>braliajordanie2.php">Voyage Bralia Jordanie2</a></li>
                         <li><a href="<?php echo $path_public; ?>bralialoirezoo.php">Voyage Bralia Loire Zoo</a></li>
                         <li><a href="<?php echo $path_public; ?>braliabudapest.php">Voyage Bralia Budapest</a></li>
 
