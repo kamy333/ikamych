@@ -42,18 +42,13 @@
         <div class="col-lg-3 col-lg-offset-1">
             <?php //echo get_search_category(); ?>
 
+            <?php echo Links::output_links('C#'); ?>
+        </div>
+
+        <div class="col-lg-4 ">
+            <?php //echo get_search_category(); ?>
+
             <?php echo Links::output_links('PHP'); ?>
-        </div>
-
-        <div class="col-lg-2 ">
-            <?php //echo get_search_category(); ?>
-
-            <?php echo Links::output_links('Bootstrap'); ?>
-        </div>
-        <div class="col-lg-2 ">
-            <?php //echo get_search_category(); ?>
-
-            <?php echo Links::output_links('udemy',true); ?>
         </div>
 
         </div>

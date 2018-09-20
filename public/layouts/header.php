@@ -36,6 +36,7 @@
     <link rel="stylesheet" type="text/css" href="<?php echo $Nav->path_public; ?>css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="<?php echo $Nav->path_public; ?>css/custom.css">
     <link rel="stylesheet" type="text/css" href="<?php echo $Nav->path_public; ?>css/styles.css">
+    <link href="https://netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
 
 
     <?php if ($Nav->current_page == 'profile') { ?>

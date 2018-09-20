@@ -67,7 +67,8 @@ Chaque leader offre le meilleur de ce que son peuple produit.";
             </div>
 
 
-            <div class="col-lg-4" style="background-color: #f1ffff;margin-top: 2em;margin-right: 2em;padding: 2em">
+            <div class="col-lg-4 col-lg-offset-1"
+                 style="background-color: #ff941e;margin-top: 2em;margin-right: 2em;padding: 2em">
                 <?php
                 $text = "<p>\"Quelques Juifs (genre apprentis Inglorious Basterds) organisent secrètement un attentat contre Adolf Hitler qui doit passer en voiture près de leur schtettl à midi. Ils préparent leur arme de
 destruction massive, la planquent sous le pont à l'entrée du village et attendent. Passe midi, 12.30, 13
@@ -76,7 +77,7 @@ heures, Hitler n'arrive pas... Ils commencent à s'inquiéter et l'un dit à l'a
                 ?>
 
             </div>
-            <div class="col-lg-4" style="background-color: #f1ffff;margin-top: 2em;padding: 2em">
+            <div class="col-lg-4" style="background-color: #fffd6c;margin-top: 2em;padding: 2em">
                 <?php
                 $text = "Une charmante demoiselle un peu court vêtue monte dans un bus à Jerusalem. <br>
 Un orthodoxe assis à côté d'elle, au bout de deux stations lui tend une pomme.<br>
@@ -90,7 +91,7 @@ Deux stations plus tard la demoiselle lui rend la pomme.<br>
 
             </div>
 </div>
-        <div class="col-lg-5 col-lg-offset-1" style="background-color: #f1ffff;margin-top: 2em;padding: 2em">
+        <div class="col-lg-5 col-lg-offset-1" style="background-color: #2dffce;margin-top: 2em;padding: 2em">
             <?php
             $text = "Salomon est sur son lit de mort. Sa fidèle Sarah se tient comme il se doit auprès de lui, et se saisit
 tendrement de sa main. Salomon lève vers elle un regard attendri et demande à sa femme d'une voix
@@ -113,7 +114,8 @@ quand même si ce n'est pas toi qui me portes la poisse !!!</p> ";
             ?>
         </div>
 
-        <div class="col-lg-5 col-lg-offset-1" style="background-color: #f1ffff;margin-top: 2em;padding: 2em">
+        <div class="col-lg-5 col-lg-offset-1"
+             style="color: white; background-color: #1a1aff;margin-top: 2em;padding: 2em">
             <?php
             $text = "Histoire juive :<br>
     Ca se passe dans les années 70 . Des immigrants juifs soviétiques arrivent en Israël. Un journaliste les interroge:<br>
@@ -129,7 +131,8 @@ quand même si ce n'est pas toi qui me portes la poisse !!!</p> ";
             ?>
         </div>
 
-        <div class="col-lg-5 col-lg-offset-1" style="background-color: #f1ffff;margin-top: 2em;padding: 2em">
+        <div class="col-lg-5 col-lg-offset-1"
+             style="background-color: #ff58e1;color: white; margin-top: 2em;padding: 2em">
             <?php
             $text = "Encore aujourd'hui, de nombreuses personnes, en écrivant le chiffre sept, utilisent une barre supplémentaire horizontale au milieu du chiffre.La plupart des typographies l'ont fait disparaître aujourd'hui, comme vous pouvez le constater ici: 7<br>
 Mais savez-vous pourquoi cette barre a survécu jusqu'à nos jours?Il faut remonter bien loin, aux temps bibliques.Lorsque Moise eut gravi le mont Sinaï et que les 10 commandements lui furent dictés, il redescendit vers son peuple et leur lut, à haute et forte voix, chaque commandement. Arrivé au septième, il annonça :<br>
@@ -155,7 +158,7 @@ Ce dernier le remercie encore plus chaleureusement. N’y comprenant rien, Dieud
             </div>
 
 
-            <div class="col-lg-3 " style="background-color: #f1ffff;margin-top: 2em;margin-left:0.5em;padding: 2em">
+            <div class="col-lg-3 " style="background-color: #d8d0ff;margin-top: 2em;margin-left:0.5em;padding: 2em">
                 <?php
                 $text="- Deux juifs se rencontrent sur le quai d'une gare:<br>
 - Où vas-tu ?<br>
@@ -166,7 +169,7 @@ Ce dernier le remercie encore plus chaleureusement. N’y comprenant rien, Dieud
             </div>
 
 
-            <div class="col-lg-3 " style="background-color: #f1ffff;margin-top: 2em;margin-left:0.5em;padding: 2em">
+            <div class="col-lg-3 " style="background-color: #fffd6c;margin-top: 2em;margin-left:0.5em;padding: 2em">
                 <?php
                 $text="A la sortie de la deuxième guerre mondiale, l'employé demande au candidat juif à l’émigration :<br>
 - Dans quel pays voulez vous vous rendre ?<br>
@@ -179,7 +182,7 @@ Ce dernier le remercie encore plus chaleureusement. N’y comprenant rien, Dieud
             </div>
 </div>
 
-        <div class="col-lg-5 col-lg-offset-1" style="background-color: #f1ffff;margin-top: 2em;padding: 2em">
+        <div class="col-lg-5 col-lg-offset-1" style="background-color: #f1d8ff;margin-top: 2em;padding: 2em">
 
             <?php
             $text="Au sentier a Paris un commerçant chinois va voir son voisin Élie pour se plaindre qu'il s'est encore fait cambrioler pour la 37eme fois ce trimestre alors que tous les autres commerçant juif eux presque pas.<br>
@@ -202,7 +205,7 @@ Une semaine après lui avoir fourni la Mezouza le chinois revient voir Élie qui
 
         </div>
 
-        <div class="col-lg-5 col-lg-offset-1" style="background-color: #f1ffff;margin-top: 2em;padding: 2em">
+        <div class="col-lg-5 col-lg-offset-1" style="background-color: #fff0fb;margin-top: 2em;padding: 2em">
 
             <?php
             $text = "Un vieil homme juif de 82 ans, est assis dans un bar juste à côté de la table d'une magnifique jeune femme avec une poitrine extraordinaire.<br>
@@ -223,7 +226,7 @@ Finalement la fille qui s'impatiente, lui dit:<br>
 
         </div>
 
-        <div class="col-lg-5 col-lg-offset-1" style="background-color: #f1ffff;margin-top: 2em;padding: 2em">
+        <div class="col-lg-5 col-lg-offset-1" style="background-color: #d1fdff;margin-top: 2em;padding: 2em">
 
             <?php
 
@@ -240,7 +243,7 @@ Alors la troisième termine:<br>
 
         </div>
 
-        <div class="col-lg-5 col-lg-offset-1" style="background-color: #f1ffff;margin-top: 2em;padding: 2em">
+        <div class="col-lg-5 col-lg-offset-1" style="background-color: #aeffec;margin-top: 2em;padding: 2em">
 
             <?php
             $text="C’est un curé et un rabbin, très bons amis. <br>Le curé dit à son ami rabbin : « tu sais, je connais une magouille pour ne pas payer au restaurant : il suffit d’attendre que tous les clients soient partis et que le restaurant ferme ses portes, tu vas voir ! ». <br>Ils se rendent donc au restaurant, commandent, dinent et attendent que tous les clients soient partis jusqu’à presque fermeture des portes ! Un serveur dit : ' ces messieurs ont-ils réglé ? ' Et le rabbin répond : « oui et nous attendons toujours notre monnaie ! »";
@@ -270,7 +273,7 @@ Et tous de répondre en coeur:<br>
 
         </div>
 
-        <div class="col-lg-5 col-lg-offset-1" style="background-color: #f1ffff;margin-top: 2em;padding: 2em">
+        <div class="col-lg-5 col-lg-offset-1" style="background-color: #ffedc8;margin-top: 2em;padding: 2em">
 
             <?php
             $text=" Deux hommes opposés par une affaire consultent un rabbin du tribunal rabbinique. Chacun défend alors son point de vue.<br>
@@ -429,7 +432,7 @@ Un peu plus tard, la mère envoie des lettres de remerciements.<br>
             </div>
 
 
-            <div class="col-lg-4 col-lg-offset-1" style="background-color: #f1ffff;margin-top: 2em;padding: 2em">
+            <div class="col-lg-4 col-lg-offset-1" style="background-color: #97f7ff;margin-top: 2em;padding: 2em">
                 <?php
 
                 $text = "4 femmes se retrouvent à New York après s'être perdues de vue durant plusieurs années. Elles se montrent des photos de leurs enfants devenus adultes désormais (dans ce genre d'histoire ce sont toujours des fils, on se demande pourquoi ...)
@@ -468,7 +471,7 @@ D ieu :<br>
         </div>
 
         <div class="row">
-            <div class="col-lg-4 col-lg-offset-1" style="background-color: #f1ffff;margin-top: 2em;padding: 2em">
+            <div class="col-lg-4 col-lg-offset-1" style="background-color: #ffc1f2;margin-top: 2em;padding: 2em">
                 <?php
 
                 $text = "Chaïm Lévy veut entrer au Rotary club de Vitroles. Il demande un formulaire d'inscription. Il découvre les questions au fur et à mesure.<br>
