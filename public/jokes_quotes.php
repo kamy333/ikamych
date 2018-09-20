@@ -46,6 +46,21 @@ Un juif s'approche d'eux et leur dit: \"Moins fort SVP, dieu pourrait s’aperce
         </div>
 
 
+        <div class="col-lg-4 col-lg-offset-1"
+             style="color: darkgreen; background-color: #43ff36;margin-top: 2em;padding: 2em">
+
+
+            <?php
+            //          $text = "<a href='#'></a>";
+            $text = "Simone (Veil), Marceline (Loridan-Ivens) et Hélène (Hausser) sont au Jardin d'Eden, attablées autour de pâtisseries, de thé rare et de bons vins et se marrent comme des bossues depuis des heures. Elles font un tel vacarme que dieu en personne vient s'enquérir de la cause de leur hilarité. 
+- On se raconte des blagues sur Auschwitz ! répondent-elles ensemble, entre deux hoquets de fou-rire, s'essuyant les yeux de leurs larmes de joie,
+- Sur Auschwitz ?, répond le Tout-puissant, mais ce n'est pas très drôle, voyons, Mesdames !
+- Ah bon ? Qu'est ce que t'en sais, toi, répondent-elles en choeur, tu n'étais pas là !";
+            echo "" . $text . "<hr>";
+            ?>
+        </div>
+
+
         <div class="row">
             <div class="col-lg-4 col-lg-offset-1" style="background-color: #f1ffff;margin-top: 2em;padding: 2em">
 
@@ -68,7 +83,7 @@ Chaque leader offre le meilleur de ce que son peuple produit.";
 
 
             <div class="col-lg-4 col-lg-offset-1"
-                 style="background-color: #ff941e;margin-top: 2em;margin-right: 2em;padding: 2em">
+                 style="color: lavenderblush; background-color: #ff941e;margin-top: 2em;margin-right: 2em;padding: 2em">
                 <?php
                 $text = "<p>\"Quelques Juifs (genre apprentis Inglorious Basterds) organisent secrètement un attentat contre Adolf Hitler qui doit passer en voiture près de leur schtettl à midi. Ils préparent leur arme de
 destruction massive, la planquent sous le pont à l'entrée du village et attendent. Passe midi, 12.30, 13
@@ -77,7 +92,7 @@ heures, Hitler n'arrive pas... Ils commencent à s'inquiéter et l'un dit à l'a
                 ?>
 
             </div>
-            <div class="col-lg-4" style="background-color: #fffd6c;margin-top: 2em;padding: 2em">
+            <div class="col-lg-4" style="color: darkgoldenrod; background-color: #fffd6c;margin-top: 2em;padding: 2em">
                 <?php
                 $text = "Une charmante demoiselle un peu court vêtue monte dans un bus à Jerusalem. <br>
 Un orthodoxe assis à côté d'elle, au bout de deux stations lui tend une pomme.<br>
@@ -91,7 +106,8 @@ Deux stations plus tard la demoiselle lui rend la pomme.<br>
 
             </div>
 </div>
-        <div class="col-lg-5 col-lg-offset-1" style="background-color: #2dffce;margin-top: 2em;padding: 2em">
+        <div class="col-lg-5 col-lg-offset-1"
+             style="color: darkgreen; background-color: #2dffce;margin-top: 2em;padding: 2em">
             <?php
             $text = "Salomon est sur son lit de mort. Sa fidèle Sarah se tient comme il se doit auprès de lui, et se saisit
 tendrement de sa main. Salomon lève vers elle un regard attendri et demande à sa femme d'une voix
