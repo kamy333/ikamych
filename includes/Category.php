@@ -140,6 +140,7 @@ protected static $db_fields_table_display_full =array('id','category','category_
 
     public static $db_field_search =array('search_all','id','category','category_1','category_2','unit_price','company_unit_price','download_csv');
 
+
     public static $page_name="Category";
     public static $page_manage="manage_category.php";
     public static $page_new="new_category.php";

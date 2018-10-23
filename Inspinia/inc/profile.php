@@ -1,13 +1,5 @@
 <?php  $session->confirmation_protected_page(); ?>
 
-
-<?php
-
-
-?>
-
-
-
 <div class="row">
 <div class="col-lg-12  white-bg">
     <div class="text-center m-t-lg">
@@ -18,6 +10,7 @@
             <?php if (isset($user)) { echo $user->full_name();} ?></strong>  </h1>
 
  </div>
+</div>
 </div>
 
 

@@ -307,20 +307,15 @@ class Links extends DatabaseObject
     public static function find_all_category_from_links()
     {
         // global $database;
-        $sql = "SELECT DISTINCT t1.category
-FROM links AS t1 INNER JOIN links_category AS t2 on t2.id = t1.category_id
-ORDER BY t2.rank ASC, t1.id ASC ";
-        //  return   self::find_by_sql("SELECT DISTINCT category FROM" . " ".self::$table_name. " ORDER BY id ASC");
-
+        $sql = "SELECT DISTINCT t1.category FROM links AS t1 INNER JOIN links_category AS t2 on t2.id = t1.category_id
+                ORDER BY t2.rank ASC, t1.id ASC ";
         return self::find_by_sql($sql);
     }
 
     public static function find_all_category_1_from_links()
     {
         // global $database;
-        $sql = "SELECT DISTINCT sub_category_1
-FROM links WHERE sub_category_1 IS NOT NULL ";
-        //  return   self::find_by_sql("SELECT DISTINCT category FROM" . " ".self::$table_name. " ORDER BY id ASC");
+        $sql = "SELECT DISTINCT sub_category_1 FROM links WHERE sub_category_1 IS NOT NULL ";
 
         return self::find_by_sql($sql);
     }
@@ -329,15 +324,15 @@ FROM links WHERE sub_category_1 IS NOT NULL ";
     public static function find_all_category_2_from_links()
     {
         // global $database;
-        $sql = "SELECT DISTINCT sub_category_2
-FROM links WHERE sub_category_2 IS NOT NULL ";
-        //  return   self::find_by_sql("SELECT DISTINCT category FROM" . " ".self::$table_name. " ORDER BY id ASC");
+        $sql = "SELECT DISTINCT sub_category_2 FROM links WHERE sub_category_2 IS NOT NULL ";
 
         return self::find_by_sql($sql);
     }
 
     public static function get_search_category($category_1 = false, $category_2 = false)
     {
+
+        global $Nav;
 
         if ($category_1) {
             $category_set = self::find_all_category_1_from_links();
@@ -364,6 +359,11 @@ FROM links WHERE sub_category_2 IS NOT NULL ";
         $output .= "<li role='presentation' class=''><a href=";
         $output .= "admin/new_link.php";
         $output .= ">New</a></li>";
+
+        if (User::is_admin()) {
+            $output .= $Nav->menu_item('Article', 'New Article', 'new_data.php', 'admin/crud/data');
+        }
+
 
         $output .= "<li role='presentation' class='{$active1}'><a href=";
         $output .= $_SERVER['PHP_SELF'];

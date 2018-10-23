@@ -19,7 +19,6 @@ if (isset($message)) {
 }
     ?>
 
-<!---->
 <?php
 
 if(User::is_visitor() ){ redirect_to('../../Inspinia/index.php');}
@@ -57,20 +56,8 @@ if(isset($_GET['class_name'])){
     echo $class_name::class_structure();
 }
 
-    //    $reflectionClass = new ReflectionClass('User');
-    //
-    //    var_dump($reflectionClass->getProperty('staticProperty')->getValue());
-    //    var_dump($reflectionClass->getProperty('property')->getValue(new User));
-    //
-    //    $reflectionProperty = $reflectionClass->getProperty('privateProperty');
-    //    $reflectionProperty->setAccessible(true);
-    //    var_dump($reflectionProperty->getValue(new User));
-    //
 
-
-
-
-?>
+    ?>
 </div>
 
 <hr>

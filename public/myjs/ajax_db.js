@@ -3,6 +3,8 @@
  */
 
 $(document).ready(function () {
+
+
     var ajaxRunning = false;
     var icount = 0;
     var $class_name = getParameterByName('class_name');
@@ -106,8 +108,9 @@ $(document).ready(function () {
         } else {
              url = window.location.href;
 
-        }
 
+        }
+        // console.log(url);
         // var page = parseInt($(thisVar).text());
 
         // var n = url.indexOf("?");
@@ -116,7 +119,8 @@ $(document).ready(function () {
         // queryString = queString.replace("?&", "?");
 
         queryString = getQuerystring(url);
-        var newUrl = "../admin/ajax/ajax_manage.php" + queryString;
+        var newUrl = "/public/admin/ajax/ajax_manage.php" + queryString;
+        // var newUrl = "../admin/ajax/ajax_manage.php" + queryString;
         RemoveListenersPagination();
         // showSpinner();
         $.get(newUrl, function (data, status, xhr) {
@@ -161,7 +165,8 @@ $(document).ready(function () {
         var id = getParameterByName('id', url);
         var classname = getParameterByName('class_name', url);
 
-        var newUrl = "../admin/ajax/ajax_edit.php";
+        var newUrl = "/public/admin/ajax/ajax_edit.php";
+        // var newUrl = "../admin/ajax/ajax_edit.php";
         newUrl += "?class_name=" + classname;
         if (id) {
             newUrl += "&id=" + id;
@@ -239,7 +244,8 @@ $(document).ready(function () {
       var   id = parseInt(getParameterByName('id',href));
       var $class=getParameterByName('class_name',href);
 
-        var newUrl = "../admin/ajax/ajax_delete.php?class_name=" + $class_name + "&id=" + id;
+        var newUrl = "/public/admin/ajax/ajax_delete.php?class_name=" + $class_name + "&id=" + id;
+        // var newUrl = "../admin/ajax/ajax_delete.php?class_name=" + $class_name + "&id=" + id;
 
 
         $.getJSON(newUrl, function (data, status, xhr) {
@@ -355,7 +361,8 @@ $(document).ready(function () {
 
         var form = "#form_" + $class_name;
         var action = $(form).attr('action');
-        var newUrl = "../admin/ajax/ajax_post.php";
+        var newUrl = "/public/admin/ajax/ajax_post.php";
+        // var newUrl = "../admin/ajax/ajax_post.php";
         var form_data = $(form).serializeArray();
 
         console.log(form_data);

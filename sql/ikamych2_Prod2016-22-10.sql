@@ -22,6 +22,24 @@ SET time_zone = "+00:00";
 
 -- --------------------------------------------------------
 
+
+DROP TABLE IF EXISTS article;
+CREATE TABLE IF NOT EXISTS `article` (
+  `id`         INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `subject`    VARCHAR(255)     NOT NULL,
+  `link`       VARCHAR(255),
+  `photo`      VARCHAR(255),
+  `article`    text,
+  `likes`      INT(11)          NOT NULL,
+  `comment`    VARCHAR(255),
+  `input_date` TIMESTAMP        NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+)
+  ENGINE = InnoDB
+  DEFAULT CHARSET = utf8
+  AUTO_INCREMENT = 1;
+
+
 --
 -- Table structure for table `blacklist_ip`
 --

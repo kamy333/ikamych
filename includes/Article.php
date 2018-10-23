@@ -17,6 +17,8 @@ class Article extends DatabaseObject
     public static $get_form_element_others = array();
     public static $form_default_value = array(
         "input_date" => 'nowtime()',
+        "likes" => 0,
+        "subject" => "joke",
 
     );
     public static $db_field_search = array('search_all', 'chat', 'download_csv');
@@ -28,7 +30,7 @@ class Article extends DatabaseObject
     public static $page_delete = "delete_article.php";
     protected static $table_name = "article";
     protected static $db_fields = array('id', 'subject', 'link', 'photo', 'article', 'likes', 'comment', 'input_date');
-    protected static $required_fields = array('subject', 'link', 'photo', 'article', 'likes', 'comment', 'input_date');
+    protected static $required_fields = array('article',);
     protected static $db_fields_table_display_short = array('id', 'subject', 'link', 'photo', 'article', 'likes', 'comment', 'input_date');
     protected static $db_fields_table_display_full = array('id', 'subject', 'link', 'photo', 'article', 'likes', 'comment', 'input_date');
     protected static $form_properties = array(
@@ -46,20 +48,20 @@ class Article extends DatabaseObject
 
         ),
         "link" => array("type" => "url",
-            "name" => 'web_address',
+            "name" => 'link',
             "label_text" => "Link",
             "placeholder" => "Website Address",
-            "required" => true,
+            "required" => false,
         ),
         "likes" => array("type" => "number",
             "name" => 'likes',
             "label_text" => "Likes",
             'min' => 0,
             "placeholder" => "Likes",
-            "required" => true,
+            "required" => false,
         ),
         "article" => array("type" => "textarea",
-            "name" => 'message',
+            "name" => 'article',
             "label_text" => "Article",
             "placeholder" => "Article here",
             "required" => true,
@@ -142,9 +144,7 @@ class Article extends DatabaseObject
     {
         $output = "</a><span>&nbsp;</span>";
         $output .= "<a  class=\"btn btn-primary\"  href=\"" . static::$page_new . "\">Add Article Ajax" . " </a><span>&nbsp;</span>";
-//        $output .= "<a  class=\"btn btn-primary\"  href=\"" . "new_ajax.php?class_name=Article" . "\">New Article Ajax " . " </a></a><span>&nbsp;</span>";
         $output .= "<a  class=\"btn btn-primary\"  href=\"" . LinksCategory::$page_manage . "\">View Category " . " </a><span>&nbsp;</span>";
-//        $output .= "<a  class=\"btn btn-primary\"  href=\"" . MyExpensePerson::$page_manage . "\">View Person " . " </a>";
         return $output;
     }
 

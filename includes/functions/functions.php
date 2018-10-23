@@ -254,13 +254,10 @@ function date_sql($date = false)
     return strftime("%Y-%m-%d", $date);
 }
 
-
 function unixToMySQL($timestamp)
 {
     return date('Y-m-d H:i:s', $timestamp);
 }
-
-
 
 function dateDifference($date_1 , $date_2 , $differenceFormat = '%a' )
 {
@@ -272,8 +269,6 @@ function dateDifference($date_1 , $date_2 , $differenceFormat = '%a' )
     return $interval->format($differenceFormat);
 
 }
-
-
 
 function DateDifferenceFormat($date_1 , $date_2){
 
@@ -309,9 +304,6 @@ function DateDifferenceFormat($date_1 , $date_2){
 
     }
 }
-
-
-
 
 function mth_fr_name($month_name){
     switch($month_name){
@@ -427,7 +419,6 @@ function day_no($jour){
 
 }
 
-
 function date_fr($str_time='now'){
     $unix_time = strtotime($str_time);
     $day_wk_no = day_eng_no(strftime("%A" ,$unix_time));
@@ -488,7 +479,6 @@ function e($string){
     return $database->escape_value($string) ;
 
 }
-
 
 function clean_query_string($text_qry_str){
     if ( substr_count($text_qry_str, '?')>1){
@@ -674,7 +664,10 @@ function check_request(){
 
 function get_picture_folder_blueimp_gallery($img_folder="",$title="",$default_path="public"){
 //    global $folder_project_name;
-    $dir=SITE_ROOT.DS.$default_path.DS."/img/".$img_folder;
+    global $Nav;
+//    $dir=SITE_ROOT.DS.$default_path.DS."/img/".$img_folder;
+    $dir = SITE_ROOT . DS . $Nav->top_folder . DS . "img/" . $img_folder;
+
 
     $output="";
     if(is_dir($dir)) {
@@ -683,7 +676,11 @@ function get_picture_folder_blueimp_gallery($img_folder="",$title="",$default_pa
             if(stripos($file, '.') > 0) {
                 $ext = pathinfo($file, PATHINFO_EXTENSION);
                 if($ext=='jpg' || $ext=='JPG' || $ext=='png' || $ext=='PNG'){
-                    $output.= "<a href='img/$img_folder/{$file}' title=\"{$title}\" data-gallery=''><img src='img/$img_folder/{$file}' style='width: 10em;height: 10em' ></a>";
+//                    $output.= "<a href='img/$img_folder/{$file}' title=\"{$title}\" data-gallery=''><img src='img/$img_folder/{$file}' style='width: 10em;height: 10em' ></a>";
+                    $output .= "<a href='/$default_path/img/$img_folder/{$file}' title=\"{$title}\" data-gallery=''><img src='/$default_path/img/$img_folder/{$file}' style='width: 10em;height: 10em' ></a>";
+
+
+
                 }
             }
         }
@@ -1106,7 +1103,6 @@ function button_color($color, $txt = "xxx", $href = false, $href_env = "", $othe
 
 }
 
-
 function button_color_mobile($color, $txt = "xxx", $href = false, $href_env = "", $others_a = "", $btn_length = "btn-lg")
 {
     global $Nav;
@@ -1134,9 +1130,6 @@ function button_color_mobile($color, $txt = "xxx", $href = false, $href_env = ""
 
 }
 
-
-
-
 function yes_no($int, $lang = 'e')
 {
     $integer = (int)$int;
@@ -1159,7 +1152,6 @@ function yes_no($int, $lang = 'e')
 
     return $output;
 }
-
 
 function reverse_yes_no($int, $lang = 'e')
 {
@@ -1335,9 +1327,7 @@ function remove_accents($str, $utf8 = true)
         $str);
     return $str;
 }
-
 //- remove_accents()
-
 
 function ebook($link = "", $text = "", $id = 0, $source = "")
 {
@@ -1355,7 +1345,6 @@ function ebook($link = "", $text = "", $id = 0, $source = "")
 
     return $output;
 }
-
 
 function get_ebooks($img_folder = "")
 {
@@ -1414,3 +1403,5 @@ function get_ebooks($img_folder = "")
 
 
 ?>
+
+

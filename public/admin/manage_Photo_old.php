@@ -6,7 +6,12 @@ if(User::is_employee() || User::is_secretary()){ redirect_to('index.php');}
 $class_name="Photo";
 //$class_name1="MyExpense";
 //$class_name2="MyExpensePerson";
-
+if ($Nav->folder_immediate != "admin") {
+    $class_name::$page_manage = $Nav->path_admin . $Nav->folder_prev . '/manage/' . $class_name::$page_manage;
+    $class_name::$page_new = $Nav->path_admin . $Nav->folder_prev . '/new/' . $class_name::$page_new;
+    $class_name::$page_edit = $Nav->path_admin . $Nav->folder_prev . '/edit/' . $class_name::$page_edit;
+    $class_name::$page_delete = $Nav->path_admin . $Nav->folder_prev . '/delete/' . $class_name::$page_delete;
+}
 
 $table_name=$class_name::get_table_name();
 

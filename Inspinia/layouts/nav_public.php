@@ -29,7 +29,7 @@
 
                             <li><a href="<?php echo $Nav->http . "transmed/"; ?>index.php"><i class="fa fa-taxi"></i>
                                     <span class="nav-label">Transport</span></a></li>
-                            <?php echo $Nav->menu_item('', 'Full version Inspinia', 'http://www.ikamy.ch/Inspinia_Full_Version/', 'none', true) ?>
+                            <?php echo $Nav->menu_item('', 'Full version Inspinia', 'https://www.ikamy.ch/Inspinia_Full_Version/', '', true) ?>
                             <?php
                             echo $Nav->menu_item('', 'Inspinia Full2', '../Inspinia_Full_Version_2/index.php', 'public', true);
 
@@ -42,7 +42,7 @@
                             <li><a href="<?php echo $path_public; ?>player.php">players</a></li>
 
                             <?php echo $Nav->menu_item('', 'SmartAdmin', 'https://www.ikamy.ch/smartAdmin/', 'none', true) ?>
-                            <?php echo $Nav->menu_item('', 'SmartAdmin full version', 'http://www.ikamy.ch/SmartAdmin_Full_Version_html/', 'none', true) ?>
+                            <?php echo $Nav->menu_item('', 'SmartAdmin full version', 'https://www.ikamy.ch/SmartAdmin_Full_Version_html/', 'none', true) ?>
                         </ul>
                     </li>
                 <?php } ?>

@@ -8,6 +8,13 @@ if(User::is_employee() || User::is_secretary()  || User::is_visitor()){ redirect
 $class_name="InvoiceActual";
 $table_name=$class_name::get_table_name();
 
+if ($Nav->folder_immediate != "admin") {
+    $class_name::$page_manage = $Nav->path_admin . $Nav->folder_prev . '/manage/' . $class_name::$page_manage;
+    $class_name::$page_new = $Nav->path_admin . $Nav->folder_prev . '/new/' . $class_name::$page_new;
+    $class_name::$page_edit = $Nav->path_admin . $Nav->folder_prev . '/edit/' . $class_name::$page_edit;
+    $class_name::$page_delete = $Nav->path_admin . $Nav->folder_prev . '/delete/' . $class_name::$page_delete;
+}
+
 $order_name= !empty($_GET["order_name"])?$_GET["order_name"] : 'id';
 $order_type= !empty($_GET["order_type"])?$_GET["order_type"] :'ASC';
 

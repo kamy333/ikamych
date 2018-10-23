@@ -11,7 +11,6 @@
 class MyHouseExpense extends DatabaseObject {
     protected static $table_name="my_house_expense";
 
-// 'currency_id','Account','debitor','creditor'
 
     protected static $db_fields = array('id','amount','ccy_id','rate','person_id','expense_type_id','expense_date','comment','modification_time');
 

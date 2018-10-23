@@ -3,10 +3,13 @@
 <?php if(User::is_employee() || User::is_visitor()){ redirect_to('index.php');}?>
 
 <?php $class_name="TransportChauffeur" ;
-$class_name2="MyExpensePerson" ;
-$class_name1="MyHouseExpense" ;
 
-
+if ($Nav->folder_immediate != "admin") {
+    $class_name::$page_manage = $Nav->path_admin . $Nav->folder_prev . '/manage/' . $class_name::$page_manage;
+    $class_name::$page_new = $Nav->path_admin . $Nav->folder_prev . '/new/' . $class_name::$page_new;
+    $class_name::$page_edit = $Nav->path_admin . $Nav->folder_prev . '/edit/' . $class_name::$page_edit;
+    $class_name::$page_delete = $Nav->path_admin . $Nav->folder_prev . '/delete/' . $class_name::$page_delete;
+}
 
 
 if(isset($_GET['id'])){
@@ -114,13 +117,7 @@ if(request_is_post() && request_is_same_domain()) {
     <span>&nbsp;&nbsp; |&nbsp;&nbsp; </span>
     <a href="<?php echo $class_name::$page_manage ?>" >Manage <?php echo $class_name::$page_name ?></a>
     <span>&nbsp;&nbsp; |&nbsp;&nbsp; </span>
-    <a href="<?php echo $class_name1::$page_manage ?>" >Manage <?php echo $class_name1::$page_name ?></a>
-    <span>&nbsp;&nbsp; |&nbsp;&nbsp; </span>
-    <a href="<?php echo $class_name2::$page_manage ?>" >Manage <?php echo $class_name2::$page_name ?></a>
-    <span>&nbsp;&nbsp; |&nbsp;&nbsp; </span>
-    <a href="<?php echo $class_name1::$page_new ?>">Add New <?php echo $class_name1::$page_name ?></a>
-    <span>&nbsp;&nbsp; |&nbsp;&nbsp; </span>
-    <a href="<?php echo $class_name2::$page_new ?>">Add New <?php echo $class_name2::$page_name ?></a>
+    <a href="<?php echo $class_name::$page_new ?>">Add New <?php echo $class_name::$page_name ?></a>
 
     <div class ="background_light_blue">
 
@@ -134,21 +131,6 @@ if(request_is_post() && request_is_same_domain()) {
                 <?php
 
                 echo $class_name::construct_form($get_item,$_GET);
-
-                //                $name='expense_type';
-                //                if(isset($_GET[$name])){ $value=$_GET[$name]; } else { isset($get_item)? $value=$get_item->$name :$value="Pres";}
-                //                echo  $class_name::get_form($name,$value);
-                //
-                //
-                //                $name='rank';
-                //                if(isset($_GET[$name])){ $value=$_GET[$name]; } else { isset($get_item)? $value=$get_item->$name :$value=1;}
-                //                echo  $class_name::get_form($name,$value);
-                //
-                //                $name='comment';
-                //                if(isset($_GET[$name])){ $value=$_GET[$name]; } else { isset($get_item)? $value=$get_item->$name :$value='';}
-                //                echo  $class_name::get_form($name,$value);
-
-
 
                 echo Form::form_id();
                 echo csrf_token_tag();?>

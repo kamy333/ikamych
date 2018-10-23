@@ -13,7 +13,24 @@ $table_name=$class_name::get_table_name();
 $order_name= !empty($_GET["order_name"])?$_GET["order_name"] : 'id';
 $order_type= !empty($_GET["order_type"])?$_GET["order_type"] :'ASC';
 
+if ($Nav->folder_immediate != "admin") {
+    $class_name::$page_manage = $Nav->path_admin . $Nav->folder_prev . '/manage/' . $class_name::$page_manage;
+    $class_name::$page_new = $Nav->path_admin . $Nav->folder_prev . '/new/' . $class_name::$page_new;
+    $class_name::$page_edit = $Nav->path_admin . $Nav->folder_prev . '/edit/' . $class_name::$page_edit;
+    $class_name::$page_delete = $Nav->path_admin . $Nav->folder_prev . '/delete/' . $class_name::$page_delete;
 
+    $class_name1::$page_manage = $Nav->path_admin . $Nav->folder_prev . '/manage/' . $class_name1::$page_manage;
+    $class_name1::$page_new = $Nav->path_admin . $Nav->folder_prev . '/new/' . $class_name1::$page_new;
+    $class_name1::$page_edit = $Nav->path_admin . $Nav->folder_prev . '/edit/' . $class_name1::$page_edit;
+    $class_name1::$page_delete = $Nav->path_admin . $Nav->folder_prev . '/delete/' . $class_name1::$page_delete;
+
+    $class_name2::$page_manage = $Nav->path_admin . $Nav->folder_prev . '/manage/' . $class_name2::$page_manage;
+    $class_name2::$page_new = $Nav->path_admin . $Nav->folder_prev . '/new/' . $class_name2::$page_new;
+    $class_name2::$page_edit = $Nav->path_admin . $Nav->folder_prev . '/edit/' . $class_name2::$page_edit;
+    $class_name2::$page_delete = $Nav->path_admin . $Nav->folder_prev . '/delete/' . $class_name2::$page_delete;
+
+
+}
 
 //echo get_where_string($class_name);
 

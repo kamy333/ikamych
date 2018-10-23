@@ -214,7 +214,6 @@ if(request_is_post() && request_is_same_domain()) {
 
 if(request_is_get() && isset($_GET['id']) && $_GET['class_name']==='ToDoList' && $_GET['action']=='quickupdate'){
     ToDoList::quickupdate();
-
 }
 
 
@@ -289,11 +288,8 @@ if(User::is_visitor()){
 ?>
 
 
-<?php include_once ($Nav->path_public."inc".DS."profile.php")?>
-
-
-
-
+<?php include_once(SITE_ROOT . DS . $Nav->top_folder . DS . "inc" . DS . "profile_option.php") ?>
+<?php include_once(SITE_ROOT . DS . $Nav->top_folder . DS . "inc" . DS . "profile.php") ?>
 
 
 <?php

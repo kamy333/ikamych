@@ -79,17 +79,17 @@
 
                             <li class="divider"></li>
 
-                            <li><a href="judaisme.php">Judaisme</a></li>
-                            <li><a href="antisemitism_1.php">Antisemitism</a></li>
-                            <li><a href="antisionism.php">Antisionism 1</a></li>
-                            <li><a href="shoah.php">Shoah</a></li>
-                            <li><a href="jokes_quotes.php">Jokes Quotes</a></li>
-                            <li><a href="juif_arabe1.php">Juif Arabe</a></li>
-                            <li><a href="bhl.php">BHL</a></li>
-                            <li><a href="psychologie.php">Psychologie</a></li>
+                            <li><a href="_f/article/judaisme.php">Judaisme</a></li>
+                            <li><a href="_f/article/antisemitism_1.php">Antisemitism</a></li>
+                            <li><a href="_f/article/antisionism.php">Antisionism 1</a></li>
+                            <li><a href="_f/article/shoah.php">Shoah</a></li>
+                            <li><a href="_f/article/jokes_quotes.php">Jokes Quotes</a></li>
+                            <li><a href="_f/article/juif_arabe1.php">Juif Arabe</a></li>
+                            <li><a href="_f/article/bhl.php">BHL</a></li>
+                            <li><a href="_f/article/psychologie.php">Psychologie</a></li>
                             <li class="divider"></li>
-                            <li><a href="lesson_git.php">Git</a></li>
-                            <li><a href="lesson_OOP_PHP.php">OOP PHP</a></li>
+                            <li><a href="_f/IT/lesson_git.php">Git</a></li>
+                            <li><a href="_f/IT/lesson_OOP_PHP.php">OOP PHP</a></li>
 
 
                         </ul>

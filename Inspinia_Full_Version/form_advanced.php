@@ -1574,6 +1574,8 @@
                                 </a>
                             </div>
                         </div>
+
+
                         <div class="ibox-content">
                             <h4>
                                 Custom switch
@@ -1581,25 +1583,31 @@
                             <p>
                                 Pure CSS3 On/Off flipswitches with animated transitions.
                             </p>
-                            <div class="switch">
-                                <div class="onoffswitch">
-                                    <input type="checkbox" checked class="onoffswitch-checkbox" id="example1">
-                                    <label class="onoffswitch-label" for="example1">
-                                        <span class="onoffswitch-inner"></span>
-                                        <span class="onoffswitch-switch"></span>
-                                    </label>
+                            <form action="form_advanced.php" method="get">
+                                <div class="switch">
+                                    <div class="onoffswitch">
+                                        <input type="checkbox" name="chk1" checked class="onoffswitch-checkbox"
+                                               id="example1">
+                                        <label class="onoffswitch-label" for="example1">
+                                            <span class="onoffswitch-inner"></span>
+                                            <span class="onoffswitch-switch"></span>
+                                        </label>
+                                    </div>
                                 </div>
-                            </div>
 
-                            <div class="switch">
-                                <div class="onoffswitch">
-                                    <input type="checkbox" class="onoffswitch-checkbox" id="example2">
-                                    <label class="onoffswitch-label" for="example2">
-                                        <span class="onoffswitch-inner"></span>
-                                        <span class="onoffswitch-switch"></span>
-                                    </label>
+
+                                <div class="switch">
+                                    <div class="onoffswitch">
+                                        <input type="checkbox" name="chk2" class="onoffswitch-checkbox" id="example2">
+                                        <label class="onoffswitch-label" for="example2">
+                                            <span class="onoffswitch-inner"></span>
+                                            <span class="onoffswitch-switch"></span>
+                                        </label>
+                                    </div>
                                 </div>
-                            </div>
+                                <input type="submit" value="Submit">
+                            </form>
+
 
                         </div>
                     </div>

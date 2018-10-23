@@ -19,7 +19,12 @@ if(isset($_GET['class_name'])) {
 
 }
 
-
+if ($Nav->folder_immediate != "admin") {
+    $class_name::$page_manage = $Nav->path_admin . $Nav->folder_prev . '/manage/' . $class_name::$page_manage;
+    $class_name::$page_new = $Nav->path_admin . $Nav->folder_prev . '/new/' . $class_name::$page_new;
+    $class_name::$page_edit = $Nav->path_admin . $Nav->folder_prev . '/edit/' . $class_name::$page_edit;
+    $class_name::$page_delete = $Nav->path_admin . $Nav->folder_prev . '/delete/' . $class_name::$page_delete;
+}
 
 
 $query_string=remove_get(array('view','page',$class_name));

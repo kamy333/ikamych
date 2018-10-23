@@ -50,6 +50,11 @@
     <?php } unset($pages) ?>
 
 
+    <?php $pages = array('profile') ?>
+    <?php if (in_array($active_menu_clean, $pages)) { ?>
+        <link href="<?php echo $path; ?>css/plugins/switchery/switchery.css" rel="stylesheet">
+    <?php }
+    unset($pages) ?>
 
 
 

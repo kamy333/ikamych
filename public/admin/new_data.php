@@ -14,6 +14,13 @@ if(isset($_GET['class_name'])) {
     $class_name="ToDoList";
 }
 
+if ($Nav->folder_immediate != "admin") {
+    $class_name::$page_manage = $Nav->path_admin . $Nav->folder_prev . '/manage/' . $class_name::$page_manage;
+    $class_name::$page_new = $Nav->path_admin . $Nav->folder_prev . '/new/' . $class_name::$page_new;
+    $class_name::$page_edit = $Nav->path_admin . $Nav->folder_prev . '/edit/' . $class_name::$page_edit;
+    $class_name::$page_delete = $Nav->path_admin . $Nav->folder_prev . '/delete/' . $class_name::$page_delete;
+}
+
 if(isset($_GET['id'])){
     $post_link=$_SERVER["PHP_SELF"]."?id=".urldecode($_GET['id']&"class_name=".$class_name);
     $page="Update";
