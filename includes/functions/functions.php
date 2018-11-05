@@ -1,12 +1,14 @@
 <?php
-function redirect_to( $location = NULL ) {
+function redirect_to($location = NULL)
+{
     if ($location != NULL) {
         header("Location: {$location}");
         exit;
     }
 }
 
-function strip_zeros_from_date( $marked_string="" ) {
+function strip_zeros_from_date($marked_string = "")
+{
     // first remove the marked zeros
     $no_zeros = str_replace('*0', '', $marked_string);
     // then remove any remaining marks
@@ -15,36 +17,37 @@ function strip_zeros_from_date( $marked_string="" ) {
 }
 
 
-function output_message($message="",$type="error") {
-    if ($type=="ok" || $type=="OK" || $type=="o" || $type=="O"){
-        $alert="success";
-        $gliphicon="ok";
-        $txt="Warning";
+function output_message($message = "", $type = "error")
+{
+    if ($type == "ok" || $type == "OK" || $type == "o" || $type == "O") {
+        $alert = "success";
+        $gliphicon = "ok";
+        $txt = "Warning";
 
-    }elseif($type=="warning" || $type=="w" || $type=="W"){
-        $alert="warning";
-        $gliphicon="warning-sign";
-        $txt="Warning";
+    } elseif ($type == "warning" || $type == "w" || $type == "W") {
+        $alert = "warning";
+        $gliphicon = "warning-sign";
+        $txt = "Warning";
 
-    }elseif($type=="error" || $type=="e" || $type=="E"){
-        $alert="danger";
-        $gliphicon="exclamation-sign";
-        $txt="Error";
+    } elseif ($type == "error" || $type == "e" || $type == "E") {
+        $alert = "danger";
+        $gliphicon = "exclamation-sign";
+        $txt = "Error";
 
     } else {
-        $alert="danger";
-        $gliphicon="exclamation-sign";
-        $txt="Error";
+        $alert = "danger";
+        $gliphicon = "exclamation-sign";
+        $txt = "Error";
 
     }
 
     if (!empty($message)) {
         $output = "<div class=\"alert alert-{$alert} fade in\"  role='alert' >";
-        $output.="<a href='#' class='close' data-dismiss='alert'>&times;</a>";
-        $output.="<span class=\"glyphicon glyphicon-{$gliphicon}\" aria-hidden='true'></span>";
-        $output.="<span class=\"sr-only\">{$txt}:</span>";
+        $output .= "<a href='#' class='close' data-dismiss='alert'>&times;</a>";
+        $output .= "<span class=\"glyphicon glyphicon-{$gliphicon}\" aria-hidden='true'></span>";
+        $output .= "<span class=\"sr-only\">{$txt}:</span>";
 
-        $output .= " &nbsp;".htmlentities($message, ENT_COMPAT, 'utf-8');
+        $output .= " &nbsp;" . htmlentities($message, ENT_COMPAT, 'utf-8');
         $output .= "</div>";
 
         return $output;
@@ -53,34 +56,40 @@ function output_message($message="",$type="error") {
     }
 }
 
-function has_presence($value) {
+function has_presence($value)
+{
     $trimmed_value = trim($value);
     return isset($trimmed_value) && $trimmed_value !== "";
 }
 
-function __autoload($class_name) {
+function __autoload($class_name)
+{
     $class_name = strtolower($class_name);
-    $path = LIB_PATH.DS."{$class_name}.php";
-    if(file_exists($path)) {
+    $path = LIB_PATH . DS . "{$class_name}.php";
+    if (file_exists($path)) {
         require_once($path);
     } else {
         die("The file {$class_name}.php could not be found.");
     }
 }
 
-function include_layout_template($template="") {
-    include(SITE_ROOT.DS.'public'.DS.'layouts'.DS.$template);
+function include_layout_template($template = "")
+{
+    include(SITE_ROOT . DS . 'public' . DS . 'layouts' . DS . $template);
 }
 
-function log_action($action, $message="") {
-    $logfile = SITE_ROOT.DS.'logs'.DS.'log.txt';
+function log_action($action, $message = "")
+{
+    $logfile = SITE_ROOT . DS . 'logs' . DS . 'log.txt';
     $new = file_exists($logfile) ? false : true;
-    if($handle = fopen($logfile, 'a')) { // append
+    if ($handle = fopen($logfile, 'a')) { // append
         $timestamp = strftime("%Y-%m-%d %H:%M:%S", time());
         $content = "{$timestamp} | {$action}: {$message}\n";
         fwrite($handle, $content);
         fclose($handle);
-        if($new) { chmod($logfile, 0755); }
+        if ($new) {
+            chmod($logfile, 0755);
+        }
     } else {
         echo "Could not open log file for writing.";
     }
@@ -123,13 +132,15 @@ function log_views($action, $message = "")
 }
 
 
-function is_ajax_request() {
+function is_ajax_request()
+{
     return isset($_SERVER['HTTP_X_REQUESTED_WITH']) &&
         $_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest';
 }
 
 
-function datetime_to_text($datetime="") {
+function datetime_to_text($datetime = "")
+{
     $unix_datetime = strtotime($datetime);
     return strftime("%B %d, %Y at %I:%M %p", $unix_datetime);
 }
@@ -203,22 +214,25 @@ function hr_mn_to_text($time_sql, $semicolon = ":")
 
 }
 
-function date_to_text($date=""){
-    if(empty($date)){
-        $date=time();
+function date_to_text($date = "")
+{
+    if (empty($date)) {
+        $date = time();
     }
     $unix_datetime = strtotime($date);
     return strftime("%a %b %e, %Y ", $unix_datetime);
 
 }
 
-function datetime_to_text_day($datetime="") {
+function datetime_to_text_day($datetime = "")
+{
     $unix_datetime = strtotime($datetime);
     return strftime("%a %B %d, %Y at %I:%M %p", $unix_datetime);
 }
 
 
-function now(){
+function now()
+{
     return strftime("%B %d, %Y at %I:%M %p", time());
 }
 
@@ -232,7 +246,7 @@ function now_sql($date = false)
     if ($date == false) {
         $date = time();
     }
-    return strftime("%Y-%m-%d",time());
+    return strftime("%Y-%m-%d", time());
 }
 
 function now_time($s = false)
@@ -259,7 +273,7 @@ function unixToMySQL($timestamp)
     return date('Y-m-d H:i:s', $timestamp);
 }
 
-function dateDifference($date_1 , $date_2 , $differenceFormat = '%a' )
+function dateDifference($date_1, $date_2, $differenceFormat = '%a')
 {
     $datetime1 = date_create($date_1);
     $datetime2 = date_create($date_2);
@@ -270,55 +284,95 @@ function dateDifference($date_1 , $date_2 , $differenceFormat = '%a' )
 
 }
 
-function DateDifferenceFormat($date_1 , $date_2){
+function DateDifferenceFormat($date_1, $date_2)
+{
 
-    $day=(int) dateDifference($date_1 ,  $date_2 , "%a" );
-    $hour=(int) dateDifference($date_1 ,  $date_2 , "%h" );
-    $minute=(int) dateDifference($date_1 ,  $date_2 , "%i" );
-    $differenceFormat="%a";
-    $now=(boolean)false;
+    $day = (int)dateDifference($date_1, $date_2, "%a");
+    $hour = (int)dateDifference($date_1, $date_2, "%h");
+    $minute = (int)dateDifference($date_1, $date_2, "%i");
+    $differenceFormat = "%a";
+    $now = (boolean)false;
 
-    if($day<1){
-        if($hour==0) {
-            if($minute<2){$minutes="Minute";$now=true;} else {$minutes="Minutes";}
+    if ($day < 1) {
+        if ($hour == 0) {
+            if ($minute < 2) {
+                $minutes = "Minute";
+                $now = true;
+            } else {
+                $minutes = "Minutes";
+            }
             $differenceFormat = "%i $minutes ago";
 
 
-        }  else {
-            if($hour<2){$hours="Hour";} else {$hours="Hours";}
-            $differenceFormat="%h $hours ago";}
+        } else {
+            if ($hour < 2) {
+                $hours = "Hour";
+            } else {
+                $hours = "Hours";
+            }
+            $differenceFormat = "%h $hours ago";
+        }
 
-    }  else {
-        if($day>=1) {
-            if($day<2){$days="Day";} else {$days="Days";}
-            $differenceFormat="%a $days ago";
+    } else {
+        if ($day >= 1) {
+            if ($day < 2) {
+                $days = "Day";
+            } else {
+                $days = "Days";
+            }
+            $differenceFormat = "%a $days ago";
         }
 
 
     }
 
-    if($now){
+    if ($now) {
         return "&nbsp;Now";
     } else {
-        return  dateDifference($date_1 , $date_2 , $differenceFormat );
+        return dateDifference($date_1, $date_2, $differenceFormat);
 
     }
 }
 
-function mth_fr_name($month_name){
-    switch($month_name){
-        case "January":       return "janvier" ;    break;
-        case "February":      return "février" ;    break;
-        case "March":         return "mars" ;       break;
-        case "April":         return "avril" ;      break;
-        case "May":           return "mai";         break;
-        case "June":          return "juin";        break;
-        case "July":          return "juillet";     break;
-        case "August":        return "aôut";        break;
-        case "September":     return "septembre";   break;
-        case "October":       return "octobre";     break;
-        case "November":      return "novembre";    break;
-        case "December":      return "décembre";    break;
+function mth_fr_name($month_name)
+{
+    switch ($month_name) {
+        case "January":
+            return "janvier";
+            break;
+        case "February":
+            return "février";
+            break;
+        case "March":
+            return "mars";
+            break;
+        case "April":
+            return "avril";
+            break;
+        case "May":
+            return "mai";
+            break;
+        case "June":
+            return "juin";
+            break;
+        case "July":
+            return "juillet";
+            break;
+        case "August":
+            return "aôut";
+            break;
+        case "September":
+            return "septembre";
+            break;
+        case "October":
+            return "octobre";
+            break;
+        case "November":
+            return "novembre";
+            break;
+        case "December":
+            return "décembre";
+            break;
 
         default:
             return "ATTENTION ";
@@ -326,20 +380,45 @@ function mth_fr_name($month_name){
     }
 }
 
-function mth_fr_no($month_no){
-    switch($month_no){
-        case "01":       return "janvier" ;    break;
-        case "02":       return "février" ;    break;
-        case "03":       return "mars" ;       break;
-        case "04":       return "avril" ;      break;
-        case "05":       return "mai";         break;
-        case "06":       return "juin";        break;
-        case "07":       return "juillet";     break;
-        case "08":       return "août";        break;
-        case "09":       return "septembre";   break;
-        case "10":       return "octobre";     break;
-        case "11":       return "novembre";    break;
-        case "12":       return "décembre";    break;
+function mth_fr_no($month_no)
+{
+    switch ($month_no) {
+        case "01":
+            return "janvier";
+            break;
+        case "02":
+            return "février";
+            break;
+        case "03":
+            return "mars";
+            break;
+        case "04":
+            return "avril";
+            break;
+        case "05":
+            return "mai";
+            break;
+        case "06":
+            return "juin";
+            break;
+        case "07":
+            return "juillet";
+            break;
+        case "08":
+            return "août";
+            break;
+        case "09":
+            return "septembre";
+            break;
+        case "10":
+            return "octobre";
+            break;
+        case "11":
+            return "novembre";
+            break;
+        case "12":
+            return "décembre";
+            break;
 
         default:
             return "ATTENTION ";
@@ -347,16 +426,31 @@ function mth_fr_no($month_no){
     }
 }
 
-function day_eng( $numb=0){
+function day_eng($numb = 0)
+{
 
-    switch($numb){
-        case 1:            return "Monday";            break;
-        case 2:            return "Tuesday";           break;
-        case 3:            return "Wednesday";         break;
-        case 4:            return "Thursday";          break;
-        case 5:            return "Friday";            break;
-        case 6:            return "Saturday";          break;
-        case 0:            return "Sunday";            break;
+    switch ($numb) {
+        case 1:
+            return "Monday";
+            break;
+        case 2:
+            return "Tuesday";
+            break;
+        case 3:
+            return "Wednesday";
+            break;
+        case 4:
+            return "Thursday";
+            break;
+        case 5:
+            return "Friday";
+            break;
+        case 6:
+            return "Saturday";
+            break;
+        case 0:
+            return "Sunday";
+            break;
         default:
             return "ATTENTION Day english name CHIFFRE DOIT ETRE ENTRE 0-6";
             break;
@@ -366,16 +460,31 @@ function day_eng( $numb=0){
 
 }
 
-function day_fr( $numb=0){
+function day_fr($numb = 0)
+{
 
-    switch($numb){
-        case 1:    return "Lundi";         break;
-        case 2:    return "Mardi";         break;
-        case 3:    return "Mercredi";      break;
-        case 4:    return "Jeudi";         break;
-        case 5:    return "Vendredi";      break;
-        case 6:    return "Samedi";        break;
-        case 0:    return "Dimanche";      break;
+    switch ($numb) {
+        case 1:
+            return "Lundi";
+            break;
+        case 2:
+            return "Mardi";
+            break;
+        case 3:
+            return "Mercredi";
+            break;
+        case 4:
+            return "Jeudi";
+            break;
+        case 5:
+            return "Vendredi";
+            break;
+        case 6:
+            return "Samedi";
+            break;
+        case 0:
+            return "Dimanche";
+            break;
         default:
             return "ATTENTION CHIFFRE DOIT ETRE ENTRE 0-6";
             break;
@@ -385,15 +494,30 @@ function day_fr( $numb=0){
 
 }
 
-function day_eng_no($jour){
-    switch($jour){
-        case "Monday":       return 1 ;   break;
-        case "Tuesday":      return 2 ;   break;
-        case "Wednesday":    return 3 ;   break;
-        case "Thursday":     return 4 ;   break;
-        case "Friday":       return 5;    break;
-        case "Saturday":     return 6;    break;
-        case "Sunday":       return 0;    break;
+function day_eng_no($jour)
+{
+    switch ($jour) {
+        case "Monday":
+            return 1;
+            break;
+        case "Tuesday":
+            return 2;
+            break;
+        case "Wednesday":
+            return 3;
+            break;
+        case "Thursday":
+            return 4;
+            break;
+        case "Friday":
+            return 5;
+            break;
+        case "Saturday":
+            return 6;
+            break;
+        case "Sunday":
+            return 0;
+            break;
         default:
             return "ATTENTION day french CHIFFRE DOIT ETRE ENTRE 0-6";
             break;
@@ -402,15 +526,30 @@ function day_eng_no($jour){
 
 }
 
-function day_no($jour){
-    switch($jour){
-        case "Lundi":            return 1;       break;
-        case "Mardi":            return 2 ;      break;
-        case "Mercredi":         return 3;       break;
-        case "Jeudi":            return 4;       break;
-        case "Vendredi":         return 5;       break;
-        case "Samedi":           return 6;       break;
-        case "Dimanche":         return 0;       break;
+function day_no($jour)
+{
+    switch ($jour) {
+        case "Lundi":
+            return 1;
+            break;
+        case "Mardi":
+            return 2;
+            break;
+        case "Mercredi":
+            return 3;
+            break;
+        case "Jeudi":
+            return 4;
+            break;
+        case "Vendredi":
+            return 5;
+            break;
+        case "Samedi":
+            return 6;
+            break;
+        case "Dimanche":
+            return 0;
+            break;
         default:
             return "ATTENTION CHIFFRE DOIT ETRE ENTRE 0-6";
             break;
@@ -419,113 +558,121 @@ function day_no($jour){
 
 }
 
-function date_fr($str_time='now'){
+function date_fr($str_time = 'now')
+{
     $unix_time = strtotime($str_time);
-    $day_wk_no = day_eng_no(strftime("%A" ,$unix_time));
-    $nom_jour=day_fr($day_wk_no);
-    $nom_jour_short=substr($nom_jour, 0, 3);
+    $day_wk_no = day_eng_no(strftime("%A", $unix_time));
+    $nom_jour = day_fr($day_wk_no);
+    $nom_jour_short = substr($nom_jour, 0, 3);
 
-    $jour_no=strftime("*%d",$unix_time);
-    $jour_no= str_replace('*0','',$jour_no);
-    $jour_no= str_replace('*','',$jour_no);
+    $jour_no = strftime("*%d", $unix_time);
+    $jour_no = str_replace('*0', '', $jour_no);
+    $jour_no = str_replace('*', '', $jour_no);
 
-    $now_month=mth_fr_name(strftime("%B" ,$unix_time));
-    $now_month_short=substr($now_month, 0, 4);
-    $now_year= strftime("%Y" ,$unix_time);
-    $now_year_short=substr($now_year, 2, 2);
+    $now_month = mth_fr_name(strftime("%B", $unix_time));
+    $now_month_short = substr($now_month, 0, 4);
+    $now_year = strftime("%Y", $unix_time);
+    $now_year_short = substr($now_year, 2, 2);
 
-    $hour_minute=strftime("*%H:%M" ,$unix_time);
-    $hour_minute= str_replace('*0','',$hour_minute);
-    $hour_minute= str_replace('*','',$hour_minute);
+    $hour_minute = strftime("*%H:%M", $unix_time);
+    $hour_minute = str_replace('*0', '', $hour_minute);
+    $hour_minute = str_replace('*', '', $hour_minute);
 
-    $date_fr=h($jour_no.".".$now_month.".".$now_year);
-    $date_fr_short = h($nom_jour_short." ".$jour_no." ".$now_month_short." ".$now_year_short);
-    $date_fr_long=h($nom_jour." ".$jour_no." ".$now_month." ".$now_year);
+    $date_fr = h($jour_no . "." . $now_month . "." . $now_year);
+    $date_fr_short = h($nom_jour_short . " " . $jour_no . " " . $now_month_short . " " . $now_year_short);
+    $date_fr_long = h($nom_jour . " " . $jour_no . " " . $now_month . " " . $now_year);
 
-    $date_fr_hr=h($jour_no.".".$now_month.".".$now_year." - ".$hour_minute);
-    $date_fr_short_hr = $nom_jour_short." ".$jour_no." ".$now_month_short." ".$now_year_short." - ".$hour_minute;
-    $date_fr_long_hr=h($nom_jour." ".$jour_no." ".$now_month." ".$now_year." - ".$hour_minute);
-    $date_fr_full_hr=h($nom_jour." ".$jour_no." ".$now_month." ".$now_year." ".$hour_minute);
+    $date_fr_hr = h($jour_no . "." . $now_month . "." . $now_year . " - " . $hour_minute);
+    $date_fr_short_hr = $nom_jour_short . " " . $jour_no . " " . $now_month_short . " " . $now_year_short . " - " . $hour_minute;
+    $date_fr_long_hr = h($nom_jour . " " . $jour_no . " " . $now_month . " " . $now_year . " - " . $hour_minute);
+    $date_fr_full_hr = h($nom_jour . " " . $jour_no . " " . $now_month . " " . $now_year . " " . $hour_minute);
 
 
-    return array($date_fr,$date_fr_short,$date_fr_long,$date_fr_hr,$date_fr_short_hr,$date_fr_long_hr,$date_fr_full_hr);
+    return array($date_fr, $date_fr_short, $date_fr_long, $date_fr_hr, $date_fr_short_hr, $date_fr_long_hr, $date_fr_full_hr);
 
 //    list ($date_fr,$date_fr_short,$date_fr_long,$date_fr_hr,$date_fr_short_hr,$date_fr_long_hr,$date_fr_full_hr)= date_fr($date_sql);
 
 
 }
 
-function hs($string) {
+function hs($string)
+{
     return htmlspecialchars($string);
 }
 
 // Sanitize for JavaScript output
-function j($string) {
+function j($string)
+{
     return json_encode($string);
 }
 
 // Sanitize for use in a URL
-function u($string) {
+function u($string)
+{
     return urlencode($string);
 }
 
-function h($string){
-    return htmlentities($string,ENT_COMPAT,"utf-8");
+function h($string)
+{
+    return htmlentities($string, ENT_COMPAT, "utf-8");
 }
 
-function e($string){
+function e($string)
+{
     global $database;
 
-    return $database->escape_value($string) ;
+    return $database->escape_value($string);
 
 }
 
-function clean_query_string($text_qry_str){
-    if ( substr_count($text_qry_str, '?')>1){
+function clean_query_string($text_qry_str)
+{
+    if (substr_count($text_qry_str, '?') > 1) {
 
-        $occ=substr_count($text_qry_str, '?');
+        $occ = substr_count($text_qry_str, '?');
 //        echo "\n"."Number time ? ".$occ."\n";
-        $pos=(int) strpos($text_qry_str,'?');
+        $pos = (int)strpos($text_qry_str, '?');
 //        echo"position ".$pos."\n";
-        $qry_str_part1=substr($text_qry_str,0, $pos+1);
+        $qry_str_part1 = substr($text_qry_str, 0, $pos + 1);
 //        echo "\n";
-        $qry_str_part2=substr($text_qry_str, $pos+1);
+        $qry_str_part2 = substr($text_qry_str, $pos + 1);
 //        echo "\n";
-        $qry_str_part2=str_replace("&?", "&", $qry_str_part2,$count);
-        $qry_str_part2=str_replace("&&", "&", $qry_str_part2,$count);
-        $qry_str_part2=str_replace("??", "&", $qry_str_part2,$count);
-        $qry_str_part2=str_replace("?&", "&", $qry_str_part2,$count);
+        $qry_str_part2 = str_replace("&?", "&", $qry_str_part2, $count);
+        $qry_str_part2 = str_replace("&&", "&", $qry_str_part2, $count);
+        $qry_str_part2 = str_replace("??", "&", $qry_str_part2, $count);
+        $qry_str_part2 = str_replace("?&", "&", $qry_str_part2, $count);
 
 //        echo $text_qry_str; echo "\n";
-        $new_url= $qry_str_part1. str_replace("?", "&", $qry_str_part2,$count)."\n";
+        $new_url = $qry_str_part1 . str_replace("?", "&", $qry_str_part2, $count) . "\n";
 
         return $new_url;
-    }   else {
+    } else {
 
         return $text_qry_str;
     }
 }
 
-function remove_get($remove=array()){
+function remove_get($remove = array())
+{
 //var_dump($remove);
 //var_dump($_GET);
 
 //var_dump($class_name_exist);
 
-    $array=array();
+    $array = array();
 
-    if (isset($_GET)){
-        foreach($_GET as $key=>$val){
-            if(!in_array($key,$remove)){
-                $url_decode=urldecode($val);
-                $array[$key] =$url_decode  ;
+    if (isset($_GET)) {
+        foreach ($_GET as $key => $val) {
+            if (!in_array($key, $remove)) {
+                $url_decode = urldecode($val);
+                $array[$key] = $url_decode;
             }
         }
 
 //    var_dump($array);
 //   var_dump($_GET);
 
-        return "?".http_build_query($array)."&";
+        return "?" . http_build_query($array) . "&";
 
     } else {
 
@@ -534,61 +681,62 @@ function remove_get($remove=array()){
 
 }
 
-function get_where_string($class_name){
+function get_where_string($class_name)
+{
     //  global$class_name;
 
 
+    $where = "";
+    $where_query = null;
+    if (isset($_GET)) {
 
-    $where="";
-    $where_query=null;
-    if(isset($_GET)){
 
+        if (isset($_GET)) {
 
-        if(isset($_GET)){
+            if (!empty ($_GET['search_all'])) {
+                $j = 0;
 
-            if(!empty ($_GET['search_all'])  ){
-                $j=0;
-
-                foreach($class_name::get_table_field() as $col){
+                foreach ($class_name::get_table_field() as $col) {
                     $j++;
-                    $value=e (urldecode($_GET['search_all'])) ;
-                    $j==1? $where=" WHERE ":$where=" OR ";
-                    $where_query.=$where . $col." like '%".$value ."%'";
+                    $value = e(urldecode($_GET['search_all']));
+                    $j == 1 ? $where = " WHERE " : $where = " OR ";
+                    $where_query .= $where . $col . " like '%" . $value . "%'";
 
                 }
 
 
             } else {
-                $unique_get=array_unique($_GET);
-                $i=0;
-                foreach($unique_get as $key=>$val) {
-                    if(in_array($key,$class_name::get_table_field())){
+                $unique_get = array_unique($_GET);
+                $i = 0;
+                foreach ($unique_get as $key => $val) {
+                    if (in_array($key, $class_name::get_table_field())) {
 //                        echo "a $key -> $val <br>";
 
-                        if(in_array($key,$class_name::$fields_numeric)){
-                            $_num_val=(int)$val;
+                        if (in_array($key, $class_name::$fields_numeric)) {
+                            $_num_val = (int)$val;
 //                            echo "b {$key} -> {$val} <br>";
 
 
-                            if((!empty($val)) || $_num_val==0){
+                            if ((!empty($val)) || $_num_val == 0) {
 //                            echo " {$key} -> {$val} <br>";
 
                                 $i++;
 //                                var_dump($where);
-                                $i==1? $where=" WHERE ":$where=" AND ";
-                                $where_query.=$where . $key."=".e($_num_val)." ";}
+                                $i == 1 ? $where = " WHERE " : $where = " AND ";
+                                $where_query .= $where . $key . "=" . e($_num_val) . " ";
+                            }
                         } else {
-                            if(!empty($val)){
+                            if (!empty($val)) {
                                 $i++;
-                                $i==1? $where=" WHERE ":$where=" AND ";
-                                $where_query.=$where . $key."='".e($val)."' ";}
+                                $i == 1 ? $where = " WHERE " : $where = " AND ";
+                                $where_query .= $where . $key . "='" . e($val) . "' ";
+                            }
 
                         }
 
                     }
                 }
             }
-
 
 
         }
@@ -601,8 +749,9 @@ function get_where_string($class_name){
 
 }
 
-function validate_ip ($ip){
-    if(filter_var($ip,FILTER_VALIDATE_IP|FILTER_FLAG_IPV4 | FILTER_FLAG_NO_PRIV_RANGE|FILTER_FLAG_NO_RES_RANGE)===false){
+function validate_ip($ip)
+{
+    if (filter_var($ip, FILTER_VALIDATE_IP | FILTER_FLAG_IPV4 | FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE) === false) {
         return false;
     } else {
         return true;
@@ -611,8 +760,9 @@ function validate_ip ($ip){
 }
 
 // return first found
-function forwarded_ip(){
-    $keys=array(
+function forwarded_ip()
+{
+    $keys = array(
         'HTTP_X_FORWARDED_FOR',
         'HTTP_X_FORWARDED',
         'HTTP_FORWARDED_FOR',
@@ -621,11 +771,11 @@ function forwarded_ip(){
         'HTTP_X_CLUSTER_CLIENT_IP'
     );
     foreach ($keys as $key) {
-        if(isset($_SERVER[$key])){
-            $ip_array=explode(",",$_SERVER[$key]);
+        if (isset($_SERVER[$key])) {
+            $ip_array = explode(",", $_SERVER[$key]);
             foreach ($ip_array as $ip) {
-                $ip=trim($ip);
-                if(validate_ip($ip)){
+                $ip = trim($ip);
+                if (validate_ip($ip)) {
                     return $ip;
                 }
 
@@ -637,48 +787,48 @@ function forwarded_ip(){
 
 }
 
-function check_request(){
+function check_request()
+{
 
 //    echo $_POST['project_id'][0]."<br>";
 //    echo $_POST['project_id'][1]."<br>";
 //    echo array_count_values($_POST['project_id']);
 
 
-    if(request_is_post()  && $_POST){
-        echo "<p>POST Request Value</p>"."<br>";
+    if (request_is_post() && $_POST) {
+        echo "<p>POST Request Value</p>" . "<br>";
         echo "<pre>";
         print_r($_POST);
         echo "</pre>";
     }
 
-    if(request_is_get() && $_GET){
-        echo "<p>GET Request Value</p>"."<br>";
+    if (request_is_get() && $_GET) {
+        echo "<p>GET Request Value</p>" . "<br>";
         echo "<pre>";
         print_r($_GET);
         echo "</pre>";
     }
 
 
-
 }
 
-function get_picture_folder_blueimp_gallery($img_folder="",$title="",$default_path="public"){
+function get_picture_folder_blueimp_gallery($img_folder = "", $title = "", $default_path = "public")
+{
 //    global $folder_project_name;
     global $Nav;
 //    $dir=SITE_ROOT.DS.$default_path.DS."/img/".$img_folder;
     $dir = SITE_ROOT . DS . $Nav->top_folder . DS . "img/" . $img_folder;
 
 
-    $output="";
-    if(is_dir($dir)) {
+    $output = "";
+    if (is_dir($dir)) {
         $dir_array = scandir($dir);
-        foreach($dir_array as $file) {
-            if(stripos($file, '.') > 0) {
+        foreach ($dir_array as $file) {
+            if (stripos($file, '.') > 0) {
                 $ext = pathinfo($file, PATHINFO_EXTENSION);
-                if($ext=='jpg' || $ext=='JPG' || $ext=='png' || $ext=='PNG'){
+                if ($ext == 'jpg' || $ext == 'JPG' || $ext == 'png' || $ext == 'PNG') {
 //                    $output.= "<a href='img/$img_folder/{$file}' title=\"{$title}\" data-gallery=''><img src='img/$img_folder/{$file}' style='width: 10em;height: 10em' ></a>";
                     $output .= "<a href='/$default_path/img/$img_folder/{$file}' title=\"{$title}\" data-gallery=''><img src='/$default_path/img/$img_folder/{$file}' style='width: 10em;height: 10em' ></a>";
-
 
 
                 }
@@ -688,24 +838,26 @@ function get_picture_folder_blueimp_gallery($img_folder="",$title="",$default_pa
     return $output;
 }
 
-function get_picture_folder_bootstrap_gallery($img_folder="",$alt="image",$default_path="public",$caption=true){
+function get_picture_folder_bootstrap_gallery($img_folder = "", $alt = "image", $default_path = "public", $caption = true)
+{
 //    global $folder_project_name;
-    $dir=SITE_ROOT.DS.$default_path.DS."/img/".$img_folder;
+    $dir = SITE_ROOT . DS . $default_path . DS . "/img/" . $img_folder;
 
-    $output="";
-    if(is_dir($dir)) {
+    $output = "";
+    if (is_dir($dir)) {
         $dir_array = scandir($dir);
-        foreach($dir_array as $file) {
-            if(stripos($file, '.') > 0) {
+        foreach ($dir_array as $file) {
+            if (stripos($file, '.') > 0) {
                 $ext = pathinfo($file, PATHINFO_EXTENSION);
-                $file_no_ext= str_replace(".".$ext, "", $file);;
-                if($caption){
-                    $out_caption="<div class=\"carousel-caption\">{$file_no_ext}
+                $file_no_ext = str_replace("." . $ext, "", $file);;
+                if ($caption) {
+                    $out_caption = "<div class=\"carousel-caption\">{$file_no_ext}
                                 </div>";
                 } else {
-                    $out_caption="";}
-                if($ext=='jpg' || $ext=='JPG' || $ext=='png' || $ext=='PNG'){
-                    $output.= "<div class=\"item\">
+                    $out_caption = "";
+                }
+                if ($ext == 'jpg' || $ext == 'JPG' || $ext == 'png' || $ext == 'PNG') {
+                    $output .= "<div class=\"item\">
                                 <img alt=\"{$alt}\" class=\"img - responsive thum\"                                                            src='img/$img_folder/{$file}'>
                                 {$out_caption}
                                 </div>";
@@ -752,46 +904,46 @@ function get_mp3($img_folder = "", $title = "", $default_path = "public")
     return $output;
 }
 
-function get_picture_array($img_folder=""){
+function get_picture_array($img_folder = "")
+{
     global $Nav;
-    $default_path=$Nav->folder;
-    $dir=SITE_ROOT.DS.$default_path.DS."/img/".$img_folder;
+    $default_path = $Nav->folder;
+    $dir = SITE_ROOT . DS . $default_path . DS . "/img/" . $img_folder;
 
-    $picture_array=array();
+    $picture_array = array();
 //    $output="";
-    if(is_dir($dir)) {
+    if (is_dir($dir)) {
         $dir_array = scandir($dir);
-        foreach($dir_array as $file) {
-            if(stripos($file, '.') > 0) {
+        foreach ($dir_array as $file) {
+            if (stripos($file, '.') > 0) {
                 $ext = pathinfo($file, PATHINFO_EXTENSION);
                 $file_no_ext = str_replace("." . $ext, "", $file);
 
 
-                $alt=trim(substr($file_no_ext,3,100));
+                $alt = trim(substr($file_no_ext, 3, 100));
                 $alt = str_replace("_", " ", $alt);
                 $alt = ucfirst($alt);
 
 
-                if($ext=='jpg' || $ext=='JPG' || $ext=='png' || $ext=='PNG'){
+                if ($ext == 'jpg' || $ext == 'JPG' || $ext == 'png' || $ext == 'PNG') {
 
-                    $img_html="<img alt=\"{$file_no_ext}\" class=\"img-responsive\" src='img/$img_folder/{$file}' style='width: 30em;height: 20em' >";
+                    $img_html = "<img alt=\"{$file_no_ext}\" class=\"img-responsive\" src='img/$img_folder/{$file}' style='width: 30em;height: 20em' >";
 
-                    $img_src="<img src='img/$img_folder/{$file}' alt='{$alt}' class='img-responsive pull-left'> ";
+                    $img_src = "<img src='img/$img_folder/{$file}' alt='{$alt}' class='img-responsive pull-left'> ";
 
-                    $output=array(
-                        "img_tag"=>$img_html,
-                        'img_file'=>$file,
-                        "img_name"=>$file_no_ext,
-                        "img_ext"=>$ext,
-                        "img_folder"=>$Nav->folder,
-                        "img_path"=>$dir,
-                        "img_src"=>$img_src,
-                        "img_alt"=>$alt,
+                    $output = array(
+                        "img_tag" => $img_html,
+                        'img_file' => $file,
+                        "img_name" => $file_no_ext,
+                        "img_ext" => $ext,
+                        "img_folder" => $Nav->folder,
+                        "img_path" => $dir,
+                        "img_src" => $img_src,
+                        "img_alt" => $alt,
                     );
 
 
-
-                    array_push($picture_array,$output);
+                    array_push($picture_array, $output);
 
 
                 }
@@ -803,11 +955,12 @@ function get_picture_array($img_folder=""){
 
 }
 
-function blueimp_lightBoxGallery($content=""){
-    $output="";
-    $output.="<div class=\"lightBoxGallery\">";
-    $output.=$content;
-    $output.=" <div id=\"blueimp-gallery\" class=\"blueimp-gallery\">
+function blueimp_lightBoxGallery($content = "")
+{
+    $output = "";
+    $output .= "<div class=\"lightBoxGallery\">";
+    $output .= $content;
+    $output .= " <div id=\"blueimp-gallery\" class=\"blueimp-gallery\">
                             <div class=\"slides\"></div>
                             <h3 class=\"title\"></h3>
                             <a class=\"prev\">‹</a>
@@ -816,46 +969,50 @@ function blueimp_lightBoxGallery($content=""){
                             <a class=\"play-pause\"></a>
                             <ol class=\"indicator\"></ol>
                         </div>";
-    $output.="</div>";
+    $output .= "</div>";
 
     return $output;
 
 }
 
-function blueimp_wrapper($h2="",$content){
-    $output="";
-    $output.="<div class=\"row\">
+function blueimp_wrapper($h2 = "", $content)
+{
+    $output = "";
+    $output .= "<div class=\"row\">
                 <div class=\"ibox-content\">";
-    if($h2){
-        $output.="<h2>{$h2}</h2>";
+    if ($h2) {
+        $output .= "<h2>{$h2}</h2>";
     }
-    $output.=$content;
-    $output.="</div>";
+    $output .= $content;
+    $output .= "</div>";
 //    $output.="";
 
     return $output;
 }
 
-function get_gallery_array($no=1){
-    $pages=array();
-    if ($no===1) {
-        $pages=array(
-            'index'=>'Home',
-            'index_gallery6'=>'Bralia',
-            'index_gallery'=>'Desiree Wedding',
+function get_gallery_array($no = 1)
+{
+    $pages = array();
+    if ($no === 1) {
+        $pages = array(
+            'index' => 'Home',
+            'index_gallery6' => 'Bralia',
+            'index_gallery' => 'Desiree Wedding',
             'index_gallery10' => 'Samira Wedding',
-            'index_gallery2'=>'Family',
-            'index_gallery3'=>'Friends',
-            'index_gallery4'=>'myPage',
-            'index_gallery5'=>'Lycée Français de Jérusalem',
-            'index_gallery7'=>'Maman Bozorgue',
+            'index_gallery2' => 'Family',
+            'index_gallery3' => 'Friends',
+            'index_gallery4' => 'myPage',
+            'index_gallery5' => 'Lycée Français de Jérusalem',
+            'index_gallery7' => 'Maman Bozorgue',
             'index_gallery8' => 'Film',
             'index_gallery9' => 'Pablo Audio',
-            'index_gallery12' => 'Djamila'
+            'index_gallery12' => 'Djamila photo',
+            'index_gallery14' => 'Djamila objectif',
+            'index_gallery15' => 'Djamila helico',
         );
-    } elseif($no===2){
-        $pages=array(
-            'index'=>'Home',
+    } elseif ($no === 2) {
+        $pages = array(
+            'index' => 'Home',
         );
 
     }
@@ -864,50 +1021,57 @@ function get_gallery_array($no=1){
 
 }
 
-function gallery_menu_list($no=1){
+function gallery_menu_list($no = 1)
+{
     global $active_menu_clean;
     global $session;
     global $path_public;
 
-    $p=$active_menu_clean;
+    $p = $active_menu_clean;
 
 
-    $pages=get_gallery_array($no);
+    $pages = get_gallery_array($no);
 
-    $output="";
-    foreach ($pages as $page=>$pa){
-        if ($page===$p) { $class="active";} else { $class="";}
+    $output = "";
+    foreach ($pages as $page => $pa) {
+        if ($page === $p) {
+            $class = "active";
+        } else {
+            $class = "";
+        }
 
         if ($page == 'index_gallery6' && (User::is_bralia())) {
             $output .= "<li class='$class'><a  href=\"$path_public $page.php\">$pa</a></li>";
-        } elseif ($page == 'index_gallery12' && (User::is_djamila())) {
+        } elseif (($page == 'index_gallery12') && (User::is_djamila())) {
+            $output .= "<li class='$class'><a  href=\"$path_public $page.php\">$pa</a></li>";
+        } elseif (($page == 'index_gallery14') && (User::is_djamila())) {
             $output .= "<li class='$class'><a  href=\"$path_public $page.php\">$pa</a></li>";
         } elseif ($page == 'index_gallery9' && (User::is_admin())) {
             $output .= "<li class='$class'><a  href=\"$path_public $page.php\">$pa</a></li>";
-        } elseif($page=='index_gallery6'){
-            $output.="";
+        } elseif ($page == 'index_gallery6') {
+            $output .= "";
         } elseif ($page == 'index_gallery9') {
             $output .= "";
         } elseif ($page == 'index_gallery12') {
             $output .= "";
 
         } else {
-            $output.="<li class='$class'><a  href=\"$path_public $page.php\">$pa</a></li>";}
+            $output .= "<li class='$class'><a  href=\"$path_public $page.php\">$pa</a></li>";
+        }
 
     }
-
 
 
     return $output;
 
 
-
 }
 
-function gallery_button($no=1){
+function gallery_button($no = 1)
+{
     global $session;
 
-    $output="<div class=\"col-lg-2 col-md-2 col-md-offset-4\">
+    $output = "<div class=\"col-lg-2 col-md-2 col-md-offset-4\">
             <div class=\"text-center m-t-lg\">
         <div class=\"btn-group\" role=\"group\" aria-label=\"...\">
 <!--            <button type=\"button\" class=\"btn btn-default\">1</button>-->
@@ -920,11 +1084,11 @@ function gallery_button($no=1){
                 </button>
                 <ul class=\"dropdown-menu\">";
 
-    $output.=gallery_menu_list($no);
+    $output .= gallery_menu_list($no);
 
 // if( $session->user_id===28 || User::is_kamy()) {$output.="<li><a href=\"index_gallery6.php\">Bralia</a></li>"; }
 
-    $output.=" </ul>
+    $output .= " </ul>
             </div>
         </div>
             </div>
@@ -935,10 +1099,11 @@ function gallery_button($no=1){
 
 }
 
-function admin_button(){
+function admin_button()
+{
 
 
-    $output="<div class=\"col-lg-2 col-md-2 col-md-offset-4\">
+    $output = "<div class=\"col-lg-2 col-md-2 col-md-offset-4\">
             <div class=\"text-center m-t-lg\">
         <div class=\"btn-group\" role=\"group\" aria-label=\"...\">
 <!--            <button type=\"button\" class=\"btn btn-default\">1</button>-->
@@ -951,11 +1116,11 @@ function admin_button(){
                 </button>
                 <ul class=\"dropdown-menu\">
                     <li><a href=\"index.php\"><b>Admin</b></a></li>";
-    if(User::is_kamy()){
-        $output.="<li><a href=\"expense_loan.php\">Loan and House</a></li>";
+    if (User::is_kamy()) {
+        $output .= "<li><a href=\"expense_loan.php\">Loan and House</a></li>";
     }
 
-    $output.="                 <li><a href=\"minor.php\">Minor</a></li>
+    $output .= "                 <li><a href=\"minor.php\">Minor</a></li>
                     <li><a href=\"01_test.php\">test 01</a></li>
 
                 </ul>
@@ -1327,6 +1492,7 @@ function remove_accents($str, $utf8 = true)
         $str);
     return $str;
 }
+
 //- remove_accents()
 
 function ebook($link = "", $text = "", $id = 0, $source = "")
@@ -1399,7 +1565,81 @@ function get_ebooks($img_folder = "")
 
 }
 
+include SITE_ROOT . DS . 'vendor/mistic100/randomcolor/src/RandomColor.php';
 
+use \Colors\RandomColor;
+
+function article_by_sql($article_where_subject = 1, $color_palette = 12, $is_row = true)
+{
+
+
+    $articles = Article::find_by_sql("SELECT * FROM article WHERE subject_id='{$article_where_subject}' order by id DESC");
+    $output = "";
+    $output .= "<div class='row'>";
+    foreach ($articles as $article) {
+//        $my_num = array(1,2,3,4,5,6,7,8,9,10,11,12);
+//        shuffle($my_num);
+        $i = $color_palette; // $my_num[0]; using by default 12 light color but could use 12 other optioms in shuffle
+
+        switch ($i) {
+            case 0:
+                $my_color = RandomColor::many(36);
+                break;
+            case 1:
+                $my_color = RandomColor::many(18, array('hue' => 'red'));
+                break;
+            case 2:
+                $my_color = RandomColor::many(18, array('hue' => 'orange'));
+                break;
+            case 3:
+                $my_color = RandomColor::many(18, array('hue' => 'yellow'));
+                break;
+            case 4:
+                $my_color = RandomColor::many(18, array('hue' => 'green'));
+                break;
+            case 5:
+                $my_color = RandomColor::many(18, array('hue' => 'blue'));
+                break;
+            case 6:
+                $my_color = RandomColor::many(18, array('hue' => 'purple'));
+                break;
+            case 7:
+                $my_color = RandomColor::many(18, array('hue' => 'pink'));
+                break;
+            case 8:
+                $my_color = RandomColor::many(18, array('hue' => 'monochrome'));
+                break;
+            case 9:
+                $my_color = RandomColor::many(27, array('hue' => array('blue', 'yellow')));
+                break;
+            case 10:
+                $my_color = RandomColor::many(27, array('luminosity' => 'dark'));
+                break;
+            case 11:
+                $my_color = RandomColor::many(36, array('luminosity' => 'random', 'hue' => 'random'));
+                break;
+            case 12:
+                $my_color = RandomColor::many(27, array('luminosity' => 'light'));
+                break;
+
+            default:
+                $my_color = RandomColor::many(27, array('luminosity' => 'light'));
+
+        }
+        $output .= "<div class='col-lg-9 col-lg-offset-2' style='background-color: {$my_color[0]};margin-top: 2em;padding: 2em'>";
+        if (!empty($article->link)) {
+            $output .= "<h4  style='background-color:white}'><a target='_blank'  href='{$article->link}'>{$article->link_txt}</a></h4>";
+//            $output.="<br>";
+        }
+        if (trim($article->article !== "a")) {
+            $output .= $article->article;
+            $output .= "</div>";
+        }
+
+    }
+    $output .= "</div>";
+    return $output;
+}
 
 
 ?>

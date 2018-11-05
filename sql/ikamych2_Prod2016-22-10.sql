@@ -980,6 +980,22 @@ CREATE TABLE IF NOT EXISTS `links_category` (
 -- Dumping data for table `links_category`
 --
 
+CREATE TABLE IF NOT EXISTS `article_subject` (
+  `id`      INT(11)          NOT NULL AUTO_INCREMENT,
+  `subject` VARCHAR(50)      NOT NULL,
+  `rank`    INT(10) UNSIGNED NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `category` (`subject`)
+)
+  ENGINE = InnoDB
+  DEFAULT CHARSET = utf8
+  AUTO_INCREMENT = 1;
+
+--
+-- Dumping data for table `links_category`
+--
+
+
 INSERT INTO `links_category` (`id`, `category`, `rank`) VALUES
   (1, 'Others', 0),
   (2, 'PHP', 1),

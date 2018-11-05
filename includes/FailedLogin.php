@@ -17,10 +17,11 @@ class FailedLogin extends DatabaseObject {
     public static $page_edit = "edit_failed_logins.php";
     public static $page_delete = "delete_failed_logins.php";
     protected static $table_name = "failed_logins";
-    protected static $db_fields = array('id', 'username', 'login_attempt', 'last_time', 'ip', 'host', 'input_date');
-    protected static $db_fields_table_display_short = array('id', 'username', 'login_attempt', 'last_time', 'ip', 'host', 'input_date');
-    protected static $db_fields_table_display_full = array('id', 'username', 'login_attempt', 'last_time', 'ip', 'host', 'input_date');
-    protected static $db_field_exclude_table_display_sort = null;
+    protected static $db_field_exclude_table_display_sort = array('date');
+
+    protected static $db_fields = array('id', 'username', 'login_attempt', 'last_time', 'date', 'ip', 'host', 'input_date');
+    protected static $db_fields_table_display_short = array('id', 'username', 'login_attempt', 'last_time', 'date', 'ip', 'host', 'input_date');
+    protected static $db_fields_table_display_full = array('id', 'username', 'login_attempt', 'last_time', 'date', 'ip', 'host', 'input_date');
     protected static $form_properties= array(
         "username"=> array("type"=>"text",
             "name"=>'username',
@@ -132,14 +133,12 @@ class FailedLogin extends DatabaseObject {
     public $username;
     public $login_attempt;
     public $last_time;
+    public $date;
     public $ip;
     public $host;
     public $input_date;
 
    public function record_failed_login($username) {
-  //      $failed_login = find_one_in_fake_db('failed_logins', 'username', sql_prep($username));
-
-    //   if(!$username){$username=$_POST['username'];}
 
        $failed_login=self::find_by_username($username);
 
@@ -223,6 +222,12 @@ class FailedLogin extends DatabaseObject {
     protected function set_up_display()
     {
 //        $this->last_time=datetime_to_text_day($this->last_time);
+
+        $epoch = $this->last_time;
+        $dt = new DateTime("@$epoch");  // convert UNIX timestamp to PHP DateTime
+        $this->date = $dt->format('Y-m-d H:i:s'); // output = 2017-01-01 00:00:00
+
+
 
     }
 

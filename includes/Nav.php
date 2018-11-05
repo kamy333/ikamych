@@ -56,6 +56,9 @@ class SmartNav
                  'index_gallery7'=>'Maman Bozorgue',
                  'index_gallery8'=>'Film',
                  'index_gallery9' => 'Pablo Enregistrement',
+                 'index_gallery12' => 'Djam photo',
+                 'index_gallery14' => 'Djam objectif',
+                 'index_gallery15' => 'Djam helico',
              )
          ),
              "Admin_class"=>array(
@@ -338,10 +341,14 @@ $array_class=array();
         if ($page===$this->current_page) { $class="active";} else { $class="";}
 
 
+        if ($page == 'index_gallery6' && (User::is_bralia())) {
+            $output .= "<li class='$class'><a  href=\"{$path}{$the_page}\">$page_title</a></li>";
 
-        if ($page=='index_gallery6' && (User::is_bralia())){
-            $output.="<li class='$class'><a  href=\"{$path}{$the_page}\">$page_title</a></li>";
-        } elseif($page=='index_gallery8' &&$session->is_logged_in()){
+        } elseif (($page == 'index_gallery12' || $page == 'index_gallery14') && (User::is_djamila())) {
+            $output .= "<li class='$class'><a  href=\"{$path}{$the_page}\">$page_title</a></li>";
+
+
+        } elseif ($page == 'index_gallery8' && $session->is_logged_in()) {
             $output.="<li class='$class'><a  href=\"{$path}{$the_page}\">$page_title</a></li>";
 
         } elseif($page=='index_gallery6'|| $page=='index_gallery8' ){
@@ -527,82 +534,6 @@ public function format_menu_public($menu_name="Unknown",$class="")  {
     }
 
 
-    public function menu_item2($class = '', $text = "Missing text", $page = "class_manage.php", $area = 'admin', $target = false)
-    {
-//        the item is for the admin sidebar context but var context can point to public
-
-        $active="";
-
-
-        if($class){
-//            if(isset($_GET['class_name']) || isset($_GET['cl'])  ){
-
-            if (isset($_GET['class_name'])) {
-
-//                if(isset($_GET['cl'])) {
-//                    if (MyClasses::find_short_class($_GET['cl'])) {
-//                        $_GET['class_name'] = MyClasses::find_short_class($_GET['cl']);
-//                    } else {
-//                        $_GET['class_name'] = $_GET['cl'];
-//                    }
-//                }
-
-                $class_name=$_GET['class_name'];
-                if($class_name==$class && $page==$this->current_page_php ){$active= 'active';}
-
-
-            } else {
-                $class_name="";
-                if($class_name==$class && $page==$this->current_page_php ){$active= 'active';}
-
-            }
-
-        }else {
-            $class_name="";
-            if($class_name==$class && $page==$this->current_page_php ){$active= 'active';}
-
-        }
-
-
-        if($area==='admin'){
-            $path=$this->path_admin;
-        }elseif($area==='public'){
-            $path=$this->path_public;} else{$path="";}
-
-
-        $output = "";
-        $output .= "<li class='{$active}'>";
-
-
-        $output .= "<a href='";
-        $output .= $path.$page;
-        if($class){
-            $output .= "?class_name=" . $class;
-        }
-        $output .= "'";
-
-        if($target){
-            $output.=" target=\"_blank\" ";
-        }
-
-        $output .= ">";
-        $output .= $text;
-        $output .= "</a>";
-
-
-        $output .= "</li>";
-
-        //The below is not working
-//        if($class){
-//            $output.="<span class='label label-default pull-right'>";
-//            $output.="<a  href='{$this->path_admin}class_edit.php?class_name=$class'>N</a></span>";
-//        }
-
-
-        return $output;
-
-
-    }
 
 
 }

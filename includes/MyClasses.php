@@ -11,7 +11,7 @@ class MyClasses
 
     public static $all_class = array(
         'HeurePresence', 'Note', 'ToDoList', 'Message', 'Chat', 'ChatFriend', 'Notification',
-        'User', 'UserType', 'Article',
+        'User', 'UserType', 'Article', 'ArticleSubject',
         'Links', 'LinksCategory', 'Category1', 'Category2',
         'Project', 'Client', 'InvoiceActual', 'Category', 'InvoiceEstimate', 'Currency',
         'MyCigarette',

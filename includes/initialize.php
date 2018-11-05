@@ -175,6 +175,7 @@ require_once(LIB_PATH . DS . 'ChatFriendDjamila.php');
 
 require_once(LIB_PATH . DS . 'Notification.php');
 require_once(LIB_PATH . DS . 'Article.php');
+require_once(LIB_PATH . DS . 'ArticleSubject.php');
 
 require_once(LIB_PATH . DS . 'Photo.php');
 require_once(LIB_PATH . DS . 'Comment.php');

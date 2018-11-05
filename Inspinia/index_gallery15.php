@@ -14,65 +14,72 @@
 ?>
 
 <?php echo gallery_button(); ?>
-    <h1>Photo</h1>
+
+    <h1>Helicopter</h1>
 
     <div class="wrapper wrapper-content">
 
+        <div class="row">
+
+            <a href="http://passeportpourlemploi.com/entreprendre/Vid0807-faire-naitre-son-idee" class="">passeportpourlemploi.com/entreprendre/Vid0807-faire-naitre-son-idee</a>
+
+        </div>
 
         <div class="row">
 
 
-        <div class="col-lg-12">
-            <div class="ibox float-e-margins">
+            <div class="col-lg-12">
+                <div class="ibox float-e-margins">
+
+                    <div class="ibox-content">
+
+                        <h2>
+                            <!--                            <button class="btn btn-danger  dim btn-large-dim" type="button"><i class="fa fa-heart"></i></button>-->
+                            With Djamila :)<span class="pull-right"> <a href="index.php"
+                                                                        class="btn btn-primary">back Home</a></span>
+                        </h2>
+                        <blockquote></blockquote>
+
+
+                        <?php
+                        $h2 = "Anniversaire Djamila 2-2-2018";
+                        $fol = "Djamila/2018_02_02";
+                        echo blueimp_wrapper($h2, blueimp_lightBoxGallery(get_picture_folder_blueimp_gallery($fol, $h2, $folder_project_name))); ?>
+
+                    </div>
+                </div>
+                <div class="ibox-content">
+                    <?php $h2 = "Djamila Kamran 23-02-2018";
+                    $fol = "Djamila/2018_02_23";
+
+                    echo blueimp_wrapper($h2, blueimp_lightBoxGallery(get_picture_folder_blueimp_gallery($fol, $h2, $folder_project_name))); ?>
+                </div>
 
                 <div class="ibox-content">
+                    <?php $h2 = "Djamila saut parachute 24-04-2018";
+                    $fol = "Djamila/2018_04_24";
 
-                    <h2>
-                        <!--                            <button class="btn btn-danger  dim btn-large-dim" type="button"><i class="fa fa-heart"></i></button>-->
-                        With Djamila :)<span class="pull-right"> <a href="index.php"
-                                                                    class="btn btn-primary">back Home</a></span></h2>
-                    <blockquote></blockquote>
-
-
-                    <?php
-                    $h2 = "Anniversaire Djamila 2-2-2018";
-                    $fol = "Djamila/2018_02_02";
                     echo blueimp_wrapper($h2, blueimp_lightBoxGallery(get_picture_folder_blueimp_gallery($fol, $h2, $folder_project_name))); ?>
-
                 </div>
-            </div>
-            <div class="ibox-content">
-                <?php $h2 = "Djamila Kamran 23-02-2018";
-                $fol = "Djamila/2018_02_23";
 
-                echo blueimp_wrapper($h2, blueimp_lightBoxGallery(get_picture_folder_blueimp_gallery($fol, $h2, $folder_project_name))); ?>
-            </div>
+                <div class="ibox-content">
+                    <?php $h2 = "Djamila Chaussure 17-06-2018";
+                    $fol = "Djamila/2018_06_17";
 
-            <div class="ibox-content">
-                <?php $h2 = "Djamila saut parachute 24-04-2018";
-                $fol = "Djamila/2018_04_24";
+                    echo blueimp_wrapper($h2, blueimp_lightBoxGallery(get_picture_folder_blueimp_gallery($fol, $h2, $folder_project_name)));
+                    $h2 = ""; ?>
+                </div>
 
-                echo blueimp_wrapper($h2, blueimp_lightBoxGallery(get_picture_folder_blueimp_gallery($fol, $h2, $folder_project_name))); ?>
-            </div>
+                <div class="ibox-content">
+                    <?php $h2 = "Djamila Hélico 09-10-2018";
+                    $fol = "Djamila/2018_10_09";
 
-            <div class="ibox-content">
-                <?php $h2 = "Djamila Chaussure 17-06-2018";
-                $fol = "Djamila/2018_06_17";
-
-                echo blueimp_wrapper($h2, blueimp_lightBoxGallery(get_picture_folder_blueimp_gallery($fol, $h2, $folder_project_name)));
-                $h2 = ""; ?>
-            </div>
-
-            <div class="ibox-content">
-                <?php $h2 = "Djamila Hélico 09-10-2018";
-                $fol = "Djamila/2018_10_09";
-
-                echo blueimp_wrapper($h2, blueimp_lightBoxGallery(get_picture_folder_blueimp_gallery($fol, $h2, $folder_project_name)));
-                $h2 = ""; ?>
-            </div>
+                    echo blueimp_wrapper($h2, blueimp_lightBoxGallery(get_picture_folder_blueimp_gallery($fol, $h2, $folder_project_name)));
+                    $h2 = ""; ?>
+                </div>
 
 
-            <?php
+                <?php
 
 
                 function DjamilaComment($comments_array = array(), $img_folder = 'public')

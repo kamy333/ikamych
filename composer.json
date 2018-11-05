@@ -4,6 +4,7 @@
       "nesbot/carbon": "~1.21",
       "jenssegers/date": "^3.2",
       "jimmiw/php-time-ago": "^2.0",
-      "google/apiclient": "^2.0"
+      "google/apiclient": "^2.0",
+      "mistic100/randomcolor": "1.0.4"
     }
 }
