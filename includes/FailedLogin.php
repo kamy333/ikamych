@@ -19,7 +19,7 @@ class FailedLogin extends DatabaseObject {
     protected static $table_name = "failed_logins";
     protected static $db_field_exclude_table_display_sort = array('date');
 
-    protected static $db_fields = array('id', 'username', 'login_attempt', 'last_time', 'date', 'ip', 'host', 'input_date');
+    protected static $db_fields = array('id', 'username', 'login_attempt', 'last_time', 'ip', 'host', 'input_date');
     protected static $db_fields_table_display_short = array('id', 'username', 'login_attempt', 'last_time', 'date', 'ip', 'host', 'input_date');
     protected static $db_fields_table_display_full = array('id', 'username', 'login_attempt', 'last_time', 'date', 'ip', 'host', 'input_date');
     protected static $form_properties= array(
