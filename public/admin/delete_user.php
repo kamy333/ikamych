@@ -11,6 +11,8 @@ if ($Nav->folder_immediate != "admin") {
     $class_name::$page_delete = $Nav->path_admin . $Nav->folder_prev . '/delete/' . $class_name::$page_delete;
 } ?>
 
+// ajax doesn't work with no password update
+
 <?php
 $class_name::$page_manage = "/public/admin/manage_user.php";
 $class_name::$page_new = "/public/admin/new_user.php";
