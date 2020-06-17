@@ -113,6 +113,9 @@ if ($layout_context == "public") {
                         <?php
                         if (User::is_admin()) {
                             echo "<li class=\"divider\"></li>";
+                            echo $Nav->menu_item('', 'JB Video', 'web_jb_02/jb_request_02.html', 'public');
+
+                            echo "<li class=\"divider\"></li>";
                             echo $Nav->menu_item('', 'AngularJS Login', 'angular2.php', 'public');
                             echo "<li class=\"divider\"></li>";
                             echo $Nav->menu_item('', 'Inspinia', '../inspinia/index.php', 'public');
@@ -155,10 +158,18 @@ if ($layout_context == "public") {
 
                     <ul class="dropdown-menu">
 
+                        <?php if (User::is_admin() || User::is_employee()) { ?>
 
-                        <li><a href="<?php echo $path_public; ?>_f/_transmed/transmed_form.php">Transmed_form</a></li>
-                        <li><a href="<?php echo $path_public; ?>_f/_transmed/transmed_form2.php">Transmed_form2</a></li>
+                            <li><a href="<?php echo $path_public; ?>_f/_transmed/transmed_form.php">Transmed_form</a>
+                            </li>
+                            <li><a href="<?php echo $path_public; ?>_f/_transmed/transmed_form2.php">Transmed_form2</a>
+                            </li>
+                            <li><a href="<?php echo $path_public; ?>_f/_transmed/transmed_form3.php">Transmed_form3</a>
+                            </li>
+                            <li><a href="<?php echo $path_public; ?>_f/_transmed/transmed_form4.php">Transmed_form4</a>
+                            </li>
 
+                        <?php } ?>
 
                         <li class="divider"></li>
                         <li><a href="<?php echo $path_public; ?>_f/_bralia/braliacuba.php">Voyage Bralia Cuba
@@ -173,6 +184,7 @@ if ($layout_context == "public") {
                                 Budapest</a></li>
 
                         <li class="divider"></li>
+                        <li><a href="<?php echo $path_public; ?>_f/article/articles.php">Articles</a></li>
                         <li><a href="<?php echo $path_public; ?>_f/article/jokes_quotes.php">Jokes Quotes</a></li>
                         <li><a href="<?php echo $path_public; ?>_f/article/judaisme.php">Judaisme</a></li>
                         <li><a href="<?php echo $path_public; ?>_f/article/juif_iran.php">Juifs d'Iran</a></li>
@@ -181,6 +193,7 @@ if ($layout_context == "public") {
                         <li><a href="<?php echo $path_public; ?>_f/article/shoah.php">Shoah</a></li>
                         <li><a href="<?php echo $path_public; ?>_f/article/juif_arabe1.php">Juifs Arabe</a></li>
                         <li><a href="<?php echo $path_public; ?>_f/article/bhl.php">BHL</a></li>
+                        <li><a href="<?php echo $path_public; ?>_f/article/handicap.php">Handicap</a></li>
                         <li><a href="<?php echo $path_public; ?>_f/article/psychologie.php">Psychologie</a></li>
                         <li class="divider"></li>
                         <li><a href="<?php echo $path_public; ?>_f/IT/programmingbooks2.php">Programming books2</a></li>
@@ -249,13 +262,11 @@ if ($layout_context == "public") {
                             } ?>
                             <li class="divider"></li>
                             <?php echo $Nav->menu_item('Article', 'Article', 'manage_ajax.php', 'admin/crud/ajax'); ?>
+                            <?php echo $Nav->menu_item('Book', 'Book', 'manage_ajax.php', 'admin/crud/ajax'); ?>
                             <?php echo $Nav->menu_item('ToDoList', 'To Do List', 'manage_ajax.php', 'admin/crud/ajax'); ?>
                             <?php echo $Nav->menu_item('Chat', 'Chat', 'manage_ajax.php', 'admin/crud/ajax'); ?>
                             <?php echo $Nav->menu_item('ChatFriend', 'Chat Friend', 'manage_ajax.php', 'admin/crud/ajax'); ?>
 
-                            <!--                --><?php //echo $Nav->menu_item('','To Do List','manage_ToDoList.php','admin'); ?>
-                            <!--                --><?php //echo $Nav->menu_item('','Chat','manage_chat.php','admin'); ?>
-                            <!--                --><?php //echo $Nav->menu_item('','Chat Friend','manage_ChatFriend.php','admin'); ?>
                             <?php echo "<li class=\"divider\"></li>"; ?>
                             <?php echo $Nav->menu_item('MyHouseExpense', 'House Expense', 'manage_ajax.php', 'admin/crud/ajax'); ?>
                             <?php echo $Nav->menu_item('MyExpense', 'Expense', 'manage_ajax.php', 'admin/crud/ajax'); ?>
@@ -263,29 +274,20 @@ if ($layout_context == "public") {
                             <?php echo $Nav->menu_item('MyExpenseType', 'Expense Type', 'manage_ajax.php', 'admin/crud/ajax'); ?>
                             <?php echo $Nav->menu_item('MyHouseExpenseType', 'House Expense Type', 'manage_ajax.php', 'admin/crud/ajax'); ?>
                             <?php echo $Nav->menu_item('Currency', 'Currency', 'manage_ajax.php', 'admin/crud/ajax'); ?>
-                            <!--                --><?php //echo $Nav->menu_item('','House Expense','manage_MyHouseExpense.php','admin'); ?>
-                            <!--                --><?php //echo $Nav->menu_item('','Expense','manage_MyExpense.php','admin'); ?>
-                            <!--                --><?php //echo $Nav->menu_item('','Expense Person','manage_MyExpensePerson.php','admin'); ?>
-                            <!--                --><?php //echo $Nav->menu_item('','Expense Type','manage_MyExpenseType.php','admin'); ?>
-                            <!--                --><?php //echo $Nav->menu_item('','House Expense Type','manage_MyHouseExpenseType.php','admin'); ?>
-                            <!--                --><?php //echo $Nav->menu_item('','Currency','manage_currency.php','admin'); ?>
+
                             <?php echo "<li class=\"divider\"></li>"; ?>
-                            <!--                --><?php //echo $Nav->menu_item('','Clients','manage_clients.php','admin'); ?>
-                            <!--                --><?php //echo $Nav->menu_item('','Projects','manage_projects.php','admin'); ?>
-                            <!--                --><?php //echo $Nav->menu_item('','Category','manage_category.php','admin'); ?>
-                            <!--                --><?php //echo $Nav->menu_item('','Category 1','manage_category_1.php','admin'); ?>
-                            <!--                --><?php //echo $Nav->menu_item('','Category 2','manage_category_2.php','admin'); ?>
-                            <!--                --><?php //echo $Nav->menu_item('','Invoice Actual','manage_invoice_actual.php','admin'); ?>
-                            <!--                --><?php //echo "<li class=\"divider\"></li>"; ?>
-                            <?php echo $Nav->menu_item('User', 'User', 'manage_ajax.php', 'admin/crud/ajax'); ?>
-                            <!--                --><?php //echo $Nav->menu_item('','Users','manage_user.php','admin'); ?>
+
+                            <?php
+                            echo "<li><a href='/public/admin/manage_user.php'>User old</a></li>"
+                            ?>
+
+                            <?php echo $Nav->menu_item('User', 'User Ajax', 'manage_ajax.php', 'admin/crud/ajax'); ?>
                             <?php echo "<li class=\"divider\">Links</li>"; ?>
                             <?php echo $Nav->menu_item('Links', 'Links', 'manage_ajax.php', 'admin/crud/ajax'); ?>
                             <?php echo $Nav->menu_item('LinksCategory', 'Links Category', 'manage_ajax.php', 'admin/crud/ajax'); ?>
-                            <!--                --><?php //echo $Nav->menu_item('', 'Links', 'manage_links.php', 'admin'); ?>
-                            <!--                --><?php //echo $Nav->menu_item('','Links Category','manage_links_category.php','admin'); ?>
+
                             <?php echo "<li class=\"divider\"></li>"; ?>
-                            <!--                --><?php //echo $Nav->menu_item('','Invoice Send','manage_invoice_send.php','admin'); ?>
+
 
 
                             <?php if (isset($session->user_id) and $user->is_admin()) { ?>
@@ -311,6 +313,7 @@ if ($layout_context == "public") {
                         <ul class="dropdown-menu">
 
                             <?php echo $Nav->menu_item('Article', 'Article', 'new_ajax.php', 'admin/crud/ajax'); ?>
+                            <?php echo $Nav->menu_item('Book', 'Book', 'new_ajax.php', 'admin/crud/ajax'); ?>
                             <?php echo $Nav->menu_item('ToDoList', 'To Do List', 'new_ajax.php', 'admin/crud/ajax'); ?>
                             <?php echo $Nav->menu_item('Chat', 'Chat', 'new_ajax.php', 'admin/crud/ajax'); ?>
                             <?php echo $Nav->menu_item('ChatFriend', 'Chat Friend', 'new_ajax.php', 'admin/crud/ajax'); ?>
@@ -353,14 +356,14 @@ if ($layout_context == "public") {
                             <ul class="dropdown-menu">
 
 
-                                <?php echo $Nav->menu_item('', 'Photos', 'manage_photos.php') ?>
-                                <?php echo $Nav->menu_item('', 'Comments', 'manage_comments.php') ?>
-                                <?php echo $Nav->menu_item('', 'Comment Photo', 'manage_comments_photo.php') ?>
+                                <?php echo $Nav->menu_item('', 'Photos', 'manage_photos.php', 'admin/wkg_progress') ?>
+                                <?php echo $Nav->menu_item('', 'Comments', 'manage_comments.php', 'admin/wkg_progress') ?>
+                                <?php echo $Nav->menu_item('', 'Comment Photo', 'manage_comments_photo.php', 'admin/wkg_progress') ?>
 
                                 <?php echo "<li class=\"divider\"></li>"; ?>
 
-                                <?php echo $Nav->menu_item('', 'New Comment old', 'new_Comment_old.php') ?>
-                                <?php echo $Nav->menu_item('', 'New Photo', 'new_photo.php') ?>
+                                <?php echo $Nav->menu_item('', 'New Comment old', 'new_Comment_old.php', 'admin/wkg_progress') ?>
+                                <?php echo $Nav->menu_item('', 'New Photo', 'new_photo.php', 'admin/wkg_progress') ?>
 
                                 <?php echo "<li class=\"divider\"></li>"; ?>
                                 <?php echo $Nav->menu_item('', 'Public Photo', 'photo.php', "public") ?>
@@ -368,10 +371,10 @@ if ($layout_context == "public") {
 
 
                                 <?php echo "<li class=\"divider\"></li>"; ?>
-                                <?php echo $Nav->menu_item('', 'Photos Old', 'Manage_Photo.php') ?>
-                                <?php echo $Nav->menu_item('', 'Comments del?', 'manage_Comment.php') ?>
-                                <?php echo $Nav->menu_item('', 'Comment Old ', 'manage_Comment_old.php') ?>
-                                <?php echo $Nav->menu_item('', 'New Photo_old', 'new_photo_old.php') ?>
+                                <?php echo $Nav->menu_item('', 'Photos Old', 'Manage_Photo.php', 'admin/wkg_progress') ?>
+                                <?php echo $Nav->menu_item('', 'Comments del?', 'manage_Comment.php', 'admin/wkg_progress') ?>
+                                <?php echo $Nav->menu_item('', 'Comment Old ', 'manage_Comment_old.php', 'admin/wkg_progress') ?>
+                                <?php echo $Nav->menu_item('', 'New Photo_old', 'new_photo_old.php', 'admin/wkg_progress') ?>
 
 
                             </ul>
@@ -432,14 +435,15 @@ if ($layout_context == "public") {
                         <ul class="dropdown-menu">
 
                             <?php if (isset($_SESSION["user_id"]) and $user->is_admin()) { ?>
+                                <li><a href="<?php echo $path_admin; ?>index.php">Index Admin</a></li>
                                 <li><a href="<?php echo $path_admin; ?>profile.php">Profile</a></li>
                                 <li><a href="<?php echo $path_admin; ?>upload.php">Upload file photo</a></li>
                                 <li class="divider"></li>
-                                <li><a href="<?php echo $path_admin; ?>manage_blacklist_ip.php">Manage Blacklist_ip</a>
-                                </li>
-                                <li><a href="<?php echo $path_admin; ?>manage_failed_logins.php">Manage Failed
-                                        logins</a></li>
-                                <li><a href="<?php echo $path_admin; ?>manage_user_type.php">Manage User Type</a></li>
+
+                                <?php echo $Nav->menu_item('FailedLogin', 'Manage Failed Login', 'manage_ajax.php', 'admin/crud/ajax'); ?>
+                                <?php echo $Nav->menu_item('BlacklistIp', 'Manage Blacklist Ip', 'manage_ajax.php', 'admin/crud/ajax'); ?>
+                                <?php echo $Nav->menu_item('UserType', 'Manage User Type', 'manage_ajax.php', 'admin/crud/ajax'); ?>
+
                                 <li><a href="<?php echo $path_admin; ?>logfile.php">Log File</a></li>
                                 <?php echo $Nav->menu_item('', 'Log Views File', 'logfileviews.php', 'admin'); ?>
                                 <?php echo $Nav->menu_item('', 'Log Debug File', 'logfileDebug.php', 'admin'); ?>
@@ -507,15 +511,21 @@ if ($layout_context == "public") {
                         </button>
                         <ul class="dropdown-menu" role="menu">
 
-                            <li><a href="<?php echo $path_admin; ?>0_test_validation.php">0_test_validation</a></li>
-                            <li><a href="<?php echo $path_admin; ?>0_modele.php?cl=ViewModelByChauffeur">0_modele</a>
-                            </li>
-                            <li><a href="<?php echo $path_admin; ?>0_forms.php">0_forms</a></li>
-                            <li><a href="<?php echo $path_admin; ?>0_forms_from_class.php">0_forms_from_class</a></li>
-                            <li><a href="<?php echo $path_admin; ?>0_modele4.php">0_modele4</a></li>
-                            <li><a href="<?php echo $path_admin; ?>login.php">login</a></li>
+
+                            <?php
+                            for ($i = 1; $i <= 10; $i++) {
+                                if ($i == 3) {
+                                    continue;
+                                }
+                                $i < 10 ? $x = "0{$i}" : $x = $i;
+                                echo $Nav->menu_item('', "test{$x}", "test{$x}.php", 'admin/test');
+                            }
+                            ?>
+                            <?php echo $Nav->menu_item('', 'test03', 'test03.php?cl=ViewModelByChauffeur', 'admin/test'); ?>
 
                             <li class="divider"></li>
+                            <li><a href="<?php echo $path_admin; ?>login.php">login</a></li>
+
 
                         </ul>
                     </div>

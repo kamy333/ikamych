@@ -225,25 +225,27 @@
         </div>
     </div>
 
-<?php $nom_modal_id="kamran_nafisspour"; $nom_employee="Kamran Nafisspour" ;?>
+<?php $nom_modal_id = "kamran_nafisspour";
+$nom_employee = "Kamran Nafisspour"; ?>
 
-    <div id="<?php echo $nom_modal_id ?>" class="modal fade" tabindex="-1">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close glyphicon glyphicon-remove" data-dismiss="modal"></button>
-                    <h3 class="modal-title"><?php echo $nom_employee ?></h3>
-                </div>
-                <div class="modal-body">
-                    <p><img src="img/kamy.JPG" style="width: 40%;height: 40%;" alt="<?php echo $nom_employee ;?>" class="img-responsive pull-left ">Kamran or Kamy is a client and friend for more than 10 years. He is struck with a genetic diseases named Inclusion Body Myositis. He always been active and works in a bank as a Director and is a certified public accountant but also have good knowledge of productivity tools like Microsoft Excel or Access.  Two years ago an invoicing system in Microsoft Access which I use now</p>
-                    <p>Last year he started to learn web related technology and he designed this website but also an enterprise system for transport company were planning online, travel are recorded by each driver and used to invoice clients. </p>
-                </div>
-                <div class="modal-footer">
-                    <button class="btn btn-primary" data-dismiss="modal">Close</button>
-                </div>
+<div id="<?php echo $nom_modal_id ?>" class="modal fade" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close glyphicon glyphicon-remove" data-dismiss="modal"></button>
+                <h3 class="modal-title"><?php echo $nom_employee ?></h3>
+            </div>
+            <div class="modal-body">
+                <p><img src="img/kamy.JPG" style="width: 40%;height: 40%;" alt="<?php echo $nom_employee; ?>"
+                        class="img-responsive pull-left "></p>
+
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" data-dismiss="modal">Close</button>
             </div>
         </div>
     </div>
+</div>
 
 <div class="container-fluid">
     <?php include(SITE_ROOT.DS.'public'.DS.'layouts'.DS."footer.php") ?>

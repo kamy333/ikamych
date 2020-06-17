@@ -21,16 +21,17 @@ class SmartNav
          'index_gallery6',
              ),
          'link'=>array(
-             'index'=>'Home',
-             'index_gallery6'=>'Bralia',
-             'index_gallery'=>'Desiree Wedding',
+             'index' => 'Home',
+             'index_gallery6' => 'Bralia',
+             'index_gallery' => 'Desiree Wedding',
+             'index_gallery16' => 'Desiree Baby Shower',
              'index_gallery10' => 'Samira Wedding',
-             'index_gallery2'=>'Family',
-             'index_gallery3'=>'Friends',
-             'index_gallery4'=>'My Page',
-             'index_gallery5'=>'Lycée Français de Jérusalem',
-             'index_gallery7'=>'Maman Bozorgue',
-             'index_gallery8'=>'Film',
+             'index_gallery2' => 'Family',
+             'index_gallery3' => 'Friends',
+             'index_gallery4' => 'My Page',
+             'index_gallery5' => 'Lycée Français de Jérusalem',
+             'index_gallery7' => 'Maman Bozorgue',
+             'index_gallery8' => 'Film',
              'index_gallery11' => 'Film Classic',
              'index_gallery13' => 'Marco',
          )
@@ -44,17 +45,18 @@ class SmartNav
              'protection'=>array(
                  'index_gallery6',
              ),
-             'link'=>array(
-                 'index'=>'Home',
-                 'index_gallery6'=>'Bralia',
-                 'index_gallery'=>'Desiree Wedding',
-                 'index_gallery10' => 'Samita Wedding',
-                 'index_gallery2'=>'Family',
-                 'index_gallery3'=>'Friends',
-                 'index_gallery4'=>'My Page',
-                 'index_gallery5'=>'Lycée Français de Jérusalem',
-                 'index_gallery7'=>'Maman Bozorgue',
-                 'index_gallery8'=>'Film',
+             'link'=> array(
+                 'index' => 'Home',
+                 'index_gallery6' => 'Bralia',
+                 'index_gallery' => 'Desiree Wedding',
+                 'index_gallery16' => 'Desiree Baby Shower',
+                 'index_gallery10' => 'Samira Wedding',
+                 'index_gallery2' => 'Family',
+                 'index_gallery3' => 'Friends',
+                 'index_gallery4' => 'My Page',
+                 'index_gallery5' => 'Lycée Français de Jérusalem',
+                 'index_gallery7' => 'Maman Bozorgue',
+                 'index_gallery8' => 'Film',
                  'index_gallery9' => 'Pablo Enregistrement',
                  'index_gallery12' => 'Djam photo',
                  'index_gallery14' => 'Djam objectif',
@@ -112,10 +114,8 @@ class SmartNav
     public $array_url;
     public $top_folder;
     public $path_folders;
-    public $folder_immediate;
-    public $folder_prev;
-
-
+    public $folder_immediate = "";
+    public $folder_prev = "";
 
 
     function __construct()
@@ -141,6 +141,7 @@ class SmartNav
         $this->path_admin = $admin_dir;
         $count_full = count($this->array_full_url);
         $count = count($this->array_url);
+
 
         $this->folder_immediate = $this->array_full_url[$count_full];
         $this->folder_prev = $this->array_full_url[$count - 1];
@@ -528,12 +529,50 @@ public function format_menu_public($menu_name="Unknown",$class="")  {
 //        }
 
 
+        $output = str_replace("///", "/", $output);
+
         return $output;
 
 
     }
 
+    public function menu_item_simple($text = "Missing text", $page = "/public/admin/manager_user.php", $target = false)
+    {
+//        the item is for the admin sidebar context but var context can point to public
 
+
+        $output = "";
+        $output .= "<li >";
+
+//        $path=$this->path_public;
+
+        $output .= "<a href='";
+        $output .= $page;
+        $output .= "'";
+        if ($target) {
+            $output .= " target=\"_blank\" ";
+        }
+
+        $output .= ">";
+        $output .= $text;
+        $output .= "</a>";
+
+
+        $output .= "</li>";
+
+        //The below is not working
+//        if($class){
+//            $output.="<span class='label label-default pull-right'>";
+//            $output.="<a  href='{$this->path_admin}class_edit.php?class_name=$class'>N</a></span>";
+//        }
+
+
+        $output = str_replace("///", "/", $output);
+
+        return $output;
+
+
+    }
 
 
 }

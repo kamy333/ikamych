@@ -137,21 +137,31 @@ class ChatFriend2 extends DatabaseObject
             "class"=>"User",
             "label_text"=>"",
             "select_option_text"=>'Username',
-            'field_option_0'=>"username",
-            'field_option_1'=>"username",
-            "required" =>false,
+            'field_option_0' => "username",
+            'field_option_1' => "username",
+            "required" => false,
         ),
 
 
     );
 
 
-    public static $page_name="Chat Friend2";
-    public static $page_manage="manage_ChatFriend.php";
-    public static $page_new="new_ChatFriend.php";
-    public static $page_edit="edit_ChatFriend.php";
-    public static $page_delete="delete_ChatFriend.php";
-    public static $page_public="chat2.php";
+    public static $page_name = "Chat Friend2";
+
+//    public static $page_manage="manage_ChatFriend.php";
+//    public static $page_new="new_ChatFriend.php";
+//    public static $page_edit="edit_ChatFriend.php";
+//    public static $page_delete="delete_ChatFriend.php";
+
+
+    public static $page_manage = "/public/admin/crud/ajax/manage_ajax.php?class_name=ChatFriend"; // "new_link.php";
+    public static $page_new = "/public/admin/crud/ajax/new_ajax.php?class_name=ChatFriend"; // "new_link.php";
+    public static $page_edit = "/public/admin/crud/ajax/edit_ajax.php?class_name=ChatFriend"; //  "edit_link.php";
+    public static $page_delete = "/public/admin/crud/ajax/delete_ajax.php?class_name=ChatFriend"; //  "delete_link.php";
+    public static $position_table = "positionRight"; // positionLeft // positionBoth  positionRight
+
+
+    public static $page_public = "chat2.php";
 
     public static $per_page;
 

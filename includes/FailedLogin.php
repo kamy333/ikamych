@@ -6,25 +6,35 @@
  * Date: 9/17/2015
  * Time: 10:00 PM
  */
-class FailedLogin extends DatabaseObject {
-    public static $required_fields=array('username','login_attempt','last_time');
-    public static $get_form_element=array('username','login_attempt','last_time','ip','host');
-    public static $get_form_element_others=array();
+class FailedLogin extends DatabaseObject
+{
+    public static $required_fields = array('username', 'login_attempt', 'last_time');
+    public static $get_form_element = array('username', 'login_attempt', 'last_time', 'ip', 'host');
+    public static $get_form_element_others = array();
     public static $db_field_search = array('search_all', 'id', 'username', 'login_attempt', 'last_time', 'ip', 'host', 'download_csv');
     public static $page_name = "FailedLogin";
-    public static $page_manage = "manage_failed_logins.php";
-    public static $page_new = "new_failed_logins.php";
-    public static $page_edit = "edit_failed_logins.php";
-    public static $page_delete = "delete_failed_logins.php";
+
+//    public static $page_manage = "manage_failed_logins.php";
+//    public static $page_new = "new_failed_logins.php";
+//    public static $page_edit = "edit_failed_logins.php";
+//    public static $page_delete = "delete_failed_logins.php";
+
+    public static $page_manage = "/public/admin/crud/ajax/manage_ajax.php?class_name=FailedLogin"; // "manage_links.php";
+    public static $page_new = "/public/admin/crud/ajax/new_ajax.php?class_name=FailedLogin"; // "new_link.php";
+    public static $page_edit = "/public/admin/crud/ajax/edit_ajax.php?class_name=FailedLogin"; //  "edit_link.php";
+    public static $page_delete = "/public/admin/crud/ajax/delete_ajax.php?class_name=FailedLogin"; //  "delete_link.php";
+    public static $position_table = "positionRight"; // positionLeft // positionBoth  positionRight
+
+
     protected static $table_name = "failed_logins";
     protected static $db_field_exclude_table_display_sort = array('date');
 
     protected static $db_fields = array('id', 'username', 'login_attempt', 'last_time', 'ip', 'host', 'input_date');
     protected static $db_fields_table_display_short = array('id', 'username', 'login_attempt', 'last_time', 'date', 'ip', 'host', 'input_date');
     protected static $db_fields_table_display_full = array('id', 'username', 'login_attempt', 'last_time', 'date', 'ip', 'host', 'input_date');
-    protected static $form_properties= array(
-        "username"=> array("type"=>"text",
-            "name"=>'username',
+    protected static $form_properties = array(
+        "username" => array("type" => "text",
+            "name" => 'username',
             "label_text"=>"Username",
             "placeholder"=>"username",
             "required" =>true,

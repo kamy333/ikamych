@@ -110,7 +110,7 @@ class ArticleSubject extends DatabaseObject
     public static $db_field_search = array('search_all', 'subject', 'download_csv');
 
 
-    public static $page_name = "article subject";
+    public static $page_name = "Article Subject";
     public static $page_manage = "/public/admin/crud/ajax/manage_ajax.php?class_name=ArticleSubject";
     public static $page_new = "/public/admin/crud/ajax/new_ajax.php?class_name=ArticleSubject";
     public static $page_edit = "/public/admin/crud/ajax/edit_ajax.php?class_name=ArticleSubject";

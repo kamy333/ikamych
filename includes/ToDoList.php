@@ -24,10 +24,17 @@ class ToDoList extends DatabaseObject
     public static $db_field_search = array('search_all', 'todo', 'done', 'due_date', 'rank', 'web_address', 'download_csv');
 
     public static $page_name = "ToDo List";
-    public static $page_manage = "manage_ToDoList.php";
-    public static $page_new = "new_ToDoList.php";
-    public static $page_edit = "edit_ToDoList.php";
-    public static $page_delete = "delete_ToDoList.php";
+//    public static $page_manage = "manage_ToDoList.php";
+//    public static $page_new = "new_ToDoList.php";
+//    public static $page_edit = "edit_ToDoList.php";
+//    public static $page_delete = "delete_ToDoList.php";
+
+    public static $page_manage = "/public/admin/crud/ajax/manage_ajax.php?class_name=ToDoList"; // "new_link.php";
+    public static $page_new = "/public/admin/crud/ajax/new_ajax.php?class_name=ToDoList"; // "new_link.php";
+    public static $page_edit = "/public/admin/crud/ajax/edit_ajax.php?class_name=ToDoList"; //  "edit_link.php";
+    public static $page_delete = "/public/admin/crud/ajax/delete_ajax.php?class_name=ToDoList"; //  "delete_link.php";
+    public static $position_table = "positionRight"; // positionLeft // positionBoth  positionRight
+
 
     public static $form_class_dependency = array();
     public static $per_page;

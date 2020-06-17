@@ -1,4 +1,3 @@
-
 <?php require_once('../includes/initialize.php'); ?>
 
 <?php $class_name="Links"; ?>

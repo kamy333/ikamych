@@ -12,28 +12,37 @@ class Chat extends DatabaseObject {
 
     public static $fields_numeric = array('id', 'user_id', 'to_user_id', 'readit',);
     public static $get_form_element = array('user_id', 'to_user_id', 'readit', 'message', 'input_date');
-    public static $get_form_element_others=array();
-    public static $form_default_value=array(
-        "input_date"=>'nowtime()',
+    public static $get_form_element_others = array();
+    public static $form_default_value = array(
+        "input_date" => 'nowtime()',
         "readit" => 0
 
     );
     public static $db_field_search = array('search_all', 'chat', 'download_csv');
     public static $form_user_id;
     public static $page_name = "Chat";
-    public static $page_manage = "manage_chat.php";
-    public static $page_new = "new_chat.php";
-    public static $page_edit = "edit_chat.php";
-    public static $page_delete = "delete_chat.php";
+
+//    public static $page_manage = "manage_chat.php";
+//    public static $page_new = "new_chat.php";
+//    public static $page_edit = "edit_chat.php";
+//    public static $page_delete = "delete_chat.php";
+
+    public static $page_manage = "/public/admin/crud/ajax/manage_ajax.php?class_name=Chat"; // "new_link.php";
+    public static $page_new = "/public/admin/crud/ajax/new_ajax.php?class_name=Chat"; // "new_link.php";
+    public static $page_edit = "/public/admin/crud/ajax/edit_ajax.php?class_name=Chat"; //  "edit_link.php";
+    public static $page_delete = "/public/admin/crud/ajax/delete_ajax.php?class_name=Chat"; //  "delete_link.php";
+    public static $position_table = "positionRight"; // positionLeft // positionBoth  positionRight
+
+
     protected static $table_name = "chat";
     protected static $db_fields = array('id', 'user_id', 'to_user_id', 'readit', 'message', 'input_date');
     protected static $required_fields = array('user_id', 'to_user_id', 'readit', 'message', 'input_date');
     protected static $db_fields_table_display_short = array('id', 'user_id', 'to_user_id', 'readit', 'message', 'input_date');
     protected static $db_fields_table_display_full = array('id', 'user_id', 'to_user_id', 'readit', 'message', 'input_date');
     protected static $db_field_exclude_table_display_sort = null;
-    protected static $form_properties= array(
+    protected static $form_properties = array(
         "user_id" => array("type" => "selectchosen",
-            "name"=>'user_id',
+            "name" => 'user_id',
             "class"=>"User",
             "label_text"=>"User",
             "select_option_text"=>'Username',

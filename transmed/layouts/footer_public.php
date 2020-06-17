@@ -3,7 +3,7 @@
 
     </div>
     <div class="text-center">
-        <strong></strong><?php echo $logo; ?> &copy; 2014-<?php echo date("Y"); ?>
+        <strong></strong><?php echo $logo2; ?> &copy; 2014-<?php echo date("Y"); ?>
 
     </div>
 </div>

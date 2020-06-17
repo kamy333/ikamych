@@ -59,6 +59,9 @@ class Form extends DatabaseObject
 
     public $multiple;
 
+    public $rows = 1;
+    public $cols = 1;
+
     public $script;
 
 
@@ -690,7 +693,11 @@ class Form extends DatabaseObject
         if ($this->form_format_type == self::FORM_HORIZONTAL) {
             $output .= "<div class='{$this->col_sm_input}'>";
         }
-        $output .= "<textarea name='$this->name'  class='form-control'";
+
+
+        !empty($this->cols) ? $cols = '' : $cols = '';
+
+        $output .= "<textarea rows='$this->rows' $cols  name='$this->name'  class='form-control'";
 
         if (isset($this->id)) {
             $output .= "id='{$this->id}' ";

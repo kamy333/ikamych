@@ -66,8 +66,8 @@ CREATE TABLE `blacklist_ip` (
 -- Dumping data for table `blacklist_ip`
 --
 
-INSERT INTO `blacklist_ip` (`id`, `ip`, `login_failed`, `input_date`) VALUES
-  (1, '::1', 2, '2017-05-09 00:42:19');
+INSERT INTO `blacklist_ip` (`id`, `ip`, `login_failed`, `input_date`)
+VALUES (1, '::1', 2, '2017-05-09 00:42:19');
 
 -- --------------------------------------------------------
 
@@ -75,14 +75,24 @@ INSERT INTO `blacklist_ip` (`id`, `ip`, `login_failed`, `input_date`) VALUES
 -- Table structure for table `chat`
 --
 
-CREATE TABLE `chat` (
-  `id`            INT(11)      NOT NULL,
-  `user_id`       INT(11)      NOT NULL,
-  `to_user_id`    VARCHAR(255)          DEFAULT NULL,
-  `to_user_id_cc` VARCHAR(255) NOT NULL DEFAULT '1',
-  `readit`        TINYINT(1)   NOT NULL DEFAULT '0',
-  `message`       VARCHAR(255)          DEFAULT NULL,
-  `input_date`    TIMESTAMP    NULL     DEFAULT CURRENT_TIMESTAMP
+create table test
+(
+    `id`      int(11) UNSIGNED NOT NULL primary key,
+    firstname varchar(255),
+    lastname  varchar(255)
+
+);
+
+
+CREATE TABLE `chat`
+(
+    `id`            INT(11)      NOT NULL,
+    `user_id`       INT(11)      NOT NULL,
+    `to_user_id`    VARCHAR(255)          DEFAULT NULL,
+    `to_user_id_cc` VARCHAR(255) NOT NULL DEFAULT '1',
+    `readit`        TINYINT(1)   NOT NULL DEFAULT '0',
+    `message`       VARCHAR(255)          DEFAULT NULL,
+    `input_date`    TIMESTAMP    NULL     DEFAULT CURRENT_TIMESTAMP
 )
   ENGINE = InnoDB
   DEFAULT CHARSET = utf8;

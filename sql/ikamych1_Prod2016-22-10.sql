@@ -7,13 +7,19 @@
 -- Server version: 5.5.37-log
 -- PHP Version: 5.5.23
 
+
+INSERT INTO book (id, category_id, download_source_link, h2, h3, summary, rank, pdf_name, author, about_book,
+                  about_author, photo, apress_link, likes, is_row, num_column, num_offset, comment, input_date)
+VALUES ('', '1', 'https://www.google.com/finance', 'h2', 'h3', '', '1000', 'Beginning+SQL+Queries.pdf', '', '
+about_book', 'about_author', '', 'https://www.google.com/finance', '0', '0', '9', '0', '', '2018-11-16 03:45:18');
+
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
 
 
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT = @@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS = @@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION = @@COLLATION_CONNECTION */;
 /*!40101 SET NAMES utf8 */;
 
 --

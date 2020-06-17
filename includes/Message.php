@@ -22,10 +22,18 @@ class Message extends DatabaseObject
     public static $db_field_search = array('search_all', 'chat', 'download_csv');
     public static $form_user_id;
     public static $page_name = "Chat";
-    public static $page_manage = "manage_chat.php";
-    public static $page_new = "new_chat.php";
-    public static $page_edit = "edit_chat.php";
-    public static $page_delete = "delete_chat.php";
+//    public static $page_manage = "manage_chat.php";
+//    public static $page_new = "new_chat.php";
+//    public static $page_edit = "edit_chat.php";
+//    public static $page_delete = "delete_chat.php";
+
+    public static $page_manage = "/public/admin/crud/ajax/manage_ajax.php?class_name=Message"; // "new_link.php";
+    public static $page_new = "/public/admin/crud/ajax/new_ajax.php?class_name=Message"; // "new_link.php";
+    public static $page_edit = "/public/admin/crud/ajax/edit_ajax.php?class_name=Message"; //  "edit_link.php";
+    public static $page_delete = "/public/admin/crud/ajax/delete_ajax.php?class_name=Message"; //  "delete_link.php";
+    public static $position_table = "positionRight"; // positionLeft // positionBoth  positionRight
+
+
     protected static $table_name = "chat";
     protected static $db_fields = array('id', 'user_id', 'to_user_id', 'readit', 'message', 'input_date');
     protected static $required_fields = array('user_id', 'to_user_id', 'readit', 'message', 'input_date');

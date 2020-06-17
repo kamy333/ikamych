@@ -18,8 +18,6 @@
 <script src="//code.jquery.com/jquery-latest.min.js"></script>
 <script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
 <script>tinymce.init({selector: 'textarea'});</script>
-
-<!--<script src="--><?php //echo $Nav->path_public; ?><!--js/bootstrap.min.js"></script>-->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
         integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
         crossorigin="anonymous"></script>
@@ -64,9 +62,136 @@ if ($Nav->current_page == "transmed_form2") {
 
 
     </script>
+
+
 <?php } ?>
 
 
+<?php
+if ($Nav->current_page == "transmed_form3") {
+    ?>
+    <script>
+
+
+        function ttd(data) {
+            return "<td>" + data + "</td>";
+        }
+
+        //var myHttp = '<?php //echo $http;  ?>//';
+        var myHttp = 'https://spreadsheets.google.com/feeds/list/1uFQMPEsnH0EeC7XQ-sbAe_7ga1ozpjNvJhJSId0mC4g/1/public/values?alt=json';
+
+        $.getJSON(myHttp, function (data) {
+            var d = data.feed.entry;
+            console.log(d);
+
+
+            var timestamp;
+            var datedelacourse;
+            var heurecourse;
+            var nomclient;
+            var typetransport;
+            var adressededepart;
+            var adressedarrivee;
+            var allersimpleouallerretour;
+            var heureretour;
+            var dateretour;
+            var emailaddress;
+            var chauffeur;
+            var myTd;
+
+            jQuery.each(d, function () {
+                timestamp = ttd(this['gsx$timestamp']['$t']);
+                datedelacourse = ttd(this['gsx$datedelacourse']['$t']);
+                heurecourse = ttd(this['gsx$heurecourse']['$t']);
+                nomclient = ttd(this['gsx$nomclient']['$t']);
+                typetransport = ttd(this['gsx$typetransport']['$t']);
+                adressededepart = ttd(this['gsx$adressededepart']['$t']);
+                adressedarrivee = ttd(this['gsx$adressedarrivee']['$t']);
+                allersimpleouallerretour = ttd(this['gsx$allersimpleouallerretour']['$t']);
+                heureretour = ttd(this['gsx$heureretour']['$t']);
+                dateretour = ttd(this['gsx$dateretour']['$t']);
+                emailaddress = ttd(this['gsx$emailaddress']['$t']);
+                chauffeur = ttd(this['gsx$chauffeur']['$t']);
+
+                myTd = timestamp + datedelacourse + heurecourse + nomclient + typetransport + adressededepart + adressedarrivee + allersimpleouallerretour
+                    + heureretour + dateretour + emailaddress + chauffeur;
+//                console.log(myFirst);
+                $('#myTableCourses').find('tr:last').after('<tr>' + myTd + '</tr>');
+            });
+
+            console.log(d);
+        });
+
+    </script>
+<?php } ?>
+
+
+
+
+<?php
+if ($Nav->current_page == "transmed_form4") {
+    ?>
+    <script>
+
+
+        function ttd(data) {
+            return "<td>" + data + "</td>";
+        }
+
+        //var myHttp = '<?php //echo $http;  ?>//';
+        var myHttp = 'https://spreadsheets.google.com/feeds/list/1uFQMPEsnH0EeC7XQ-sbAe_7ga1ozpjNvJhJSId0mC4g/2/public/values?alt=json';
+
+        $.getJSON(myHttp, function (data) {
+            var d = data.feed.entry;
+            console.log(d);
+
+
+            var timestamp;
+            var nomchauffeur;
+            var date;
+            var heurededebut;
+            var heuredefin;
+            var commentaire;
+            var myTd;
+
+
+            jQuery.each(d, function () {
+                timestamp = ttd(this['gsx$timestamp']['$t']);
+                nomchauffeur = ttd(this['gsx$nomchauffeur']['$t']);
+                date = ttd(this['gsx$date']['$t']);
+                heurededebut = ttd(this['gsx$heurededebut']['$t']);
+                heuredefin = ttd(this['gsx$heuredefin']['$t']);
+                commentaire = ttd(this['gsx$commentaire']['$t']);
+
+                myTd = timestamp + nomchauffeur + date + heurededebut + heuredefin + commentaire
+
+
+//                console.log(myFirst);
+                $('#myTableHoraires').find('tr:last').after('<tr>' + myTd + '</tr>');
+            });
+
+            console.log(d);
+        });
+
+    </script>
+<?php } ?>
+
+
+
+
+<?php if ($stylesheets == "fade_php") { ?>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="/public/_js/examples/javascripts/jquery.easing.1.3.js"></script>
+    <script src="/public/_js/examples/javascripts/jquery.animate-enhanced.min.js"></script>
+    <script src="/public/_js/dist/jquery.superslides.js" type="text/javascript" charset="utf-8"></script>
+    <script>
+        $('#slides').superslides({
+            animation: 'fade'
+        });
+    </script>
+
+
+<?php } ?>
 
 <?php
 if (substr($Nav->current_page, 0, 7) == "manage_" ||

@@ -29,19 +29,25 @@
 <br>
 
 <div class="row">
-    <div class="col-lg-3 col-lg-offset-1">
+    <div class="col-lg-3 ">
         <?php //echo get_search_category(); ?>
 
         <?php echo Links::output_links(); ?>
     </div>
 
-    <div class="col-lg-3 col-lg-offset-1">
+    <div class="col-lg-3 ">
+        <?php //echo get_search_category(); ?>
+
+        <?php echo Links::output_links('Google'); ?>
+    </div>
+
+    <div class="col-lg-3 ">
         <?php //echo get_search_category(); ?>
 
         <?php echo Links::output_links('C#'); ?>
     </div>
 
-    <div class="col-lg-4 ">
+    <div class="col-lg-3 ">
         <?php //echo get_search_category(); ?>
 
         <?php echo Links::output_links('PHP'); ?>

@@ -336,26 +336,33 @@ class Client extends DatabaseObject {
         ),
 
 
-
     );
 
-    public static $db_field_search =array('search_all','pseudo', 'restricted_list', 'company_name','web_view','last_name','first_name','email', 'website','address','cp','city','country','phone','mobile','download_csv');
+    public static $db_field_search = array('search_all', 'pseudo', 'restricted_list', 'company_name', 'web_view', 'last_name', 'first_name', 'email', 'website', 'address', 'cp', 'city', 'country', 'phone', 'mobile', 'download_csv');
 
 
-    public static $page_name="Client";
-    public static $page_manage="manage_clients.php";
-    public static $page_new="new_client.php";
-    public static $page_edit="edit_client.php";
-    public static $page_delete="delete_client.php";
+    public static $page_name = "Client";
+//    public static $page_manage="manage_clients.php";
+//    public static $page_new="new_client.php";
+//    public static $page_edit="edit_client.php";
+//    public static $page_delete="delete_client.php";
 
-    public static $form_class_dependency=array('Project','Currency') ;
+
+    public static $page_manage = "/public/admin/crud/ajax/manage_ajax.php?class_name=Client"; // "new_link.php";
+    public static $page_new = "/public/admin/crud/ajax/new_ajax.php?class_name=Client"; // "new_link.php";
+    public static $page_edit = "/public/admin/crud/ajax/edit_ajax.php?class_name=Client"; //  "edit_link.php";
+    public static $page_delete = "/public/admin/crud/ajax/delete_ajax.php?class_name=Client"; //  "delete_link.php";
+    public static $position_table = "positionRight"; // positionLeft // positionBoth  positionRight
+
+
+    public static $form_class_dependency = array('Project', 'Currency');
 
 
     public static $per_page;
 
 
-public $id;
-public $pseudo;
+    public $id;
+    public $pseudo;
 public $restricted_list;
 public $company_name;
 public $web_view;

@@ -37,5 +37,11 @@ class InvoiceEstimate extends DatabaseObject {
     public $vat;
     public $price_estimate;
 
+    public static $page_manage = "/public/admin/crud/ajax/manage_ajax.php?class_name=InvoiceEstimate"; // "new_link.php";
+    public static $page_new = "/public/admin/crud/ajax/new_ajax.php?class_name=InvoiceEstimate"; // "new_link.php";
+    public static $page_edit = "/public/admin/crud/ajax/edit_ajax.php?class_name=InvoiceEstimate"; //  "edit_link.php";
+    public static $page_delete = "/public/admin/crud/ajax/delete_ajax.php?class_name=InvoiceEstimate"; //  "delete_link.php";
+    public static $position_table = "positionRight"; // positionLeft // positionBoth  positionRight
+
 
 }

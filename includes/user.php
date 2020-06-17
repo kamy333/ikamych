@@ -17,20 +17,42 @@ class User extends DatabaseObject {
 
     public static $get_form_element=array('user_image','username','password','nom','email','user_type_id','first_name','last_name','block_user');
 
-    public static $get_form_element_others=array('address','cp','city','country','phone','mobile','','');
+    public static $get_form_element_others = array('address', 'cp', 'city', 'country', 'phone', 'mobile', '', '');
 
-    public static $form_default_value=array(
-        "block_user"=>"0",
-        "user_type_id"=>"5"
+    public static $form_default_value = array(
+        "block_user" => "0",
+        "user_type_id" => "5"
     );
 
     // todo message per class
     public static $db_field_search = array('search_all', 'id', 'username', 'nom', 'email', 'user_type', 'user_type_id', 'block_user', 'first_name', 'last_name', 'reset_token', 'address', 'cp', 'city', 'country', 'phone', 'mobile', 'download_csv');
     public static $page_name = "User";
-    public static $page_manage = "manage_user.php";
-    public static $page_new = "new_user.php";
-    public static $page_edit = "edit_user.php";
-    public static $page_delete = "delete_user.php";
+
+//    public static $page_manage = "manage_user.php";
+//    public static $page_new = "/public/admin/new_user.php";
+//    public static $page_edit = "/public/admin/edit_user.php";
+//    public static $page_delete = "delete_user.php";
+
+    public static $page_manage = "/public/admin/crud/ajax/manage_ajax.php?class_name=User";
+    public static $page_new = "/public/admin/crud/ajax/new_ajax.php?class_name=User";
+    public static $page_edit = "/public/admin/crud/ajax/edit_ajax.php?class_name=User";
+    public static $page_delete = "/public/admin/crud/ajax/delete_ajax.php?class_name=User";
+
+//    public static $page_manage ="/public/admin/crud/data/manage_data.php?class_name=User";
+//    public static $page_new ="/public/admin/crud/data/new_data.php?class_name=User";
+//    public static $page_edit ="/public/admin/crud/data/edit_data.php?class_name=User";
+//    public static $page_delete ="/public/admin/data/delete_data.php?class_name=User";
+
+//    public static $page_manage ="/public/admin/manage_user.php";
+//    public static $page_new ="/public/admin/new_user.php";
+//    public static $page_edit ="/public/admin/edit_user.php";
+//    public static $page_delete ="/public/admin/delete_user.php";
+
+
+//    public static $position_table="positionRight"; // positionLeft // positionBoth  positionRight
+    public static $position_table = "positionBoth"; // positionLeft // positionBoth  positionRight
+
+
     public static $form_class_dependency = array('UserType');
     static public $valid_user_type_id = array(
         self::TYPE_ADMIN => 'admin',
@@ -42,6 +64,7 @@ class User extends DatabaseObject {
     );
     protected static $table_name = "users";
     protected static $db_fields = array('id', 'username', 'hashed_password', 'nom', 'email', 'user_type', 'user_type_id', 'block_user', 'unread_message', 'unread_notification', 'first_name', 'last_name', 'user_image', 'reset_token', 'address', 'cp', 'city', 'country', 'phone', 'mobile');
+
     protected static $db_fields_no_password = array('id', 'username', 'nom', 'email', 'user_type', 'user_type_id', 'block_user', 'unread_message', 'unread_notification', 'first_name', 'last_name', 'user_image', 'reset_token', 'address', 'cp', 'city', 'country', 'phone', 'mobile');
     protected static $db_fields_table_display_short = array('id', 'username', 'nom', 'email', 'user_type', 'user_type_id', 'block_user', 'photo', 'reset_token');
     protected static $db_fields_table_display_full = array('id', 'username', 'nom', 'email', 'user_type', 'user_type_id', 'block_user', 'unread_message', 'unread_notification', 'first_name', 'last_name', 'user_image', 'reset_token', 'address', 'cp', 'city', 'country', 'phone', 'mobile');
@@ -99,26 +122,52 @@ class User extends DatabaseObject {
         "last_name"=> array("type"=>"text",
             "name"=>'last_name',
             "label_text"=>"Last Name",
-            "placeholder"=>"Last Name",
-            "required" =>false,
+            "placeholder" => "Last Name",
+            "required" => false,
         ),
 
-        "reset_token"=> array("type"=>"text",
-            "name"=>'reset_token',
-            "label_text"=>"Reset token",
-            "placeholder"=>"token only view or delete",
-            "required" =>false,
+        "reset_token" => array("type" => "text",
+            "name" => 'reset_token',
+            "label_text" => "Reset token",
+            "placeholder" => "token only view or delete",
+            "required" => false,
+        ),
+// button block_user
+//        "block_user" =>array("type"=>"radio",
+//            array(0,
+//                array(
+//                    "label_all"=>"Block User",
+//                    "name"=>"block_user",
+//                    "label_radio"=>"No",
+//                    "value"=>"0",
+//                    "id"=>"block_user_no",
+//                    "default"=>true)),
+//            array(1,
+//                array(
+//                    "label_all"=>"Block User",
+//                    "name"=>"block_user",
+//                    "label_radio"=>"Yes",
+//                    "value"=>"1",
+//                    "id"=>"block_user_yes",
+//                    "default"=>false)),
+//        ),
+
+        "block_user" => array("type" => "text",
+            "name" => 'block_user',
+            "label_text" => "Block User",
+            "placeholder" => "unblock 0 or block 1",
+            "required" => false,
         ),
 
-        "block_user" =>array("type"=>"radio",
+        "block_user1" => array("type" => "radio",
             array(0,
                 array(
-                    "label_all"=>"Block User",
-                    "name"=>"block_user",
-                    "label_radio"=>"No",
-                    "value"=>"0",
-                    "id"=>"block_user_no",
-                    "default"=>true)),
+                    "label_all" => "Block User",
+                    "name" => "block_user",
+                    "label_radio" => "No",
+                    "value" => "0",
+                    "id" => "block_user_no",
+                    "default" => true)),
             array(1,
                 array(
                     "label_all"=>"Block User",
@@ -571,7 +620,12 @@ class User extends DatabaseObject {
         $record_user = self::find_by_username($username);
         $check = self::password_check($password);
         if ($check) {
-            return $record_user;
+            if ($record_user->block_user == 0) {
+                return $record_user;
+            } else {
+                return false;
+            }
+
         } else {
             return false;
         }
@@ -858,22 +912,25 @@ public function delete_reset_token() {
     }
 }
 
-    public  function login_visitor_email($info){
-        $mail=new MyPHPMailer() ;
-    global $logo;
-    $subject="New visitor login ".$info;
-    $to=$this->email;
-    $message="<p>We have a new visitor that registered into $logo</p>";
-   $mail->AddEmbeddedImage($this->user_path_and_placeholder(), 'logo_2u');
-//    $mail->AltBody="New Visitor.";
-    $message.="<br><p><img   width='110' height='110' src='cid:logo_2u'></p><br><br>";
+    public  function login_visitor_email($info)
+    {
+        $mail = new MyPHPMailer();
+        global $logo;
+        $subject = "New visitor login " . $info;
+        $to = $this->email;
 
-    $message.="<ul>";
-    $message.="<li>Username: ".$this->username."</li>";
-    $message.="<li>First Name: ".$this->first_name."</li>";
-    $message.="<li>Last Name: ".$this->last_name."</li>";
-    $message.="<li>Nom: ".$this->nom."</li>";
-    $message.="<li>Last Name: ".$this->full_name()."</li>";
+        $msg = "<a href='https://www.ikamy.ch/public/admin/crud/ajax/manage_ajax.php?class_name=User'> " . $logo . "</a>";
+        $message = "<p>We have a new visitor that registered into $msg </p>";
+        $mail->AddEmbeddedImage($this->user_path_and_placeholder(), 'logo_2u');
+//    $mail->AltBody="New Visitor.";
+        $message .= "<br><p><img   width='110' height='110' src='cid:logo_2u' alt='logo'></p><br><br>";
+
+        $message .= "<ul>";
+        $message .= "<li>Username: " . $this->username . "</li>";
+        $message .= "<li>First Name: " . $this->first_name . "</li>";
+        $message .= "<li>Last Name: " . $this->last_name . "</li>";
+        $message .= "<li>Nom: " . $this->nom . "</li>";
+        $message .= "<li>Last Name: " . $this->full_name() . "</li>";
     $message.="<li>Email: ".$this->email."</li>";
     $message.="<li>User_type: ".$this->user_type."</li>";
     $message.="<li>Address: ".$this->address."</li>";
@@ -897,15 +954,61 @@ public function delete_reset_token() {
         if(!$mail->send())
         {
             echo "Mailer Error: " . $mail->ErrorInfo;
-        }
-        else
-        {
+        } else {
             //     echo "Message has been sent successfully";
         }
 
 
+    }
+
+
+    public function visitor_email($info)
+    {
+        $mail = new MyPHPMailer();
+        global $logo;
+        $subject = "New visitor login " . $info;
+        $to = $this->email;
+
+
+        $message = "<p>Thank you for registering to $logo <br> We are considering your registration </p>";
+        $mail->AddEmbeddedImage($this->user_path_and_placeholder(), 'logo_2u');
+//    $mail->AltBody="New Visitor.";
+//        $message.="<br><p><img   width='110' height='110' src='cid:logo_2u' alt='logo'></p><br><br>";
+
+        $message .= "<ul>";
+        $message .= "<li>Username: " . $this->username . "</li>";
+        $message .= "<li>First Name: " . $this->first_name . "</li>";
+        $message .= "<li>Last Name: " . $this->last_name . "</li>";
+        $message .= "<li>Nom: " . $this->nom . "</li>";
+        $message .= "<li>Last Name: " . $this->full_name() . "</li>";
+        $message .= "<li>Email: " . $this->email . "</li>";
+        $message .= "<li>User_type: " . $this->user_type . "</li>";
+        $message .= "<li>Address: " . $this->address . "</li>";
+        $message .= "<li>CP: " . $this->cp . "</li>";
+        $message .= "<li>City: " . $this->city . "</li>";
+        $message .= "<li>Country: " . $this->country . "</li>";
+        $message .= "<li>Mobile: " . $this->mobile . "</li>";
+        $message .= "<li>Reset token: " . $this->reset_token . "</li>";
+        $message .= "<li>Block user: " . $this->block_user . "</li>";
+        $message .= "<li>Photo path: " . $this->user_path_and_placeholder() . "</li>";
+        $message .= "</ul>";
+
+        //Send HTML or Plain Text email
+        $mail->addBCC("kamy@ikamy.ch");
+        $mail->addAddress($this->email);
+        $mail->isHTML(true);
+        $mail->Subject = $subject;
+
+        $mail->Body = $message;
+        //   $mail->AltBody = "This is the plain text version of the email content";
+
+        if (!$mail->send()) {
+            echo "Mailer Error: " . $mail->ErrorInfo;
+        }
+
 
     }
+
 
     public function full_name()
     {

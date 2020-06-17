@@ -214,22 +214,29 @@ class MyExpense extends DatabaseObject {
                     "label_radio"=>"oui",
                     "value"=>"Yes",
                     "id"=>"visible_yes",
-                    "default"=>true)),
+                    "default" => true)),
         ),
 
     );
 
 
-    public static $db_field_search =array('search_all','amount','ccy_id','person_id','expense_type_id','expense_date','comment','download_csv');
+    public static $db_field_search = array('search_all', 'amount', 'ccy_id', 'person_id', 'expense_type_id', 'expense_date', 'comment', 'download_csv');
 
 
-    public static $page_name="Expense Loan";
-    public static $page_manage="manage_MyExpense.php";
-    public static $page_new="new_MyExpense.php";
-    public static $page_edit="edit_MyExpense.php";
-    public static $page_delete="delete_MyExpense.php";
+    public static $page_name = "Expense Loan";
+//    public static $page_manage="manage_MyExpense.php";
+//    public static $page_new="new_MyExpense.php";
+//    public static $page_edit="edit_MyExpense.php";
+//    public static $page_delete="delete_MyExpense.php";
 
-    public static $form_class_dependency=array('MyExpensePerson','MyExpenseType') ;
+    public static $page_manage = "/public/admin/crud/ajax/manage_ajax.php?class_name=MyExpense"; // "new_link.php";
+    public static $page_new = "/public/admin/crud/ajax/new_ajax.php?class_name=MyExpense"; // "new_link.php";
+    public static $page_edit = "/public/admin/crud/ajax/edit_ajax.php?class_name=MyExpense"; //  "edit_link.php";
+    public static $page_delete = "/public/admin/crud/ajax/delete_ajax.php?class_name=MyExpense"; //  "delete_link.php";
+    public static $position_table = "positionRight"; // positionLeft // positionBoth  positionRight
+
+
+    public static $form_class_dependency = array('MyExpensePerson', 'MyExpenseType');
 
 
     public static $per_page;
@@ -256,22 +263,83 @@ class MyExpense extends DatabaseObject {
 
     public static function by_person()
     {
-        $output="";
-        array_push(static::$db_fields,'total','itemsCount','amountCHF');
-        $table=static::$table_name;
-        $sql="SELECT 
+        $output = "";
+        array_push(static::$db_fields, 'total', 'itemsCount', 'amountCHF');
+        $table = static::$table_name;
+        $sql = "SELECT 
     person_id,
     COUNT(id) AS itemsCount,
     SUM(amount) AS amount,
-    SUM(amount * rate) AS amountCHF
+    SUM(amount * rate) AS amountCHF 
+    
 FROM
     $table
+    
+     
 GROUP BY person_id;";
 
 
+        $table_class = Table::full_table_class();
+
+        $output .= "<table class='$table_class '>";
+        $output .= "<tr>
+                          <th class='text-center'>Name" . "</th>
+                          <th class='text-center'>No Items" . "</th>
+                          <th class='text-center'>Total CHF" . "</th>
+                          </tr>";
+
+        $results = static::find_by_sql($sql);
+        if ($results) {
+
+            foreach ($results as $result) {
+
+                $myperson = MyExpensePerson::find_by_id($result->person_id);
+                $person = $myperson->person_name;
+
+                $output .= "<tr>";
+                $output .= "<td class='text-center'>{$person}</td>";
+                $output .= "<td class='text-center'>{$result->itemsCount}</td>";
+                $output .= "<td class='text-right'>" . number_format($result->amountCHF, 2) . "</td>";
+                $output .= "</tr>";
+
+                unset($ccy);
+                unset($person);
+            }
+        }
+
+        unset($results);
+
+        $sum = number_format(static::sum_field_where($field = "amount * rate"), 2);
+
+        $output .= "<tr>";
+        $output .= "<td class='text-center'><strong>Total</strong></td>";
+        $output .= str_repeat("<td></td>", 1);
+        $output .= "<td class='text-right'><strong>" . $sum . "</strong></td>";
+        $output .= "</tr>";
+
+        $output .= "</table>";
+        return $output;
+    }
+
+    public static function by_person_pret_Rbt()
+    {
+        $output = "";
+        array_push(static::$db_fields, 'total', 'itemsCount', 'amountCHF');
+        $table = static::$table_name;
+        $sql = "SELECT 
+    person_id,
+    COUNT(id) AS itemsCount,
+    SUM(amount) AS amount,
+    SUM(amount * rate) AS amountCHF 
+    
+FROM
+    $table
+    
+ WHERE  (expense_type_id=1 or expense_type_id=3) and person_id !=6   
+GROUP BY person_id;";
 
 
-        $table_class=Table::full_table_class();
+        $table_class = Table::full_table_class();
 
         $output.="<table class='$table_class '>";
         $output.="<tr>

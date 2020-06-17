@@ -132,29 +132,36 @@ protected static $db_fields_table_display_full =array('id','category','category_
             "label_text"=>"",
             "select_option_text"=>'company_unit_price',
             'field_option_0'=>"company_unit_price",
-            'field_option_1'=>"company_unit_price",
-            "required" =>false,
+            'field_option_1' => "company_unit_price",
+            "required" => false,
         ),
 
-        );
+    );
 
-    public static $db_field_search =array('search_all','id','category','category_1','category_2','unit_price','company_unit_price','download_csv');
+    public static $db_field_search = array('search_all', 'id', 'category', 'category_1', 'category_2', 'unit_price', 'company_unit_price', 'download_csv');
 
 
-    public static $page_name="Category";
-    public static $page_manage="manage_category.php";
-    public static $page_new="new_category.php";
-    public static $page_edit="edit_category.php";
-    public static $page_delete="delete_category.php";
+    public static $page_name = "Category";
+//    public static $page_manage="manage_category.php";
+//    public static $page_new="new_category.php";
+//    public static $page_edit="edit_category.php";
+//    public static $page_delete="delete_category.php";
 
-    public static $form_class_dependency=array('InvoiceActual','Category1','Category2') ;
+    public static $page_manage = "/public/admin/crud/ajax/manage_ajax.php?class_name=Category"; // "manage_links.php";
+    public static $page_new = "/public/admin/crud/ajax/new_ajax.php?class_name=Category"; // "new_link.php";
+    public static $page_edit = "/public/admin/crud/ajax/edit_ajax.php?class_name=Category"; //  "edit_link.php";
+    public static $page_delete = "/public/admin/crud/ajax/delete_ajax.php?class_name=Category"; //  "delete_link.php";
+    public static $position_table = "positionRight"; // positionLeft // positionBoth  positionRight
+
+
+    public static $form_class_dependency = array('InvoiceActual', 'Category1', 'Category2');
 
 
     public static $per_page;
 
 
     public $id;
-public $category;
+    public $category;
 public $category_1_id;
 public $category_1;
 public $category_2_id;

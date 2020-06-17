@@ -13,14 +13,31 @@ class DatabaseObject
     // protected static $table_name
 
     public static $page_name;
-    public static $page_manage;
-    public static $page_new;
-    public static $page_edit;
-    public static $page_delete;
+
+
+//    public static $page_manage;
+//    public static $page_new;
+//    public static $page_edit;
+//    public static $page_delete;
+
+
+    public static $page_manage = "/public/admin/crud/ajax/manage_ajax.php?class_name=" . __CLASS__;
+    public static $page_new = "/public/admin/crud/ajax/new_ajax.php?class_name=" . __CLASS__;
+    public static $page_edit = "/public/admin/crud/ajax/edit_ajax.php?class_name=" . __CLASS__;
+    public static $page_delete = "/public/admin/crud/ajax/delete_ajax.php?class_name=" . __CLASS__;
+
+
+//    public static $page_manage = "/public/admin/crud/ajax/manage_ajax.php";
+//    public static $page_new = "/public/admin/crud/ajax/new_ajax.php";
+//    public static $page_edit = "/public/admin/crud/ajax/edit_ajax.php";
+//    public static $page_delete = "/public/admin/crud/ajax/delete_ajax.php";
+
+    public static $position_table = "positionRight"; // positionLeft // positionBoth  positionRight
+
+
     public static $form_class_dependency = array();
     public static $pagination_per_page = 20;
     public static $fields_numeric; // array assoc key->format feed see todo
-
 
     // todo not use but too attempt to have sort reference on table head an db field
     public static $fields_numeric_format = array();
@@ -169,6 +186,7 @@ class DatabaseObject
             static::$page_delete = "{$data}.php?class_name=" . get_called_class();
             return;
         }
+
 
         if (is_array($pages)) {
             static::$page_manage = $pages[0] . "_{$data}.php?class_name=" . get_called_class();
@@ -735,7 +753,40 @@ class DatabaseObject
     }
 
 
-    // form multi
+    public static function find_column_name()
+    {
+
+        global $database;
+        $table = static::$table_name;
+        $output = "";
+        $sql = "SHOW COLUMNS FROM $table ";
+        $result = $database->query($sql);
+        while ($record = $database->fetch_array($result)) {
+            $fields[] = $record['Field'];
+        }
+        $class_name = get_called_class();
+        $count = count($fields);
+
+        $output .= "<div class='col-md-3'>";
+        $output .= "<ul class='list-group'>";
+        $output .= "<li class='list-group-item'>count db <span class='badge''>$count</span></li>";
+        $output .= "<li class='list-group-item'>" . "<b>Database schema:<span class='color:red'> {$class_name}</span></b>" . "</li>";
+        foreach ($fields as $f) {
+            $output .=
+                "<li class='list-group-item'>" . $f . "</li>";
+        }
+
+        $output .= "</ul>";
+
+        $output .= $comma_separated = " \$db_fields = ['" . implode("','", $fields) . "']<br><hr>";
+
+        foreach ($fields as $field) {
+            $output .= "\${$field};<br>";
+
+        }
+
+        return $output;
+    }
 
     public static function find_all()
     {
@@ -1059,6 +1110,14 @@ class DatabaseObject
         $output .= "<table class='table table-striped table-bordered table-hover table-condensed '>";
         $output .= "<tr>";
 
+        if (strtolower(static::$position_table) == "positionleft" ||
+            strtolower(static::$position_table) == "positionboth") {
+
+            if ($edit) {
+                $output .= "<th width='5%' colspan=\"2\" class=\"text-center\" style='vertical-align:middle;'>Actions</th>";
+            }
+        }
+
         foreach ($table_field as $fieldname) {
             $alt_fieldname = $fieldname;
             if (property_exists(new static, $fieldname)) {
@@ -1134,8 +1193,12 @@ class DatabaseObject
             }
         }
 
-        if ($edit) {
-            $output .= "<th colspan=\"2\" class=\"text-center\" style='vertical-align:middle;'>Actions</th>";
+        if (strtolower(static::$position_table) == "positionright" ||
+            strtolower(static::$position_table) == "positionboth") {
+
+            if ($edit) {
+                $output .= "<th colspan=\"2\" class=\"text-center\" style='vertical-align:middle;'>Actions</th>";
+            }
         }
 
         $output .= "</tr>";
@@ -1512,6 +1575,7 @@ class DatabaseObject
         if ($edit) {
             $href = clean_query_string("class_edit.php?class_name=" . get_called_class() . "&id=" . urlencode($this->id));
 
+
 //            $output .= "<td class='text-center'><a class='btn btn-primary table-btn' style='width: 5em' href='" . "class_edit?class_name=" . get_called_class() . "&id=" . urlencode($this->id) . "'>Edit</a></td>";
 
             $output .= "<td class='text-center'><a class='btn btn-primary table-btn' style='width: 5em' href='" . $href . "'>Edit</a></td>";
@@ -1535,6 +1599,21 @@ class DatabaseObject
         $output = "";
         $output .= "<tr>";
 
+
+        if (strtolower(static::$position_table) == "positionleft" ||
+            strtolower(static::$position_table) == "positionboth") {
+            if ($edit) {
+                $href = clean_query_string(static::$page_edit . "?id=" . urlencode($this->id));
+
+                $output .= "<td class='text-center'><a class='btn btn-primary table-btn button-edit-form' href='" . $href . "'><span class='	glyphicon glyphicon-pencil'></span></a></td>";
+
+
+                $href = clean_query_string(static::$page_delete . "?id=" . urlencode($this->id));
+                $output .= "<td class='text-center'><a class='btn btn-danger table-btn button-delete-form' href='" . $href . "'><span class='glyphicon glyphicon-remove'></span></a></td>";
+            }
+        }
+
+
         if ($long_short == 1) {
             $table_field = static::$db_fields_table_display_full;
 
@@ -1557,26 +1636,31 @@ class DatabaseObject
 //                    $output.= "<td $style class='text-right'>".number_format ( $this->$fieldname,2)."</td>";
                     $output .= "<td><span $style class='text-right'>" . number_format($this->$fieldname, 2) . "</span></td>";
                 } else {
-                    $output .= "<td  class='text-center'>" . $this->$fieldname . "</td>";
+                    if ($fieldname == "id") {
+                        $a = "<a href='/public/admin/crud/ajax/edit_ajax.php?class_name=" . get_called_class() . "&id={$this->$fieldname}'>{$this->$fieldname}</a>";
+                        $output .= "<td  class='text-center'>" . $a . "</td>";
+
+                    } else {
+                        $output .= "<td  class='text-center'>" . $this->$fieldname . "</td>";
+
+                    }
                 }
             }
         }
 
-        if ($edit) {
-            $href = clean_query_string(static::$page_edit . "?id=" . urlencode($this->id));
 
-//            $output.= "<td class='text-center'><a class='btn btn-primary table-btn button-edit-form' data-toggle='modal' data-target='form-edit-id($this->id)' href='".$href."'>Edit</a></td>" ;
-
-//            $output .= "<td class='text-center'><a class='btn btn-primary table-btn button-edit-form' data-toggle='modal' data-target='form-edit-id{$this->id}' href='" . $href . "'>Edit</a></td>";
-
-            $output .= "<td class='text-center'><a class='btn btn-primary table-btn button-edit-form' href='" . $href . "'>Edit</a></td>";
+        if (strtolower(static::$position_table) == "positionright" ||
+            strtolower(static::$position_table) == "positionboth") {
+            if ($edit) {
+                $href = clean_query_string(static::$page_edit . "?id=" . urlencode($this->id));
+                $output .= "<td class='text-center'><a class='btn btn-primary table-btn button-edit-form' href='" . $href . "'>Edit</a></td>";
 
 
-            $href = clean_query_string(static::$page_delete . "?id=" . urlencode($this->id));
-
-
-            $output .= "<td class='text-center'><a class='btn btn-danger table-btn button-delete-form' href='" . $href . "'>Delete</a></td>";
+                $href = clean_query_string(static::$page_delete . "?id=" . urlencode($this->id));
+                $output .= "<td class='text-center'><a class='btn btn-danger table-btn button-delete-form' href='" . $href . "'>Delete</a></td>";
+            }
         }
+
 
         $output .= "</tr>";
         return $output;

@@ -214,26 +214,32 @@ class InvoiceActual extends DatabaseObject{
             "select_option_text"=>'Invoiced?',
             'field_option_0'=>"invoiced",
             'field_option_1'=>"invoiced",
-            "required" =>false,
+            "required" => false,
         ),
 
 
     );
 
-    public static $db_field_search =array('search_all','project_id', 'project_code','start_date','end_date', 'quantity', 'category','ref_upload','invoice_id','invoiced','unit_price','company_unit_price','download_csv');
+    public static $db_field_search = array('search_all', 'project_id', 'project_code', 'start_date', 'end_date', 'quantity', 'category', 'ref_upload', 'invoice_id', 'invoiced', 'unit_price', 'company_unit_price', 'download_csv');
 
 
-    public static $page_name="Invoice Actual";
-    public static $page_manage="manage_invoice_actual.php";
-    public static $page_new="new_invoice_actual.php";
-    public static $page_edit="edit_invoice_actual.php";
-    public static $page_delete="delete_invoice_actual.php";
+    public static $page_name = "Invoice Actual";
+//    public static $page_manage="manage_invoice_actual.php";
+//    public static $page_new="new_invoice_actual.php";
+//    public static $page_edit="edit_invoice_actual.php";
+//    public static $page_delete="delete_invoice_actual.php";
 
-    public static $form_class_dependency=array('Category','Category1','Category2') ;
+    public static $page_manage = "/public/admin/crud/ajax/manage_ajax.php?class_name=InvoiceActual"; // "new_link.php";
+    public static $page_new = "/public/admin/crud/ajax/new_ajax.php?class_name=InvoiceActual"; // "new_link.php";
+    public static $page_edit = "/public/admin/crud/ajax/edit_ajax.php?class_name=InvoiceActual"; //  "edit_link.php";
+    public static $page_delete = "/public/admin/crud/ajax/delete_ajax.php?class_name=InvoiceActual"; //  "delete_link.php";
+    public static $position_table = "positionRight"; // positionLeft // positionBoth  positionRight
+
+
+    public static $form_class_dependency = array('Category', 'Category1', 'Category2');
 
 
     public static $per_page;
-
 
 
     public $id;

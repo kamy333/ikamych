@@ -6,7 +6,7 @@
 
     </div>
     <div class="text-center">
-        <span> <small>&#xA9;&nbsp;2014 - <?php echo date("Y") . ', ' . $logo; ?></small></span>
+        <span> <small>&#xA9;&nbsp;2014 - <?php echo date("Y") . ', ' . $logo2; ?></small></span>
     </div>
 </div>
 

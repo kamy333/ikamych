@@ -20,7 +20,7 @@
                 echo "<li class=''><a href='{$path_admin}planning.php?class_name=ToDoList'><i class=''></i>Planning</a></li>";
                 ?>
                 <li>
-                    <span class="m-r-sm text-muted welcome-message">Welcome to <?php echo $logo; ?>.</span>
+                    <span class="m-r-sm text-muted welcome-message">Welcome to <?php echo $logo2; ?>.</span>
                 </li>
 
 

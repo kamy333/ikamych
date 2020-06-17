@@ -23,10 +23,19 @@ class Note extends DatabaseObject
     );
     public static $db_field_search = array('search_all', 'note', 'done', 'due_date', 'rank', 'web_address', 'download_csv');
     public static $page_name = "note";
-    public static $page_manage = "manage_note.php";
-    public static $page_new = "new_note.php";
-    public static $page_edit = "edit_note.php";
-    public static $page_delete = "delete_note.php";
+
+//    public static $page_manage = "manage_note.php";
+//    public static $page_new = "new_note.php";
+//    public static $page_edit = "edit_note.php";
+//    public static $page_delete = "delete_note.php";
+
+    public static $page_manage = "/public/admin/crud/ajax/manage_ajax.php?class_name=Note"; // "new_link.php";
+    public static $page_new = "/public/admin/crud/ajax/new_ajax.php?class_name=Note"; // "new_link.php";
+    public static $page_edit = "/public/admin/crud/ajax/edit_ajax.php?class_name=Note"; //  "edit_link.php";
+    public static $page_delete = "/public/admin/crud/ajax/delete_ajax.php?class_name=Note"; //  "delete_link.php";
+    public static $position_table = "positionRight"; // positionLeft // positionBoth  positionRight
+
+
     public static $form_class_dependency = array();
     public static $per_page;
     protected static $table_name = "note";

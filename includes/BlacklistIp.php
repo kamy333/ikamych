@@ -86,28 +86,32 @@ public $login_failed;
             "label_text"=>"",
             "select_option_text"=>'login_failed',
             'field_option_0'=>"login_failed",
-            'field_option_1'=>"login_failed",
-            "required" =>false,
+            'field_option_1' => "login_failed",
+            "required" => false,
         ),
     );
 
-    public static $db_field_search= array('search_all','id', 'ip', 'login_failed',);
+    public static $db_field_search = array('search_all', 'id', 'ip', 'login_failed',);
 
 
+    public static $page_name = "BlacklistIp";
+//    public static $page_manage="manage_blacklist.php";
+//    public static $page_new="new_blacklist.php";
+//    public static $page_edit="edit_blacklist.php";
+//    public static $page_delete="delete_blacklist.php";
 
-    public static $page_name="BlacklistIp";
-    public static $page_manage="manage_blacklist.php";
-    public static $page_new="new_blacklist.php";
-    public static $page_edit="edit_blacklist.php";
-    public static $page_delete="delete_blacklist.php";
+    public static $page_manage = "/public/admin/crud/ajax/manage_ajax.php?class_name=BlacklistIp"; // "manage_links.php";
+    public static $page_new = "/public/admin/crud/ajax/new_ajax.php?class_name=BlacklistIp"; // "new_link.php";
+    public static $page_edit = "/public/admin/crud/ajax/edit_ajax.php?class_name=BlacklistIp"; //  "edit_link.php";
+    public static $page_delete = "/public/admin/crud/ajax/delete_ajax.php?class_name=BlacklistIp"; //  "delete_link.php";
+    public static $position_table = "positionRight"; // positionLeft // positionBoth  positionRight
 
 
-
-
-    public static function find_by_ip($ip="") {
+    public static function find_by_ip($ip = "")
+    {
         global $database;
         $ip = $database->escape_value($ip);
-        $result_array = self::find_by_sql("SELECT * FROM ".self::$table_name." WHERE ip='{$ip}' LIMIT 1");
+        $result_array = self::find_by_sql("SELECT * FROM " . self::$table_name . " WHERE ip='{$ip}' LIMIT 1");
         return !empty($result_array) ? array_shift($result_array) : false;
     }
 

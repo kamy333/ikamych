@@ -55,16 +55,19 @@ defined('SIDEBAR_CANVAS') ? null : define('SIDEBAR_CANVAS', SITE_ROOT . DS . 'tr
 defined('TABLE_MANAGE') ? null : define('TABLE_MANAGE', SITE_ROOT . DS . 'transmed' . DS . 'layouts' . DS . 'table_manage.php');
 
 
-$logo = "<span style='color: #0016b0'><b>T</b></span>";
-$logo .= "<span style='color: green'><b>r</b></span>";
-$logo .= "<span style='color: red'><b>a</b></span>";
-$logo .= "<span style='color: darkorchid'><b>n</b></span>";
-$logo .= "<span style='color: royalblue'><b>s</b></span>";
-$logo .= "<span style='color:red'><b>m</b></span>";
-$logo .= "<span style='color: palevioletred'><b>e</b></span>";
-$logo .= "<span style='color: darkcyan'><b>d</b></span>";
+$logo2 = "<span style='color: #0016b0'><b>T</b></span>";
+$logo2 .= "<span style='color: green'><b>r</b></span>";
+$logo2 .= "<span style='color: red'><b>a</b></span>";
+$logo2 .= "<span style='color: darkorchid'><b>n</b></span>";
+$logo2 .= "<span style='color: royalblue'><b>s</b></span>";
+$logo2 .= "<span style='color:red'><b>m</b></span>";
+$logo2 .= "<span style='color: palevioletred'><b>e</b></span>";
+$logo2 .= "<span style='color: darkcyan'><b>d</b></span>";
 //$logo.="<b>".$logo."</b>";
+
+$logo = "<img src='/public/img/logo/NewLogo%20Transmed.png' alt=\"Transmed Logo\" height=\"42\" width=\"42\" ";
 defined('LOGO') ? null : define("LOGO", $logo);
+defined('LOGO2') ? null : define("LOGO2", $logo2);
 
 
 // load config file first

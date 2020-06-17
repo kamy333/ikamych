@@ -198,23 +198,29 @@ class MyHouseExpense extends DatabaseObject {
                     "label_radio"=>"oui",
                     "value"=>"Yes",
                     "id"=>"visible_yes",
-                    "default"=>true)),
+                    "default" => true)),
         ),
 
     );
 
 
-    public static $db_field_search =array('search_all','download_csv');
+    public static $db_field_search = array('search_all', 'download_csv');
 
 
-    public static $page_name="House Expense";
-    public static $page_manage="manage_MyHouseExpense.php";
-    public static $page_new="new_MyHouseExpense.php";
-    public static $page_edit="edit_MyHouseExpense.php";
-    public static $page_delete="delete_MyHouseExpense.php";
+    public static $page_name = "House Expense";
+//    public static $page_manage="manage_MyHouseExpense.php";
+//    public static $page_new="new_MyHouseExpense.php";
+//    public static $page_edit="edit_MyHouseExpense.php";
+//    public static $page_delete="delete_MyHouseExpense.php";
 
-    public static $form_class_dependency=array('MyHouseExpenseType','MyExpensePerson') ;
+    public static $page_manage = "/public/admin/crud/ajax/manage_ajax.php?class_name=MyHouseExpense"; // "new_link.php";
+    public static $page_new = "/public/admin/crud/ajax/new_ajax.php?class_name=MyHouseExpense"; // "new_link.php";
+    public static $page_edit = "/public/admin/crud/ajax/edit_ajax.php?class_name=MyHouseExpense"; //  "edit_link.php";
+    public static $page_delete = "/public/admin/crud/ajax/delete_ajax.php?class_name=MyHouseExpense"; //  "delete_link.php";
+    public static $position_table = "positionRight"; // positionLeft // positionBoth  positionRight
 
+
+    public static $form_class_dependency = array('MyHouseExpenseType', 'MyExpensePerson');
 
 
     public static $per_page;

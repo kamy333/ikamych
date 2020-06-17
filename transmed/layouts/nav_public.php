@@ -113,7 +113,7 @@
             <ul class="nav navbar-top-links navbar-right">
 
                 <?php
-                echo "<li>Bienvenue sur $logo</li>";
+                echo "<li>Bienvenue sur $logo2</li>";
                 if (isset($_SESSION["user_id"])) {
                     echo Message::get_chat();
                     echo Notification::get_notification();

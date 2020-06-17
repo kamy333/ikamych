@@ -85,21 +85,29 @@ class MyCigarette extends DatabaseObject {
                     "label_radio"=>"oui",
                     "value"=>"Yes",
                     "id"=>"visible_yes",
-                    "default"=>true)),
+                    "default" => true)),
         ),
 
     );
 
 
-    public static $db_field_search =array('search_all','download_csv');
+    public static $db_field_search = array('search_all', 'download_csv');
 
 
-    public static $page_name="Cigarette";
-    public static $page_manage="manage_MyCigarette.php";
-    public static $page_new="new_MyCigarette.php";
-    public static $page_edit="edit_MyCigarette.php";
-    public static $page_delete="delete_MyCigarette.php";
-    public static $page_add_cig="new_MyCigarette_Add_1.php";
+    public static $page_name = "Cigarette";
+//    public static $page_manage="manage_MyCigarette.php";
+//    public static $page_new="new_MyCigarette.php";
+//    public static $page_edit="edit_MyCigarette.php";
+//    public static $page_delete="delete_MyCigarette.php";
+
+    public static $page_manage = "/public/admin/crud/ajax/manage_ajax.php?class_name=MyCigarette"; // "new_link.php";
+    public static $page_new = "/public/admin/crud/ajax/new_ajax.php?class_name=MyCigarette"; // "new_link.php";
+    public static $page_edit = "/public/admin/crud/ajax/edit_ajax.php?class_name=MyCigarette"; //  "edit_link.php";
+    public static $page_delete = "/public/admin/crud/ajax/delete_ajax.php?class_name=MyCigarette"; //  "delete_link.php";
+    public static $position_table = "positionRight"; // positionLeft // positionBoth  positionRight
+
+
+    public static $page_add_cig = "new_MyCigarette_Add_1.php";
 
     public static $per_page;
 

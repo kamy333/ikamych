@@ -30,8 +30,8 @@ $photos = Photo::find_by_sql($sql);
 
 <?php //var_dump($users) ?>
 
-<?php $layout_context = "admin"; ?>
-<?php $active_menu = "admin" ?>
+<?php $layout_context = "public"; ?>
+<?php $active_menu = "public" ?>
 <?php $stylesheets = "" //custom_form  ?>
 <?php $view_full_table == 1 ? $fluid_view = true : $fluid_view = false; ?>
 <?php $javascript = "form_admin" ?>

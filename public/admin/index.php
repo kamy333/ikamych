@@ -27,33 +27,20 @@ if(User::is_visitor() ){ redirect_to('../../Inspinia/index.php');}
 
 <div class="row">
 
-    <?php
-    //    class Foo {
-    //        public static $staticProperty = 'foobar';
-    //
-    //        public $property = 'barfoo';
-    //        protected $privateProperty = 'foofoo';
-    //    }
-    //
-    //    $reflectionClass = new ReflectionClass('DatabaseObject');
-    //
-    //    var_dump($reflectionClass->getProperty('staticProperty')->getValue());
-    //    var_dump($reflectionClass->getProperty('property')->getValue(new DatabaseObject));
-    //
-    //    $reflectionProperty = $reflectionClass->getProperty('privateProperty');
-    //    $reflectionProperty->setAccessible(true);
-    //    var_dump($reflectionProperty->getValue(new DatabaseObject));
-    //    ?>
 
-
-
-    
 <?php
 echo DatabaseObject::form_structure();
 
 if(isset($_GET['class_name'])){
-    $class_name=$_GET['class_name'];
+    $class_name = $_GET['class_name'];
+
+    echo "<div class='row'>";
+
     echo $class_name::class_structure();
+
+    echo $class_name::find_column_name();
+    echo "</div>";
+//    echo "";
 }
 
 
@@ -62,18 +49,18 @@ if(isset($_GET['class_name'])){
 
 <hr>
 
-<div class="row">
-    <div class="col-md-12">
+<div class='row'>
+    <div class='col-md-12'>
 
 
-<ul>
-    <li>    <li><a href="../../Inspinia/">Bralia click </a></li>
+        <ul>
+            <li>
+            <li><a href="../../Inspinia/">Bralia click </a></li>
 
-</ul>
+        </ul>
 
 
-
-<ul>
+        <ul>
     <li><a href="manage_custom_form.php">custom</a></li>
     <li><a href="../../smartAdmin/">SmartAdmin</a></li>
     <li><a href="../../SmartAdmin_Full_Version_html/">SmartAdmin Full Version</a></li>

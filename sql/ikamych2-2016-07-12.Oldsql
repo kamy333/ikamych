@@ -27,6 +27,9 @@ SET time_zone = "+00:00";
 --
 -- Table structure for table `blacklist_ip`
 --
+DROP TABLE IF EXISTS `book`;
+
+
 
 DROP TABLE IF EXISTS `blacklist_ip`;
 CREATE TABLE IF NOT EXISTS `blacklist_ip` (

@@ -94,29 +94,35 @@ class LinksCategory extends DatabaseObject {
             "label_text"=>"",
             "select_option_text"=>'rank',
             'field_option_0'=>"rank",
-            'field_option_1'=>"rank",
-            "required" =>false,
+            'field_option_1' => "rank",
+            "required" => false,
         ),
     );
 
 
-    public static $db_field_search =array('search_all','category','download_csv');
+    public static $db_field_search = array('search_all', 'category', 'download_csv');
 
 
-    public static $page_name="LinksCategory";
-    public static $page_manage="manage_links_category.php";
-    public static $page_new="new_link_category.php";
-    public static $page_edit="edit_link_category.php";
-    public static $page_delete="delete_link_category.php";
+    public static $page_name = "LinksCategory";
+//    public static $page_manage="manage_links_category.php";
+//    public static $page_new="new_link_category.php";
+//    public static $page_edit="edit_link_category.php";
+//    public static $page_delete="delete_link_category.php";
+
+    public static $page_manage = "/public/admin/crud/ajax/manage_ajax.php?class_name=LinksCategory"; // "new_link.php";
+    public static $page_new = "/public/admin/crud/ajax/new_ajax.php?class_name=LinksCategory"; // "new_link.php";
+    public static $page_edit = "/public/admin/crud/ajax/edit_ajax.php?class_name=LinksCategory"; //  "edit_link.php";
+    public static $page_delete = "/public/admin/crud/ajax/delete_ajax.php?class_name=LinksCategory"; //  "delete_link.php";
+    public static $position_table = "positionRight"; // positionLeft // positionBoth  positionRight
 
 
-    public static $form_class_dependency=array('Links') ;
+    public static $form_class_dependency = array('Links');
 
 
     public static $per_page;
 
-    public $id ;
-    public $category ;
+    public $id;
+    public $category;
     public $rank;
 
     public  function form_validation() {

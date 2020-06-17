@@ -1,4 +1,8 @@
 <?php require_once('../../../includes/initialize.php'); ?>
+<?php $session->confirmation_protected_page(); ?>
+<?php if (User::is_visitor()) {
+    redirect_to('index.php');
+} ?>
 
 <?php $class_name = "Links"; ?>
 
@@ -22,28 +26,28 @@
 
 <?php
 //1tP5RJcnRz8Xq5WjNarTymBLGsTiDvX5vGVzoYedljzI
-$published="https://script.google.com/macros/s/AKfycbwdriN5JO06KwkQRCi69KqwRPLi-EPRZvkOFDJYWH1yxzbyn8E/exec";
-$publishedlnk="<a href='$published'>Google published</a>";
-$key="1tP5RJcnRz8Xq5WjNarTymBLGsTiDvX5vGVzoYedljzI";
-$http="https://spreadsheets.google.com/feeds/list/".$key."/od6/public/values?alt=json";
-$link="<a href='$http'>Google JSON</a>";
+$published = "https://script.google.com/macros/s/AKfycbwdriN5JO06KwkQRCi69KqwRPLi-EPRZvkOFDJYWH1yxzbyn8E/exec";
+$publishedlnk = "<a href='{$published}'>Google published |</a>";
+$key = "1tP5RJcnRz8Xq5WjNarTymBLGsTiDvX5vGVzoYedljzI";
+$http = "https://spreadsheets.google.com/feeds/list/" . $key . "/od6/public/values?alt=json";
+$link = "<a href='$http'>Google JSON |</a>";
 echo $link." ".$publishedlnk;
 ?>
 
 <div class="row">
 
     <div class="col-lg-8 col-lg-offset-2" style="background-color: #f1ffff;margin-top: 2em;padding: 2em">
-<table class="table table-striped" id="myTable">
-<tr>
-    <th>First</th>
-    <th>Last</th>
-    <th>Email</th>
-    <th>Approved</th>
-    <th>Age</th>
-</tr>
+        <table class="table table-striped" id="myTable">
+            <tr>
+                <th>First</th>
+                <th>Last</th>
+                <th>Email</th>
+                <th>Approved</th>
+                <th>Age</th>
+            </tr>
 
 
-</table>
+        </table>
     </div>
 </div>
 <!--    <script>

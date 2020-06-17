@@ -61,30 +61,51 @@
                         <a class="play-pause"></a>
                     </div>
 
+                    </div>
                 </div>
                 </div>
-        </div>
-                
-                
-                <div class="row">
-
-                <div class="ibox-content">
-
-                    <h2>Desiree and Peddy Engagement party gallery</h2>
-                    <p>
-                        <strong>Desiree and Peddy Engagement</strong> was held in Los Angeles on xx, 2015 at
-                        <a target="_blank" href="#">xx</a>
-                    </p>
-
-                    <?php echo blueimp_lightBoxGallery( get_picture_folder_blueimp_gallery("DesireeEngagement","Engagement Party",$folder_project_name)); ?>
 
 
-                </div>
+        <div class="row">
+
+            <div class="ibox-content">
+
+                <h2>Desiree Baby Shower</h2>
+                <p>
+                    <strong>Desiree and Peddy Engagement</strong> was held in Los Angeles on xx, 2015 at
+                    <a target="_blank" href="#">xx</a>
+                </p>
+
+                <?php echo blueimp_lightBoxGallery(get_picture_folder_blueimp_gallery("DesireeEngagement", "Desiree Baby Shower", $folder_project_name)); ?>
+
 
             </div>
+
+
         </div>
 
+
+        <div class="row">
+
+            <div class="ibox-content">
+
+                <h2>Baby Shower</h2>
+                <p>
+                    <!--                        <strong>Desiree and Peddy Engagement</strong> was held in Los Angeles on xx, 2015 at-->
+                    <a target="_blank" href="#">xx</a>
+                </p>
+
+                <?php echo blueimp_lightBoxGallery(get_picture_folder_blueimp_gallery("DesireeBabyShower", "Desiree Baby Shower", $folder_project_name)); ?>
+
+
+            </div>
+
+        </div>
+
+
     </div>
+
 </div>
+    </div>
 
 <?php include(FOOTER_PUBLIC) ;?>

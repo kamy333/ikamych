@@ -78,22 +78,30 @@ class UserType extends DatabaseObject {
             "class"=>"UserType",
             "label_text"=>"",
             "select_option_text"=>'user_type',
-            'field_option_0'=>"user_type",
-            'field_option_1'=>"user_type",
-            "required" =>false,
+            'field_option_0' => "user_type",
+            'field_option_1' => "user_type",
+            "required" => false,
         ),
 
     );
 
-    public static $db_field_search= array('search_all','id', 'user_type','download_csv');
+    public static $db_field_search = array('search_all', 'id', 'user_type', 'download_csv');
 
-    public static $page_name="User Type";
-    public static $page_manage="manage_user_type.php";
-    public static $page_new="new_user:type.php";
-    public static $page_edit="edit_user_type.php";
-    public static $page_delete="delete_user_type.php";
+    public static $page_name = "User Type";
+//    public static $page_manage="manage_user_type.php";
+//    public static $page_new="new_user:type.php";
+//    public static $page_edit="edit_user_type.php";
+//    public static $page_delete="delete_user_type.php";
 
-    public static $form_class_dependency=array('User') ;
+
+    public static $page_manage = "/public/admin/crud/ajax/manage_ajax.php?class_name=UserType"; // "manage_links.php";
+    public static $page_new = "/public/admin/crud/ajax/new_ajax.php?class_name=UserType"; // "new_link.php";
+    public static $page_edit = "/public/admin/crud/ajax/edit_ajax.php?class_name=UserType"; //  "edit_link.php";
+    public static $page_delete = "/public/admin/crud/ajax/delete_ajax.php?class_name=UserType"; //  "delete_link.php";
+    public static $position_table = "positionRight"; // positionLeft // positionBoth  positionRight
+
+
+    public static $form_class_dependency = array('User');
 
 
     public $id;

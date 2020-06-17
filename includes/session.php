@@ -162,6 +162,7 @@ class Session {
 
         // Regenerate session ID to invalidate the old one.
         // Super important to prevent session hijacking/fixation.
+
         session_regenerate_id();
 
         $this->user_id = $_SESSION['user_id'] = $user->id;

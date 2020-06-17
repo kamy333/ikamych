@@ -11,15 +11,21 @@ if ($Nav->folder_immediate != "admin") {
     $class_name::$page_delete = $Nav->path_admin . $Nav->folder_prev . '/delete/' . $class_name::$page_delete;
 } ?>
 
+<?php
+$class_name::$page_manage = "/public/admin/manage_user.php";
+$class_name::$page_new = "/public/admin/new_user.php";
+$class_name::$page_edit = "/public/admin/edit_user.php";
+$class_name:: $page_delete = "/public/admin/delete_user.php";
+?>
 
 <?php
 if (!isset($_GET["id"])) {
-    $id="";
+    $id = "";
     redirect_to($class_name::$page_manage);
 } else {
 
-    $id=$_GET["id"];
-    $class_found=$class_name::find_by_id($id);
+    $id = $_GET["id"];
+    $class_found = $class_name::find_by_id($id);
 
 if($class_found->username=="Admin" &&$class_name=="User"){
     $session->message($class_found->username." cannot be deleted  ") ;

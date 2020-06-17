@@ -209,29 +209,36 @@ class Project extends DatabaseObject {
             "label_text"=>"",
             "select_option_text"=>'end_date',
             'field_option_0'=>"end_date",
-            'field_option_1'=>"end_date",
-            "required" =>false,
+            'field_option_1' => "end_date",
+            "required" => false,
         ),
 
     );
 
-    public static $db_field_search=array('search_all','id', 'project_code','project_name', 'client_id','pseudo','start_date', 'end_date','currency_iso','download_csv');
+    public static $db_field_search = array('search_all', 'id', 'project_code', 'project_name', 'client_id', 'pseudo', 'start_date', 'end_date', 'currency_iso', 'download_csv');
 
 
-    public static $page_name="Project";
-    public static $page_manage="manage_projects.php";
-    public static $page_new="new_project.php";
-    public static $page_edit="edit_project.php";
-    public static $page_delete="delete_project.php";
+    public static $page_name = "Project";
+//    public static $page_manage="manage_projects.php";
+//    public static $page_new="new_project.php";
+//    public static $page_edit="edit_project.php";
+//    public static $page_delete="delete_project.php";
 
-    public static $form_class_dependency=array('Client') ;
+    public static $page_manage = "/public/admin/crud/ajax/manage_ajax.php?class_name=Project"; // "new_link.php";
+    public static $page_new = "/public/admin/crud/ajax/new_ajax.php?class_name=Project"; // "new_link.php";
+    public static $page_edit = "/public/admin/crud/ajax/edit_ajax.php?class_name=Project"; //  "edit_link.php";
+    public static $page_delete = "/public/admin/crud/ajax/delete_ajax.php?class_name=Project"; //  "delete_link.php";
+    public static $position_table = "positionRight"; // positionLeft // positionBoth  positionRight
+
+
+    public static $form_class_dependency = array('Client');
 
 
     public static $per_page;
 
 
     public $id;
-public $project_code;
+    public $project_code;
 public $project_name;
 public $client_id;
 public $pseudo;

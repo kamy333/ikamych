@@ -5,7 +5,7 @@
 <?php // var_dump($session) ?>
 
 <?php
-$class_name="UserUpdate";
+$class_name = "UserUpdate";
 if ($Nav->folder_immediate != "admin") {
     $class_name::$page_manage = $Nav->path_admin . $Nav->folder_prev . '/manage/' . $class_name::$page_manage;
     $class_name::$page_new = $Nav->path_admin . $Nav->folder_prev . '/new/' . $class_name::$page_new;
@@ -13,11 +13,17 @@ if ($Nav->folder_immediate != "admin") {
     $class_name::$page_delete = $Nav->path_admin . $Nav->folder_prev . '/delete/' . $class_name::$page_delete;
 }
 
-if(isset($_GET['id'])){
-    $post_link=$_SERVER["PHP_SELF"]."?id=".urldecode($_GET['id']);
+$class_name::$page_manage = "/public/admin/manage_user.php";
+$class_name::$page_new = "/public/admin/new_user.php";
+$class_name::$page_edit = "/public/admin/edit_user.php";
+$class_name:: $page_delete = "/public/admin/delete_user.php";
 
-}else{
-    $post_link=$_SERVER["PHP_SELF"];
+
+if (isset($_GET['id'])) {
+    $post_link = $_SERVER["PHP_SELF"] . "?id=" . urldecode($_GET['id']);
+
+} else {
+    $post_link = $_SERVER["PHP_SELF"];
 }
 
 ?>

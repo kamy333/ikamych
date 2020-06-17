@@ -8,7 +8,7 @@
         </div>
         <div class="text-center">
             <p class="text-center">
-                <small>&#xA9;&nbsp;2014 - <?php echo date("Y"); ?>,<?php echo " " . $logo; ?> </small>
+                <small>&#xA9;&nbsp;2014 - <?php echo date("Y"); ?>,<?php echo " " . $logo2; ?> </small>
             </p>
         </div>
     </div>

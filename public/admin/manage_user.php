@@ -7,8 +7,8 @@ if(User::is_employee() || User::is_secretary() || User::is_visitor()){ redirect_
 $class_name="User";
 $table_name=$class_name::get_table_name();
 
-$order_name= !empty($_GET["order_name"])?$_GET["order_name"] : 'id';
-$order_type= !empty($_GET["order_type"])?$_GET["order_type"] :'ASC';
+$order_name = !empty($_GET["order_name"]) ? $_GET["order_name"] : 'id';
+$order_type = !empty($_GET["order_type"]) ? $_GET["order_type"] : 'ASC';
 
 if ($Nav->folder_immediate != "admin") {
     $class_name::$page_manage = $Nav->path_admin . $Nav->folder_prev . '/manage/' . $class_name::$page_manage;
@@ -17,15 +17,20 @@ if ($Nav->folder_immediate != "admin") {
     $class_name::$page_delete = $Nav->path_admin . $Nav->folder_prev . '/delete/' . $class_name::$page_delete;
 }
 
+$class_name::$page_manage = "/public/admin/manage_user.php";
+$class_name::$page_new = "/public/admin/new_user.php";
+$class_name::$page_edit = "/public/admin/edit_user.php";
+$class_name:: $page_delete = "/public/admin/delete_user.php";
+
 //echo get_where_string($class_name);
 
-$page= !empty($_GET['page'])? (int) $_GET["page"]:1;
-$per_page=20;
-$where=get_where_string($class_name);
-$total_count=$class_name::count_all_where($where);
-$pagination= new Pagination($page,$per_page,$total_count);
+$page = !empty($_GET['page']) ? (int)$_GET["page"] : 1;
+$per_page = 20;
+$where = get_where_string($class_name);
+$total_count = $class_name::count_all_where($where);
+$pagination = new Pagination($page, $per_page, $total_count);
 
-require_once LIB_PATH.DS.'download'.DS.'download_csv.php';
+require_once LIB_PATH . DS . 'download' . DS . 'download_csv.php';
 
 
 $sql = "SELECT * FROM {$table_name} ";

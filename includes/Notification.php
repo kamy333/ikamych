@@ -18,16 +18,21 @@ class Notification extends DatabaseObject
 
     public $username;
 //    public $to;
+    public static $page_manage = "/public/admin/crud/ajax/manage_ajax.php?class_name=Notification"; // "new_link.php";
+    public static $page_new = "/public/admin/crud/ajax/new_ajax.php?class_name=Notification"; // "new_link.php";
+    public static $page_edit = "/public/admin/crud/ajax/edit_ajax.php?class_name=Notification"; //  "edit_link.php";
+    public static $page_delete = "/public/admin/crud/ajax/delete_ajax.php?class_name=Notification"; //  "delete_link.php";
+    public static $position_table = "positionRight"; // positionLeft // positionBoth  positionRight
 
 
-    protected static $table_name="notifications";
-    protected static $db_fields = array('id', 'user_id','read', 'message','link','date');
+    protected static $table_name = "notifications";
+    protected static $db_fields = array('id', 'user_id', 'read', 'message', 'link', 'date');
 
-    public static $required_fields=array('id', 'user_id','read', 'message','link');
+    public static $required_fields = array('id', 'user_id', 'read', 'message', 'link');
 
-    protected static $db_fields_table_display_short=array('id', 'user_id','read','username','link', 'message','date');
+    protected static $db_fields_table_display_short = array('id', 'user_id', 'read', 'username', 'link', 'message', 'date');
 
-    protected static $db_fields_table_display_full=array('id', 'user_id','read','username','message','link','date');
+    protected static $db_fields_table_display_full = array('id', 'user_id', 'read', 'username', 'message', 'link', 'date');
 
     protected static $db_field_exclude_table_display_sort=array('username');
 

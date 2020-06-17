@@ -81,7 +81,7 @@ if (is_dir($dir)) {
     foreach ($dir_array as $file) {
         if (stripos($file, '.') > 0) {
             $ext = pathinfo($file, PATHINFO_EXTENSION);
-            if ($ext == 'jpg' || $ext == 'JPG' || $ext == 'png' || $ext == 'PNG') {
+            if ($ext == 'jpg' || $ext == 'jpeg' || $ext == 'JPEG' || $ext == 'JPG' || $ext == 'png' || $ext == 'PNG') {
                 list($width, $height, $type, $attr) = getimagesize($file);
 //                if ($width)
                 $count++;
@@ -103,7 +103,7 @@ if (is_dir($dir)) {
     foreach ($dir_array as $file) {
         if (stripos($file, '.') > 0) {
             $ext = pathinfo($file, PATHINFO_EXTENSION);
-            if ($ext == 'jpg' || $ext == 'JPG' || $ext == 'png' || $ext == 'PNG') {
+            if ($ext == 'jpg' || $ext == 'jpeg' || $ext == 'JPEG' || $ext == 'JPG' || $ext == 'png' || $ext == 'PNG') {
                 list($width, $height, $type, $attr) = getimagesize($file);
 
                 $count++;
@@ -154,12 +154,27 @@ if (is_dir($dir)) {
 
 
             <?php
-            //          $text = "<a href='#'></a>";
             $text .= "<p>Je t'aime dans le temps. Je t'aimerai jusqu'au bout du temps. Et quand le temps sera écoulé, alors, je t'aurai aimée. Et rien de cet amour, comme rien de ce qui a été, ne pourra jamais être effacé.<p>
 	<div class='pull-right'><p>Jean d'Ormesson <small>(16 juin 1925 - 5 décembre 2017)</small></p>
 		<small><i>-Un jour je m'en irai sans avoir tout dit.</i></small></div>";
             echo "" . $text . "<hr>";
             ?>
+
+
+        </div>
+
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2" style="margin-top: 2em;padding: 2em;background-color: white">
+                <?php
+                //          $text = "<a href='#'></a>";
+                $text = "<p>
+J’imagine qu’une des raisons pour lesquelles les gens s’accrochent à leurs haines avec tellement d’obstination, est qu’ils sentent qu’une fois la haine partie, ils devront affronter leurs souffrances.<p>
+	<div class='pull-right'><p>James Baldwin</p>
+	</div>";
+                echo "" . $text;
+
+                ?>
+            </div>
         </div>
 
 

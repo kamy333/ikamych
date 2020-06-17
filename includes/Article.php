@@ -36,19 +36,20 @@ class Article extends DatabaseObject
 //    public static $page_delete = "delete_article.php";
 
 
-    public static $page_manage = "/public/admin/crud/ajax/manage_ajax.php";
-    public static $page_new = "/public/admin/crud/ajax/new_ajax.php";
-    public static $page_edit = "/public/admin/crud/ajax/edit_ajax.php";
-    public static $page_delete = "/public/admin/crud/ajax/delete_ajax.php";
+//    public static $page_manage = "/public/admin/crud/ajax/manage_ajax.php?class_name=" .__CLASS__;
+//    public static $page_new = "/public/admin/crud/ajax/new_ajax.php?class_name=" .__CLASS__;
+//    public static $page_edit = "/public/admin/crud/ajax/edit_ajax.php?class_name=" .__CLASS__;
+//    public static $page_delete = "/public/admin/crud/ajax/delete_ajax.php?class_name=" .__CLASS__;
 
+    public static $position_table = "positionBoth"; // positionLeft // positionBoth  positionRight
 
 
     protected static $table_name = "article";
     protected static $db_fields = array('id', 'rank', 'subject_id', 'link_txt', 'link', 'photo', 'h3', 'article', 'likes', 'is_row', 'num_column', 'num_offset', 'comment', 'input_date');
     protected static $required_fields = array('article',);
-    protected static $db_field_exclude_table_display_sort = array('subject', 'article_short');
+    protected static $db_field_exclude_table_display_sort = array('subject', 'article_short', 'link_short');
 
-    protected static $db_fields_table_display_short = array('id', 'rank', 'subject', 'link_txt', 'link', 'photo', 'h3', 'article_short', 'input_date');
+    protected static $db_fields_table_display_short = array('id', 'rank', 'subject', 'link_txt', 'link_short', 'photo', 'h3', 'article_short');
     protected static $db_fields_table_display_full = array('id', 'rank', 'subject_id', 'subject', 'link_txt', 'link', 'photo', 'h3', 'article', 'likes', 'is_row', 'num_column', 'num_offset', 'comment', 'input_date');
     protected static $form_properties = array(
         "rank" => array("type" => "number",
@@ -58,12 +59,7 @@ class Article extends DatabaseObject
             "placeholder" => "a number to sort",
             "required" => true,
         ),
-//        "subject_id" => array("type" => "text",
-//            "name" => 'subject_id',
-//            "label_text" => "subject_id",
-//            "placeholder" => "subject_id",
-//            "required" => true,
-//        ),
+
 
         "subject_id" => array("type" => "select",
             "name" => 'subject_id',
@@ -113,6 +109,8 @@ class Article extends DatabaseObject
             "name" => 'article',
             "label_text" => "Article",
             "placeholder" => "Article here",
+            "rows" => 5,
+            "cols" => 5,
             "required" => true,
         ),
         "is_row" => array("type" => "number",
@@ -210,6 +208,8 @@ class Article extends DatabaseObject
     public $subject;
     public $link_txt;
     public $link;
+    public $link_short;
+
     public $photo;
     public $article;
     public $article_short;
@@ -229,6 +229,7 @@ class Article extends DatabaseObject
         $output = "</a><span>&nbsp;</span>";
         $output .= "<a  class=\"btn btn-primary\"  href=\"" . static::$page_new . "\">Add Article Ajax" . " </a><span>&nbsp;</span>";
         $output .= "<a  class=\"btn btn-primary\"  href=\"" . ArticleSubject::$page_manage . "\"> Subject " . " </a><span>&nbsp;</span>";
+        $output .= "<a  class=\"btn btn-beige\"  href='/public/_f/article/articles.php?ArticleSubject=1&submitArticleSubject=Submit'>Articles " . " </a><span>&nbsp;</span>";
         return $output;
     }
 
@@ -257,6 +258,84 @@ class Article extends DatabaseObject
     }
 
 
+    function get_modal_article()
+    {
+
+        // modal
+
+//        $article = self::find_by_id($this->id);
+
+
+        $div_id = get_class($this) . "{$this->id}";
+
+        $output = "";
+
+        //   $output .= "";
+
+
+        $output = "";
+
+
+        $output .= "<a class='' style='width:1em;' href='#' data-toggle='modal' data-target='#{$div_id}'>";
+        $output .= "<span class=\"glyphicon glyphicon-info-sign\" style='color: #0000ff;' aria-hidden='true'>";
+        // $output.= "".htmlentities($link['id'],ENT_COMPAT, 'utf-8');
+        $output .= "</span>";
+        $output .= "</a>";
+
+
+// below is modal mode not shown (hidden)
+        $output .= "<div class='modal fade' id='{$div_id}' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true'>";
+        $output .= "    <div class='modal-dialog'>";
+        $output .= "        <div class='modal-content'>";
+        $output .= "            <div class='modal-header'>";
+        $output .= "                <button type='button' class='close' data-dismiss='modal' aria-label='Close'><span aria-hidden='true'>&times;</span></button>";
+        $output .= "                <h5 class='modal-title' id='myModalLabel'>article" . htmlentities($this->h3, ENT_COMPAT, 'utf-8') .
+            "</strong> Categ :" . htmlentities($this->h3, ENT_COMPAT, 'utf-8') . "</strong></h5>";
+        $output .= "            </div>";
+        $output .= "            <div class='modal-body'>";
+
+
+        $output .= $this->article;
+
+
+        $class = "&id=";
+        $relative = "/public/admin/crud/ajax/";
+        $p_edit = self::$page_edit . $class; //  $relative ."edit_ajax.php".$class;
+        $p_del = self::$page_delete . $class; //  $relative . "delete_ajax.php".$class;
+        $p_new = self::$page_new . $class; //  $relative . "new_ajax.php".$class ;
+
+        $output .= "<div class='container-fluid text-left'> ";
+
+
+        $output .= "</div>";
+
+
+        $output .= "            </div>";
+
+        $style_width_button = "style='width: 6em;'";
+
+
+        $output .= "            <div class='modal-footer'>";
+        $output .= "                <div class='btn-group btn-group-justified' role='group' aria-label='...'>";
+        $output .= "                <p class='btn'  ><a class='btn btn-primary btn-xm'{$style_width_button } href='{$p_edit}" . urlencode($this->id) . "'>Edit</a></p>";
+        $output .= "                <p class='btn'><a class='btn btn-danger btn-xm' {$style_width_button} href='{$p_del}" . urlencode($this->id) . "'>Delete</a></p>";
+        $output .= "                <p class='btn' ><a class='btn btn-success btn-xm' {$style_width_button} href='{$p_new}" . urlencode($this->id) . "'>add</a></p>";
+
+        $output .= "                <p class='btn' data-dismiss='modal'><a class=' btn btn-info btn-xm' {$style_width_button}>close</a> </p>";
+
+        $output .= "                </div>";
+
+
+        $output .= "            </div>";
+        $output .= "        </div>";
+        $output .= "    </div>";
+        $output .= "</div>";
+
+
+        return $output;
+    }
+
+
     public function set_up_display()
     {
         $ArticleSubject = ArticleSubject::find_by_id($this->subject_id);
@@ -266,8 +345,17 @@ class Article extends DatabaseObject
 //        $arr=str_word_count($str_tags,10);
 //        $this->article_short= implode(" ",$arr);
 
-        $this->article_short = strip_tags(implode(' ', array_slice(explode(' ', $this->article), 0, 5)));;
+//        $this->article_short = implode(' ', array_slice(explode(' ', strip_tags($this->article)), 0, 5));;
 
+        $this->article_short = self::get_modal_article();
+
+        if (!empty($this->link)) {
+            $this->link_short = "<a target='_blank' href='{$this->link}'>lnk</a>";
+
+        }
+
+
+//        $this->link_short = implode(' ', array_slice(explode(' ', $this->link), 0, 5));
 
     }
 

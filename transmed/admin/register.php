@@ -42,7 +42,7 @@ if (request_is_post() && request_is_same_domain()) {
 
             $user->email = trim($_POST['email']);
             $user->user_type_id = 5;
-            $user->block_user = 0;
+            $user->block_user = 1;
             $user->unread_message = 0;
             $user->unread_notification = 0;
 
@@ -97,7 +97,9 @@ if (request_is_post() && request_is_same_domain()) {
 
                     $session->message("User: " . $user->username . " " . " has been created for ID (" . $user->id . ")");
                     $session->ok(true);
-                    $user->login_visitor_email('Registration sucessfull');;
+                    $user->login_visitor_email('Registration sucessfull');
+                    $user->visitor_email('Registration sucessfull');
+
                     redirect_to("index.php");
                 } else {
                     log_action('Registration unsuccessfull ', " ");

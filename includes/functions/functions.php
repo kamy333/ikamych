@@ -625,6 +625,13 @@ function e($string)
 
 }
 
+function clean_query_string2($text_qry_str)
+{
+    $new_str = str_replace("//", "/", $text_qry_str);
+    $new_str = str_replace("htpps:/", "htpps://", $new_str);
+    return $new_str;
+}
+
 function clean_query_string($text_qry_str)
 {
     if (substr_count($text_qry_str, '?') > 1) {
@@ -826,7 +833,7 @@ function get_picture_folder_blueimp_gallery($img_folder = "", $title = "", $defa
         foreach ($dir_array as $file) {
             if (stripos($file, '.') > 0) {
                 $ext = pathinfo($file, PATHINFO_EXTENSION);
-                if ($ext == 'jpg' || $ext == 'JPG' || $ext == 'png' || $ext == 'PNG') {
+                if ($ext == 'jpg' || $ext == 'jpeg' || $ext == 'JPEG' || $ext == 'JPG' || $ext == 'png' || $ext == 'PNG') {
 //                    $output.= "<a href='img/$img_folder/{$file}' title=\"{$title}\" data-gallery=''><img src='img/$img_folder/{$file}' style='width: 10em;height: 10em' ></a>";
                     $output .= "<a href='/$default_path/img/$img_folder/{$file}' title=\"{$title}\" data-gallery=''><img src='/$default_path/img/$img_folder/{$file}' style='width: 10em;height: 10em' ></a>";
 
@@ -837,6 +844,7 @@ function get_picture_folder_blueimp_gallery($img_folder = "", $title = "", $defa
     }
     return $output;
 }
+
 
 function get_picture_folder_bootstrap_gallery($img_folder = "", $alt = "image", $default_path = "public", $caption = true)
 {
@@ -856,7 +864,7 @@ function get_picture_folder_bootstrap_gallery($img_folder = "", $alt = "image", 
                 } else {
                     $out_caption = "";
                 }
-                if ($ext == 'jpg' || $ext == 'JPG' || $ext == 'png' || $ext == 'PNG') {
+                if ($ext == 'jpg' || $ext == 'jpeg' || $ext == 'JPEG' || $ext == 'JPG' || $ext == 'png' || $ext == 'PNG') {
                     $output .= "<div class=\"item\">
                                 <img alt=\"{$alt}\" class=\"img - responsive thum\"                                                            src='img/$img_folder/{$file}'>
                                 {$out_caption}
@@ -925,7 +933,7 @@ function get_picture_array($img_folder = "")
                 $alt = ucfirst($alt);
 
 
-                if ($ext == 'jpg' || $ext == 'JPG' || $ext == 'png' || $ext == 'PNG') {
+                if ($ext == 'jpg' || $ext == 'jpeg' || $ext == 'JPEG' || $ext == 'JPG' || $ext == 'png' || $ext == 'PNG') {
 
                     $img_html = "<img alt=\"{$file_no_ext}\" class=\"img-responsive\" src='img/$img_folder/{$file}' style='width: 30em;height: 20em' >";
 
@@ -998,6 +1006,7 @@ function get_gallery_array($no = 1)
             'index' => 'Home',
             'index_gallery6' => 'Bralia',
             'index_gallery' => 'Desiree Wedding',
+            'index_gallery16' => 'Desire Baby Shower',
             'index_gallery10' => 'Samira Wedding',
             'index_gallery2' => 'Family',
             'index_gallery3' => 'Friends',
@@ -1517,6 +1526,7 @@ function get_ebooks($img_folder = "")
 
     global $Nav;
     $default_path = $Nav->folder;
+//    $default_path = "";
     $dir = SITE_ROOT . DS . $default_path . DS . "/img/" . $img_folder;
     $picture_array = array();
 //    $output="";
@@ -1535,10 +1545,10 @@ function get_ebooks($img_folder = "")
 
                 if ($ext == 'jpg' || $ext == 'JPG' || $ext == 'png' || $ext == 'PNG' || 'pdf') {
 
-                    $img_html = "<img alt=\"{$file_no_ext}\" class=\"img-responsive\" src='img/$img_folder/{$file}' style='width: 30em;height: 20em' >";
+                    $img_html = "<img alt=\"{$file_no_ext}\" class=\"img-responsive\" src='/public/img/$img_folder/{$file}' style='width: 30em;height: 20em' >";
 
-                    $img_src = "<img src='img/$img_folder/{$file}' alt='{$alt}' class='img-responsive pull-left'> ";
-                    $full_path = "img/$img_folder/{$file}";
+                    $img_src = "<img src='/public/img/$img_folder/{$file}' alt='{$alt}' class='img-responsive pull-left'> ";
+                    $full_path = "/public/img/$img_folder/{$file}";
                     $output = array(
                         "img_tag" => $img_html,
                         'img_file' => $file,
@@ -1549,7 +1559,7 @@ function get_ebooks($img_folder = "")
                         "img_src" => $img_src,
                         "img_alt" => $alt,
                         "full_path" => $full_path,
-                        "href" => "<a href='$full_path'>$file_no_ext</a>"
+                        "href" => "<a target='_blank' href='$full_path'>$file_no_ext</a>"
                     );
 
 
@@ -1577,8 +1587,8 @@ function article_by_sql($article_where_subject = 1, $color_palette = 12, $is_row
     $output = "";
     $output .= "<div class='row'>";
     foreach ($articles as $article) {
-//        $my_num = array(1,2,3,4,5,6,7,8,9,10,11,12);
-//        shuffle($my_num);
+
+
         $i = $color_palette; // $my_num[0]; using by default 12 light color but could use 12 other optioms in shuffle
 
         switch ($i) {
@@ -1626,18 +1636,332 @@ function article_by_sql($article_where_subject = 1, $color_palette = 12, $is_row
                 $my_color = RandomColor::many(27, array('luminosity' => 'light'));
 
         }
+        $output .= "<article>";
+
+        $output .= "<div class='col-lg-9 col-lg-offset-2' style='background-color:{$my_color[0]}  ;margin-top: 2em;padding: 2em ;' >";
+
+//        $nexts = Article::find_by_sql("SELECT * FROM article WHERE id !={$article->id} AND subject_id='{$article_where_subject}' order by id DESC LIMIT 1 ");
+//
+//        foreach ($nexts as $next) { $output .= "check nextid = " . $next->id.". {$article->id} <br>"; }
+
+
+        if (User::is_admin()) {
+            $output .= "<div class='text-right'>";
+            $output .= "<a  class='btn btn-default' href='/public/admin/crud/ajax/manage_ajax.php?class_name=Article'><i><span class='glyphicon glyphicon-th-large'></span></i></a>";
+            $output .= "&nbsp;&nbsp;<a class='btn btn-info'  href='/public/admin/crud/ajax/new_ajax.php?class_name=Article'><i><span class='glyphicon glyphicon-plus'></span></i></a>";
+            $output .= "&nbsp;&nbsp;<a class='btn btn-primary'  href='/public/admin/crud/ajax/edit_ajax.php?class_name=Article&id={$article->id}'><i><span class='glyphicon glyphicon-pencil'></span></i></a>";
+            $output .= "&nbsp;&nbsp;<a class='btn btn-danger'  class='btn btn-danger' href='/public/admin/crud/ajax/delete_ajax.php?class_name=Article&id={$article->id}'  onclick=\"return confirm('Are you sure to delete?')\"><i><span class='glyphicon glyphicon-remove'></span></i></a>";
+            $output .= "</div>";
+        }
+//        $output .= "</div>";
+
         $output .= "<div class='col-lg-9 col-lg-offset-2' style='background-color: {$my_color[0]};margin-top: 2em;padding: 2em'>";
         if (!empty($article->link)) {
             $output .= "<h4  style='background-color:white}'><a target='_blank'  href='{$article->link}'>{$article->link_txt}</a></h4>";
-//            $output.="<br>";
         }
         if (trim($article->article !== "a")) {
             $output .= $article->article;
             $output .= "</div>";
         }
 
+        $output .= "</article>";
+
     }
     $output .= "</div>";
+
+    return $output;
+}
+
+
+function article_subject()
+{
+    $output = "";
+    $subjects = ArticleSubject::find_all();
+    $path = $_SERVER['PHP_SELF'];
+
+
+    $output .= "<div class='col-lg-3'>";
+
+    $output .= "<form name='form_ArticleSubject' id='form_ArticleSubject' action='{$path}' class='form-inline' method='GET'>";
+
+    $lnk = "<a href='/public/admin/crud/ajax/manage_ajax.php?class_name=Article' >Articles</a>";
+    $output .= "<label for='ArticleSubjectLabel'>$lnk &nbsp;</label>";
+
+    $output .= "<select name='ArticleSubject' id='ArticleSubjectLabel' >";
+
+    foreach ($subjects as $subject) {
+        ($_GET ["ArticleSubject"] == $subject->id) ? $selected = "selected" : $selected = "";
+        $output .= " <option value='{$subject->id}' $selected >{$subject->subject}</option>";
+    }
+
+    $output .= "</select>
+               <input name='submitArticleSubject' type='submit'>
+               </form>";
+    $output .= "</div>";
+
+
+    return $output;
+
+}
+
+
+function book_category()
+{
+    $output = "";
+    $category = BookCategory::find_all();
+    $path = $_SERVER['PHP_SELF'];
+
+    $output .= "<div class='col-lg-3  col-lg-offset-2'>";
+
+    $output .= "<form name='form_BookCategory' id='form_BookCategory' action='{$path}' class='form-inline'  method='GET'>";
+
+    $lnk = "<a href='/public/admin/crud/ajax/manage_ajax.php?class_name=Book' >Books</a>";
+
+    $output .= "<label for='BookCategoryLabel'>$lnk &nbsp;</label>";
+
+    $output .= "<select name='BookCategory' id='BookCategoryLabel' >";
+
+    foreach ($category as $categ) {
+        ($_GET ["ArticleSubject"] == $categ->id) ? $selected = "selected" : $selected = "";
+        $output .= " <option value='{$categ->id}' $selected >{$categ->category}</option>";
+    }
+
+    $output .= "</select>
+                <input name='submitBookCategory' type='submit'>
+                </form>";
+    $output .= "</div>";
+
+    return $output;
+
+}
+
+function book_category2()
+{
+    $output = "";
+    $category = BookCategory::find_all();
+
+    $x = pathinfo($_SERVER["PHP_SELF"]);
+    $path_base = $x['basename'];
+
+    $output .= "<div class='col-lg-8  col-lg-offset-2 text-center'>";
+
+
+    foreach ($category as $categ) {
+
+        $path = "$path_base?BookCategory={$categ->id}&submitBookCategory=Submit";
+        $output .= "<span ><a style='text-decoration:white' href='{$path}'>{$categ->category}</a></span>&nbsp;&nbsp;&nbsp;&nbsp;";
+
+    }
+
+
+    $output .= "</div>";
+
+    return $output;
+
+}
+
+
+function book_by_sql($book_where_category = 1, $color_palette = 12, $is_row = true)
+{
+    $output = "";
+
+    $books = Book::find_by_sql("SELECT * FROM book WHERE category_id='{$book_where_category}' order by id DESC");
+
+
+//    $output .= "<h2 id='top'>Top of page!</h2>";
+    $output .= "";
+
+
+    $output .= "<br><h1 id='top' class='text-center'>" . "Books" . "</h1>";
+
+
+    $output .= "<div class='row'>";
+
+    $output .= book_category2();
+    $output .= "</div>";
+
+
+    $output .= "<div class='row'>";
+    $output .= "<div class='col-lg-9 col-lg-offset-2' style='background-color:snow  ;margin-top: 2em;padding: 2em ;border-style: solid;' >";
+    $output .= "<h2 class='text-center'>Menu</h2>";
+    $output .= "<ul>";
+    foreach ($books as $book) {
+        $output .= "<li>";
+        $output .= "<a href='#book{$book->id}'>$book->h2</a>";
+        $output .= "</li>";
+    }
+    $output .= "</ul>";
+    $output .= "</div>";
+    $output .= "</div>";
+
+
+    $output .= "<div class='row'>";
+
+
+//    $ids=[];
+//    foreach ($books as $book) {
+//        array_push($ids, $book->id);
+//    }
+//
+//    $j=-1;
+//    $count_ids=count($ids);
+
+
+    foreach ($books as $book) {
+
+
+        $output .= "";
+
+        $i = $color_palette; // $my_num[0]; using by default 12 light color but could use 12 other optioms in shuffle
+        $my_color = RandomColor::many(27, array('luminosity' => 'light'));
+        switch ($i) {
+            case 0:
+                $my_color = RandomColor::many(36);
+                break;
+            case 1:
+                $my_color = RandomColor::many(18, array('hue' => 'red'));
+                break;
+            case 2:
+                $my_color = RandomColor::many(18, array('hue' => 'orange'));
+                break;
+            case 3:
+                $my_color = RandomColor::many(18, array('hue' => 'yellow'));
+                break;
+            case 4:
+                $my_color = RandomColor::many(18, array('hue' => 'green'));
+                break;
+            case 5:
+                $my_color = RandomColor::many(18, array('hue' => 'blue'));
+                break;
+            case 6:
+                $my_color = RandomColor::many(18, array('hue' => 'purple'));
+                break;
+            case 7:
+                $my_color = RandomColor::many(18, array('hue' => 'pink'));
+                break;
+            case 8:
+                $my_color = RandomColor::many(18, array('hue' => 'monochrome'));
+                break;
+            case 9:
+                $my_color = RandomColor::many(27, array('hue' => array('blue', 'yellow')));
+                break;
+            case 10:
+                $my_color = RandomColor::many(27, array('luminosity' => 'dark'));
+                break;
+            case 11:
+                $my_color = RandomColor::many(36, array('luminosity' => 'random', 'hue' => 'random'));
+                break;
+            case 12:
+                $my_color = RandomColor::many(27, array('luminosity' => 'light'));
+                break;
+
+            default:
+                $my_color = RandomColor::many(27, array('luminosity' => 'light'));
+
+        }
+
+//        $output .= "<div class='col-lg-9 col-lg-offset-2' style='background-color: {$my_color[0]};margin-top: 2em;padding: 2em'>";
+        $output .= "<span id='book{$book->id}'></span>";
+        $output .= "<div class='col-lg-9 col-lg-offset-2' style='background-color:#D6EAF8  ;margin-top: 2em;padding: 2em ;border-style: solid;' >";
+
+
+        if (User::is_admin()) {
+            $output .= "<div class='text-right'>";
+            $output .= "";
+            $output .= "<a  class='btn btn-default'  href='/public/admin/crud/ajax/manage_ajax.php?class_name=Book'><i><span class='glyphicon glyphicon-th-large'></span></i></a>";
+            $output .= "&nbsp;&nbsp;<a class='btn btn-info btn-sm'  href='/public/admin/crud/ajax/new_ajax.php?class_name=Book'><i><span class='glyphicon glyphicon-plus'></span></i></a>";
+            $output .= "&nbsp;&nbsp;<a class='btn btn-primary'  href='/public/admin/crud/ajax/edit_ajax.php?class_name=Book&id={$book->id}'><i><span class='glyphicon glyphicon-pencil'></span></i></a>";
+            $output .= "&nbsp;&nbsp;<a class='btn btn-danger'  class='btn btn-danger' href='/public/admin/crud/ajax/delete_ajax.php?class_name=Book&id={$book->id}'  onclick=\"return confirm('Are you sure to delete?')\"><i><span class='glyphicon glyphicon-remove'></span></i></a>";
+
+            $output .= "";
+            $output .= "</div>";
+
+        }
+
+        $output .= "<article>";
+
+//        $j++;
+//
+//        $next=$ids[$j+1];
+//        $prev=$ids[$j-1];
+
+
+//        $output .="bookid:{$book->id} /" . "item: ".$j ." / arr: " .$ids[$j];
+
+
+        if (!empty($book->h2)) {
+            $output .= "<h2>$book->h2</h2>";
+            $output .= "<a href='#top'>Go to top</a>&nbsp;&nbsp;";
+
+//            if($j !== 0){$output.="<a href='#previous{$prev}'>previous</a>&nbsp;&nbsp;";}
+//            if ($ids[$count_ids -1] == $j){$output.="<a href='#next{$next}'>next</a>";            }
+//            $output .= "&nbsp;&nbsp;<span class='' id='previous{$book->id}'>previous{$book->id}</span>";
+//            $output .= "&nbsp;&nbsp;<span class='' id='next{$book->id}'>next{$book->id}</span>";
+//            $output .= "  countId: $count_ids idscount: ".$ids[$count_ids -1];
+
+
+        }
+
+
+        if (!empty($book->h3)) {
+            $output .= "<h3>$book->h3</h3>";
+        }
+
+        if (!empty($book->author)) {
+            $output .= "<p>$book->author</p>";
+        }
+
+        $output .= "<p>";
+
+        if (!empty($book->pdf_name)) {
+            $output .= "<a  class='btn btn-primary' target='_blank' href='/public/img/books/$book->pdf_name'>pdf</a>&nbsp;&nbsp;";
+        }
+
+
+        if (!empty($book->download_source_link)) {
+            $output .= "<a class='btn btn-info' target='_blank' href='$book->download_source_link'>Source link</a>&nbsp;&nbsp;";
+        }
+
+
+        if (!empty($book->apress_link)) {
+            $output .= "<a class='btn btn-default' href='$book->apress_link' >apress_link</a>";
+        }
+
+        $output .= "</p>";
+
+
+//         if(!empty($book->about_book)){
+//            $output .= "<p>$book->about_book</p>";}
+
+
+        if (!empty($book->photo)) {
+            $output .= "<p><img src='$book->about_author'>photo</i></p>";
+        }
+
+        $output .= "<div class='tabbable'> <!-- Only required for left/right tabs -->
+        <ul class='nav nav-tabs'>
+            <li class='active'><a href='#tab1' data-toggle='tab'>About Book</a></li>
+            <li><a href='#tab2' data-toggle='tab'>About Author</a></li>
+        </ul>
+        <div class='tab-content'>
+            <div class='tab-pane active' id='tab1'>
+                <p>{$book->about_book}</p>
+            </div>
+            <div class='tab-pane' id='tab2'>
+                 <p>{$book->about_author}</p>
+            </div>
+        </div>
+    </div>";
+
+        $output .= "</article>";
+
+        $output .= "</div>";
+
+
+    }
+
+    $output .= "</div>";
+
     return $output;
 }
 

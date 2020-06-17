@@ -32,9 +32,22 @@
                 <div class="ibox float-e-margins">
 
                     <div class="ibox-content">
+                        <?php $h2 = "Djamila Hélico 21-03-2019";
+                        $fol = "Djamila/2019_03_21";
+
+                        echo blueimp_wrapper($h2, blueimp_lightBoxGallery(get_picture_folder_blueimp_gallery($fol, $h2, $folder_project_name))); ?>
+                    </div>
+
+                    <div class="ibox-content">
+                        <?php $h2 = "Djamila bébé";
+                        $fol = "Djamila/baby";
+
+                        echo blueimp_wrapper($h2, blueimp_lightBoxGallery(get_picture_folder_blueimp_gallery($fol, $h2, $folder_project_name))); ?>
+                    </div>
+
+                    <div class="ibox-content">
 
                         <h2>
-                            <!--                            <button class="btn btn-danger  dim btn-large-dim" type="button"><i class="fa fa-heart"></i></button>-->
                             With Djamila :)<span class="pull-right"> <a href="index.php"
                                                                         class="btn btn-primary">back Home</a></span>
                         </h2>
@@ -47,6 +60,7 @@
                         echo blueimp_wrapper($h2, blueimp_lightBoxGallery(get_picture_folder_blueimp_gallery($fol, $h2, $folder_project_name))); ?>
 
                     </div>
+
                 </div>
                 <div class="ibox-content">
                     <?php $h2 = "Djamila Kamran 23-02-2018";

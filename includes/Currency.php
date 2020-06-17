@@ -141,29 +141,35 @@ class Currency extends DatabaseObject
             "label_text"=>"",
             "select_option_text"=>'rank',
             'field_option_0'=>"rank",
-            'field_option_1'=>"rank",
-            "required" =>false,
+            'field_option_1' => "rank",
+            "required" => false,
         ),
     );
 
 
+    public static $db_field_search = array('search_all', 'id', 'date', 'currency', 'currency_country', 'rate', 'download_csv');
 
-    public static $db_field_search =array('search_all','id','date','currency','currency_country','rate','download_csv');
+    public static $page_name = "Currency";
+//    public static $page_manage="manage_currency.php";
+//    public static $page_new="new_currency.php";
+//    public static $page_edit="edit_currency.php";
+//    public static $page_delete="delete_currency.php";
 
-    public static $page_name="Currency";
-    public static $page_manage="manage_currency.php";
-    public static $page_new="new_currency.php";
-    public static $page_edit="edit_currency.php";
-    public static $page_delete="delete_currency.php";
+    public static $page_manage = "/public/admin/crud/ajax/manage_ajax.php?class_name=Currency"; // "new_link.php";
+    public static $page_new = "/public/admin/crud/ajax/new_ajax.php?class_name=Currency"; // "new_link.php";
+    public static $page_edit = "/public/admin/crud/ajax/edit_ajax.php?class_name=Currency"; //  "edit_link.php";
+    public static $page_delete = "/public/admin/crud/ajax/delete_ajax.php?class_name=Currency"; //  "delete_link.php";
+    public static $position_table = "positionRight"; // positionLeft // positionBoth  positionRight
+
 
     public static $per_page;
 
-public $id ;
-public $currency ;
-public $currency_country ;
-public $rate ;
-public $date ;
-public $rank ;
+    public $id;
+    public $currency;
+    public $currency_country;
+    public $rate;
+    public $date;
+    public $rank;
 public $comment ;
 public $input_date ;
 

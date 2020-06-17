@@ -70,22 +70,29 @@ class Category1 extends DatabaseObject {
             "name"=>'category_1',
             "id"=>"search_category_1",
             "class"=>"Category1",
-            "label_text"=>"",
-            "select_option_text"=>'category_1',
-            'field_option_0'=>"category_1",
-            'field_option_1'=>"category_1",
-            "required" =>false,
+            "label_text" => "",
+            "select_option_text" => 'category_1',
+            'field_option_0' => "category_1",
+            'field_option_1' => "category_1",
+            "required" => false,
         ),
     );
-    public static $db_field_search= array('search_all','id','category_1','download_csv');
+    public static $db_field_search = array('search_all', 'id', 'category_1', 'download_csv');
 
-    public static $page_name="Category 1";
-    public static $page_manage="manage_category_1.php";
-    public static $page_new="new_category_1.php";
-    public static $page_edit="edit_category_1.php";
-    public static $page_delete="delete_category_1.php";
+    public static $page_name = "Category 1";
+//    public static $page_manage="manage_category_1.php";
+//    public static $page_new="new_category_1.php";
+//    public static $page_edit="edit_category_1.php";
+//    public static $page_delete="delete_category_1.php";
 
-    public static $form_class_dependency=array('InvoiceActual','Category','Category2') ;
+    public static $page_manage = "/public/admin/crud/ajax/manage_ajax.php?class_name=Category1"; // "new_link.php";
+    public static $page_new = "/public/admin/crud/ajax/new_ajax.php?class_name=Category1"; // "new_link.php";
+    public static $page_edit = "/public/admin/crud/ajax/edit_ajax.php?class_name=Category1"; //  "edit_link.php";
+    public static $page_delete = "/public/admin/crud/ajax/delete_ajax.php?class_name=Category1"; //  "delete_link.php";
+    public static $position_table = "positionRight"; // positionLeft // positionBoth  positionRight
+
+
+    public static $form_class_dependency = array('InvoiceActual', 'Category', 'Category2');
 
     public static $per_page;
 

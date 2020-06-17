@@ -22,13 +22,22 @@ class HeurePresence extends DatabaseObject
     );
     public static $db_field_search = array('search_all', 'id', 'person_id', 'date_presence', 'datetime_presence', 'datetime_presence_fin', 'heure_debut', 'heure_fin', 'user_id', 'username', 'input_date', 'modification_time', "commentaire", 'download_csv');
     public static $page_name = "Presence";
-    public static $page_manage = "manage_heure_presence.php";
+//    public static $page_manage = "manage_heure_presence.php";
+//
+////    protected static $db_field_include_table_display_sort=array(
+////        'link'=>'web_address','prog'=>'progress','todos'=>'todo','due_on'=>'due_date');
+//    public static $page_new = "new_heure_presence.php";
+//    public static $page_edit = "edit_heure_presence.php";
+//    public static $page_delete = "delete_heure_presence.php";
 
-//    protected static $db_field_include_table_display_sort=array(
-//        'link'=>'web_address','prog'=>'progress','todos'=>'todo','due_on'=>'due_date');
-    public static $page_new = "new_heure_presence.php";
-    public static $page_edit = "edit_heure_presence.php";
-    public static $page_delete = "delete_heure_presence.php";
+
+    public static $page_manage = "/public/admin/crud/ajax/manage_ajax.php?class_name=HeurePresence"; // "new_link.php";
+    public static $page_new = "/public/admin/crud/ajax/new_ajax.php?class_name=HeurePresence"; // "new_link.php";
+    public static $page_edit = "/public/admin/crud/ajax/edit_ajax.php?class_name=HeurePresence"; //  "edit_link.php";
+    public static $page_delete = "/public/admin/crud/ajax/delete_ajax.php?class_name=HeurePresence"; //  "delete_link.php";
+    public static $position_table = "positionRight"; // positionLeft // positionBoth  positionRight
+
+
     public static $pagination_per_page = 100;
     public static $per_page;
     protected static $table_name = "heure_presence";

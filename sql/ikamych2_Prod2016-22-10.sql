@@ -22,15 +22,102 @@ SET time_zone = "+00:00";
 
 -- --------------------------------------------------------
 
+/*
+id
+category_id
+download_source
+h2
+h3
+summary
+rank
+pdf_name
+author
+about_book
+about_author
+photo
+apress_link
+likes
+is_row
+num_column
+num_offset
+comment
+input_date
+
+*/
+
+DROP TABLE IF EXISTS book;
+CREATE TABLE IF NOT EXISTS `book`
+(
+    `id`              int(11) unsigned    NOT NULL auto_increment,
+    `category_id`     int(11) UNSIGNED    NOT NULL,
+    `download_source` varchar(255)        NOT NULL,
+    `author`          varchar(255)                 DEFAULT NULL,
+    `pdf_name`        varchar(255)                 DEFAULT NULL,
+    `about_book`      varchar(255)                 DEFAULT NULL,
+    `about_author`    varchar(255)                 DEFAULT NULL,
+    `apress_link`     varchar(255)                 DEFAULT NULL,
+    `photo`           varchar(255)                 DEFAULT NULL,
+    `h2`              varchar(255)        NOT NULL,
+    `h3`              varchar(255)        NOT NULL,
+    `summary`         text,
+    `rank`            int(11)             NOT NULL DEFAULT '1000',
+    `likes`           int(11)             NOT NULL,
+    `is_row`          tinyint(1) UNSIGNED NOT NULL DEFAULT '1',
+    `num_column`      tinyint(1)          NOT NULL DEFAULT '9',
+    `num_offset`      tinyint(4)          NOT NULL DEFAULT '0',
+    `comment`         varchar(255)                 DEFAULT NULL,
+    `input_date`      timestamp           NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (`id`)
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8
+  AUTO_INCREMENT = 1;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `article_subject`
+--
+DROP TABLE IF EXISTS book_category;
+CREATE TABLE if not exists `book_category`
+(
+    `id`       int(11) unsigned NOT NULL auto_increment,
+    `category` varchar(50)      NOT NULL,
+    `rank`     int(10) UNSIGNED NOT NULL DEFAULT '0',
+    PRIMARY KEY (`id`),
+    UNIQUE KEY `category.` (`category`)
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8
+  AUTO_INCREMENT = 1;
+
+
+DROP TABLE IF EXISTS book;
+CREATE TABLE IF NOT EXISTS `book`
+(
+    `id`         INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+    `subject`    VARCHAR(255)     NOT NULL,
+    `link`       VARCHAR(255),
+    `photo`      VARCHAR(255),
+    `summary`    text,
+    `likes`      INT(11)          NOT NULL,
+    `comment`    VARCHAR(255),
+    `input_date` TIMESTAMP        NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (`id`)
+)
+    ENGINE = InnoDB
+    DEFAULT CHARSET = utf8
+    AUTO_INCREMENT = 1;
+
+
 
 DROP TABLE IF EXISTS article;
-CREATE TABLE IF NOT EXISTS `article` (
-  `id`         INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `subject`    VARCHAR(255)     NOT NULL,
-  `link`       VARCHAR(255),
-  `photo`      VARCHAR(255),
-  `article`    text,
-  `likes`      INT(11)          NOT NULL,
+CREATE TABLE IF NOT EXISTS `article`
+(
+    `id`       INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+    `subject`  VARCHAR(255)     NOT NULL,
+    `link`     VARCHAR(255),
+    `photo`    VARCHAR(255),
+    `article`  text,
+    `likes`    INT(11)          NOT NULL,
   `comment`    VARCHAR(255),
   `input_date` TIMESTAMP        NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)

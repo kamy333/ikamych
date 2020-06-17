@@ -117,22 +117,29 @@ class MyExpenseType extends DatabaseObject {
                     "label_radio"=>"oui",
                     "value"=>"Yes",
                     "id"=>"visible_yes",
-                    "default"=>true)),
+                    "default" => true)),
         ),
 
     );
 
 
-    public static $db_field_search =array('search_all','expense_type','download_csv');
+    public static $db_field_search = array('search_all', 'expense_type', 'download_csv');
 
 
-    public static $page_name="Expense Type";
-    public static $page_manage="manage_MyExpenseType.php";
-    public static $page_new="new_MyExpenseType.php";
-    public static $page_edit="edit_MyExpenseType.php";
-    public static $page_delete="delete_MyExpenseType.php";
+    public static $page_name = "Expense Type";
+//    public static $page_manage="manage_MyExpenseType.php";
+//    public static $page_new="new_MyExpenseType.php";
+//    public static $page_edit="edit_MyExpenseType.php";
+//    public static $page_delete="delete_MyExpenseType.php";
 
-    public static $form_class_dependency=array('MyExpense','MyExpensePerson') ;
+    public static $page_manage = "/public/admin/crud/ajax/manage_ajax.php?class_name=MyExpenseType"; // "new_link.php";
+    public static $page_new = "/public/admin/crud/ajax/new_ajax.php?class_name=MyExpenseType"; // "new_link.php";
+    public static $page_edit = "/public/admin/crud/ajax/edit_ajax.php?class_name=MyExpenseType"; //  "edit_link.php";
+    public static $page_delete = "/public/admin/crud/ajax/delete_ajax.php?class_name=MyExpenseType"; //  "delete_link.php";
+    public static $position_table = "positionRight"; // positionLeft // positionBoth  positionRight
+
+
+    public static $form_class_dependency = array('MyExpense', 'MyExpensePerson');
 
 
     public static $per_page;

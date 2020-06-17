@@ -39,17 +39,18 @@ if(User::is_employee() || !User::is_admin() ||  User::is_secretary()){ redirect_
 
     <?php if(User::is_kamy()){ ?>
 
-<div class="row">
-        <?php echo Table::ibox_table(MyExpense::by_person(),"Expense by Person",4,0) ?>
-        <?php echo Table::ibox_table(MyExpense::by_type(),"Expense by Type",4,0) ?>
-        <?php echo Table::ibox_table(MyExpense::by_ccy(),"Expense by Currency",4,0) ?>
-</div>
-    <div class="row">
-        <?php echo Table::ibox_table(MyHouseExpense::by_person(),"House Expense by Person",4,0) ?>
-        <?php echo Table::ibox_table(MyHouseExpense::by_type(),"House Expense by Type",4,0) ?>
-        <?php echo Table::ibox_table(MyHouseExpense::by_ccy(),"House Expense by Currency",4,0) ?>
+        <div class="row">
+            <?php echo Table::ibox_table(MyExpense::by_person_pret_Rbt(), "Expense by Person Prêt-Rbt  ", 4, 0) ?>
+            <?php echo Table::ibox_table(MyExpense::by_person(), "Expense by Person", 4, 0) ?>
+            <?php echo Table::ibox_table(MyExpense::by_type(), "Expense by Type", 4, 0) ?>
+            <?php echo Table::ibox_table(MyExpense::by_ccy(), "Expense by Currency", 4, 0) ?>
+        </div>
+        <div class="row">
+            <?php echo Table::ibox_table(MyHouseExpense::by_person(), "House Expense by Person", 4, 0) ?>
+            <?php echo Table::ibox_table(MyHouseExpense::by_type(), "House Expense by Type", 4, 0) ?>
+            <?php echo Table::ibox_table(MyHouseExpense::by_ccy(), "House Expense by Currency", 4, 0) ?>
 
- </div>
+        </div>
 
 <div class="row">
     <?php echo Table::ibox_table(MyExpense::by_person_ccy(),"Expense by Person Ccy",4,0) ?>

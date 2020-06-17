@@ -1,5 +1,6 @@
 <?php require_once('../includes/initialize.php'); ?>
-<?php //$bralia=User::find_by_id($session->user_id); ?>
+<?php //return; ?>
+
 
 <?php if (User::is_djamila()) {
 } else {
@@ -22,57 +23,78 @@
         <div class="row">
 
 
-        <div class="col-lg-12">
-            <div class="ibox float-e-margins">
+            <div class="col-lg-12">
+
+
+                <div class="ibox float-e-margins">
+
+                    <div class="ibox-content">
+
+                        <h2>
+                       <span class="pull-right"> <a href="index.php"
+                                                    class="btn btn-primary">back Home</a></span></h2>
+                        <blockquote></blockquote>
+
+                        <div class="text-center">
+                            <a class="img-responsive home-page-photo " target="_blank"
+                               href="https://www.youtube.com/watch?v=eMdaeHV0Tos">
+                                <img height="400" src="/Inspinia/img/Djamila/Djam_parachute_001.jpg" alt="Djamila">
+                            </a>
+                        </div>
+                        <div class="ibox-content">
+                            <?php $h2 = "Djamila Hélico 21-03-2019";
+                            $fol = "Djamila/2019-03-21";
+
+                            echo blueimp_wrapper($h2, blueimp_lightBoxGallery(get_picture_folder_blueimp_gallery($fol, $h2, $folder_project_name))); ?>
+                        </div>
+
+                        <div class="ibox-content">
+                            <?php $h2 = "Djamila bébé";
+                            $fol = "Djamila/baby";
+
+                            echo blueimp_wrapper($h2, blueimp_lightBoxGallery(get_picture_folder_blueimp_gallery($fol, $h2, $folder_project_name))); ?>
+                        </div>
+
+
+                        <?php
+                        $h2 = "Anniversaire Djamila 2-2-2018";
+                        $fol = "Djamila/2018_02_02";
+                        echo blueimp_wrapper($h2, blueimp_lightBoxGallery(get_picture_folder_blueimp_gallery($fol, $h2, $folder_project_name))); ?>
+
+                    </div>
+                </div>
+                <div class="ibox-content">
+                    <?php $h2 = "Djamila Kamran 23-02-2018";
+                    $fol = "Djamila/2018_02_23";
+
+                    echo blueimp_wrapper($h2, blueimp_lightBoxGallery(get_picture_folder_blueimp_gallery($fol, $h2, $folder_project_name))); ?>
+                </div>
 
                 <div class="ibox-content">
+                    <?php $h2 = "Djamila saut parachute 24-04-2018";
+                    $fol = "Djamila/2018_04_24";
 
-                    <h2>
-                        <!--                            <button class="btn btn-danger  dim btn-large-dim" type="button"><i class="fa fa-heart"></i></button>-->
-                        With Djamila :)<span class="pull-right"> <a href="index.php"
-                                                                    class="btn btn-primary">back Home</a></span></h2>
-                    <blockquote></blockquote>
-
-
-                    <?php
-                    $h2 = "Anniversaire Djamila 2-2-2018";
-                    $fol = "Djamila/2018_02_02";
                     echo blueimp_wrapper($h2, blueimp_lightBoxGallery(get_picture_folder_blueimp_gallery($fol, $h2, $folder_project_name))); ?>
-
                 </div>
-            </div>
-            <div class="ibox-content">
-                <?php $h2 = "Djamila Kamran 23-02-2018";
-                $fol = "Djamila/2018_02_23";
 
-                echo blueimp_wrapper($h2, blueimp_lightBoxGallery(get_picture_folder_blueimp_gallery($fol, $h2, $folder_project_name))); ?>
-            </div>
+                <div class="ibox-content">
+                    <?php $h2 = "Djamila Chaussure 17-06-2018";
+                    $fol = "Djamila/2018_06_17";
 
-            <div class="ibox-content">
-                <?php $h2 = "Djamila saut parachute 24-04-2018";
-                $fol = "Djamila/2018_04_24";
+                    echo blueimp_wrapper($h2, blueimp_lightBoxGallery(get_picture_folder_blueimp_gallery($fol, $h2, $folder_project_name)));
+                    $h2 = ""; ?>
+                </div>
 
-                echo blueimp_wrapper($h2, blueimp_lightBoxGallery(get_picture_folder_blueimp_gallery($fol, $h2, $folder_project_name))); ?>
-            </div>
+                <div class="ibox-content">
+                    <?php $h2 = "Djamila Hélico 09-10-2018";
+                    $fol = "Djamila/2018_10_09";
 
-            <div class="ibox-content">
-                <?php $h2 = "Djamila Chaussure 17-06-2018";
-                $fol = "Djamila/2018_06_17";
-
-                echo blueimp_wrapper($h2, blueimp_lightBoxGallery(get_picture_folder_blueimp_gallery($fol, $h2, $folder_project_name)));
-                $h2 = ""; ?>
-            </div>
-
-            <div class="ibox-content">
-                <?php $h2 = "Djamila Hélico 09-10-2018";
-                $fol = "Djamila/2018_10_09";
-
-                echo blueimp_wrapper($h2, blueimp_lightBoxGallery(get_picture_folder_blueimp_gallery($fol, $h2, $folder_project_name)));
-                $h2 = ""; ?>
-            </div>
+                    echo blueimp_wrapper($h2, blueimp_lightBoxGallery(get_picture_folder_blueimp_gallery($fol, $h2, $folder_project_name)));
+                    $h2 = ""; ?>
+                </div>
 
 
-            <?php
+                <?php
 
 
                 function DjamilaComment($comments_array = array(), $img_folder = 'public')

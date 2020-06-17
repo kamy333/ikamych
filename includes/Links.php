@@ -20,7 +20,6 @@ class Links extends DatabaseObject
 
     protected static $db_field_exclude_table_display_sort = array('link');
 
-    // protected static $field_replace_display=array('name'=>'link');
     public static $fields_numeric = array('id', 'privacy', 'rank', 'category_id');
 
     public static $get_form_element = array('name', 'web_address', 'description', 'category_id', 'sub_category_1', 'sub_category_2', 'privacy', 'rank');
@@ -201,10 +200,13 @@ class Links extends DatabaseObject
 
 
     public static $page_name = "Links";
-    public static $page_manage = "manage_links.php";
-    public static $page_new = "new_link.php";
-    public static $page_edit = "edit_link.php";
-    public static $page_delete = "delete_link.php";
+
+
+    public static $page_manage = "/public/admin/crud/ajax/manage_ajax.php?class_name=Links"; // "manage_links.php";
+    public static $page_new = "/public/admin/crud/ajax/new_ajax.php?class_name=Links"; // "new_link.php";
+    public static $page_edit = "/public/admin/crud/ajax/edit_ajax.php?class_name=Links"; //  "edit_link.php";
+    public static $page_delete = "/public/admin/crud/ajax/delete_ajax.php?class_name=Links"; //  "delete_link.php";
+    public static $position_table = "positionleft"; // positionLeft // positionBoth  positionRight
 
     public static $form_class_dependency = array('LinksCategory', 'MyExpenseType');
 
@@ -227,8 +229,6 @@ class Links extends DatabaseObject
     public $ref_name;
     public $link;
 
-
-// modal properties
 
 
     public function form_validation()
@@ -261,10 +261,9 @@ class Links extends DatabaseObject
     {
 
         if (isset($this->web_address) && isset($this->name)) {
-            $this->link = "<a href='{$this->web_address}'>lnk</a>";
+            $this->link = "<a target='_blank' href='{$this->web_address}'>lnk</a>";
 
         }
-        // $this->name=h($this->ref_name);
 
         if (!isset($this->category)) {
             $category = LinksCategory::find_by_id($this->category_id);
@@ -289,9 +288,9 @@ class Links extends DatabaseObject
         $sql = "SELECT * FROM {$table} ";
 
         if ($category_1) {
-            $sql .= "WHERE  sub_category_1 = '{$category}'";
+            $sql .= "WHERE  sub_category_1 = '{$category}' ORDER BY rank";
         } elseif ($category_2) {
-            $sql .= "WHERE  sub_category_2 = '{$category}'";
+            $sql .= "WHERE  sub_category_2 = '{$category}' ORDER BY rank";
         } else {
             if (!empty($category)) {
                 $sql .= "WHERE category = '{$category}' ORDER BY rank";
@@ -357,7 +356,7 @@ class Links extends DatabaseObject
 
 
         $output .= "<li role='presentation' class=''><a href=";
-        $output .= "admin/new_link.php";
+        $output .= static::$page_new; //"admin/new_link.php";
         $output .= ">New</a></li>";
 
         if (User::is_admin()) {
@@ -395,9 +394,7 @@ class Links extends DatabaseObject
         $output .= "</ul>";
 
         $output .= "<ul class='nav nav-pills '>";
-//       echo '<pre>';
-//var_dump($category_set);
-//       echo '</pre>';
+
 
         foreach ($category_set as $category) {
 
@@ -426,12 +423,7 @@ class Links extends DatabaseObject
 
         }
 
-
-        //
-
-
         $output .= "</ul>";
-        //   mysqli_free_result($category_set);
 
         return $output;
 
@@ -530,7 +522,6 @@ class Links extends DatabaseObject
             }
 
             $output .= "<tr>";
-            //  $output.= "<td class='text-center'>" . "" . "</td>";
 
             //todo chk $moodal
 //            $modal="";
@@ -544,23 +535,12 @@ class Links extends DatabaseObject
             }
 
 
-            // $output.="<td class='text-center'>".htmlentities($link['category'], ENT_COMPAT, 'utf-8')."</td>";
-
-
-//        $output.="<td class='text-center'>".htmlentities($link['description'], ENT_COMPAT, 'utf-8')."</td>";
-//        $output.="<td class='text-center'>".htmlentities($link['sub_category_1'], ENT_COMPAT, 'utf-8')."</td>";
-//        $output.="<td class='text-center'>".htmlentities($link['sub_category_2'], ENT_COMPAT, 'utf-8')."</td>";
-//        $output.="<td class='text-center'>".htmlentities($link['privacy'], ENT_COMPAT, 'utf-8')."</td>";
-//        $output.="<td class='text-center'>".htmlentities($link['rank'], ENT_COMPAT, 'utf-8')."</td>";
-//        $output.="<td class='text-center'>".htmlentities($link['username'], ENT_COMPAT, 'utf-8')."</td>";
-
 
             $output .= "</tr>";
         }
 
 
         $output .= "</table>";
-        //    mysqli_free_result($link_set);
         $output .= "</div>";
 
         return $output;
@@ -571,13 +551,10 @@ class Links extends DatabaseObject
     protected static function get_modal_body_links($link_id)
     {
         $link = self::find_by_id($link_id);
-        //   $client= find_client_by_id($program["client_id"]);
 
         $grid = "<div class='row'>";
         $grid1 = "<div class='col-md-12  col-lg-12'>";
-//   $grid2="<div class='col-md-10 col-lg-10'>";
-//
-//   $grid3="</div>";
+
         $grid_2_DIV = "</div></div>";
 
         $grid = "";
@@ -588,10 +565,7 @@ class Links extends DatabaseObject
         $grid_head = $grid . $grid1;
 
         $modal_body = "<dl class='dl-horizontal dd-color-blue'>";
-        // $modal_body="<dl>";
-        // $modal_body .="{$grid}<dt><strong>Pseudo</strong></dt><dd>". htmlentities($client['pseudo'], ENT_COMPAT, 'utf-8')."</dd>{$grid1}";
-        // $modal_body .="{$grid}<dt><strong>Nom</strong></dt><dd>".htmlentities($client['web_view'], ENT_COMPAT, 'utf-8') ."</dd>{$grid1}";
-//var_dump($link);
+
 
         foreach ($link as $key => $val) {
             $key_clean = ucfirst(str_replace("_", "  ", $key));
@@ -626,27 +600,9 @@ class Links extends DatabaseObject
                 $modal_body .= "<dd> " . htmlentities($val, ENT_COMPAT, 'utf-8') . "</dd>";
                 $modal_body .= "{$grid_2_DIV}";
 
-                //  $modal_body .= "";
-                //     $link="<span><a style='color: palevioletred' href='edit_visible_modele_course.php?modele_id=". urlencode($modele["id"])."'>".htmlentities($val_yes_no , ENT_COMPAT, 'utf-8')."</a> </span>";
-
-
-                //    $modal_body .= "<dd> " . $link  . "</dd>";
 
             } elseif ($key == "web_address") {
             } elseif ($key == "username") {
-//        } elseif($key=="prix_course") {
-//            if(!is_chauffeur()){
-//                $modal_body .= "{$grid_head}";
-//                $modal_body .= "<dt><strong>".htmlentities($key_clean, ENT_COMPAT, 'utf-8') . ":</strong></dt>";
-//                $modal_body .= "<dd>" . htmlentities($val, ENT_COMPAT, 'utf-8')  . " frs</dd>";
-//                $modal_body .= "{$grid_2_DIV}";
-//            }
-//        } else {
-//            $modal_body .= "{$grid_head}";
-//            $modal_body .= "<dt><strong>". htmlentities($key_clean, ENT_COMPAT, 'utf-8') . ":</strong></dt>";
-//            $modal_body .= "<dd>" . htmlentities($val, ENT_COMPAT, 'utf-8')  . "</dd>";
-//            $modal_body .= "{$grid_2_DIV}";
-//        }
 
 
             } else {
@@ -679,15 +635,11 @@ class Links extends DatabaseObject
 
         $output = "";
 
-        //   $output .= "";
-
-
         $output = "";
 
 
         $output .= "<a class='' style='width:1em;' href='#' data-toggle='modal' data-target='#{$div_id}'>";
         $output .= "<span class=\"glyphicon glyphicon-info-sign\" style='color: #0000ff;' aria-hidden='true'>";
-        // $output.= "".htmlentities($link['id'],ENT_COMPAT, 'utf-8');
         $output .= "</span>";
         $output .= "</a>";
 
@@ -702,27 +654,18 @@ class Links extends DatabaseObject
         $output .= "            </div>";
         $output .= "            <div class='modal-body'>";
 
-        //function of body of modal
-        $p_edit = "../admin/edit_link.php";
-        $p_del = "../admin/delete_link.php";
-        $p_new = "new_link.php";
-        // $p_validation="";
-        // $p_validation_mgr="";
 
-        $relative = "../public/admin/";
+//        $class="?class_name=".get_called_class()."&id=";
+        $class = "&id=";
 
-        $p_edit = $relative . self::$page_edit;
-        $p_del = $relative . self::$page_delete;
-        $p_new = $relative . self::$page_new;
+        $p_edit = static::$page_edit . $class;
+        $p_del = static::$page_delete . $class;
+        $p_new = static::$page_new . $class;
 
 
         $output .= "<div class='container-fluid text-left'> ";
 
         $output .= self::get_modal_body_links($link_id);;
-
-        //   $output .= "<div class='container-fluid text-right'> ";
-        //   $output .= "                <button type='button' class='btn btn-default' data-dismiss='modal'>&nbsp;Close&nbsp;</button>";
-        //  $output .= "</div>";
 
 
         $output .= "</div>";
@@ -735,9 +678,9 @@ class Links extends DatabaseObject
 
         $output .= "            <div class='modal-footer'>";
         $output .= "                <div class='btn-group btn-group-justified' role='group' aria-label='...'>";
-        $output .= "                <p class='btn'  ><a class='btn btn-primary btn-xm'{$style_width_button} href='{$p_edit}?id=" . urlencode($link_id) . "'>Edit</a></p>";
-        $output .= "                <p class='btn'><a class='btn btn-danger btn-xm' {$style_width_button} href='{$p_del}?id=" . urlencode($link_id) . "'>Delete</a></p>";
-        $output .= "                <p class='btn' ><a class='btn btn-success btn-xm' {$style_width_button} href='{$p_new}?id=" . urlencode($link_id) . "'>add</a></p>";
+        $output .= "                <p class='btn'><a class='btn btn-primary btn-xm'{$style_width_button} href='{$p_edit}" . urlencode($link_id) . "'>Edit</a></p>";
+        $output .= "                <p class='btn'><a class='btn btn-danger btn-xm' {$style_width_button} href='{$p_del}" . urlencode($link_id) . "'>Delete</a></p>";
+        $output .= "                <p class='btn' ><a class='btn btn-success btn-xm' {$style_width_button} href='{$p_new}" . urlencode($link_id) . "'>add</a></p>";
 
         $output .= "                <p class='btn' data-dismiss='modal'><a class=' btn btn-info btn-xm' {$style_width_button}>close</a> </p>";
 
@@ -754,37 +697,7 @@ class Links extends DatabaseObject
     }
 
 
-    /*    public static function  get_modal(){
-            $output="";
-            $output.="      <button type='button' class='btn btn-primary btn-lg' data-toggle='modal' data-target='.bs-example-modal-lg'>";
-            $output.="           <span class='glyphicon glyphicon-info-sign' style='color: whitesmoke' aria-hidden='true'></span>";
-            $output.="        </button>";
 
-            $output.="       <div class='modal fade bs-example-modal-lg' tabindex='-1' role='dialog' aria-labelledby='myLargeModalLabel'>";
-            $output.="          <div class='modal-dialog modal-lg'>";
-            $output.="             <div class='modal-content'>";
-            $output.="                  <div class='modal-header'>";
-            $output.="                    <button type='button' class='close' data-dismiss='modal' aria-label='Close'><span aria-hidden='true'>&times;</span></button>";
-            $output.="                      <h4 class='modal-title' id='myModalLabel'>Modal title</h4>";
-            $output.="                 </div>";
-            $output.="                 <div class='modal-body'>";
-
-
-
-            // body go here
-
-         $output.="                      </div>";
-         $output.="                <div class='modal-footer'>";
-         $output.="                    <button type='button' class='btn btn-default' data-dismiss='modal'>Close</button>";
-         $output.="                   <button type='button' class='btn btn-primary'>Save changes</button>";
-         $output.="              </div>";
-         $output.="           </div>";
-         $output.="        </div>";
-         $output.="   </div>";
-
-
-
-    }*/
 
     public static function table_nav_additional()
     {

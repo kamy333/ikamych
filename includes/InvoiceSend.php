@@ -242,29 +242,36 @@ class InvoiceSend extends DatabaseObject
             "class"=>"InvoiceSend",
             "label_text"=>"",
             "select_option_text"=>'payment_date',
-            'field_option_0'=>"payment_date",
-            'field_option_1'=>"payment_date",
-            "required" =>false,
+            'field_option_0' => "payment_date",
+            'field_option_1' => "payment_date",
+            "required" => false,
         ),
     );
 
-    public static $db_field_search =array('search_all','project_id', 'project_code','invoice_date', 'gross_amount', 'vat','amount','canceled','status','payment_date','download_csv');
+    public static $db_field_search = array('search_all', 'project_id', 'project_code', 'invoice_date', 'gross_amount', 'vat', 'amount', 'canceled', 'status', 'payment_date', 'download_csv');
 
 
-    public static $page_name="Invoice send";
-    public static $page_manage="manage_invoice_send.php";
-    public static $page_new="new_invoice_send.php";
-    public static $page_edit="edit_invoice_send.php";
-    public static $page_delete="delete_invoice_send.php";
+    public static $page_name = "Invoice send";
+//    public static $page_manage="manage_invoice_send.php";
+//    public static $page_new="new_invoice_send.php";
+//    public static $page_edit="edit_invoice_send.php";
+//    public static $page_delete="delete_invoice_send.php";
+
+    public static $page_manage = "/public/admin/crud/ajax/manage_ajax.php?class_name=InvoiceSend"; // "new_link.php";
+    public static $page_new = "/public/admin/crud/ajax/new_ajax.php?class_name=InvoiceSend"; // "new_link.php";
+    public static $page_edit = "/public/admin/crud/ajax/edit_ajax.php?class_name=InvoiceSend"; //  "edit_link.php";
+    public static $page_delete = "/public/admin/crud/ajax/delete_ajax.php?class_name=InvoiceSend"; //  "delete_link.php";
+    public static $position_table = "positionRight"; // positionLeft // positionBoth  positionRight
+
 
     public static $per_page;
 
-public $id  ;
-public $project_id  ;
-public $project_code  ;
-public $invoice_date  ;
-public $gross_amount  ;
-public $vat  ;
+    public $id;
+    public $project_id;
+    public $project_code;
+    public $invoice_date;
+    public $gross_amount;
+    public $vat;
 public $amount  ;
 public $canceled  ;
 public $status  ;

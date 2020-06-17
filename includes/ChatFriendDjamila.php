@@ -148,12 +148,18 @@ class ChatFriendDjamila extends DatabaseObject
 
 
     public static $page_name = "Chat Friend Djamila";
-    public static $page_manage = "manage_ChatFriend_Djamila.php";
-    public static $page_new = "new_ChatFriend_Djamila.php";
-    public static $page_edit = "edit_ChatFriend_Djamila.php";
-    public static $page_delete = "delete_ChatFriend_Djamila.php";
-    public static $page_public = "chat_djamila.php";
+//    public static $page_manage = "manage_ChatFriend_Djamila.php";
+//    public static $page_new = "new_ChatFriend_Djamila.php";
+//    public static $page_edit = "edit_ChatFriend_Djamila.php";
+//    public static $page_delete = "delete_ChatFriend_Djamila.php";
 
+    public static $page_manage = "/public/admin/crud/ajax/manage_ajax.php?class_name=ChatFriendDjamila"; // "new_link.php";
+    public static $page_new = "/public/admin/crud/ajax/new_ajax.php?class_name=ChatFriendDjamila"; // "new_link.php";
+    public static $page_edit = "/public/admin/crud/ajax/edit_ajax.php?class_name=ChatFriendDjamila"; //  "edit_link.php";
+    public static $page_delete = "/public/admin/crud/ajax/delete_ajax.php?class_name=ChatFriendDjamila"; //  "delete_link.php";
+    public static $position_table = "positionRight"; // positionLeft // positionBoth  positionRight
+
+    public static $page_public = "chat_djamila.php";
     public static $per_page;
 
 

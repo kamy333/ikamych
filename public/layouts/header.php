@@ -39,6 +39,9 @@
     <link rel="stylesheet" type="text/css" href="<?php echo $Nav->path_public; ?>css/custom.css">
     <link rel="stylesheet" type="text/css" href="<?php echo $Nav->path_public; ?>css/styles.css">
 
+    <?php if ($stylesheets == "fade_php") { ?>
+        <link rel="stylesheet" href="/public/_js/dist/stylesheets/superslides.css">
+    <?php } ?>
 
     <?php if ($Nav->current_page == 'profile') { ?>
 
