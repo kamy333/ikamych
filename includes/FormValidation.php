@@ -70,20 +70,33 @@ public $warnings=array();
             $msg.=" ". $msg_arg;
             $msg .= "</p>";
         } else {
-            $msg="";
+            $msg = "";
         }
 
-        return $msg;
+      return $msg;
 
 
-    }
+  }
 
-    public function validate_presences(array $required_fields, $warning_me=false) {
+//    public function validate_0_or_1( $boolean_fields, $warning_me=false){
+//        $msg_presence=array();
+//
+//        $value = trim($_POST[$boolean_fields]);
+//        $field=intval(trim($boolean_fields));
+//
+//    if ($field >1 || $field <0){
+//        $msg_presence[$field] = $this->warnings[$field];
+//    }
+//        return $msg_presence;
+//    }
+
+    public function validate_presences(array $required_fields, $warning_me = false)
+    {
         // second arg to get as warning
 //        $this->errors;
 //        $this->warnings;
 
-        $msg_presence=array();
+        $msg_presence = array();
 
         if (is_array($required_fields)) {
             foreach ($required_fields as $field) {

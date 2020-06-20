@@ -1582,7 +1582,13 @@ class DatabaseObject
 
             $href = clean_query_string("class_delete.php?class_name=" . get_called_class() . "&id=" . urlencode($this->id));
 
-            $output .= "<td class='text-center'><a class='btn btn-danger table-btn' href='class_delete?class_name=" . get_called_class() . "&id=" . urlencode($this->id) . "'>Delete</a></td>";
+            if (get_called_class() == "User") {
+                $onclick = "onclick=\"return confirm('Are you sure you want to delete ID {$this->id}?');\"";
+            } else {
+                $onclick = "";
+            }
+
+            $output .= "<td class='text-center'><a {$onclick} class='btn btn-danger table-btn' href='class_delete?class_name=" . get_called_class() . "&id=" . urlencode($this->id) . "'   >Delete</a></td>";
         }
 
         $output .= "</tr>";
@@ -1607,9 +1613,14 @@ class DatabaseObject
 
                 $output .= "<td class='text-center'><a class='btn btn-primary table-btn button-edit-form' href='" . $href . "'><span class='	glyphicon glyphicon-pencil'></span></a></td>";
 
+                if (get_called_class() == "User") {
+                    $onclick = "onclick=\"return confirm('Are you sure you want to delete ID {$this->id}?');\"";
+                } else {
+                    $onclick = "";
+                }
 
                 $href = clean_query_string(static::$page_delete . "?id=" . urlencode($this->id));
-                $output .= "<td class='text-center'><a class='btn btn-danger table-btn button-delete-form' href='" . $href . "'><span class='glyphicon glyphicon-remove'></span></a></td>";
+                $output .= "<td class='text-center'><a {$onclick} class='btn btn-danger table-btn button-delete-form'  href='" . $href . "'><span class='glyphicon glyphicon-remove'></span></a></td>";
             }
         }
 
@@ -1655,9 +1666,15 @@ class DatabaseObject
                 $href = clean_query_string(static::$page_edit . "?id=" . urlencode($this->id));
                 $output .= "<td class='text-center'><a class='btn btn-primary table-btn button-edit-form' href='" . $href . "'>Edit</a></td>";
 
+                if (get_called_class() == "User") {
+                    $onclick = "onclick=\"return confirm('Are you sure you want to delete ID {$this->id}?');\"";
+                } else {
+                    $onclick = "";
+                }
+
 
                 $href = clean_query_string(static::$page_delete . "?id=" . urlencode($this->id));
-                $output .= "<td class='text-center'><a class='btn btn-danger table-btn button-delete-form' href='" . $href . "'>Delete</a></td>";
+                $output .= "<td class='text-center'><a {$onclick} class='btn btn-danger table-btn button-delete-form' href='" . $href . "'>Delete</a></td>";
             }
         }
 

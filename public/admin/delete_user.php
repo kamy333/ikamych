@@ -39,6 +39,8 @@ if($class_found->username=="Admin" &&$class_name=="User"){
     }
 
 } else {
+
+
     if($class_found->delete()){
 //        $session->message($class_found->username." successfully deleted") ;
         $session->message($class_found->message_form("successfully deleted!")) ;

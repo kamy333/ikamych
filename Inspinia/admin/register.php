@@ -41,9 +41,9 @@ if(request_is_post() && request_is_same_domain()) {
 //            $user->last_name = trim($_POST['last_name']);
 
             $user->email = trim($_POST['email']);
-            $user->user_type_id =5;
-            $user->block_user=0;
-            $user->unread_message=0;
+            $user->user_type_id = 5;
+            $user->block_user = 1;
+            $user->unread_message = 0;
             $user->unread_notification=0;
 
 
@@ -90,17 +90,27 @@ if(request_is_post() && request_is_same_domain()) {
             // to validation
 
             if(empty($valid->errors)){
-                    if (!$user->save()){
-                        log_action('Registration success for ', $user->username." created");
+                    if (!$user->save()) {
 
-                        $session->message("User: ".$user->username." "." has been created for ID (".$user->id .")");
-                        $session->ok(true);
-                        $user-> login_visitor_email('Registration sucessfull');;
-                        redirect_to("index.php");
+                        if ($user->block_user < 1) {
+                            log_action('Registration successful for ', $user->username . " created");
+                            $session->message("User: " . $user->username . " " . " has been created for ID (" . $user->id . ")");
+                            $user->login_visitor_email('Registration successful.');
+                            redirect_to("index.php");
+                        } else {
+                            log_action('Registration successful for ', $user->username . " created");
+
+                            $session->message("User (blocked): " . $user->username . " " . " has been created for ID (" . $user->id . ")");
+                            $session->ok(true);
+                            $user->login_visitor_email('Registration successful with block User');
+
+                        }
+
+
                     } else {
-                        log_action('Registration unsuccessfull ', " ");
-                        $user-> login_visitor_email('Registration Unsucessfull');;
-                        $session->message("User: ".$user->username." "."edit failed");
+                        log_action('Registration unsuccessful ', " ");
+                        $user->login_visitor_email('Registration Unsuccessful');
+                        $session->message("User: " . $user->username . " " . "edit failed");
 
                     }
 

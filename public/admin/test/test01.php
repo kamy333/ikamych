@@ -1,7 +1,7 @@
 <?php require_once('../../../includes/initialize.php'); ?>
 <?php $session->confirmation_protected_page(); ?>
 
-<?php if (User::is_employee()) {
+<?php if (!User::is_admin()) {
     redirect_to('index.php');
 } ?>
 
@@ -20,6 +20,17 @@
 <?php echo $message; ?>
 
 <?php
+
+$user = new User();
+$user->username = "Dumy";
+$user->password = "Dumy";
+$user->email = "Dumy@dumy.com";
+$user->first_name = "Dumy";
+$user->last_name = "Dumy";
+$user->nom = "Dumy Dumy";
+$user->block_user = 1;
+$user->user_type_id = 5;
+$user->create();
 
 
 $current_page = 1;

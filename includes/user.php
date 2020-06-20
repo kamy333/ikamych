@@ -615,17 +615,13 @@ class User extends DatabaseObject {
 
     }
 
+
     public static function authenticate($username = "", $password = "")
     {
         $record_user = self::find_by_username($username);
         $check = self::password_check($password);
         if ($check) {
-            if ($record_user->block_user == 0) {
-                return $record_user;
-            } else {
-                return false;
-            }
-
+            return $record_user;
         } else {
             return false;
         }
@@ -693,7 +689,7 @@ class User extends DatabaseObject {
             }
 
         } else {
-            parent::delete();
+            return parent::delete();
         }
 
     }
@@ -961,19 +957,18 @@ public function delete_reset_token() {
 
     }
 
-
-    public function visitor_email($info)
+    public function blocked_email($info)
     {
         $mail = new MyPHPMailer();
         global $logo;
-        $subject = "New visitor login " . $info;
+        $subject = "Blocked user login " . $info;
         $to = $this->email;
 
-
-        $message = "<p>Thank you for registering to $logo <br> We are considering your registration </p>";
-        $mail->AddEmbeddedImage($this->user_path_and_placeholder(), 'logo_2u');
+        $msg = "<a href='https://www.ikamy.ch/public/admin/crud/ajax/manage_ajax.php?class_name=User'> " . $logo . "</a>";
+        $message = "<p>We have a block user attempting to login into $msg </p>";
+//        $mail->AddEmbeddedImage($this->user_path_and_placeholder(), 'logo_2u');
 //    $mail->AltBody="New Visitor.";
-//        $message.="<br><p><img   width='110' height='110' src='cid:logo_2u' alt='logo'></p><br><br>";
+//        $message .= "<br><p><img   width='110' height='110' src='cid:logo_2u' alt='logo'></p><br><br>";
 
         $message .= "<ul>";
         $message .= "<li>Username: " . $this->username . "</li>";
@@ -990,8 +985,58 @@ public function delete_reset_token() {
         $message .= "<li>Mobile: " . $this->mobile . "</li>";
         $message .= "<li>Reset token: " . $this->reset_token . "</li>";
         $message .= "<li>Block user: " . $this->block_user . "</li>";
-        $message .= "<li>Photo path: " . $this->user_path_and_placeholder() . "</li>";
+//        $message.="<li>Photo path: ".$this->user_path_and_placeholder()."</li>";
         $message .= "</ul>";
+
+        //Send HTML or Plain Text email
+        $mail->addAddress('nafisspour@bluewin.ch');
+        $mail->isHTML(true);
+        $mail->Subject = $subject;
+
+        $mail->Body = $message;
+        //   $mail->AltBody = "This is the plain text version of the email content";
+
+        if (!$mail->send()) {
+            echo "Mailer Error: " . $mail->ErrorInfo;
+        } else {
+            //     echo "Message has been sent successfully";
+        }
+
+
+    }
+
+    public function visitor_email($info)
+    {
+        $mail = new MyPHPMailer();
+        global $logo;
+        $subject = "New visitor " . $info;
+        $to = $this->email;
+
+
+        $message = "<p>Dear {$this->nom}, <br> Thank you for registering successfully  to $logo <br>
+                        Your registration is being reviewed but you are blocked temporary until then'
+                        </p>";
+//        $mail->AddEmbeddedImage($this->user_path_and_placeholder(), 'logo_2u');
+//    $mail->AltBody="New Visitor.";
+//        $message.="<br><p><img   width='110' height='110' src='cid:logo_2u' alt='logo'></p><br><br>";
+
+        if (1 == 2) {
+            $message .= "<ul>";
+            $message .= "<li>Username: " . $this->username . "</li>";
+            $message .= "<li>First Name: " . $this->first_name . "</li>";
+            $message .= "<li>Last Name: " . $this->last_name . "</li>";
+            $message .= "<li>Full Nom: " . $this->nom . "</li>";
+            $message .= "<li>Full Name: " . $this->full_name() . "</li>";
+            $message .= "<li>Email: " . $this->email . "</li>";
+            $message .= "<li>User_type: " . $this->user_type . "</li>";
+            $message .= "<li>Address: " . $this->address . "</li>";
+            $message .= "<li>CP: " . $this->cp . "</li>";
+            $message .= "<li>City: " . $this->city . "</li>";
+            $message .= "<li>Country: " . $this->country . "</li>";
+            $message .= "<li>Mobile: " . $this->mobile . "</li>";
+            $message .= "</ul>";
+
+        }
 
         //Send HTML or Plain Text email
         $mail->addBCC("kamy@ikamy.ch");
@@ -1073,7 +1118,7 @@ public function delete_reset_token() {
     protected function set_up_display(){
         $this->set_user_type();
         $this->set_img();
-
+        $this->block_user = intval($this->block_user);
 
     }
 

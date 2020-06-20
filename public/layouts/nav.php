@@ -6,39 +6,13 @@
 } ?>
 
 <?php
-//$layout_context=basename(__DIR__);
-
-
-//if (isset($subfolder) && !empty($subfolder)) {
-//    $path_admin = "admin/" . $subfolder;
-//    $path_public = $subfolder."/";
-//    echo "pppppppppppppp";
-//}else{
-//    $path_admin="";
-//    $path_public="../../";
-//}
 
 if ($layout_context == "public") {
-
-//    https://www.ikamy.ch/public/myLinks.php?category=Others
-    //   https://www.ikamy.ch/ikamych/public/myLinks.php?category=Others
-
-//    $path_admin="admin/";
-//    $path_public=""  ;
-
     $path_admin = MY_URL_ADMIN;
     $path_public = MY_URL_PUBLIC;
-
 } else {
-
-
-//    $path_admin="";
-//    $path_public="../";
-
     $path_admin = MY_URL_ADMIN;
     $path_public = MY_URL_PUBLIC;
-
-
 } ?>
 
 
@@ -49,8 +23,6 @@ if ($layout_context == "public") {
         var $path_admin = "admin/";
         var $path_public = "";
         var $path = "";
-        // var $path=$Nav->relative_path_top();
-
     </script>
 <?php } else { ?>
     <script>
@@ -58,15 +30,9 @@ if ($layout_context == "public") {
         var $path_admin = "";
         var $path_public = "../";
         var $path = "../";
-        // var $path= "".$Nav->relative_path_top()."\"";
     </script>
 
 <?php } ?>
-
-<?php
-//echo isset($session->user_id) ? "true" : "false";
-?>
-
 
 <div class="row">
     <nav class="navbar navbar-default navbar-fixed-top " role="navigation">
@@ -277,11 +243,7 @@ if ($layout_context == "public") {
 
                             <?php echo "<li class=\"divider\"></li>"; ?>
 
-                            <?php
-                            echo "<li><a href='/public/admin/manage_user.php'>User old</a></li>"
-                            ?>
-
-                            <?php echo $Nav->menu_item('User', 'User Ajax', 'manage_ajax.php', 'admin/crud/ajax'); ?>
+                            <?php echo "<li><a href='/public/admin/manage_user.php'>User</a></li>" ?>
                             <?php echo "<li class=\"divider\">Links</li>"; ?>
                             <?php echo $Nav->menu_item('Links', 'Links', 'manage_ajax.php', 'admin/crud/ajax'); ?>
                             <?php echo $Nav->menu_item('LinksCategory', 'Links Category', 'manage_ajax.php', 'admin/crud/ajax'); ?>

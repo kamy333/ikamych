@@ -42,25 +42,28 @@ if (request_is_post() && request_is_same_domain()) {
                 $found_user = User::authenticate($username, $password);
 
                 if ($found_user) {
-                    $failed_login->clear_failed_logins($username);
-                    $session->login($found_user);
-                    log_action('Login', "{$found_user->username} logged in from public.");
-                    redirect_to("index.php");
+
+                    if ($found_user->block_user == 0) {
+                        $failed_login->clear_failed_logins($username);
+                        $session->login($found_user);
+                        log_action('Login', "{$found_user->username} logged in from public.");
+                        redirect_to("index.php");
+                    } else {
+                        log_action('Login failed', "{$username} logged in failed because is blocked. (Public)");
+                        $message = "Dear {$found_user->nom}, You are blocked until your registration is reviewed. Thank you for your understanding. ";
+                        $found_user->blocked_email('Blocked User tried to login. (Public)');
+
+                    }
+
+
                 } else {
-                    log_action('Login failed', "{$username} logged in failed from public.");
+                    log_action('Login failed', "{$username} logged in failed.(Public)");
                     $failed_login->record_failed_login($username);
                     $blacklist_ip->add_ip_to_blacklist();
 
-                    if ($found_user->block_user == 1) {
-                        log_action('Login failed', "{$username} logged in failed because is blocked.");
+                    log_action('Login failed', "{$username} logged in failed.(Public)");
+                    $message = "Username/password combination incorrect.";
 
-                        $message = "You are blocked until your registration is reviewed. Thank you for your understanding ";
-                    } else {
-                        log_action('Login failed', "{$username} logged in failed.");
-
-                        $message = "Username/password combination incorrect.";
-
-                    }
 
                     //Uncomment if need to reinitialize to 0 blacklist and ip as argument
                     //$blacklist_ip->clear_blacklist_ip($_SERVER['REMOTE_ADDR']);

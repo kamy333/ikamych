@@ -21,6 +21,7 @@ $class_name::$page_manage = "/public/admin/manage_user.php";
 $class_name::$page_new = "/public/admin/new_user.php";
 $class_name::$page_edit = "/public/admin/edit_user.php";
 $class_name:: $page_delete = "/public/admin/delete_user.php";
+//$class_name::$page_delete = "/public/admin/crud/ajax/delete_ajax.php?class_name=User";
 
 //echo get_where_string($class_name);
 
