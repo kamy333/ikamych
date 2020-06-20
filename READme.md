@@ -1,4 +1,7 @@
-Welcome to __Rajah__ project  
-## hi
+Welcome to __ikamy.ch__ project  
+## hello
 
-  im there `word`but forgot
+I've created this site fir my own use
+
+ 
+  
