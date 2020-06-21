@@ -55,9 +55,22 @@ if (request_is_post() && request_is_same_domain()) {
 
         //todo complete valid like pseudo
 
+        if ($class_name == "User") {
+            if (!isset($_POST['password']) || empty($_POST['password'])) {
+
+                $required_field = $class_name::$required_fields_no_password;
+                $kamy = "not isset no password ";
+            } else {
+                $required_field = $class_name::$required_fields;
+                $kamy = "isset password";
+            }
+        }
+
         $valid = $new_item->form_validation();
 
         if (empty($valid->errors)) {
+
+
             if ($new_item->save()) {
                 $session->message($class_name . $new_item->pseudo . " " . "has been $text_post with ID (" . $new_item->id . ")");
                 $session->ok(true);

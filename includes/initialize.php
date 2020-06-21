@@ -53,6 +53,7 @@ defined('LIB_PATH') ? null : define('LIB_PATH', SITE_ROOT . DS . 'includes');
 defined('LIB_PATH_VENDOR') ? null : define('LIB_PATH_VENDOR', SITE_ROOT . DS . 'vendor');
 
 defined('PATH_UPLOAD') ? null : define('PATH_UPLOAD', SITE_ROOT . DS . 'uploads');
+defined('PATH_USER_IMG') ? null : define('PATH_USER_IMG', SITE_ROOT . DS . 'user_img');
 
 
 defined('CONFIG_HEADER') ? null : define('CONFIG_HEADER', SITE_ROOT . DS . 'Inspinia' . DS . 'layouts' . DS . 'config_header.php');

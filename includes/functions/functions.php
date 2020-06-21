@@ -62,7 +62,7 @@ function has_presence($value)
     return isset($trimmed_value) && $trimmed_value !== "";
 }
 
-function __autoload($class_name)
+function my_autoloader($class_name)
 {
     $class_name = strtolower($class_name);
     $path = LIB_PATH . DS . "{$class_name}.php";
@@ -72,6 +72,8 @@ function __autoload($class_name)
         die("The file {$class_name}.php could not be found.");
     }
 }
+
+spl_autoload_register('my_autoloader');
 
 function include_layout_template($template = "")
 {
@@ -109,6 +111,25 @@ function log_debug($action, $message = "")
         }
     } else {
         echo "Could not open log debug file for writing.";
+    }
+}
+
+
+function log_queries($action, $message = "")
+{
+
+    $logfile = SITE_ROOT . DS . 'logs' . DS . 'queries.txt';
+    $new = file_exists($logfile) ? false : true;
+    if ($handle = fopen($logfile, 'a')) { // append
+        $timestamp = strftime("%Y-%m-%d %H:%M:%S", time());
+        $content = "{$timestamp} | {$action}: {$message}\n";
+        fwrite($handle, $content);
+        fclose($handle);
+        if ($new) {
+            chmod($logfile, 0755);
+        }
+    } else {
+        echo "Could not open log queries file for writing.";
     }
 }
 

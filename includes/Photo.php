@@ -71,12 +71,12 @@ class Photo extends DatabaseObject
             $this->errors[]=$this->upload_errors_array[$files['error']];
             return false;
         } elseif ($ext == 'php' || $ext == 'js' || $ext == 'pdf') {
-            log_action('Registration unsuccessfull ', " upload extension violation " . $ext);
+            log_action('Registration unsuccessful ', " upload extension violation " . $ext);
             $this->errors[] = $this->upload_errors_array['these files not accepted'];
             return false;
 
         } elseif (!in_array($ext, $ext_accept)) {
-            log_action('Registration unsuccessfull ', " upload extension violation array " . $ext);
+            log_action('Registration unsuccessful ', " upload extension violation array " . $ext);
             $this->errors[] = $this->upload_errors_array['these files not accepted'];
             return false;
 

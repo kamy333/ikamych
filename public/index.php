@@ -17,18 +17,18 @@ if (User::is_visitor()) {
 
 <?php
 
-class Helper
-{
-
-    static function getImgSize($image, $case)
-    {
-        if (is_file($image)) {
-            $size = getimagesize($image);
-            return $size[$case];
-        }
-
-    }
-}
+//class Helper
+//{
+//
+//    static function getImgSize($image, $case)
+//    {
+//        if (is_file($image)) {
+//            $size = getimagesize($image);
+//            return $size[$case];
+//        }
+//
+//    }
+//}
 
 $img_folder = "DesireeWedding";
 $dir = SITE_ROOT . DS . 'public' . DS . "/img/" . $img_folder;
@@ -39,11 +39,11 @@ $h = 460;
 
 $width = Helper::getImgSize($image, 0);
 $width = $width > $w ? $w : $width;
+$width = $w;
 
-
-$height = Helper::getImgSize($image, 1);
-$height = $height > $h ? $h : $height;
-
+//$height = Helper::getImgSize($image, 1);
+//$height = $height > $h ? $h : $height;
+$height = $h;
 $pic_size = " width = '$width' height = '$height' ";
 
 //

@@ -45,6 +45,7 @@ class DatabaseObject
     public static $get_form_element;
     public static $get_form_element_all;
     public static $form_default_value;
+    public static $fields_image; // todo  so image exist and are uploaded
 
 //    public static $all_class = array('Article','ToDoList', 'User', 'UserType', 'Client', 'Category', 'BlacklistIp', 'Links', 'LinksCategory', 'Project', 'Category1', 'Category2', 'InvoiceActual', 'InvoiceEstimate', 'FailedLogin', 'MyCigarette', 'MyExpense', 'MyExpensePerson', 'MyExpenseType', 'MyHouseExpense', 'MyHouseExpenseType', 'Chat', 'ChatFriend', 'Notification', 'TransportChauffeur', 'TransportClient', 'TransportProgramming', 'TransportProgrammingModel', 'TransportType');
 
@@ -219,6 +220,8 @@ class DatabaseObject
 
     public function update()
     {
+//        log_debug('action3');
+
         $this->set_up_display();
         global $database;
         // Don't forget your SQL syntax and good habits:

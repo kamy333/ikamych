@@ -86,18 +86,25 @@ if(request_is_post() && request_is_same_domain()) {
 
             if(empty($valid->errors)){
 
-
-
-
-                    if (!empty($_FILES['user_image'])){
-                    $new_this_class->set_files($_FILES['user_image']) ;
+//                // must static $fields and method set files
+//                $images=$new_this_class::$fields_image;
+//                if(isset($images)){
+//                    foreach($images as $image){
+//                        if (!empty($_FILES[$image])){
+//                            $new_this_class->set_files($_FILES[$image]) ;
+//                            $new_this_class->upload_photo();
+//                        }
+//                    }
+//                }
+                if (!empty($_FILES['user_image'])) {
+                    $new_this_class->set_files($_FILES['user_image']);
                     $new_this_class->upload_photo();
-                                      }
+                }
 
-                if(!isset($new_this_class->password) ){
+                if (!isset($new_this_class->password)) {
 
-                    if(!$new_this_class->update_no_password()){
-                        $session->message("User: ".$new_this_class->username." "."has been updated for ID (".$new_this_class->id .") but not the password ");
+                    if (!$new_this_class->update_no_password()) {
+                        $session->message("User: " . $new_this_class->username . " " . "has been updated for ID (" . $new_this_class->id . ") but not the password ");
                         $session->ok(true);
                         redirect_to($class_name::$page_manage);
 //                        redirect_to("manage_user.php");

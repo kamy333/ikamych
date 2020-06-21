@@ -22,9 +22,9 @@
 <?php
 
 $user = new User();
-$user->username = "Dumy";
-$user->password = "Dumy";
-$user->email = "Dumy@dumy.com";
+$user->username = "dumy";
+$user->password = "dumy";
+$user->email = "dumy@dumy.com";
 $user->first_name = "Dumy";
 $user->last_name = "Dumy";
 $user->nom = "Dumy Dumy";

@@ -5,19 +5,19 @@
                     class="navbar-toggle collapsed" type="button">
                 <i class="fa fa-reorder"></i>
             </button>
-            <a href="<?php echo $path_public; ?>index.php" style="background-color: honeydew"
+            <a href="<?php echo $Nav->path_admin; ?>index.php" style="background-color: honeydew"
                class="navbar-brand"><?php echo LOGO; ?></a>
         </div>
         <div class="navbar-collapse collapse" id="navbar">
             <ul class="nav navbar-nav">
                 <li class="">
-                    <a aria-expanded="false" role="button" href="<?php echo $path_admin; ?>index.php">Admin </a>
+                    <a aria-expanded="false" role="button" href="<?php echo $Nav->path_admin; ?>index.php">Admin </a>
                 </li>
 
 
                 <li>
                     <a aria-expanded="false" role="button"
-                       href="<?php echo $path_public; ?>myLinks.php?category=Others">Links</a>
+                       href="<?php echo $Nav->path_admin; ?>myLinks.php?category=Others">Links</a>
                 </li>
 
 
@@ -36,10 +36,10 @@
                             ?>
 
                             <li><a href="<?php echo $path; ?>index_old.php">Old public Layout</a></li>
-                            <li><a href="<?php echo $path_public; ?>minor.php">Minor</a></li>
-                            <li><a href="<?php echo $path_public; ?>landing.php">Landing Page</a></li>
-                            <li><a href="<?php echo $path_public; ?>off_canvas_menu.php">Canvas view</a></li>
-                            <li><a href="<?php echo $path_public; ?>player.php">players</a></li>
+                            <li><a href="<?php echo $Nav->path_admin; ?>minor.php">Minor</a></li>
+                            <li><a href="<?php echo $Nav->path_admin; ?>landing.php">Landing Page</a></li>
+                            <li><a href="<?php echo $Nav->path_admin; ?>off_canvas_menu.php">Canvas view</a></li>
+                            <li><a href="<?php echo $Nav->path_admin; ?>player.php">players</a></li>
 
                             <?php echo $Nav->menu_item('', 'SmartAdmin', 'https://www.ikamy.ch/smartAdmin/', 'none', true) ?>
                             <?php echo $Nav->menu_item('', 'SmartAdmin full version', 'https://www.ikamy.ch/SmartAdmin_Full_Version_html/', 'none', true) ?>
@@ -115,8 +115,8 @@
 
 
                 } else {
-                    echo "<li><a href='{$path_admin}register.php'><i class=\"fa fa-r\"></i>Register</a></li>";
-                    echo "<li><a href='{$path_admin}login.php'><i class=\"fa fa-sign-in\"></i> Log in</a></li>";
+                    echo "<li><a href='{$Nav->path_admin}register.php'><i class=\"fa fa-r\"></i>Register</a></li>";
+                    echo "<li><a href='{$Nav->path_admin}login.php'><i class=\"fa fa-sign-in\"></i> Log in</a></li>";
 
                     $img_path = SITE_ROOT . DS . $folder_project_name . DS . 'img' . DS;
                     if (file_exists($img_path . 'no_user.jpg')) {

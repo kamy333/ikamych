@@ -244,7 +244,9 @@ if ($layout_context == "public") {
                             <?php echo "<li class=\"divider\"></li>"; ?>
 
                             <?php echo "<li><a href='/public/admin/manage_user.php'>User</a></li>" ?>
+                            <?php echo $Nav->menu_item('User', 'User t', 'manage_ajax.php', 'admin/crud/ajax'); ?>
                             <?php echo "<li class=\"divider\">Links</li>"; ?>
+
                             <?php echo $Nav->menu_item('Links', 'Links', 'manage_ajax.php', 'admin/crud/ajax'); ?>
                             <?php echo $Nav->menu_item('LinksCategory', 'Links Category', 'manage_ajax.php', 'admin/crud/ajax'); ?>
 
@@ -256,6 +258,7 @@ if ($layout_context == "public") {
                                 <?php echo $Nav->menu_item('', 'Log File', 'logfile.php', 'admin'); ?>
                                 <?php echo $Nav->menu_item('', 'Log Views File', 'logfileviews.php', 'admin'); ?>
                                 <?php echo $Nav->menu_item('', 'Log Debug File', 'logfileDebug.php', 'admin'); ?>
+                                <?php echo $Nav->menu_item('', 'Log Queries File', 'logfilequeries.php', 'admin'); ?>
 
                             <?php } ?>
 
@@ -409,6 +412,7 @@ if ($layout_context == "public") {
                                 <li><a href="<?php echo $path_admin; ?>logfile.php">Log File</a></li>
                                 <?php echo $Nav->menu_item('', 'Log Views File', 'logfileviews.php', 'admin'); ?>
                                 <?php echo $Nav->menu_item('', 'Log Debug File', 'logfileDebug.php', 'admin'); ?>
+                                <?php echo $Nav->menu_item('', 'Log Queries File', 'logfilequeries.php', 'admin'); ?>
 
                                 <li class="divider"></li>
                                 <li><a href="<?php echo $path_admin; ?>rajah_project.php">Rajah Project</a></li>

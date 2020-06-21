@@ -3,9 +3,11 @@
         <nav class="navbar navbar-static-top" role="navigation" style="margin-bottom: 0">
             <div class="navbar-header">
                 <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#"><i class="fa fa-bars"></i> </a>
-                <form role="search" class="navbar-form-custom" action="<?php echo $path_admin; ?>search_results.php">
+                <form role="search" class="navbar-form-custom"
+                      action="<?php echo $Nav->path_admin; ?>search_results.php">
                     <div class="form-group">
-                        <input type="text" placeholder="Search for something..." class="form-control" name="top-search" id="top-search">
+                        <label for="top-search"></label><input type="text" placeholder="Search for something..."
+                                                               class="form-control" name="top-search" id="top-search">
                     </div>
                 </form>
             </div>
@@ -15,8 +17,7 @@
                 </li>
 
 
-
-      <?php if ($session->is_logged_in()) {?>
+                <?php if ($session->is_logged_in()) {?>
         <?php   echo Chat::get_chat();?>
 
 
@@ -27,15 +28,15 @@
 
                 <?php
                     if($session->is_logged_in()) {
-                        echo "<li><a href='{$path_public}index.php'><i class=\"fa fa-home\"></i> Home</a></li>";
+                        echo "<li><a href='{$Nav->path_admin}index.php'><i class=\"fa fa-home\"></i> Home</a></li>";
 
-                        echo "<li><a href='{$path_admin}logout.php'><i class=\"fa fa-sign-out\"></i> Log out</a></li>";
+                        echo "<li><a href='{$Nav->path_admin}logout.php'><i class=\"fa fa-sign-out\"></i> Log out</a></li>";
 
                     } else {
-                        echo "<li><a href='{$path_public}index.php'><i class=\"fa fa-home\"></i> Home </a></li>";
+                        echo "<li><a href='{$Nav->path_admin}index.php'><i class=\"fa fa-home\"></i> Home </a></li>";
 
                      if ($active_menu_clean !=='login'){
-                        echo "<li><a href='{$path_admin}login.php'><i class=\"fa fa-sign-in\"></i> Log in</a></li>";
+                         echo "<li><a href='{$Nav->path_admin}login.php'><i class=\"fa fa-sign-in\"></i> Log in</a></li>";
                      }
 
                     }
