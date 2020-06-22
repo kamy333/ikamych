@@ -2,20 +2,22 @@
 
 require_once('../../includes/initialize.php');
 $session->confirmation_protected_page();
-if(User::is_employee() || User::is_secretary() || User::is_visitor()){ redirect_to('index.php');}
+if (User::is_employee() || User::is_secretary() || User::is_visitor()) {
+    redirect_to('index.php');
+}
 
-$class_name="User";
-$table_name=$class_name::get_table_name();
+$class_name = "User";
+$table_name = $class_name::get_table_name();
 
 $order_name = !empty($_GET["order_name"]) ? $_GET["order_name"] : 'id';
 $order_type = !empty($_GET["order_type"]) ? $_GET["order_type"] : 'ASC';
 
-if ($Nav->folder_immediate != "admin") {
-    $class_name::$page_manage = $Nav->path_admin . $Nav->folder_prev . '/manage/' . $class_name::$page_manage;
-    $class_name::$page_new = $Nav->path_admin . $Nav->folder_prev . '/new/' . $class_name::$page_new;
-    $class_name::$page_edit = $Nav->path_admin . $Nav->folder_prev . '/edit/' . $class_name::$page_edit;
-    $class_name::$page_delete = $Nav->path_admin . $Nav->folder_prev . '/delete/' . $class_name::$page_delete;
-}
+//if ($Nav->folder_immediate != "admin") {
+//    $class_name::$page_manage = $Nav->path_admin . $Nav->folder_prev . '/manage/' . $class_name::$page_manage;
+//    $class_name::$page_new = $Nav->path_admin . $Nav->folder_prev . '/new/' . $class_name::$page_new;
+//    $class_name::$page_edit = $Nav->path_admin . $Nav->folder_prev . '/edit/' . $class_name::$page_edit;
+//    $class_name::$page_delete = $Nav->path_admin . $Nav->folder_prev . '/delete/' . $class_name::$page_delete;
+//}
 
 $class_name::$page_manage = "/public/admin/manage_user.php";
 $class_name::$page_new = "/public/admin/new_user.php";

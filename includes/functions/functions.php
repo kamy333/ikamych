@@ -635,6 +635,7 @@ function u($string)
 
 function h($string)
 {
+//    htmlspecialchars($string)
     return htmlentities($string, ENT_COMPAT, "utf-8");
 }
 
@@ -649,6 +650,7 @@ function e($string)
 function clean_query_string2($text_qry_str)
 {
     $new_str = str_replace("//", "/", $text_qry_str);
+
     $new_str = str_replace("htpps:/", "htpps://", $new_str);
     return $new_str;
 }

@@ -114,7 +114,7 @@ class SmartNav
     public $array_url;
     public $top_folder;
     public $path_folders;
-    public $folder_immediate = "";
+    public $folder_immediate;
     public $folder_prev = "";
 
 
@@ -139,13 +139,22 @@ class SmartNav
         $admin_dir = $first_dir . DS . 'admin' . DS;
         $this->path_public = $first_dir;
         $this->path_admin = $admin_dir;
-        $count_full = count($this->array_full_url);
-        $count = count($this->array_url);
 
+        if (isset($this->array_full_url)) {
+            $count_full = count($this->array_full_url);
+        }
+        if (isset($this->array_url)) {
+            $count = count($this->array_url);
+        }
 
-        $this->folder_immediate = $this->array_full_url[$count_full];
-        $this->folder_prev = $this->array_full_url[$count - 1];
+//        $this->folder_immediate = $this->array_full_url[$count_full];
+        if (isset($count_full) && isset($this->array_full_url)) {
+            $this->folder_immediate = $this->array_full_url[$count_full];
+        }
 
+        if (isset($count) && isset($this->array_full_url)) {
+            $this->folder_prev = $this->array_full_url[$count - 1];
+        }
 //        echo "<script>alert($count )</script>";
 //        echo "<script>alert($this->folder_immediate )</script>";
 //        echo "<script>alert($this->folder_prev )</script>";

@@ -92,7 +92,7 @@ class DatabaseObject
                 $expected_fields = static::get_table_field();
                 foreach ($expected_fields as $field) {
                     if (isset($_POST[$field])) {
-                        $new_item->$field = trim($_POST{$field});
+                        $new_item->$field = trim($_POST[$field]);
                     }
 
                 }

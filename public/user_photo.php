@@ -16,13 +16,14 @@ if (request_is_get()) {
     log_debug("no");
 }
 
-$_GET['id'] ?? '1';
 
 if (empty($_GET['id']) || !isset($_GET['id'])) {
     $session->message("The photo was not found");
     redirect_to("index.php");
-}
 
+}
+$id = $_GET['id'] ?? '1';
+$id = h($id);
 $the_user = User::find_by_id($_GET['id']);
 
 ?>
@@ -31,7 +32,7 @@ $the_user = User::find_by_id($_GET['id']);
 <?php $layout_context = "admin"; ?>
 <?php $active_menu = "admin" ?>
 <?php $stylesheets = "" //custom_form  ?>
-<?php $view_full_table == 1 ? $fluid_view = true : $fluid_view = false; ?>
+<?php //$view_full_table == 1 ? $fluid_view = true : $fluid_view = false; ?>
 <?php $javascript = "" ?>
 <?php $sub_menu = false ?>
 <?php include(SITE_ROOT . DS . 'public' . DS . 'layouts' . DS . "header.php") ?>

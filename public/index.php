@@ -37,8 +37,8 @@ $image = $dir . '/Desiree_entry.jpg';
 $w = 720;
 $h = 460;
 
-$width = Helper::getImgSize($image, 0);
-$width = $width > $w ? $w : $width;
+//$width = Helper::getImgSize($image, 0);
+//$width = $width > $w ? $w : $width;
 $width = $w;
 
 //$height = Helper::getImgSize($image, 1);
