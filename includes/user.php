@@ -573,6 +573,19 @@ class User extends DatabaseObject
         }
     }
 
+    public static function is_caroline()
+    {
+        if (isset($_SESSION) && isset($_SESSION['user_id'])) {
+            $found_user = self::find_by_id($_SESSION["user_id"]);
+            if ($found_user->username == 'caroline' || $found_user->username == 'kamy' || $found_user->username == 'admin') {
+                return true;
+            } else {
+                return false;
+            }
+        }
+    }
+
+
     public static function is_secretary()
     {
         if (isset($_SESSION) && isset($_SESSION['user_id'])) {
@@ -802,7 +815,7 @@ class User extends DatabaseObject
             $href = "/public/photo.php?id=" . urlencode($this->id);
             $src = $this->user_path_and_placeholder();
             if (file_exists("../../user_img/{$this->username}.jpg")) {
-                log_debug("found2");
+//                log_debug("found2");
                 $this->photo = "<a href='/public/user_photo.php?id=" . urlencode($this->id) . "'> <span><img class='img-thumbnail img-responsive img-circle'  src='{$src}' alt='{$this->username}' style='width:2em;height:2em;'</span></a>";
             }
         }

@@ -44,7 +44,7 @@ if(isset($_GET['class_name'])){
 }
 
 
-    ?>
+?>
 </div>
 
 <hr>
@@ -52,67 +52,20 @@ if(isset($_GET['class_name'])){
 <div class='row'>
     <div class='col-md-12'>
 
+        <p>Admin en construction link button not working</p>
 
-        <ul>
-            <li>
-            <li><a href="../../Inspinia/">Bralia click </a></li>
+        <?php echo button_color('success', "<i class='fa fa-maxcdn'>&nbsp;Model</i>", '/public/admin/manage_user.php', ''); ?>
 
-        </ul>
-
-
-        <ul>
-    <li><a href="manage_custom_form.php">custom</a></li>
-    <li><a href="../../smartAdmin/">SmartAdmin</a></li>
-    <li><a href="../../SmartAdmin_Full_Version_html/">SmartAdmin Full Version</a></li>
-    <li><a href="../../Inspinia/">Inspinia</a></li>
-    <li><a href="../../Inspinia_Full_Version/">Inspinia Full Version</a></li>
-</ul>
-
-	<ul>
-		<li><a href="logfile.php">View Log file</a></li>
-		<li><a href="logout.php">Logout</a></li>
-		<li><a href="logout.php">Logout</a></li>
+        <?php echo button_color('primary', "<i class='fa fa-automobile'>&nbsp;Course</i>", 'transport.php?class_name=Course', ''); ?>
 
 
-    </ul>
+        <?php echo button_color('primary', "<i class='fa fa-male'>&nbsp;Clients</i>", 'transport.php?cl=tClient', ''); ?>
+        <?php echo button_color('danger', "<i class='fa fa-user'>&nbsp;Chauffeur</i>", 'transport.php?cl=Chauffeur', ''); ?>
+        <?php echo button_color('warning', "<i class='fa fa-cab'>&nbsp;Transport Type</i>", 'transport.php?cl=TransportType', ''); ?>
 
-<ul>
-        <li><a href="manage_user.php">Manage User</a></li>
-        <li><a href="new_user.php">New User</a></li>
-        <li><a href="#">Edit User</a></li>
-        <li><a href="#">Delete User</a></li>
-</ul>
-
-<ul>
-        <li><a href="#">Manage Project</a></li>
-        <li><a href="#">New Project</a></li>
-        <li><a href="#">Edit Project</a></li>
-        <li><a href="#">Delete Project</a></li>
-</ul>
-<ul>
-        <li><a href="#">Manage Invoice Estimate</a></li>
-        <li><a href="#">New Invoice Estimate</a></li>
-        <li><a href="#">Edit Invoice Estimate</a></li>
-        <li><a href="#">Delete Invoice Estimate</a></li>
-</ul>
-
-<ul>
-        <li><a href="#">Manage Invoice Actual</a></li>
-        <li><a href="#">New Invoice Actual</a></li>
-        <li><a href="#">Edit Invoice Actual</a></li>
-        <li><a href="#">Delete Invoice Actual</a></li>
-</ul>
-
-<ul>
-        <li><a href="">Manage Invoice</a></li>
-        <li><a href="">New Invoice</a</li>
-        <li><a href="">Edit Invoice</a></li>
-        <li><a href="">Delete Invoice</a></li>
-
-    </ul>
 
     </div>
 </div>
 
-<?php include(SITE_ROOT.DS.'public'.DS.'layouts'.DS."footer.php") ?>
+<?php include(SITE_ROOT . DS . 'public' . DS . 'layouts' . DS . "footer.php") ?>
 		

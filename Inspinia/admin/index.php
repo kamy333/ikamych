@@ -53,8 +53,8 @@ if(User::is_employee() || !User::is_admin() ||  User::is_secretary()){ redirect_
         </div>
 
 <div class="row">
-    <?php echo Table::ibox_table(MyExpense::by_person_ccy(),"Expense by Person Ccy",4,0) ?>
-    <?php echo Table::ibox_table(MyHouseExpense::by_person_ccy(),"Expense by Person Ccy",4,0) ?>
+    <?php echo Table::ibox_table(MyExpense::by_person_ccy(), "Expense by Person Ccy", 4, 0) ?>
+    <?php echo Table::ibox_table(MyHouseExpense::by_person_ccy(), "Expense by Person Ccy", 4, 0) ?>
 </div>
 
         <div class="row">
@@ -63,28 +63,28 @@ if(User::is_employee() || !User::is_admin() ||  User::is_secretary()){ redirect_
             <?php
             $exclude = "34,32,39,24,26";
 
-            echo Table::ibox_table(myExpense::aPerson(4, true, $exclude), "Djamilla Include", 12, 0) ?>
-            <?php echo Table::ibox_table(myExpense::aPerson(4, false, $exclude), "Djamilla Exclude", 12, 0) ?>
+            echo Table::ibox_table(myExpense::aPerson2(4, true, $exclude), "Djamilla Include", 12, 0) ?>
+            <?php echo Table::ibox_table(myExpense::aPerson2(4, false, $exclude), "Djamilla Exclude", 12, 0) ?>
 
 
             <?php
             $exclude = "2,3,4,7,19,20,23,31,36,47,49,52";
-            echo Table::ibox_table(myExpense::aPerson(1, true, $exclude), "Pablo Include", 12, 0) ?>
-            <?php echo Table::ibox_table(myExpense::aPerson(1, false, $exclude), "Pablo Exclude", 12, 0) ?>
+            echo Table::ibox_table(myExpense::aPerson2(1, true, $exclude), "Pablo Include", 12, 0) ?>
+            <?php echo Table::ibox_table(myExpense::aPerson2(1, false, $exclude), "Pablo Exclude", 12, 0) ?>
 
 
             <?php
             $exclude = "10,11,29,43,44,45,58,63";
-            echo Table::ibox_table(myExpense::aPerson(2, true, $exclude), "Maman Include", 12, 0) ?>
+            echo Table::ibox_table(myExpense::aPerson2(2, true, $exclude), "Maman Include", 12, 0) ?>
             <?php echo Table::ibox_table(myExpense::aPerson(2, false, $exclude), "Maman Exclude", 12, 0) ?>
 
 
         </div>
 
-<!--    </div>-->
+        <!--    </div>-->
 
 
-<?php  } ?>
+    <?php } ?>
 
 
 

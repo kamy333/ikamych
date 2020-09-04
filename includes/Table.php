@@ -101,7 +101,8 @@ public static function ibox_table($content="",$title="",$col=4, $col_offset=0){
 return $output;
 }
 
- public static function div_table() {
+
+    public static function div_table() {
     
 
 

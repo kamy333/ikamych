@@ -47,6 +47,16 @@
 
     </div>
 
+    <div class="col-lg-11 col-lg-offset-1 text-center" style="background-color: #f1ffff;margin-top: 2em;padding: 2em">
+
+        <img WIDTH="100" HEIGHT="200" src="/public/img/handicap/SamsungFridgeFilter.jpeg" alt="">
+
+        Refrigerator Water filter
+        Filter Cartridge
+        HAFEX/EXP
+        Part No. DA29-10105J
+
+    </div>
 
     <!--<div id="fb-root"></div>-->
     <!--<script>(function (d, s, id) {-->

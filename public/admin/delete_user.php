@@ -43,8 +43,14 @@ if($class_found->username=="Admin" &&$class_name=="User"){
 
     if($class_found->delete()){
 //        $session->message($class_found->username." successfully deleted") ;
-        $session->message($class_found->message_form("successfully deleted!")) ;
+        $session->message($class_found->message_form("successfully deleted!"));
         $session->ok(true);
+
+        $new_file = $class_found->user_img_directory . DS . $class_found->username . ".jpg";
+        if (file_exists($new_file)) {
+            unlink($new_file);
+        }
+
         redirect_to($class_name::$page_manage);
     } else {
 //        $session->message($class_found->username." deletion failed ") ;

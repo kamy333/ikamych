@@ -59,11 +59,20 @@
                     echo $Nav->menu_item('', 'Djamila', 'index_gallery12.php', 'public');
                     echo $Nav->menu_item('', 'Chat Djam', 'chat_djamila.php', 'public');
                 }
+
+                if (User::is_caroline()) {
+                    echo $Nav->menu_item('', 'Maman', 'maman_exp.php', 'public');
+//                    echo $Nav->menu_item('', 'Chat Djam', 'chat_djamila.php', 'public');
+                }
                 ?>
 
-                <?php if(User::is_manager()) {?>
-                <li><a href="<?php echo $Nav->http . "transmed/"; ?>index.php"><i class="fa fa-taxi"></i> <span
-                                class="nav-label">Transport</span></a></li>
+
+                ?>
+
+
+                <?php if (User::is_manager()) { ?>
+                    <li><a href="<?php echo $Nav->http . "transmed/"; ?>index.php"><i class="fa fa-taxi"></i> <span
+                                    class="nav-label">Transport</span></a></li>
                 <?php } ?>
                 <!--
                 <li class="dropdown">
