@@ -22,28 +22,36 @@
                             <span class="clear"> <span class="block m-t-xs"> 
                                     <strong class="font-bold">
                     <?php if (isset($_SESSION["user_id"])){echo $user->full_name();} else {
-                        echo "No User"; } ?>
+                        echo "No User";
+                    } ?>
 
                                     </strong>
                              </span> <span class="text-muted text-xs block">
-        <?php if (isset($_SESSION["user_id"])){echo $user->user_type;}else {echo "Log in"; } ?>
+        <?php if (isset($_SESSION["user_id"])) {
+            echo $user->user_type;
+        } else {
+            echo "Log in";
+        } ?>
 
                                     <b class="caret"></b></span> </span> </a>
                     <ul class="dropdown-menu animated fadeInRight m-t-xs">
 
                         <?php
-                        echo "<li><a href='{$path_public}chat.php'>Chat</a></li>";
-                        echo "<li><a href='{$path_admin}mailbox.php'>Mailbox</a></li>";
+                        if (isset($path_public)) {
+                            echo "<li><a href='{$path_public}chat.php'>Chat</a></li>";
+                        }
+                        if (isset($path_admin)) {
+                            echo "<li><a href='{$path_admin}mailbox.php'>Mailbox</a></li>";
+                        }
                         echo "<li><a href='{$path_admin}contacts.php'>Contacts</a></li>";
-                        echo $Nav->menu_item('',"<span style='margin-right: 20%'><i class='fa fa-user'></i></span>Profile",'profile.php','public');
-
+                        echo $Nav->menu_item('', "<span style='margin-right: 20%'><i class='fa fa-user'></i></span>Profile", 'profile.php', 'public');
 
 
                         echo "<li class='divider'></li>";
 
-                        if(isset($_SESSION["user_id"])) {
+                        if (isset($_SESSION["user_id"])) {
 //                            echo "<li><a href='{$path_admin}logout.php'>Logout</a></li>";
-                            echo $Nav->menu_item('','<span style=\'margin-right: 20%\'>
+                            echo $Nav->menu_item('', '<span style=\'margin-right: 20%\'>
                             <i class=\'fa fa-sign-out\'></i></span>logout','logout.php','admin');
 
                         } else {
@@ -64,52 +72,72 @@
             <?php if($session->is_logged_in()) { ?>
 
                 <li>
-                    <a href="<?php echo $path_public;?>index.php"><i class="fa fa-home"></i> <span class="nav-label">Public</span></a>
-                </li>
-            <li>
-                <a href="<?php echo $path_admin;?>index.php"><i class="fa fa-th-large"></i> <span class="nav-label">Dashboard</span></a>
-            </li>
-
-                  <li class="<?php echo $class_transport_active; ?>">
-                      <a href="<?php echo $Nav->http . "transmed/"; ?>index.php"><i class="fa fa-taxi"></i> <span
-                                  class="nav-label">Transport</span></a>
-
-                      <!--            <ul class="nav nav-second-level --><?php //echo $class_admin_collapse; ?><!--">-->
-                      <!--                --><?php //echo $Nav->menu_item('TransportProgramming','Course','class_manage.php') ?>
-                      <!--            </ul>-->
+                    <a href="<?php echo $path_public; ?>index.php"><i class="fa fa-home"></i> <span class="nav-label">Public</span></a>
                 </li>
 
 
-            <li class="<?php echo $class_admin_active; ?>">
+                <li>
+                    <a href="<?php echo $path_public; ?>loan_exp.php"><i class="fa fa-th-large"></i> <span
+                                class="nav-label">Loan</span></a>
+                </li>
 
-                <a href="<?php echo $path_admin;?>index.php"><i class="fa fa-database"></i> <span class="nav-label">Admin</span> <span class="fa arrow"></span></a>
+                <li>
+                    <a href="<?php echo $path_admin; ?>index.php"><i class="fa fa-th-large"></i> <span
+                                class="nav-label">Dashboard</span></a>
+                </li>
 
-                <ul class="nav nav-second-level <?php echo $class_admin_collapse; ?>">
+                <li class="<?php if (isset($class_transport_active)) {
+                    echo $class_transport_active;
+                } ?>">
+                    <a href="<?php echo $Nav->http . "transmed/"; ?>index.php"><i class="fa fa-taxi"></i> <span
+                                class="nav-label">Transport</span></a>
 
-                    <?php echo $Nav->menu_item('User','Users','class_manage.php') ?>
-                    <?php echo $Nav->menu_item('Client','Clients','class_manage.php') ?>
-                    <?php echo $Nav->menu_item('Project','Projects','class_manage.php') ?>
-                    <?php echo $Nav->menu_item('InvoiceActual','Invoice Actual','class_manage.php') ?>
-                    <?php echo $Nav->menu_item('InvoiceSend','Invoice Send','class_manage.php') ?>
-                    <?php echo $Nav->menu_item('Chat','Chat','class_manage.php') ?>
-                    <?php echo $Nav->menu_item('Notification','Notifications','class_manage.php') ?>
-
-                </ul>
-            </li>
+                    <!--            <ul class="nav nav-second-level --><?php //echo $class_admin_collapse; ?><!--">-->
+                    <!--                --><?php //echo $Nav->menu_item('TransportProgramming','Course','class_manage.php') ?>
+                    <!--            </ul>-->
+                </li>
 
 
-            <li class="<?php  echo $class_kamy_active; ?>">
-                <a href="<?php echo $path_admin;?>index.php"><i class="fa fa-user"></i> <span class="nav-label">Kamy</span> <span class="fa arrow"></span></a>
-                <ul class="nav nav-second-level <?php echo $class_kamy_collapse; ?>">
+                <li class="<?php if (isset($class_admin_active)) {
+                    echo $class_admin_active;
+                } ?>">
 
-                    <?php echo $Nav->menu_item('Links','Links','class_manage.php') ?>
-                    <?php echo $Nav->menu_item('MyExpense','Expense','class_manage.php') ?>
-                    <?php echo $Nav->menu_item('ToDoList','ToDoList','class_manage.php') ?>
-                    <?php echo $Nav->menu_item('MyHouseExpense','HouseExpense','class_manage.php') ?>
-                    <?php echo $Nav->menu_item('MyCigarette','Cigarette','class_manage.php') ?>
-                    <?php echo $Nav->menu_item('MyCigaretteDay','Cigarette Day','class_manage.php') ?>
-                    <?php echo $Nav->menu_item('MyCigaretteMonth','Cigarette Month','class_manage.php') ?>
-                    <?php echo $Nav->menu_item('MyCigaretteYear','Cigarette Year','class_manage.php') ?>
+                    <a href="<?php echo $path_admin; ?>index.php"><i class="fa fa-database"></i> <span
+                                class="nav-label">Admin</span> <span class="fa arrow"></span></a>
+
+                    <ul class="nav nav-second-level <?php if (isset($class_admin_collapse)) {
+                        echo $class_admin_collapse;
+                    } ?>">
+
+                        <?php echo $Nav->menu_item('User', 'Users', 'class_manage.php') ?>
+                        <?php echo $Nav->menu_item('Client', 'Clients', 'class_manage.php') ?>
+                        <?php echo $Nav->menu_item('Project', 'Projects', 'class_manage.php') ?>
+                        <?php echo $Nav->menu_item('InvoiceActual', 'Invoice Actual', 'class_manage.php') ?>
+                        <?php echo $Nav->menu_item('InvoiceSend', 'Invoice Send', 'class_manage.php') ?>
+                        <?php echo $Nav->menu_item('Chat', 'Chat', 'class_manage.php') ?>
+                        <?php echo $Nav->menu_item('Notification', 'Notifications', 'class_manage.php') ?>
+
+                    </ul>
+                </li>
+
+
+                <li class="<?php if (isset($class_kamy_active)) {
+                    echo $class_kamy_active;
+                } ?>">
+                    <a href="<?php echo $path_admin; ?>index.php"><i class="fa fa-user"></i> <span class="nav-label">Kamy</span>
+                        <span class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level <?php if (isset($class_kamy_collapse)) {
+                        echo $class_kamy_collapse;
+                    } ?>">
+
+                        <?php echo $Nav->menu_item('Links', 'Links', 'class_manage.php') ?>
+                        <?php echo $Nav->menu_item('MyExpense', 'Expense', 'class_manage.php') ?>
+                        <?php echo $Nav->menu_item('ToDoList', 'ToDoList', 'class_manage.php') ?>
+                        <?php echo $Nav->menu_item('MyHouseExpense', 'HouseExpense', 'class_manage.php') ?>
+                        <?php echo $Nav->menu_item('MyCigarette', 'Cigarette', 'class_manage.php') ?>
+                        <?php echo $Nav->menu_item('MyCigaretteDay', 'Cigarette Day', 'class_manage.php') ?>
+                        <?php echo $Nav->menu_item('MyCigaretteMonth', 'Cigarette Month', 'class_manage.php') ?>
+                        <?php echo $Nav->menu_item('MyCigaretteYear', 'Cigarette Year', 'class_manage.php') ?>
 
 
                 </ul>
@@ -119,28 +147,30 @@
             <?php } // end of is logged in?>
 
 
-
-            
-
             <li class="">
-                <a href="#"><i class="fa fa-home"></i> <span class="nav-label">Public area</span> <span class="fa arrow"></span></a>
+                <a href="#"><i class="fa fa-home"></i> <span class="nav-label">Public area</span> <span
+                            class="fa arrow"></span></a>
 
                 <ul class="nav nav-second-level">
                     <li>
-<!--                        <a href="#">Public<span class="fa arrow"></span></a>-->
-                        <a href="#"><i class="fa fa-folder-o"></i> <span class="nav-label">Others</span> <span class="fa arrow"></span></a>
+                        <!--                        <a href="#">Public<span class="fa arrow"></span></a>-->
+                        <a href="#"><i class="fa fa-folder-o"></i> <span class="nav-label">Others</span> <span
+                                    class="fa arrow"></span></a>
                         <ul class="nav nav-third-level">
 
-<?php echo $Nav->menu_item('','Home public','index.php','public');
-if(User::is_admin()){
+                            <?php
+                            echo $Nav->menu_item('', 'Home public', 'index.php', 'public');
+                            echo $Nav->menu_item('', 'Loan', 'loan_exp.php', 'public');
+
+                            if (User::is_admin()) {
 //    echo $Nav->menu_item('','Inspinia Full version ','http://www.ikamy.ch/Inspinia_Full_Version/','none',true);
 //    echo $Nav->menu_item('','Minton','http://www.ikamy.ch/minton/Admin/Blue_PHP/index.php','public',true);
 //    echo $Nav->menu_item('','SmartAdmin','http://www.ikamy.ch/smartAdmin/','none',true);
 //    echo $Nav->menu_item('','SmartAdmin full version','http://www.ikamy.ch/SmartAdmin_Full_Version_html/','none',true) ;
-    echo $Nav->menu_item('', 'Inspinia Full', '../Inspinia_Full_Version/index.php', 'public', true);
-    echo $Nav->menu_item('', 'Inspinia Full2', '../Inspinia_Full_Version_2/index.php', 'public', true);
-    echo $Nav->menu_item('','SmartAdmin','../smartAdmin/index.php','public',true);
-    echo $Nav->menu_item('','Minton','../minton/Admin/Blue_PHP/index.php','public');
+                                echo $Nav->menu_item('', 'Inspinia Full', '../Inspinia_Full_Version/index.php', 'public', true);
+                                echo $Nav->menu_item('', 'Inspinia Full2', '../Inspinia_Full_Version_2/index.php', 'public', true);
+                                echo $Nav->menu_item('', 'SmartAdmin', '../smartAdmin/index.php', 'public', true);
+                                echo $Nav->menu_item('', 'Minton', '../minton/Admin/Blue_PHP/index.php', 'public');
     echo $Nav->menu_item('','Minton Full','../Minton_Full_Version/index.php','public',true);
     echo $Nav->menu_item('','SmartAdmin Full','../SmartAdmin_Full_Version/index.php','public');
     echo $Nav->menu_item('','Minor','minor.php','public');

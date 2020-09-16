@@ -11,19 +11,19 @@
 class MyExpensePerson extends DatabaseObject {
     protected static $table_name="myexpense_person";
 
-    protected static $db_fields = array('id','person_name','rank','comment');
+    protected static $db_fields = array('id', 'person_name', 'close_person', 'authorized_user', 'rank', 'comment');
 
     protected static $required_fields =  array('person_name','rank');
 
-    protected static $db_fields_table_display_short =  array('id','person_name','rank','comment');
+    protected static $db_fields_table_display_short = array('id', 'person_name', 'close_person', 'authorized_user', 'rank', 'comment');
 
-    protected static $db_fields_table_display_full =  array('id','person_name','rank','comment');
-    protected static $db_field_exclude_table_display_sort=null;
+    protected static $db_fields_table_display_full = array('id', 'person_name', 'close_person', 'authorized_user', 'rank', 'comment');
+    protected static $db_field_exclude_table_display_sort = null;
 
     public static $fields_numeric=array('id','rank');
 
-    public static $get_form_element=array('person_name','rank','comment');
-    public static $get_form_element_others=array();
+    public static $get_form_element = array('person_name', 'close_person', 'authorized_user', 'close', 'rank', 'comment');
+    public static $get_form_element_others = array();
 
     public static $form_default_value=array(
         "person_name"=>"Pablo"
@@ -31,22 +31,49 @@ class MyExpensePerson extends DatabaseObject {
 
     protected static $form_properties= array(
 
-        "person_name"=> array("type"=>"text",
-            "name"=>'person_name',
-            "label_text"=>"person_name",
-            "placeholder"=>"person_name",
-            "required" =>true,
+        "person_name" => array("type" => "text",
+            "name" => 'person_name',
+            "label_text" => "person_name",
+            "placeholder" => "person_name",
+            "required" => true,
         ),
-        "comment"=> array("type"=>"textarea",
-            "name"=>'comment',
-            "label_text"=>"Comment",
-            "placeholder"=>"input Comment",
-            "required" =>false,
+
+
+        "close_person" => array("type" => "radio",
+            array(0,
+                array(
+                    "label_all" => "close_person",
+                    "name" => "close_person",
+                    "label_radio" => "No",
+                    "value" => "0",
+                    "id" => "close_person_no",
+                    "default" => true)),
+            array(1,
+                array(
+                    "label_all" => "close_person",
+                    "name" => "close_person",
+                    "label_radio" => "Yes",
+                    "value" => "1",
+                    "id" => "close_person_yes",
+                    "default" => false)),
         ),
-        "rank"=> array("type"=>"number",
-            "name"=>'rank',
-            "label_text"=>"Rank",
-            'min'=>0,
+
+        "authorized_user" => array("type" => "text",
+            "name" => 'authorized_user',
+            "label_text" => "authorized_user",
+            "placeholder" => "authorized_user",
+            "required" => false,
+        ),
+        "comment" => array("type" => "textarea",
+            "name" => 'comment',
+            "label_text" => "Comment",
+            "placeholder" => "input Comment",
+            "required" => false,
+        ),
+        "rank" => array("type" => "number",
+            "name" => 'rank',
+            "label_text" => "Rank",
+            'min' => 0,
             "placeholder"=>"a number to sort",
             "required" =>false,
         ),
@@ -127,15 +154,17 @@ class MyExpensePerson extends DatabaseObject {
 
     public $id;
     public $person_name;
+    public $close_person;
+    public $authorized_user;
     public $comment;
     public $rank;
 
 
+    public function form_validation()
+    {
+        $valid = new FormValidation();
 
-    public  function form_validation() {
-        $valid=new FormValidation();
-
-        $valid->validate_presences(self::$required_fields) ;
+        $valid->validate_presences(self::$required_fields);
         return $valid;
 
 

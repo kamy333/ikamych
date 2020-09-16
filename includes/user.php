@@ -577,7 +577,19 @@ class User extends DatabaseObject
     {
         if (isset($_SESSION) && isset($_SESSION['user_id'])) {
             $found_user = self::find_by_id($_SESSION["user_id"]);
-            if ($found_user->username == 'caroline' || $found_user->username == 'kamy' || $found_user->username == 'admin') {
+            if ($found_user->username == 'carolinefdm' || $found_user->username == 'kamy' || $found_user->username == 'admin') {
+                return true;
+            } else {
+                return false;
+            }
+        }
+    }
+
+    public static function is_weslley()
+    {
+        if (isset($_SESSION) && isset($_SESSION['user_id'])) {
+            $found_user = self::find_by_id($_SESSION["user_id"]);
+            if ($found_user->username == 'Weslley' || $found_user->username == 'kamy' || $found_user->username == 'admin') {
                 return true;
             } else {
                 return false;

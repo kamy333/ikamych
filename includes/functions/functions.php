@@ -633,6 +633,11 @@ function u($string)
     return urlencode($string);
 }
 
+function d($string)
+{
+    return urldecode($string);
+}
+
 function h($string)
 {
 //    htmlspecialchars($string)

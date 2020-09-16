@@ -9,9 +9,9 @@
 
 //protected static $db_fields = array('','','','','','','','','','');
 
-class MyExpense extends DatabaseObject
+class MyLoan extends DatabaseObject
 {
-    protected static $table_name = "myexpense";
+    protected static $table_name = "myloan";
 
 // 'currency_id','Account','debitor','creditor'
 
@@ -19,9 +19,9 @@ class MyExpense extends DatabaseObject
 
     protected static $required_fields = array('amount', 'ccy_id', 'person_id', 'expense_type_id', 'expense_date');
 
-    protected static $db_fields_table_display_short = array('id', 'amount', 'amountCHF', 'ccy_id', 'currency', 'rate', 'person_id', 'person_name', 'expense_type_id', 'expense_type', 'expense_date', 'category');
+    protected static $db_fields_table_display_short = array('id', 'amount', 'amountCHF', 'ccy_id', 'currency', 'rate', 'person_id', 'person_name', 'expense_type_id', 'expense_type', 'expense_date');
 
-    protected static $db_fields_table_display_full = array('id', 'amount', 'amountCHF', 'currency', 'rate', 'person_id', 'person_name', 'expense_type_id', 'expense_type', 'expense_date', 'category', 'comment', 'modification_time');
+    protected static $db_fields_table_display_full = array('id', 'amount', 'amountCHF', 'currency', 'rate', 'person_id', 'person_name', 'expense_type_id', 'expense_type', 'expense_date', 'comment', 'modification_time');
 
     protected static $db_field_exclude_table_display_sort = array('amountCHF');
 
@@ -150,7 +150,7 @@ class MyExpense extends DatabaseObject
         "amount" => array("type" => "select",
             "name" => 'amount',
             "id" => "search_amount",
-            "class" => "MyExpense",
+            "class" => "MyLoan",
             "label_text" => "",
             "select_option_text" => 'Amount',
             'field_option_0' => "amount",
@@ -191,7 +191,7 @@ class MyExpense extends DatabaseObject
         "expense_date" => array("type" => "select",
             "name" => 'expense_date',
             "id" => "search_expense_date",
-            "class" => "MyExpense",
+            "class" => "MyLoan",
             "label_text" => "",
             "select_option_text" => 'Expense type',
             'field_option_0' => "expense_date",
@@ -224,16 +224,16 @@ class MyExpense extends DatabaseObject
     public static $db_field_search = array('search_all', 'amount', 'ccy_id', 'person_id', 'expense_type_id', 'expense_date', 'comment', 'download_csv');
 
 
-    public static $page_name = "Expense Loan";
-//    public static $page_manage="manage_MyExpense.php";
-//    public static $page_new="new_MyExpense.php";
-//    public static $page_edit="edit_MyExpense.php";
-//    public static $page_delete="delete_MyExpense.php";
+    public static $page_name = "Loan";
+//    public static $page_manage="manage_MyLoan.php";
+//    public static $page_new="new_MyLoan.php";
+//    public static $page_edit="edit_MyLoan.php";
+//    public static $page_delete="delete_MyLoan.php";
 
-    public static $page_manage = "/public/admin/crud/ajax/manage_ajax.php?class_name=MyExpense"; // "new_link.php";
-    public static $page_new = "/public/admin/crud/ajax/new_ajax.php?class_name=MyExpense"; // "new_link.php";
-    public static $page_edit = "/public/admin/crud/ajax/edit_ajax.php?class_name=MyExpense"; //  "edit_link.php";
-    public static $page_delete = "/public/admin/crud/ajax/delete_ajax.php?class_name=MyExpense"; //  "delete_link.php";
+    public static $page_manage = "/public/admin/crud/ajax/manage_ajax.php?class_name=MyLoan"; // "new_link.php";
+    public static $page_new = "/public/admin/crud/ajax/new_ajax.php?class_name=MyLoan"; // "new_link.php";
+    public static $page_edit = "/public/admin/crud/ajax/edit_ajax.php?class_name=MyLoan"; //  "edit_link.php";
+    public static $page_delete = "/public/admin/crud/ajax/delete_ajax.php?class_name=MyLoan"; //  "delete_link.php";
     public static $position_table = "positionBoth"; // positionLeft // positionBoth  positionRight
 
 
@@ -256,9 +256,6 @@ class MyExpense extends DatabaseObject
     public $currency;
     public $ccy_id;
     public $rate;
-
-
-    public $category;
 
 
     public $itemsCount;
@@ -385,6 +382,7 @@ GROUP BY person_id;";
         return $output;
     }
 
+
     public static function by_person_receivable()
     {
         $output = "";
@@ -507,6 +505,7 @@ GROUP BY $table.person_id;";
         return $output;
     }
 
+
     public static function by_person_ccy()
     {
         $output = "";
@@ -573,6 +572,7 @@ GROUP BY person_id,ccy_id;";
         $output .= "</table>";
         return $output;
     }
+
 
     public static function by_ccy()
     {
@@ -641,6 +641,7 @@ GROUP BY ccy_id;";
         return $output;
     }
 
+
     public static function by_type()
     {
         $output = "";
@@ -706,6 +707,7 @@ GROUP BY expense_type_id;";
         return $output;
     }
 
+
     public function form_validation()
     {
         $this->set_up_display();
@@ -732,6 +734,7 @@ GROUP BY expense_type_id;";
         return $output;
     }
 
+
     protected function set_up_display()
     {
 
@@ -744,7 +747,6 @@ GROUP BY expense_type_id;";
         $result = MyExpenseType::find_by_id($this->expense_type_id);
         $this->expense_type = $result->expense_type;
         $this->side = $result->side;
-        $this->category = $result->category;
 
 
         if ($this->side < 0 && $this->amount > 0) {
@@ -762,115 +764,7 @@ GROUP BY expense_type_id;";
     }
 
 
-    public static function get_category_name($exp_type_ids)
-    {
-        if ($exp_type_ids == "1,3") {
-            $cat = "Loan";
-        } elseif ($exp_type_ids == "4,5") {
-            $cat = "Gift";
-        } elseif ($exp_type_ids == "6,7") {
-            $cat = "Exclude";
-        } else {
-            $cat = "All";
-        }
-
-        return $cat;
-
-
-    }
-
-    public static function form_select_person()
-    {
-        $output = "";
-        $desc = "DESC";
-
-        $sql = "SELECT t1.person_id,t2.person_name
-        FROM " . static::$table_name . " AS t1
-          INNER JOIN myexpense_person AS t2
-            ON t1.person_id = t2.id 
-            WHERE t2.close_person=0 
-            GROUP BY t1.person_id,t2.person_name 
-        ORDER BY t2.rank ASC";
-
-
-        $output .= " <div class='col-sm-5 form-inline'>";
-        $output .= "<form name='xxx' method='get' action='" . h($_SERVER['PHP_SELF']) . "'>";
-
-        if (User::is_admin()) {
-
-
-            $output .= "<select class='form - control m - b' name='person_id'>";
-            $results = static::find_by_sql($sql);
-            if ($results) {
-                if (isset($_GET["person_id"])) {
-                    $p_id = $_GET["person_id"];
-                    $myperson1 = MyExpensePerson::find_by_id($p_id);
-                    $person1 = $myperson1->person_name;
-                    $output .= "<option selected value='{$p_id}'>{$person1}</option>";
-                }
-
-                foreach ($results as $result) {
-                    $myperson = MyExpensePerson::find_by_id($result->person_id);
-                    $person = $myperson->person_name;
-
-                    $output .= "<option value='{$result->person_id}'>{$person}</option>";
-                }
-
-            }
-
-            $output .= "</select>";
-
-        }
-        $output .= "<select class='form - control m - b' name='type_category'>";
-
-        if (isset($_GET["type_category"])) {
-
-            $exp_type_ids = d($_GET["type_category"]);
-            $cat = static::get_category_name($exp_type_ids);
-
-            $output .= "<option selected value='{$exp_type_ids}'>{$cat}</option>";
-        }
-
-        $output .= "<option value='" . u("All") . "'>All</option>";
-        $output .= "<option value='" . u("1,3") . "'>Loan</option>";
-        $output .= "<option value='" . u("4,5") . "'>Gift</option>";
-        $output .= "<option value='" . u("6,7") . "'>Exclude</option>";
-
-        $output .= "</select>";
-
-        $output .= "<select class='form - control m - b' name='sort'>";
-        if (isset($_GET["sort"])) {
-            $sort = $_GET["sort"];
-
-            if ($sort == "ASC") {
-                $output .= "<option selected value='" . u("ASC") . "'>ASC</option>";
-                $output .= "<option  value='" . u("DESC") . "'>DESC</option>";
-
-            } else {
-                $output .= "<option selected value='" . u("DESC") . "'>DESC</option>";
-                $output .= "<option  value='" . u("ASC") . "'>ASC</option>";
-
-            }
-
-        } else {
-            $output .= "<option selected value='" . u("DESC") . "'>DESC</option>";
-            $output .= "<option  value='" . u("ASC") . "'>ASC</option>";
-
-        }
-
-
-        $output .= "</select>";
-
-
-        $output .= "<button class='btn btn-primary' type='submit'>Get Person</button>";
-        $output .= "</form>";
-        $output .= "</div>";
-
-        return $output;
-    }
-
-
-    public static function aPerson(int $personId, $NOT = true, $exclude = "", $desc = "DESC", $is_button = false)
+    public static function aPerson(int $personId, $NOT = true, $exclude = "34,32,39,24,26", $desc = "DESC", $is_button = false)
     {
         $output = "";
 
@@ -888,48 +782,13 @@ GROUP BY expense_type_id;";
             $addCol = "";
         }
 
-        if (isset($_GET["type_category"])) {
-            $cat = d($_GET["type_category"]);
-            $cat_name = static::get_category_name($cat);
 
-            if ($cat == "All") {
-                $and_type = "";
-                $and_type1 = "";
-            } else {
-                $and_type = "";
-                $and_type = " AND t1.expense_type_id IN ($cat) ";
-                $and_type1 = " AND expense_type_id IN ($cat) ";
-            }
-
-
-        } else {
-
-            $cat = "1,3";
-            $cat_name = MyExpense::get_category_name($cat);
-            $and_type = " AND t1.expense_type_id IN ($cat) ";
-            $and_type1 = " AND expense_type_id IN ($cat) ";
-
-        }
-
-
-        if ($exclude == "") {
-            $and_exclude = "";
-        } else {
-
-            $and_exclude = " AND t1.id $newNot IN ($exclude) ";
-            $and_exclude1 = " AND id $newNot IN ($exclude) ";
-        }
-
-
-        $sql = "SELECT t1.id ,t1.person_id,t1.ccy_id,t2.person_name,t1.comment,t1.expense_date,t1.amount,t1.rate,t1.expense_type_id,t1.amount * t1.rate AS amountCHF,t3.category
+        $sql = "SELECT t1.id ,t1.person_id,t1.ccy_id,t2.person_name,t1.comment,t1.expense_date,t1.amount,t1.rate,t1.expense_type_id,t1.amount * t1.rate AS amountCHF
         FROM " . static::$table_name . " AS t1
           INNER JOIN myexpense_person AS t2
             ON t1.person_id = t2.id
-           INNER JOIN myexpense_type AS t3  
-            ON t1.expense_type_id=t3.id
         WHERE t1.person_id=$personId
-        $and_type
-        $and_exclude ORDER BY t1.id {$desc}";
+        AND t1.id $newNot IN ($exclude) ORDER BY t1.id {$desc}";
 
 
         $table_class = Table::full_table_class();
@@ -945,7 +804,6 @@ GROUP BY expense_type_id;";
                           <th class='text-center'>Fx" . "</th>
                           <th class='text-center'>Amt CHF" . "</th>
                           <th class='text-center'>Type" . "</th>
-                          <th class='text-center'>Category" . "</th>
                           {$addCol}
                           </tr>";
 
@@ -959,8 +817,6 @@ GROUP BY expense_type_id;";
 
                 $mytype = MyExpenseType::find_by_id($result->expense_type_id);
                 $type = $mytype->expense_type;
-                $categ = $mytype->category;
-
 
                 $myCurrency = Currency::find_by_id($result->ccy_id);
                 $ccy = $myCurrency->currency;
@@ -983,8 +839,10 @@ GROUP BY expense_type_id;";
                 $output .= "<td class='text-center'>{$ccy}</td>";
                 if ($result->amount < 0) {
                     $output .= "<td class='text-right' style='color: red'>" . number_format($result->amount, 2) . "</td>";
+
                 } else {
                     $output .= "<td class='text-right'>" . number_format($result->amount, 2) . "</td>";
+
                 }
                 $output .= "<td class='text-center'>{$result->rate}</td>";
 
@@ -997,7 +855,6 @@ GROUP BY expense_type_id;";
 
                 }
                 $output .= "<td class='text-center'>{$type}</td>";
-                $output .= "<td class='text-center'>{$categ}</td>";
 
                 if ($is_button) {
                     $href = clean_query_string("class_edit.php?class_name=" . get_called_class() . "&id=" . urlencode($result->id));
@@ -1016,17 +873,14 @@ GROUP BY expense_type_id;";
 
         unset($results);
 
-        $sum = number_format(static::sum_field_where($field = "amount * rate", "WHERE person_id=$personId $and_type1
-$and_exclude1 "), 2);
+        $sum = number_format(static::sum_field_where($field = "amount * rate", "WHERE person_id=$personId
+AND id $newNot IN ($exclude)"), 2);
 
         $output .= "<tr>";
         $output .= "<td class='text-center'><strong>Total</strong></td>";
-        $output .= str_repeat("<td></td>", 4);
-        $output .= "<td class='text-center'><strong>Total</strong></td>";
-        $output .= "<td class='text-right'><strong>" . "CHF" . "</strong></td>";
+        $output .= str_repeat("<td></td>", 6);
         $output .= "<td class='text-right'><strong>" . $sum . "</strong></td>";
-        $output .= "<td class='text-right'><strong>" . $cat_name . "</strong></td>";
-        $output .= str_repeat("<td></td>", 1);
+        $output .= "<td class='text-right'><strong>" . "CHF" . "</strong></td>";
         $output .= "</tr>";
         $output .= "</table>";
         return $output;

@@ -15,7 +15,7 @@ class MyClasses
         'Links', 'LinksCategory', 'Category1', 'Category2',
         'Project', 'Client', 'InvoiceActual', 'Category', 'InvoiceEstimate', 'Currency',
         'MyCigarette',
-        'MyExpense', 'MyExpensePerson', 'MyExpenseType', 'MyHouseExpense',
+        'MyExpense', 'MyLoan', 'MyExpensePerson', 'MyExpenseType', 'MyHouseExpense',
         'MyHouseExpenseType',
         'FailedLogin', 'BlacklistIp',
         'TransportChauffeur',

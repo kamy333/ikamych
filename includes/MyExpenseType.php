@@ -11,20 +11,20 @@
 class MyExpenseType extends DatabaseObject {
     protected static $table_name="myexpense_type";
 
-    protected static $db_fields = array('id','expense_type','side','rank','comment');
+    protected static $db_fields = array('id', 'expense_type', 'side', 'rank', 'category', 'comment');
 
     protected static $required_fields =  array('expense_type','side','rank');
 
-    protected static $db_fields_table_display_short =  array('id','expense_type','side','rank','comment');
+    protected static $db_fields_table_display_short = array('id', 'expense_type', 'side', 'rank', 'category', 'comment');
 
-    protected static $db_fields_table_display_full =  array('id','expense_type','side','rank','comment');
-    protected static $db_field_exclude_table_display_sort=null;
+    protected static $db_fields_table_display_full = array('id', 'expense_type', 'side', 'rank', 'category', 'comment');
+    protected static $db_field_exclude_table_display_sort = null;
 
     public static $fields_numeric=array('id','rank','side');
 
 
-    public static $get_form_element=array('expense_type','rank','side','comment');
-    public static $get_form_element_others=array();
+    public static $get_form_element = array('expense_type', 'rank', 'side', 'category', 'comment');
+    public static $get_form_element_others = array();
 
     public static $form_default_value=array(
         "rank"=>"1",
@@ -48,26 +48,32 @@ class MyExpenseType extends DatabaseObject {
                     "label_radio"=>"Positif ",
                     "value"=>"1",
                     "id"=>"side_positif",
-                    "default"=>true)),
+                    "default" => true)),
             array(1,
                 array(
-                    "label_all"=>"Positif Negatif",
-                    "name"=>"side",
-                    "label_radio"=>"Negatif",
-                    "value"=>"-1",
-                    "id"=>"side_negative",
-                    "default"=>true)),
+                    "label_all" => "Positif Negatif",
+                    "name" => "side",
+                    "label_radio" => "Negatif",
+                    "value" => "-1",
+                    "id" => "side_negative",
+                    "default" => true)),
         ),
-        "comment"=> array("type"=>"textarea",
-            "name"=>'comment',
-            "label_text"=>"Comment",
-            "placeholder"=>"input Comment",
-            "required" =>false,
+        "category" => array("type" => "text",
+            "name" => 'category',
+            "label_text" => "category",
+            "placeholder" => "category",
+            "required" => true,
         ),
-        "rank"=> array("type"=>"number",
-            "name"=>'rank',
-            "label_text"=>"Rank",
-            'min'=>0,
+        "comment" => array("type" => "textarea",
+            "name" => 'comment',
+            "label_text" => "Comment",
+            "placeholder" => "input Comment",
+            "required" => false,
+        ),
+        "rank" => array("type" => "number",
+            "name" => 'rank',
+            "label_text" => "Rank",
+            'min' => 0,
             "placeholder"=>"a number to sort",
             "required" =>true,
         ),
@@ -150,6 +156,7 @@ class MyExpenseType extends DatabaseObject {
     public $comment;
     public $rank;
     public $side;
+    public $category;
 
 
 

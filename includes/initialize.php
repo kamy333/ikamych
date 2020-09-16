@@ -168,6 +168,7 @@ require_once(LIB_PATH . DS . 'Note.php');
 require_once(LIB_PATH . DS . 'MyExpenseType.php');
 require_once(LIB_PATH . DS . 'MyHouseExpenseType.php');
 require_once(LIB_PATH . DS . 'MyExpense.php');
+require_once(LIB_PATH . DS . 'MyLoan.php');
 require_once(LIB_PATH . DS . 'MyHouseExpense.php');
 require_once(LIB_PATH . DS . 'Chat.php');
 require_once(LIB_PATH . DS . 'ChatFriend.php');

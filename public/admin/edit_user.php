@@ -61,7 +61,7 @@ if(request_is_post() && request_is_same_domain()) {
             $expected_fields=$new_this_class::get_table_field();
             foreach($expected_fields as $field){
                 if(isset($_POST[$field])){
-                echo    $new_this_class->$field=trim($_POST{$field}) ;
+                echo $new_this_class->$field = trim($_POST[$field]);
                 }
             }
 

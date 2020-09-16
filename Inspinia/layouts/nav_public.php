@@ -60,14 +60,14 @@
                     echo $Nav->menu_item('', 'Chat Djam', 'chat_djamila.php', 'public');
                 }
 
-                if (User::is_caroline()) {
-                    echo $Nav->menu_item('', 'Maman', 'maman_exp.php', 'public');
+                if (User::is_caroline() || User::is_weslley()) {
+                    echo $Nav->menu_item('', 'Loan', 'loan_exp.php', 'public');
 //                    echo $Nav->menu_item('', 'Chat Djam', 'chat_djamila.php', 'public');
                 }
                 ?>
 
 
-                ?>
+
 
 
                 <?php if (User::is_manager()) { ?>

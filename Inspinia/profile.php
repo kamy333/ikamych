@@ -95,7 +95,7 @@ if(request_is_post() && request_is_same_domain()) {
             $expected_fields=UpdateUserProfile::get_table_field();
             foreach($expected_fields as $field){
                 if(isset($_POST[$field])){
-                    $user->$field=trim($_POST{$field}) ;
+                    $user->$field = trim($_POST[$field]);
                 }
             }
 
@@ -288,7 +288,11 @@ if(User::is_visitor()){
 ?>
 
 
-<?php include_once(SITE_ROOT . DS . $Nav->top_folder . DS . "inc" . DS . "profile_option.php") ?>
+<?php
+if (1 == 2) {
+    include_once(SITE_ROOT . DS . $Nav->top_folder . DS . "inc" . DS . "profile_option.php");
+}
+?>
 <?php include_once(SITE_ROOT . DS . $Nav->top_folder . DS . "inc" . DS . "profile.php") ?>
 
 
