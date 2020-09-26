@@ -714,6 +714,7 @@ class User extends DatabaseObject
 
     }
 
+
     public function ajax_save_user_image($user_image, $user_id)
     {
         global $database;

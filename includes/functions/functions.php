@@ -633,6 +633,11 @@ function u($string)
     return urlencode($string);
 }
 
+function ud8($string)
+{
+    return utf8_decode($string);
+}
+
 function d($string)
 {
     return urldecode($string);
@@ -651,6 +656,22 @@ function e($string)
     return $database->escape_value($string);
 
 }
+
+function format_number($number)
+{
+    $output = "";
+    if (is_numeric($number)) {
+        if ($number < 0) {
+            $output .= "<span style='color: red'>" . number_format($number, 2) . "</span>";
+        } else {
+            $output .= "<span>" . number_format($number, 2) . "</span>";
+
+        }
+    }
+
+    return $output;
+}
+
 
 function clean_query_string2($text_qry_str)
 {

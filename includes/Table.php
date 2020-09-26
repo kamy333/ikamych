@@ -72,6 +72,8 @@ public static function ibox_table($content="",$title="",$col=4, $col_offset=0){
 
     if($title){
         $output.="<div class=\"ibox-title\">";
+
+
         $output.="<h5 class='text-center'>$title</h5>";
         $output.="<div class=\"ibox-tools\">
                                     <a class=\"collapse-link\">

@@ -11,18 +11,18 @@
 class MyExpensePerson extends DatabaseObject {
     protected static $table_name="myexpense_person";
 
-    protected static $db_fields = array('id', 'person_name', 'close_person', 'authorized_user', 'rank', 'comment');
+    protected static $db_fields = array('id', 'person_name', 'close_person', 'authorized_user', 'language', 'rank', 'comment');
 
     protected static $required_fields =  array('person_name','rank');
 
-    protected static $db_fields_table_display_short = array('id', 'person_name', 'close_person', 'authorized_user', 'rank', 'comment');
+    protected static $db_fields_table_display_short = array('id', 'person_name', 'close_person', 'authorized_user', 'rank', 'language', 'comment');
 
-    protected static $db_fields_table_display_full = array('id', 'person_name', 'close_person', 'authorized_user', 'rank', 'comment');
+    protected static $db_fields_table_display_full = array('id', 'person_name', 'close_person', 'authorized_user', 'language', 'rank', 'comment');
     protected static $db_field_exclude_table_display_sort = null;
 
     public static $fields_numeric=array('id','rank');
 
-    public static $get_form_element = array('person_name', 'close_person', 'authorized_user', 'close', 'rank', 'comment');
+    public static $get_form_element = array('person_name', 'close_person', 'authorized_user', 'language', 'close', 'rank', 'comment');
     public static $get_form_element_others = array();
 
     public static $form_default_value=array(
@@ -61,9 +61,17 @@ class MyExpensePerson extends DatabaseObject {
         "authorized_user" => array("type" => "text",
             "name" => 'authorized_user',
             "label_text" => "authorized_user",
-            "placeholder" => "authorized_user",
+            "placeholder" => "authorized user must be valid username and comma-separated if more than 1",
             "required" => false,
         ),
+
+        "language" => array("type" => "text",
+            "name" => 'language',
+            "label_text" => "language",
+            "placeholder" => "language comma-separated if more than 1 en,fr,ptg",
+            "required" => false,
+        ),
+
         "comment" => array("type" => "textarea",
             "name" => 'comment',
             "label_text" => "Comment",
@@ -158,6 +166,8 @@ class MyExpensePerson extends DatabaseObject {
     public $authorized_user;
     public $comment;
     public $rank;
+
+    public $language;
 
 
     public function form_validation()

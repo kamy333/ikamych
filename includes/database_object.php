@@ -691,6 +691,17 @@ class DatabaseObject
 
     }
 
+    public static function sum_field_where_by_sql($sql)
+    {
+        global $database;
+//        $table = static::$table_name;
+        $result_set = $database->query($sql);
+        $row = $database->fetch_array($result_set);
+        return $row ? array_shift($row) : false;
+
+    }
+
+
     public static function find_max_id()
     {
         global $database;

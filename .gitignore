@@ -54,6 +54,8 @@ $RECYCLE.BIN/
 *.gif
 *.mp4
 *.mov
+*.jpeg
+
 
 db_connection.php
 new_ByB_project/
@@ -71,6 +73,7 @@ vendor
 /transmed/xml/transmed/*
 /includes/transmed_config/config_transmed.php
 /includes/transmed_config/
+/public/img/*
 test2.sql
 Inspinia/css/patterns/
 Inspinia/css/plugins/images/
@@ -143,3 +146,18 @@ transmedmb/assets/portfolio/images/
 transmedmb/documentation/assets/blueprint-css/plugins/buttons/icons/
 transmedmb/documentation/assets/blueprint-css/plugins/link-icons/icons/
 transmedmb/documentation/assets/images/
+public/img/Kamy/Weslley_judeo.jpeg
+public/img/maman_document/2020-08-14 Lelah Facture Maman_AiG Europe lux CHF 108.00.jpeg
+public/img/maman_document/2020-08-14 Lelah Facture Maman_SBB CFF CHF 205.00 2.jpeg
+public/img/maman_document/2020-08-14 Lelah Facture Maman_SBB CFF CHF 205.00.jpeg
+public/img/maman_document/2020-08-14 Lelah Facture Maman_Swiscom CHF 578.30.jpeg
+public/img/maman_document/2020-08-25_Lettre poursuite CSS ASSurance_1 CHF 259.60.jpeg
+public/img/maman_document/2020-08-27_Wincasa_3.jpeg
+"public/img/maman_document/2020-09-02 Maman Facture Geneve-M\303\251decin CHF 482.75.jpeg"
+public/img/maman_document/2020-09-07 Ambulance Maman 1 CHF 864.10.jpeg
+public/img/maman_document/2020-09-07 Ambulance Maman 2 Fact CHF 864.10.jpeg
+public/img/maman_document/Capital trsf papa Wesley CHF 12500.jpeg
+public/img/maman_document/Fact Maman Helvetia CHF 473.20.jpeg
+public/img/maman_document/Fact Maman UBS and Accardia CHF 500.00.jpeg
+public/img/maman_document/Fact Maman UBS2 Card Center 2020_07-26 CHF 1000.00.jpeg
+public/img/maman_document/Maman office poursuite CSS Assurance CHF 2373.75.jpeg

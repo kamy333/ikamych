@@ -9,47 +9,67 @@
 class Currency extends DatabaseObject
 {
 
-    protected static $table_name="currency";
-    protected static $db_fields =array('id','currency','currency_country','rate','date','rank','comment',);
-    public static $required_fields =array('currency','currency_country','rate','date','rank');
-    protected static $db_fields_table_display_short =array('id','currency','currency_country','rate','date','rank','comment',);
-    protected static $db_fields_table_display_full =array('id','currency','currency_country','rate','date','rank','comment',);
-    protected static $db_field_exclude_table_display_sort=null;
-    public static $fields_numeric=array('id','rate','rank');
+    protected static $table_name = "currency";
+    protected static $db_fields = array('id', 'currency', 'currency_country', 'rate_side', 'rate', 'date', 'rank', 'comment',);
+    public static $required_fields = array('currency', 'currency_country', 'rate_side', 'rate', 'date', 'rank');
+    protected static $db_fields_table_display_short = array('id', 'currency', 'rate_side', 'currency_country', 'rate', 'date', 'rank', 'comment',);
+    protected static $db_fields_table_display_full = array('id', 'currency', 'rate_side', 'currency_country', 'rate', 'date', 'rank', 'comment',);
+    protected static $db_field_exclude_table_display_sort = null;
+    public static $fields_numeric = array('id', 'rate', 'rank');
 
-    public static $get_form_element=array('currency','currency_country','rate','date','rank','comment');
+    public static $get_form_element = array('currency', 'currency_country', 'rate_side', 'rate', 'date', 'rank', 'comment');
 
-    public static $get_form_element_others=array();
+    public static $get_form_element_others = array();
 
-    public static $form_default_value=array(
-        "currency_country"=>"CHF",
-        "date"=>"now()",
+    public static $form_default_value = array(
+        "currency_country" => "CHF",
+        "date" => "now()",
+        "rate_side" => "Multiply",
+
     );
     protected static $form_properties= array(
         "currency"=> array("type"=>"text",
             "name"=>'currency',
             "id"=>"currency",
             "label_text"=>"Currency",
-            "placeholder"=>"Currency ISO",
-            "required" =>true,
+            "placeholder" => "Currency ISO",
+            "required" => true,
         ),
-        "currency_country"=> array("type"=>"text",
-            "name"=>'currency_country',
-            "id"=>"currency_country",
-            "label_text"=>"Currency Country",
-            "placeholder"=>"Currency Country Name",
-            "required" =>false,
+        "currency_country" => array("type" => "text",
+            "name" => 'currency_country',
+            "id" => "currency_country",
+            "label_text" => "Currency Country",
+            "placeholder" => "Currency Country Name",
+            "required" => false,
         ),
-        "rate"=> array("type"=>"number",
-            "name"=>'rate',
-            "id"=>"rate",
-            "label_text"=>"currency rate",
-            'min'=>0,
-            "step"=>'any',
-            "placeholder"=>"Rate to CHF multiplier",
-            "required" =>true,
+        "rate_side" => array("type" => "radio",
+            array(0,
+                array(
+                    "label_all" => "rate_side",
+                    "name" => "rate_side",
+                    "label_radio" => "Multiply",
+                    "value" => "Multiply",
+                    "id" => "rate_side_multiply",
+                    "default" => true)),
+            array(1,
+                array(
+                    "label_all" => "rate_side",
+                    "name" => "rate_side",
+                    "label_radio" => "Divide",
+                    "value" => "Divide",
+                    "id" => "rate_side_divide",
+                    "default" => false)),
         ),
-        "date"=> array("type"=>"date",
+        "rate" => array("type" => "number",
+            "name" => 'rate',
+            "id" => "rate",
+            "label_text" => "currency rate",
+            'min' => 0,
+            "step" => 'any',
+            "placeholder" => "Rate to CHF multiplier",
+            "required" => true,
+        ),
+        "date" => array("type" => "date",
             "name"=>'date',
             "id"=>"date",
             "label_text"=>"Date",
@@ -167,18 +187,21 @@ class Currency extends DatabaseObject
     public $id;
     public $currency;
     public $currency_country;
+    public $rate_side;
     public $rate;
     public $date;
     public $rank;
-public $comment ;
-public $input_date ;
-
-    public  function form_validation() {
+    public $comment;
+    public $input_date;
 
 
-        $valid=new FormValidation();
+    public function form_validation()
+    {
 
-        $valid->validate_presences(self::$required_fields) ;
+
+        $valid = new FormValidation();
+
+        $valid->validate_presences(self::$required_fields);
 //        if(!isset($this->id)){$valid->unique_category();}
 
         $valid->is_numeric('rate',['min'=>0]);

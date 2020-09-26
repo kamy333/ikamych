@@ -16,5 +16,36 @@
 <?php include(SITE_ROOT . DS . 'public' . DS . 'layouts' . DS . "header.php") ?>
 <?php include(SITE_ROOT . DS . 'public' . DS . 'layouts' . DS . "nav.php") ?>
 
+<?php
+
+$exp = MyExpense::find_by_id(136);
+echo $exp->document;
+echo "<br><br>";
+$folder = "/public/img/maman_document/";
+$file = $exp->document;
+//$file="2020-06-28-Avis BGG  Maman  Office poursuite CSS Assurance 259.90.pdf";
+
+//$full_path=u($folder.$file);
+$full_path = $folder . $file;
+$lnk = "<a href='$full_path'>$file</a>";
+echo $lnk;
+
+echo "<br><br>";
+
+$file = "Wincasa Golchan Loyer comptabilite retard.pdf";
+$full_path = $folder . $file;
+$lnk = "<a href='$full_path'>$file</a>";
+echo $lnk;
+echo "<br><br>";
+$pi = pathinfo($full_path);
+$txt = $pi['filename'];
+$ext = $pi['extension'];
+
+echo $txt;
+echo "<br><br>";
+echo $ext;
+
+?>
+
 
 <?php include(SITE_ROOT . DS . 'public' . DS . 'layouts' . DS . "footer.php") ?>

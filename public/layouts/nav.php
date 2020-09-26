@@ -73,6 +73,13 @@ if ($layout_context == "public") {
                     } ?>
                 ><a href="#" data-toggle="dropdown">About us<span class="caret"></span></a>
                     <ul class="dropdown-menu">
+
+
+                        <?php
+                        if (User::is_caroline() || User::is_weslley()) {
+                            echo $Nav->menu_item('', 'Loans', 'loan_expense.php', 'public');
+                        }
+                        ?>
                         <?php echo $Nav->menu_item('', 'About us1', 'about_us.php', 'public'); ?>
                         <?php echo $Nav->menu_item('', 'About us 2', 'about_us_2.php', 'public'); ?>
                         <?php echo $Nav->menu_item('', 'About Us 3', 'angular.php', 'public'); ?>

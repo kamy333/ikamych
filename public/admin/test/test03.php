@@ -1,7 +1,9 @@
 <?php require_once('../../../includes/initialize.php'); ?>
 <?php require_once('../../../includes/transport/ViewTransportModelByChauffeur.php'); ?>
 
-<?php $session->confirmation_protected_page(); ?>
+<?php if (isset($session)) {
+    $session->confirmation_protected_page();
+} ?>
 
 <?php if (User::is_employee()) {
     redirect_to('index.php');
@@ -21,7 +23,9 @@ $class_name = MyClasses::redirect_disable_class();
 <?php include(SITE_ROOT . DS . 'public' . DS . 'layouts' . DS . "nav.php") ?>
 
 <?php echo isset($valid) ? $valid->form_errors() : "" ?>
-<?php echo $message; ?>
+<?php if (isset($message)) {
+    echo $message;
+} ?>
 
 
 <?php
