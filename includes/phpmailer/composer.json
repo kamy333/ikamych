@@ -21,7 +21,9 @@
     ],
     "require": {
       "php": ">=5.0.0",
-      "ext-mysqli": "*"
+      "ext-mysqli": "*",
+      "ext-dom": "*",
+      "ext-simplexml": "*"
     },
     "require-dev": {
         "phpdocumentor/phpdocumentor": "*",

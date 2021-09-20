@@ -54,10 +54,9 @@ if(isset($_GET['class_name'])){
 
         <p>Admin en construction link button not working</p>
 
-        <?php echo button_color('success', "<i class='fa fa-maxcdn'>&nbsp;Model</i>", '/public/admin/manage_user.php', ''); ?>
+        <?php echo button_color('success', "<i class='fa fa-maxcdn'>&nbsp;User</i>", '/public/admin/manage_user.php', '','','',2) ; ?>
 
-        <?php echo button_color('primary', "<i class='fa fa-automobile'>&nbsp;Course</i>", 'transport.php?class_name=Course', ''); ?>
-
+        <?php echo button_color('primary', "<i class='fa fa-automobile'>&nbsp;My Expense</i>", '/public/admin/crud/ajax/manage_ajax.php?class_name=MyExpense', '','','',2); ?>
 
         <?php echo button_color('primary', "<i class='fa fa-male'>&nbsp;Clients</i>", 'transport.php?cl=tClient', ''); ?>
         <?php echo button_color('danger', "<i class='fa fa-user'>&nbsp;Chauffeur</i>", 'transport.php?cl=Chauffeur', ''); ?>

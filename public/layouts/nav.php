@@ -79,6 +79,10 @@ if ($layout_context == "public") {
                         if (User::is_caroline() || User::is_weslley()) {
                             echo $Nav->menu_item('', 'Loans', 'loan_expense.php', 'public');
                         }
+                        if (User::is_caroline() || User::is_weslley()) {
+                            echo $Nav->menu_item('', 'Loans Mum', 'loan_expense_1.php', 'public');
+                        }
+
                         ?>
                         <?php echo $Nav->menu_item('', 'About us1', 'about_us.php', 'public'); ?>
                         <?php echo $Nav->menu_item('', 'About us 2', 'about_us_2.php', 'public'); ?>
@@ -121,6 +125,8 @@ if ($layout_context == "public") {
                 ><a href="<?php echo $path_public; ?>myLinks.php?category=Others">Links</a></li>
 
 
+
+
                 <li
                     <?php if (isset($active_menu) && $active_menu == "Others") {
                         echo " class=\"dropdown active\"";
@@ -131,20 +137,6 @@ if ($layout_context == "public") {
 
                     <ul class="dropdown-menu">
 
-                        <?php if (User::is_admin() || User::is_employee()) { ?>
-
-                            <li><a href="<?php echo $path_public; ?>_f/_transmed/transmed_form.php">Transmed_form</a>
-                            </li>
-                            <li><a href="<?php echo $path_public; ?>_f/_transmed/transmed_form2.php">Transmed_form2</a>
-                            </li>
-                            <li><a href="<?php echo $path_public; ?>_f/_transmed/transmed_form3.php">Transmed_form3</a>
-                            </li>
-                            <li><a href="<?php echo $path_public; ?>_f/_transmed/transmed_form4.php">Transmed_form4</a>
-                            </li>
-
-                        <?php } ?>
-
-                        <li class="divider"></li>
                         <li><a href="<?php echo $path_public; ?>_f/_bralia/braliacuba.php">Voyage Bralia Cuba
                                 Mexique</a></li>
                         <li><a href="<?php echo $path_public; ?>_f/_bralia/braliajordanie.php">Voyage Bralia
@@ -157,12 +149,14 @@ if ($layout_context == "public") {
                                 Budapest</a></li>
 
                         <li class="divider"></li>
+                        <li><a href="<?php echo $path_public; ?>_f/article/music.php">Music</a></li>
                         <li><a href="<?php echo $path_public; ?>_f/article/articles.php">Articles</a></li>
                         <li><a href="<?php echo $path_public; ?>_f/article/jokes_quotes.php">Jokes Quotes</a></li>
                         <li><a href="<?php echo $path_public; ?>_f/article/judaisme.php">Judaisme</a></li>
                         <li><a href="<?php echo $path_public; ?>_f/article/juif_iran.php">Juifs d'Iran</a></li>
                         <li><a href="<?php echo $path_public; ?>_f/article/antisemitism_1.php">Antisemitism</a></li>
                         <li><a href="<?php echo $path_public; ?>_f/article/antisionism.php">Antisionism 1</a></li>
+                        <li><a href="<?php echo $path_public; ?>_f/article/shoah_1.php">Shoah paint</a></li>
                         <li><a href="<?php echo $path_public; ?>_f/article/shoah.php">Shoah</a></li>
                         <li><a href="<?php echo $path_public; ?>_f/article/juif_arabe1.php">Juifs Arabe</a></li>
                         <li><a href="<?php echo $path_public; ?>_f/article/bhl.php">BHL</a></li>
@@ -309,15 +303,7 @@ if ($layout_context == "public") {
                         </ul>
                     </li>
 
-
-                    <li
-                        <?php if (isset($active_menu) && $active_menu == "transport") {
-                            echo "class=\"active\"";
-                        } ?>
-                    ><a href="<?php echo $Nav->http . "transmed/"; ?>index.php">Transmed </a></li>
-
-
-                    <?php if (User::is_kamy()) { ?>
+                    <?php if (User::is_kamy() && 1==2) { ?>
 
                         <li
                             <?php if (isset($active_menu) && $active_menu == "photo_gallery") {
@@ -354,6 +340,92 @@ if ($layout_context == "public") {
                             </ul>
                         </li>
                     <?php } ?>
+
+                <?php if (User::is_kamy()  && 1==2) { ?>
+                    <li
+                        <?php if (isset($active_menu) && $active_menu == "transport") {
+                            echo "class=\"active\"";
+                        } ?>
+                    ><a href="<?php echo $Nav->http . "transmed/"; ?>index.php">Transmed </a></li>
+
+                        <?php if (User::is_admin() || User::is_employee()) { ?>
+
+                            <li><a href="<?php echo $path_public; ?>_f/_transmed/transmed_form.php">Transmed_form</a>
+                            </li>
+                            <li><a href="<?php echo $path_public; ?>_f/_transmed/transmed_form2.php">Transmed_form2</a>
+                            </li>
+                            <li><a href="<?php echo $path_public; ?>_f/_transmed/transmed_form3.php">Transmed_form3</a>
+                            </li>
+                            <li><a href="<?php echo $path_public; ?>_f/_transmed/transmed_form4.php">Transmed_form4</a>
+                            </li>
+
+                        <?php } ?>
+
+                    <?php } ?>
+
+                    <?php if (User::is_kamy() && 1==2) { ?>
+
+                        <li
+                            <?php if (isset($active_menu) && $active_menu == "photo_gallery") {
+                                echo " class=\"dropdown active\"";
+                            } else {
+                                echo " class=\" dropdown\"";
+                            } ?>
+                        ><a href="#" data-toggle="dropdown">Photo Gallery<span class="caret"></span></a>
+
+                            <ul class="dropdown-menu">
+
+
+                                <?php echo $Nav->menu_item('', 'Photos', 'manage_photos.php', 'admin/wkg_progress') ?>
+                                <?php echo $Nav->menu_item('', 'Comments', 'manage_comments.php', 'admin/wkg_progress') ?>
+                                <?php echo $Nav->menu_item('', 'Comment Photo', 'manage_comments_photo.php', 'admin/wkg_progress') ?>
+
+                                <?php echo "<li class=\"divider\"></li>"; ?>
+
+                                <?php echo $Nav->menu_item('', 'New Comment old', 'new_Comment_old.php', 'admin/wkg_progress') ?>
+                                <?php echo $Nav->menu_item('', 'New Photo', 'new_photo.php', 'admin/wkg_progress') ?>
+
+                                <?php echo "<li class=\"divider\"></li>"; ?>
+                                <?php echo $Nav->menu_item('', 'Public Photo', 'photo.php', "public") ?>
+                                <?php echo $Nav->menu_item('', 'Public Photo Gallery', 'photo_gallery.php', "public") ?>
+
+
+                                <?php echo "<li class=\"divider\"></li>"; ?>
+                                <?php echo $Nav->menu_item('', 'Photos Old', 'Manage_Photo.php', 'admin/wkg_progress') ?>
+                                <?php echo $Nav->menu_item('', 'Comments del?', 'manage_Comment.php', 'admin/wkg_progress') ?>
+                                <?php echo $Nav->menu_item('', 'Comment Old ', 'manage_Comment_old.php', 'admin/wkg_progress') ?>
+                                <?php echo $Nav->menu_item('', 'New Photo_old', 'new_photo_old.php', 'admin/wkg_progress') ?>
+
+
+                            </ul>
+                        </li>
+                    <?php } ?>
+
+
+
+
+                    <?php if (User::is_kamy()) { ?>
+                        <li
+                            <?php if (isset($active_menu) && $active_menu == "Kamy") {
+                                echo " class=\"dropdown active\"";
+                            } else {
+                                echo " class=\" dropdown\"";
+                            } ?>
+                        ><a href="#" data-toggle="dropdown">Kamy<span class="caret"></span></a>
+
+                            <ul class="dropdown-menu">
+<!--                                <li class="divider"></li>-->
+                                <li><a href="<?php echo $path_public; ?>_f/article/music.php">Music</a></li>
+                                <li><a href="<?php echo $path_public; ?>_f/kamy/kamy_1.php">Finance</a></li>
+                                <li><a href="<?php echo $path_public; ?>_f/kamy/loan_expense.php">Loans Kamy</a></li>
+                                <li><a href="<?php echo $path_public; ?>_f/kamy/pay_brazil.php">Pay Bresil</a></li>
+                                <li><a href="https://seekingalpha.com/account/portfolio/summary?portfolioId=59021836">Seeking Alpha</a></li>
+                            </ul>
+                        </li>
+
+                    <?php } ?>
+
+
 
                     <?php if (isset($_SESSION["user_id"]) and $user->is_admin()) { ?>
                         <li

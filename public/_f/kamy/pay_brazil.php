@@ -20,7 +20,13 @@ if (isset($_GET["amount2"])) {
 } else {
     $amount2 = 0;
 }
+if (isset($_GET["amount3"])) {
+    $amount3 = $_GET["amount3"];
+} else {
+    $amount3 = 0;
+}
 
+$total_amount=$amount1 + $amount2 + $amount3 ;
 
 ?>
 
@@ -54,12 +60,15 @@ $output = "";
 $output .= "<form class='form-inline' action='" . $_SERVER['PHP_SELF'] . "' method='get' name='amount'>
 Amount Geovani: <input type='number' value='{$amount1}' class='input-small' name='amount1' placeholder='amount'>
 Amount Alex: <input type='number' value='{$amount2}' class='input-small' name='amount2' placeholder='amount'>
+Amount Weslley: <input type='number' value='{$amount3}' class='input-small' name='amount3' placeholder='amount'>
 <input type='submit' class='btn'>
 </form>";
 
+
+
 $output .= "<br><br><p>Bonjour Nico,<br>
 J’espère que tu vas bien.<br><br>
-Je vais t’envoyer de l’argent sur ton compte :<br><br>
+Je vais t’envoyer de l’argent sur ton compte <strong>CHF {$total_amount}.-</strong> :<br><br>
 ";
 $output .= "";
 
@@ -120,9 +129,29 @@ if (!$amount2 == 0) {
 
 }
 
+if (!$amount3 == 0) {
+    $output .= "<b>CHF {$amount3}.-</b> <br>";
+    $output .= "NOME:WESLLEY MICKAEL DIAS FERREIRA <br>                    
+                    CPF:057.104.651-78<br>
+                    NUMERO DE CONTA BANCARIA<br>
+                    AG:0001<br>
+                    CONTA:81472831-9<br>
+                    Banco 260:NU PAGAMENTOS S.A.<br><br>
+                <hr>
+";
+
+}
+
+
+
+
 $output .= "Pourras-tu m'envoyer une copie de l'avis de paiement<br>";
 $output .= "Je te remercie<br>";
 $output .= "Kamran";
+
+
+
+
 
 echo $output;
 

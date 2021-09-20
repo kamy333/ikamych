@@ -16,7 +16,8 @@ $(document).ready(function () {
         var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
             results = regex.exec(url);
         if (!results) return null;
-        if (!results[2]) return '';
+        if (!results[2])
+            return '';
         return decodeURIComponent(results[2].replace(/\+/g, " "));
     }
 
@@ -106,7 +107,7 @@ $(document).ready(function () {
                   }
 
         } else {
-             url = window.location.href;
+            url = window.location.href;
 
 
         }
@@ -330,7 +331,7 @@ $(document).ready(function () {
         // }, 5000);
 
     }
-    
+
     function alertError(data) {
         data = data || 'no data'  ;
         var output='<div  class="alert alert-danger  fade in"  role="alert" >';

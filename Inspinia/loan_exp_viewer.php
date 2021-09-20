@@ -58,11 +58,6 @@ $person = $myperson->person_name;
 
 ?>
 
-
-
-
-
-
 <?php if (User::is_caroline() || User::is_weslley()) { ?>
     <?php
     if (isset($_GET['url'])) {

@@ -10,7 +10,7 @@ class MyClasses
 {
 
     public static $all_class = array(
-        'HeurePresence', 'Note', 'ToDoList', 'Message', 'Chat', 'ChatFriend', 'Notification',
+        'SetUp','HeurePresence', 'Note', 'ToDoList', 'Message', 'Chat', 'ChatFriend', 'Notification',
         'User', 'UserType', 'Article', 'ArticleSubject', 'Book', 'BookCategory',
         'Links', 'LinksCategory', 'Category1', 'Category2',
         'Project', 'Client', 'InvoiceActual', 'Category', 'InvoiceEstimate', 'Currency',

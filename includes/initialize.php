@@ -139,6 +139,7 @@ require_once(LIB_PATH . DS . 'Nav.php');
 require_once(LIB_PATH . DS . 'Upload.php');
 
 // load database-related classes
+require_once(LIB_PATH . DS . 'SetUp.php');
 require_once(LIB_PATH . DS . 'user.php');
 require_once(LIB_PATH . DS . 'UserType.php');
 require_once(LIB_PATH . DS . 'FailedLogin.php');

@@ -1,26 +1,25 @@
-<?php require_once('../includes/initialize.php');
-$session->confirmation_protected_page();
+<?php require_once('../../../includes/initialize.php'); ?>
 
+<?php
 if (User::is_caroline() || User::is_weslley()) {
 } else {
     redirect_to('../index.php');
 }
-
+?>
 ?>
 
 
-
+<?php $layout_context = "public"; ?>
+<?php $active_menu = "about"; ?>
 <?php $stylesheets = ""; ?>
 <?php $fluid_view = true; ?>
 <?php $javascript = ""; ?>
 <?php $incl_message_error = true; ?>
+<?php //include_layout_template('header_2.php'); ?>
+<?php include(SITE_ROOT . DS . 'public' . DS . 'layouts' . DS . "header.php") ?>
+<?php include(SITE_ROOT . DS . 'public' . DS . 'layouts' . DS . "nav.php") ?>
 
-<?php //include(HEADER) ?>
-<?php //include(SIDEBAR) ?>
-<?php //include(NAV) ?>
 
-<?php include(HEADER_PUBLIC); ?>
-<?php include_once(NAV_PUBLIC) ?>
 
 <?php
 
@@ -53,7 +52,6 @@ foreach ($persons as $person) {
 $myperson = MyExpensePerson::find_by_id($p_id);
 $person = $myperson->person_name;
 
-
 if (User::is_caroline() || User::is_weslley()) {
     echo " <div>";
 
@@ -64,30 +62,30 @@ if (User::is_caroline() || User::is_weslley()) {
         $sort = $_GET["sort"];
     }
 
-    $url = $_SERVER['SERVER_NAME'] . parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+    $Url = $_SERVER['SERVER_NAME'] . parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
     $urla = $url . "?sort=ASC";
-        $urld = $url . "?sort=DESC";
-        $exclude = ""; //"10,11,29,43,44,45,58,63";
+    $urld = $url . "?sort=DESC";
+    $exclude = ""; //"10,11,29,43,44,45,58,63";
 
-        if (isset($_GET["type_category"])) {
-            $cat = d($_GET["type_category"]);
-            $cat_name = MyExpense::get_category_name($cat);
+    if (isset($_GET["type_category"])) {
+        $cat = d($_GET["type_category"]);
+        $cat_name = MyExpense::get_category_name($cat);
 
-            if ($cat == "All") {
-                $and_type = "";
-                $and_type1 = "";
+        if ($cat == "All") {
+            $and_type = "";
+            $and_type1 = "";
 
-            } else {
-                $and_type = "";
-                $and_type = " AND t1.expense_type_id IN ($cat) ";
-                $and_type1 = " AND expense_type_id IN ($cat) ";
-            }
         } else {
-            $cat = "1,3";
-            $cat_name = MyExpense::get_category_name($cat);
+            $and_type = "";
             $and_type = " AND t1.expense_type_id IN ($cat) ";
             $and_type1 = " AND expense_type_id IN ($cat) ";
         }
+    } else {
+        $cat = "1,3";
+        $cat_name = MyExpense::get_category_name($cat);
+        $and_type = " AND t1.expense_type_id IN ($cat) ";
+        $and_type1 = " AND expense_type_id IN ($cat) ";
+    }
 
 
     if (isset($_GET["show_hide_doc"])) {
@@ -99,7 +97,7 @@ if (User::is_caroline() || User::is_weslley()) {
         }
 
     } else {
-        $show_doc = true;
+        $show_doc = false;
     }
 
 
@@ -126,8 +124,6 @@ if (User::is_caroline() || User::is_weslley()) {
 
     $sum = myExpense::sum_field_where_by_sql($sql);
 
-    echo "<a href='/Inspinia/loan_exp_1.php' class='button'>Summary Mum</a>";
-
     if ($sum < 0) {
         $sum = "<span style='color: red'><b>CHF " . number_format($sum, 2) . "</b></span>";
         $due = "<span style='color: red'><b>$cat_name : Total Due in favor of {$person}:</b></span>";
@@ -137,16 +133,13 @@ if (User::is_caroline() || User::is_weslley()) {
     }
 
     $msg .= "<br>";
-
-    $msg .= "<div style='font-size: small'>";
     $msg .= MyExpense::form_select_person();
-    $msg .= "</div>";
     $msg .= str_repeat("&nbsp;", 5) . $due . str_repeat("&nbsp;", 5) . $sum;
-        if (User::is_admin()) {
-            $msg .= str_repeat("&nbsp;", 10) . "<a href='/public/admin/crud/ajax/manage_ajax.php?class_name=MyExpense'><span style='color:blueviolet;'><b>Add Expense Item</b></span></a>";
-        }
+    if (User::is_admin()) {
+        $msg .= str_repeat("&nbsp;", 10) . "<a href='/public/admin/crud/ajax/manage_ajax.php?class_name=MyExpense'><span style='color:blueviolet;'><b>Add Expense Item</b></span></a>";
+    }
 
-        $msg .= "<br><br>";
+    $msg .= "<br><br>";
     $output .= "<div class='ibox-content text-center' style='font-size: 20px'>";
     $output .= str_repeat("&nbsp;", 30) . $msg;
     $output .= "</div>";
@@ -157,15 +150,12 @@ if (User::is_caroline() || User::is_weslley()) {
     echo "<div class='row center'>";
     $exclude = "";// "10,11,29,43,44,45,58,63";
 
-    $title = "$person - Kamran ";;
-    echo Table::ibox_table(myExpense::aPerson($p_id, true, $exclude, $sort, $show_doc, false), $title, 12, 0);
+    echo Table::ibox_table(myExpense::aPerson($p_id, true, $exclude, $sort, $show_doc, false), "$person - Kamran", 12, 0);
 
     echo "</div>";
 } ?>
 
 
-</div>
-<?php include(FOOTER_PUBLIC); ?>
-<?php //include(FOOTER) ?>
 
+<?php include(SITE_ROOT . DS . 'public' . DS . 'layouts' . DS . "footer.php") ?>
 

@@ -40,6 +40,7 @@ if(User::is_employee() || !User::is_admin() ||  User::is_secretary()){ redirect_
     <?php if(User::is_kamy()){ ?>
 
         <div class="row">
+            <?php echo Table::ibox_table(ReportFinance::Report1(), " Prêt-Rbt Mum Year Month ", 5, 0) ?>
             <?php echo Table::ibox_table(MyExpense::by_person_pret_Rbt(), "Expense by Person Prêt-Rbt  ", 4, 0) ?>
             <?php echo Table::ibox_table(MyExpense::by_person(), "Expense by Person", 4, 0) ?>
             <?php echo Table::ibox_table(MyExpense::by_type(), "Expense by Type", 4, 0) ?>

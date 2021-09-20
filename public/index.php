@@ -34,15 +34,18 @@ $img_folder = "DesireeWedding";
 $dir = SITE_ROOT . DS . 'public' . DS . "/img/" . $img_folder;
 $image = $dir . '/Desiree_entry.jpg';
 
-$w = 720;
-$h = 460;
+
 
 //$width = Helper::getImgSize($image, 0);
 //$width = $width > $w ? $w : $width;
-$width = $w;
+
 
 //$height = Helper::getImgSize($image, 1);
 //$height = $height > $h ? $h : $height;
+
+$w = 720;
+$h = 460;
+$width = $w;
 $height = $h;
 $pic_size = " width = '$width' height = '$height' ";
 
@@ -161,6 +164,29 @@ if (is_dir($dir)) {
             ?>
 
 
+        </div>
+
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2" style="margin-top: 2em;padding: 2em;background-color: white">
+                <?php
+                //          $text = "<a href='#'></a>";
+                $text = "<br><p>
+        <i>Ce n’est qu’un moment..</i><br> <br> <br>
+        
+        Je t'en prie mon amour ne pleure pas<br>
+        Ce n'est qu'un moment<br>
+        Plus jamais je ne pourrais te dire bonne nuit<br>
+        Parce que je suis sur le point d'aller vers la lumière éternelle<br>
+        Ce n’est qu’un moment chéri juste un moment.<br>
+        Tes peines s'estomperont dans le sentiment des étoiles<br>
+        Soit serein chéri ce n'est qu'un moment<br>
+        Mais après éternellement tu ressentiras l'amour<br>
+        Et en m’attendant tu souriras au soleil pour transformer mes larmes en sourire et en bonheur</p>
+            <div class='pull-right'><p><strong>Franseca Barzaghi Bassi</strong></p></div>";
+                echo "" . $text;
+
+                ?>
+            </div>
         </div>
 
         <div class="row">

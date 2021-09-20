@@ -1296,7 +1296,7 @@ function ibox($content = "Missing content", $col = 5, $h5 = "Header",
     return $output;
 }
 
-function button_color($color, $txt = "xxx", $href = false, $href_env = "", $others_a = "", $btn_length = "btn-lg")
+function button_color($color, $txt = "xxx", $href = false, $href_env = "", $others_a = "", $btn_length = "btn-lg",$href_brut=1)
 {
     global $Nav;
     $bootstrap = ['primary', 'success', 'info', 'danger', 'warning'];
@@ -1321,6 +1321,15 @@ function button_color($color, $txt = "xxx", $href = false, $href_env = "", $othe
     }
 
 //    $others_a if wanting to attr in a like ''  onclick="return confirm('Delete Are you sure?')"
+
+    if($href_brut==1){
+        $new_href=$new_href;
+
+    }else {
+//        keep $href argument no modification
+        $new_href=$href;
+    }
+
     return "<a {$others_a} href='{$new_href}'><button class='{$class}' style='{$style}' role='button' >{$txt}</button></a>";
 
 
@@ -2014,6 +2023,30 @@ function book_by_sql($book_where_category = 1, $color_palette = 12, $is_row = tr
     return $output;
 }
 
+    function NumberFormatColor($number=0){
+    $output="";
+    $style="";
+
+     if( ((float) $number) < 0){$style="style='color:red'";} else {$style="";}
+
+        return $style;
+    }
+
+function TD_NumberFormatColor($number=0,$strong=false){
+    $output="";
+    $style="";
+    $sum = number_format($number, 2);
+
+    if( ((float) $number) < 0){$style="style='color:red'";} else {$style="";}
+    if($strong){
+        $output = "<td class='text-right' $style ><strong>" . $sum . "</strong></td>";
+
+    } else {
+        $output = "<td class='text-right' $style >" . $sum . "</td>";
+
+    }
+    return $output;
+}
 
 ?>
 

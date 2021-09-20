@@ -22,7 +22,10 @@
 
 
                 <?php if (User::is_admin()) { ?>
-                    <li class="dropdown">
+
+
+
+                        <li class="dropdown">
                         <a aria-expanded="false" role="button" href="#" class="dropdown-toggle" data-toggle="dropdown">
                             Public <span class="caret"></span></a>
                         <ul role="menu" class="dropdown-menu">
@@ -50,22 +53,52 @@
 
                 <?php
                 echo $Nav->public_menu("public_gallery");
-                if (User::is_bralia()) {
-                    echo $Nav->menu_item('', 'Bralia', 'index_gallery6.php', 'public');
-                    echo $Nav->menu_item('', 'Chat', 'chat.php', 'public');
-                }
 
                 if (User::is_djamila()) {
                     echo $Nav->menu_item('', 'Djamila', 'index_gallery12.php', 'public');
-                    echo $Nav->menu_item('', 'Chat Djam', 'chat_djamila.php', 'public');
                 }
 
-                if (User::is_caroline() || User::is_weslley()) {
-                    echo $Nav->menu_item('', 'Loan', 'loan_exp.php', 'public');
-//                    echo $Nav->menu_item('', 'Chat Djam', 'chat_djamila.php', 'public');
-                }
                 ?>
 
+                <li class="dropdown">
+                    <a aria-expanded="false" role="button" href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        Friend <span class="caret"></span></a>
+                    <ul role="menu" class="dropdown-menu">
+                        <?php
+
+                        if (User::is_bralia()) {
+                            echo $Nav->menu_item('', 'Bralia', 'index_gallery6.php', 'public');
+                            echo $Nav->menu_item('', 'Chat Bralia', 'chat.php', 'public');
+                        }
+
+                        if (User::is_djamila()) {
+                            echo $Nav->menu_item('', 'Djamila', 'index_gallery12.php', 'public');
+                            echo $Nav->menu_item('', 'Chat Djam', 'chat_djamila.php', 'public');
+                        }
+
+                        ?>
+
+                    </ul>
+                </li>
+
+
+                <li class="dropdown">
+                    <a aria-expanded="false" role="button" href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        Loan <span class="caret"></span></a>
+                    <ul role="menu" class="dropdown-menu">
+                        <?php
+                        if (User::is_caroline() || User::is_weslley()) {
+                            echo $Nav->menu_item('', 'Loan', 'loan_exp.php', 'public');
+                        }
+
+                        if (User::is_caroline()) {
+                            echo $Nav->menu_item('', 'Mum', 'loan_exp_1.php', 'public');
+                        }
+
+                        ?>
+
+                    </ul>
+                </li>
 
 
 

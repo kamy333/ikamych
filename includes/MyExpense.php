@@ -17,23 +17,23 @@ class MyExpense extends DatabaseObject
 
 // 'currency_id','Account','debitor','creditor'
 
-    protected static $db_fields = array('id', 'amount', 'ccy_id', 'rate', 'person_id', 'expense_type_id', 'expense_date', 'comment', 'document', 'modification_time');
+    protected static $db_fields = array('id', 'amount', 'cash', 'ccy_id', 'rate', 'person_id', 'expense_type_id', 'expense_date', 'comment', 'document', 'modification_time');
 
-    protected static $required_fields = array('amount', 'ccy_id', 'person_id', 'expense_type_id', 'expense_date');
+    protected static $required_fields = array('amount', 'cash', 'ccy_id', 'person_id', 'expense_type_id', 'expense_date');
 
-    protected static $db_fields_table_display_short = array('id', 'amount', 'amountCHF', 'ccy_id', 'currency', 'rate', 'person_id', 'person_name', 'expense_type_id', 'expense_type', 'expense_date', 'category', 'document_lnk');
+    protected static $db_fields_table_display_short = array('id', 'amount', 'cash', 'is_cash', 'amountCHF', 'ccy_id', 'currency', 'rate', 'person_id', 'person_name', 'expense_type_id', 'expense_type', 'expense_date', 'category', 'document_lnk');
 
-    protected static $db_fields_table_display_full = array('id', 'amount', 'amountCHF', 'currency', 'rate', 'person_id', 'person_name', 'expense_type_id', 'expense_type', 'expense_date', 'category', 'document', 'document_lnk', 'comment', 'modification_time');
+    protected static $db_fields_table_display_full = array('id', 'amount', 'cash', 'is_cash', 'amountCHF', 'currency', 'rate', 'person_id', 'person_name', 'expense_type_id', 'expense_type', 'expense_date', 'category', 'document', 'document_lnk', 'comment', 'modification_time');
 
     protected static $db_field_exclude_table_display_sort = array('amountCHF', 'document_lnk');
 
     protected static $db_field_include_table_display_sort = array(
-        'person_name' => 'person_id', 'expense_type' => 'expense_type_id', 'currency' => 'ccy_id');
+        'person_name' => 'person_id', 'expense_type' => 'expense_type_id', 'currency' => 'ccy_id', 'is_cash' => 'cash');
 
-    public static $fields_numeric = array('id', 'amount', 'amountCHF', 'person_id', 'expense_type_id', 'ccy_id', 'rate');
+    public static $fields_numeric = array('id', 'amount', 'amountCHF', 'person_id', 'expense_type_id', 'ccy_id', 'rate', 'cash');
     public static $fields_numeric_format = array('amount', 'amountCHF');
 
-    public static $get_form_element = array('amount', 'ccy_id', 'rate', 'expense_date', 'person_id', 'expense_type_id', 'comment', 'document', 'modification_time');
+    public static $get_form_element = array('amount', 'cash', 'ccy_id', 'rate', 'expense_date', 'person_id', 'expense_type_id', 'comment', 'document', 'modification_time');
 
     public static $get_form_element_others = array();
 
@@ -53,10 +53,28 @@ class MyExpense extends DatabaseObject
         "amount" => array("type" => "number",
             "name" => 'amount',
             "label_text" => "Amount",
-            'min' => 0,
+//            'min' => 0,
             "placeholder" => "Amount",
             "step" => "0.01",
             "required" => true,
+        ),
+        "cash" => array("type" => "radio",
+            array(0,
+                array(
+                    "label_all" => "is Cash",
+                    "name" => "cash",
+                    "label_radio" => "No",
+                    "value" => "0",
+                    "id" => "cash_no",
+                    "default" => true)),
+            array(1,
+                array(
+                    "label_all" => "is Cash",
+                    "name" => "cash",
+                    "label_radio" => "Yes",
+                    "value" => "1",
+                    "id" => "cash_yes",
+                    "default" => false)),
         ),
         "ccy_id" => array("type" => "select",
             "name" => 'ccy_id',
@@ -165,7 +183,16 @@ class MyExpense extends DatabaseObject
             'field_option_1' => "amount",
             "required" => false,
         ),
-
+        "cash" => array("type" => "select",
+            "name" => 'cash',
+            "id" => "search_cash",
+            "class" => "MyExpense",
+            "label_text" => "",
+            "select_option_text" => 'Cash',
+            'field_option_0' => "cash",
+            'field_option_1' => "cash",
+            "required" => false,
+        ),
         "ccy_id" => array("type" => "select",
             "name" => 'ccy_id',
             "id" => "search_ccy_id",
@@ -246,6 +273,8 @@ class MyExpense extends DatabaseObject
 
     public $id;
     public $amount;
+    public $cash;
+    public $is_cash;
     public $amountCHF;
     public $person_id;
     public $person_name;
@@ -266,12 +295,20 @@ class MyExpense extends DatabaseObject
     public $total;
     public $side;
     public $rate_side;
+    public $Yr;
+    public $Mth;
+    public $MthName;
+    public $Amt_Pret;
+    public $Amt_PretCHF;
+    public $Amt_Rbt;
+    public $Amt_RbtCHF;
 
-    public function save()
-    {
-        isset($this->id) ? $this->send_email("updated") : $this->send_email("added/created");
-        return parent::save(); // TODO: Change the autogenerated stub
-    }
+
+//    public function save()
+//    {
+//        isset($this->id) ? $this->send_email("updated") : $this->send_email("added/created");
+//        return parent::save(); // TODO: Change the autogenerated stub
+//    }
 
     public function delete()
     {
@@ -379,6 +416,8 @@ class MyExpense extends DatabaseObject
 
         if (!$myperson->authorized_user) {
             return "";
+        } else {
+            return "";
         }
 
         $auth_users = explode(",", $myperson->authorized_user);
@@ -386,7 +425,7 @@ class MyExpense extends DatabaseObject
 
         foreach ($auth_users as $auth_user) {
             $user = User::find_by_username($auth_user);
-            if (1 == 1) {
+            if (1 == 2) {
                 if ($user) {
                     $mail->addAddress($user->email, $user->nom);
                     $msg_user .= $user->first_name . ",";
@@ -495,8 +534,7 @@ class MyExpense extends DatabaseObject
     
 FROM
     $table
-    
-     
+
 GROUP BY person_id;";
 
 
@@ -972,6 +1010,12 @@ GROUP BY expense_type_id;";
             $this->amount = -$this->amount;
         }
 
+        if ($this->cash < 1) {
+            $this->is_cash = "No";
+        } else {
+            $this->is_cash = "Yes";
+        }
+
         if (isset($this->amount) && isset($this->rate)) {
 
             if ($this->rate_side == "Multiply") {
@@ -986,9 +1030,11 @@ GROUP BY expense_type_id;";
         $folder = "/public/img/maman_document/";
         $href_img = "/Inspinia/loan_exp_viewer.php";
         $lnk = "";
+
         if ($this->document) {
             $file = trim($this->document);
-            $full_path = $folder . $file;
+//            $full_path = $folder . $file;
+//            $full_path2 =$_SERVER["DOCUMENT_ROOT"]. $folder . $file;
             $documents = explode(",", $this->document);
 
             $nbsp = str_repeat("&nbsp;", 1);
@@ -999,18 +1045,23 @@ GROUP BY expense_type_id;";
                 $ext = $pi['extension'];
                 $file = $document;
                 $full_path = $folder . $file;
+                $full_path2 = $_SERVER["DOCUMENT_ROOT"] . $folder . $file;
 
-                if (strtolower($ext) == "pdf") {
+                if (file_exists($full_path2)) {
+                    if (strtolower($ext) == "pdf") {
 
-                    $lnk .= "<a href='{$full_path}'><button type='button' class='btn btn-danger' data-toggle='tooltip' data-placement='left' title='{$document}'><i class='fa fa-file-pdf-o'></i></button></a>";
+                        $lnk .= "<a href='{$full_path}'><button type='button' class='btn btn-danger' data-toggle='tooltip' data-placement='left' title='{$document}'><i class='fa fa-file-pdf-o'></i></button></a>";
 
-                } elseif (strtolower($ext) == "jpg" || strtolower($ext) == "jpeg" || strtolower($ext) == "png") {
-                    $href = $href_img . "?url=" . u($folder . $document);
 
-                    $lnk .= "<a href='{$href}'><button type='button' class='btn btn-info' data-toggle='tooltip' data-placement='left' title='{$document}'><i class='fa fa-file-photo-o'></i></button></a>";
+                    } elseif (strtolower($ext) == "jpg" || strtolower($ext) == "jpeg" || strtolower($ext) == "png") {
+                        $href = $href_img . "?url=" . u($folder . $document);
 
+                        $lnk .= "<a href='{$href}'><button type='button' class='btn btn-info' data-toggle='tooltip' data-placement='left' title='{$document}'><i class='fa fa-file-photo-o'></i></button></a>";
+
+                    }
 
                 }
+
             }
 
         } else {
@@ -1155,7 +1206,6 @@ GROUP BY expense_type_id;";
     public static function aPerson(int $personId, $NOT = true, $exclude = "", $desc = "DESC", $show_doc = false, $is_button = false)
     {
 
-
         $output = "";
 
         if ($NOT) {
@@ -1205,7 +1255,7 @@ GROUP BY expense_type_id;";
         }
 
 
-        $sql = "SELECT t1.id ,t1.person_id,t1.ccy_id,t2.person_name,t1.document,t1.comment,t1.expense_date,t1.amount,t1.rate,t1.expense_type_id,t1.amount * t1.rate AS amountCHF,t3.category
+        $sql = "SELECT t1.id ,t1.person_id,t1.ccy_id,t2.person_name,t1.document,t1.comment,t1.expense_date,t1.amount,t1.cash,t1.rate,t1.expense_type_id,t1.amount * t1.rate AS amountCHF,t3.category
         FROM " . static::$table_name . " AS t1
           INNER JOIN myexpense_person AS t2
             ON t1.person_id = t2.id
@@ -1230,6 +1280,7 @@ GROUP BY expense_type_id;";
                           <th class='text-center'>Amount CCY" . "</th>
                           <th class='text-center'>Fx" . "</th>
                           <th class='text-center'>Amt CHF" . "</th>
+                          <th class='text-center'>Cash" . "</th>
                           <th class='text-center'>Type" . "</th>
                           <th class='text-center'>Category" . "</th>";
 
@@ -1284,6 +1335,13 @@ GROUP BY expense_type_id;";
                 $output .= "<td class='text-right'>" . format_number($result->amount) . "</td>";
                 $output .= "<td class='text-right'>{$result->rate}</td>";
                 $output .= "<td class='text-right'>" . format_number($result->amountCHF) . "</td>";
+
+                if ($result->cash == 1) {
+                    $style = "style='color:blue'";
+                } else {
+                    $style = "style='color:gray'";
+                }
+                $output .= "<td class='text-right' {$style}><strong>" . $result->is_cash . "</strong></td>";
 
                 $output .= "<td class='text-center'>{$type}</td>";
                 $output .= "<td class='text-center'>{$categ}</td>";
@@ -1464,3 +1522,502 @@ GROUP BY expense_type_id;";
 
 
 }
+
+
+class ReportFinance extends MyExpense
+{
+//    public $category;
+
+    protected static $db_fields = array('id', 'amount', 'cash', 'ccy_id', 'rate', 'person_id', 'expense_type_id', 'expense_type', 'expense_date', 'comment', 'document', 'modification_time', 'currency', 'person_name', 'Yr', 'Mth', 'total', 'itemsCount', 'amountCHF', 'Amt_Pret', 'Amt_PretCHF', 'MthName');
+
+    public static function Report1($XLS = false)
+    {
+        $output = "";
+        $style = "";
+
+        if (!$XLS) {
+            $filename = u("Pret-Rbt Mum Year Month");
+//            $a = "<a href='/Inspinia/loan_exp_2.php?report=Report1&id=0'>Export Xl</a>";
+            $a = "<button style='background-color: #00A300;'>
+                <a href='/Inspinia/loan_exp_2.php?report=Report1&id=0&filename=$filename'><span style='color: white'>Export XlS</span></a>
+                </button>";
+        }
+
+//        $array_header = ["Year", "Month Name", "Mth", "No Item", "Amount CHF"];
+        $output .= $a;
+
+        $sql = "SELECT year(e.expense_date) as Yr, monthname (e.expense_date) as MthName,
+       month(e.expense_date) as Mth,COUNT(e.id) AS itemsCount,SUM(ROUND(e.amount * e.rate,2)) AS amountCHF,
+       SUM(e.amount)  as amount
+         FROM myexpense as e
+         INNER JOIN  myexpense_person as p ON e.person_id = p.id
+         INNER JOIN  myexpense_type as t ON e.expense_type_id = t.id
+         INNER JOIN  currency as c ON e.ccy_id = c.id
+WHERE person_id = 2   and(e.expense_type_id in (1,3))
+GROUP BY year(e.expense_date),month(e.expense_date)
+ORDER BY year(e.expense_date) DESC,month(e.expense_date) DESC";
+
+
+        $table_class = Table::full_table_class();
+
+        $output .= "<table class='$table_class '>";
+        $output .= "<tr>
+                          <th class='text-center'>Year" . "</th>
+                          <th class='text-center'>Mth Name" . "</th>
+                          <th class='text-center'>Mth No" . "</th>
+                          <th class='text-center'>No Items" . "</th>
+                          <th class='text-center'>Amount CHF" . "</th>
+                          </tr>";
+
+        $results = static::find_by_sql($sql);
+
+        if ($results) {
+
+            foreach ($results as $result) {
+                $output .= "<tr>";
+                $output .= "<td class='text-center'>{$result->Yr}</td>";
+                $output .= "<td class='text-center'>{$result->MthName}</td>";
+                $output .= "<td class='text-center'>{$result->Mth}</td>";
+                $output .= "<td class='text-center'>{$result->itemsCount}</td>";
+//                 if( ((float) $result->amountCHF) < 0){$style="style='color:red'";} else {$style="";}
+                $style = NumberFormatColor($result->amountCHF);
+                $amount_format = number_format($result->amountCHF, 2);
+                if ($XLS) {
+                    $output .= "<td class='text-right' >" . $result->amountCHF . "</td>";
+                } else {
+                    $output .= "<td class='text-right' $style >" . number_format($result->amountCHF, 2) . "</td>";
+                }
+
+                $output .= "</tr>";
+            }
+        }
+
+        unset($results);
+
+        if (!$XLS) {
+            $sum = static::sum_field_where($field = "amount * rate", " WHERE person_id = 2");
+            $style = NumberFormatColor($sum);
+            $sum = number_format($sum, 2);
+
+            $output .= "<tr>";
+            $output .= "<td class='text-center'><strong>Total</strong></td>";
+            $output .= str_repeat("<td></td>", 3);
+
+            $output .= "<td class='text-right' $style><strong>" . $sum . "</strong></td>";
+            $output .= "</tr>";
+        }
+
+        $output .= "</table>";
+        return $output;
+    }
+
+
+    public static function SQL1()
+    {
+        $sql = "SELECT year(e.expense_date) as Yr,COUNT(e.id) AS itemsCount, SUM(e.amount) as amount,SUM(ROUND(e.amount * e.rate,2)) AS amountCHF
+         FROM myexpense as e
+         INNER JOIN  myexpense_person as p ON e.person_id = p.id
+         INNER JOIN  myexpense_type as t ON e.expense_type_id = t.id
+         INNER JOIN  currency as c ON e.ccy_id = c.id
+WHERE person_id = 2   and(e.expense_type_id in (1,3))
+GROUP BY year(e.expense_date)
+ORDER BY year(e.expense_date) DESC";
+
+        return $sql;
+    }
+
+    public static function SQL2()
+    {
+        $sql = "SELECT year(e.expense_date) as Yr,COUNT(e.id) AS itemsCount,
+       SUM(ROUND(e.amount * e.rate,2)) AS amountCHF
+         FROM myexpense as e
+         INNER JOIN  myexpense_person as p ON e.person_id = p.id
+         INNER JOIN  myexpense_type as t ON e.expense_type_id = t.id
+         INNER JOIN  currency as c ON e.ccy_id = c.id
+WHERE person_id = 2 and e.amount >=0   and(e.expense_type_id in (1,3))
+GROUP BY year(e.expense_date)
+ORDER BY year(e.expense_date) DESC";
+
+        return $sql;
+    }
+
+    public static function SQL3()
+    {
+        $sql = "SELECT year(e.expense_date) as Yr,COUNT(e.id) AS itemsCount,
+       SUM(ROUND(e.amount * e.rate,2)) AS amountCHF
+         FROM myexpense as e
+         INNER JOIN  myexpense_person as p ON e.person_id = p.id
+         INNER JOIN  myexpense_type as t ON e.expense_type_id = t.id
+         INNER JOIN  currency as c ON e.ccy_id = c.id
+WHERE person_id = 2 and e.amount < 0   and(e.expense_type_id in (1,3))
+GROUP BY year(e.expense_date)
+ORDER BY year(e.expense_date) DESC";
+
+        return $sql;
+    }
+
+
+    public static function SQL4()
+    {
+        $sql = "SELECT year(e.expense_date) AS Yr, month (e.expense_date) AS Mth,monthname (e.expense_date) as MthName,
+       e.expense_date, e.id,e.amount,c.currency,ROUND(e.amount * e.rate,2) AS amountCHF,e.ccy_id,c.rate,e.expense_type_id,t.expense_type,e.comment,p.person_name,e.person_id ,e.cash 
+ FROM myexpense as e
+ INNER JOIN  myexpense_person as p ON e.person_id = p.id
+ INNER JOIN  myexpense_type as t ON e.expense_type_id = t.id
+ INNER JOIN  currency as c ON e.ccy_id = c.id
+  WHERE person_id=2  and(e.expense_type_id in (1,3))
+  ORDER BY e.id DESC;";
+
+        return $sql;
+    }
+
+    public static function SQL4a()
+    {
+        $sql = "SELECT year(e.expense_date) AS Yr, month (e.expense_date) AS Mth,monthname (e.expense_date) as MthName,
+       e.expense_date, e.id,e.amount,c.currency,ROUND(e.amount * e.rate,2) AS amountCHF,e.ccy_id,c.rate,e.expense_type_id,t.expense_type,e.comment,p.person_name,e.person_id,e.cash 
+ FROM myexpense as e
+ INNER JOIN  myexpense_person as p ON e.person_id = p.id
+ INNER JOIN  myexpense_type as t ON e.expense_type_id = t.id
+ INNER JOIN  currency as c ON e.ccy_id = c.id
+  WHERE person_id=2  and(e.expense_type_id in (1,3)) and e.cash=1  
+  ORDER BY e.id DESC;";
+
+        return $sql;
+    }
+
+
+    public static function SQL5()
+    {
+        $sql = "SELECT year(e.expense_date) as Yr,COUNT(e.id) AS itemsCount,
+       SUM(ROUND(e.amount * e.rate,2)) AS amountCHF
+         FROM myexpense as e
+         INNER JOIN  myexpense_person as p ON e.person_id = p.id
+         INNER JOIN  myexpense_type as t ON e.expense_type_id = t.id
+         INNER JOIN  currency as c ON e.ccy_id = c.id
+WHERE person_id = 2 and e.amount < 0   and(e.expense_type_id in (1,3)) and e.cash=1 
+GROUP BY year(e.expense_date)
+ORDER BY year(e.expense_date) DESC";
+
+        return $sql;
+    }
+
+    public static function SQL6()
+    {
+        $sql = "SELECT year(e.expense_date) as Yr,COUNT(e.id) AS itemsCount,
+       SUM(ROUND(e.amount * e.rate,2)) AS amountCHF
+         FROM myexpense as e
+         INNER JOIN  myexpense_person as p ON e.person_id = p.id
+         INNER JOIN  myexpense_type as t ON e.expense_type_id = t.id
+         INNER JOIN  currency as c ON e.ccy_id = c.id
+WHERE person_id = 2 and e.amount > 0   and(e.expense_type_id in (1,3)) and e.cash=1 
+GROUP BY year(e.expense_date)
+ORDER BY year(e.expense_date) DESC";
+
+        return $sql;
+    }
+
+    public static function Report($No = 0, $XLS = false)
+    {
+        $output = "";
+        $style = "";
+
+//        $array_header = ["Year", "Month Name", "Mth", "No Item", "Amount CHF"];
+
+        if ($No === 1) {
+            $sql = static::SQL1();
+            $filename = u("Pret-Rbt Mum Year");
+
+        } elseif ($No === 2) {
+            $sql = static::SQL2();
+            $filename = u("Pret Mum Year");
+        } elseif ($No === 3) {
+            $sql = static::SQL3();
+            $filename = u("Rbt Mum Year");
+        } elseif ($No === 4) {
+            $sql = static::SQL5();
+            $filename = u("Mum Year Cash Rbt");
+        } elseif ($No === 5) {
+            $sql = static::SQL6();
+            $filename = u("Mum Year Cash Rbt");
+        }
+
+        if (!$XLS) {
+//            $txt = "Prêt-Rbt Mum Year Month";
+            $a = "<button style='background-color: #00A300;'><a href='/Inspinia/loan_exp_2.php?report=Report&id=$No&filename=$filename'><span style='color: white'>Export XlS</span></a></button>";
+        }
+
+
+        $table_class = Table::full_table_class();
+        $output .= $a;
+        $output .= "<table class='$table_class '>";
+        $output .= "<tr>
+                          <th class='text-center'>Year" . "</th>
+                          <th class='text-center'>No Items" . "</th>
+                          <th class='text-center'>Amount CHF" . "</th>
+                          </tr>";
+
+        $results = static::find_by_sql($sql);
+
+        if ($results) {
+
+            foreach ($results as $result) {
+                $output .= "<tr>";
+                $output .= "<td class='text-center'>{$result->Yr}</td>";
+                $output .= "<td class='text-center'>{$result->itemsCount}</td>";
+
+                if (!$XLS) {
+                    $output .= TD_NumberFormatColor($result->amountCHF, false);;
+                } else {
+                    $output .= (float)$result->amountCHF;;
+                }
+
+
+                $output .= "</tr>";
+            }
+        }
+
+        unset($results);
+        if (!$XLS) {
+
+            if ($No === 1) {
+                $sum = static::sum_field_where($field = "amount * rate", " WHERE person_id = 2 ");
+            } elseif ($No === 2) {
+                $sum = static::sum_field_where($field = "amount * rate", " WHERE person_id = 2 and amount >= 0 ");
+            } elseif ($No === 3) {
+                $sum = static::sum_field_where($field = "amount * rate", " WHERE person_id = 2 and amount <0 ");
+            } elseif ($No === 4) {
+                $sum = static::sum_field_where($field = "amount * rate", " WHERE person_id = 2 and amount <0 and cash=1 ");
+            } elseif ($No === 5) {
+                $sum = static::sum_field_where($field = "amount * rate", " WHERE person_id = 2 and amount >0 and cash=1 ");
+            }
+
+
+            $output .= "<tr>";
+            $output .= "<td class='text-center'><strong>Total</strong></td>";
+            $output .= str_repeat("<td></td>", 1);
+            $output .= TD_NumberFormatColor($sum, true);
+            $output .= "</tr>";
+        }
+
+
+        $output .= "</table>";
+        return $output;
+    }
+
+
+    public static function Report4($XLS = false)
+    {
+        $output = "";
+        $style = "";
+
+
+        $sql = static::SQL4();
+        $filename = u("Pret-Rbt Mum All");
+
+        if (!$XLS) {
+//            $txt = "Prêt-Rbt Mum Year Month";
+            $a = "<button style='background-color: #00A300;'><a href='/Inspinia/loan_exp_2.php?report=Report4&id=0&filename=$filename'><span style='color: white'>Export XlS</span></a></button>";
+        }
+
+
+        $table_class = Table::full_table_class();
+        $output .= $a;
+        $output .= "<table class='$table_class '>";
+        $output .= "<tr>
+                          <th class='text-center'>ID" . "</th>
+                          <th class='text-center'>Year" . "</th>
+                          <th class='text-center'>Mth" . "</th>
+                          <th class='text-center'>MthName" . "</th>
+                          <th class='text-center'>Exp Date" . "</th>                          
+                          <th class='text-center'>Amount" . "</th>
+                          <th class='text-center'>CCY" . "</th>                      
+                          <th class='text-center'>Amount CHF" . "</th>
+                          <th class='text-center'>Cash" . "</th>
+                          <th class='text-center'>CCY ID" . "</th>
+                          <th class='text-center'>RATE" . "</th>
+                          <th class='text-center'>Exp type ID" . "</th>
+                          <th class='text-center'>Exp type" . "</th>
+                          <th class='text-center'>Comment" . "</th>
+                          <th class='text-center'>Person Name" . "</th>
+                          <th class='text-center'>Person Name ID" . "</th>
+                          
+                          
+                          </tr>";
+
+        $results = static::find_by_sql($sql);
+
+        if ($results) {
+
+            foreach ($results as $result) {
+                $output .= "<tr>";
+                if (User::is_admin()) {
+                    $lnk = "/public/admin/crud/data/edit_data.php?class_name=" . get_parent_class() . "&id={$result->id}";
+                    $output .= "<td class='text-center'><a href='{$lnk}'>{$result->id}</a></td>";
+                } else {
+                    $output .= "<td class='text-center'>{$result->id}</td>";
+
+                }
+
+
+                $output .= "<td class='text-center'>{$result->Yr}</td>";
+                $output .= "<td class='text-center'>{$result->Mth}</td>";
+                $output .= "<td class='text-center'>{$result->MthName}</td>";
+                $output .= "<td class='text-center'>{$result->expense_date}</td>";
+
+
+                if (!$XLS) {
+                    $output .= TD_NumberFormatColor($result->amount, false);;
+                } else {
+                    $output .= "<td class='text-center'>" . (float)$result->amount . "</td>";;
+                }
+                $output .= "<td class='text-center'>{$result->currency}</td>";
+                if (!$XLS) {
+                    $output .= TD_NumberFormatColor($result->amountCHF, false);;
+                } else {
+                    $output .= "<td class='text-center'>" . (float)$result->amountCHF . "</td>";;
+                }
+
+                if ($result->cash == 1) {
+                    $output .= "<td class='text-center' style='color:blue'><strong>Yes</strong></td>";
+                } else {
+                    $output .= "<td class='text-center'>No</td>";
+                }
+
+                $output .= "<td class='text-center'>{$result->ccy_id}</td>";
+
+
+                $output .= "<td class='text-center'>{$result->rate}</td>";
+                $output .= "<td class='text-center'>{$result->expense_type_id}</td>";
+                $output .= "<td class='text-center'>{$result->expense_type}</td>";
+                $output .= "<td class='text-center'>{$result->comment}</td>";
+                $output .= "<td class='text-center'>{$result->person_name}</td>";
+                $output .= "<td class='text-center'>{$result->person_id}</td>";
+
+                $output .= "</tr>";
+            }
+        }
+
+        unset($results);
+        if (!$XLS) {
+
+            $sum = static::sum_field_where($field = "amount * rate", " WHERE person_id = 2 ");
+
+            $output .= "<tr>";
+            $output .= "<td class='text-center'><strong>Total</strong></td>";
+            $output .= str_repeat("<td></td>", 5);
+            $output .= TD_NumberFormatColor($sum, true);
+            $output .= "</tr>";
+        }
+        $output .= "</table>";
+        return $output;
+    }
+
+    public static function Report4a($XLS = false)
+    {
+        $output = "";
+        $style = "";
+
+
+        $sql = static::SQL4a();
+        $filename = u("Pret-Rbt MumCash");
+
+        if (!$XLS) {
+//            $txt = "Prêt-Rbt Mum Year Month";
+            $a = "<button style='background-color: #00A300;'><a href='/Inspinia/loan_exp_2.php?report=Report4&id=0&filename=$filename'><span style='color: white'>Export XlS</span></a></button>";
+        }
+
+
+        $table_class = Table::full_table_class();
+        $output .= $a;
+        $output .= "<table class='$table_class '>";
+        $output .= "<tr>
+                          <th class='text-center'>ID" . "</th>
+                          <th class='text-center'>Year" . "</th>
+                          <th class='text-center'>Mth" . "</th>
+                          <th class='text-center'>MthName" . "</th>
+                          <th class='text-center'>Exp Date" . "</th>                          
+                          <th class='text-center'>Amount" . "</th>
+                          <th class='text-center'>CCY" . "</th>                      
+                          <th class='text-center'>Amount CHF" . "</th>
+                          <th class='text-center'>Cash" . "</th>
+                          <th class='text-center'>CCY ID" . "</th>
+                          <th class='text-center'>RATE" . "</th>
+                          <th class='text-center'>Exp type ID" . "</th>
+                          <th class='text-center'>Exp type" . "</th>
+                          <th class='text-center'>Comment" . "</th>
+                          <th class='text-center'>Person Name" . "</th>
+                          <th class='text-center'>Person Name ID" . "</th>
+                          
+                          
+                          </tr>";
+
+        $results = static::find_by_sql($sql);
+
+        if ($results) {
+
+            foreach ($results as $result) {
+                $output .= "<tr>";
+                if (User::is_admin()) {
+                    $lnk = "/public/admin/crud/data/edit_data.php?class_name=" . get_parent_class() . "&id={$result->id}";
+                    $output .= "<td class='text-center'><a href='{$lnk}'>{$result->id}</a></td>";
+                } else {
+                    $output .= "<td class='text-center'>{$result->id}</td>";
+
+                }
+
+
+                $output .= "<td class='text-center'>{$result->Yr}</td>";
+                $output .= "<td class='text-center'>{$result->Mth}</td>";
+                $output .= "<td class='text-center'>{$result->MthName}</td>";
+                $output .= "<td class='text-center'>{$result->expense_date}</td>";
+
+
+                if (!$XLS) {
+                    $output .= TD_NumberFormatColor($result->amount, false);;
+                } else {
+                    $output .= "<td class='text-center'>" . (float)$result->amount . "</td>";;
+                }
+                $output .= "<td class='text-center'>{$result->currency}</td>";
+                if (!$XLS) {
+                    $output .= TD_NumberFormatColor($result->amountCHF, false);;
+                } else {
+                    $output .= "<td class='text-center'>" . (float)$result->amountCHF . "</td>";;
+                }
+
+                if ($result->cash == 1) {
+                    $output .= "<td class='text-center' style='color:blue'><strong>Yes</strong></td>";
+                } else {
+                    $output .= "<td class='text-center'>No</td>";
+                }
+
+                $output .= "<td class='text-center'>{$result->ccy_id}</td>";
+
+
+                $output .= "<td class='text-center'>{$result->rate}</td>";
+                $output .= "<td class='text-center'>{$result->expense_type_id}</td>";
+                $output .= "<td class='text-center'>{$result->expense_type}</td>";
+                $output .= "<td class='text-center'>{$result->comment}</td>";
+                $output .= "<td class='text-center'>{$result->person_name}</td>";
+                $output .= "<td class='text-center'>{$result->person_id}</td>";
+
+                $output .= "</tr>";
+            }
+        }
+
+        unset($results);
+        if (!$XLS) {
+
+            $sum = static::sum_field_where($field = "amount * rate", " WHERE person_id = 2 and cash=1 ");
+
+            $output .= "<tr>";
+            $output .= "<td class='text-center'><strong>Total</strong></td>";
+            $output .= str_repeat("<td></td>", 5);
+            $output .= TD_NumberFormatColor($sum, true);
+            $output .= "</tr>";
+        }
+        $output .= "</table>";
+        return $output;
+    }
+
+}
+
