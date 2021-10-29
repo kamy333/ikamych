@@ -31,8 +31,13 @@ if (User::is_caroline()) {
 
 </div>
     <div class="row">
+
     <?php
 
+    $year=2021;
+    $txt = "Prêt-Rbt Mum + kamy $year";
+    $kamy_id=19;
+    echo Table::ibox_table(ReportFinance::Report_YEAR(1,false,2021,19), $txt, 3, 0);
 
 
     $txt = "Prêt-Rbt Mum Year";

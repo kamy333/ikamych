@@ -1337,7 +1337,7 @@ GROUP BY expense_type_id;";
                 $output .= "<td class='text-right'>" . format_number($result->amountCHF) . "</td>";
 
                 if ($result->cash == 1) {
-                    $style = "style='color:blue'";
+                    $style = "style='color:blue;background-color:#EBF5FB;'";
                 } else {
                     $style = "style='color:gray'";
                 }
@@ -1675,12 +1675,12 @@ ORDER BY year(e.expense_date) DESC";
     {
         $sql = "SELECT year(e.expense_date) AS Yr, month (e.expense_date) AS Mth,monthname (e.expense_date) as MthName,
        e.expense_date, e.id,e.amount,c.currency,ROUND(e.amount * e.rate,2) AS amountCHF,e.ccy_id,c.rate,e.expense_type_id,t.expense_type,e.comment,p.person_name,e.person_id,e.cash 
- FROM myexpense as e
- INNER JOIN  myexpense_person as p ON e.person_id = p.id
- INNER JOIN  myexpense_type as t ON e.expense_type_id = t.id
- INNER JOIN  currency as c ON e.ccy_id = c.id
-  WHERE person_id=2  and(e.expense_type_id in (1,3)) and e.cash=1  
-  ORDER BY e.id DESC;";
+    FROM myexpense as e
+    INNER JOIN  myexpense_person as p ON e.person_id = p.id
+    INNER JOIN  myexpense_type as t ON e.expense_type_id = t.id
+    INNER JOIN  currency as c ON e.ccy_id = c.id
+    WHERE person_id=2  and(e.expense_type_id in (1,3)) and e.cash=1  
+    ORDER BY e.id DESC;";
 
         return $sql;
     }
@@ -1694,9 +1694,9 @@ ORDER BY year(e.expense_date) DESC";
          INNER JOIN  myexpense_person as p ON e.person_id = p.id
          INNER JOIN  myexpense_type as t ON e.expense_type_id = t.id
          INNER JOIN  currency as c ON e.ccy_id = c.id
-WHERE person_id = 2 and e.amount < 0   and(e.expense_type_id in (1,3)) and e.cash=1 
-GROUP BY year(e.expense_date)
-ORDER BY year(e.expense_date) DESC";
+    WHERE person_id = 2 and e.amount < 0   and(e.expense_type_id in (1,3)) and e.cash=1 
+    GROUP BY year(e.expense_date)
+    ORDER BY year(e.expense_date) DESC";
 
         return $sql;
     }
@@ -1709,12 +1709,17 @@ ORDER BY year(e.expense_date) DESC";
          INNER JOIN  myexpense_person as p ON e.person_id = p.id
          INNER JOIN  myexpense_type as t ON e.expense_type_id = t.id
          INNER JOIN  currency as c ON e.ccy_id = c.id
-WHERE person_id = 2 and e.amount > 0   and(e.expense_type_id in (1,3)) and e.cash=1 
-GROUP BY year(e.expense_date)
-ORDER BY year(e.expense_date) DESC";
+    WHERE person_id = 2 and e.amount > 0   and(e.expense_type_id in (1,3)) and e.cash=1 
+    GROUP BY year(e.expense_date)
+    ORDER BY year(e.expense_date) DESC";
+
+
 
         return $sql;
+
     }
+
+
 
     public static function Report($No = 0, $XLS = false)
     {
@@ -1776,6 +1781,8 @@ ORDER BY year(e.expense_date) DESC";
             }
         }
 
+
+
         unset($results);
         if (!$XLS) {
 
@@ -1789,6 +1796,116 @@ ORDER BY year(e.expense_date) DESC";
                 $sum = static::sum_field_where($field = "amount * rate", " WHERE person_id = 2 and amount <0 and cash=1 ");
             } elseif ($No === 5) {
                 $sum = static::sum_field_where($field = "amount * rate", " WHERE person_id = 2 and amount >0 and cash=1 ");
+            }
+
+
+            $output .= "<tr>";
+            $output .= "<td class='text-center'><strong>Total</strong></td>";
+            $output .= str_repeat("<td></td>", 1);
+            $output .= TD_NumberFormatColor($sum, true);
+            $output .= "</tr>";
+        }
+
+
+        $output .= "</table>";
+        return $output;
+    }
+
+
+    public static function SQL_Year($year=2021)
+    {
+        $sql = "SELECT year(e.expense_date) as Yr,COUNT(e.id) AS itemsCount,
+       SUM(ROUND(e.amount * e.rate,2)) AS amountCHF
+         FROM myexpense as e
+         INNER JOIN  myexpense_person as p ON e.person_id = p.id
+         INNER JOIN  myexpense_type as t ON e.expense_type_id = t.id
+         INNER JOIN  currency as c ON e.ccy_id = c.id
+    WHERE (e.person_id = 2 )  and e.amount > 0 and year(e.expense_date)={$year}   and(e.expense_type_id in (1,3)) 
+    GROUP BY year(e.expense_date)
+    ORDER BY year(e.expense_date) DESC";
+
+        return $sql;
+    }
+
+    public static function Report_YEAR($No = 0, $XLS = false,$year=2021,$kamy_id=19)
+    {
+        $output = "";
+        $style = "";
+
+//        $year=2021;
+
+        if ($No === 1) {
+            $sql = static::SQL_Year($year);
+            $filename = u("Mum $year");
+        }
+
+        if (!$XLS) {
+            $a = "<button style='background-color: #00A300;'><a href='/Inspinia/loan_exp_2.php?report=Report&id=$No&filename=$filename'><span style='color: white'>Export XlS</span></a></button>";
+        }
+
+
+        $table_class = Table::full_table_class();
+        $output .= $a;
+        $output .= "<table class='$table_class '>";
+        $output .= "<tr>
+                          <th class='text-center'>Year" . "</th>
+                          <th class='text-center'>No Items" . "</th>
+                          <th class='text-center'>Amount CHF" . "</th>
+                          </tr>";
+
+        $results = static::find_by_sql($sql);
+
+        if ($results) {
+
+            foreach ($results as $result) {
+                $output .= "<tr>";
+                $output .= "<td class='text-center'>{$result->Yr}</td>";
+                $output .= "<td class='text-center'>{$result->itemsCount}</td>";
+
+                if (!$XLS) {
+                    $output .= TD_NumberFormatColor($result->amountCHF, false);;
+                } else {
+                    $output .= (float)$result->amountCHF;;
+                }
+
+
+                $output .= "</tr>";
+            }
+        }
+
+        if ($No === 1) {
+            $sum2 = static::sum_field_where($field = "amount * rate", " WHERE person_id = $kamy_id    ");
+            $sum3= 30000;
+            $output .= "<tr>";
+            $output .= "<td class='text-center'>2021</td>";
+            $output .= "<td class='text-center'>kamy_2021</td>";
+
+            if (!$XLS) {
+                $output .= TD_NumberFormatColor($sum2, false);;
+            } else {
+                $output .= (float)$sum2;;
+            }
+
+            $output .= "<tr>";
+            $output .= "<td class='text-center'>2021</td>";
+            $output .= "<td class='text-center'>kamy_2021_BCG</td>";
+
+            if (!$XLS) {
+                $output .= TD_NumberFormatColor($sum3, false);;
+            } else {
+                $output .= (float)$sum3;;
+            }
+
+
+            $output .= "</tr>";
+        }
+
+        unset($results);
+        if (!$XLS) {
+
+            if ($No === 1) {
+                $sum = static::sum_field_where($field = "amount * rate", " WHERE person_id = 2 and amount >0 and year(expense_date)=$year  ");
+                $sum=$sum+ $sum2 +$sum3;
             }
 
 
@@ -1878,7 +1995,7 @@ ORDER BY year(e.expense_date) DESC";
                 }
 
                 if ($result->cash == 1) {
-                    $output .= "<td class='text-center' style='color:blue'><strong>Yes</strong></td>";
+                    $output .= "<td class='text-center' style='color:blue;background-color:#EBF5FB'><strong>Yes</strong></td>";
                 } else {
                     $output .= "<td class='text-center'>No</td>";
                 }
@@ -1985,7 +2102,7 @@ ORDER BY year(e.expense_date) DESC";
                 }
 
                 if ($result->cash == 1) {
-                    $output .= "<td class='text-center' style='color:blue'><strong>Yes</strong></td>";
+                    $output .= "<td class='text-center' style='color:blue;background-color:#EBF5FB'><strong>Yes</strong></td>";
                 } else {
                     $output .= "<td class='text-center'>No</td>";
                 }

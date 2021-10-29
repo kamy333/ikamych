@@ -29,6 +29,9 @@ if (User::is_caroline() || User::is_weslley()) {
 </div>
 <div class="row">
     <?php
+
+
+
     $txt = "Prêt-Rbt Mum Year Month";
     //    $a = "<a href='/Inspinia/loan_exp_2.php?report=Report1&id=0'>Export Xl $txt</a>";
     echo Table::ibox_table(ReportFinance::Report1(), $txt, 5, 0);

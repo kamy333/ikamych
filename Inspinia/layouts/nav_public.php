@@ -24,8 +24,7 @@
                 <?php if (User::is_admin()) { ?>
 
 
-
-                        <li class="dropdown">
+                    <li class="dropdown">
                         <a aria-expanded="false" role="button" href="#" class="dropdown-toggle" data-toggle="dropdown">
                             Public <span class="caret"></span></a>
                         <ul role="menu" class="dropdown-menu">
@@ -60,6 +59,8 @@
 
                 ?>
 
+                <?php if (User::is_bralia() || User::is_djamila()) { ?>
+
                 <li class="dropdown">
                     <a aria-expanded="false" role="button" href="#" class="dropdown-toggle" data-toggle="dropdown">
                         Friend <span class="caret"></span></a>
@@ -80,26 +81,30 @@
 
                     </ul>
                 </li>
+                <?php } ?>
 
+                <?php
+                if (User::is_caroline() || User::is_weslley()) {
+                    ?>
 
-                <li class="dropdown">
-                    <a aria-expanded="false" role="button" href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        Loan <span class="caret"></span></a>
-                    <ul role="menu" class="dropdown-menu">
-                        <?php
-                        if (User::is_caroline() || User::is_weslley()) {
-                            echo $Nav->menu_item('', 'Loan', 'loan_exp.php', 'public');
-                        }
+                    <li class="dropdown">
+                        <a aria-expanded="false" role="button" href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            Loan <span class="caret"></span></a>
+                        <ul role="menu" class="dropdown-menu">
+                            <?php
+                            if (User::is_caroline() || User::is_weslley()) {
+                                echo $Nav->menu_item('', 'Loan', 'loan_exp.php', 'public');
+                            }
 
-                        if (User::is_caroline()) {
-                            echo $Nav->menu_item('', 'Mum', 'loan_exp_1.php', 'public');
-                        }
+                            if (User::is_caroline()) {
+                                echo $Nav->menu_item('', 'Mum', 'loan_exp_1.php', 'public');
+                            }
 
-                        ?>
+                            ?>
 
-                    </ul>
-                </li>
-
+                        </ul>
+                    </li>
+                <?php } ?>
 
 
 
