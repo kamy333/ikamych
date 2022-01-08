@@ -1,14 +1,9 @@
 <?php require_once('../includes/initialize.php');
 $session->confirmation_protected_page();
 
-if (User::is_caroline()) {
-} else {
-    redirect_to('../index.php');
-}
+if (!User::is_caroline()) { redirect_to('../index.php');}
 
 ?>
-
-
 
 <?php $stylesheets = ""; ?>
 <?php $fluid_view = true; ?>
@@ -33,11 +28,18 @@ if (User::is_caroline()) {
     <div class="row">
 
     <?php
+    echo MyExpense::form_select_year();
+    echo "<hr>";
 
-    $year=2021;
+       if(isset($_GET['Yr'])){
+           $year=$_GET['Yr'];
+       } else {
+           $year=2021;
+       }
+
     $txt = "Prêt-Rbt Mum + kamy $year";
     $kamy_id=19;
-    echo Table::ibox_table(ReportFinance::Report_YEAR(1,false,2021,19), $txt, 3, 0);
+    echo Table::ibox_table(ReportFinance::Report_YEAR(1,false,$year,19), $txt, 3, 0);
 
 
     $txt = "Prêt-Rbt Mum Year";

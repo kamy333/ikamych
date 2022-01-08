@@ -1323,7 +1323,7 @@ function button_color($color, $txt = "xxx", $href = false, $href_env = "", $othe
 //    $others_a if wanting to attr in a like ''  onclick="return confirm('Delete Are you sure?')"
 
     if($href_brut==1){
-        $new_href=$new_href;
+//        $new_href=$new_href;
 
     }else {
 //        keep $href argument no modification

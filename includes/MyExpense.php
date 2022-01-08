@@ -1202,6 +1202,34 @@ GROUP BY expense_type_id;";
         return $output;
     }
 
+    public static function form_select_year()
+    {
+
+        array_push(static::$db_fields, "Yr");
+        $sql = "SELECT DISTINCT year(t1.expense_date) as Yr
+        FROM " . static::$table_name . " AS t1
+        ORDER BY year(t1.expense_date) DESC";
+        $output .= "<form name='xxxx' method='get' action='" . h($_SERVER['PHP_SELF']) . "'>";
+        $output .= "<select class='form - control m - b' name='Yr'>";
+
+
+        $results = static::find_by_sql($sql);
+        if ($results) {
+            foreach ($results as $result) {
+                $output .= "<option value='{$result->Yr}'>{$result->Yr}</option>";
+            }
+
+        }
+        $output .= "</select>";
+
+        $output .= "<button class='btn btn-primary' type='submit'>Get Year</button>";
+
+        $output.="</form>";
+
+
+        return $output;
+
+    }
 
     public static function aPerson(int $personId, $NOT = true, $exclude = "", $desc = "DESC", $show_doc = false, $is_button = false)
     {
@@ -1338,10 +1366,13 @@ GROUP BY expense_type_id;";
 
                 if ($result->cash == 1) {
                     $style = "style='color:blue;background-color:#EBF5FB;'";
+                    $output .= "<td class='text-center' style='color:blue;background-color:#EBF5FB'><strong><i class='fa fa-check'></i></strong></td>";
                 } else {
                     $style = "style='color:gray'";
+//                    $output .= "<td class='text-right' {$style}><strong>" . $result->is_cash . "</strong></td>";
+                    $output .= "<td style='color:blue;background-color:lavenderblush' class='text-center'>-</td>";
+
                 }
-                $output .= "<td class='text-right' {$style}><strong>" . $result->is_cash . "</strong></td>";
 
                 $output .= "<td class='text-center'>{$type}</td>";
                 $output .= "<td class='text-center'>{$categ}</td>";
@@ -1714,11 +1745,9 @@ ORDER BY year(e.expense_date) DESC";
     ORDER BY year(e.expense_date) DESC";
 
 
-
         return $sql;
 
     }
-
 
 
     public static function Report($No = 0, $XLS = false)
@@ -1782,7 +1811,6 @@ ORDER BY year(e.expense_date) DESC";
         }
 
 
-
         unset($results);
         if (!$XLS) {
 
@@ -1812,7 +1840,8 @@ ORDER BY year(e.expense_date) DESC";
     }
 
 
-    public static function SQL_Year($year=2021)
+
+    public static function SQL_Year($year = 2021)
     {
         $sql = "SELECT year(e.expense_date) as Yr,COUNT(e.id) AS itemsCount,
        SUM(ROUND(e.amount * e.rate,2)) AS amountCHF
@@ -1827,7 +1856,25 @@ ORDER BY year(e.expense_date) DESC";
         return $sql;
     }
 
-    public static function Report_YEAR($No = 0, $XLS = false,$year=2021,$kamy_id=19)
+
+    public static function Spec_Exception($txt1=2021,$txt2="Choose something",$sum=0,$XLS=false){
+
+        $output .= "<tr>";
+        $output .= "<td class='text-center'>{$txt1}</td>";
+        $output .= "<td class='text-center'>{$txt2}</td>";
+
+        if (!$XLS) {
+            $output .= TD_NumberFormatColor($sum, false);;
+        } else {
+            $output .= (float)$sum;;
+        }
+        $output .= "<tr>";
+
+        return $output;
+
+    }
+
+    public static function Report_YEAR($No = 0, $XLS = false, $year = 2021, $kamy_id = 19)
     {
         $output = "";
         $style = "";
@@ -1874,38 +1921,32 @@ ORDER BY year(e.expense_date) DESC";
         }
 
         if ($No === 1) {
-            $sum2 = static::sum_field_where($field = "amount * rate", " WHERE person_id = $kamy_id    ");
-            $sum3= 30000;
-            $output .= "<tr>";
-            $output .= "<td class='text-center'>2021</td>";
-            $output .= "<td class='text-center'>kamy_2021</td>";
 
-            if (!$XLS) {
-                $output .= TD_NumberFormatColor($sum2, false);;
+            if ($year==2021 || $year=="2021") {
+                $sum2 = static::sum_field_where($field = "amount * rate", " WHERE person_id = $kamy_id    ");
+                $sum3 = 30000;
+                $sum4 = 27700;
+
+                $output .= static::Spec_Exception('2021', "kamy_2021", $sum2, $XLS);
+                $output .= static::Spec_Exception('2021', "kamy_2021_BCG", $sum3, $XLS);
+                $output .= static::Spec_Exception('2021', "kamy_2021_Donation", $sum4, $XLS);
             } else {
-                $output .= (float)$sum2;;
+                $sum2 = 0;
+                $sum3 = 0;
+                $sum4 = 0;
             }
 
-            $output .= "<tr>";
-            $output .= "<td class='text-center'>2021</td>";
-            $output .= "<td class='text-center'>kamy_2021_BCG</td>";
-
-            if (!$XLS) {
-                $output .= TD_NumberFormatColor($sum3, false);;
-            } else {
-                $output .= (float)$sum3;;
-            }
-
-
-            $output .= "</tr>";
         }
+
 
         unset($results);
         if (!$XLS) {
 
             if ($No === 1) {
                 $sum = static::sum_field_where($field = "amount * rate", " WHERE person_id = 2 and amount >0 and year(expense_date)=$year  ");
-                $sum=$sum+ $sum2 +$sum3;
+
+                $sum = $sum + $sum2 + $sum3 + $sum4;
+
             }
 
 
@@ -1995,9 +2036,11 @@ ORDER BY year(e.expense_date) DESC";
                 }
 
                 if ($result->cash == 1) {
-                    $output .= "<td class='text-center' style='color:blue;background-color:#EBF5FB'><strong>Yes</strong></td>";
+//                  $output .= "<td class='text-center' style='color:blue;background-color:#EBF5FB'><strong>Yes</strong></td>";
+                    $output .= "<td class='text-center' style='color:blue;background-color:#EBF5FB'><strong><i class='fa fa-check'></i></strong></td>";
+
                 } else {
-                    $output .= "<td class='text-center'>No</td>";
+                    $output .= "<td style='color:blue;background-color:lavenderblush' class='text-center'>-</td>";
                 }
 
                 $output .= "<td class='text-center'>{$result->ccy_id}</td>";
@@ -2102,7 +2145,8 @@ ORDER BY year(e.expense_date) DESC";
                 }
 
                 if ($result->cash == 1) {
-                    $output .= "<td class='text-center' style='color:blue;background-color:#EBF5FB'><strong>Yes</strong></td>";
+//                    $output .= "<td class='text-center' style='color:blue;background-color:#EBF5FB'><strong>Yes</strong></td>";
+                    $output .= "<td class='text-center' style='color:blue;background-color:#EBF5FB'><strong><i class='fa fa-envelope'></i></strong></td>";
                 } else {
                     $output .= "<td class='text-center'>No</td>";
                 }

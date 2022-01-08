@@ -75,7 +75,7 @@ if (User::is_kamy()) {
     $text1 .= "<div class='row text-center'>";
     $text1 .= "<div class='col-lg-8 col-lg-offset-2' style='margin-top: 2em;padding: 2em;background-color: white'>";
     $text1 .= "<p>in fonding memory</p>";
-    $text1 .= "<p>Maman Bozorgue 17.04.2011 | Katy Samak | Farad Lavi | Maggy Herzet | Dahidjan Ezatollah | Dahidjan Ramatollah | Baba Bozorgue | Maman Bozorgue Motaram | Mr. Mme Manaz Sadigh 23.6.2020 | khaleh Aghdass | Dahidjan 3 | Amouh Aziz </p>";
+    $text1 .= "<p>Maman Bozorgue 17.04.2011 | Katy Samak | Farad Lavi | Maggy Herzet | Dahidjan Ezatollah 10.10.2020 | Dahidjan Ramatollah | Baba Bozorgue | Maman Bozorgue Motaram | Mr. Mme Manaz Sadigh 23.6.2020 | khaleh Aghdass | Dahidjan 3 | Amouh Aziz </p>";
     echo "" . $text1;// . "<hr>";
     $text1 .= "</div>";
     $text1 .= "</div>";

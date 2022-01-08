@@ -53,9 +53,9 @@
                 <?php
                 echo $Nav->public_menu("public_gallery");
 
-                if (User::is_djamila()) {
-                    echo $Nav->menu_item('', 'Djamila', 'index_gallery12.php', 'public');
-                }
+//                if (User::is_djamila()) {
+//                    echo $Nav->menu_item('', 'Djamila', 'index_gallery12.php', 'public');
+//                }
 
                 ?>
 

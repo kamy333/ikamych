@@ -124,7 +124,7 @@ if (is_dir($dir)) {
 ?>
 
 
-<h1 class="text-center">Welcome to <?php echo $logo ?></h1>
+<h1 class="text-center">Welcome XXX to <?php echo $logo ?></h1>
 
 <?php
 
