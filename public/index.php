@@ -124,7 +124,7 @@ if (is_dir($dir)) {
 ?>
 
 
-<h1 class="text-center">Welcome XXX to <?php echo $logo ?></h1>
+<h1 class="text-center">Welcome to <?php echo $logo ?></h1>
 
 <?php
 
@@ -155,9 +155,15 @@ if (is_dir($dir)) {
 
         <div class="col-lg-8 col-lg-offset-2" style="margin-top: 2em;padding: 2em">
 
+            <?php
+            $text = "<p>En tant de crise, les intelligents cherchent des solutions, les imbéciles cherchent des coupables.<p>
+	<div class='pull-right'><p><small>- Anonyme</small></p>
+		<small><i></i></small></div>";
+            echo "" . $text . "<br><hr>";
+            ?>
 
             <?php
-            $text .= "<p>Je t'aime dans le temps. Je t'aimerai jusqu'au bout du temps. Et quand le temps sera écoulé, alors, je t'aurai aimée. Et rien de cet amour, comme rien de ce qui a été, ne pourra jamais être effacé.<p>
+            $text = "<p>Je t'aime dans le temps. Je t'aimerai jusqu'au bout du temps. Et quand le temps sera écoulé, alors, je t'aurai aimée. Et rien de cet amour, comme rien de ce qui a été, ne pourra jamais être effacé.<p>
 	<div class='pull-right'><p>Jean d'Ormesson <small>(16 juin 1925 - 5 décembre 2017)</small></p>
 		<small><i>-Un jour je m'en irai sans avoir tout dit.</i></small></div>";
             echo "" . $text . "<hr>";
@@ -170,8 +176,8 @@ if (is_dir($dir)) {
             <div class="col-lg-8 col-lg-offset-2" style="margin-top: 2em;padding: 2em;background-color: white">
                 <?php
                 //          $text = "<a href='#'></a>";
-                $text = "<br><p>
-        <i>Ce n’est qu’un moment..</i><br> <br> <br>
+                $text = "<p>
+        <i>Ce n’est qu’un moment..</i><br> <br> 
         
         Je t'en prie mon amour ne pleure pas<br>
         Ce n'est qu'un moment<br>

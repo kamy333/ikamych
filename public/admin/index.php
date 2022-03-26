@@ -54,20 +54,24 @@ if (User::is_visitor()) {
 <div class='row'>
     <div class='col-md-12'>
 
-<!--        <p>Admin en construction link button not working</p>-->
+        <!--        <p>Admin en construction link button not working</p>-->
 
-        <?php if(User::is_kamy()) { ?>
-        <?php echo button_color('success', "<i class='fa fa-maxcdn'>&nbsp;&nbsp;&nbsp;&nbsp;User&nbsp;&nbsp;&nbsp;&nbsp;</i>", '/public/admin/manage_user.php', '', '', '', 2); ?>
+        <?php if (User::is_kamy()) { ?>
+            <?php echo button_color('success', "<i class='fa fa-maxcdn'>&nbsp;&nbsp;&nbsp;&nbsp;User&nbsp;&nbsp;&nbsp;&nbsp;</i>", '/public/admin/manage_user.php', '', '', '', 2); ?>
 
-        <?php echo button_color('primary', "<i class='fa fa-automobile'>&nbsp;My Expense</i>", '/public/admin/crud/ajax/manage_ajax.php?class_name=MyExpense', '', '', '', 2); ?>
+            <?php echo button_color('primary', "<i class='fa fa-automobile'>&nbsp;My Expense</i>", '/public/admin/crud/ajax/manage_ajax.php?class_name=MyExpense', '', '', '', 2); ?>
 
-        <?php }?>
+            <?php echo button_color('danger', "<i class='fa fa-automobile'>&nbsp;New Expense</i>", '/public/admin/crud/ajax/new_ajax.php?class_name=MyExpense', '', '', '', 2); ?>
 
-        <?php if(1==2) { ?>
-        <?php echo button_color('primary', "<i class='fa fa-male'>&nbsp;Clients</i>", 'transport.php?cl=tClient', ''); ?>
-        <?php echo button_color('danger', "<i class='fa fa-user'>&nbsp;Chauffeur</i>", 'transport.php?cl=Chauffeur', ''); ?>
-        <?php echo button_color('warning', "<i class='fa fa-cab'>&nbsp;Transport Type</i>", 'transport.php?cl=TransportType', ''); ?>
-    <?php }?>
+
+            <!--            https://www.ikamy.ch/public/admin/crud/ajax/new_ajax.php?class_name=MyExpense     -->
+        <?php } ?>
+
+        <?php if (1 == 2) { ?>
+            <?php echo button_color('primary', "<i class='fa fa-male'>&nbsp;Clients</i>", 'transport.php?cl=tClient', ''); ?>
+            <?php echo button_color('danger', "<i class='fa fa-user'>&nbsp;Chauffeur</i>", 'transport.php?cl=Chauffeur', ''); ?>
+            <?php echo button_color('warning', "<i class='fa fa-cab'>&nbsp;Transport Type</i>", 'transport.php?cl=TransportType', ''); ?>
+        <?php } ?>
 
     </div>
 </div>

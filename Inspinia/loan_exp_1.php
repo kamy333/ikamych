@@ -34,11 +34,22 @@ if (!User::is_caroline()) { redirect_to('../index.php');}
        if(isset($_GET['Yr'])){
            $year=$_GET['Yr'];
        } else {
-           $year=2021;
+           $year=2022;
+       }
+
+
+       if ($year == 2021){
+                       $kamy_id=19;
+
+       }elseif ($year == 2022){
+                       $kamy_id=21;
+
+       }else{
+           $kamy_id=21;
        }
 
     $txt = "Prêt-Rbt Mum + kamy $year";
-    $kamy_id=19;
+//    $kamy_id=19;
     echo Table::ibox_table(ReportFinance::Report_YEAR(1,false,$year,19), $txt, 3, 0);
 
 

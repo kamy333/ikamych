@@ -1930,6 +1930,13 @@ ORDER BY year(e.expense_date) DESC";
                 $output .= static::Spec_Exception('2021', "kamy_2021", $sum2, $XLS);
                 $output .= static::Spec_Exception('2021', "kamy_2021_BCG", $sum3, $XLS);
                 $output .= static::Spec_Exception('2021', "kamy_2021_Donation", $sum4, $XLS);
+            }elseif ($year==2022 || $year=="2022")    {
+                $kamy_id=21;
+                $sum2 = static::sum_field_where($field = "amount * rate", " WHERE person_id = $kamy_id    ");
+                $sum3 = 0;
+                $sum4 = 0;
+                $output .= static::Spec_Exception('2022', "kamy_2022", $sum2, $XLS);
+
             } else {
                 $sum2 = 0;
                 $sum3 = 0;

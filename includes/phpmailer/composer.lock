@@ -1023,7 +1023,7 @@
             },
             "require": {
                 "cilex/cilex": "~1.0",
-                "erusev/parsedown": "~1.0",
+                "erusev/parsedown": "~1.7.2",
                 "herrera-io/phar-update": "1.0.3",
                 "jms/serializer": "~0.12",
                 "monolog/monolog": "~1.6",

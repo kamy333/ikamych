@@ -32,7 +32,7 @@ class MyPHPMailer extends PHPMailer
         $this->Username=EMAIL_USERNAME ;
         $this->Password=EMAIL_PASSWORD;
         $this->FromName="ikamy.ch";
-        $this->From = "ikamy.ch@bluewin.ch";
+//        $this->From = "ikamy.ch@bluewin.ch";
         $this->From = "kamy@ikamy.ch";
 
         // $this->addCC("nafisspour@bluewin.ch");

@@ -11,6 +11,7 @@
 // DIRECTORY_SEPARATOR is a PHP pre-defined constant
 // (\ for Windows, / for Unix)
 
+/** @noinspection PhpExpressionResultUnusedInspection */
 defined('DS') ? null : define('DS', DIRECTORY_SEPARATOR);
 defined('SITE_URL') ? null : define("SITE_URL", "https://" . $_SERVER['SERVER_NAME']);
 defined('SITE_ROOT') ? null : define('SITE_ROOT', realpath(dirname(__FILE__) . DS . ".." . DS));

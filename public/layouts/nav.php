@@ -229,8 +229,13 @@ if ($layout_context == "public") {
                         <ul class="dropdown-menu">
 
                             <?php if (User::is_admin()) {
-                                echo $Nav->menu_item('', 'Index ajax', 'index_ajax.php', 'admin/crud/ajax');
-                                echo $Nav->menu_item('', 'Index data', 'index_data.php', 'admin/crud/data');
+
+                                echo $Nav->menu_item('MyExpense', 'Expense', 'manage_ajax.php', 'admin/crud/ajax');
+
+                                echo $Nav->menu_item('MyExpense', 'New Expense', 'new_ajax.php', 'admin/crud/ajax');
+
+//                                echo $Nav->menu_item('', 'Index ajax', 'index_ajax.php', 'admin/crud/ajax');
+//                                echo $Nav->menu_item('', 'Index data', 'index_data.php', 'admin/crud/data');
                             } ?>
                             <li class="divider"></li>
                             <?php echo $Nav->menu_item('Article', 'Article', 'manage_ajax.php', 'admin/crud/ajax'); ?>
@@ -251,7 +256,7 @@ if ($layout_context == "public") {
                             <?php echo "<li class=\"divider\"></li>"; ?>
 
                             <?php echo "<li><a href='/public/admin/manage_user.php'>User</a></li>" ?>
-                            <?php echo $Nav->menu_item('User', 'User t', 'manage_ajax.php', 'admin/crud/ajax'); ?>
+<!--                            --><?php //echo $Nav->menu_item('User', 'User t', 'manage_ajax.php', 'admin/crud/ajax'); ?>
                             <?php echo "<li class=\"divider\">Links</li>"; ?>
 
                             <?php echo $Nav->menu_item('Links', 'Links', 'manage_ajax.php', 'admin/crud/ajax'); ?>
@@ -283,6 +288,10 @@ if ($layout_context == "public") {
                     ><a href="#" data-toggle="dropdown">New<span class="caret"></span></a>
 
                         <ul class="dropdown-menu">
+
+                            <?php echo $Nav->menu_item('MyExpense', 'Expense', 'new_ajax.php', 'admin/crud/ajax'); ?>
+
+                            <li class="divider"></li>
 
                             <?php echo $Nav->menu_item('Article', 'Article', 'new_ajax.php', 'admin/crud/ajax'); ?>
                             <?php echo $Nav->menu_item('Book', 'Book', 'new_ajax.php', 'admin/crud/ajax'); ?>
