@@ -9,7 +9,7 @@ setlocale(LC_TIME, 'fr_FR.utf8', 'fra');
 // (\ for Windows, / for Unix)
 
 defined('DS') ? null : define('DS', DIRECTORY_SEPARATOR);
-defined('SITE_URL') ? null : define("SITE_URL", "http://" . $_SERVER['SERVER_NAME']);
+defined('SITE_URL') ? null : define("SITE_URL", "https://" . $_SERVER['SERVER_NAME']);
 defined('SITE_ROOT') ? null : define('SITE_ROOT', realpath(dirname(__FILE__) . DS . ".." . DS));
 defined('MY_URL_PUBLIC') ? null : define('MY_URL_PUBLIC', SITE_URL . '/ikamych/transmed/');
 defined('MY_URL_ADMIN') ? null : define('MY_URL_ADMIN', MY_URL_PUBLIC . 'admin/');

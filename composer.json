@@ -5,6 +5,12 @@
       "jenssegers/date": "^3.2",
       "jimmiw/php-time-ago": "^2.0",
       "google/apiclient": "^2.0",
-      "mistic100/randomcolor": "1.0.4"
+      "mistic100/randomcolor": "1.0.4",
+      "ext-curl": "*"
+    },
+  "autoload": {
+    "psr-4": {
+      "": "api_class"
     }
+  }
 }
