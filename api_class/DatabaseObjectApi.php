@@ -3,7 +3,7 @@
 // probably smart to require it before we start.
 //require_once(LIB_PATH.DS.'database_transmed.php');
 
-class DatabaseObject
+class DatabaseObjectApi
 {
 
     // I'm waiting for Late Static Bindings in PHP 5.3
@@ -14,23 +14,11 @@ class DatabaseObject
 
     public static $page_name;
 
-
-//    public static $page_manage;
-//    public static $page_new;
-//    public static $page_edit;
-//    public static $page_delete;
-
-
     public static $page_manage = "/public/admin/crud/ajax/manage_ajax.php?class_name=" . __CLASS__;
     public static $page_new = "/public/admin/crud/ajax/new_ajax.php?class_name=" . __CLASS__;
     public static $page_edit = "/public/admin/crud/ajax/edit_ajax.php?class_name=" . __CLASS__;
     public static $page_delete = "/public/admin/crud/ajax/delete_ajax.php?class_name=" . __CLASS__;
 
-
-//    public static $page_manage = "/public/admin/crud/ajax/manage_ajax.php";
-//    public static $page_new = "/public/admin/crud/ajax/new_ajax.php";
-//    public static $page_edit = "/public/admin/crud/ajax/edit_ajax.php";
-//    public static $page_delete = "/public/admin/crud/ajax/delete_ajax.php";
 
     public static $position_table = "positionRight"; // positionLeft // positionBoth  positionRight
 
@@ -47,8 +35,6 @@ class DatabaseObject
     public static $form_default_value;
     public static $fields_image; // todo  so image exist and are uploaded
 
-//    public static $all_class = array('Article','ToDoList', 'User', 'UserType', 'Client', 'Category', 'BlacklistIp', 'Links', 'LinksCategory', 'Project', 'Category1', 'Category2', 'InvoiceActual', 'InvoiceEstimate', 'FailedLogin', 'MyCigarette', 'MyExpense', 'MyExpensePerson', 'MyExpenseType', 'MyHouseExpense', 'MyHouseExpenseType', 'Chat', 'ChatFriend', 'Notification', 'TransportChauffeur', 'TransportClient', 'TransportProgramming', 'TransportProgrammingModel', 'TransportType');
-
     protected static $table_name; // used for form new the related links put class dependency in array
     protected static $existing_password;
 
@@ -64,12 +50,7 @@ class DatabaseObject
     protected static $form_properties_search;
     public static $db_fields_not_set_post = [];
 
-    public static function post_form_class()
-    {
-//    this used for special fprm delegated to child class
 
-
-    }
 
     public static function post_form($data = "data")
     {
@@ -220,8 +201,6 @@ class DatabaseObject
 
     public function update()
     {
-//        log_debug('action3');
-
         $this->set_up_display();
         global $database;
         // Don't forget your SQL syntax and good habits:
@@ -294,103 +273,6 @@ class DatabaseObject
         } else {
             return false;
         }
-    }
-
-    public static function get_form_new_href($array_classes = [])
-    {
-//used to add related links on new and page get from this and other classes
-
-        $output = "";
-
-//       $array_classes=['MyExpensePerson', 'MyHouseExpense'];
-
-        $span = "<span>&nbsp;&nbsp; |&nbsp;&nbsp; </span>";
-//      $output .= get_called_class().BR;
-
-        $output .= "<a href=\"index.php\">Index</a> &nbsp;&nbsp";
-
-        $href = clean_query_string(static::$page_manage);
-        $output .= $span . "<a href=\"" . static::$page_manage . "\"> Manage " . static::$page_name . "</a>";
-
-        foreach ($array_classes as $class) {
-            call_user_func_array(array($class, 'change_to_unique_data'), ['data']);
-
-            $href = clean_query_string($class::$page_manage);
-            $output .= $span . "<a href=\"" . $href . "\"> Manage " . $class::$page_name . "</a>";
-////           var_dump($class);
-//           $output1 .= $class::$page_manage.BR;
-        }
-        unset($class);
-
-        foreach ($array_classes as $class) {
-            $href = clean_query_string($class::$page_new);
-            $output .= $span . "<a href=\"" . $href . "\"> Add New " . $class::$page_name . "</a>";
-        }
-//       $output = "";
-//       $arr = array(1, 2, 3, 4);
-//       foreach ($arr as $value) {
-//           $output.= $value ;
-//       }
-        return $output;
-    }
-
-    public static function Create_form($copy = true)
-    {
-        global $Nav;
-//        if($Nav->)
-//        echo $_SERVER['PHP_SELF'];
-
-
-        if (isset($_GET['id']) && !isset($_GET['duplicate_record'])) {
-            $post_link = clean_query_string(static::$page_edit . "?id=" . urlencode($_GET['id']));
-            $page = "Update";
-            $page1 = "Update ID (" . $_GET['id'] . ")";
-            $text_post = "Updated";
-            $text_post1 = "update";
-            $jquery = "update-form-button";
-        } else {
-
-            $post_link = clean_query_string(static::$page_new);
-            $page = "New";
-            $page1 = "Add New ";
-            $text_post = "created";
-            $text_post1 = "creation";
-            $jquery = "add-form-button";
-        }
-        $output = "";
-        $link = "<a  href='" . $post_link . " '>" . ' ' . $page1 . " "
-            . clean_query_string(static::$page_name) . "</a>";
-        $h4 = "<h4 class='text-center'>{$link} </h4>";
-        $output .= "<div class ='form-header-dark-blue'  >";
-        $output .= "<p>$link<p>";
-        $output .= "</div>";
-        $output .= "<div class =\"form-light-blue\">";
-        $output .= "<form name='form_" . get_called_class() . "' id='form_" . get_called_class() . "'  class='form-horizontal' method='post' action='{$post_link}'> ";
-        if (request_is_get()) {
-            if (isset($_GET['id'])) {
-                $id = $_GET['id'];
-                $get_item = static::find_by_id($id);
-                $output .= static::construct_form($get_item, $_GET);
-            } else {
-                $output .= static::construct_form(false, $_GET);
-            }
-        }
-
-//        if there is $_GET['id'] it will put id but not $_GET['copy_record']
-        $output .= Form::form_id();
-
-        $output .= csrf_token_tag();
-        $output .= form::class_name(get_called_class());
-//        $output .= "</fieldset>";
-        $output .= " <div class='col-sm-offset-3 col-sm-7 col-xs-3'>
-                   <button  type='submit' name='submit' id='{$jquery}' class='btn btn-primary' >"
-            . $page . ' ' . static::$page_name . "</button></div>";
-        $output .= "<div class='text-right' ><a href='"
-            . clean_query_string(static::$page_manage) . "'" . " id='cancel-update-new' class='btn btn-info' role='button' >Cancel</a></div>";
-        $output .= "";
-        $output .= "</form>";
-        $output .= "</div>";
-        return $output;
     }
 
 
@@ -1020,7 +902,6 @@ class DatabaseObject
         if (isset($order_name)) {
             $sql .= " ORDER BY {$order_name} {$order_type} ";
         }
-
 
         $sql .= "LIMIT {$per_page} ";
         $sql .= "OFFSET {$pagination->offset()}";

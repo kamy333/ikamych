@@ -7,8 +7,10 @@
 $k=$_GET["kamy"];
 echo "";
 
-$json = file_get_contents('pizzas3.json');
-if (file_exists('pizzas3.json')){
+$json_filename="pizzas_app_1.json";
+
+$json = file_get_contents($json_filename);
+if (file_exists($json_filename)){
     $json_data = json_decode($json,true);
 //    var_dump($json_data);
 

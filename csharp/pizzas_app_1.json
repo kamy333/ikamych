@@ -1,5 +1,5 @@
 [
-	{ "nom": "4 fromages", "ingredients": [ "cantal", "mozzarella", "fromage de chèvre", "gruyère" ], "prix": 11, "imageUrl": "https://www.galbani.fr/wp-content/uploads/2017/07/pizza_filant_montage_2_3.jpg"},
+	{ "nom": "4 fromages buoil", "ingredients": [ "cantal", "mozzarella", "fromage de chèvre", "gruyère" ], "prix": 11, "imageUrl": "https://www.galbani.fr/wp-content/uploads/2017/07/pizza_filant_montage_2_3.jpg"},
 	{ "nom": "tartiflette", "ingredients": [ "pomme de terre", "oignons", "crème fraiche", "lardons", "mozzarella" ], "prix": 14, "imageUrl": "https://cdn.pizzamatch.com/1/35/1375105305-pizza-napolitain-630.JPG?1375105310"},
 	{ "nom": "margherita", "ingredients": [ "sauce tomate", "mozzarella", "basilic" ], "prix": 7, "imageUrl": "https://www.misteriosocultos.com/wp-content/uploads/2018/12/pizza.jpg"},
 	{ "nom": "indienne", "ingredients": [ "curry", "mozzarella", "poulet", "poivron", "oignon", "coriandre" ], "prix": 10, "imageUrl": "https://assets.afcdn.com/recipe/20160519/15342_w1024h768c1cx3504cy2338.jpg"},

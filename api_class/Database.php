@@ -9,12 +9,9 @@ class Database
     private $user;
     private $password;
 
-    public function __construct(
-        string $host,
-        string $name,
-        string $user,
-        string $password
-    )
+    private ?PDO $conn =null;
+
+    public function __construct(string $host, string $name, string $user, string $password )
     {
         $this->host = $host;
         $this->name = $name;
@@ -28,16 +25,13 @@ class Database
      */
     public function getConnection(): PDO
     {
-//        $this->host=DB_SERVER;
-//        $this->name=DB_NAME;
-//        $this->user=DB_USER;
-//        $this->password=DB_PASSWORD;
-
-        $dsn = "mysql:host={$this->host};dbname={$this->name};charset";
-        return new PDO($dsn, $this->user, $this->password,
-            [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-                PDO::ATTR_EMULATE_PREPARES => false,
-                PDO::ATTR_STRINGIFY_FETCHES => false]);
-
+        if ($this->conn===null){
+            $dsn = "mysql:host={$this->host};dbname={$this->name};charset";
+           $this->conn= new PDO($dsn, $this->user, $this->password,
+                    [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+                    PDO::ATTR_EMULATE_PREPARES => false,
+                    PDO::ATTR_STRINGIFY_FETCHES => false]);
+        }
+        return $this->conn;
     }
 }

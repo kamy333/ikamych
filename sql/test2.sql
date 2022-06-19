@@ -41,6 +41,10 @@ CREATE TABLE IF NOT EXISTS `task`
     INDEX (name)
      );
 
+ALTER TABLE task ADD user_id INT NOT NULL , ADD INDEX (user_id);
+
+ALTER TABLE task ADD FOREIGN KEY (user_id) references user(id) ON DELETE CASCADE ON UPDATE CASCADE ;
+
 CREATE TABLE  IF NOT EXISTS  user(
     `id` INT(11) NOT NULL AUTO_INCREMENT,
     `name` VARCHAR(128)  NOT NULL,

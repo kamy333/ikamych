@@ -136,7 +136,6 @@ function log_queries($action, $message = "")
 function log_views($action, $message = "")
 {
 
-
     $logfile = SITE_ROOT . DS . 'logs' . DS . 'views.txt';
     $new = file_exists($logfile) ? false : true;
     if ($handle = fopen($logfile, 'a')) { // append

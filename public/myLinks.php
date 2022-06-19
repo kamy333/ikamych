@@ -30,28 +30,35 @@
 
 <div class="row">
     <div class="col-lg-3 ">
-        <?php //echo get_search_category(); ?>
-
         <?php echo Links::output_links(); ?>
     </div>
 
     <div class="col-lg-3 ">
-        <?php //echo get_search_category(); ?>
-
-        <?php echo Links::output_links('Google'); ?>
-    </div>
-
-    <div class="col-lg-3 ">
-        <?php //echo get_search_category(); ?>
-
         <?php echo Links::output_links('C#'); ?>
     </div>
 
     <div class="col-lg-3 ">
-        <?php //echo get_search_category(); ?>
-
-        <?php echo Links::output_links('PHP'); ?>
+        <?php echo Links::output_links('C#_2'); ?>
     </div>
+
+    <div class="col-lg-3 ">
+        <?php echo Links::output_links('C#_3'); ?>
+    </div>
+
+    <div class="col-lg-3 ">
+        <?php echo Links::output_links('Xamarin'); ?>
+    </div>
+
+    <div class="col-lg-3 ">
+        <?php echo Links::output_links('SQLServer'); ?>
+    </div>
+<!--    <hr>-->
+<!--    <br>-->
+<!--    <div class="col-lg-3 ">-->
+<!--        --><?php //echo Links::output_links('PHP'); ?>
+<!--    </div>-->
+
+
 
 </div>
 

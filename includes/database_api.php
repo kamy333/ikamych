@@ -4,7 +4,7 @@
 
 
 
-class MySQLDatabase
+class MySQLDatabaseApi
 {
 
 
@@ -18,7 +18,7 @@ class MySQLDatabase
 
     public function open_connection()
     {
-        $this->connection = mysqli_connect(DB_SERVER, DB_USER, DB_PASS, DB_NAME);
+        $this->connection = mysqli_connect(DB_SERVER, DB_USER, DB_PASS, DB_NAME_API);
         if (mysqli_connect_errno()) {
             die("Database connection failed: " . mysqli_connect_error() . " (" . mysqli_connect_errno() . ")");
         }
@@ -94,7 +94,7 @@ class MySQLDatabase
 
     }
 }
-$database= new MySQLDatabase();
+$database= new MySQLDatabaseApi();
 
 
 

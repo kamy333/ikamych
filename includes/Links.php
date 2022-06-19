@@ -434,7 +434,7 @@ class Links extends DatabaseObject
     {
         global $database;
         $name_category = $database->escape_value($name_category);
-        $result_array = self::find_by_sql("SELECT * FROM " . self::$table_name . " WHERE category='{$name_category}'");
+        $result_array = self::find_by_sql("SELECT * FROM " . self::$table_name . " WHERE category='{$name_category}' ORDER BY Rank ");
         return !empty($result_array) ? $result_array : false;
     }
 
@@ -454,6 +454,13 @@ class Links extends DatabaseObject
         return !empty($result_array) ? $result_array : false;
     }
 
+//    public static function find_name_category_3_links($name_category = "")
+//    {
+//        global $database;
+//        $name_category = $database->escape_value($name_category);
+//        $result_array = self::find_by_sql("SELECT * FROM " . self::$table_name . " WHERE sub_category_2='{$name_category}' ORDER BY Rank");
+//        return !empty($result_array) ? $result_array : false;
+//    }
 
     public static function output_links($name_category = null, $category_1 = false, $category_2 = false)
     {
