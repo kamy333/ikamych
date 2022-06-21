@@ -52,7 +52,7 @@
     <div class="col-lg-3 ">
         <?php echo Links::output_links('SQLServer'); ?>
     </div>
-<!--    <hr>-->
+<!--    <hr> yooooooo man-->
 <!--    <br>-->
 <!--    <div class="col-lg-3 ">-->
 <!--        --><?php //echo Links::output_links('PHP'); ?>
