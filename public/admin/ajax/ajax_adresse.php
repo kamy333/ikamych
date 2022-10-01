@@ -4,7 +4,7 @@
 require_once('../../../includes/initialize_transmed.php');
 $session->confirmation_protected_page();
 if (User::is_visitor()) {
-    redirect_to('../index.php');
+    redirect_to('../../index.php');
 }
 //MyClasses::redirect_disable_class();
 

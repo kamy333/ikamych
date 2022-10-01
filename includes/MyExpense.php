@@ -987,6 +987,54 @@ GROUP BY expense_type_id;";
         return $output;
     }
 
+    public function insert_link_document($folder)
+    {
+
+//        $folder = "/public/img/maman_document/";
+        $href_img = "/Inspinia/loan_exp_viewer.php";
+        $lnk = "";
+
+        if ($this->document) {
+            $file = trim($this->document);
+//            $full_path = $folder . $file;
+//            $full_path2 =$_SERVER["DOCUMENT_ROOT"]. $folder . $file;
+            $documents = explode(",", $this->document);
+
+            $nbsp = str_repeat("&nbsp;", 1);
+
+            foreach ($documents as $document) {
+                $pi = pathinfo($document);
+                $txt = $pi['filename'];
+                $ext = $pi['extension'];
+                $file = $document;
+                $full_path = $folder . $file;
+                $full_path2 = $_SERVER["DOCUMENT_ROOT"] . $folder . $file;
+
+                if (file_exists($full_path2)) {
+                    if (strtolower($ext) == "pdf") {
+
+                        $lnk .= "<a href='{$full_path}'  target='_blank'><button type='button' class='btn btn-danger' data-toggle='tooltip' data-placement='left' title='{$document}'><i class='fa fa-file-pdf-o'></i></button></a>";
+
+
+                    } elseif (strtolower($ext) == "jpg" || strtolower($ext) == "jpeg" || strtolower($ext) == "png") {
+                        $href = $href_img . "?url=" . u($folder . $document);
+
+                        $lnk .= "<a href='{$href}' target='_blank'><button type='button' class='btn btn-info' data-toggle='tooltip' data-placement='left' title='{$document}'><i class='fa fa-file-photo-o'></i></button></a>";
+
+                    }
+
+                }
+
+            }
+
+        } else {
+            $lnk .= "";
+        }
+
+        return trim($lnk);
+    }
+
+
     protected function set_up_display()
     {
 
@@ -1019,7 +1067,7 @@ GROUP BY expense_type_id;";
         if (isset($this->amount) && isset($this->rate)) {
 
             if ($this->rate_side == "Multiply") {
-                $this->amountCHF = $this->amount / $this->rate;
+                $this->amountCHF = $this->amount * $this->rate;
 
             } else {
                 $this->amountCHF = $this->amount / $this->rate;
@@ -1027,49 +1075,9 @@ GROUP BY expense_type_id;";
         }
 
 
-        $folder = "/public/img/maman_document/";
-        $href_img = "/Inspinia/loan_exp_viewer.php";
-        $lnk = "";
-
-        if ($this->document) {
-            $file = trim($this->document);
-//            $full_path = $folder . $file;
-//            $full_path2 =$_SERVER["DOCUMENT_ROOT"]. $folder . $file;
-            $documents = explode(",", $this->document);
-
-            $nbsp = str_repeat("&nbsp;", 1);
-
-            foreach ($documents as $document) {
-                $pi = pathinfo($document);
-                $txt = $pi['filename'];
-                $ext = $pi['extension'];
-                $file = $document;
-                $full_path = $folder . $file;
-                $full_path2 = $_SERVER["DOCUMENT_ROOT"] . $folder . $file;
-
-                if (file_exists($full_path2)) {
-                    if (strtolower($ext) == "pdf") {
-
-                        $lnk .= "<a href='{$full_path}'><button type='button' class='btn btn-danger' data-toggle='tooltip' data-placement='left' title='{$document}'><i class='fa fa-file-pdf-o'></i></button></a>";
 
 
-                    } elseif (strtolower($ext) == "jpg" || strtolower($ext) == "jpeg" || strtolower($ext) == "png") {
-                        $href = $href_img . "?url=" . u($folder . $document);
-
-                        $lnk .= "<a href='{$href}'><button type='button' class='btn btn-info' data-toggle='tooltip' data-placement='left' title='{$document}'><i class='fa fa-file-photo-o'></i></button></a>";
-
-                    }
-
-                }
-
-            }
-
-        } else {
-            $lnk .= "";
-        }
-
-
-        $this->document_lnk = trim($lnk);
+        $this->document_lnk = $this->insert_link_document("/public/img/maman_document/");
 
     }
 
@@ -1224,7 +1232,7 @@ GROUP BY expense_type_id;";
 
         $output .= "<button class='btn btn-primary' type='submit'>Get Year</button>";
 
-        $output.="</form>";
+        $output .= "</form>";
 
 
         return $output;
@@ -1559,12 +1567,28 @@ class ReportFinance extends MyExpense
 {
 //    public $category;
 
+    protected static $id_person =2;
+
     protected static $db_fields = array('id', 'amount', 'cash', 'ccy_id', 'rate', 'person_id', 'expense_type_id', 'expense_type', 'expense_date', 'comment', 'document', 'modification_time', 'currency', 'person_name', 'Yr', 'Mth', 'total', 'itemsCount', 'amountCHF', 'Amt_Pret', 'Amt_PretCHF', 'MthName');
 
-    public static function Report1($XLS = false)
+    public static function Report1($XLS = false, $what = "both")
     {
         $output = "";
         $style = "";
+        $criteria = "";
+        $criteria2 = "";
+
+        if (strtolower($what) == "positive") {
+            $criteria = " and e.amount >= 0";
+            $criteria2 = " and amount >= 0";
+        } elseif (strtolower($what) == "negative") {
+            $criteria = " and e.amount < 0";
+            $criteria2 = " and amount < 0";
+        } else {
+            $criteria = "";
+            $criteria2 = "";
+        }
+
 
         if (!$XLS) {
             $filename = u("Pret-Rbt Mum Year Month");
@@ -1575,16 +1599,25 @@ class ReportFinance extends MyExpense
         }
 
 //        $array_header = ["Year", "Month Name", "Mth", "No Item", "Amount CHF"];
+
+      //  $tableName=static::$table_name;
+        $tblname=static::$table_name;
+        $theid_person=static::$id_person;
+
         $output .= $a;
 
-        $sql = "SELECT year(e.expense_date) as Yr, monthname (e.expense_date) as MthName,
-       month(e.expense_date) as Mth,COUNT(e.id) AS itemsCount,SUM(ROUND(e.amount * e.rate,2)) AS amountCHF,
+        $sql = "SELECT year(e.expense_date) as Yr, 
+       monthname (e.expense_date) as MthName,
+       month(e.expense_date) as Mth,COUNT(e.id) AS itemsCount,
+       SUM(ROUND(e.amount * e.rate ,2)) AS amountCHF,
+       
+    
        SUM(e.amount)  as amount
-         FROM myexpense as e
+         FROM {$tblname} as e
          INNER JOIN  myexpense_person as p ON e.person_id = p.id
          INNER JOIN  myexpense_type as t ON e.expense_type_id = t.id
          INNER JOIN  currency as c ON e.ccy_id = c.id
-WHERE person_id = 2   and(e.expense_type_id in (1,3))
+WHERE person_id = {$theid_person}   and(e.expense_type_id in (1,3)) $criteria
 GROUP BY year(e.expense_date),month(e.expense_date)
 ORDER BY year(e.expense_date) DESC,month(e.expense_date) DESC";
 
@@ -1615,10 +1648,13 @@ ORDER BY year(e.expense_date) DESC,month(e.expense_date) DESC";
                 $amount_format = number_format($result->amountCHF, 2);
                 if ($XLS) {
                     $output .= "<td class='text-right' >" . $result->amountCHF . "</td>";
+//                    $output .= "<td class='text-right' >" . $result->Amt_PretCHF . "</td>";
+//                    $output .= "<td class='text-right' >" . $result->Amt_RbtCHF . "</td>";
                 } else {
                     $output .= "<td class='text-right' $style >" . number_format($result->amountCHF, 2) . "</td>";
+//                    $output .= "<td class='text-right' $style >" . number_format($result->Amt_PretCHF, 2) . "</td>";
+//                    $output .= "<td class='text-right' $style >" . number_format($result->Amt_RbtCHF, 2) . "</td>";
                 }
-
                 $output .= "</tr>";
             }
         }
@@ -1626,7 +1662,7 @@ ORDER BY year(e.expense_date) DESC,month(e.expense_date) DESC";
         unset($results);
 
         if (!$XLS) {
-            $sum = static::sum_field_where($field = "amount * rate", " WHERE person_id = 2");
+            $sum = static::sum_field_where($field = "amount * rate", " WHERE person_id = 2 $criteria2 ");
             $style = NumberFormatColor($sum);
             $sum = number_format($sum, 2);
 
@@ -1642,15 +1678,17 @@ ORDER BY year(e.expense_date) DESC,month(e.expense_date) DESC";
         return $output;
     }
 
-
     public static function SQL1()
     {
+        $tblname=static::$table_name;
+        $theid_person=static::$id_person;
+
         $sql = "SELECT year(e.expense_date) as Yr,COUNT(e.id) AS itemsCount, SUM(e.amount) as amount,SUM(ROUND(e.amount * e.rate,2)) AS amountCHF
-         FROM myexpense as e
+         FROM $tblname as e
          INNER JOIN  myexpense_person as p ON e.person_id = p.id
          INNER JOIN  myexpense_type as t ON e.expense_type_id = t.id
          INNER JOIN  currency as c ON e.ccy_id = c.id
-WHERE person_id = 2   and(e.expense_type_id in (1,3))
+WHERE person_id = $theid_person   and(e.expense_type_id in (1,3))
 GROUP BY year(e.expense_date)
 ORDER BY year(e.expense_date) DESC";
 
@@ -1659,13 +1697,16 @@ ORDER BY year(e.expense_date) DESC";
 
     public static function SQL2()
     {
+        $tblname=static::$table_name;
+        $theid_person=static::$id_person;
+
         $sql = "SELECT year(e.expense_date) as Yr,COUNT(e.id) AS itemsCount,
        SUM(ROUND(e.amount * e.rate,2)) AS amountCHF
-         FROM myexpense as e
+         FROM $tblname as e
          INNER JOIN  myexpense_person as p ON e.person_id = p.id
          INNER JOIN  myexpense_type as t ON e.expense_type_id = t.id
          INNER JOIN  currency as c ON e.ccy_id = c.id
-WHERE person_id = 2 and e.amount >=0   and(e.expense_type_id in (1,3))
+WHERE person_id = $theid_person and e.amount >=0   and(e.expense_type_id in (1,3))
 GROUP BY year(e.expense_date)
 ORDER BY year(e.expense_date) DESC";
 
@@ -1674,13 +1715,16 @@ ORDER BY year(e.expense_date) DESC";
 
     public static function SQL3()
     {
+        $tblname=static::$table_name;
+        $theid_person=static::$id_person;
+
         $sql = "SELECT year(e.expense_date) as Yr,COUNT(e.id) AS itemsCount,
        SUM(ROUND(e.amount * e.rate,2)) AS amountCHF
-         FROM myexpense as e
+         FROM $tblname as e
          INNER JOIN  myexpense_person as p ON e.person_id = p.id
          INNER JOIN  myexpense_type as t ON e.expense_type_id = t.id
          INNER JOIN  currency as c ON e.ccy_id = c.id
-WHERE person_id = 2 and e.amount < 0   and(e.expense_type_id in (1,3))
+WHERE person_id = $theid_person and e.amount < 0   and(e.expense_type_id in (1,3))
 GROUP BY year(e.expense_date)
 ORDER BY year(e.expense_date) DESC";
 
@@ -1690,13 +1734,16 @@ ORDER BY year(e.expense_date) DESC";
 
     public static function SQL4()
     {
+        $tblname=static::$table_name;
+        $theid_person=static::$id_person;
+
         $sql = "SELECT year(e.expense_date) AS Yr, month (e.expense_date) AS Mth,monthname (e.expense_date) as MthName,
        e.expense_date, e.id,e.amount,c.currency,ROUND(e.amount * e.rate,2) AS amountCHF,e.ccy_id,c.rate,e.expense_type_id,t.expense_type,e.comment,p.person_name,e.person_id ,e.cash 
- FROM myexpense as e
+ FROM $tblname as e
  INNER JOIN  myexpense_person as p ON e.person_id = p.id
  INNER JOIN  myexpense_type as t ON e.expense_type_id = t.id
  INNER JOIN  currency as c ON e.ccy_id = c.id
-  WHERE person_id=2  and(e.expense_type_id in (1,3))
+  WHERE person_id= $theid_person  and(e.expense_type_id in (1,3))
   ORDER BY e.id DESC;";
 
         return $sql;
@@ -1704,13 +1751,16 @@ ORDER BY year(e.expense_date) DESC";
 
     public static function SQL4a()
     {
+        $tblname=static::$table_name;
+        $theid_person=static::$id_person;
+
         $sql = "SELECT year(e.expense_date) AS Yr, month (e.expense_date) AS Mth,monthname (e.expense_date) as MthName,
        e.expense_date, e.id,e.amount,c.currency,ROUND(e.amount * e.rate,2) AS amountCHF,e.ccy_id,c.rate,e.expense_type_id,t.expense_type,e.comment,p.person_name,e.person_id,e.cash 
-    FROM myexpense as e
+    FROM $tblname as e
     INNER JOIN  myexpense_person as p ON e.person_id = p.id
     INNER JOIN  myexpense_type as t ON e.expense_type_id = t.id
     INNER JOIN  currency as c ON e.ccy_id = c.id
-    WHERE person_id=2  and(e.expense_type_id in (1,3)) and e.cash=1  
+    WHERE person_id=$theid_person  and(e.expense_type_id in (1,3)) and e.cash=1  
     ORDER BY e.id DESC;";
 
         return $sql;
@@ -1719,13 +1769,16 @@ ORDER BY year(e.expense_date) DESC";
 
     public static function SQL5()
     {
+        $tblname=static::$table_name;
+        $theid_person=static::$id_person;
+
         $sql = "SELECT year(e.expense_date) as Yr,COUNT(e.id) AS itemsCount,
        SUM(ROUND(e.amount * e.rate,2)) AS amountCHF
-         FROM myexpense as e
+         FROM $tblname as e
          INNER JOIN  myexpense_person as p ON e.person_id = p.id
          INNER JOIN  myexpense_type as t ON e.expense_type_id = t.id
          INNER JOIN  currency as c ON e.ccy_id = c.id
-    WHERE person_id = 2 and e.amount < 0   and(e.expense_type_id in (1,3)) and e.cash=1 
+    WHERE person_id = $theid_person and e.amount < 0   and(e.expense_type_id in (1,3)) and e.cash=1 
     GROUP BY year(e.expense_date)
     ORDER BY year(e.expense_date) DESC";
 
@@ -1734,13 +1787,16 @@ ORDER BY year(e.expense_date) DESC";
 
     public static function SQL6()
     {
+        $tblname=static::$table_name;
+        $theid_person=static::$id_person;
+
         $sql = "SELECT year(e.expense_date) as Yr,COUNT(e.id) AS itemsCount,
        SUM(ROUND(e.amount * e.rate,2)) AS amountCHF
-         FROM myexpense as e
+         FROM $tblname as e
          INNER JOIN  myexpense_person as p ON e.person_id = p.id
          INNER JOIN  myexpense_type as t ON e.expense_type_id = t.id
          INNER JOIN  currency as c ON e.ccy_id = c.id
-    WHERE person_id = 2 and e.amount > 0   and(e.expense_type_id in (1,3)) and e.cash=1 
+    WHERE person_id = {$theid_person} and e.amount > 0   and(e.expense_type_id in (1,3)) and e.cash=1 
     GROUP BY year(e.expense_date)
     ORDER BY year(e.expense_date) DESC";
 
@@ -1756,6 +1812,9 @@ ORDER BY year(e.expense_date) DESC";
         $style = "";
 
 //        $array_header = ["Year", "Month Name", "Mth", "No Item", "Amount CHF"];
+
+//        echo static::$table_name;
+//        echo '<br>';
 
         if ($No === 1) {
             $sql = static::SQL1();
@@ -1812,18 +1871,22 @@ ORDER BY year(e.expense_date) DESC";
 
 
         unset($results);
+
+        $tblname=static::$table_name;
+        $theid_person=static::$id_person;
+
         if (!$XLS) {
 
             if ($No === 1) {
-                $sum = static::sum_field_where($field = "amount * rate", " WHERE person_id = 2 ");
+                $sum = static::sum_field_where($field = "amount * rate", " WHERE person_id = $theid_person ");
             } elseif ($No === 2) {
-                $sum = static::sum_field_where($field = "amount * rate", " WHERE person_id = 2 and amount >= 0 ");
+                $sum = static::sum_field_where($field = "amount * rate", " WHERE person_id = $theid_person and amount >= 0 ");
             } elseif ($No === 3) {
-                $sum = static::sum_field_where($field = "amount * rate", " WHERE person_id = 2 and amount <0 ");
+                $sum = static::sum_field_where($field = "amount * rate", " WHERE person_id = $theid_person and amount <0 ");
             } elseif ($No === 4) {
-                $sum = static::sum_field_where($field = "amount * rate", " WHERE person_id = 2 and amount <0 and cash=1 ");
+                $sum = static::sum_field_where($field = "amount * rate", " WHERE person_id = $theid_person and amount <0 and cash=1 ");
             } elseif ($No === 5) {
-                $sum = static::sum_field_where($field = "amount * rate", " WHERE person_id = 2 and amount >0 and cash=1 ");
+                $sum = static::sum_field_where($field = "amount * rate", " WHERE person_id = $theid_person and amount >0 and cash=1 ");
             }
 
 
@@ -1840,16 +1903,19 @@ ORDER BY year(e.expense_date) DESC";
     }
 
 
-
     public static function SQL_Year($year = 2021)
     {
+
+        $tblname=static::$table_name;
+        $theid_person=static::$id_person;
+
         $sql = "SELECT year(e.expense_date) as Yr,COUNT(e.id) AS itemsCount,
        SUM(ROUND(e.amount * e.rate,2)) AS amountCHF
-         FROM myexpense as e
+         FROM $tblname as e
          INNER JOIN  myexpense_person as p ON e.person_id = p.id
          INNER JOIN  myexpense_type as t ON e.expense_type_id = t.id
          INNER JOIN  currency as c ON e.ccy_id = c.id
-    WHERE (e.person_id = 2 )  and e.amount > 0 and year(e.expense_date)={$year}   and(e.expense_type_id in (1,3)) 
+    WHERE (e.person_id = $theid_person )  and e.amount > 0 and year(e.expense_date)={$year}   and(e.expense_type_id in (1,3)) 
     GROUP BY year(e.expense_date)
     ORDER BY year(e.expense_date) DESC";
 
@@ -1857,7 +1923,8 @@ ORDER BY year(e.expense_date) DESC";
     }
 
 
-    public static function Spec_Exception($txt1=2021,$txt2="Choose something",$sum=0,$XLS=false){
+    public static function Spec_Exception($txt1 = 2021, $txt2 = "Choose something", $sum = 0, $XLS = false)
+    {
 
         $output .= "<tr>";
         $output .= "<td class='text-center'>{$txt1}</td>";
@@ -1922,7 +1989,7 @@ ORDER BY year(e.expense_date) DESC";
 
         if ($No === 1) {
 
-            if ($year==2021 || $year=="2021") {
+            if ($year == 2021 || $year == "2021") {
                 $sum2 = static::sum_field_where($field = "amount * rate", " WHERE person_id = $kamy_id    ");
                 $sum3 = 30000;
                 $sum4 = 27700;
@@ -1930,8 +1997,8 @@ ORDER BY year(e.expense_date) DESC";
                 $output .= static::Spec_Exception('2021', "kamy_2021", $sum2, $XLS);
                 $output .= static::Spec_Exception('2021', "kamy_2021_BCG", $sum3, $XLS);
                 $output .= static::Spec_Exception('2021', "kamy_2021_Donation", $sum4, $XLS);
-            }elseif ($year==2022 || $year=="2022")    {
-                $kamy_id=21;
+            } elseif ($year == 2022 || $year == "2022") {
+                $kamy_id = 21;
                 $sum2 = static::sum_field_where($field = "amount * rate", " WHERE person_id = $kamy_id    ");
                 $sum3 = 0;
                 $sum4 = 0;
@@ -1947,10 +2014,14 @@ ORDER BY year(e.expense_date) DESC";
 
 
         unset($results);
+
+
+        $tblname=static::$table_name;
+        $theid_person=static::$id_person;
         if (!$XLS) {
 
             if ($No === 1) {
-                $sum = static::sum_field_where($field = "amount * rate", " WHERE person_id = 2 and amount >0 and year(expense_date)=$year  ");
+                $sum = static::sum_field_where($field = "amount * rate", " WHERE person_id = $theid_person and amount >0 and year(expense_date)=$year  ");
 
                 $sum = $sum + $sum2 + $sum3 + $sum4;
 
@@ -2065,9 +2136,11 @@ ORDER BY year(e.expense_date) DESC";
         }
 
         unset($results);
+        $tblname=static::$table_name;
+        $theid_person=static::$id_person;
         if (!$XLS) {
 
-            $sum = static::sum_field_where($field = "amount * rate", " WHERE person_id = 2 ");
+            $sum = static::sum_field_where($field = "amount * rate", " WHERE person_id = $theid_person ");
 
             $output .= "<tr>";
             $output .= "<td class='text-center'><strong>Total</strong></td>";
@@ -2173,9 +2246,13 @@ ORDER BY year(e.expense_date) DESC";
         }
 
         unset($results);
+
+        $tblname=static::$table_name;
+        $theid_person=static::$id_person;
+
         if (!$XLS) {
 
-            $sum = static::sum_field_where($field = "amount * rate", " WHERE person_id = 2 and cash=1 ");
+            $sum = static::sum_field_where($field = "amount * rate", " WHERE person_id = $theid_person and cash=1 ");
 
             $output .= "<tr>";
             $output .= "<td class='text-center'><strong>Total</strong></td>";
@@ -2189,3 +2266,94 @@ ORDER BY year(e.expense_date) DESC";
 
 }
 
+class MyExpenseMum extends MyExpense
+{
+
+    public static $get_form_element = array('amount', 'cash', 'comment', 'document', 'person_id', 'expense_type_id', 'expense_date', 'ccy_id', 'rate', 'modification_time');
+
+    public static $page_manage = "/public/admin/crud/ajax/manage_ajax.php?class_name=MyExpenseMum"; // "new_link.php
+    public static $page_new = "/public/admin/crud/ajax/new_ajax.php?class_name=MyExpenseMum"; // "new_link.php";
+    public static $page_edit = "/public/admin/crud/ajax/edit_ajax.php?class_name=MyExpenseMum"; //  "edit_link.php";
+    public static $page_delete = "/public/admin/crud/ajax/delete_ajax.php?class_name=MyExpenseMum"; //  "delete_link.php";
+
+    public static $form_default_value = array(
+        "expense_date" => "now()",
+        "modification_time" => "nowtime()",
+        "amount" => "0",
+        "person_id" => "2",
+        "expense_type_id" => "1",
+        "ccy_id" => "1",
+//        "currency"=>"CHF",
+        "rate" => "1",
+        "comment" => "Cs Mum Payt Fact"
+
+
+    );
+
+}
+
+
+class MyExpenseCaroline extends ReportFinance
+{
+
+    protected static $table_name = "myexpensecaroline";
+
+    public static $id_person=2;
+//    public static $get_form_element = array('amount', 'cash', 'comment', 'document', 'person_id', 'expense_type_id', 'expense_date', 'ccy_id', 'rate', 'modification_time');
+//
+    public static $get_form_element = array('amount', 'cash', 'expense_type_id', 'comment', 'document', 'expense_date', 'ccy_id', 'rate', 'modification_time');
+
+    public static $page_name = "Caroline Transaction Mum" ;
+
+    public static $page_manage = "/public/admin/crud/data/manage_data.php?class_name=MyExpenseMumCaroline";
+//    public static $page_new = "/public/admin/crud/ajax/new_ajax.php?class_name=MyExpenseMumCaroline";
+//    public static $page_edit = "/public/admin/crud/ajax/edit_ajax.php?class_name=MyExpenseMumCaroline";
+//    public static $page_delete = "/public/admin/crud/ajax/delete_ajax.php?class_name=MyExpenseMumCaroline";
+
+    public static $page_new = "/public/admin/crud/data/new_data.php?class_name=MyExpenseMumCaroline";
+    public static $page_edit = "/public/admin/crud/data/edit_data.php?class_name=MyExpenseMumCaroline";
+    public static $page_delete = "/public/admin/crud/data/delete_data.php?class_name=MyExpenseMumCaroline";
+
+
+
+    public static $form_default_value = array(
+        "expense_date" => "now()",
+        "modification_time" => "nowtime()",
+        "amount" => "0",
+ //       "person_id" => "22",
+        "expense_type_id" => "1",
+        "ccy_id" => "2",
+//        "currency"=>"CHF",
+        "rate" => "1",
+        "comment" => "Mum"
+
+
+    );
+
+
+    protected function set_up_display()
+    {
+        $this->person_id = 22;
+        parent::set_up_display();
+
+
+    }
+
+    public static function table_nav_additional()
+    {
+
+        if(User::is_admin()){
+        $output = "</a><span>&nbsp;</span>";
+        $output .= "<a  class=\"btn btn-primary\"  href=\"" . MyExpensePerson::$page_new . "\">Add New Person " . " </a><span>&nbsp;</span>";
+        $output .= "<a  class=\"btn btn-primary\"  href=\"" . MyExpenseType::$page_new . "\">Add New Type " . " </a></a><span>&nbsp;</span>";
+        $output .= "<a  class=\"btn btn-primary\"  href=\"" . MyExpensePerson::$page_manage . "\">View Person " . " </a><span>&nbsp;</span>";
+        $output .= "<a  class=\"btn btn-primary\"  href=\"" . MyExpenseType::$page_manage . "\">View Type " . " </a>";
+        }
+
+
+        $output .= "<a  class=\"btn btn-info\"  href=\"" . "/Inspinia/loan_exp.php" . "\">Mum " . " </a>";
+
+        return $output;
+    }
+
+}

@@ -1,8 +1,20 @@
 <?php require_once('../../../../includes/initialize.php'); ?>
 <?php $session->confirmation_protected_page(); ?>
-<?php if (User::is_employee() || User::is_visitor()) {
-    redirect_to('index.php');
-} ?>
+<?php
+//if (User::is_employee() || User::is_visitor()) {
+//    redirect_to('index.php');
+//}
+if(User::is_caroline_only()){
+    if (isset($_GET['class_name'])) {
+        $class_name = $_GET['class_name'];
+        if ($class_name != "MyExpenseCaroline") {
+            redirect_to('../../index.php');
+        }
+    }
+} elseif (User::is_employee()  || User::is_visitor()) {
+    redirect_to('../../index.php');
+}
+?>
 <?php $session->confirmation_protected_page(); ?>
 
 <?php $layout_context = "admin"; ?>

@@ -40,7 +40,7 @@ class ToDoList extends DatabaseObject
     public static $per_page;
     protected static $table_name = "to_do_list";
     protected static $db_fields = array('id', 'user_id', 'todo', 'due_date', 'rank', 'web_address', 'comment', 'done', 'progress');
-    protected static $required_fields = array('user_id', 'todo', 'done');
+    public static $required_fields = array('user_id', 'todo', 'done');
     protected static $db_fields_table_display_short = array('id', 'user_id', 'todos', 'done', 'prog', 'due_on', 'rank', 'comment');
     protected static $db_fields_table_display_full = array('id', 'user_id', 'todos', 'done', 'prog', 'progress', 'due_date', 'rank', 'web_address', 'comment', 'done');
     protected static $db_field_exclude_table_display_sort = array();

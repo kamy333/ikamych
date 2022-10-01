@@ -78,25 +78,12 @@ if (!User::is_caroline()) { redirect_to('../index.php');}
     $txt = "Mum Cash Rbt";
     //    $a = "<a href='/Inspinia/loan_exp_2.php?report=Report&id=1'>Export Xl $txt</a>";
     echo Table::ibox_table(ReportFinance::Report(4), $txt, 3, 0);
-    echo "</div>";
-    echo "<hr>";
-    echo "<div class='row'>";
-
-    $txt = "Prêt Mum Year Month";
-    //    $a = "<a href='/Inspinia/loan_exp_2.php?report=Report1&id=0'>Export Xl $txt</a>";
-    echo Table::ibox_table(ReportFinance::Report1(false,"positive"), $txt, 5, 0);
-
-    $txt = "Rbt Mum Year Month";
-    //    $a = "<a href='/Inspinia/loan_exp_2.php?report=Report1&id=0'>Export Xl $txt</a>";
-    echo Table::ibox_table(ReportFinance::Report1(false,"negative"), $txt, 5, 0);
-
 
     $txt = "Prêt-Rbt Mum Year Month";
     //    $a = "<a href='/Inspinia/loan_exp_2.php?report=Report1&id=0'>Export Xl $txt</a>";
-    echo Table::ibox_table(ReportFinance::Report1(false,"both"), $txt, 5, 0);
+    echo Table::ibox_table(ReportFinance::Report1(), $txt, 5, 0);
 
-    echo "</div>";
-//    echo "<hr>";
+    echo "<hr>";
 
     $txt = "Mum All";
     //    $a = "<a href='/Inspinia/loan_exp_2.php?report=Report&id=1'>Export Xl $txt</a>";

@@ -26,8 +26,38 @@
 
 <?php
 
+Function BookMyExpense($amount,$comment){
+
+}
+
+$amount=1000;
+$comment="test comment";
+$document="test document";
+$person_id=2;
+$expense_type_id=1;
+
+/** @noinspection PhpObjectFieldsAreOnlyWrittenInspection */
+$expense= new MyExpense();
+$expense->amount=$amount;
+$expense->is_cash=1;
+$expense->comment=$comment;
+$expense->document=$document;
+$expense->person_id=$person_id;
+$expense->expense_type_id=$expense_type_id;
+//$expense->create();
 
 
+?>
+
+<?php
+
+$query = explode('&', $_SERVER['QUERY_STRING']);
+$params = array();
+foreach ($query as $param) {
+    list($name, $value) = explode('=', $param, 2);
+    $params[urldecode($name)][] = urldecode($value);
+
+}
 
 ?>
 

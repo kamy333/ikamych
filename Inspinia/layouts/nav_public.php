@@ -53,34 +53,34 @@
                 <?php
                 echo $Nav->public_menu("public_gallery");
 
-//                if (User::is_djamila()) {
-//                    echo $Nav->menu_item('', 'Djamila', 'index_gallery12.php', 'public');
-//                }
+                //                if (User::is_djamila()) {
+                //                    echo $Nav->menu_item('', 'Djamila', 'index_gallery12.php', 'public');
+                //                }
 
                 ?>
 
                 <?php if (User::is_bralia() || User::is_djamila()) { ?>
 
-                <li class="dropdown">
-                    <a aria-expanded="false" role="button" href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        Friend <span class="caret"></span></a>
-                    <ul role="menu" class="dropdown-menu">
-                        <?php
+                    <li class="dropdown">
+                        <a aria-expanded="false" role="button" href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            Friend <span class="caret"></span></a>
+                        <ul role="menu" class="dropdown-menu">
+                            <?php
 
-                        if (User::is_bralia()) {
-                            echo $Nav->menu_item('', 'Bralia', 'index_gallery6.php', 'public');
-                            echo $Nav->menu_item('', 'Chat Bralia', 'chat.php', 'public');
-                        }
+                            if (User::is_bralia()) {
+                                echo $Nav->menu_item('', 'Bralia', 'index_gallery6.php', 'public');
+                                echo $Nav->menu_item('', 'Chat Bralia', 'chat.php', 'public');
+                            }
 
-                        if (User::is_djamila()) {
-                            echo $Nav->menu_item('', 'Djamila', 'index_gallery12.php', 'public');
-                            echo $Nav->menu_item('', 'Chat Djam', 'chat_djamila.php', 'public');
-                        }
+                            if (User::is_djamila()) {
+                                echo $Nav->menu_item('', 'Djamila', 'index_gallery12.php', 'public');
+                                echo $Nav->menu_item('', 'Chat Djam', 'chat_djamila.php', 'public');
+                            }
 
-                        ?>
+                            ?>
 
-                    </ul>
-                </li>
+                        </ul>
+                    </li>
                 <?php } ?>
 
                 <?php
@@ -98,9 +98,19 @@
 
                             if (User::is_caroline()) {
                                 echo $Nav->menu_item('', 'Mum', 'loan_exp_1.php', 'public');
+
+                                echo "<li><a href=\"https://www.ikamy.ch/public/admin/crud/ajax/new_ajax.php?class_name=MyExpenseCaroline\">New Expense or Credit</a></li>";
+
+                                echo "<li><a href=\"https://www.ikamy.ch/public/admin/crud/ajax/manage_ajax.php?class_name=MyExpenseCaroline\">Manage Data</a></li>";
+
+//                                echo "<li><a href=\"https://www.ikamy.ch/public/admin/crud/ajax/manage_ajax.php?class_name=MyExpense\">Test Caro false MyExpense</a></li>";
+
+
                             }
 
+
                             ?>
+
 
                         </ul>
                     </li>

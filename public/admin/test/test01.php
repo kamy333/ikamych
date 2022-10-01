@@ -36,7 +36,7 @@ $user->last_name = "Dumy";
 $user->nom = "Dumy Dumy";
 $user->block_user = 1;
 $user->user_type_id = 5;
-$user->create();
+//$user->create();
 
 
 $current_page = 1;

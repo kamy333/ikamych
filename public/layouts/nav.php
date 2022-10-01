@@ -212,6 +212,28 @@ if ($layout_context == "public") {
                 <?php } ?>
 
 
+                <?php if  (User::is_admin() || User::is_caroline()) { ?>
+
+                    <li
+                        <?php if (isset($active_menu) && $active_menu == "admin") {
+                            echo " class=\"dropdown active\"";
+                        } else {
+                            echo " class=\" dropdown\"";
+                        } ?>
+                    ><a href="#" data-toggle="dropdown">Caroline<span class="caret"></span></a>
+
+                        <ul class="dropdown-menu">
+                            <?php
+                            echo $Nav->menu_item('MyExpenseCaroline', 'New Expense Mum Caroline', 'new_ajax.php', 'admin/crud/ajax');
+                            echo $Nav->menu_item('MyExpenseCaroline', 'Expense Mum Caroline', 'manage_ajax.php', 'admin/crud/ajax');
+                            ?>
+                        </ul>
+                    </li>
+
+
+                <?php } ?>
+
+
 
                 <?php
 
@@ -230,13 +252,18 @@ if ($layout_context == "public") {
 
                             <?php if (User::is_admin()) {
 
-                                echo $Nav->menu_item('MyExpense', 'Expense', 'manage_ajax.php', 'admin/crud/ajax');
-
-                                echo $Nav->menu_item('MyExpense', 'New Expense', 'new_ajax.php', 'admin/crud/ajax');
-
-//                                echo $Nav->menu_item('', 'Index ajax', 'index_ajax.php', 'admin/crud/ajax');
-//                                echo $Nav->menu_item('', 'Index data', 'index_data.php', 'admin/crud/data');
+                                echo $Nav->menu_item('MyExpenseMum', 'New Expense Mum', 'new_ajax.php', 'admin/crud/ajax');
+                                echo $Nav->menu_item('MyExpenseMum', 'Expense Mum', 'manage_ajax.php', 'admin/crud/ajax');
                             } ?>
+
+
+                            <?php if (User::is_admin() || User::is_caroline()) {
+
+                                echo $Nav->menu_item('MyExpenseCaroline', 'New Expense Mum Caroline', 'new_ajax.php', 'admin/crud/ajax');
+                                echo $Nav->menu_item('MyExpenseCaroline', 'Expense Mum Caroline', 'manage_ajax.php', 'admin/crud/ajax');
+                            } ?>
+
+
                             <li class="divider"></li>
                             <?php echo $Nav->menu_item('Article', 'Article', 'manage_ajax.php', 'admin/crud/ajax'); ?>
                             <?php echo $Nav->menu_item('Book', 'Book', 'manage_ajax.php', 'admin/crud/ajax'); ?>
@@ -247,6 +274,7 @@ if ($layout_context == "public") {
                             <?php echo "<li class=\"divider\"></li>"; ?>
                             <?php echo $Nav->menu_item('MyHouseExpense', 'House Expense', 'manage_ajax.php', 'admin/crud/ajax'); ?>
                             <?php echo $Nav->menu_item('MyExpense', 'Expense', 'manage_ajax.php', 'admin/crud/ajax'); ?>
+                            <?php echo $Nav->menu_item('MyExpenseMum', 'Expense Mum', 'manage_ajax.php', 'admin/crud/ajax'); ?>
                             <?php echo $Nav->menu_item('MyLoan', 'Loan', 'manage_ajax.php', 'admin/crud/ajax'); ?>
                             <?php echo $Nav->menu_item('MyExpensePerson', 'Expense Person', 'manage_ajax.php', 'admin/crud/ajax'); ?>
                             <?php echo $Nav->menu_item('MyExpenseType', 'Expense Type', 'manage_ajax.php', 'admin/crud/ajax'); ?>
@@ -289,7 +317,8 @@ if ($layout_context == "public") {
 
                         <ul class="dropdown-menu">
 
-                            <?php echo $Nav->menu_item('MyExpense', 'Expense', 'new_ajax.php', 'admin/crud/ajax'); ?>
+
+                            <?php echo $Nav->menu_item('MyExpenseMum', 'Expense Mum', 'new_ajax.php', 'admin/crud/ajax'); ?>
 
                             <li class="divider"></li>
 
@@ -301,6 +330,7 @@ if ($layout_context == "public") {
                             <?php echo "<li class=\"divider\"></li>"; ?>
                             <?php echo $Nav->menu_item('MyHouseExpense', 'House Expense', 'new_ajax.php', 'admin/crud/ajax'); ?>
                             <?php echo $Nav->menu_item('MyExpense', 'Expense', 'new_ajax.php', 'admin/crud/ajax'); ?>
+                            <?php echo $Nav->menu_item('MyExpenseMum', 'Expense Mum', 'new_ajax.php', 'admin/crud/ajax'); ?>
                             <?php echo $Nav->menu_item('MyLoan', 'Loan', 'new_ajax.php', 'admin/crud/ajax'); ?>
                             <?php echo $Nav->menu_item('MyExpensePerson', 'Expense Person', 'new_ajax.php', 'admin/crud/ajax'); ?>
                             <?php echo $Nav->menu_item('MyExpenseType', 'Expense Type', 'new_ajax.php', 'admin/crud/ajax'); ?>

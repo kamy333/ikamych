@@ -1,14 +1,12 @@
 <?php require_once('../includes/initialize.php');
 $session->confirmation_protected_page();
 
+/** @noinspection PhpStatementHasEmptyBodyInspection */
 if (User::is_caroline() || User::is_weslley()) {
 } else {
     redirect_to('../index.php');
 }
-
 ?>
-
-
 
 <?php $stylesheets = ""; ?>
 <?php $fluid_view = true; ?>

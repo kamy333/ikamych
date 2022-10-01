@@ -1,6 +1,6 @@
 <?php require_once('../includes/initialize.php'); ?>
 <?php
-if (User::is_visitor()) {
+if (User::is_visitor() && !User::is_caroline_only()) {
     redirect_to('/Inspinia/index.php');
 }
 

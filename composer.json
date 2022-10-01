@@ -6,6 +6,7 @@
       "jimmiw/php-time-ago": "^2.0.5",
       "google/apiclient": "2.12.6",
       "mistic100/randomcolor": "1.0.4",
+      "twig/twig": "1.44.7",
       "ext-curl": "*"
     },
   "autoload": {
@@ -19,3 +20,5 @@
         }
     }
 }
+
+

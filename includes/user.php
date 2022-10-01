@@ -585,6 +585,19 @@ class User extends DatabaseObject
         }
     }
 
+    public static function is_caroline_only()
+    {
+        if (isset($_SESSION) && isset($_SESSION['user_id'])) {
+            $found_user = self::find_by_id($_SESSION["user_id"]);
+            if ($found_user->username == 'carolinefdm' ) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+    }
+
+
     public static function is_weslley()
     {
         if (isset($_SESSION) && isset($_SESSION['user_id'])) {

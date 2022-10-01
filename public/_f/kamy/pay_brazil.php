@@ -71,20 +71,17 @@ Amount Carolina: <input type='number' value='{$amount4}' class='input-small' nam
 <input type='submit' class='btn'>
 </form>";
 
-
-
 $output .= "<br><br><p>Hello ViaExpress,<br>
 I Kamran Nafisspour Client ID 1000 37425 sent an amount of <strong>CHF {$total_amount}.-</strong> :<br><br>
 ";
 $output .= "";
 
-
-
 $output .= "<p style='font-size: smaller'>
-                 BR Corporation Sarl<br>
-                 Rue de Chantepoulet,8<br>
+                 IBAN: CH11 0900 0000 1260 4048 7<br>
+                 BR Corporation SA<br>
+                 Rue de Chantepoulet 8<br>
                  1201 Genève<br>
-                 Compte 12-604048-7</p>";
+                 Reference: RF22 1000 3742 5 </p>";
 
 
 $output .= "Would you be kind to pay equivalent BRL with best FX rate to: <br><hr>";
@@ -140,10 +137,7 @@ if (!$amount4 == 0) {
                     Banco 260:NU PAGAMENTOS S.A.<br><br>
                 <hr>
 ";
-
 }
-
-
 $output .= "Once done would you please be kind to send me the advice.<br>";
 $output .= "Best regards<br>";
 $output .= "Kamran";
@@ -151,6 +145,5 @@ $output .= "Kamran";
 echo $output;
 
 ?>
-
 
 <?php include(SITE_ROOT . DS . 'public' . DS . 'layouts' . DS . "footer.php"); ?>
