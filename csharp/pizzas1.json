@@ -1,0 +1,15 @@
+[
+	{ "nom": "4 fromages", "ingredients": [ "cantal", "mozzarella", "fromage de chèvre", "gruyère" ], "prix": 11},
+	{ "nom": "tartiflette", "ingredients": [ "pomme de terre", "oignons", "crème fraiche", "lardons", "mozzarella" ], "prix": 14},
+	{ "nom": "margherita", "ingredients": [ "sauce tomate", "mozzarella", "basilic" ], "prix": 7},
+	{ "nom": "indienne", "ingredients": [ "curry", "mozzarella", "poulet", "poivron", "oignon", "coriandre" ], "prix": 10},
+	{ "nom": "mexicaine", "ingredients": [ "boeuf", "mozzarella", "maïs", "tomates", "oignon", "coriandre" ], "prix": 13},
+	{ "nom": "chèvre et miel", "ingredients": [ "miel", "mozzarella", "fromage de chèvre", "roquette"], "prix": 10},
+	{ "nom": "napolitaine", "ingredients": [ "sauce tomate", "mozzarella", "anchois", "câpres"], "prix": 9},
+	{ "nom": "kebab", "ingredients": [ "poulet", "oignons", "sauce tomate", "sauce kebab", "mozzarella"], "prix": 11},
+	{ "nom": "louisiane", "ingredients": [ "poulet", "champignons", "poivrons", "oignons", "sauce tomate", "mozzarella"], "prix": 12},
+	{ "nom": "orientale", "ingredients": [ "merguez", "champignons", "sauce tomate", "mozzarella"], "prix": 11},
+	{ "nom": "hawaïenne", "ingredients": [ "jambon", "ananas", "sauce tomate", "mozzarella"], "prix": 12},
+	{ "nom": "reine", "ingredients": [ "jambon", "champignons", "sauce tomate", "mozzarella"], "prix": 8},
+
+]

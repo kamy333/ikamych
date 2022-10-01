@@ -1,0 +1,75 @@
+[
+  {
+    "nom": "4 fromages",
+    "vegetarienne": true,
+    "ingredients": [ "cantal", "mozzarella", "fromage de chèvre", "gruyère" ],
+    "prix": 11
+  },
+  {
+    "nom": "tartiflette",
+    "vegetarienne": false,
+    "ingredients": [ "pomme de terre", "oignons", "crème fraiche", "lardons", "mozzarella" ],
+    "prix": 14
+  },
+  {
+    "nom": "margherita",
+    "vegetarienne": true,
+    "ingredients": [ "sauce tomate", "mozzarella", "basilic" ],
+    "prix": 7
+  },
+  {
+    "nom": "indienne",
+    "vegetarienne": false,
+    "ingredients": [ "curry", "mozzarella", "poulet", "poivron", "oignon", "coriandre" ],
+    "prix": 10
+  },
+  {
+    "nom": "mexicaine",
+    "vegetarienne": false,
+    "ingredients": [ "boeuf", "mozzarella", "maïs", "tomates", "oignon", "coriandre" ],
+    "prix": 13
+  },
+  {
+    "nom": "chèvre et miel",
+    "vegetarienne": true,
+    "ingredients": [ "miel", "mozzarella", "fromage de chèvre", "roquette" ],
+    "prix": 10
+  },
+  {
+    "nom": "napolitaine",
+    "vegetarienne": true,
+    "ingredients": [ "sauce tomate", "mozzarella", "anchois", "câpres" ],
+    "prix": 9
+  },
+  {
+    "nom": "kebab",
+    "vegetarienne": false,
+    "ingredients": [ "poulet", "oignons", "sauce tomate", "sauce kebab", "mozzarella" ],
+    "prix": 11
+  },
+  {
+    "nom": "louisiane",
+    "vegetarienne": false,
+    "ingredients": [ "poulet", "champignons", "poivrons", "oignons", "sauce tomate", "mozzarella" ],
+    "prix": 12
+  },
+  {
+    "nom": "orientale",
+    "vegetarienne": false,
+    "ingredients": [ "merguez", "champignons", "sauce tomate", "mozzarella" ],
+    "prix": 11
+  },
+  {
+    "nom": "hawaïenne",
+    "vegetarienne": false,
+    "ingredients": [ "jambon", "ananas", "sauce tomate", "mozzarella" ],
+    "prix": 12
+  },
+  {
+    "nom": "reine",
+    "vegetarienne": true,
+    "ingredients": [ "jambon", "champignons", "sauce tomate", "mozzarella" ],
+    "prix": 8
+  }
+
+]
