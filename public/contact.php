@@ -1,5 +1,5 @@
 <?php require_once('../includes/initialize.php'); ?>
-
+<?php redirect_to('/Inspinia/index.php');?>
 <?php
 $errName=null;
 $errEmail=null;

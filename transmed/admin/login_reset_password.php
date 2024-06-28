@@ -1,4 +1,4 @@
-<?php require_once('../../includes/initialize_transmed.php'); ?>
+<?php require_once("../../includes/initialize.php"); ?>
 <?php
 
 // Rather than require setting up a real database, 
@@ -10,38 +10,38 @@ $token = $_GET['token'];
 
 // Confirm that the token sent is valid
 $user = User::find_by_reset_token($token);
-if (!isset($user) || !$user) {
-    // Token wasn't sent or didn't match a user.
+if(!isset($user) || !$user) {
+	// Token wasn't sent or didn't match a user.
     $session->message("Did not find you try again");
-    redirect_to('login_forgot_password_username.php');
+	redirect_to('login_forgot_password_username.php');
 }
 
 
-if (request_is_post() && request_is_same_domain()) {
+if(request_is_post() && request_is_same_domain()) {
+	
+  if(!csrf_token_is_valid() || !csrf_token_is_recent()) {
+  	$message = "Sorry, request was not valid.";
+  } else {
+    // CSRF tests passed--form was created by us recently.
 
-    if (!csrf_token_is_valid() || !csrf_token_is_recent()) {
-        $message = "Sorry, request was not valid.";
-    } else {
-        // CSRF tests passed--form was created by us recently.
+		// retrieve the values submitted via the form
+    $password = trim($_POST['password']);
+    $password_confirm = trim($_POST['password_confirm']);
 
-        // retrieve the values submitted via the form
-        $password = trim($_POST['password']);
-        $password_confirm = trim($_POST['password_confirm']);
+    $valid=new FormValidation();
+    $valid->validate_presences(array('password','password_confirm'))  ;
+    if ($password !== $password_confirm){
+    $valid->errors['password_confirmation']="Password confirmation does not match password.";
+    }
 
-        $valid = new FormValidation();
-        $valid->validate_presences(array('password', 'password_confirm'));
-        if ($password !== $password_confirm) {
-            $valid->errors['password_confirmation'] = "Password confirmation does not match password.";
-        }
+     if ( empty ($valid->errors) ) {
+     $user->password=$password;
+     $user->save();
+     $user->delete_reset_token();
 
-        if (empty ($valid->errors)) {
-            $user->password = $password;
-            $user->save();
-            $user->delete_reset_token();
+     redirect_to('login.php');
 
-            redirect_to('login.php');
-
-        }
+     }
 
 //
 //		if(!has_presence($password) || !has_presence($password_confirm)) {
@@ -62,23 +62,23 @@ if (request_is_post() && request_is_same_domain()) {
 //			redirect_to('login.php');
 //		}
 
-    }
+	}
 } else {
 
 
-    if (isset($_SESSION)) {
+    if(isset($_SESSION)){
         $session->end_session();
-        $session = new Session();
+        $session=new Session();
     }
 
 
 }
 ?>
 
-<?php $stylesheets = ""; ?>
-<?php $fluid_view = true; ?>
-<?php $javascript = ""; ?>
-<?php $incl_message_error = true; ?>
+<?php $stylesheets="";  ?>
+<?php $fluid_view=true; ?>
+<?php $javascript=""; ?>
+<?php $incl_message_error=true; ?>
 
 <?php include(HEADER); ?>
 <?php include(NAV); ?>
@@ -98,53 +98,55 @@ if (request_is_post() && request_is_same_domain()) {
 <!--    <div class ="background_light_blue">-->
 
 
-<div class="passwordBox animated fadeInDown">
-    <div class="row">
-        <div class="col-md-12">
-            <div class="ibox-content">
-                <h2 class="font-bold">Reset password</h2>
+        <div class="passwordBox animated fadeInDown">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="ibox-content">
+                        <h2 class="font-bold">Reset password</h2>
 
-                <p>
-                    Enter your new password and confirm.
-                </p>
+                        <p>
+                            Enter  your new password and confirm.
+                        </p>
 
-                <div class="row">
-                    <div class="col-md-12">
-                        <!--        <form id="" class="form-horizontal" action="-->
-                        <?php //echo $_SERVER['PHP_SELF'].$url;?><!--" method="POST">-->
-                        <form class="m-t" role="form" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
-
-
-                            <?php echo csrf_token_tag(); ?>
-
-                            <p class="help-block col-lg-offset-2 col-md-offset-2"><a
-                                        style="color:blue-decoration: underline" href="login.php">back to login</a></p>
-
-                            <div class="form-group">
-                                <input type="password" name="password" class="form-control" placeholder="New Password"
-                                       required="">
-                            </div>
-
-                            <div class="form-group">
-                                <input type="password" name="password_confirm" class="form-control"
-                                       placeholder="Confirm new password" required="">
-                            </div>
+                        <div class="row">
+                            <div class="col-md-12">
+<!--        <form id="" class="form-horizontal" action="--><?php //echo $_SERVER['PHP_SELF'].$url;?><!--" method="POST">-->
+            <form class="m-t" role="form" action="<?php echo $_SERVER['PHP_SELF'];?>" method="POST">
 
 
-                            <button type="submit" name="submit_new_password"
-                                    class="btn btn-primary block full-width m-b">Reset password
-                            </button>
+                <?php echo csrf_token_tag(); ?>
 
+                <p class="help-block col-lg-offset-2 col-md-offset-2"><a style="color:blue-decoration: underline" href="login.php">back to login</a></p>
 
-                        </form>
-
-                    </div>
+                <div class="form-group">
+                    <input type="password" name="password" class="form-control" placeholder="New Password" required="">
                 </div>
-            </div>
-        </div>
+
+                <div class="form-group">
+                    <input type="password" name="password_confirm" class="form-control" placeholder="Confirm new password" required="">
+                </div>
+
+
+
+
+
+
+                <button type="submit"  name="submit_new_password" class="btn btn-primary block full-width m-b">Reset password</button>
+
+
+
+        </form>
+
+                            </div>
+                        </div>
+</div>
+    </div>
 
     </div>
 </div>
+
+
+
 
 
 <?php include(FOOTER); ?>

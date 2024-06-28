@@ -1,4 +1,4 @@
-<?php require_once('../includes/initialize_transmed.php'); ?>
+<?php require_once('../includes/initialize.php'); ?>
 
 <?php include_once(HEADER) ?>
 
@@ -14,42 +14,41 @@
     <title>ikamy.ch</title>
 
     <!-- Bootstrap core CSS -->
-    <link href="<?php echo $path; ?>css/bootstrap.min.css" rel="stylesheet">
+    <link href="<?php echo $path;?>css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Animation CSS -->
-    <link href="<?php echo $path; ?>css/animate.css" rel="stylesheet">
-    <link href="<?php echo $path; ?>font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <link href="<?php echo $path;?>css/animate.css" rel="stylesheet">
+    <link href="<?php echo $path;?>font-awesome/css/font-awesome.min.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
-    <link href="<?php echo $path; ?>css/style.css" rel="stylesheet">
+    <link href="<?php echo $path;?>css/style.css" rel="stylesheet">
 </head>
 
 <body id="page-top" class="landing-page">
 <div class="navbar-wrapper">
-    <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
-        <div class="container">
-            <div class="navbar-header page-scroll">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
-                        aria-expanded="false" aria-controls="navbar">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="<?php echo $path; ?>index.php">WEBAPPLAYERS</a>
+        <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+            <div class="container">
+                <div class="navbar-header page-scroll">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="<?php echo $path;?>index.php">WEBAPPLAYERS</a>
+                </div>
+                <div id="navbar" class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a class="page-scroll" href="#page-top">Home</a></li>
+                        <li><a class="page-scroll" href="#features">Features</a></li>
+                        <li><a class="page-scroll" href="#team">Team</a></li>
+                        <li><a class="page-scroll" href="#testimonials">Testimonials</a></li>
+                        <li><a class="page-scroll" href="#pricing">Pricing</a></li>
+                        <li><a class="page-scroll" href="#contact">Contact</a></li>
+                    </ul>
+                </div>
             </div>
-            <div id="navbar" class="navbar-collapse collapse">
-                <ul class="nav navbar-nav navbar-right">
-                    <li><a class="page-scroll" href="#page-top">Home</a></li>
-                    <li><a class="page-scroll" href="#features">Features</a></li>
-                    <li><a class="page-scroll" href="#team">Team</a></li>
-                    <li><a class="page-scroll" href="#testimonials">Testimonials</a></li>
-                    <li><a class="page-scroll" href="#pricing">Pricing</a></li>
-                    <li><a class="page-scroll" href="#contact">Contact</a></li>
-                </ul>
-            </div>
-        </div>
-    </nav>
+        </nav>
 </div>
 <div id="inSlider" class="carousel carousel-fade" data-ride="carousel">
     <ol class="carousel-indicators">
@@ -105,20 +104,17 @@
     <div class="row">
         <div class="col-sm-3">
             <h2>Full responsive</h2>
-            <p>Using bootstrap twitter CSS framework design for mobile first. Fully responsive to all screen size
-                whether laptop, tablet, desktop computers</p>
+            <p>Using bootstrap twitter CSS framework design for mobile first. Fully responsive to all screen size whether laptop, tablet, desktop computers</p>
             <p><a class="navy-link" href="#" role="button">Details &raquo;</a></p>
         </div>
         <div class="col-sm-3">
             <h2>LESS/SASS Files</h2>
-            <p>We can customize your css files either on SASS which use Ruby language to watch and create your custuom
-                css or with less using javascript.</p>
+            <p>We can customize your css files either on SASS which use Ruby language to watch and create your custuom css or with less using javascript.</p>
             <p><a class="navy-link" href="#" role="button">Details &raquo;</a></p>
         </div>
         <div class="col-sm-3">
             <h2>6 Charts Library</h2>
-            <p>Charts are a powerful intuitive tool to communicate financial information. Present your client with
-                charts. You will be delighted.</p>
+            <p>Charts are a powerful intuitive tool to communicate financial information. Present your client with charts. You will be delighted.</p>
             <p><a class="navy-link" href="#" role="button">Details &raquo;</a></p>
         </div>
         <div class="col-sm-3">
@@ -129,11 +125,11 @@
     </div>
 </section>
 
-<section class="container features">
+<section  class="container features">
     <div class="row">
         <div class="col-lg-12 text-center">
             <div class="navy-line"></div>
-            <h1>Over 40+ unique view<br/> <span class="navy"> with many custom components</span></h1>
+            <h1>Over 40+ unique view<br/> <span class="navy"> with many custom components</span> </h1>
             <p>Ask for it and you will be amazed how your website can be attractive </p>
         </div>
     </div>
@@ -142,34 +138,30 @@
             <div>
                 <i class="fa fa-mobile features-icon"></i>
                 <h2>Full responsive</h2>
-                <p>Using bootstrap twitter CSS framework design for mobile first. Fully responsive to all screen size
-                    whether laptop, tablet, desktop computers</p>
+                <p>Using bootstrap twitter CSS framework design for mobile first. Fully responsive to all screen size whether laptop, tablet, desktop computers</p>
             </div>
             <div class="m-t-lg">
                 <i class="fa fa-bar-chart features-icon"></i>
                 <h2>6 Charts Library</h2>
-                <p>Charts are a powerful intuitive tool to communicate financial information. Present your client with
-                    charts. You will be delighted.</p>
+                <p>Charts are a powerful intuitive tool to communicate financial information. Present your client with charts. You will be delighted.</p>
             </div>
         </div>
         <div class="col-md-6 text-center  wow zoomIn">
             <div class="col-md-offset-4">
-                <!--            <img src="img/landing/perspective.png" alt="dashboard" class="img-responsive">-->
-                <img src="img/admin.jpg" width="200" height="200" alt="dashboard" class="img-responsive">
-            </div>
+<!--            <img src="img/landing/perspective.png" alt="dashboard" class="img-responsive">-->
+            <img src="img/admin.jpg" width="200" height="200" alt="dashboard" class="img-responsive">
+        </div>
         </div>
         <div class="col-md-3 text-center wow fadeInRight">
             <div>
                 <i class="fa fa-envelope features-icon"></i>
                 <h2>Mail pages</h2>
-                <p>Donec sed odio dui. Etiam porta sem malesuada magna mollis euismod. Nullam id dolor id nibh ultricies
-                    vehicula ut id elit. Morbi leo risus.</p>
+                <p>Donec sed odio dui. Etiam porta sem malesuada magna mollis euismod. Nullam id dolor id nibh ultricies vehicula ut id elit. Morbi leo risus.</p>
             </div>
             <div class="m-t-lg">
                 <i class="fa fa-google features-icon"></i>
                 <h2>AngularJS version</h2>
-                <p>Donec sed odio dui. Etiam porta sem malesuada magna mollis euismod. Nullam id dolor id nibh ultricies
-                    vehicula ut id elit. Morbi leo risus.</p>
+                <p>Donec sed odio dui. Etiam porta sem malesuada magna mollis euismod. Nullam id dolor id nibh ultricies vehicula ut id elit. Morbi leo risus.</p>
             </div>
         </div>
     </div>
@@ -184,17 +176,14 @@
         <div class="col-lg-6 features-text wow fadeInLeft">
             <small><?php echo strtoupper($logo); ?></small>
             <h2>Perfectly designed </h2>
-            <p><?php echo strtoupper($logo); ?> Admin Theme is a premium admin dashboard template with flat design
-                concept. It is fully responsive admin dashboard template built with Bootstrap 3+ Framework, HTML5 and
-                CSS3, Media query. It has a huge collection of reusable UI components and integrated with latest jQuery
-                plugins.</p>
+            <p><?php echo strtoupper($logo); ?> Admin Theme is a premium admin dashboard template with flat design concept. It is fully responsive admin dashboard template built with Bootstrap 3+ Framework, HTML5 and CSS3, Media query. It has a huge collection of reusable UI components and integrated with latest jQuery plugins.</p>
             <a href="" class="btn btn-primary">Learn more</a>
         </div>
         <div class="col-lg-6 text-right wow fadeInRight">
             <img src="img/landing/dashboard.png" alt="dashboard" class="img-responsive pull-right">
-            <!--            <div class="col-md-offset-4">-->
-            <!--                <img src="img/kamy.jpg" width="200" height="200" alt="dashboard" class="img-responsive">-->
-            <!--            </div>-->
+<!--            <div class="col-md-offset-4">-->
+<!--                <img src="img/kamy.jpg" width="200" height="200" alt="dashboard" class="img-responsive">-->
+<!--            </div>-->
         </div>
     </div>
 </section>
@@ -213,8 +202,7 @@
                 <div class="team-member">
                     <img src="img/landing/avatar3.jpg" class="img-responsive img-circle img-small" alt="">
                     <h4><span class="navy">Amelia</span> Smith</h4>
-                    <p>Lorem ipsum dolor sit amet, illum fastidii dissentias quo ne. Sea ne sint animal iisque, nam an
-                        soluta sensibus. </p>
+                    <p>Lorem ipsum dolor sit amet, illum fastidii dissentias quo ne. Sea ne sint animal iisque, nam an soluta sensibus. </p>
                     <ul class="list-inline social-icon">
                         <li><a href="#"><i class="fa fa-twitter"></i></a>
                         </li>
@@ -229,8 +217,7 @@
                 <div class="team-member wow zoomIn">
                     <img src="img/landing/avatar1.jpg" class="img-responsive img-circle" alt="">
                     <h4><span class="navy">John</span> Novak</h4>
-                    <p>Lorem ipsum dolor sit amet, illum fastidii dissentias quo ne. Sea ne sint animal iisque, nam an
-                        soluta sensibus.</p>
+                    <p>Lorem ipsum dolor sit amet, illum fastidii dissentias quo ne. Sea ne sint animal iisque, nam an soluta sensibus.</p>
                     <ul class="list-inline social-icon">
                         <li><a href="#"><i class="fa fa-twitter"></i></a>
                         </li>
@@ -245,8 +232,7 @@
                 <div class="team-member">
                     <img src="img/landing/avatar2.jpg" class="img-responsive img-circle img-small" alt="">
                     <h4><span class="navy">Peter</span> Johnson</h4>
-                    <p>Lorem ipsum dolor sit amet, illum fastidii dissentias quo ne. Sea ne sint animal iisque, nam an
-                        soluta sensibus.</p>
+                    <p>Lorem ipsum dolor sit amet, illum fastidii dissentias quo ne. Sea ne sint animal iisque, nam an soluta sensibus.</p>
                     <ul class="list-inline social-icon">
                         <li><a href="#"><i class="fa fa-twitter"></i></a>
                         </li>
@@ -260,8 +246,7 @@
         </div>
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 text-center m-t-lg m-b-lg">
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aut eaque, laboriosam veritatis, quos non
-                    quis ad perspiciatis, totam corporis ea, alias ut unde.</p>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aut eaque, laboriosam veritatis, quos non quis ad perspiciatis, totam corporis ea, alias ut unde.</p>
             </div>
         </div>
     </div>
@@ -280,10 +265,7 @@
             <div class="col-lg-3 features-text wow fadeInLeft">
                 <small><?php echo strtoupper($logo); ?></small>
                 <h2>Perfectly designed </h2>
-                <p><?php echo strtoupper($logo); ?> Admin Theme is a premium admin dashboard template with flat design
-                    concept. It is fully responsive admin dashboard template built with Bootstrap 3+ Framework, HTML5
-                    and CSS3, Media query. It has a huge collection of reusable UI components and integrated with latest
-                    jQuery plugins.</p>
+                <p><?php echo strtoupper($logo); ?> Admin Theme is a premium admin dashboard template with flat design concept. It is fully responsive admin dashboard template built with Bootstrap 3+ Framework, HTML5 and CSS3, Media query. It has a huge collection of reusable UI components and integrated with latest jQuery plugins.</p>
                 <a href="" class="btn btn-primary">Learn more</a>
             </div>
             <div class="col-lg-6 text-right m-t-n-lg wow zoomIn">
@@ -292,10 +274,7 @@
             <div class="col-lg-3 features-text text-right wow fadeInRight">
                 <small><?php echo strtoupper($logo); ?></small>
                 <h2>Perfectly designed </h2>
-                <p><?php echo strtoupper($logo); ?> Admin Theme is a premium admin dashboard template with flat design
-                    concept. It is fully responsive admin dashboard template built with Bootstrap 3+ Framework, HTML5
-                    and CSS3, Media query. It has a huge collection of reusable UI components and integrated with latest
-                    jQuery plugins.</p>
+                <p><?php echo strtoupper($logo); ?> Admin Theme is a premium admin dashboard template with flat design concept. It is fully responsive admin dashboard template built with Bootstrap 3+ Framework, HTML5 and CSS3, Media query. It has a huge collection of reusable UI components and integrated with latest jQuery plugins.</p>
                 <a href="" class="btn btn-primary">Learn more</a>
             </div>
         </div>
@@ -323,8 +302,7 @@
 
                         <div class="vertical-timeline-content">
                             <h2>Meeting</h2>
-                            <p>Conference on the sales results for the previous year. Monica please examine sales trends
-                                in marketing and products. Below please find the current status of the sale.
+                            <p>Conference on the sales results for the previous year. Monica please examine sales trends in marketing and products. Below please find the current status of the sale.
                             </p>
                             <a href="#" class="btn btn-xs btn-primary"> More info</a>
                             <span class="vertical-date"> Today <br/> <small>Dec 24</small> </span>
@@ -338,8 +316,7 @@
 
                         <div class="vertical-timeline-content">
                             <h2>Decision</h2>
-                            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum
-                                has been the industry's standard dummy text ever since.</p>
+                            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since.</p>
                             <a href="#" class="btn btn-xs btn-primary"> More info</a>
                             <span class="vertical-date"> Tomorrow <br/> <small>Dec 26</small> </span>
                         </div>
@@ -352,8 +329,7 @@
 
                         <div class="vertical-timeline-content">
                             <h2>Implementation</h2>
-                            <p>Go to shop and find some products. Lorem Ipsum is simply dummy text of the printing and
-                                typesetting industry. Lorem Ipsum has been the industry's. </p>
+                            <p>Go to shop and find some products. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's. </p>
                             <a href="#" class="btn btn-xs btn-primary"> More info</a>
                             <span class="vertical-date"> Monday <br/> <small>Jan 02</small> </span>
                         </div>
@@ -377,10 +353,7 @@
                     What our users say
                 </h1>
                 <div class="testimonials-text">
-                    <i>"Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model
-                        text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various
-                        versions have evolved over the years, sometimes by accident, sometimes on purpose (injected
-                        humour and the like)."</i>
+                    <i>"Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like)."</i>
                 </div>
                 <small>
                     <strong>12.02.2014 - Andy Smith</strong>
@@ -403,8 +376,7 @@
         <div class="row features-block">
             <div class="col-lg-4">
                 <div class="bubble">
-                    "Uncover many web sites still in their infancy. Various versions have evolved over the years,
-                    sometimes by accident, sometimes on purpose (injected humour and the like)."
+                    "Uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like)."
                 </div>
                 <div class="comments-avatar">
                     <a href="" class="pull-left">
@@ -421,8 +393,7 @@
 
             <div class="col-lg-4">
                 <div class="bubble">
-                    "Uncover many web sites still in their infancy. Various versions have evolved over the years,
-                    sometimes by accident, sometimes on purpose (injected humour and the like)."
+                    "Uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like)."
                 </div>
                 <div class="comments-avatar">
                     <a href="" class="pull-left">
@@ -439,8 +410,7 @@
 
             <div class="col-lg-4">
                 <div class="bubble">
-                    "Uncover many web sites still in their infancy. Various versions have evolved over the years,
-                    sometimes by accident, sometimes on purpose (injected humour and the like)."
+                    "Uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like)."
                 </div>
                 <div class="comments-avatar">
                     <a href="" class="pull-left">
@@ -454,6 +424,7 @@
                     </div>
                 </div>
             </div>
+
 
 
         </div>
@@ -475,17 +446,13 @@
                 <small><?php echo strtoupper($logo); ?></small>
                 <h2>Perfectly designed </h2>
                 <i class="fa fa-bar-chart big-icon pull-right"></i>
-                <p><?php echo strtoupper($logo); ?> Admin Theme is a premium admin dashboard template with flat design
-                    concept. It is fully responsive admin dashboard template built with Bootstrap 3+ Framework, HTML5
-                    and CSS3, Media query. It has a huge collection of reusable UI components and integrated with.</p>
+                <p><?php echo strtoupper($logo); ?> Admin Theme is a premium admin dashboard template with flat design concept. It is fully responsive admin dashboard template built with Bootstrap 3+ Framework, HTML5 and CSS3, Media query. It has a huge collection of reusable UI components and integrated with.</p>
             </div>
             <div class="col-lg-5 features-text">
                 <small><?php echo strtoupper($logo); ?></small>
                 <h2>Perfectly designed </h2>
                 <i class="fa fa-bolt big-icon pull-right"></i>
-                <p><?php echo strtoupper($logo); ?> Admin Theme is a premium admin dashboard template with flat design
-                    concept. It is fully responsive admin dashboard template built with Bootstrap 3+ Framework, HTML5
-                    and CSS3, Media query. It has a huge collection of reusable UI components and integrated with.</p>
+                <p><?php echo strtoupper($logo); ?> Admin Theme is a premium admin dashboard template with flat design concept. It is fully responsive admin dashboard template built with Bootstrap 3+ Framework, HTML5 and CSS3, Media query. It has a huge collection of reusable UI components and integrated with.</p>
             </div>
         </div>
         <div class="row">
@@ -493,17 +460,13 @@
                 <small><?php echo strtoupper($logo); ?></small>
                 <h2>Perfectly designed </h2>
                 <i class="fa fa-clock-o big-icon pull-right"></i>
-                <p>INSPINIA Admin Theme is a premium admin dashboard template with flat design concept. It is fully
-                    responsive admin dashboard template built with Bootstrap 3+ Framework, HTML5 and CSS3, Media query.
-                    It has a huge collection of reusable UI components and integrated with.</p>
+                <p>INSPINIA Admin Theme is a premium admin dashboard template with flat design concept. It is fully responsive admin dashboard template built with Bootstrap 3+ Framework, HTML5 and CSS3, Media query. It has a huge collection of reusable UI components and integrated with.</p>
             </div>
             <div class="col-lg-5 features-text">
                 <small><?php echo strtoupper($logo); ?></small>
                 <h2>Perfectly designed </h2>
                 <i class="fa fa-users big-icon pull-right"></i>
-                <p><?php echo strtoupper($logo); ?> Admin Theme is a premium admin dashboard template with flat design
-                    concept. It is fully responsive admin dashboard template built with Bootstrap 3+ Framework, HTML5
-                    and CSS3, Media query. It has a huge collection of reusable UI components and integrated with.</p>
+                <p><?php echo strtoupper($logo); ?> Admin Theme is a premium admin dashboard template with flat design concept. It is fully responsive admin dashboard template built with Bootstrap 3+ Framework, HTML5 and CSS3, Media query. It has a huge collection of reusable UI components and integrated with.</p>
             </div>
         </div>
     </div>
@@ -525,8 +488,7 @@
                         Basic
                     </li>
                     <li class="pricing-desc">
-                        Lorem ipsum dolor sit amet, illum fastidii dissentias quo ne. Sea ne sint animal iisque, nam an
-                        soluta sensibus.
+                        Lorem ipsum dolor sit amet, illum fastidii dissentias quo ne. Sea ne sint animal iisque, nam an soluta sensibus.
                     </li>
                     <li class="pricing-price">
                         <span>$16</span> / month
@@ -558,8 +520,7 @@
                         Standard
                     </li>
                     <li class="pricing-desc">
-                        Lorem ipsum dolor sit amet, illum fastidii dissentias quo ne. Sea ne sint animal iisque, nam an
-                        soluta sensibus.
+                        Lorem ipsum dolor sit amet, illum fastidii dissentias quo ne. Sea ne sint animal iisque, nam an soluta sensibus.
                     </li>
                     <li class="pricing-price">
                         <span>$22</span> / month
@@ -594,8 +555,7 @@
                         Premium
                     </li>
                     <li class="pricing-desc">
-                        Lorem ipsum dolor sit amet, illum fastidii dissentias quo ne. Sea ne sint animal iisque, nam an
-                        soluta sensibus.
+                        Lorem ipsum dolor sit amet, illum fastidii dissentias quo ne. Sea ne sint animal iisque, nam an soluta sensibus.
                     </li>
                     <li class="pricing-price">
                         <span>$160</span> / month
@@ -623,10 +583,7 @@
         </div>
         <div class="row m-t-lg">
             <div class="col-lg-8 col-lg-offset-2 text-center m-t-lg">
-                <p>*Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model
-                    text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. <span
-                            class="navy">Various versions</span> have evolved over the years, sometimes by accident,
-                    sometimes on purpose (injected humour and the like).</p>
+                <p>*Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. <span class="navy">Various versions</span>  have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).</p>
             </div>
         </div>
     </div>
@@ -651,11 +608,11 @@
                     <abbr title="Phone">P:</abbr> +41(079) 350-2132
                 </address>
             </div>
-            <!--            <div class="col-lg-4">-->
-            <!--                <p class="text-color">-->
-            <!--                    Consectetur adipisicing elit. Aut eaque, totam corporis laboriosam veritatis quis ad perspiciatis, totam corporis laboriosam veritatis, consectetur adipisicing elit quos non quis ad perspiciatis, totam corporis ea,-->
-            <!--                </p>-->
-            <!--            </div>-->
+<!--            <div class="col-lg-4">-->
+<!--                <p class="text-color">-->
+<!--                    Consectetur adipisicing elit. Aut eaque, totam corporis laboriosam veritatis quis ad perspiciatis, totam corporis laboriosam veritatis, consectetur adipisicing elit quos non quis ad perspiciatis, totam corporis ea,-->
+<!--                </p>-->
+<!--            </div>-->
         </div>
         <div class="row">
             <div class="col-lg-12 text-center">
@@ -675,24 +632,22 @@
         </div>
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 text-center m-t-lg m-b-lg">
-                <p><strong>&copy;2014 - <?php echo date("Y") . ', ' . $logo; ?></strong><br/> consectetur adipisicing
-                    elit. Aut eaque, laboriosam veritatis, quos non quis ad perspiciatis, totam corporis ea, alias ut
-                    unde.</p>
+                <p><strong>&copy;2014 - <?php echo date("Y").', '.$logo; ?></strong><br/> consectetur adipisicing elit. Aut eaque, laboriosam veritatis, quos non quis ad perspiciatis, totam corporis ea, alias ut unde.</p>
             </div>
         </div>
     </div>
 </section>
 
 <!-- Mainly scripts -->
-<script src="<?php echo $path; ?>js/jquery-2.1.1.js"></script>
-<script src="<?php echo $path; ?>js/bootstrap.min.js"></script>
-<script src="<?php echo $path; ?>js/plugins/metisMenu/jquery.metisMenu.js"></script>
-<script src="<?php echo $path; ?>js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+<script src="<?php echo $path;?>js/jquery-2.1.1.js"></script>
+<script src="<?php echo $path;?>js/bootstrap.min.js"></script>
+<script src="<?php echo $path;?>js/plugins/metisMenu/jquery.metisMenu.js"></script>
+<script src="<?php echo $path;?>js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
 
 <!-- Custom and plugin javascript -->
-<script src="<?php echo $path; ?>js/inspinia.js"></script>
-<script src="<?php echo $path; ?>js/plugins/pace/pace.min.js"></script>
-<script src="<?php echo $path; ?>js/plugins/wow/wow.min.js"></script>
+<script src="<?php echo $path;?>js/inspinia.js"></script>
+<script src="<?php echo $path;?>js/plugins/pace/pace.min.js"></script>
+<script src="<?php echo $path;?>js/plugins/wow/wow.min.js"></script>
 
 
 <script>
@@ -705,7 +660,7 @@
         });
 
         // Page scrolling feature
-        $('a.page-scroll').bind('click', function (event) {
+        $('a.page-scroll').bind('click', function(event) {
             var link = $(this);
             $('html, body').stop().animate({
                 scrollTop: $(link.attr('href')).offset().top - 50
@@ -715,24 +670,22 @@
         });
     });
 
-    var cbpAnimatedHeader = (function () {
+    var cbpAnimatedHeader = (function() {
         var docElem = document.documentElement,
-            header = document.querySelector('.navbar-default'),
-            didScroll = false,
-            changeHeaderOn = 200;
-
+                header = document.querySelector( '.navbar-default' ),
+                didScroll = false,
+                changeHeaderOn = 200;
         function init() {
-            window.addEventListener('scroll', function (event) {
-                if (!didScroll) {
+            window.addEventListener( 'scroll', function( event ) {
+                if( !didScroll ) {
                     didScroll = true;
-                    setTimeout(scrollPage, 250);
+                    setTimeout( scrollPage, 250 );
                 }
-            }, false);
+            }, false );
         }
-
         function scrollPage() {
             var sy = scrollY();
-            if (sy >= changeHeaderOn) {
+            if ( sy >= changeHeaderOn ) {
                 $(header).addClass('navbar-scroll')
             }
             else {
@@ -740,11 +693,9 @@
             }
             didScroll = false;
         }
-
         function scrollY() {
             return window.pageYOffset || docElem.scrollTop;
         }
-
         init();
 
     })();

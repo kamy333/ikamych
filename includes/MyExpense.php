@@ -17,27 +17,27 @@ class MyExpense extends DatabaseObject
 
 // 'currency_id','Account','debitor','creditor'
 
-    protected static $db_fields = array('id', 'amount', 'cash', 'ccy_id', 'rate', 'person_id', 'expense_type_id', 'expense_date', 'comment', 'document', 'modification_time');
+    protected static $db_fields = ['id', 'amount', 'cash', 'ccy_id', 'rate', 'person_id', 'expense_type_id', 'expense_date', 'comment', 'document', 'modification_time'];
 
-    protected static $required_fields = array('amount', 'cash', 'ccy_id', 'person_id', 'expense_type_id', 'expense_date');
+    protected static $required_fields = ['amount', 'cash', 'ccy_id', 'person_id', 'expense_type_id', 'expense_date'];
 
-    protected static $db_fields_table_display_short = array('id', 'amount', 'cash', 'is_cash', 'amountCHF', 'ccy_id', 'currency', 'rate', 'person_id', 'person_name', 'expense_type_id', 'expense_type', 'expense_date', 'category', 'document_lnk');
+    protected static $db_fields_table_display_short = ['id', 'amount', 'cash', 'is_cash', 'amountCHF', 'ccy_id', 'currency', 'rate', 'person_id', 'person_name', 'expense_type_id', 'expense_type', 'expense_date', 'category', 'document_lnk'];
 
-    protected static $db_fields_table_display_full = array('id', 'amount', 'cash', 'is_cash', 'amountCHF', 'currency', 'rate', 'person_id', 'person_name', 'expense_type_id', 'expense_type', 'expense_date', 'category', 'document', 'document_lnk', 'comment', 'modification_time');
+    protected static $db_fields_table_display_full = ['id', 'amount', 'cash', 'is_cash', 'amountCHF', 'currency', 'rate', 'person_id', 'person_name', 'expense_type_id', 'expense_type', 'expense_date', 'category', 'document', 'document_lnk', 'comment', 'modification_time'];
 
-    protected static $db_field_exclude_table_display_sort = array('amountCHF', 'document_lnk');
+    protected static $db_field_exclude_table_display_sort = ['amountCHF', 'document_lnk'];
 
-    protected static $db_field_include_table_display_sort = array(
-        'person_name' => 'person_id', 'expense_type' => 'expense_type_id', 'currency' => 'ccy_id', 'is_cash' => 'cash');
+    protected static $db_field_include_table_display_sort = [
+        'person_name' => 'person_id', 'expense_type' => 'expense_type_id', 'currency' => 'ccy_id', 'is_cash' => 'cash'];
 
-    public static $fields_numeric = array('id', 'amount', 'amountCHF', 'person_id', 'expense_type_id', 'ccy_id', 'rate', 'cash');
-    public static $fields_numeric_format = array('amount', 'amountCHF');
+    public static $fields_numeric = ['id', 'amount', 'amountCHF', 'person_id', 'expense_type_id', 'ccy_id', 'rate', 'cash'];
+    public static $fields_numeric_format = ['amount', 'amountCHF'];
 
-    public static $get_form_element = array('amount', 'cash', 'ccy_id', 'rate', 'expense_date', 'person_id', 'expense_type_id', 'comment', 'document', 'modification_time');
+    public static $get_form_element = ['amount', 'cash', 'ccy_id', 'rate', 'expense_date', 'person_id', 'expense_type_id', 'comment', 'document', 'modification_time'];
 
-    public static $get_form_element_others = array();
+    public static $get_form_element_others = [];
 
-    public static $form_default_value = array(
+    public static $form_default_value = [
         "expense_date" => "now()",
         "modification_time" => "nowtime()",
         "amount" => "0",
@@ -45,38 +45,38 @@ class MyExpense extends DatabaseObject
 //        "currency"=>"CHF",
         "rate" => "1"
 
-    );
+    ];
 
 
-    protected static $form_properties = array(
+    protected static $form_properties = [
 
-        "amount" => array("type" => "number",
+        "amount" => ["type" => "number",
             "name" => 'amount',
             "label_text" => "Amount",
 //            'min' => 0,
             "placeholder" => "Amount",
             "step" => "0.01",
             "required" => true,
-        ),
-        "cash" => array("type" => "radio",
-            array(0,
-                array(
+        ],
+        "cash" => ["type" => "radio",
+            [0,
+                [
                     "label_all" => "is Cash",
                     "name" => "cash",
                     "label_radio" => "No",
                     "value" => "0",
                     "id" => "cash_no",
-                    "default" => true)),
-            array(1,
-                array(
+                    "default" => true]],
+            [1,
+                [
                     "label_all" => "is Cash",
                     "name" => "cash",
                     "label_radio" => "Yes",
                     "value" => "1",
                     "id" => "cash_yes",
-                    "default" => false)),
-        ),
-        "ccy_id" => array("type" => "select",
+                    "default" => false]],
+        ],
+        "ccy_id" => ["type" => "select",
             "name" => 'ccy_id',
             "class" => "Currency",
             "label_text" => "Currency",
@@ -84,8 +84,8 @@ class MyExpense extends DatabaseObject
             'field_option_0' => "id",
             'field_option_1' => "currency",
             "required" => true,
-        ),
-        "rate" => array("type" => "number",
+        ],
+        "rate" => ["type" => "number",
             "name" => 'rate',
             "id" => "rate",
             "label_text" => "Rate",
@@ -93,8 +93,8 @@ class MyExpense extends DatabaseObject
             "placeholder" => "Rate to CHF",
             "required" => false,
             "step" => "0.00001"
-        ),
-        "person_id" => array("type" => "select",
+        ],
+        "person_id" => ["type" => "select",
             "name" => 'person_id',
             "class" => "MyExpensePerson",
             "label_text" => "Person Name ID",
@@ -102,7 +102,7 @@ class MyExpense extends DatabaseObject
             'field_option_0' => "id",
             'field_option_1' => "person_name",
             "required" => true,
-        ),
+        ],
 //        "person_name"=> array("type"=>"select",
 //            "name"=>'person_name',
 //            "class"=>"MyExpensePerson",
@@ -112,7 +112,7 @@ class MyExpense extends DatabaseObject
 //            'field_option_1'=>"person_name",
 //            "required" =>true,
 //        ),
-        "expense_type_id" => array("type" => "select",
+        "expense_type_id" => ["type" => "select",
             "name" => 'expense_type_id',
             "class" => "MyExpenseType",
             "label_text" => "Expense Type",
@@ -120,7 +120,7 @@ class MyExpense extends DatabaseObject
             'field_option_0' => "id",
             'field_option_1' => "expense_type",
             "required" => true,
-        ),
+        ],
 //        "expense_type"=> array("type"=>"select",
 //            "name"=>'expense_type',
 //            "class"=>"MyExpenseType",
@@ -130,40 +130,40 @@ class MyExpense extends DatabaseObject
 //            'field_option_1'=>"expense_type",
 //            "required" =>true,
 //        ),
-        "expense_date" => array("type" => "date",
+        "expense_date" => ["type" => "date",
             "name" => 'expense_date',
             "label_text" => "Expense Date",
             "placeholder" => "Input Date",
             "required" => true,
-        ),
-        "comment" => array("type" => "textarea",
+        ],
+        "comment" => ["type" => "textarea",
             "name" => 'comment',
             "label_text" => "Comment",
             "placeholder" => "input Comment",
             "required" => false,
-        ),
-        "document" => array("type" => "text",
+        ],
+        "document" => ["type" => "text",
             "name" => 'document',
             "label_text" => "document",
             "placeholder" => "documents comma-separated if more than 1",
             "required" => false,
-        ),
-        "modification_time" => array("type" => "datetime",
+        ],
+        "modification_time" => ["type" => "datetime",
             "name" => 'modification_time',
             "label_text" => "modification_time",
             "placeholder" => "modification_time",
             "required" => true,
-        ),
-    );
+        ],
+    ];
 
-    protected static $form_properties_search = array(
-        "search_all" => array("type" => "text",
+    protected static $form_properties_search = [
+        "search_all" => ["type" => "text",
             "name" => 'search_all',
             "label_text" => "",
             "placeholder" => "Search all",
             "required" => false,
-        ),
-        "person_id" => array("type" => "select",
+        ],
+        "person_id" => ["type" => "select",
             "name" => 'person_id',
             "id" => "search_person_id",
             "class" => "MyExpensePerson",
@@ -172,8 +172,8 @@ class MyExpense extends DatabaseObject
             'field_option_0' => "id",
             'field_option_1' => "person_name",
             "required" => false,
-        ),
-        "amount" => array("type" => "select",
+        ],
+        "amount" => ["type" => "select",
             "name" => 'amount',
             "id" => "search_amount",
             "class" => "MyExpense",
@@ -182,8 +182,8 @@ class MyExpense extends DatabaseObject
             'field_option_0' => "amount",
             'field_option_1' => "amount",
             "required" => false,
-        ),
-        "cash" => array("type" => "select",
+        ],
+        "cash" => ["type" => "select",
             "name" => 'cash',
             "id" => "search_cash",
             "class" => "MyExpense",
@@ -192,8 +192,8 @@ class MyExpense extends DatabaseObject
             'field_option_0' => "cash",
             'field_option_1' => "cash",
             "required" => false,
-        ),
-        "ccy_id" => array("type" => "select",
+        ],
+        "ccy_id" => ["type" => "select",
             "name" => 'ccy_id',
             "id" => "search_ccy_id",
             "class" => "Currency",
@@ -202,18 +202,18 @@ class MyExpense extends DatabaseObject
             'field_option_0' => "id",
             'field_option_1' => "currency",
             "required" => false,
-        ),
+        ],
 
-        "rate" => array("type" => "number",
+        "rate" => ["type" => "number",
             "name" => 'rate',
             "id" => "rate",
             "label_text" => "Rate",
             'min' => 0,
             "placeholder" => "Rate to CHF",
             "required" => false,
-        ),
+        ],
 
-        "expense_type_id" => array("type" => "select",
+        "expense_type_id" => ["type" => "select",
             "name" => 'expense_type_id',
             "id" => "search_expense_type",
             "class" => "MyExpenseType",
@@ -222,8 +222,8 @@ class MyExpense extends DatabaseObject
             'field_option_0' => "id",
             'field_option_1' => "expense_type",
             "required" => false,
-        ),
-        "expense_date" => array("type" => "select",
+        ],
+        "expense_date" => ["type" => "select",
             "name" => 'expense_date',
             "id" => "search_expense_date",
             "class" => "MyExpense",
@@ -232,38 +232,42 @@ class MyExpense extends DatabaseObject
             'field_option_0' => "expense_date",
             'field_option_1' => "expense_date",
             "required" => false,
-        ),
+        ],
 
-        "download_csv" => array("type" => "radio",
-            array(0,
-                array(
+        "download_csv" => ["type" => "radio",
+            [0,
+                [
                     "label_all" => "Dnld csv",
                     "name" => "download_csv",
                     "label_radio" => "non",
                     "value" => "No",
                     "id" => "visible_no",
-                    "default" => true)),
-            array(1,
-                array(
+                    "default" => true]],
+            [1,
+                [
                     "label_all" => "Dnld csv",
                     "name" => "download_csv",
                     "label_radio" => "oui",
                     "value" => "Yes",
                     "id" => "visible_yes",
-                    "default" => true)),
-        ),
+                    "default" => true]],
+        ],
 
-    );
+    ];
 
 
-    public static $db_field_search = array('search_all', 'amount', 'ccy_id', 'person_id', 'expense_type_id', 'expense_date', 'comment', 'download_csv');
+    public static $db_field_search = ['search_all', 'amount', 'ccy_id', 'person_id', 'expense_type_id', 'expense_date', 'comment', 'download_csv'];
 
 
     public static $page_name = "Expense Loan";
 
-    public static $page_manage = "/public/admin/crud/ajax/manage_ajax.php?class_name=MyExpense"; // "new_link.php";
+//    public static $page_manage = "/public/admin/crud/ajax/manage_ajax.php?class_name=MyExpense"; // "new_link.php";
+    public static $page_manage = "/public/admin/crud/data/manage_data.php?class_name=MyExpense"; // "new_link.php";
     public static $page_new = "/public/admin/crud/ajax/new_ajax.php?class_name=MyExpense"; // "new_link.php";
-    public static $page_edit = "/public/admin/crud/ajax/edit_ajax.php?class_name=MyExpense"; //  "edit_link.php";
+
+//    public static $page_edit = "/public/admin/crud/ajax/edit_ajax.php?class_name=MyExpense"; //  "edit_link.php";
+    public static $page_edit = "/public/admin/crud/data/edit_data.php?class_name=MyExpense"; //  "edit_link.php"
+
     public static $page_delete = "/public/admin/crud/ajax/delete_ajax.php?class_name=MyExpense"; //  "delete_link.php";
     public static $position_table = "positionBoth"; // positionLeft // positionBoth  positionRight
 
@@ -439,17 +443,17 @@ class MyExpense extends DatabaseObject
 
         if ($type == "updated") {
             $type_en = "updated";
-            $type_fr = utf8_decode("Actualisation");
-            $type_ptg = utf8_decode("atualizada");
+            $type_fr = mb_convert_encoding("Actualisation", 'ISO-8859-1');
+            $type_ptg = mb_convert_encoding("atualizada", 'ISO-8859-1');
 
         } elseif ($type == "added/created") {
             $type_en = "added/created";
-            $type_fr = utf8_decode("Ajout / creation");
-            $type_ptg = utf8_decode("adicionado / criado");
+            $type_fr = mb_convert_encoding("Ajout / creation", 'ISO-8859-1');
+            $type_ptg = mb_convert_encoding("adicionado / criado", 'ISO-8859-1');
         } elseif ($type == "deleted") {
             $type_en = "deleted";
-            $type_fr = utf8_decode("Suppressipn");
-            $type_ptg = utf8_decode("apagada");
+            $type_fr = mb_convert_encoding("Suppressipn", 'ISO-8859-1');
+            $type_ptg = mb_convert_encoding("apagada", 'ISO-8859-1');
         }
 
         $languages = explode(",", $myperson->language);
@@ -465,37 +469,37 @@ class MyExpense extends DatabaseObject
                 $message .= "&nbsp;&nbsp;&nbsp;<span style='font-size: smaller'><i>You may need to login with your credential before</i></span> <br></p>";
 
             } elseif ($language == "french" || $language == "fr") {
-                $type = utf8_decode($type_fr);
-                $notice = utf8_decode("Notification");
+                $type = mb_convert_encoding($type_fr, 'ISO-8859-1');
+                $notice = mb_convert_encoding("Notification", 'ISO-8859-1');
                 $message .= "<b>Cher(e)  {$msg_user} {$kamy->first_name},</b><br><br>";
                 $lnk = "<a href= '" . SITE_URL . "/Inspinia/loan_exp.php'>" .
-                    utf8_decode("Cliquer ici pour accèder page emprunt")
+                    mb_convert_encoding("Cliquer ici pour accèder page emprunt", 'ISO-8859-1')
                     . "</a>";
 
                 $message .= "<p>" .
-                    utf8_decode(" {$type} de la table d'emprunt pour {$this->person_name}")
+                    mb_convert_encoding(" {$type} de la table d'emprunt pour {$this->person_name}", 'ISO-8859-1')
                     . "<br><br>";
                 $message .= " {$lnk}";
                 $message .= "&nbsp;&nbsp;&nbsp;<span style='font-size: smaller'><i>" .
-                    utf8_decode("Il se peut que vous devez logger sur le site avant d'accèder à la page")
+                    mb_convert_encoding("Il se peut que vous devez logger sur le site avant d'accèder à la page", 'ISO-8859-1')
                     . "</i></span> <br></p>";
 
             } elseif ($language == "portuguese" || $language == "ptg") {
                 $type = $type_ptg;
-                $notice = utf8_decode("Notificação");
+                $notice = mb_convert_encoding("Notificação", 'ISO-8859-1');
                 $message .= "<b>" .
-                    utf8_decode("Querida, Querido  {$msg_user} {$kamy->first_name},")
+                    mb_convert_encoding("Querida, Querido  {$msg_user} {$kamy->first_name},", 'ISO-8859-1')
                     . "</b><br><br>";
                 $lnk = "<a href= '" . SITE_URL . "/Inspinia/loan_exp.php?person_id=$this->person_id'>" .
-                    utf8_decode("Clique aqui empréstimo para revisar")
+                    mb_convert_encoding("Clique aqui empréstimo para revisar", 'ISO-8859-1')
                     . "</a>";
 
                 $message .= "<p>" .
-                    utf8_decode("Nós temos {$type} a despesa de empréstimo para {$this->person_name}")
+                    mb_convert_encoding("Nós temos {$type} a despesa de empréstimo para {$this->person_name}", 'ISO-8859-1')
                     . "<br><br>";
                 $message .= " {$lnk}";
                 $message .= "&nbsp;&nbsp;&nbsp;<span style='font-size: smaller'><i>" .
-                    utf8_decode("Você pode precisar fazer o login com sua credencial antes")
+                    mb_convert_encoding("Você pode precisar fazer o login com sua credencial antes", 'ISO-8859-1')
                     . "</i></span> <br></p>";
             }
 
@@ -1075,8 +1079,6 @@ GROUP BY expense_type_id;";
         }
 
 
-
-
         $this->document_lnk = $this->insert_link_document("/public/img/maman_document/");
 
     }
@@ -1567,7 +1569,7 @@ class ReportFinance extends MyExpense
 {
 //    public $category;
 
-    protected static $id_person =2;
+    protected static $id_person = 2;
 
     protected static $db_fields = array('id', 'amount', 'cash', 'ccy_id', 'rate', 'person_id', 'expense_type_id', 'expense_type', 'expense_date', 'comment', 'document', 'modification_time', 'currency', 'person_name', 'Yr', 'Mth', 'total', 'itemsCount', 'amountCHF', 'Amt_Pret', 'Amt_PretCHF', 'MthName');
 
@@ -1600,9 +1602,9 @@ class ReportFinance extends MyExpense
 
 //        $array_header = ["Year", "Month Name", "Mth", "No Item", "Amount CHF"];
 
-      //  $tableName=static::$table_name;
-        $tblname=static::$table_name;
-        $theid_person=static::$id_person;
+        //  $tableName=static::$table_name;
+        $tblname = static::$table_name;
+        $theid_person = static::$id_person;
 
         $output .= $a;
 
@@ -1680,8 +1682,8 @@ ORDER BY year(e.expense_date) DESC,month(e.expense_date) DESC";
 
     public static function SQL1()
     {
-        $tblname=static::$table_name;
-        $theid_person=static::$id_person;
+        $tblname = static::$table_name;
+        $theid_person = static::$id_person;
 
         $sql = "SELECT year(e.expense_date) as Yr,COUNT(e.id) AS itemsCount, SUM(e.amount) as amount,SUM(ROUND(e.amount * e.rate,2)) AS amountCHF
          FROM $tblname as e
@@ -1697,8 +1699,8 @@ ORDER BY year(e.expense_date) DESC";
 
     public static function SQL2()
     {
-        $tblname=static::$table_name;
-        $theid_person=static::$id_person;
+        $tblname = static::$table_name;
+        $theid_person = static::$id_person;
 
         $sql = "SELECT year(e.expense_date) as Yr,COUNT(e.id) AS itemsCount,
        SUM(ROUND(e.amount * e.rate,2)) AS amountCHF
@@ -1715,8 +1717,8 @@ ORDER BY year(e.expense_date) DESC";
 
     public static function SQL3()
     {
-        $tblname=static::$table_name;
-        $theid_person=static::$id_person;
+        $tblname = static::$table_name;
+        $theid_person = static::$id_person;
 
         $sql = "SELECT year(e.expense_date) as Yr,COUNT(e.id) AS itemsCount,
        SUM(ROUND(e.amount * e.rate,2)) AS amountCHF
@@ -1734,8 +1736,8 @@ ORDER BY year(e.expense_date) DESC";
 
     public static function SQL4()
     {
-        $tblname=static::$table_name;
-        $theid_person=static::$id_person;
+        $tblname = static::$table_name;
+        $theid_person = static::$id_person;
 
         $sql = "SELECT year(e.expense_date) AS Yr, month (e.expense_date) AS Mth,monthname (e.expense_date) as MthName,
        e.expense_date, e.id,e.amount,c.currency,ROUND(e.amount * e.rate,2) AS amountCHF,e.ccy_id,c.rate,e.expense_type_id,t.expense_type,e.comment,p.person_name,e.person_id ,e.cash 
@@ -1751,8 +1753,8 @@ ORDER BY year(e.expense_date) DESC";
 
     public static function SQL4a()
     {
-        $tblname=static::$table_name;
-        $theid_person=static::$id_person;
+        $tblname = static::$table_name;
+        $theid_person = static::$id_person;
 
         $sql = "SELECT year(e.expense_date) AS Yr, month (e.expense_date) AS Mth,monthname (e.expense_date) as MthName,
        e.expense_date, e.id,e.amount,c.currency,ROUND(e.amount * e.rate,2) AS amountCHF,e.ccy_id,c.rate,e.expense_type_id,t.expense_type,e.comment,p.person_name,e.person_id,e.cash 
@@ -1769,8 +1771,8 @@ ORDER BY year(e.expense_date) DESC";
 
     public static function SQL5()
     {
-        $tblname=static::$table_name;
-        $theid_person=static::$id_person;
+        $tblname = static::$table_name;
+        $theid_person = static::$id_person;
 
         $sql = "SELECT year(e.expense_date) as Yr,COUNT(e.id) AS itemsCount,
        SUM(ROUND(e.amount * e.rate,2)) AS amountCHF
@@ -1787,8 +1789,8 @@ ORDER BY year(e.expense_date) DESC";
 
     public static function SQL6()
     {
-        $tblname=static::$table_name;
-        $theid_person=static::$id_person;
+        $tblname = static::$table_name;
+        $theid_person = static::$id_person;
 
         $sql = "SELECT year(e.expense_date) as Yr,COUNT(e.id) AS itemsCount,
        SUM(ROUND(e.amount * e.rate,2)) AS amountCHF
@@ -1872,8 +1874,8 @@ ORDER BY year(e.expense_date) DESC";
 
         unset($results);
 
-        $tblname=static::$table_name;
-        $theid_person=static::$id_person;
+        $tblname = static::$table_name;
+        $theid_person = static::$id_person;
 
         if (!$XLS) {
 
@@ -1906,8 +1908,8 @@ ORDER BY year(e.expense_date) DESC";
     public static function SQL_Year($year = 2021)
     {
 
-        $tblname=static::$table_name;
-        $theid_person=static::$id_person;
+        $tblname = static::$table_name;
+        $theid_person = static::$id_person;
 
         $sql = "SELECT year(e.expense_date) as Yr,COUNT(e.id) AS itemsCount,
        SUM(ROUND(e.amount * e.rate,2)) AS amountCHF
@@ -2004,6 +2006,14 @@ ORDER BY year(e.expense_date) DESC";
                 $sum4 = 0;
                 $output .= static::Spec_Exception('2022', "kamy_2022", $sum2, $XLS);
 
+            } elseif ($year == 2023 || $year == "2023") {
+                $kamy_id = 24;
+                $sum2 = static::sum_field_where($field = "amount * rate", " WHERE person_id = $kamy_id    ");
+                $sum3 = 0;
+                $sum4 = 0;
+                $output .= static::Spec_Exception('2023', "kamy_2023", $sum2, $XLS);
+
+
             } else {
                 $sum2 = 0;
                 $sum3 = 0;
@@ -2016,8 +2026,8 @@ ORDER BY year(e.expense_date) DESC";
         unset($results);
 
 
-        $tblname=static::$table_name;
-        $theid_person=static::$id_person;
+        $tblname = static::$table_name;
+        $theid_person = static::$id_person;
         if (!$XLS) {
 
             if ($No === 1) {
@@ -2136,8 +2146,8 @@ ORDER BY year(e.expense_date) DESC";
         }
 
         unset($results);
-        $tblname=static::$table_name;
-        $theid_person=static::$id_person;
+        $tblname = static::$table_name;
+        $theid_person = static::$id_person;
         if (!$XLS) {
 
             $sum = static::sum_field_where($field = "amount * rate", " WHERE person_id = $theid_person ");
@@ -2247,8 +2257,8 @@ ORDER BY year(e.expense_date) DESC";
 
         unset($results);
 
-        $tblname=static::$table_name;
-        $theid_person=static::$id_person;
+        $tblname = static::$table_name;
+        $theid_person = static::$id_person;
 
         if (!$XLS) {
 
@@ -2271,9 +2281,11 @@ class MyExpenseMum extends MyExpense
 
     public static $get_form_element = array('amount', 'cash', 'comment', 'document', 'person_id', 'expense_type_id', 'expense_date', 'ccy_id', 'rate', 'modification_time');
 
-    public static $page_manage = "/public/admin/crud/ajax/manage_ajax.php?class_name=MyExpenseMum"; // "new_link.php
+//    public static $page_manage = "/public/admin/crud/ajax/manage_ajax.php?class_name=MyExpenseMum"; // "new_link.php
+    public static $page_manage = "/public/admin/crud/data/manage_data.php?class_name=MyExpenseMum"; // "new_link.php
     public static $page_new = "/public/admin/crud/ajax/new_ajax.php?class_name=MyExpenseMum"; // "new_link.php";
-    public static $page_edit = "/public/admin/crud/ajax/edit_ajax.php?class_name=MyExpenseMum"; //  "edit_link.php";
+//    public static $page_edit = "/public/admin/crud/ajax/edit_ajax.php?class_name=MyExpenseMum"; //  "edit_link.php";
+    public static $page_edit = "/public/admin/crud/data/edit_data.php?class_name=MyExpenseMum"; //  "edit_link.php";
     public static $page_delete = "/public/admin/crud/ajax/delete_ajax.php?class_name=MyExpenseMum"; //  "delete_link.php";
 
     public static $form_default_value = array(
@@ -2298,12 +2310,12 @@ class MyExpenseCaroline extends ReportFinance
 
     protected static $table_name = "myexpensecaroline";
 
-    public static $id_person=2;
+    public static $id_person = 2;
 //    public static $get_form_element = array('amount', 'cash', 'comment', 'document', 'person_id', 'expense_type_id', 'expense_date', 'ccy_id', 'rate', 'modification_time');
 //
     public static $get_form_element = array('amount', 'cash', 'expense_type_id', 'comment', 'document', 'expense_date', 'ccy_id', 'rate', 'modification_time');
 
-    public static $page_name = "Caroline Transaction Mum" ;
+    public static $page_name = "Caroline Transaction Mum";
 
     public static $page_manage = "/public/admin/crud/data/manage_data.php?class_name=MyExpenseMumCaroline";
 //    public static $page_new = "/public/admin/crud/ajax/new_ajax.php?class_name=MyExpenseMumCaroline";
@@ -2315,12 +2327,11 @@ class MyExpenseCaroline extends ReportFinance
     public static $page_delete = "/public/admin/crud/data/delete_data.php?class_name=MyExpenseMumCaroline";
 
 
-
     public static $form_default_value = array(
         "expense_date" => "now()",
         "modification_time" => "nowtime()",
         "amount" => "0",
- //       "person_id" => "22",
+        //       "person_id" => "22",
         "expense_type_id" => "1",
         "ccy_id" => "2",
 //        "currency"=>"CHF",
@@ -2342,12 +2353,75 @@ class MyExpenseCaroline extends ReportFinance
     public static function table_nav_additional()
     {
 
-        if(User::is_admin()){
-        $output = "</a><span>&nbsp;</span>";
-        $output .= "<a  class=\"btn btn-primary\"  href=\"" . MyExpensePerson::$page_new . "\">Add New Person " . " </a><span>&nbsp;</span>";
-        $output .= "<a  class=\"btn btn-primary\"  href=\"" . MyExpenseType::$page_new . "\">Add New Type " . " </a></a><span>&nbsp;</span>";
-        $output .= "<a  class=\"btn btn-primary\"  href=\"" . MyExpensePerson::$page_manage . "\">View Person " . " </a><span>&nbsp;</span>";
-        $output .= "<a  class=\"btn btn-primary\"  href=\"" . MyExpenseType::$page_manage . "\">View Type " . " </a>";
+        if (User::is_admin()) {
+            $output = "</a><span>&nbsp;</span>";
+            $output .= "<a  class=\"btn btn-primary\"  href=\"" . MyExpensePerson::$page_new . "\">Add New Person " . " </a><span>&nbsp;</span>";
+            $output .= "<a  class=\"btn btn-primary\"  href=\"" . MyExpenseType::$page_new . "\">Add New Type " . " </a></a><span>&nbsp;</span>";
+            $output .= "<a  class=\"btn btn-primary\"  href=\"" . MyExpensePerson::$page_manage . "\">View Person " . " </a><span>&nbsp;</span>";
+            $output .= "<a  class=\"btn btn-primary\"  href=\"" . MyExpenseType::$page_manage . "\">View Type " . " </a>";
+        }
+
+
+        $output .= "<a  class=\"btn btn-info\"  href=\"" . "/Inspinia/loan_exp.php" . "\">Mum " . " </a>";
+
+        return $output;
+    }
+
+}
+
+
+class MyExpenseMumPost extends MyExpenseMum
+{
+
+    protected static $table_name = "myexpensemumpost";
+
+    public static $id_person = 2;
+//    public static $get_form_element = array('amount', 'cash', 'comment', 'document', 'person_id', 'expense_type_id', 'expense_date', 'ccy_id', 'rate', 'modification_time');
+//
+//    public static $get_form_element = array('amount', 'cash', 'expense_type_id', 'comment', 'document', 'expense_date', 'ccy_id', 'rate', 'modification_time');
+
+    public static $page_name = "Mum Postfinance  ";
+
+    public static $page_manage = "/public/admin/crud/data/manage_data.php?class_name=MyExpenseMumPost";
+//    public static $page_new = "/public/admin/crud/ajax/new_ajax.php?class_name=MyExpenseMumPost";
+//    public static $page_edit = "/public/admin/crud/ajax/edit_ajax.php?class_name=MyExpenseMumPost";
+//    public static $page_delete = "/public/admin/crud/ajax/delete_ajax.php?class_name=MyExpenseMumPost";
+
+    public static $page_new = "/public/admin/crud/data/new_data.php?class_name=MyExpenseMumPost";
+    public static $page_edit = "/public/admin/crud/data/edit_data.php?class_name=MyExpenseMumPost";
+    public static $page_delete = "/public/admin/crud/data/delete_data.php?class_name=MyExpenseMumPost";
+
+
+//    public static $form_default_value = array(
+//        "expense_date" => "now()",
+//        "modification_time" => "nowtime()",
+//        "amount" => "0",
+//        "person_id" => "2",
+//        "expense_type_id" => "1",
+//        "ccy_id" => "2",
+////        "currency"=>"CHF",
+//        "rate" => "1",
+//        "comment" => "Mum post finance"
+//
+//
+//    );
+//
+//
+//    protected function set_up_display()
+//    {
+//        $this->person_id = 2;
+//        parent::set_up_display();
+//    }
+
+    public static function table_nav_additional()
+    {
+
+        if (User::is_admin()) {
+            $output = "</a><span>&nbsp;</span>";
+            $output .= "<a  class=\"btn btn-primary\"  href=\"" . MyExpensePerson::$page_new . "\">Add New Person " . " </a><span>&nbsp;</span>";
+            $output .= "<a  class=\"btn btn-primary\"  href=\"" . MyExpenseType::$page_new . "\">Add New Type " . " </a></a><span>&nbsp;</span>";
+            $output .= "<a  class=\"btn btn-primary\"  href=\"" . MyExpensePerson::$page_manage . "\">View Person " . " </a><span>&nbsp;</span>";
+            $output .= "<a  class=\"btn btn-primary\"  href=\"" . MyExpenseType::$page_manage . "\">View Type " . " </a>";
         }
 
 

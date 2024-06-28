@@ -6,5 +6,5 @@ if(isset($session->user_id)){
 log_action('Logout', "{$found_user->username} logged out.");
 }
     $session->logout();
-    redirect_to("login.php");
+    redirect_to("/public/admin/login.php");
 ?>

@@ -27,9 +27,11 @@
 
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     ;
-    <title>ikamy.ch <?php if ($layout_context == "admin") {
+    <title>ikamy.ch
+        <?php if ($layout_context == "admin") {
             echo "Admin";
-        } ?></title>
+        } ?>
+    </title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 
@@ -38,6 +40,9 @@
 
     <link rel="stylesheet" type="text/css" href="<?php echo $Nav->path_public; ?>css/custom.css">
     <link rel="stylesheet" type="text/css" href="<?php echo $Nav->path_public; ?>css/styles.css">
+
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
     <?php if ($stylesheets == "fade_php") { ?>
         <link rel="stylesheet" href="/public/_js/dist/stylesheets/superslides.css">

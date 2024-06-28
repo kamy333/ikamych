@@ -125,8 +125,6 @@ if ($layout_context == "public") {
                 ><a href="<?php echo $path_public; ?>myLinks.php?category=Others">Links</a></li>
 
 
-
-
                 <li
                     <?php if (isset($active_menu) && $active_menu == "Others") {
                         echo " class=\"dropdown active\"";
@@ -185,11 +183,11 @@ if ($layout_context == "public") {
                 </li>
 
 
-                <li
-                    <?php if (isset($active_menu) && $active_menu == "contact") {
-                        echo "class=\"active\"";
-                    } ?>
-                ><a href="<?php echo $path_public; ?>contact.php">Contact</a></li>
+                <!--                <li-->
+                <!--                    --><?php //if (isset($active_menu) && $active_menu == "contact") {
+                //                        echo "class=\"active\"";
+                //                    } ?>
+                <!--                ><a href="--><?php //echo $path_public; ?><!--contact.php">Contact</a></li>-->
 
 
                 <?php if (isset($_SESSION["user_id"]) && ($user->is_employee())) { ?>
@@ -212,23 +210,49 @@ if ($layout_context == "public") {
                 <?php } ?>
 
 
-                <?php if  (User::is_admin() || User::is_caroline()) { ?>
+                <?php if (User::is_admin() || User::is_caroline()) { ?>
 
-                    <li
-                        <?php if (isset($active_menu) && $active_menu == "admin") {
-                            echo " class=\"dropdown active\"";
+                <li
+                    <?php if (isset($active_menu) && $active_menu == "adminx") {
+                        echo " class=\"dropdown active\"";
+                    } else {
+                        echo " class=\" dropdown\"";
+                    } ?>
+                ><a href="#" data-toggle="dropdown">
+                        <?php } ?>
+
+                        <?php
+                        if (User::is_kamy()) {
+                            echo "Calendar";
+
                         } else {
-                            echo " class=\" dropdown\"";
-                        } ?>
-                    ><a href="#" data-toggle="dropdown">Caroline<span class="caret"></span></a>
+                            echo "Caroline ";
+                            echo "<li class='divider'></li>";
+                        }
+                        ?>
 
-                        <ul class="dropdown-menu">
-                            <?php
-                            echo $Nav->menu_item('MyExpenseCaroline', 'New Expense Mum Caroline', 'new_ajax.php', 'admin/crud/ajax');
-                            echo $Nav->menu_item('MyExpenseCaroline', 'Expense Mum Caroline', 'manage_ajax.php', 'admin/crud/ajax');
-                            ?>
-                        </ul>
-                    </li>
+                        <?php { ?>
+                        <span class="caret"></span></a>
+
+                    <ul class="dropdown-menu">
+
+                        <?php
+
+                        if (User::is_kamy()){
+                            echo "<li><a href='https://www.ikamy.ch/public/calendar.php'>Calendar.php</a>";
+                            echo $Nav->menu_item('Calendar', 'Manage Calendar', 'manage_ajax.php', 'admin/crud/ajax');
+                            echo $Nav->menu_item('Calendar', 'New Calendar', 'new_ajax.php', 'admin/crud/ajax');
+                             echo "<li class='divider'></li>";
+                            echo "<li><a href='$path_public_f/kamy/foyer_oasis.php'>Foyer Oasis Calendar</a></li>";
+                            echo "<li class='divider'></li>";
+                        }
+
+
+                        echo $Nav->menu_item('MyExpenseCaroline', 'New Expense Mum Caroline', 'new_ajax.php', 'admin/crud/ajax');
+                        echo $Nav->menu_item('MyExpenseCaroline', 'Expense Mum Caroline', 'manage_ajax.php', 'admin/crud/ajax');
+                        ?>
+                    </ul>
+                </li>
 
 
                 <?php } ?>
@@ -254,6 +278,8 @@ if ($layout_context == "public") {
 
                                 echo $Nav->menu_item('MyExpenseMum', 'New Expense Mum', 'new_ajax.php', 'admin/crud/ajax');
                                 echo $Nav->menu_item('MyExpenseMum', 'Expense Mum', 'manage_ajax.php', 'admin/crud/ajax');
+                                echo $Nav->menu_item('MyExpenseMumPost', 'Expense Mum Post', 'manage_ajax.php', 'admin/crud/ajax');
+                                echo $Nav->menu_item('Calendar', 'Calendar', 'manage_ajax.php', 'admin/crud/ajax');
                             } ?>
 
 
@@ -275,6 +301,7 @@ if ($layout_context == "public") {
                             <?php echo $Nav->menu_item('MyHouseExpense', 'House Expense', 'manage_ajax.php', 'admin/crud/ajax'); ?>
                             <?php echo $Nav->menu_item('MyExpense', 'Expense', 'manage_ajax.php', 'admin/crud/ajax'); ?>
                             <?php echo $Nav->menu_item('MyExpenseMum', 'Expense Mum', 'manage_ajax.php', 'admin/crud/ajax'); ?>
+                            <?php echo $Nav->menu_item('MyExpenseMumPost', 'Expense Mum Post', 'manage_ajax.php', 'admin/crud/ajax'); ?>
                             <?php echo $Nav->menu_item('MyLoan', 'Loan', 'manage_ajax.php', 'admin/crud/ajax'); ?>
                             <?php echo $Nav->menu_item('MyExpensePerson', 'Expense Person', 'manage_ajax.php', 'admin/crud/ajax'); ?>
                             <?php echo $Nav->menu_item('MyExpenseType', 'Expense Type', 'manage_ajax.php', 'admin/crud/ajax'); ?>
@@ -284,7 +311,7 @@ if ($layout_context == "public") {
                             <?php echo "<li class=\"divider\"></li>"; ?>
 
                             <?php echo "<li><a href='/public/admin/manage_user.php'>User</a></li>" ?>
-<!--                            --><?php //echo $Nav->menu_item('User', 'User t', 'manage_ajax.php', 'admin/crud/ajax'); ?>
+                            <!--                            --><?php //echo $Nav->menu_item('User', 'User t', 'manage_ajax.php', 'admin/crud/ajax'); ?>
                             <?php echo "<li class=\"divider\">Links</li>"; ?>
 
                             <?php echo $Nav->menu_item('Links', 'Links', 'manage_ajax.php', 'admin/crud/ajax'); ?>
@@ -293,14 +320,13 @@ if ($layout_context == "public") {
                             <?php echo "<li class=\"divider\"></li>"; ?>
 
 
-
-                            <?php if (isset($session->user_id) and $user->is_admin()) { ?>
-                                <?php echo $Nav->menu_item('', 'Log File', 'logfile.php', 'admin'); ?>
-                                <?php echo $Nav->menu_item('', 'Log Views File', 'logfileviews.php', 'admin'); ?>
-                                <?php echo $Nav->menu_item('', 'Log Debug File', 'logfileDebug.php', 'admin'); ?>
-                                <?php echo $Nav->menu_item('', 'Log Queries File', 'logfilequeries.php', 'admin'); ?>
-
-                            <?php } ?>
+                            <!--                            --><?php //if (isset($session->user_id) and $user->is_admin()) { ?>
+                            <!--                                --><?php //echo $Nav->menu_item('', 'Log File', 'logfile.php', 'admin'); ?>
+                            <!--                                --><?php //echo $Nav->menu_item('', 'Log Views File', 'logfileviews.php', 'admin'); ?>
+                            <!--                                --><?php //echo $Nav->menu_item('', 'Log Debug File', 'logfileDebug.php', 'admin'); ?>
+                            <!--                                --><?php //echo $Nav->menu_item('', 'Log Queries File', 'logfilequeries.php', 'admin'); ?>
+                            <!---->
+                            <!--                            --><?php //} ?>
 
 
                         </ul>
@@ -319,6 +345,7 @@ if ($layout_context == "public") {
 
 
                             <?php echo $Nav->menu_item('MyExpenseMum', 'Expense Mum', 'new_ajax.php', 'admin/crud/ajax'); ?>
+                            <?php echo $Nav->menu_item('MyExpenseMumPost', 'Expense Mum Post', 'new_ajax.php', 'admin/crud/ajax'); ?>
 
                             <li class="divider"></li>
 
@@ -331,6 +358,7 @@ if ($layout_context == "public") {
                             <?php echo $Nav->menu_item('MyHouseExpense', 'House Expense', 'new_ajax.php', 'admin/crud/ajax'); ?>
                             <?php echo $Nav->menu_item('MyExpense', 'Expense', 'new_ajax.php', 'admin/crud/ajax'); ?>
                             <?php echo $Nav->menu_item('MyExpenseMum', 'Expense Mum', 'new_ajax.php', 'admin/crud/ajax'); ?>
+                            <?php echo $Nav->menu_item('MyExpenseMumPost', 'Expense Mum Post', 'new_ajax.php', 'admin/crud/ajax'); ?>
                             <?php echo $Nav->menu_item('MyLoan', 'Loan', 'new_ajax.php', 'admin/crud/ajax'); ?>
                             <?php echo $Nav->menu_item('MyExpensePerson', 'Expense Person', 'new_ajax.php', 'admin/crud/ajax'); ?>
                             <?php echo $Nav->menu_item('MyExpenseType', 'Expense Type', 'new_ajax.php', 'admin/crud/ajax'); ?>
@@ -347,67 +375,7 @@ if ($layout_context == "public") {
                         </ul>
                     </li>
 
-                    <?php if (User::is_kamy() && 1==2) { ?>
-
-                        <li
-                            <?php if (isset($active_menu) && $active_menu == "photo_gallery") {
-                                echo " class=\"dropdown active\"";
-                            } else {
-                                echo " class=\" dropdown\"";
-                            } ?>
-                        ><a href="#" data-toggle="dropdown">Photo Gallery<span class="caret"></span></a>
-
-                            <ul class="dropdown-menu">
-
-
-                                <?php echo $Nav->menu_item('', 'Photos', 'manage_photos.php', 'admin/wkg_progress') ?>
-                                <?php echo $Nav->menu_item('', 'Comments', 'manage_comments.php', 'admin/wkg_progress') ?>
-                                <?php echo $Nav->menu_item('', 'Comment Photo', 'manage_comments_photo.php', 'admin/wkg_progress') ?>
-
-                                <?php echo "<li class=\"divider\"></li>"; ?>
-
-                                <?php echo $Nav->menu_item('', 'New Comment old', 'new_Comment_old.php', 'admin/wkg_progress') ?>
-                                <?php echo $Nav->menu_item('', 'New Photo', 'new_photo.php', 'admin/wkg_progress') ?>
-
-                                <?php echo "<li class=\"divider\"></li>"; ?>
-                                <?php echo $Nav->menu_item('', 'Public Photo', 'photo.php', "public") ?>
-                                <?php echo $Nav->menu_item('', 'Public Photo Gallery', 'photo_gallery.php', "public") ?>
-
-
-                                <?php echo "<li class=\"divider\"></li>"; ?>
-                                <?php echo $Nav->menu_item('', 'Photos Old', 'Manage_Photo.php', 'admin/wkg_progress') ?>
-                                <?php echo $Nav->menu_item('', 'Comments del?', 'manage_Comment.php', 'admin/wkg_progress') ?>
-                                <?php echo $Nav->menu_item('', 'Comment Old ', 'manage_Comment_old.php', 'admin/wkg_progress') ?>
-                                <?php echo $Nav->menu_item('', 'New Photo_old', 'new_photo_old.php', 'admin/wkg_progress') ?>
-
-
-                            </ul>
-                        </li>
-                    <?php } ?>
-
-                <?php if (User::is_kamy()  && 1==2) { ?>
-                    <li
-                        <?php if (isset($active_menu) && $active_menu == "transport") {
-                            echo "class=\"active\"";
-                        } ?>
-                    ><a href="<?php echo $Nav->http . "transmed/"; ?>index.php">Transmed </a></li>
-
-                        <?php if (User::is_admin() || User::is_employee()) { ?>
-
-                            <li><a href="<?php echo $path_public; ?>_f/_transmed/transmed_form.php">Transmed_form</a>
-                            </li>
-                            <li><a href="<?php echo $path_public; ?>_f/_transmed/transmed_form2.php">Transmed_form2</a>
-                            </li>
-                            <li><a href="<?php echo $path_public; ?>_f/_transmed/transmed_form3.php">Transmed_form3</a>
-                            </li>
-                            <li><a href="<?php echo $path_public; ?>_f/_transmed/transmed_form4.php">Transmed_form4</a>
-                            </li>
-
-                        <?php } ?>
-
-                    <?php } ?>
-
-                    <?php if (User::is_kamy() && 1==2) { ?>
+                    <?php if (User::is_kamy() && 1 == 2) { ?>
 
                         <li
                             <?php if (isset($active_menu) && $active_menu == "photo_gallery") {
@@ -446,6 +414,72 @@ if ($layout_context == "public") {
                     <?php } ?>
 
 
+                    <?php if (User::is_admin() || User::is_kamy()) { ?>
+
+                        <li
+                            <?php if (isset($active_menu) && $active_menu == "transmed") {
+                                echo " class=\"dropdown active\"";
+                            } else {
+                                echo " class=\" dropdown\"";
+                            } ?>
+                        ><a href="#" data-toggle="dropdown">Transmed<span class="caret"></span></a>
+
+                            <ul class="dropdown-menu">
+
+                                <?php
+
+                                echo $Nav->menu_item('', 'Transmed fr', 'https://www.ikamy.fr/public/', '', true);
+                                echo $Nav->menu_item('', 'Transmed ch', 'https://www.ikamy.ch/transmed/', '', true);
+                                echo $Nav->menu_item('Course', 'Course', 'manage_ajax.php', 'admin/crud/ajax');
+                                echo $Nav->menu_item('Calendar', 'Calendar', 'manage_ajax.php', 'admin/crud/ajax');
+                                echo $Nav->menu_item('Client', 'Client', 'manage_ajax.php', 'admin/crud/ajax');
+                                echo $Nav->menu_item('Chauffeur', 'Chauffeur', 'manage_ajax.php', 'admin/crud/ajax');
+                                echo "<li class=\"divider\"></li>";
+                                ?>
+                            </ul>
+                        </li>
+
+
+                    <?php } ?>
+
+
+                    <?php if (User::is_kamy() && 1 == 2) { ?>
+
+                        <li
+                            <?php if (isset($active_menu) && $active_menu == "photo_gallery") {
+                                echo " class=\"dropdown active\"";
+                            } else {
+                                echo " class=\" dropdown\"";
+                            } ?>
+                        ><a href="#" data-toggle="dropdown">Photo Gallery<span class="caret"></span></a>
+
+                            <ul class="dropdown-menu">
+
+
+                                <?php echo $Nav->menu_item('', 'Photos', 'manage_photos.php', 'admin/wkg_progress') ?>
+                                <?php echo $Nav->menu_item('', 'Comments', 'manage_comments.php', 'admin/wkg_progress') ?>
+                                <?php echo $Nav->menu_item('', 'Comment Photo', 'manage_comments_photo.php', 'admin/wkg_progress') ?>
+
+                                <?php echo "<li class=\"divider\"></li>"; ?>
+
+                                <?php echo $Nav->menu_item('', 'New Comment old', 'new_Comment_old.php', 'admin/wkg_progress') ?>
+                                <?php echo $Nav->menu_item('', 'New Photo', 'new_photo.php', 'admin/wkg_progress') ?>
+
+                                <?php echo "<li class=\"divider\"></li>"; ?>
+                                <?php echo $Nav->menu_item('', 'Public Photo', 'photo.php', "public") ?>
+                                <?php echo $Nav->menu_item('', 'Public Photo Gallery', 'photo_gallery.php', "public") ?>
+
+
+                                <?php echo "<li class=\"divider\"></li>"; ?>
+                                <?php echo $Nav->menu_item('', 'Photos Old', 'Manage_Photo.php', 'admin/wkg_progress') ?>
+                                <?php echo $Nav->menu_item('', 'Comments del?', 'manage_Comment.php', 'admin/wkg_progress') ?>
+                                <?php echo $Nav->menu_item('', 'Comment Old ', 'manage_Comment_old.php', 'admin/wkg_progress') ?>
+                                <?php echo $Nav->menu_item('', 'New Photo_old', 'new_photo_old.php', 'admin/wkg_progress') ?>
+
+
+                            </ul>
+                        </li>
+                    <?php } ?>
 
 
                     <?php if (User::is_kamy()) { ?>
@@ -458,17 +492,68 @@ if ($layout_context == "public") {
                         ><a href="#" data-toggle="dropdown">Kamy<span class="caret"></span></a>
 
                             <ul class="dropdown-menu">
-<!--                                <li class="divider"></li>-->
+                                <li><a href="http://gynous.ikamy.ch">Gynous ikamy</a></li>
+                                <li><a href="http://api.ikamy.ch">API ikamy</a></li>
+                                <li class="divider"></li>
                                 <li><a href="<?php echo $path_public; ?>_f/article/music.php">Music</a></li>
                                 <li><a href="<?php echo $path_public; ?>_f/kamy/kamy_1.php">Finance</a></li>
                                 <li><a href="<?php echo $path_public; ?>_f/kamy/loan_expense.php">Loans Kamy</a></li>
                                 <li><a href="<?php echo $path_public; ?>_f/kamy/pay_brazil.php">Pay Bresil</a></li>
-                                <li><a href="https://seekingalpha.com/account/portfolio/summary?portfolioId=59021836">Seeking Alpha</a></li>
+                                <li><a href="<?php echo $path_public; ?>_f/kamy/foyer_oasis.php">Foyer Oasis
+                                        Calendar</a></li>
+                                <li><a href="<?php echo $path_public; ?>admin/delete_unwanter_user.php">Del unwanted
+                                        Users</a></li>
+                                <li><a href="https://seekingalpha.com/account/portfolio/summary?portfolioId=59021836">Seeking
+                                        Alpha</a></li>
                             </ul>
                         </li>
 
                     <?php } ?>
 
+                    <?php if (User::is_patrick()) { ?>
+                        <li
+                            <?php if (isset($active_menu) && $active_menu == "Patrick") {
+                                echo " class=\"dropdown active\"";
+                            } else {
+                                echo " class=\" dropdown\"";
+                            } ?>
+                        ><a href="#" data-toggle="dropdown">Patrick<span class="caret"></span></a>
+
+                            <ul class="dropdown-menu">
+                                <li><a href="/public/_f/patrick/patrick.php">Patrick</a></li>
+                                <li><a href="https://gynous.ikamy.ch">Gynous ikamy ??</a></li>
+                                <li><a href="https://gynous.ikamy.ch/gynous/public/assets/assets_public/index.html">Gynous
+                                        ikamy</a></li>
+                                <li class="divider"></li>
+                                <li><a target="_blank" href="https://app.nearscreen.com/accounts/login/">nearscreen
+                                        Seatable</a></li>
+                                <li><a target="_blank" href="https://cloud.seatable.io/accounts/login/">Kamran
+                                        Seatable</a></li>
+                                <li><a target="_blank" href="https://web.nearscreen.com/login/">nearscreen WeWeb</a>
+                                </li>
+
+                                <li><a target="_blank" href="https://dashboard.weweb.io/sign-in">WeWeb
+                                        Dashboard(dev@nearscreen)</a></li>
+                                <li><a target="_blank" href="https://sso.nearscreen.com/admin">aMember</a></li>
+
+
+                                <li class="divider"></li>
+                                <li><a target="_blank"
+                                       href="https://drive.google.com/file/d/1vxyZDOR2SpJHu6b52aMBSCGfOi3SAwdp/view?usp=share_link">2023-04-19
+                                        Loom1</a></li>
+                                <li><a target="_blank"
+                                       href="https://drive.google.com/file/d/1xYDkNwcXk_PhvI5s-IEgDk-7E53Vqlt0/view?usp=share_link">2023-04-19
+                                        Loom2</a></li>
+                                <li><a target="_blank"
+                                       href="https://drive.google.com/file/d/1QssSm_aK6VmwhYfgDJPYKJu50uVqLa59/view?usp=share_link">2023-04-19
+                                        Loom3</a></li>
+                                <li><a target="_blank"
+                                       href="https://drive.google.com/file/d/15xMqswF-HiS2O6mGlWZUYFygYogs78Ll/view?usp=share_link">2023-04-19
+                                        Loom4</a></li>
+
+                            </ul>
+                        </li>
+                    <?php } ?>
 
 
                     <?php if (isset($_SESSION["user_id"]) and $user->is_admin()) { ?>
@@ -491,6 +576,12 @@ if ($layout_context == "public") {
 
                     <?php // } ?>
                 <?php } ?>
+
+                <?php
+                if (User::is_kamy()){
+                    echo "<li style='background-color: lightgrey;color: blue'><a href='https://www.ikamy.ch/public/calendar.php'><b>Calendar</b></a>";
+                }
+                ?>
 
 
             </ul>

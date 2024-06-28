@@ -12,16 +12,16 @@ class User extends DatabaseObject
     const TYPE_EMPLOYEE = 4;
     const TYPE_VISITOR = 5;
     const TYPE_CHAUFFEUR = 6;
-    public static $required_fields = array('username', 'password', 'nom', 'email', 'user_type_id');
-    public static $required_fields_no_password = array('username', 'nom', 'email', 'user_type_id');
-    public static $fields_numeric = array('id', 'user_type', 'block_user', 'unread_message', 'unread_notification',);
+    public static  $required_fields = ['username', 'password', 'nom', 'email', 'user_type_id'];
+    public static  $required_fields_no_password = array('username', 'nom', 'email', 'user_type_id');
+    public static  $fields_numeric = array('id', 'user_type', 'block_user', 'unread_message', 'unread_notification',);
 
     public static $fields_image = ['user_image']; // todo
 
 
     public static $get_form_element = array('user_image', 'username', 'password', 'nom', 'email', 'user_type_id', 'first_name', 'last_name', 'block_user');
 
-    public static $get_form_element_others = array('address', 'cp', 'city', 'country', 'phone', 'mobile', '', '');
+    public static  $get_form_element_others = array('address', 'cp', 'city', 'country', 'phone', 'mobile', '', '');
 
     public static $form_default_value = array(
         "block_user" => "0",
@@ -45,21 +45,21 @@ class User extends DatabaseObject
 //    public static $position_table="positionRight"; // positionLeft // positionBoth  positionRight
     public static $position_table = "positionBoth"; // positionLeft // positionBoth  positionRight
 
-    public static $form_class_dependency = array('UserType');
-    static public $valid_user_type_id = array(
+    public static $form_class_dependency = ['UserType'];
+    static public  $valid_user_type_id = [
         self::TYPE_ADMIN => 'admin',
         self::TYPE_MANAGER => 'manager',
         self::TYPE_SECRETARY => 'secretary',
         self::TYPE_EMPLOYEE => 'employee',
         self::TYPE_VISITOR => 'visitor',
         self::TYPE_CHAUFFEUR => 'chauffeur',
-    );
+    ];
     protected static $table_name = "users";
-    protected static $db_fields = array('id', 'username', 'hashed_password', 'nom', 'email', 'user_type', 'user_type_id', 'block_user', 'unread_message', 'unread_notification', 'first_name', 'last_name', 'user_image', 'reset_token', 'address', 'cp', 'city', 'country', 'phone', 'mobile');
+    protected static $db_fields = ['id', 'username', 'hashed_password', 'nom', 'email', 'user_type', 'user_type_id', 'block_user', 'unread_message', 'unread_notification', 'first_name', 'last_name', 'user_image', 'reset_token', 'address', 'cp', 'city', 'country', 'phone', 'mobile'];
 
-    protected static $db_fields_no_password = array('id', 'username', 'nom', 'email', 'user_type', 'user_type_id', 'block_user', 'unread_message', 'unread_notification', 'first_name', 'last_name', 'user_image', 'reset_token', 'address', 'cp', 'city', 'country', 'phone', 'mobile');
-    protected static $db_fields_table_display_short = array('id', 'username', 'nom', 'email', 'user_type', 'user_type_id', 'block_user', 'photo', 'reset_token');
-    protected static $db_fields_table_display_full = array('id', 'username', 'nom', 'email', 'user_type', 'user_type_id', 'block_user', 'unread_message', 'unread_notification', 'first_name', 'last_name', 'user_image', 'reset_token', 'address', 'cp', 'city', 'country', 'phone', 'mobile');
+    protected static  $db_fields_no_password = ['id', 'username', 'nom', 'email', 'user_type', 'user_type_id', 'block_user', 'unread_message', 'unread_notification', 'first_name', 'last_name', 'user_image', 'reset_token', 'address', 'cp', 'city', 'country', 'phone', 'mobile'];
+    protected static $db_fields_table_display_short = ['id', 'username', 'nom', 'email', 'user_type', 'user_type_id', 'block_user', 'photo', 'reset_token'];
+    protected static $db_fields_table_display_full = ['id', 'username', 'nom', 'email', 'user_type', 'user_type_id', 'block_user', 'unread_message', 'unread_notification', 'first_name', 'last_name', 'user_image', 'reset_token', 'address', 'cp', 'city', 'country', 'phone', 'mobile'];
 
 
     protected static $db_field_exclude_table_display_sort = array('photo');
@@ -400,43 +400,43 @@ class User extends DatabaseObject
 
     );
     protected static $existing_password;
-    public $per_page;
+    public  $per_page;
 
 // not used but is method is_valid_user_type_id ()
-    public $id;
-    public $username;
-    public $password;
-    public $nom;
-    public $email;
-    public $user_type;
-    public $user_type_id;
-    public $first_name;
-    public $last_name;
-    public $reset_token;
-    public $block_user;
-    public $address;
-    public $cp;
-    public $city;
-    public $country;
-    public $phone;
-    public $mobile;
-    public $user_image;
-    public $photo;
-    public $unread_message;
+    public  $id;
+    public   $username;
+    public   $password;
+    public   $nom;
+    public   $email;
+    public   $user_type;
+    public   $user_type_id;
+    public   $first_name;
+    public   $last_name;
+    public   $reset_token;
+    public   $block_user;
+    public   $address;
+    public   $cp;
+    public   $city;
+    public   $country;
+    public   $phone;
+    public   $mobile;
+    public   $user_image;
+    public   $photo;
+    public   $unread_message;
 //    public $img;
-    public $unread_notification;
+    public   $unread_notification;
 
 
-    public $upload_directory = "uploads";
-    public $upload_directory_img = "user_img";
-    public $full_path_directory = PATH_UPLOAD;
-    public $user_img_directory = PATH_USER_IMG; // todo
+    public  $upload_directory = "uploads";
+    public   $upload_directory_img = "user_img";
+    public   $full_path_directory = PATH_UPLOAD;
+    public   $user_img_directory = PATH_USER_IMG; // todo
 
-    public $image_placeholder = "https://www.mountaineers.org/images/placeholder-images/placeholder-400-x-400/image_preview";
+    public   $image_placeholder = "https://www.mountaineers.org/images/placeholder-images/placeholder-400-x-400/image_preview";
 
-    public $tmp_path;
-    public $errors = array();
-    public $upload_errors_array = array(
+    public   $tmp_path;
+    public  $errors = [];
+    public array $upload_errors_array = [
         // http://www.php.net/manual/en/features.file-upload.errors.php
         UPLOAD_ERR_OK => "No errors.",
         UPLOAD_ERR_INI_SIZE => "Larger than upload_max_filesize.",
@@ -446,10 +446,10 @@ class User extends DatabaseObject
         UPLOAD_ERR_NO_TMP_DIR => "No temporary directory.",
         UPLOAD_ERR_CANT_WRITE => "Can't write to disk.",
         UPLOAD_ERR_EXTENSION => "File upload stopped by extension."
-    );
+    ];
 
 
-    protected $hashed_password;
+    protected  $hashed_password;
 
     public static function add_soustract_message($user_id, $operator = 1)
     {
@@ -481,6 +481,7 @@ class User extends DatabaseObject
                 return false;
             }
         }
+        return false;
     }
 
     public static function is_chauffeur()
@@ -493,6 +494,7 @@ class User extends DatabaseObject
                 return false;
             }
         }
+        return false;
     }
 
     public static function is_visitor()
@@ -505,6 +507,7 @@ class User extends DatabaseObject
                 return false;
             }
         }
+        return false;
     }
 
     public static function is_stricter_access()
@@ -520,6 +523,7 @@ class User extends DatabaseObject
                 return false;
             }
         }
+        return false;
     }
 
 //   public $no_picture=false;
@@ -535,6 +539,7 @@ class User extends DatabaseObject
                 return false;
             }
         }
+        return false;
     }
 
     public static function is_kamy()
@@ -547,6 +552,7 @@ class User extends DatabaseObject
                 return false;
             }
         }
+        return false;
     }
 
     public static function is_bralia()
@@ -559,6 +565,7 @@ class User extends DatabaseObject
                 return false;
             }
         }
+        return false;
     }
 
     public static function is_djamila()
@@ -571,7 +578,22 @@ class User extends DatabaseObject
                 return false;
             }
         }
+        return false;
     }
+
+    public static function is_patrick()
+    {
+        if (isset($_SESSION) && isset($_SESSION['user_id'])) {
+            $found_user = self::find_by_id($_SESSION["user_id"]);
+            if ($found_user->username == 'patrick' || $found_user->username == 'kamy' || $found_user->username == 'admin') {
+                return true;
+            } else {
+                return false;
+            }
+        }
+        return false;
+    }
+
 
     public static function is_caroline()
     {
@@ -583,18 +605,20 @@ class User extends DatabaseObject
                 return false;
             }
         }
+        return false;
     }
 
     public static function is_caroline_only()
     {
         if (isset($_SESSION) && isset($_SESSION['user_id'])) {
             $found_user = self::find_by_id($_SESSION["user_id"]);
-            if ($found_user->username == 'carolinefdm' ) {
+            if ($found_user->username == 'carolinefdm') {
                 return true;
             } else {
                 return false;
             }
         }
+        return false;
     }
 
 
@@ -608,6 +632,7 @@ class User extends DatabaseObject
                 return false;
             }
         }
+        return false;
     }
 
 
@@ -621,7 +646,7 @@ class User extends DatabaseObject
                 return false;
             }
         }
-
+        return false;
     }
 
     public static function is_manager()
@@ -634,6 +659,7 @@ class User extends DatabaseObject
                 return false;
             }
         }
+        return false;
     }
 
     public static function is_admin()
@@ -646,7 +672,7 @@ class User extends DatabaseObject
                 return false;
             }
         }
-
+        return false;
     }
 
     public static function authenticate($username = "", $password = "")
@@ -724,6 +750,38 @@ class User extends DatabaseObject
         } else {
             return parent::delete();
         }
+        return parent::delete();
+    }
+
+    public static function table_nav_additional()
+    {
+        $output = "</a><span>&nbsp;</span>";
+        $output .= "<a  class='btn btn-primary'  href=\"" . "/public/admin/delete_unwanter_user.php" . "\">Del Unwanted Users" . " </a><span>&nbsp;</span>";
+//        $output .= "<a  class=\"btn btn-primary\"  href=\"" . MyExpenseType::$page_new . "\">Add New Type " . " </a></a><span>&nbsp;</span>";
+//        $output .= "<a  class=\"btn btn-primary\"  href=\"" . MyExpensePerson::$page_manage . "\">View Person " . " </a><span>&nbsp;</span>";
+//        $output .= "<a  class=\"btn btn-primary\"  href=\"" . MyExpenseType::$page_manage . "\">View Type " . " </a>";
+
+//        $output .= "<a  class=\"btn btn-info\"  href=\"" . "/Inspinia/loan_exp.php" . "\">Mum " . " </a>";
+
+        return $output;
+
+
+
+    }
+
+    public static function delete_unwanted_users_after_ids($id_min)
+    {
+        global $database;
+        if($id_min <=779) {
+            $session->message("We cannot delete ids $id_min below 779");
+            redirect_to(static::$page_manage);
+
+        }
+        $sql = "DELETE FROM" . " " . static::$table_name;
+        $sql .= " WHERE `id`> " . $database->escape_value($id_min);
+//        $sql .= " LIMIT 1";
+        $database->query($sql);
+        return ($database->affected_rows() == 1) ? true : false;
 
     }
 
@@ -748,11 +806,19 @@ class User extends DatabaseObject
         global $Nav;
 //        $dir = $Nav->http . "/" . $this->upload_directory . "/" . $this->user_image;
         $dir = $Nav->http . DS . $this->upload_directory_img . DS . $this->user_image;
+        $dirfile = SITE_ROOT . DS . $this->upload_directory_img . DS . $this->user_image;
         $this->image_placeholder = $Nav->http . DS . $this->upload_directory_img . DS . "no_user.jpg";
+
+        if (!file_exists($dirfile)){
+            return $dir;
+        }
         return empty($this->user_image) ? $this->image_placeholder : $dir;
 
 
     }
+
+    public $type;
+    public $size;
 
     public function set_files($files)
     {
@@ -1040,7 +1106,6 @@ class User extends DatabaseObject
         }
 
 
-
     }
 
     public function blocked_email($info)
@@ -1203,7 +1268,7 @@ class UserUpdate extends User
 class RegisterUser extends User
 {
 
-    public static $required_fields = array('username', 'password', 'first_name', 'last_name', 'email', 'user_type_id');
+    public static  $required_fields = array('username', 'password', 'first_name', 'last_name', 'email', 'user_type_id');
 }
 
 class UpdateUserProfile extends User

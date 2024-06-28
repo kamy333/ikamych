@@ -58,7 +58,7 @@ class Session
         } else {
             // actions to take right away if user is not logged in
             $ip = $_SERVER['REMOTE_ADDR'];
-            log_views("Views | " . $_SERVER['PHP_SELF'], "IP ({$ip}) UserId: " . $this->user_id);
+            log_views("Views | " . $_SERVER['PHP_SELF'], "IP ({$ip}) UserId: Not logged in");
         }
     }
 
@@ -80,10 +80,20 @@ class Session
         unset($_SESSION['user_id']);
         unset($this->user_id);
         $this->logged_in = false;
-        $_SESSION = array();
-        if (isset($_COOKIE[session_name()])) {
-            session_set_cookie_params(session_name(), '', time() - 4200, '/');
-        }
+        $_SESSION = [];
+//        if (isset($_COOKIE[session_name()])) {
+//            session_set_cookie_params(session_name(), '', time() - 4200, '/');
+//        }
+
+//        new in php8
+//        $params = session_get_cookie_params();
+//        $params['lifetime'] = time() - 4200;
+//        $params['path'] = '/';
+//        $params['secure'] = false;
+//        $params['httponly'] = false;
+//        session_set_cookie_params($params['lifetime'], $params['path'], $params['domain'], $params['secure'], $params['httponly']);
+
+
 
         session_unset();
         session_destroy();

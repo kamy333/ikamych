@@ -1,4 +1,4 @@
-<?php require_once(CONFIG_HEADER); ?>
+<?php require_once (CONFIG_HEADER);?>
 
 
 <!DOCTYPE html>
@@ -11,7 +11,7 @@
 
     <title>INSPINIA | Empty Page</title>
 
-    <link href="<?php echo $path; ?>css/bootstrap.min.css" rel="stylesheet">
+    <link href="<?php echo $path;?>css/bootstrap.min.css" rel="stylesheet">
     <link href="font-awesome/css/font-awesome.css" rel="stylesheet">
 
     <link href="css/animate.css" rel="stylesheet">

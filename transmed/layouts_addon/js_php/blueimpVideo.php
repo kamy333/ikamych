@@ -1,12 +1,12 @@
-<script src="<?php echo $path; ?>js/plugins/blueimp//blueimp-helper.js"></script>
-<script src="<?php echo $path; ?>js/plugins/blueimp/blueimp-gallery.js"></script>
-<script src="<?php echo $path; ?>js/plugins/blueimp/blueimp-gallery-fullscreen.js"></script>
-<script src="<?php echo $path; ?>js/plugins/blueimp/blueimp-gallery-indicator.js"></script>
-<script src="<?php echo $path; ?>js/plugins/blueimp/blueimp-gallery-video.js"></script>
-<script src="<?php echo $path; ?>js/plugins/blueimp/blueimp-gallery-vimeo.js"></script>
-<script src="<?php echo $path; ?>js/plugins/blueimp/blueimp-gallery-youtube.js"></script>
-<script src="<?php echo $path; ?>js/plugins/blueimp/vendor/jquery.js"></script>
-<script src="<?php echo $path; ?>js/plugins/blueimp/jquery.blueimp-gallery.js"></script>
+<script src="<?php echo $path;?>js/plugins/blueimp//blueimp-helper.js"></script>
+<script src="<?php echo $path;?>js/plugins/blueimp/blueimp-gallery.js"></script>
+<script src="<?php echo $path;?>js/plugins/blueimp/blueimp-gallery-fullscreen.js"></script>
+<script src="<?php echo $path;?>js/plugins/blueimp/blueimp-gallery-indicator.js"></script>
+<script src="<?php echo $path;?>js/plugins/blueimp/blueimp-gallery-video.js"></script>
+<script src="<?php echo $path;?>js/plugins/blueimp/blueimp-gallery-vimeo.js"></script>
+<script src="<?php echo $path;?>js/plugins/blueimp/blueimp-gallery-youtube.js"></script>
+<script src="<?php echo $path;?>js/plugins/blueimp/vendor/jquery.js"></script>
+<script src="<?php echo $path;?>js/plugins/blueimp/jquery.blueimp-gallery.js"></script>
 <!--<script src="js/plugins/blueimp/demo.js"></script>-->
 
 
@@ -87,8 +87,7 @@
 //                vimeo: '163138825',
 //                poster: 'http://www.ikamy.ch/Inspinia/video/img/GypsyKing2.jpg'            },
 
-            {
-                title: 'Caroline Feredoun dancing',
+            {  title: 'Caroline Feredoun dancing',
 //                href: 'http://www.ikamy.ch/Inspinia/img/DesireeVideo/CaroDancing.mp4',
 //                type: 'video/mp4',
                 type: 'text/html',
@@ -97,8 +96,7 @@
             },
 
 
-            {
-                title: 'Children gathering',
+            {  title: 'Children gathering',
 //                href: 'http://www.ikamy.ch/Inspinia/img/DesireeVideo/Children.mp4',
 //                type: 'video/mp4',
                 type: 'text/html',
@@ -116,6 +114,6 @@
             carousel: true
         })
     });
-
-
+    
+    
 </script>

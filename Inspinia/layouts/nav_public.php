@@ -66,6 +66,9 @@
                             Friend <span class="caret"></span></a>
                         <ul role="menu" class="dropdown-menu">
                             <?php
+                            echo $Nav->menu_item('', 'Xavier', 'index_gallery18_xavier.php', 'public');
+
+                            echo $Nav->menu_item('', 'Xavier', 'index_gallery18_xavier.php', 'public');
 
                             if (User::is_bralia()) {
                                 echo $Nav->menu_item('', 'Bralia', 'index_gallery6.php', 'public');
@@ -94,6 +97,7 @@
                             <?php
                             if (User::is_caroline() || User::is_weslley()) {
                                 echo $Nav->menu_item('', 'Loan', 'loan_exp.php', 'public');
+                                echo $Nav->menu_item('', 'Mum PostFinance', 'loan_exp_post.php', 'public');
                             }
 
                             if (User::is_caroline()) {
@@ -120,7 +124,7 @@
 
                 <?php if (User::is_manager()) { ?>
                     <li><a href="<?php echo $Nav->http . "transmed/"; ?>index.php"><i class="fa fa-taxi"></i> <span
-                                    class="nav-label">Transport</span></a></li>
+                                class="nav-label">Transport</span></a></li>
                 <?php } ?>
                 <!--
                 <li class="dropdown">

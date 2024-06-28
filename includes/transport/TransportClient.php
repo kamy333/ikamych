@@ -13,8 +13,6 @@ protected static $table_name="transport_clients";
 
     protected static $db_fields = array('id', 'pseudo', 'liste_restrictive', 'web_view', 'last_name', 'first_name', 'address', 'cp', 'city', 'country', 'default_price', 'default_depart', 'default_arrivee', 'default_transport_type', 'liste_rank', 'remarque', 'input_date', 'modification_time', 'username');
 
-
-
     protected static $required_fields = array('id','pseudo','liste_restrictive','web_view','last_name','first_name','address','cp','city','country','default_price','default_depart','default_arrivee','liste_rank','remarque','input_date','modification_time','username');
 
     protected static $db_fields_table_display_short = array('id','pseudo','liste_restrictive','web_view','last_name','first_name','address','cp','city','country','default_price','default_depart','default_arrivee','liste_rank','remarque','input_date','modification_time','username');

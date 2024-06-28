@@ -63,6 +63,27 @@ if (User::is_visitor()) {
 
             <?php echo button_color('danger', "<i class='fa fa-automobile'>&nbsp;New Expense</i>", '/public/admin/crud/ajax/new_ajax.php?class_name=MyExpense', '', '', '', 2); ?>
 
+            <hr>
+
+            <?php echo button_color('success', "<i class='fa fa-maxcdn'>&nbsp;&nbsp;&nbsp;&nbsp;User&nbsp;&nbsp;&nbsp;&nbsp;</i>", '/public/admin/manage_user.php', '', '', '', 2); ?>
+
+            <?php echo button_color('primary', "<i class='fa fa-automobile'>&nbsp;My Mum Post</i>", '/public/admin/crud/ajax/manage_ajax.php?class_name=MyExpense', '', '', '', 2); ?>
+
+            <?php echo button_color('danger', "<i class='fa fa-automobile'>&nbsp;New Mum Post</i>", '/public/admin/crud/ajax/new_ajax.php?class_name=MyExpense', '', '', '', 2); ?>
+
+            <hr>
+
+            <?php echo button_color('primary', "<i class='fa fa-automobile'>&nbsp;Calandar.php</i>",
+                'https://www.ikamy.ch/public/calendar.php'
+                , '', '', '', 2); ?>
+
+            <?php echo button_color('danger', "<i class='fa fa-automobile'>&nbsp;Manage Calendar</i>", 'https://www.ikamy.ch/public/admin/crud/ajax/manage_ajax.php?class_name=Calendar', '', '', '', 2); ?>
+
+            <?php echo button_color('primary', "<i class='fa fa-automobile'>&nbsp;Add Calandar Date</i>",
+                'https://www.ikamy.ch/public/admin/crud/ajax/new_ajax.php?class_name=Calendar'
+                , '', '', '', 2); ?>
+
+
 
             <!--            https://www.ikamy.ch/public/admin/crud/ajax/new_ajax.php?class_name=MyExpense     -->
         <?php } ?>

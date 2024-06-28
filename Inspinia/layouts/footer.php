@@ -96,6 +96,18 @@
     <script src="<?php echo $path; ?>myjs/profile2.js"></script>
 
     <script>
+        $(document).ready(function() {
+            $('.select2-dropdown-special').select2({
+                tags: false,
+                allowClear: true
+            });
+
+
+
+        });
+    </script>
+
+    <script>
         $(".select2_demo_1").select2();
         $(".select2_demo_2").select2();
         $(".select2_demo_3").select2({

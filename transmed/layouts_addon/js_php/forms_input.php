@@ -1,74 +1,74 @@
-<!--<script src="<?php echo $path; ?>js/jquery-2.1.1.js"></script>-->
-<!--<script src="<?php echo $path; ?>js/bootstrap.min.js"></script>-->
+<!--<script src="<?php echo $path;?>js/jquery-2.1.1.js"></script>-->
+<!--<script src="<?php echo $path;?>js/bootstrap.min.js"></script>-->
 
 <!-- Custom and plugin javascript -->
-<!--<script src="<?php echo $path; ?>js/inspinia.js"></script>-->
-<!--<script src="<?php echo $path; ?>js/plugins/pace/pace.min.js"></script>-->
-<!--<script src="<?php echo $path; ?>js/plugins/slimscroll/jquery.slimscroll.min.js"></script>-->
+<!--<script src="<?php echo $path;?>js/inspinia.js"></script>-->
+<!--<script src="<?php echo $path;?>js/plugins/pace/pace.min.js"></script>-->
+<!--<script src="<?php echo $path;?>js/plugins/slimscroll/jquery.slimscroll.min.js"></script>-->
 
 <!-- Chosen -->
-<script src="<?php echo $path; ?>js/plugins/chosen/chosen.jquery.js"></script>
+<script src="<?php echo $path;?>js/plugins/chosen/chosen.jquery.js"></script>
 
 <!-- JSKnob -->
-<script src="<?php echo $path; ?>js/plugins/jsKnob/jquery.knob.js"></script>
+<script src="<?php echo $path;?>js/plugins/jsKnob/jquery.knob.js"></script>
 
 <!-- Input Mask-->
-<script src="<?php echo $path; ?>js/plugins/jasny/jasny-bootstrap.min.js"></script>
+<script src="<?php echo $path;?>js/plugins/jasny/jasny-bootstrap.min.js"></script>
 
 <!-- Data picker -->
-<script src="<?php echo $path; ?>js/plugins/datapicker/bootstrap-datepicker.js"></script>
+<script src="<?php echo $path;?>js/plugins/datapicker/bootstrap-datepicker.js"></script>
 
 <!-- NouSlider -->
-<script src="<?php echo $path; ?>js/plugins/nouslider/jquery.nouislider.min.js"></script>
+<script src="<?php echo $path;?>js/plugins/nouslider/jquery.nouislider.min.js"></script>
 
 <!-- Switchery -->
-<script src="<?php echo $path; ?>js/plugins/switchery/switchery.js"></script>
+<script src="<?php echo $path;?>js/plugins/switchery/switchery.js"></script>
 
 <!-- IonRangeSlider -->
-<script src="<?php echo $path; ?>js/plugins/ionRangeSlider/ion.rangeSlider.min.js"></script>
+<script src="<?php echo $path;?>js/plugins/ionRangeSlider/ion.rangeSlider.min.js"></script>
 
 <!-- iCheck -->
-<script src="<?php echo $path; ?>js/plugins/iCheck/icheck.min.js"></script>
+<script src="<?php echo $path;?>js/plugins/iCheck/icheck.min.js"></script>
 
 <!-- MENU -->
 <!--<script src="js/plugins/metisMenu/jquery.metisMenu.js"></script>-->
 
 <!-- Color picker -->
-<script src="<?php echo $path; ?>js/plugins/colorpicker/bootstrap-colorpicker.min.js"></script>
+<script src="<?php echo $path;?>js/plugins/colorpicker/bootstrap-colorpicker.min.js"></script>
 
 <!-- Clock picker -->
-<script src="<?php echo $path; ?>js/plugins/clockpicker/clockpicker.js"></script>
+<script src="<?php echo $path;?>js/plugins/clockpicker/clockpicker.js"></script>
 
 <!-- Image cropper -->
-<script src="<?php echo $path; ?>js/plugins/cropper/cropper.min.js"></script>
+<script src="<?php echo $path;?>js/plugins/cropper/cropper.min.js"></script>
 
 <!-- Date range use moment.js same as full calendar plugin -->
-<script src="<?php echo $path; ?>js/plugins/fullcalendar/moment.min.js"></script>
+<script src="<?php echo $path;?>js/plugins/fullcalendar/moment.min.js"></script>
 
 <!-- Date range picker -->
-<script src="<?php echo $path; ?>js/plugins/daterangepicker/daterangepicker.js"></script>
+<script src="<?php echo $path;?>js/plugins/daterangepicker/daterangepicker.js"></script>
 
 <!-- Select2 -->
-<script src="<?php echo $path; ?>js/plugins/select2/select2.full.min.js"></script>
+<script src="<?php echo $path;?>js/plugins/select2/select2.full.min.js"></script>
 
 <!-- TouchSpin -->
-<script src="<?php echo $path; ?>js/plugins/touchspin/jquery.bootstrap-touchspin.min.js"></script>
+<script src="<?php echo $path;?>js/plugins/touchspin/jquery.bootstrap-touchspin.min.js"></script>
 
 <script>
-    $(document).ready(function () {
+    $(document).ready(function(){
 
         var $image = $(".image-crop > img");
         $($image).cropper({
             aspectRatio: 1.618,
             preview: ".img-preview",
-            done: function (data) {
+            done: function(data) {
                 // Output the result data for cropping image.
             }
         });
 
         var $inputImage = $("#inputImage");
         if (window.FileReader) {
-            $inputImage.change(function () {
+            $inputImage.change(function() {
                 var fileReader = new FileReader(),
                     files = this.files,
                     file;
@@ -93,27 +93,27 @@
             $inputImage.addClass("hide");
         }
 
-        $("#download").click(function () {
+        $("#download").click(function() {
             window.open($image.cropper("getDataURL"));
         });
 
-        $("#zoomIn").click(function () {
+        $("#zoomIn").click(function() {
             $image.cropper("zoom", 0.1);
         });
 
-        $("#zoomOut").click(function () {
+        $("#zoomOut").click(function() {
             $image.cropper("zoom", -0.1);
         });
 
-        $("#rotateLeft").click(function () {
+        $("#rotateLeft").click(function() {
             $image.cropper("rotate", 45);
         });
 
-        $("#rotateRight").click(function () {
+        $("#rotateRight").click(function() {
             $image.cropper("rotate", -45);
         });
 
-        $("#setDrag").click(function () {
+        $("#setDrag").click(function() {
             $image.cropper("setDragMode", "crop");
         });
 
@@ -157,13 +157,13 @@
         });
 
         var elem = document.querySelector('.js-switch');
-        var switchery = new Switchery(elem, {color: '#1AB394'});
+        var switchery = new Switchery(elem, { color: '#1AB394' });
 
         var elem_2 = document.querySelector('.js-switch_2');
-        var switchery_2 = new Switchery(elem_2, {color: '#ED5565'});
+        var switchery_2 = new Switchery(elem_2, { color: '#ED5565' });
 
         var elem_3 = document.querySelector('.js-switch_3');
-        var switchery_3 = new Switchery(elem_3, {color: '#1AB394'});
+        var switchery_3 = new Switchery(elem_3, { color: '#1AB394' });
 
         $('.i-checks').iCheck({
             checkboxClass: 'icheckbox_square-green',
@@ -191,7 +191,7 @@
             endDate: moment(),
             minDate: '01/01/2012',
             maxDate: '12/31/2015',
-            dateLimit: {days: 60},
+            dateLimit: { days: 60 },
             showDropdowns: true,
             showWeekNumbers: true,
             timePicker: false,
@@ -217,11 +217,11 @@
                 fromLabel: 'From',
                 toLabel: 'To',
                 customRangeLabel: 'Custom',
-                daysOfWeek: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'],
+                daysOfWeek: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr','Sa'],
                 monthNames: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
                 firstDay: 1
             }
-        }, function (start, end, label) {
+        }, function(start, end, label) {
             console.log(start.toISOString(), end.toISOString(), label);
             $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
         });
@@ -260,11 +260,11 @@
 
     });
     var config = {
-        '.chosen-select': {},
-        '.chosen-select-deselect': {allow_single_deselect: true},
-        '.chosen-select-no-single': {disable_search_threshold: 10},
-        '.chosen-select-no-results': {no_results_text: 'Oops, nothing found!'},
-        '.chosen-select-width': {width: "95%"}
+        '.chosen-select'           : {},
+        '.chosen-select-deselect'  : {allow_single_deselect:true},
+        '.chosen-select-no-single' : {disable_search_threshold:10},
+        '.chosen-select-no-results': {no_results_text:'Oops, nothing found!'},
+        '.chosen-select-width'     : {width:"95%"}
     }
     for (var selector in config) {
         $(selector).chosen(config[selector]);
@@ -327,28 +327,28 @@
         behaviour: 'tap',
         connect: 'upper',
         range: {
-            'min': 20,
-            'max': 80
+            'min':  20,
+            'max':  80
         }
     });
 
     $("#range_slider").noUiSlider({
-        start: [40, 60],
+        start: [ 40, 60 ],
         behaviour: 'drag',
         connect: true,
         range: {
-            'min': 20,
-            'max': 80
+            'min':  20,
+            'max':  80
         }
     });
 
     $("#drag-fixed").noUiSlider({
-        start: [40, 60],
+        start: [ 40, 60 ],
         behaviour: 'drag-fixed',
         connect: true,
         range: {
-            'min': 20,
-            'max': 80
+            'min':  20,
+            'max':  80
         }
     });
 

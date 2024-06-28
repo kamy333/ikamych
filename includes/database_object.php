@@ -21,11 +21,21 @@ class DatabaseObject
 //    public static $page_delete;
 
 
-    public static $page_manage = "/public/admin/crud/ajax/manage_ajax.php?class_name=" . __CLASS__;
+//    public static $page_manage = "/public/admin/crud/ajax/manage_ajax.php?class_name=" . __CLASS__;
+    public static $page_manage = "/public/admin/crud/data/manage_data.php?class_name=" . __CLASS__;
+
     public static $page_new = "/public/admin/crud/ajax/new_ajax.php?class_name=" . __CLASS__;
-    public static $page_edit = "/public/admin/crud/ajax/edit_ajax.php?class_name=" . __CLASS__;
+//    public static $page_edit = "/public/admin/crud/ajax/edit_ajax.php?class_name=" . __CLASS__;
+
+    public static $page_edit = "/public/admin/crud/data/edit_data.php?class_name=" . __CLASS__; //  "edit_link.php"
+
     public static $page_delete = "/public/admin/crud/ajax/delete_ajax.php?class_name=" . __CLASS__;
 
+
+//    public static $page_manage = "/public/admin/crud/ajax/manage_ajax.php";
+//    public static $page_new = "/public/admin/crud/ajax/new_ajax.php";
+//    public static $page_edit = "/public/admin/crud/ajax/edit_ajax.php";
+//    public static $page_delete = "/public/admin/crud/ajax/delete_ajax.php";
 
 //    public static $page_manage = "/public/admin/crud/ajax/manage_ajax.php";
 //    public static $page_new = "/public/admin/crud/ajax/new_ajax.php";
@@ -195,6 +205,7 @@ class DatabaseObject
             static::$page_edit = $pages[2] . "_{$data}.php?class_name=" . get_called_class();
             static::$page_delete = $pages[3] . "_{$data}.php?class_name=" . get_called_class();
 
+
         }
 
 //
@@ -270,7 +281,6 @@ class DatabaseObject
 
 
     }
-
 
 
     public function create()
@@ -459,15 +469,20 @@ class DatabaseObject
             if (isset($GET[$val])) {
                 $myvalue = $_GET[$val];
             } elseif (isset(static::$form_default_value)) {
+                $date = date_create(datetime_sql());
                 if (array_key_exists($val, static::$form_default_value)) {
                     if (static::$form_default_value[$val] === "now()") {
-                        $myvalue = strftime("%Y-%m-%d", time());
+                        $myvalue = date_format($date, 'Y-m-d');
+//                        $myvalue = strftime("%Y-%m-%d", time());
                     } elseif (static::$form_default_value[$val] === "nowtime()") {
-                        $myvalue = strftime("%Y-%m-%d %H:%M:%S", time());
+                        $myvalue = date_format($date, 'Y-m-d H:i:s');
+//                        $myvalue = strftime("%Y-%m-%d %H:%M:%S", time());
                     } elseif (static::$form_default_value[$val] === "time()") {
-                        $myvalue = strftime("%H:%M:%S", time());
+                        $myvalue = date_format($date, 'H:i:s');
+//                        $myvalue = strftime("%H:%M:%S", time());
                     } elseif (static::$form_default_value[$val] === "timeNoSecond()") {
-                        $myvalue = strftime("%H:%M", time());
+                        $myvalue = date_format($date, 'H:M');
+//                        $myvalue = strftime("%H:%M", time());
                     } else {
                         $myvalue = static::$form_default_value[$val];
                     }
@@ -515,7 +530,7 @@ class DatabaseObject
         if (isset(static::$form_properties)) {
 
 
-            $form = New Form();
+            $form = new Form();
             //   static:: get_form_properties();
             //    var_dump(static::$form_properties);
 
@@ -537,7 +552,7 @@ class DatabaseObject
 //must be one of the following input to use ->text() todo checkbox
             $type_no_exception = array("text", 'password', 'email', 'select', 'search', 'date', 'datetime', 'datetime-local', 'color', 'button', 'file', 'hidden', 'image', 'month', 'number', 'range', 'reset', 'search', 'submit', 'tel', 'file', 'url', 'selectchosen', 'time', 'datetime-local', 'clockwise');
 
-            $type_text = array("text", 'password', 'email', 'search', 'date', 'datetime', 'datetime-local', 'color', 'button', 'file', 'hidden', 'image', 'month', 'number', 'range', 'reset', 'search', 'submit', 'tel', 'url');
+            $type_text = array("text", 'password', 'email', 'search', 'date', 'datetime', 'datetime-local', 'time', 'color', 'button', 'file', 'hidden', 'image', 'month', 'number', 'range', 'reset', 'search', 'submit', 'tel', 'url');
 
             if (is_array($vars)) {
                 $type = $vars['type'];
@@ -880,8 +895,6 @@ class DatabaseObject
         }
 
 
-
-
         $pagination = static::NewPagination();
         $page = static::getPagePagination();
 
@@ -1141,6 +1154,7 @@ class DatabaseObject
                 if (isset(static::$db_field_exclude_table_display_sort) && in_array($fieldname, static::$db_field_exclude_table_display_sort)) {
                     $fieldname = str_replace("_", " ", $fieldname);
                     $fieldname = ucfirst($fieldname);
+                    $fieldname = h($fieldname);
 //                    $text_th='';
 
 
@@ -1175,12 +1189,14 @@ class DatabaseObject
 
                     $fieldname = str_replace("_", " ", $fieldname);
                     $fieldname = ucfirst($fieldname);
+                    $fieldname = h($fieldname);
 
                     if (isset($text_th)) {
 //                        echo $text_th;
                         $fieldname = $text_th;
                         $fieldname = str_replace("_", " ", $fieldname);
                         $fieldname = ucfirst($fieldname);
+                        $fieldname = h($fieldname);
                         unset($text_th);
                     }
 
@@ -1527,7 +1543,7 @@ class DatabaseObject
 
     }
 
-    // list class case sensitive
+    // list class case-sensitive
 
     public function delete()
     {
@@ -1550,7 +1566,7 @@ class DatabaseObject
         // after calling $user->delete().d
     }
 
-    public function display_table_new($long_short = 0, $edit)
+    public function display_table_new($long_short = 0, $edit = false)
     {
 
 
@@ -1602,7 +1618,8 @@ class DatabaseObject
             if (get_called_class() == "User") {
                 $onclick = "onclick=\"return confirm('Are you sure you want to delete ID {$this->id}?');\"";
             } else {
-                $onclick = "";
+//                $onclick = "";
+                $onclick = "onclick=\"return confirm('Are you sure you want to delete ID {$this->id}?');\"";
             }
 
             $output .= "<td class='text-center'><a {$onclick} class='btn btn-danger table-btn' href='class_delete?class_name=" . get_called_class() . "&id=" . urlencode($this->id) . "'   >Delete</a></td>";
@@ -1613,7 +1630,7 @@ class DatabaseObject
 
     }
 
-    public function display_table($long_short = 0, $edit)
+    public function display_table($long_short = 0, $edit = false)
     {
 
 //        ,$is_data=false
@@ -1633,7 +1650,9 @@ class DatabaseObject
                 if (get_called_class() == "User") {
                     $onclick = "onclick=\"return confirm('Are you sure you want to delete ID {$this->id}?');\"";
                 } else {
-                    $onclick = "";
+//                    $onclick = "";
+                    $onclick = "onclick=\"return confirm('Are you sure you want to delete ID {$this->id}?');\"";
+
                 }
 
                 $href = clean_query_string(static::$page_delete . "?id=" . urlencode($this->id));

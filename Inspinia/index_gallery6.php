@@ -24,7 +24,7 @@
                             <button class="btn btn-danger  dim btn-large-dim" type="button"><i class="fa fa-heart"></i></button>
                             Mon adorable amie Bralia :)<span class="pull-right"> <a href="index.php" class="btn btn-primary">back Home</a></span> </h2>
                         <blockquote>Tes photos sont superbes, tu es trop chou. J'adore la photo tendre avec ton grand-père et la famille. Tu es aussi très jolie et un magnifique sourire. </blockquote>
-                        <blockquote>La classe en avocate. J'ai du mal à les articles. As-tu gagné?</blockquote>
+                        <blockquote>La classe en avocate. J'ai du mal à lire les articles. As-tu gagné?</blockquote>
                         <blockquote>Peux-tu m'envoyer moi plus de photos stp, c'est pas assez!</blockquote>
 
 

@@ -1,24 +1,8 @@
-a > button.index-page {
-    width: 10em;
-    /*height: 10em;*/
-    margin-left: 1em;
-    margin-top: 2em;
-
-}
-
-.kamy-navbar-inverse {
-    background-color: blue;
-    color: white;
-    /*border-bottom-style: ridge;*/
-
-}
-
-
-
 .huge {
     font-size: 50px;
     line-height: normal;
 }
+
 
 .huge {
     font-size: 40px;
@@ -78,6 +62,9 @@ a > button.index-page {
     color: #df8a13;
 }
 
+
+
+
 .panel-blue {
     border-color: #337ab7;
 }
@@ -95,6 +82,8 @@ a > button.index-page {
 .panel-blue a:hover {
     color: lightskyblue;
 }
+
+
 
 .panel-darkgray {
     border-color: #a9a9a9;
@@ -114,6 +103,9 @@ a > button.index-page {
     color: #778899;
 }
 
+
+
+
 .panel-purple {
     border-color: #800080;
 }
@@ -131,6 +123,9 @@ a > button.index-page {
 .panel-purple a:hover {
     color: #f08080;
 }
+
+
+
 
 .panel-palevioletred {
     border-color: palevioletred;
@@ -150,6 +145,10 @@ a > button.index-page {
     color: purple;
 }
 
+
+
+
+
 .panel-black {
     border-color: #2a2725;
 }
@@ -167,6 +166,9 @@ a > button.index-page {
 .panel-black a:hover {
     color: palevioletred;
 }
+
+
+
 
 .panel-darkred {
     border-color: brown;
@@ -186,6 +188,11 @@ a > button.index-page {
     color: palevioletred;
 }
 
+
+
+
+
+
 .panel-darkgreen {
     border-color: darkgreen;
 }
@@ -203,6 +210,8 @@ a > button.index-page {
 .panel-darkgreen a:hover {
     color: palevioletred;
 }
+
+
 
 .panel-darkblue {
     border-color: darkblue;
@@ -222,6 +231,8 @@ a > button.index-page {
     color: blue;
 }
 
+
+
 .panel-darkgrey {
     border-color: darkgrey;
 }
@@ -239,5 +250,3 @@ a > button.index-page {
 .panel-darkgrey a:hover {
     color: grey;
 }
-
-

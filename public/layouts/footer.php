@@ -18,168 +18,24 @@
 <script src="//code.jquery.com/jquery-latest.min.js"></script>
 
 
-<!--<script id="tinimyce" class="tinimyce" src="//cdn.tiny.cloud/1/bd42pftj1phl7lgv2274y7i6ok8af0vdegi2yherw7rr3jux/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>-->
-<!---->
-<!--<script>tinymce.init({selector: 'textarea'});</script>-->
 
+<!--<script src="https://cdn.tiny.cloud/1/bd42pftj1phl7lgv2274y7i6ok8af0vdegi2yherw7rr3jux/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>-->
+<!--<script>tinymce.init({selector: 'textarea'});</script>-->
 
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
         integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
         crossorigin="anonymous"></script>
 <script src="<?php echo $Nav->path_public; ?>myjs/socialmedia.js"></script>
 
-
-<?php
-
-if ($Nav->current_page == "transmed_form2") {
-    ?>
-    <script>
-
-        function ttd(data) {
-            return "<td>" + data + "</td>";
-        }
-
-        var myHttp = '<?php echo $http;  ?>';
-
-        $.getJSON(myHttp, function (data) {
-            var d = data.feed.entry;
-
-            var myFirst;
-            var myLast;
-            var myEmail;
-            var myApproved;
-            var myAge;
-            var mytd;
-
-            jQuery.each(d, function () {
-                myFirst = ttd(this['gsx$first']['$t']);
-                myLast = ttd(this['gsx$last']['$t']);
-                myEmail = ttd(this['gsx$email']['$t']);
-                myApproved = ttd(this['gsx$approved']['$t']);
-                myAge = ttd(this['gsx$age']['$t']);
-                myTd = myFirst + myLast + myEmail + myApproved + myAge;
-//                console.log(myFirst);
-                $('#myTable').find('tr:last').after('<tr>' + myTd + '</tr>');
-            });
-
-            console.log(d);
+<script>
+    $(document).ready(function() {
+        $('.select2-dropdown-special').select2({
+            tags: false
         });
+    });
+</script>
 
 
-    </script>
-
-
-<?php } ?>
-
-
-<?php
-if ($Nav->current_page == "transmed_form3") {
-    ?>
-    <script>
-
-
-        function ttd(data) {
-            return "<td>" + data + "</td>";
-        }
-
-        //var myHttp = '<?php //echo $http;  ?>//';
-        var myHttp = 'https://spreadsheets.google.com/feeds/list/1uFQMPEsnH0EeC7XQ-sbAe_7ga1ozpjNvJhJSId0mC4g/1/public/values?alt=json';
-
-        $.getJSON(myHttp, function (data) {
-            var d = data.feed.entry;
-            console.log(d);
-
-
-            var timestamp;
-            var datedelacourse;
-            var heurecourse;
-            var nomclient;
-            var typetransport;
-            var adressededepart;
-            var adressedarrivee;
-            var allersimpleouallerretour;
-            var heureretour;
-            var dateretour;
-            var emailaddress;
-            var chauffeur;
-            var myTd;
-
-            jQuery.each(d, function () {
-                timestamp = ttd(this['gsx$timestamp']['$t']);
-                datedelacourse = ttd(this['gsx$datedelacourse']['$t']);
-                heurecourse = ttd(this['gsx$heurecourse']['$t']);
-                nomclient = ttd(this['gsx$nomclient']['$t']);
-                typetransport = ttd(this['gsx$typetransport']['$t']);
-                adressededepart = ttd(this['gsx$adressededepart']['$t']);
-                adressedarrivee = ttd(this['gsx$adressedarrivee']['$t']);
-                allersimpleouallerretour = ttd(this['gsx$allersimpleouallerretour']['$t']);
-                heureretour = ttd(this['gsx$heureretour']['$t']);
-                dateretour = ttd(this['gsx$dateretour']['$t']);
-                emailaddress = ttd(this['gsx$emailaddress']['$t']);
-                chauffeur = ttd(this['gsx$chauffeur']['$t']);
-
-                myTd = timestamp + datedelacourse + heurecourse + nomclient + typetransport + adressededepart + adressedarrivee + allersimpleouallerretour
-                    + heureretour + dateretour + emailaddress + chauffeur;
-//                console.log(myFirst);
-                $('#myTableCourses').find('tr:last').after('<tr>' + myTd + '</tr>');
-            });
-
-            console.log(d);
-        });
-
-    </script>
-<?php } ?>
-
-
-
-
-<?php
-if ($Nav->current_page == "transmed_form4") {
-    ?>
-    <script>
-
-
-        function ttd(data) {
-            return "<td>" + data + "</td>";
-        }
-
-        //var myHttp = '<?php //echo $http;  ?>//';
-        var myHttp = 'https://spreadsheets.google.com/feeds/list/1uFQMPEsnH0EeC7XQ-sbAe_7ga1ozpjNvJhJSId0mC4g/2/public/values?alt=json';
-
-        $.getJSON(myHttp, function (data) {
-            var d = data.feed.entry;
-            console.log(d);
-
-
-            var timestamp;
-            var nomchauffeur;
-            var date;
-            var heurededebut;
-            var heuredefin;
-            var commentaire;
-            var myTd;
-
-
-            jQuery.each(d, function () {
-                timestamp = ttd(this['gsx$timestamp']['$t']);
-                nomchauffeur = ttd(this['gsx$nomchauffeur']['$t']);
-                date = ttd(this['gsx$date']['$t']);
-                heurededebut = ttd(this['gsx$heurededebut']['$t']);
-                heuredefin = ttd(this['gsx$heuredefin']['$t']);
-                commentaire = ttd(this['gsx$commentaire']['$t']);
-
-                myTd = timestamp + nomchauffeur + date + heurededebut + heuredefin + commentaire
-
-
-//                console.log(myFirst);
-                $('#myTableHoraires').find('tr:last').after('<tr>' + myTd + '</tr>');
-            });
-
-            console.log(d);
-        });
-
-    </script>
-<?php } ?>
 
 
 

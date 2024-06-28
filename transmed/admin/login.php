@@ -1,5 +1,5 @@
 <?php
-require_once('../../includes/initialize_transmed.php');
+require_once("../../includes/initialize.php");
 $blacklist_ip = new BlacklistIp();
 $blacklist_ip->block_blacklisted_ips();
 
@@ -42,18 +42,32 @@ if (request_is_post() && request_is_same_domain()) {
                 $found_user = User::authenticate($username, $password);
 
                 if ($found_user) {
-                    $failed_login->clear_failed_logins($username);
-                    $session->login($found_user);
-                    log_action('Login Transmed', "{$found_user->username} logged in through Transmed.");
-                    if (User::is_visitor()) {
-                        redirect_to('/transmed/index.php');
+
+                    if ($found_user->block_user == 0) {
+
+                        $failed_login->clear_failed_logins($username);
+                        $session->login($found_user);
+                        log_action('Login', "{$found_user->username} logged in from Inspinia.");
+
+                        if (User::is_visitor()) {
+                            redirect_to('/Inspinia/index.php');
+                        }
+                        redirect_to("index.php");
+
+                    } else {
+//                        $found_user-> visitor_email('Registration successful but you are blocked');
+                        log_action('Login failed', "{$username} logged in failed because is blocked. (Inspinia)");
+                        $message = "Dear {$found_user->nom}, You are blocked until your registration is reviewed. Thank you for your understanding. ";
+                        $found_user->blocked_email('Blocked User tried to login (Inspinia)');
+
                     }
-                    redirect_to("index.php");
                 } else {
-                    log_action('Login failed', "{$username} logged in failed through Transmed.");
                     $failed_login->record_failed_login($username);
                     $blacklist_ip->add_ip_to_blacklist();
-                    $message = "Username/password combination incorrect.";
+
+                    log_action('Login failed', "{$username} logged in failed. (Inspinia)");
+                    $message = "Username/password combination incorrect";
+
 
                     //Uncomment if need to reinitialize to 0 blacklist and ip as argument
                     //$blacklist_ip->clear_blacklist_ip($_SERVER['REMOTE_ADDR']);
@@ -116,16 +130,10 @@ if (request_is_post() && request_is_same_domain()) {
             </div>
             <button type="submit" name="submit" class="btn btn-primary block full-width m-b">Login</button>
 
-            <a href="<?php echo $path_admin; ?>login_forgot_password_email.php">
-                <small>Forgot password?</small>
-            </a>
+            <a href="<?php echo $path_admin; ?>login_forgot_password_email.php"><small>Forgot password?</small></a>
             &nbsp;&nbsp;&nbsp;&nbsp;
-            <a href="<?php echo $path_admin; ?>login_forgot_password_username.php">
-                <small>Forgot user name?</small>
-            </a>
-            <p class="text-muted text-center">
-                <small>Do not have an account?</small>
-            </p>
+            <a href="<?php echo $path_admin; ?>login_forgot_password_username.php"><small>Forgot user name?</small></a>
+            <p class="text-muted text-center"><small>Do not have an account?</small></p>
             <a class="btn btn-sm btn-white btn-block" href="<?php echo $path_admin; ?>register.php">Create an
                 account</a>
         </form>

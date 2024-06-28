@@ -53,7 +53,7 @@ $query_string = remove_get(array('view', 'page', $class_name));
 //echo call_user_func_array(array($class_name, 'display_pagination'),[]);
 //echo $_SERVER['HTTP_X_REQUESTED_WITH'];
 echo "<div class=\"row\">";
-echo "<div class=\"col-md-7 {$offset}\" id='pagination' >";
+echo "<div class=\"col-md-12 {$offset}\" id='pagination' >";
 echo call_user_func_array(array($class_name, 'display_pagination'), []);
 echo "</div>";
 echo "</div>";

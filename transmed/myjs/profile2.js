@@ -39,7 +39,7 @@ function addListenersNotesEditDelete() {
         event.preventDefault();
         var href = $(this).data('myhrefedittodolist');
         // alert(ibox());
-        // $( "#result" ).load( "ajax/test.sql.html #container" );
+        // $( "#result" ).load( "ajax/test.html #container" );
 
         // $('#smallNotelistibox').html(ibox());
 

@@ -27,7 +27,7 @@ learning/
 
 inspinia/img/
 
-transmed/img/
+transmed_old/img/
 
 # Windows image file caches
 Thumbs.db
@@ -70,7 +70,7 @@ config_mail.php
 Inspinia_Full_Version_2
 vendor
 /public/admin/test/*
-/transmed/xml/transmed/*
+/transmed_old/xml/transmed/*
 /includes/transmed_config/config_transmed.php
 /includes/transmed_config/
 /public/img/*
@@ -128,24 +128,24 @@ public/img/shoah/
 public/img/social_media/
 public/js/plugins/gritter/images/
 public/js/plugins/jquery-ui/images/
-transmb/assets/img/
-transmed/css/patterns/
-transmed/css/plugins/images/
-transmed/css/plugins/jQueryUI/images/
-transmed/js/plugins/gritter/images/
-transmed/js/plugins/jquery-ui/images/
-transmed/xml/transmed/
-transmed/z_history/css/patterns/
-transmed/z_history/css/plugins/images/
-transmed/z_history/css/plugins/jQueryUI/images/
-transmed/z_history/js/plugins/gritter/images/
-transmed/z_history/js/plugins/jquery-ui/images/
-transmedmb/admin/
-transmedmb/assets/images/
-transmedmb/assets/portfolio/images/
-transmedmb/documentation/assets/blueprint-css/plugins/buttons/icons/
-transmedmb/documentation/assets/blueprint-css/plugins/link-icons/icons/
-transmedmb/documentation/assets/images/
+z_other_projects/transmb_old/assets/img/
+transmed_old/css/patterns/
+transmed_old/css/plugins/images/
+transmed_old/css/plugins/jQueryUI/images/
+transmed_old/js/plugins/gritter/images/
+transmed_old/js/plugins/jquery-ui/images/
+transmed_old/xml/transmed/
+transmed_old/z_history/css/patterns/
+transmed_old/z_history/css/plugins/images/
+transmed_old/z_history/css/plugins/jQueryUI/images/
+transmed_old/z_history/js/plugins/gritter/images/
+transmed_old/z_history/js/plugins/jquery-ui/images/
+transmedmb_old/admin/
+transmedmb_old/assets/images/
+transmedmb_old/assets/portfolio/images/
+transmedmb_old/documentation/assets/blueprint-css/plugins/buttons/icons/
+transmedmb_old/documentation/assets/blueprint-css/plugins/link-icons/icons/
+transmedmb_old/documentation/assets/images/
 public/img/Kamy/Weslley_judeo.jpeg
 public/img/maman_document/2020-08-14 Lelah Facture Maman_AiG Europe lux CHF 108.00.jpeg
 public/img/maman_document/2020-08-14 Lelah Facture Maman_SBB CFF CHF 205.00 2.jpeg

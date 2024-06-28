@@ -5,117 +5,146 @@
                     class="navbar-toggle collapsed" type="button">
                 <i class="fa fa-reorder"></i>
             </button>
-            <a href="<?php echo $path_public; ?>index.php" style="background-color: honeydew"
+            <a href="<?php echo $Nav->path_admin; ?>index.php" style="background-color: honeydew"
                class="navbar-brand"><?php echo LOGO; ?></a>
+<!--               class="navbar-brand">Transmed</a>-->
         </div>
         <div class="navbar-collapse collapse" id="navbar">
             <ul class="nav navbar-nav">
                 <li class="">
-                    <a aria-expanded="false" role="button" href="<?php echo $path_admin; ?>index.php">Admin </a>
+                    <a aria-expanded="false" role="button" href="<?php echo $Nav->path_admin; ?>index.php">Admin </a>
                 </li>
 
 
                 <li>
                     <a aria-expanded="false" role="button"
-                       href="<?php echo $path_public; ?>myLinks.php?category=Others">Links</a>
+                       href="<?php echo $Nav->path_admin; ?>myLinks.php?category=Others">Links</a>
                 </li>
 
 
                 <?php if (User::is_admin()) { ?>
+
+
                     <li class="dropdown">
                         <a aria-expanded="false" role="button" href="#" class="dropdown-toggle" data-toggle="dropdown">
                             Public <span class="caret"></span></a>
                         <ul role="menu" class="dropdown-menu">
-                            <?php echo $Nav->menu_item('', 'Full version Inspinia', 'http://www.ikamy.ch/Inspinia_Full_Version/', 'none', true);
+
+                            <li><a href="<?php echo $Nav->http . "transmed_old/"; ?>index.php"><i class="fa fa-taxi"></i>
+                                    <span class="nav-label">Transport</span></a></li>
+                            <?php echo $Nav->menu_item('', 'Full version Inspinia', 'https://www.ikamy.ch/z_other_projects/Inspinia_Full_Version/', '', true) ?>
+                            <?php echo $Nav->menu_item('', 'Full version Inspinia 2', 'https://www.ikamy.ch/z_other_projects/Inspinia_Full_Version_2/', '', true) ?>
+                            <?php
                             echo $Nav->menu_item('', 'Inspinia Full2', '../Inspinia_Full_Version_2/index.php', 'public', true);
+
                             ?>
-                            <li><a href="<?php echo $path_public; ?>import_access.php">Import</a></li>
-                            <li><a href="<?php echo $path_public; ?>comparatif.php">comparatif</a></li>
 
                             <li><a href="<?php echo $path; ?>index_old.php">Old public Layout</a></li>
-                            <li><a href="<?php echo $path_public; ?>test.php">Test</a></li>
-                            <li><a href="<?php echo $path_public; ?>minor.php">Minor</a></li>
-                            <li><a href="<?php echo $path_public; ?>landing.php">Landing Page</a></li>
-                            <li><a href="<?php echo $path_public; ?>off_canvas_menu.php">Canvas view</a></li>
-                            <li><a href="<?php echo $path_public; ?>player.php">players</a></li>
-                            <?php echo $Nav->menu_item('', 'SmartAdmin', 'http://www.ikamy.ch/smartAdmin/', 'none', true) ?>
-                            <?php echo $Nav->menu_item('', 'SmartAdmin full version', 'http://www.ikamy.ch/SmartAdmin_Full_Version_html/', 'none', true) ?>
+                            <li><a href="<?php echo $Nav->path_admin; ?>minor.php">Minor</a></li>
+                            <li><a href="<?php echo $Nav->path_admin; ?>landing.php">Landing Page</a></li>
+                            <li><a href="<?php echo $Nav->path_admin; ?>off_canvas_menu.php">Canvas view</a></li>
+                            <li><a href="<?php echo $Nav->path_admin; ?>player.php">players</a></li>
+
+                            <?php echo $Nav->menu_item('', 'SmartAdmin', 'https://www.ikamy.ch/smartAdmin/', 'none', true) ?>
+                            <?php echo $Nav->menu_item('', 'SmartAdmin full version', 'https://www.ikamy.ch/SmartAdmin_Full_Version_html/', 'none', true) ?>
                         </ul>
                     </li>
+                <?php } ?>
 
+
+                <?php
+                echo $Nav->public_menu("public_gallery");
+
+                //                if (User::is_djamila()) {
+                //                    echo $Nav->menu_item('', 'Djamila', 'index_gallery12.php', 'public');
+                //                }
+
+                ?>
+
+                <?php if (User::is_bralia() || User::is_djamila()) { ?>
 
                     <li class="dropdown">
                         <a aria-expanded="false" role="button" href="#" class="dropdown-toggle" data-toggle="dropdown">
-                            Transport <span class="caret"></span></a>
+                            Friend <span class="caret"></span></a>
                         <ul role="menu" class="dropdown-menu">
+                            <?php
+                            echo $Nav->menu_item('', 'Xavier', 'index_gallery18_xavier.php', 'public');
 
-                            <?php echo $Nav->menu_item('CourseCalendar', 'CourseCalendar', 'calendar.php', 'public') ?>
-                            <?php echo $Nav->menu_item('Course', 'Course', 'transport.php', 'public') ?>
-                            <?php echo $Nav->menu_item('Model', 'Model', 'transport.php', 'public') ?>
-                            <?php echo $Nav->menu_item('', 'Clients', 'transport.php?cl=tClient', 'none', false) ?>
+                            echo $Nav->menu_item('', 'Xavier', 'index_gallery18_xavier.php', 'public');
 
+                            if (User::is_bralia()) {
+                                echo $Nav->menu_item('', 'Bralia', 'index_gallery6.php', 'public');
+                                echo $Nav->menu_item('', 'Chat Bralia', 'chat.php', 'public');
+                            }
 
-                            <?php echo $Nav->menu_item('', 'Chauffeur', 'transport.php?cl=Chauffeur', 'none', false) ?>
-                            <?php echo $Nav->menu_item('', 'Transport Type', 'transport.php?cl=TransportType', 'none', false) ?>
-                            <?php echo "<li class=\"divider\"></li>"; ?>
+                            if (User::is_djamila()) {
+                                echo $Nav->menu_item('', 'Djamila', 'index_gallery12.php', 'public');
+                                echo $Nav->menu_item('', 'Chat Djam', 'chat_djamila.php', 'public');
+                            }
 
-                            <?php echo $Nav->menu_item('', 'View Model', 'transport.php?cl=ViewModel', 'none', false) ?>
-                            <?php echo $Nav->menu_item('', 'View VisibleNo', 'transport.php?cl=ViewVisibleNo', 'none', false) ?>
-                            <?php echo $Nav->menu_item('', 'View VisibleYes', 'transport.php?cl=ViewVisibleYes', 'none', false) ?>
-
-                            <?php echo $Nav->menu_item('', 'View Pivot all', 'transport.php?cl=ViewPivot', 'none', false) ?>
-                            <?php echo $Nav->menu_item('', 'View PivotNo', 'transport.php?cl=ViewPivotNo', 'none', false) ?>
-                            <?php echo $Nav->menu_item('', 'View PivotYes', 'transport.php?cl=ViewPivotYes', 'none', false) ?>
-                            <?php echo $Nav->menu_item('', 'View Summary', 'transport.php?cl=ViewSummary', 'none', false) ?>
-
+                            ?>
 
                         </ul>
                     </li>
+                <?php } ?>
+
+                <?php
+                if (User::is_caroline() || User::is_weslley()) {
+                    ?>
 
                     <li class="dropdown">
                         <a aria-expanded="false" role="button" href="#" class="dropdown-toggle" data-toggle="dropdown">
-                            Classes <span class="caret"></span></a>
+                            Loan <span class="caret"></span></a>
                         <ul role="menu" class="dropdown-menu">
-
-
-                            <?php foreach (MyClasses::$class_access as $class) {
-                                if (!in_array($class, MyClasses::$disable_db_classes)) {
-//                            echo $Nav->menu_item($class, 'New ' . $class, 'new_data.php', 'admin');
-                                    echo $Nav->menu_item($class, '' . $class, 'manage_ajax.php', 'admin');
-                                }
+                            <?php
+                            if (User::is_caroline() || User::is_weslley()) {
+                                echo $Nav->menu_item('', 'Loan', 'loan_exp.php', 'public');
                             }
-                            unset($class);
 
-                            foreach (MyClasses::$transmed_class as $class) {
-                                if (!in_array($class, MyClasses::$disable_db_classes)) {
-//                            echo $Nav->menu_item($class, 'New ' . $class, 'new_data.php', 'admin');
-                                    echo $Nav->menu_item($class, '' . $class, 'manage_ajax.php', 'admin');
-                                }
+                            if (User::is_caroline()) {
+                                echo $Nav->menu_item('', 'Mum', 'loan_exp_1.php', 'public');
+
+                                echo "<li><a href=\"https://www.ikamy.ch/public/admin/crud/ajax/new_ajax.php?class_name=MyExpenseCaroline\">New Expense or Credit</a></li>";
+
+                                echo "<li><a href=\"https://www.ikamy.ch/public/admin/crud/ajax/manage_ajax.php?class_name=MyExpenseCaroline\">Manage Data</a></li>";
+
+//                                echo "<li><a href=\"https://www.ikamy.ch/public/admin/crud/ajax/manage_ajax.php?class_name=MyExpense\">Test Caro false MyExpense</a></li>";
+
+
                             }
-                            unset($class);
 
 
                             ?>
+
+
                         </ul>
                     </li>
-
                 <?php } ?>
 
 
 
-                <?php
-
-
-                ?>
-
+                <?php if (User::is_manager()) { ?>
+                    <li><a href="<?php echo $Nav->http . "transmed/"; ?>index.php"><i class="fa fa-taxi"></i> <span
+                                class="nav-label">Transport</span></a></li>
+                <?php } ?>
+                <!--
+                <li class="dropdown">
+                    <a aria-expanded="false" role="button" href="#" class="dropdown-toggle" data-toggle="dropdown"> Menu item <span class="caret"></span></a>
+                    <ul role="menu" class="dropdown-menu">
+                        <li><a href="<?php /*echo $path;*/ ?>">Menu item</a></li>
+                        <li><a href="<?php /*echo $path;*/ ?>">Menu item</a></li>
+                        <li><a href="<?php /*echo $path;*/ ?>">Menu item</a></li>
+                        <li><a href="<?php /*echo $path;*/ ?>">Menu item</a></li>
+                    </ul>
+                </li>-->
 
             </ul>
             <ul class="nav navbar-top-links navbar-right">
 
                 <?php
-                echo "<li>Bienvenue sur $logo2</li>";
+                echo "<li>Welcome to $logo</li>";
                 if (isset($_SESSION["user_id"])) {
-                    echo Message::get_chat();
+                    echo Chat::get_chat();
                     echo Notification::get_notification();
 
 //                echo "<li><a href='{$path_admin}logout.php'><i class=\"fa fa-sign-out\"></i> $user->username</a></li>";
@@ -148,8 +177,8 @@
 
 
                 } else {
-                    echo "<li><a href='{$path_admin}register.php'><i class=\"fa fa-r\"></i>Register</a></li>";
-                    echo "<li><a href='{$path_admin}login.php'><i class=\"fa fa-sign-in\"></i> Log in</a></li>";
+                    echo "<li><a href='{$Nav->path_admin}register.php'><i class=\"fa fa-r\"></i>Register</a></li>";
+                    echo "<li><a href='{$Nav->path_admin}login.php'><i class=\"fa fa-sign-in\"></i> Log in</a></li>";
 
                     $img_path = SITE_ROOT . DS . $folder_project_name . DS . 'img' . DS;
                     if (file_exists($img_path . 'no_user.jpg')) {

@@ -338,7 +338,6 @@ class Form extends DatabaseObject
     {
         $output = "";
 
-
         if (isset($this->name) && isset($this->label_text)) {
             $output .= "<div class='form-group'>";
 //            $output.="<label class='{$this->col_sm_label} control-label' for='{$this->name}' >{$this->label_text}</label>";
@@ -365,7 +364,7 @@ class Form extends DatabaseObject
                 $output .= "<div class='{$this->col_sm_input}'>";
             }
 
-            $output .= "<select  class='form-control'  name='{$this->name}' ";
+            $output .= "<select  class='form-control select2-dropdown-special'  name='{$this->name}' ";
 
             if (isset($this->id)) {
                 $output .= "id='{$this->id}'";

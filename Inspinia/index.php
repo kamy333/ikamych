@@ -7,12 +7,16 @@
         <p class="text-center" style="font-size:1em">Music here!</p>
         <audio controls>
             <source src="img/audio/SomewhereOvertheRainbow.mp3" type="audio/mpeg">
-            <source src="img/audio/ArmikLagrimasDeGuitarra.mp3" type="audio/mpeg">
             Your browser does not support the audio element.
         </audio>
 
         <audio controls>
             <source src="img/audio/ArmikLagrimasDeGuitarra.mp3" type="audio/mpeg">
+            Your browser does not support the audio element.
+        </audio>
+
+        <audio controls>
+            <source src="img/Xavier/Rise Up - Andra Day (Cover).mp3" type="audio/mpeg">
             Your browser does not support the audio element.
         </audio>
     </div>
@@ -75,7 +79,7 @@ if (User::is_kamy()) {
     $text1 .= "<div class='row text-center'>";
     $text1 .= "<div class='col-lg-8 col-lg-offset-2' style='margin-top: 2em;padding: 2em;background-color: white'>";
     $text1 .= "<p>in fonding memory</p>";
-    $text1 .= "<p>Maman Bozorgue 17.04.2011 | Katy Samak | Farad Lavi | Maggy Herzet | Dahidjan Ezatollah 10.10.2020 | Dahidjan Ramatollah | Baba Bozorgue | Maman Bozorgue Motaram | Mr. Mme Manaz Sadigh 23.6.2020 | khaleh Aghdass | Dahidjan 3 | Amouh Aziz </p>";
+    $text1 .= "<p>Maman Bozorgue z'l 17.04.2011 | Xavier Raisin Dadre 01.01.2023 | Katy Samak | Farad Lavi | Maggy Herzet | Dahidjan Ezatollah 10.10.2020 | Dahidjan Ramatollah | Baba Bozorgue | Maman Bozorgue Motaram | Mr. Mme Manaz Sadigh 23.6.2020 | khaleh Aghdass | Dahidjan 3 | Amouh Aziz </p>";
     echo "" . $text1;// . "<hr>";
     $text1 .= "</div>";
     $text1 .= "</div>";
@@ -97,6 +101,8 @@ if (User::is_kamy()) {
                             <iframe src="https://drive.google.com/file/d/0B71yHaesAeDTend4empIc0VIQXc/preview"
                                     width="320" height="240"></iframe>
                         </div>
+
+
 
 
                         <div class="col-md-5">

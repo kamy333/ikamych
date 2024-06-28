@@ -85,7 +85,9 @@ function log_action($action, $message = "")
     $logfile = SITE_ROOT . DS . 'logs' . DS . 'log.txt';
     $new = file_exists($logfile) ? false : true;
     if ($handle = fopen($logfile, 'a')) { // append
-        $timestamp = strftime("%Y-%m-%d %H:%M:%S", time());
+//        $timestamp = strftime("%Y-%m-%d %H:%M:%S", time());
+        $timestamp = date("Y-m-d H:i:s");
+
         $content = "{$timestamp} | {$action}: {$message}\n";
         fwrite($handle, $content);
         fclose($handle);
@@ -102,7 +104,8 @@ function log_debug($action, $message = "")
     $logfile = SITE_ROOT . DS . 'logs' . DS . 'debug.txt';
     $new = file_exists($logfile) ? false : true;
     if ($handle = fopen($logfile, 'a')) { // append
-        $timestamp = strftime("%Y-%m-%d %H:%M:%S", time());
+//        $timestamp = strftime("%Y-%m-%d %H:%M:%S", time());
+        $timestamp = date("Y-m-d H:i:s");
         $content = "{$timestamp} | {$action}: {$message}\n";
         fwrite($handle, $content);
         fclose($handle);
@@ -121,7 +124,8 @@ function log_queries($action, $message = "")
     $logfile = SITE_ROOT . DS . 'logs' . DS . 'queries.txt';
     $new = file_exists($logfile) ? false : true;
     if ($handle = fopen($logfile, 'a')) { // append
-        $timestamp = strftime("%Y-%m-%d %H:%M:%S", time());
+//        $timestamp = strftime("%Y-%m-%d %H:%M:%S", time());
+        $timestamp = date("Y-m-d H:i:s");
         $content = "{$timestamp} | {$action}: {$message}\n";
         fwrite($handle, $content);
         fclose($handle);
@@ -139,7 +143,7 @@ function log_views($action, $message = "")
     $logfile = SITE_ROOT . DS . 'logs' . DS . 'views.txt';
     $new = file_exists($logfile) ? false : true;
     if ($handle = fopen($logfile, 'a')) { // append
-        $timestamp = strftime("%Y-%m-%d %H:%M:%S", time());
+        $timestamp = date("Y-m-d H:i:s"); // strftime("%Y-%m-%d %H:%M:%S", time());
         $content = "{$timestamp} | {$action}: {$message} \n";
         fwrite($handle, $content);
         fclose($handle);
@@ -162,7 +166,8 @@ function is_ajax_request()
 function datetime_to_text($datetime = "")
 {
     $unix_datetime = strtotime($datetime);
-    return strftime("%B %d, %Y at %I:%M %p", $unix_datetime);
+//    return strftime("%B %d, %Y at %I:%M %p", $unix_datetime);
+    return $timestamp = date("F d, Y \a\\t h:i A", $unix_datetime);
 }
 
 
@@ -240,25 +245,30 @@ function date_to_text($date = "")
         $date = time();
     }
     $unix_datetime = strtotime($date);
-    return strftime("%a %b %e, %Y ", $unix_datetime);
+//    return strftime("%a %b %e, %Y ", $unix_datetime);
+    return date("D M j, Y", $unix_datetime);
 
 }
 
 function datetime_to_text_day($datetime = "")
 {
     $unix_datetime = strtotime($datetime);
-    return strftime("%a %B %d, %Y at %I:%M %p", $unix_datetime);
+//    return strftime("%a %B %d, %Y at %I:%M %p", $unix_datetime);
+    return date("D F j, Y \a\\t h:i A", $unix_datetime);
 }
 
 
 function now()
 {
-    return strftime("%B %d, %Y at %I:%M %p", time());
+    return date("D F j, Y \a\\t h:i A", time());
 }
 
 function now_monthname()
 {
-    return strftime("%B", time());
+//    setlocale(LC_TIME, 'fr_FR.UTF-8'); // Set the locale to French
+    $date_string = date("F");
+    return $date_string;
+//    return strftime("%B", time());
 }
 
 function now_sql($date = false)
@@ -266,7 +276,8 @@ function now_sql($date = false)
     if ($date == false) {
         $date = time();
     }
-    return strftime("%Y-%m-%d", time());
+//    return strftime("%Y-%m-%d", time());
+    return date("Y-m-d", time());
 }
 
 function now_time($s = false)
@@ -285,7 +296,17 @@ function date_sql($date = false)
     if ($date == false) {
         $date = time();
     }
-    return strftime("%Y-%m-%d", $date);
+//    return strftime("%Y-%m-%d", $date);
+    return date("Y-m-d", $date);
+}
+
+function datetime_sql($date = false)
+{
+    if ($date == false) {
+        $date = time();
+    }
+//    return strftime("%Y-%m-%d", $date);
+    return date("Y-m-d H:i:s", $date);
 }
 
 function unixToMySQL($timestamp)
@@ -581,20 +602,23 @@ function day_no($jour)
 function date_fr($str_time = 'now')
 {
     $unix_time = strtotime($str_time);
-    $day_wk_no = day_eng_no(strftime("%A", $unix_time));
+    $day_wk_no = day_eng_no(date("l", $unix_time));
+
     $nom_jour = day_fr($day_wk_no);
     $nom_jour_short = substr($nom_jour, 0, 3);
 
-    $jour_no = strftime("*%d", $unix_time);
+    $jour_no = date("\\*d", $unix_time);;
     $jour_no = str_replace('*0', '', $jour_no);
     $jour_no = str_replace('*', '', $jour_no);
 
-    $now_month = mth_fr_name(strftime("%B", $unix_time));
+    $now_month = mth_fr_name(date("F", $unix_time));
+
     $now_month_short = substr($now_month, 0, 4);
-    $now_year = strftime("%Y", $unix_time);
+    $now_year = date("Y", $unix_time);
     $now_year_short = substr($now_year, 2, 2);
 
-    $hour_minute = strftime("*%H:%M", $unix_time);
+    $hour_minute = date("\\*H:i", $unix_time);
+
     $hour_minute = str_replace('*0', '', $hour_minute);
     $hour_minute = str_replace('*', '', $hour_minute);
 
@@ -608,7 +632,7 @@ function date_fr($str_time = 'now')
     $date_fr_full_hr = h($nom_jour . " " . $jour_no . " " . $now_month . " " . $now_year . " " . $hour_minute);
 
 
-    return array($date_fr, $date_fr_short, $date_fr_long, $date_fr_hr, $date_fr_short_hr, $date_fr_long_hr, $date_fr_full_hr);
+    return [$date_fr, $date_fr_short, $date_fr_long, $date_fr_hr, $date_fr_short_hr, $date_fr_long_hr, $date_fr_full_hr];
 
 //    list ($date_fr,$date_fr_short,$date_fr_long,$date_fr_hr,$date_fr_short_hr,$date_fr_long_hr,$date_fr_full_hr)= date_fr($date_sql);
 
@@ -634,7 +658,9 @@ function u($string)
 
 function ud8($string)
 {
-    return utf8_decode($string);
+    return mb_convert_encoding($string, "ISO-8859-1", "UTF-8");
+
+//    return utf8_decode($string);
 }
 
 function d($string)
@@ -1031,7 +1057,7 @@ function blueimp_lightBoxGallery($content = "")
 
 }
 
-function blueimp_wrapper($h2 = "", $content)
+function blueimp_wrapper($h2 = "", $content="")
 {
     $output = "";
     $output .= "<div class=\"row\">
@@ -1052,6 +1078,8 @@ function get_gallery_array($no = 1)
     if ($no === 1) {
         $pages = array(
             'index' => 'Home',
+//            'index_gallery17_xavier' => 'Xavier',
+            'index_gallery18_xavier' => 'Xavier',
             'index_gallery6' => 'Bralia',
             'index_gallery' => 'Desiree Wedding',
             'index_gallery16' => 'Desire Baby Shower',
@@ -1109,6 +1137,9 @@ function gallery_menu_list($no = 1)
             $output .= "";
         } elseif ($page == 'index_gallery9') {
             $output .= "";
+        } elseif ($page == 'index_gallery10') {
+            $output .= "";
+
         } elseif ($page == 'index_gallery12') {
             $output .= "";
 

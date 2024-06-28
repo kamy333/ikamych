@@ -3,6 +3,18 @@
 --
 
 
+DROP TABLE IF EXISTS transport_model;
+DROP TABLE IF EXISTS transport_model_visible_no;
+DROP TABLE IF EXISTS transport_model_visible_yes;
+DROP TABLE IF EXISTS transport_model_pivot;
+DROP TABLE IF EXISTS transport_model_pivot_visible_yes;
+DROP TABLE IF EXISTS transport_model_pivot_visible_no;
+DROP TABLE IF EXISTS transport_summary_by_course_date_program;
+DROP TABLE IF EXISTS transport_view_adresse;
+
+
+
+
 DROP VIEW IF EXISTS transport_model;
 DROP VIEW IF EXISTS transport_model_visible_no;
 DROP VIEW IF EXISTS transport_model_visible_yes;
@@ -10,7 +22,6 @@ DROP VIEW IF EXISTS transport_model_pivot;
 DROP VIEW IF EXISTS transport_model_pivot_visible_yes;
 DROP VIEW IF EXISTS transport_model_pivot_visible_no;
 DROP VIEW IF EXISTS transport_summary_by_course_date_program;
-
 DROP VIEW IF EXISTS transport_view_adresse;
 
 

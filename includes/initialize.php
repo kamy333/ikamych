@@ -94,6 +94,7 @@ defined('LOGO') ? null : define("LOGO", $logo);
 
 // load basic functions next so that everything after can use them
 require_once(LIB_PATH . DS . 'functions' . DS . 'functions.php');
+require_once(LIB_PATH . DS . 'functions' . DS . 'functions2.php');
 
 // load core objects
 require_once(LIB_PATH . DS . 'session.php');
@@ -127,6 +128,7 @@ require_once(LIB_PATH . DS . 'pagination.php');
 require_once(LIB_PATH . DS . 'paginator.class.php');
 
 require_once(LIB_PATH . DS . 'Form.php');
+require_once(LIB_PATH . DS . 'FormInspinia.php');
 require_once(LIB_PATH . DS . 'FormValidation.php');
 require_once(LIB_PATH . DS . 'Table.php');
 require_once(LIB_PATH . DS . 'Modal.php');
@@ -146,12 +148,17 @@ require_once(LIB_PATH . DS . 'UserType.php');
 require_once(LIB_PATH . DS . 'FailedLogin.php');
 require_once(LIB_PATH . DS . 'BlacklistIp.php');
 require_once(LIB_PATH . DS . "BrowserDetect.php");
-require_once(LIB_PATH . DS . 'Client.php');
+
 require_once(LIB_PATH . DS . 'Project.php');
 
 require_once(LIB_PATH . DS . 'Category1.php');
 require_once(LIB_PATH . DS . 'Category2.php');
 require_once(LIB_PATH . DS . 'Category.php');
+
+require_once(LIB_PATH . DS . 'Client.php');
+require_once(LIB_PATH . DS . 'Calendar.php');
+require_once(LIB_PATH . DS . 'Course.php');
+require_once(LIB_PATH . DS . 'Chauffeur.php');
 
 require_once(LIB_PATH . DS . 'InvoiceActual.php');
 require_once(LIB_PATH . DS . 'InvoiceSend.php');

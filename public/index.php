@@ -85,7 +85,7 @@ if (is_dir($dir)) {
         if (stripos($file, '.') > 0) {
             $ext = pathinfo($file, PATHINFO_EXTENSION);
             if ($ext == 'jpg' || $ext == 'jpeg' || $ext == 'JPEG' || $ext == 'JPG' || $ext == 'png' || $ext == 'PNG') {
-                list($width, $height, $type, $attr) = getimagesize($file);
+//                list($width, $height, $type, $attr) = getimagesize($file);
 //                if ($width)
                 $count++;
                 $output .= " <div class='item '>";
@@ -107,7 +107,7 @@ if (is_dir($dir)) {
         if (stripos($file, '.') > 0) {
             $ext = pathinfo($file, PATHINFO_EXTENSION);
             if ($ext == 'jpg' || $ext == 'jpeg' || $ext == 'JPEG' || $ext == 'JPG' || $ext == 'png' || $ext == 'PNG') {
-                list($width, $height, $type, $attr) = getimagesize($file);
+//                list($width, $height, $type, $attr) = getimagesize($file);
 
                 $count++;
                 $output .= " <div class='item '>";

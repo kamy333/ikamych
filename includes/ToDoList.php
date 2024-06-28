@@ -6,6 +6,7 @@
  * Date: 24.11.2015
  * Time: 00:47
  */
+
 //protected static $db_fields = array('','','','','','','','','','');
 
 class ToDoList extends DatabaseObject
@@ -38,9 +39,9 @@ class ToDoList extends DatabaseObject
 
     public static $form_class_dependency = array();
     public static $per_page;
+    public static $required_fields = array('user_id', 'todo', 'done');
     protected static $table_name = "to_do_list";
     protected static $db_fields = array('id', 'user_id', 'todo', 'due_date', 'rank', 'web_address', 'comment', 'done', 'progress');
-    public static $required_fields = array('user_id', 'todo', 'done');
     protected static $db_fields_table_display_short = array('id', 'user_id', 'todos', 'done', 'prog', 'due_on', 'rank', 'comment');
     protected static $db_fields_table_display_full = array('id', 'user_id', 'todos', 'done', 'prog', 'progress', 'due_date', 'rank', 'web_address', 'comment', 'done');
     protected static $db_field_exclude_table_display_sort = array();
@@ -276,19 +277,19 @@ class ToDoList extends DatabaseObject
         global $session;
 
         $todos = static::find_all();
-        $get=  "?viewAllTodo=yes" ."&class_name=".get_called_class()."&action=smallTodoList";
-        $text="Show All";
+        $get = "?viewAllTodo=yes" . "&class_name=" . get_called_class() . "&action=smallTodoList";
+        $text = "Show All";
 
         $showall = false;
         isset($_GET['viewAllTodo']) && $_GET['viewAllTodo'] == 'yes' ? $showall = true : $showall = false;
 
-        if($showall){
-            $get=  "?viewAllTodo=no" ."&class_name=".get_called_class()."&action=smallTodoList";
-            $text="Show Open";
+        if ($showall) {
+            $get = "?viewAllTodo=no" . "&class_name=" . get_called_class() . "&action=smallTodoList";
+            $text = "Show Open";
         }
 
-        $link=$_SERVER['PHP_SELF'] .$get;
-        $href = "<a id='h5href' href='" .$link."' data-newhref='".$get."'>$text</a>";
+        $link = $_SERVER['PHP_SELF'] . $get;
+        $href = "<a id='h5href' href='" . $link . "' data-newhref='" . $get . "'>$text</a>";
 
 
         $output = "";
@@ -331,22 +332,22 @@ class ToDoList extends DatabaseObject
                     $class1 = "fa fa-square-o";
                     $class2 = "m-l-xs todo-completed";
                     $showall == true ? $myshow = true : $myshow = false;
-                    $data_done="yes";
+                    $data_done = "yes";
                 } else {
                     $class1 = "fa fa-check-square";
                     $class2 = "m-l-xs";
                     $showall == true ? $myshow = true : $myshow = true;
-                    $data_done="no";
+                    $data_done = "no";
 
                 }
 
-                if ($myshow ) {
+                if ($myshow) {
 
-                    $short_href=$_SERVER['PHP_SELF'] . "?id={$todo->id}&viewAllTodo=yes&class_name=ToDoList&action=quickupdate";
+                    $short_href = $_SERVER['PHP_SELF'] . "?id={$todo->id}&viewAllTodo=yes&class_name=ToDoList&action=quickupdate";
 //                 $href = "<a href='" . $short_href . "'>update</a>";
 
 
-                    $new_href= "?id={$todo->id}&viewAllTodo=yes&class_name=ToDoList&action=quickupdate";
+                    $new_href = "?id={$todo->id}&viewAllTodo=yes&class_name=ToDoList&action=quickupdate";
 
 
                     if (!empty($todo->id)) {
@@ -376,23 +377,6 @@ class ToDoList extends DatabaseObject
 
 
         return $output;
-
-
-    }
-
-    public function form_validation()
-    {
-        $valid = new FormValidation();
-
-        $valid->validate_presences(self::$required_fields);
-
-        if (isset($this->web_address) && !empty($this->web_address)) {
-            $valid->validate_website('web_address');
-        }
-        isset($this->done) ? $valid->is_numeric(['done']) : "";
-        isset($this->progress) ? $valid->is_numeric(['progress']) : "";
-
-        return $valid;
 
 
     }
@@ -453,8 +437,22 @@ class ToDoList extends DatabaseObject
 
     }
 
+    public function form_validation()
+    {
+        $valid = new FormValidation();
+
+        $valid->validate_presences(self::$required_fields);
+
+        if (isset($this->web_address) && !empty($this->web_address)) {
+            $valid->validate_website('web_address');
+        }
+        isset($this->done) ? $valid->is_numeric(['done']) : "";
+        isset($this->progress) ? $valid->is_numeric(['progress']) : "";
+
+        return $valid;
 
 
+    }
 
 
 }

@@ -4,103 +4,72 @@
 <?php include_once(NAV_PUBLIC) ?>
 
 
-<?php //echo "http://localhost/ikamych/transmed/index.php";
-//echo "<hr>";
-//      echo "http://localhost/ikamych/transmed/index.php";
-////http://localhost/ikamych/transmed/index.php
-//?>
 
 
-<?php //   echo __DIR__;  ?>
-    <div class="wrapper wrapper-content">
-
-        <div class="container">
-            <div class="jumbotron" style="background: white">
-                <h1>Bienvenue sur Transmed Service</h1>
-                <p>Tel +41 79 321 0893</p>
-                <!--                <p><a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a></p>-->
-                <div class="row bg-white">
-                    <p class="text-center">Transport</p>
-
-                    <div class="text-center">
-                        <?php echo button_color('success', "<i class='fa fa-home'>&nbsp;Mobile transmedmb</i>", '../transmedmb/index.php', ''); ?>
-
-                        <?php echo button_color('info', "<i class='fa fa-home'>&nbsp;Mobile transmb</i>", '../transmb/index.php', ''); ?>
-
-                        <?php echo button_color('info', "<i class='fa fa-calendar'>&nbsp;Calendar</i>", 'calendar.php', ''); ?>
-
-
-                        <?php echo button_color('danger', "<i class='fa fa-home'>&nbsp;mobilizer</i>", '../mobilizer/html/index.html', ''); ?>
-                    </div>
-                    <div class="hr-line-dashed"></div>
-
-                    <?php echo button_color('success', "<i class='fa fa-maxcdn'>&nbsp;Model</i>", 'transport.php?class_name=Model', ''); ?>
-
-                    <?php echo button_color('primary', "<i class='fa fa-automobile'>&nbsp;Course</i>", 'transport.php?class_name=Course', ''); ?>
-
-
-                    <?php echo button_color('primary', "<i class='fa fa-male'>&nbsp;Clients</i>", 'transport.php?cl=tClient', ''); ?>
-                    <?php echo button_color('danger', "<i class='fa fa-user'>&nbsp;Chauffeur</i>", 'transport.php?cl=Chauffeur', ''); ?>
-                    <?php echo button_color('warning', "<i class='fa fa-cab'>&nbsp;Transport Type</i>", 'transport.php?cl=TransportType', ''); ?>
-
-                </div>
-                <div class="hr-line-dashed"></div>
-
-                <div class="row bg-white">
-                    <p class="text-center">Model</p>
-
-                    <?php echo button_color('primary', 'View Model', 'transport.php?class_name=Model', ''); ?>
-                    <?php echo button_color('primary', 'View VisibleNo', 'transport.php?cl=ViewVisibleNo', ''); ?>
-                    <?php echo button_color('success', 'View VisibleYes', 'transport.php?cl=ViewVisibleYes', ''); ?>
-                    <?php echo button_color('primary', 'View Pivot all', 'transport.php?cl=ViewPivot', ''); ?>
-
-                    <?php echo button_color('primary', 'View PivotNo', 'transport.php?cl=ViewPivotNo', ''); ?>
-                    <?php echo button_color('danger', 'View PivotYes', 'transport.php?cl=ViewPivotYes', ''); ?>
-                    <?php echo button_color('warning', 'View Summary', 'transport.php?cl=ViewSummary', ''); ?>
-
-                </div>
-                <div class="hr-line-dashed"></div>
-
-
-                <div class="row bg-white">
-                    <p class="text-center">Transport</p>
-                    <?php echo button_color('primary', 'Courses', 'manage_ajax.php?class_name=TransportProgramming', 'admin'); ?>
-                    <?php echo button_color('success', h('Modéle'), 'manage_ajax.php?class_name=TransportProgrammingModel', 'admin'); ?>
-                    <?php echo button_color('primary', 'Clients', 'manage_ajax.php?class_name=TransportClient', 'admin'); ?>
-                    <?php echo button_color('danger', 'Chauffeur', 'manage_ajax.php?class_name=TransportChauffeur', 'admin'); ?>
-                    <?php echo button_color('warning', 'Transport Type', 'manage_ajax.php?class_name=TransportType', 'admin'); ?>
-                </div>
-                <div class="hr-line-dashed"></div>
-
-
-                <div class="row bg-white">
-                    <p class="text-center"><?php echo h('Dépenses'); ?></p>
-                    <?php echo button_color('primary', 'Frais', '', 'admin'); ?>
-                    <?php echo button_color('info', 'Essence', '', 'admin'); ?>
-                    <hr>
-                </div>
-
-                <div class="row bg-white">
-                    <p class="text-center">Autres Ajax</p>
-                    <?php echo button_color('primary', 'Profile', 'profile.php?', ''); ?>
-                    <?php echo button_color('success', "<i class='fa fa-user-md'>&nbsp;User</i>", 'manage_ajax.php?class_name=User ', 'admin'); ?>
-                    <?php echo button_color('success', "<i class='fa fa-user-md'>&nbsp;User Type</i>", 'manage_ajax.php?class_name=UserType ', 'admin'); ?>
-
-                    <?php echo button_color('success', 'Messages', 'manage_ajax.php?class_name=Message ', 'admin'); ?>
-                    <?php echo button_color('info', 'Notifications', 'manage_ajax.php?class_name=Notification', 'admin'); ?>
-                    <?php echo button_color('danger', 'To Dos', 'manage_ajax.php?class_name=ToDoList', 'admin'); ?>
-
-
-                </div>
-                <div class="hr-line-dashed"></div>
-
-
-            </div>
+    <div class="row">
+        <div class="col-lg-8 col-lg-offset-2" style="margin-top: 2em;padding: 2em;background-color: white">
+            <?php
+            $text = "";
+            $text .= "<p>Je t'aime dans le temps. Je t'aimerai jusqu'au bout du temps. Et quand le temps sera écoulé,     alors, je t'aurai aimée. Et rien de cet amour, comme rien de ce qui a été, ne pourra jamais être effacé.<p>
+	<div class='pull-right'><p><strong>Jean d'Ormesson</strong> <small>(16 juin 1925 - 5 décembre 2017)</small></p>
+		<small><i>-Un jour je m'en irai sans avoir tout dit.</i></small></div>";
+            echo "" . $text;
+            ?>
         </div>
-
 
     </div>
 
+    <div class="row">
+        <div class="col-lg-8 col-lg-offset-2" style="margin-top: 2em;padding: 2em;background-color: white">
+            <?php
+            //          $text = "<a href='#'></a>";
+            $text = "<br><p> <br>
+        Ce n’est qu’un moment..<br>
+        
+        Je t'en prie mon amour ne pleure pas<br>
+        Ce n'est qu'un moment<br>
+        Plus jamais je ne pourrais te dire bonne nuit<br>
+        Parce que je suis sur le point d'aller vers la lumière éternelle<br>
+        Ce n’est qu’un moment chéri juste un moment.<br>
+        Tes peines s'estomperont dans le sentiment des étoiles<br>
+        Soit serein chéri ce n'est qu'un moment<br>
+        Mais après éternellement tu ressentiras l'amour<br>
+        Et en m’attendant tu souriras au soleil pour transformer mes larmes en sourire et en bonheur</p>
+            <div class='pull-right'><p><strong>Franseca Barzaghi Bassi</strong></p></div>";
+            echo "" . $text;
+
+            ?>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-8 col-lg-offset-2" style="margin-top: 2em;padding: 2em;background-color: white">
+            <?php
+            //          $text = "<a href='#'></a>";
+            $text = "<p>
+J’imagine qu’une des raisons pour lesquelles les gens s’accrochent à leurs haines avec tellement d’obstination, est qu’ils sentent qu’une fois la haine partie, ils devront affronter leurs souffrances.<p>
+	<div class='pull-right'><p><strong>James Baldwin</strong></p>
+	</div>";
+            echo "" . $text;
+
+            ?>
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <!--    </div>-->
+    <!---->
     <!--    </div>-->
 
 
