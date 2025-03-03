@@ -21,6 +21,11 @@
         </audio>
     </div>
 
+    <div class="row">
+    <div class="col-lg-8 col-lg-offset-2" style="margin-top: 2em;padding: 2em;background-color: white">
+            <h1 class="text-center"><a href="papa/francais_discours.php">Hommage à Papa</a></h1>
+    </div>
+    </div>
 
     <div class="row">
         <div class="col-lg-8 col-lg-offset-2" style="margin-top: 2em;padding: 2em;background-color: white">

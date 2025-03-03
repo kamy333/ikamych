@@ -2,7 +2,7 @@
 require_once('../../../includes/initialize.php');
 $session->confirmation_protected_page();
 
-if(User::is_caroline_only()){
+if (User::is_caroline_only()) {
     if (isset($_GET['class_name'])) {
         $class_name = $_GET['class_name'];
         if ($class_name != "MyExpenseCaroline") {

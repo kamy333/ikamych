@@ -15,6 +15,7 @@ if(!is_ajax_request()) {
 
 echo  call_user_func_array(array($_GET['class_name'], $_GET['action']),[true]);
 //echo 'wowww go it '. $_GET['class_name'].' '.$_GET['id']
-//echo ToDoList::quickupdate(true);
+echo ToDoList::quickupdate(true);
+echo Note::quickupdate(true);
 
 

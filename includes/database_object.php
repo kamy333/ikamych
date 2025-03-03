@@ -798,7 +798,8 @@ class DatabaseObject
         }
         $class_name = get_called_class();
         $count = count($fields);
-
+//        $countrecords = static::count_all();
+//        $output.= "Number of records in db:<b>$countrecords</b> ";
         $output .= "<div class='col-md-3'>";
         $output .= "<ul class='list-group'>";
         $output .= "<li class='list-group-item'>count db <span class='badge''>$count</span></li>";
@@ -812,10 +813,14 @@ class DatabaseObject
 
         $output .= $comma_separated = " \$db_fields = ['" . implode("','", $fields) . "']<br><hr>";
 
+        $output .= "<div class='text-left'>";
+
         foreach ($fields as $field) {
-            $output .= "\${$field};<br>";
+            $output .= "public \${$field};<br>";
 
         }
+        $output .= "</div>";
+
 
         return $output;
     }

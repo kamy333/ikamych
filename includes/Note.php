@@ -1,11 +1,13 @@
 <?php
 
+
 /**
  * Created by PhpStorm.
  * User: Kamran
  * Date: 24.11.2015
  * Time: 00:47
  */
+
 //protected static $db_fields = array('','','','','','','','','','');
 
 class Note extends DatabaseObject
@@ -185,6 +187,7 @@ class Note extends DatabaseObject
     public $web_address;
     public $link;
     public $done;
+    public $done_img;
 
     public $progress;
     public $prog;
@@ -195,7 +198,25 @@ class Note extends DatabaseObject
     public $link_delete;
     public $link_all;
 
+
     public static function table_nav_additional()
+    {
+        $output = "</a><span>&nbsp;</span>";
+        $output .= "<a  class=\"btn btn-success\"  href=\"" . "/public/calendar.php" . "\">Calendar.php " . " </a><span>&nbsp;</span>";
+        $output .= "<a  class=\"btn btn-primary\"  href=\"" . "/public/_f/kamy/recurring_appointment.php" . "\">Recurring_appointment " . " </a><span>&nbsp;</span>";
+        $output .= "<a  class=\"btn btn-info\"  href=\"" . "/public/_f/kamy/recurring_appointment_email.php?code=65B0LXcRnSLqPLumdVjf" . "\">Recurring_appointment_email " . " </a><span>&nbsp;</span>";
+        $output .= "<a  class=\"btn btn-success\"  href=\"" . "/public/admin/notes.php" . "\">Notes.php " . " </a><span>&nbsp;</span>";//        $output .= "<a  class=\"btn btn-primary\"  href=\"" . MyExpensePerson::$page_manage . "\">View Person " . " </a><span>&nbsp;</span>";
+//        $output .= "<a  class=\"btn btn-primary\"  href=\"" . MyExpenseType::$page_manage . "\">View Type " . " </a>";
+
+//        $output .= "<a  class=\"btn btn-info\"  href=\"" . "/Inspinia/loan_exp.php" . "\">Mum " . " </a>";
+
+        return $output;
+//        return "";
+
+
+    }
+
+    public static function table_nav_additional1()
     {
 
         $order_name = !empty($_GET["order_name"]) ? $_GET["order_name"] : 'id';
@@ -235,34 +256,24 @@ class Note extends DatabaseObject
 
     public static function quickupdate($ajax = false)
     {
-
+        global $session;
         if (isset($_GET) && isset($_GET['id']) && $_GET['class_name'] === 'Note' && $_GET['action'] == 'quickupdate') {
 
             $id = $_GET['id'];
-//      if(is_numeric
             $note = static::find_by_id($id);
 
-
             if ($note) {
-                if ((int)$note->done == 1) {
-                    $note->done = 0;
-                } else {
-                    $note->done = 1;
-                }
-
+                $note->done = !$note->done;
                 $note->update();
-
-//  sleep(10);
 
                 if ($ajax == true) {
                     return static::smallNotelist();
-//    return "'yeahhh'";
                 } else {
-                    redirect_to($_SERVER['PHP_SELF']);
-
+                    redirect_to($_SERVER['PHP_SELF'] . "?viewAllNote=yes");
                 }
-//      redirect_to('profile.php');
 
+            } else {
+                $session->message("Note $id not found");
             }
 
 
@@ -275,7 +286,10 @@ class Note extends DatabaseObject
     {
         global $session;
 
-        $notes = static::find_all();
+//        $notes = static::find_all();
+        $notes = static::find_by_sql("SELECT * FROM note  ORDER BY due_date ");
+
+
         $get = "?viewAllNote=yes" . "&class_name=" . get_called_class() . "&action=smallNoteList";
         $text = "Show All";
 
@@ -292,21 +306,33 @@ class Note extends DatabaseObject
 
 
         $output = "";
-        $output .= "
-    <div class=\"col-lg-4 col-lg-offset-1\"  style='margin-top: 2em'>
-    <div class=\"ibox float-e-margins\">
-    <div class=\"ibox-title\">
-        <h5>Note list</h5>
-       <span><small>&nbsp;&nbsp;$href</small></span>
-        <div class=\"ibox-tools\">
+
+        $ibox = "";
+        if ($Nav->current_page == 'profile') {
+            $ibox = "<div class=\"ibox-tools\">
             <a class=\"collapse-link\">
                 <i class=\"fa fa-chevron-up\"></i>
             </a>
             <a class=\"close-link\">
                 <i class=\"fa fa-times\"></i>
             </a>
-        </div>
+        </div>";
+        }
+
+        $classnew = "<span style='color:blue;'><i class='fa fa-plus' style='font-size: 1.5em;'></i></span>";
+        $new = "<a  href='" . static::$page_new . "'>
+            $classnew
+            </a>";
+
+        $output .= "
+
+    <div class=\"ibox float-e-margins\">
+    <div class=\"ibox-title\">
+        <h5>Note list</h5> 
+       <span><small>&nbsp;&nbsp;$href &nbsp;&nbsp; $new</small></span>
+        $ibox
     </div>";
+
 
         $class1 = "fa fa-check-square";
         $class2 = "m-l-xs";
@@ -319,6 +345,12 @@ class Note extends DatabaseObject
 
         foreach ($notes as $note) {
 
+            $myId = "<a href='https://www.ikamy.ch/public/admin/crud/ajax/edit_ajax.php?class_name=Note&id=" . u($note->id) . "'>" . $note->id . "</a>";
+
+//            $done= !empty($note->done)  ?
+//                "<span style='color:green;'><i  class='fa fa-check-square'></i></span>"  :
+//                "<span style='color:red;'><i  class='fa fa-minus-circle'></i></span>" ;
+
             if ((int)$session->user_id !== (int)$note->user_id) {
 
             } else {
@@ -326,38 +358,83 @@ class Note extends DatabaseObject
 
                 $note->set_up_display();
 
+
+//                $done = !empty($note->done) ?
+//                    "<a href='{$_SERVER['PHP_SELF']}?id=" . u($note->id) . "&class_name=" . get_called_class() . "&action=quickupdate" . "' >
+//                     <span style='color:green;'><i  class='fa fa-check-square'></i></span>
+//                     </a>"
+//                    :
+//                    "<a href='{$_SERVER['PHP_SELF']}?id=" . u($note->id) . "&class_name=" . get_called_class() . "&action=quickupdate" . "' >
+//                     <span style='color:plum;'><i  class='fa fa-square-o'></i></span></a>";
+
                 if ((int)$note->done === 1) {
-                    $class1 = "fa fa-square-o";
-                    $class2 = "m-l-xs note-completed";
+                    $class1 = "fa fa-check-square";
+                    $class1_1 = "<span style='color:green;'><i  class='fa fa-check-square'></i></span>";
+                    $class2 = "m-l-xs";
                     $showall == true ? $myshow = true : $myshow = false;
                     $data_done = "yes";
                 } else {
-                    $class1 = "fa fa-check-square";
-                    $class2 = "m-l-xs";
+                    $class1 = "fa fa-square-o";
+                    $class1_1 = "<span ><i  class='fa fa-square-o'></i></span>";
+                    $class2 = "m-l-xs note-completed";
                     $showall == true ? $myshow = true : $myshow = true;
                     $data_done = "no";
 
                 }
 
+
+                $done = !empty($note->done) ?
+                    "<a href='{$_SERVER['PHP_SELF']}?id=" . u($note->id) . "&class_name=" . get_called_class() . "&action=quickupdate" . "' class='check-link smallNoteChecklink'>
+                     <span style='color:green;'><i  class='fa fa-check-square'></i></span>
+                     </a>"
+                    :
+                    "<a href='{$_SERVER['PHP_SELF']}?id=" . u($note->id) . "&class_name=" . get_called_class() . "&action=quickupdate" . "' class='check-link smallNoteChecklink'>
+                     <span style='color:plum;'><i  class='fa fa-square-o'></i></span></a>";
+
+
                 if ($myshow) {
 
                     $short_href = $_SERVER['PHP_SELF'] . "?id={$note->id}&viewAllNote=yes&class_name=Note&action=quickupdate";
-//                 $href = "<a href='" . $short_href . "'>update</a>";
+//                    $short_href = $_SERVER['PHP_SELF'] . "?id={$note->id}&viewAllNote=yes&class_name=Note&action=quickupdate";
 
 
                     $new_href = "?id={$note->id}&viewAllNote=yes&class_name=Note&action=quickupdate";
 
 
-                    if (!empty($note->id)) {
-                        $output .= "<li class='ul-list-SmallNote'  data-myid='{$note->id}' id='ul-list-SmallNote{$note->id
-}'>";
-                        $output .= "<a href=\"$short_href\" class=\"check-link smallNoteChecklink\" data-newhref='{$new_href}'  ><i class=\"{$class1}\"></i> </a>";
+                    if ($ajax) {
+                        $output .= "<li style='list-style: none;font-size: smaller;margin-left: 0'  class='ul-list-SmallNote'  data-myid='{$note->id}' id='ul-list-SmallNote{$note->id}'>";
+//                        $output .= "<a href='$short_href' class='check-link smallNoteChecklink' data-newhref='{$new_href}'  ><i class='{$class1}'></i> </a>";
+                        $output .= "<a href='$short_href' class='check-link smallNoteChecklink' data-newhref='{$new_href}'  >$class1_1 </a>";
                         $output .= "<span class='{$class2}'>";
-                        $output .= $note->notes . "&nbsp;&nbsp;" . $note->link_all; //."  ".$href
+                        $output .= "&nbsp;&nbsp;" . $myId . " &nbsp;  " . $note->notes . "&nbsp;&nbsp;" . "  " . "<span style='font-size: xx-small;color: blueviolet'><b>" . $note->due_on . "</b></span>"; //."  ".$href
                         $output .= "</span>";
                         $output .= "</li>";
-
+                    } else {
+                        $output .= "<li style='list-style: none;font-size: smaller;margin-left: 0'  class='ul-list-SmallNote'  data-myid='{$note->id}' id='ul-list-SmallNote{$note->id}'>";
+                        $output .= "<a href='$short_href' class='check-link smallNoteChecklink' data-newhref='{$new_href}'  >$class1_1 </a>";
+                        $output .= "<span class='{$class2}'>";
+                        $output .= "&nbsp;&nbsp;" . $myId . " &nbsp;  " . $note->notes . "&nbsp;&nbsp;" . "  " . "<span style='font-size: xx-small;color: blueviolet'><b>" . $note->due_on . "</b></span>"; //."  ".$href
+                        $output .= "</span>";
+                        $output .= "</li>";
                     }
+
+
+//                    if (!empty($note->id)) {
+//
+//                        $output .= "<li style='list-style: none;font-size: smaller;margin-left: 0'  class='ul-list-SmallNote'  data-myid='{$note->id}' id='ul-list-SmallNote{$note->id}'>";
+//                        if ($ajax) {
+////                            $output .= "<a href='$short_href' class='check-link smallNoteChecklink' data-newhref='{$new_href}'  ><i class='{$class1}'></i> </a>";
+//                            $output .= $done;
+//                        } else {
+//                            $output .= $done;
+//                        }
+////                        $output .= "<a href='$short_href' class='check-link smallNoteChecklink' data-newhref='{$new_href}'  ><i class='{$class1}'></i> </a>";
+//                        $output .= "<span class='{$class2}'>";
+//                        $output .= "&nbsp;&nbsp;" . $myId . " &nbsp;  " . $note->notes . "&nbsp;&nbsp;" . " $done " . "<span style='font-size: xx-small;color: blueviolet'><b>" . $note->due_on . "</b></span>"; //."  ".$href
+//                        $output .= "</span>";
+//                        $output .= "</li>";
+//
+//                    }
 
 
                 }
@@ -367,7 +444,7 @@ class Note extends DatabaseObject
 
         $output .= "</ul>";
 
-        $output .= " </div>
+        $output .= " 
                     </div>
                     </div>
                     ";
@@ -375,6 +452,38 @@ class Note extends DatabaseObject
 
         return $output;
 
+
+    }
+
+    public static function SendsmallNotelist($ajax = false)
+    {
+        global $session;
+
+        $notes = static::smallNotelist();
+
+        global $logo;
+        $mail = new MyPHPMailer();
+
+        $kamy = User::find_by_username("kamy");
+
+        $message = $logo . "<br><br>";
+
+        $mail->addAddress($kamy->email, $kamy->nom);
+//        $mail->addBCC("kamy@ikamy.ch");
+        $mail->Subject = $subject;
+
+        $message .= $notes;
+
+        //Send HTML or Plain Text email
+        $mail->isHTML(true);
+        $mail->Body = $message;
+        //   $mail->AltBody = "This is the plain text version of the email content";
+
+        if (!$mail->send()) {
+            echo "Mailer Error: " . $mail->ErrorInfo;
+        }
+
+        return $message . "";
 
     }
 
@@ -404,6 +513,11 @@ class Note extends DatabaseObject
         if (!empty($this->web_address) && isset($this->id)) {
             $this->link = "<a href='{$this->web_address}'  target='_blank'><u>link</u></a>";
             $this->notes = "<a href='{$this->web_address}' target='_blank' style='text-decoration: none;'><u>" . $this->note . "</u></a>";
+
+
+            $this->done_img = !empty($note->done) ?
+                "<span style='color:green;'><i  class='fa fa-check-square'></i></span>" :
+                "<span style='color:plum;'><i  class='fa fa-minus-circle'></i></span>";
 
 
             $class = get_called_class() . "-link-edit";
@@ -449,6 +563,186 @@ class Note extends DatabaseObject
             $this->prog = "<input type='number' value='" . $this->progress . "' class='dial m-r disabled' data-fgColor='#1AB394' data-width='60' data-height='60'/>";
         }
 
+    }
+
+    public static function get_view_note($search)
+    {
+
+        $sql = static::find_by_sql("SELECT * FROM note  ORDER BY due_date ");
+        if ($_GET['viewAllNote'] == 'yes') {
+            $sql = static::find_by_sql("SELECT * FROM note  ORDER BY due_date ");
+        } elseif ($_GET['viewAllNote'] == 'no') {
+            $sql = static::find_by_sql("SELECT * FROM note where done=0  ORDER BY due_date ");
+        } elseif ($_GET['viewAllNote'] == 'done') {
+            $sql = static::find_by_sql("SELECT * FROM note where done=1   ORDER BY due_date ");
+        } else {
+            $sql = static::find_by_sql("SELECT * FROM note  ORDER BY due_date ");
+        }
+        return $sql;
+
+
+    }
+
+    public static function Notelist()
+    {
+        $output = "";
+
+
+
+
+
+
+
+        $output .= "<style>
+        .btn-inactif {
+            background-color: #E8F1D4;
+            color: grey;
+        }
+            .btn-actif {
+            background-color: #FFFDD0;
+            color: black;
+            }"
+            . "</style>";
+
+//        $color_btn_inactif = "chromewhite";
+//        $color_btn_actif = "yellow";
+
+//        $text_header_a = "<b>Notes</b>";
+//        $text_header_o = "<b>Notes</b>";
+//        $text_header_d = "<b>Notes</b>";
+
+        $text_header= "<b>Notes</b>";
+
+        $color_btn_inactif = "inactif";
+        $color_btn_actif = "actif";
+
+        $btn_color_all = "btn-$color_btn_inactif btn-lg";
+        $btn_color_open = "btn-$color_btn_inactif btn-lg";
+        $btn_color_done = "btn-$color_btn_inactif btn-lg";
+
+        $btn_text_a = "Show All";
+        $btn_text_o = "Show Open";
+        $btn_text_d = "Show Done";
+
+        $btn_disabled_a = "";
+        $btn_disabled_o = "";
+        $btn_disabled_d = "";
+
+        $btn_hidden_a = "";
+        $btn_hidden_o = "";
+        $btn_hidden_d = "";
+
+
+
+
+        $notes = static::get_view_note('sql');
+        if (isset($_GET['viewAllNote'])) {
+            if ($_GET['viewAllNote'] == 'yes') {
+                $btn_color_all = "btn-$color_btn_actif btn-lg";
+                $btn_text_a = "<b>Showing All</b>";
+                $btn_disabled_a = "disabled";
+                $text_header = "<b>Notes</b><span style='font-size: smaller'> (All)</span>";
+                $btn_hidden_a = "style='display: none;'";
+
+            } elseif ($_GET['viewAllNote'] == 'no') {
+                $btn_color_open = "btn-$color_btn_actif btn-lg";
+                $btn_text_o = "<b>Showing Open</b>";
+                $btn_disabled_o = "disabled";
+                $text_header = "<b>Notes</b><span style='font-size: smaller'> (Open)</span>";
+                $btn_hidden_o = "style='display: none;'";
+            } elseif ($_GET['viewAllNote'] == 'done') {
+                $btn_color_done = "btn-$color_btn_actif btn-lg";
+                $btn_text_d = "<b>Showing Done</b>";
+                $btn_disabled_d = "disabled";
+                $text_header = "<b>Notes</b><span style='font-size: smaller'> (Done)</span>";
+                $btn_hidden_d = "style='display: none;'";
+            }
+        }
+
+        $output .= "<div style='font-size: larger;margin-bottom: 10px' class='row'>";
+        $output .= "<h2 class='text-center' style='color: #483C32'>$text_header</h2>";
+        $output .= "</div>";
+
+        $output .= "<div style='font-size: larger' class='row'>";
+        $output .= "<div class='col-md-1'>";
+        $output .= "<a href='" . static::$page_new . "' class='btn btn-taupe btn-lg ' id='btnAddNote'>Add Note</a>";
+        $output .= "</div>";
+
+
+        $output .= "<div $btn_hidden_a class='col-md-1 col-md-offset-2'>";
+        $output .= "<a href='" . $_SERVER['PHP_SELF'] . "?viewAllNote=yes' class='btn $btn_color_all ' $btn_disabled_a>$btn_text_a</a>";
+        $output .= "</div>";
+
+        $output .= "<div $btn_hidden_o class='col-md-1 col-md-offset-2'>";
+        $output .= "<a href='" . $_SERVER['PHP_SELF'] . "?viewAllNote=no' class='btn {$btn_color_open }'  $btn_disabled_o >$btn_text_o</a>";
+        $output .= "</div>";
+
+        $output .= sprintf("<div %s class='col-md-1 col-md-offset-2'>", $btn_hidden_d);
+        $output .= sprintf("<a href='%s?viewAllNote=done' class='btn {$btn_color_done}' {$btn_disabled_d} >{$btn_text_d}</a>", $_SERVER['PHP_SELF']);
+        $output .= '</div>';
+
+        $output .= '</div>';
+
+        foreach ($notes as $note) {
+            $note->set_up_display();
+
+            $done = !empty($note->done) ?
+                sprintf("<a href='{$_SERVER['PHP_SELF']}?id=%s&class_name=%s&action=quickupdate' >
+                 <span style='color:green;'><i  class='fa fa-check-square'></i></span>
+                </a>", u($note->id), get_called_class())
+                :
+                "<a href='{$_SERVER['PHP_SELF']}?id=" . u($note->id) . "&class_name=" . get_called_class() . "&action=quickupdate" . "' >
+                <span ><i  class='fa fa-square-o'></i></span></a>";
+
+            $classedit = "<span style='color:green;'><i class='fa fa-pencil' style='font-size: 1.5em;'></i></span>";
+            $edit = "<a  href='" . static::$page_edit . "&id=" . u($note->id) . "'>
+            $classedit
+            </a>";
+
+            $classnew = "<span style='color:blue;'><i class='fa fa-plus' style='font-size: 1.5em;'></i></span>";
+            $new = "<a  href='" . static::$page_new . "&id=" . u($note->id) . "'>
+            $classnew
+            </a>";
+
+
+            $classdelete = "<span style='color:red;'><i  class='fa fa-minus-circle' style='font-size: 1.5em;'></i></span>";
+            $delete = "<a href='" . static::$page_delete . "&id=" . u($note->id) . "&action=delete' 
+            onclick=
+            'return confirm(\"Are you sure you want to delete this note {$note->id}?\");'>
+            <span>$classdelete</span></a>";
+
+            $id = "<a href='" . static::$page_edit . "&id=" . u($note->id) . "'><span style='font-size: smaller;color: lightgrey'>#{$note->id}</span></a>";
+            $date = "<span style='font-size: smaller;color: grey'>{$note->due_on}</span>";
+
+
+//            $color_note_bg="#EEEEEE";
+//            $color_note_color="#2B3856";
+//            $color_h4_color="#191970";
+
+
+            $output .= "<div  class='row' style='margin-top: 10px;background-color: #F8F6F0;color: #2B3856'>";
+            $output .= "<div class='col-md-9'>";
+
+            $output .= !empty($note->note) ? "<h4>$id <span style='color: #191970'> " . $note->note . "</span>
+              " . $done . "
+            $date</h4>" : '';
+
+//            $output .= !empty($note->due_date) ? "<p>" . $note->due_on . "</p>" : '';
+            $output .= !empty($note->comment) ? "<p style='margin-left: 30px'><em>" . $note->comment . "</em></p>" : '';
+            $output .= !empty($note->web_address) ? "<p>" . $note->web_address . "</p>" : '';
+//            $output .= !empty($note->rank) ? "<p>Rank: " . $note->rank . "</p>" : '';
+
+
+            $output .= "</div style='background-color: white;'>";
+//            $output .= "<div class='pull-right' style='margin: 5px auto;' >";
+            $output .= "<div class='pull-right' style='margin: 20px; display: flex; align-items: center;>";
+            $output .= $edit . "&nbsp;&nbsp;&nbsp; " . $delete;
+            $output .= "</div>";
+
+
+            $output .= "</div>";
+        }
+        return $output;
     }
 
 

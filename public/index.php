@@ -15,6 +15,14 @@ if (User::is_visitor() && !User::is_caroline_only()) {
 <?php include(SITE_ROOT . DS . 'public' . DS . 'layouts' . DS . "header.php") ?>
 <?php include(SITE_ROOT . DS . 'public' . DS . 'layouts' . DS . "nav.php") ?>
 
+
+
+<div class="row">
+    <div class="col-lg-8 col-lg-offset-2" style="margin-top: 2em;padding: 2em;background-color: white">
+        <h1 class="text-center"><a href="../Inspinia/papa/francais_discours.php">Hommage à Papa</a></h1>
+    </div>
+</div>
+
 <?php
 
 //class Helper

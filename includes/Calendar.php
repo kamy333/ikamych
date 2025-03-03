@@ -1,5 +1,6 @@
 <?php
 
+
 /**
  * Created by PhpStorm.
  * User: Kamran
@@ -12,10 +13,8 @@
 class Calendar extends DatabaseObject
 {
     public static $fields_numeric = ['id'];
-//    protected static $table_name2 = "myexpense_person";
-//    protected static $table_name3 = "myexpense_type";
 
-// 'currency_id','Account','debitor','creditor'
+
     public static $fields_numeric_format = [];
     public static $get_form_element = ['person', 'title', 'start_date', 'start_time', 'end_time', 'comment', 'input_date', 'is_birthday'];
     public static $get_form_element_others = [];
@@ -37,10 +36,8 @@ class Calendar extends DatabaseObject
     protected static $table_name = "calendar";
     protected static $db_fields = ['id', 'person', 'is_birthday', 'title', 'start_date', 'start_time', 'start_datetime', 'end_time', 'comment', 'input_date',];
 
-//    public static $page_manage = "/public/admin/crud/ajax/manage_ajax.php?class_name=MyExpense"; // "new_link.php";
     protected static $required_fields = ['person', 'is_birthday', 'title', 'start_date', 'start_time']; // "new_link.php";
     protected static $db_fields_table_display_short = ['id', 'person', 'is_birthday', 'title', 'start_date', 'start_time', 'end_time', 'comment', 'input_date',]; // "new_link.php";
-//    public static $page_edit = "/public/admin/crud/ajax/edit_ajax.php?class_name=MyExpense"; //  "edit_link.php";
     protected static $db_fields_table_display_full = ['id', 'person', 'is_birthday', 'title', 'start_date', 'start_time', 'start_datetime', 'end_time', 'comment', 'input_date',]; //  "edit_link.php"
     protected static $db_field_exclude_table_display_sort = []; //  "delete_link.php";
     protected static $db_field_include_table_display_sort = []; // positionLeft // positionBoth  positionRight
@@ -115,7 +112,7 @@ class Calendar extends DatabaseObject
                     "name" => "person",
                     "label_radio" => "Kamy",
                     "value" => "0",
-                    "id" => "cash_no",
+                    "id" => "kamy",
                     "default" => false]],
             [1,
                 [
@@ -123,7 +120,7 @@ class Calendar extends DatabaseObject
                     "name" => "person",
                     "label_radio" => "Mum",
                     "value" => "1",
-                    "id" => "cash_yes",
+                    "id" => "mum",
                     "default" => false]],
         ],
 
@@ -191,7 +188,7 @@ class Calendar extends DatabaseObject
         $msg = "";
         $mail = "";
 
-        [$date, $dtTime, $dt, $datetomorrow, $tomorrow, $hour_minus_1, $hour_add_1, $hour_minus_1_comp, $hour_add_1_comp,$date_after_tomorrow,$after_tomorrow] = static::basic_values();
+        [$date, $dtTime, $dt, $datetomorrow, $tomorrow, $hour_minus_1, $hour_add_1, $hour_minus_1_comp, $hour_add_1_comp, $date_after_tomorrow, $after_tomorrow] = static::basic_values();
 
         $subject = "Planning " . $date->format('l d.m.Y');
 
@@ -200,60 +197,80 @@ class Calendar extends DatabaseObject
 //        $msg.=$hour_minus_1."<br>";
 //        $msg.=$hour_add_1."<br>";
 
-        $appointments = Calendar::find_by_sql("SELECT * FROM calendar WHERE start_datetime >= '$hour_minus_1_comp' AND start_datetime <'$hour_add_1_comp' ORDER BY start_datetime ");
+        if (isCalendarPast()) {
 
+            $subject = "ATTENTION: Past Planning " . $date->format('l .m.Y');
 
-        if ($appointments) {
-            $count = count($appointments);
-            $title = "Planning Coming up " . "($count)";
-            [$msgo, $mailo] = static::sqlresult($appointments, "");
+            $appointments = Calendar::find_by_sql("SELECT * FROM calendar WHERE start_date <'$dt'  ORDER BY start_datetime DESC ");
+
+            if ($appointments) {
+                $count = count($appointments);
+                $title = "<p style='background-color: red;color:white;padding-top: 0.5em;padding-bottom: 0.5em'>ATTENTION: Planning Past before " . $date->format('l d.m.Y') . " ($count)</p>";
+                [$msgo, $mailo] = static::sqlresult($appointments, $title);
 //            $msg .= $msgo; //static::sqlresult($appointments, $title);
-            $msg .= CollapseOne($title, $msgo, 1,2);
-            $mail .= $mailo;
-            $msg .= "<br><hr>";
-        }
+                $msg .= CollapseOne($title, $msgo, 2, 2);
+                $mail .= $mailo;
+                $msg .= "<br><hr>";
+            }
 
-        $appointments = Calendar::find_by_sql("SELECT * FROM calendar WHERE start_date ='$dt'  ORDER BY start_datetime ");
+        } else {
 
-        if ($appointments) {
-            $count = count($appointments);
-            $title = "Planning Today " . $date->format('l d.m.Y') . " ($count)";
-            [$msgo, $mailo] = static::sqlresult($appointments, $title);
+
+            $appointments = Calendar::find_by_sql("SELECT * FROM calendar WHERE start_datetime >= '$hour_minus_1_comp' AND start_datetime <'$hour_add_1_comp' ORDER BY start_datetime ");
+
+
+            if ($appointments) {
+                $count = count($appointments);
+                $title = "Planning Coming up " . "($count)";
+                [$msgo, $mailo] = static::sqlresult($appointments, "");
 //            $msg .= $msgo; //static::sqlresult($appointments, $title);
-            $msg .= CollapseOne($title, $msgo, 2,2);
-            $mail .= $mailo;
-            $msg .= "<br><hr>";
-        }
+                $msg .= CollapseOne($title, $msgo, 1, 2);
+                $mail .= $mailo;
+                $msg .= "<br><hr>";
+            }
 
-        $appointments = Calendar::find_by_sql("SELECT * FROM calendar WHERE start_date = '$tomorrow' ORDER BY start_datetime   ");
+            $appointments = Calendar::find_by_sql("SELECT * FROM calendar WHERE start_date ='$dt'  ORDER BY start_datetime ");
 
-        if ($appointments) {
-            $count = count($appointments);
-            $title = "Planning Tomorrow " . $datetomorrow->format('l d.m.Y') . " ($count)";
-            [$msgo, $mailo] = static::sqlresult($appointments, $title);
+            if ($appointments) {
+                $count = count($appointments);
+                $title = "Planning Today " . $date->format('l d.m.Y') . " ($count)";
+                [$msgo, $mailo] = static::sqlresult($appointments, $title);
 //            $msg .= $msgo; //static::sqlresult($appointments, $title);
-            $msg .= CollapseOne($title, $msgo, 3,2);
-            $mail .= $mailo;
-            $msg .= "<br><hr>";
-        }
+                $msg .= CollapseOne($title, $msgo, 2, 2);
+                $mail .= $mailo;
+                $msg .= "<br><hr>";
+            }
 
-        $appointments = Calendar::find_by_sql("SELECT * FROM calendar WHERE start_datetime >= '$after_tomorrow' ORDER BY start_datetime   ");
+            $appointments = Calendar::find_by_sql("SELECT * FROM calendar WHERE start_date = '$tomorrow' ORDER BY start_datetime   ");
+
+            if ($appointments) {
+                $count = count($appointments);
+                $title = "Planning Tomorrow " . $datetomorrow->format('l d.m.Y') . " ($count)";
+                [$msgo, $mailo] = static::sqlresult($appointments, $title);
+//            $msg .= $msgo; //static::sqlresult($appointments, $title);
+                $msg .= CollapseOne($title, $msgo, 3, 2);
+                $mail .= $mailo;
+                $msg .= "<br><hr>";
+            }
+
+            $appointments = Calendar::find_by_sql("SELECT * FROM calendar WHERE start_datetime >= '$after_tomorrow' ORDER BY start_datetime   ");
 //        $appointments = Calendar::find_by_sql("SELECT * FROM calendar WHERE start_datetime > '$tomorrow' ORDER BY start_datetime   ");
 
-        if ($appointments) {
-            $count = count($appointments);
-            $title = "Planning upcoming in future " . " ($count)";
-            [$msgo, $mailo] = static::sqlresult($appointments, $title);
-//            $msg .= $msgo; //static::sqlresult($appointments, $title);
-            $msg .= CollapseOne($title, $msgo, 4,2);
-            $mail .= $mailo;
-            $msg .= "<br><hr>";
-        }
 
+            if ($appointments) {
+                $count = count($appointments);
+                $title = "Planning upcoming in future " . " ($count)";
+                [$msgo, $mailo] = static::sqlresult($appointments, $title);
+//            $msg .= $msgo; //static::sqlresult($appointments, $title);
+                $msg .= CollapseOne($title, $msgo, 4, 2);
+                $mail .= $mailo;
+                $msg .= "<br><hr>";
+            }
+        }
 
         static::send_email($mail, $subject);
 
-        $msg = CollapseAll($msg,2);;
+        $msg = CollapseAll($msg, 2);;
         return $msg;
     }
 
@@ -283,7 +300,7 @@ class Calendar extends DatabaseObject
         $hour_add_1_comp = date('Y-m-d H:i:s', strtotime('+1 hour', strtotime($dtTime)));
 
         $my_basic_values = [];
-        array_push($my_basic_values, $date, $dtTime, $dt, $datetomorrow, $tomorrow, $hour_minus_1, $hour_add_1, $hour_minus_1_comp, $hour_add_1_comp,$date_after_tomorrow,$after_tomorrow);
+        array_push($my_basic_values, $date, $dtTime, $dt, $datetomorrow, $tomorrow, $hour_minus_1, $hour_add_1, $hour_minus_1_comp, $hour_add_1_comp, $date_after_tomorrow, $after_tomorrow);
 
 //        $date1=date_create("2013-03-15");
 //        $date2=date_create("2013-12-12");
@@ -301,7 +318,7 @@ class Calendar extends DatabaseObject
 
         $counts_appoitments = count($appointments);
 
-        [$date, $dtTime, $dt, $datetomorrow, $tomorrow, $hour_minus_1, $hour_add_1, $hour_minus_1_comp, $hour_add_1_comp,$date_after_tomorrow,$after_tomorrow] = static::basic_values();
+        [$date, $dtTime, $dt, $datetomorrow, $tomorrow, $hour_minus_1, $hour_add_1, $hour_minus_1_comp, $hour_add_1_comp, $date_after_tomorrow, $after_tomorrow] = static::basic_values();
 
 
         if (!$title) {
@@ -310,7 +327,17 @@ class Calendar extends DatabaseObject
         }
 
 //        $msg .= "<h2 lang='fr' class='text-center'>" . $title . "</h2>";
+
         $mail .= "<h2 lang='fr' class='text-center'>" . $title . "</h2>";
+
+//        if (isCalendatPast()) {
+//
+////            $msg .= "<h2 lang='fr' class='text-center'>" . $title . "</h2>";
+//            $mail .= "<h2 style='margin-top: 10em' lang='fr' class='text-center'>" . $title . "</h2>";
+//        } else {
+//            $mail .= "<h2 lang='fr' class='text-center'>" . $title . "</h2>";
+//
+//        }
 
         $x = 0;
 
@@ -486,12 +513,34 @@ class Calendar extends DatabaseObject
 
         $message = $logo . "<br><br>";
 
-        $btnOasis="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <a href='https://www.ikamy.ch//public/_f/kamy/foyer_oasis.php'>Add Foyer Oasis</a>";
 
+        $btnRecurApp = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <a href='https://www.ikamy.ch//public/_f/kamy/recurring_appointment.php'>Add Recuring Calendar</a>";
+
+        $code = "65B0LXcRnSLqPLumdVjf"; //".u($code)."
+
+        $btnCert = "<a  href='https://www.ikamy.ch//public/_f/kamy/recurring_appointment_email.php?code=65B0LXcRnSLqPLumdVjf' >Certificat Medical Email</a>";
 
         $btn = " <a href='https://www.ikamy.ch/public/admin/crud/ajax/new_ajax.php?class_name=Calendar'><button class='btn-primary'>Add Date</button></a>";
-        $view = " <a href='https://www.ikamy.ch/public/calendar.php'><button class='btn-primary'>View Web</button></a> $btnOasis";
-        $btnview = $btn . "&nbsp;&nbsp;&nbsp;  " . $view;
+        $view = " <a href='https://www.ikamy.ch/public/calendar.php'><button class='btn-primary'>View Web</button></a> $btnRecurApp ";
+
+        $btnPast = "";
+
+        if (isCalendarPast()) {
+            $btnPast = " <a href='https://www.ikamy.ch/public/calendar.php?'><button class='btn-primary'>Future</button></a>";
+
+        } else {
+            $btnPast = " <a href='https://www.ikamy.ch/public/calendar.phptype=Past'><button class='btn-primary'>Past</button></a>";
+        }
+
+//        $btnNote = " <a class='btn btn-primary' href='https://www.ikamy.ch/public/admin/notes php'>Notes</a>";
+//        $classeNewNote = "<span style='color:green;'><i class='fa fa-plus-square' style='font-size: 1.5em;'></i></span> Note";
+//        $btnNoteAdd = " <a class='btn btn-primary' href='https://www.ikamy.ch/public/admin/crud/ajax/new_ajax.php?class_name=Note'>$classeNewNote</a>";
+
+        $btnNote = " <a style='padding: 0.1em' href='https://www.ikamy.ch/public/admin/notes.php'><button class='btn-warning'>Note</button></a>";
+//        $classeNewNote = "<span ><i class='fa fa-plus-square' ></i></span> Note";
+        $btnNoteAdd = " <a style='padding: 0.1em' href='https://www.ikamy.ch/public/admin/crud/ajax/new_ajax.php?class_name=Note''><button class='btn-warning'>Add Note</button></a>";
+
+        $btnview = $btn . "&nbsp;&nbsp;&nbsp;  " . $view . "&nbsp;&nbsp;&nbsp;  " . $btnCert . "&nbsp;&nbsp;&nbsp;  " . $btnPast . "&nbsp;&nbsp;&nbsp;  " . $btnNote."&nbsp;&nbsp;&nbsp;  " . $btnNoteAdd;
 
         $message .= "Geneva " . date("l d/m/Y") . " - " . date("H:i") . "<br>$btnview<br>";
 
@@ -520,7 +569,10 @@ class Calendar extends DatabaseObject
     {
         $output = "</a><span>&nbsp;</span>";
         $output .= "<a  class=\"btn btn-primary\"  href=\"" . "/public/calendar.php" . "\">Calendar.php " . " </a><span>&nbsp;</span>";
-        $output .= "<a  class=\"btn btn-primary\"  href=\"" . "/public/_f/kamy/foyer_oasis.php" . "\">Foyer Oasis.php " . " </a><span>&nbsp;</span>";
+        $output .= "<a  class=\"btn btn-primary\"  href=\"" . "/public/_f/kamy/recurring_appointment.php" . "\">Recurring RDV " . " </a><span>&nbsp;</span>";
+        $output .= "<a  class=\"btn btn-info\"  href=\"" . "/public/_f/kamy/recurring_appointment_email.php?code=65B0LXcRnSLqPLumdVjf" . "\">Recurring RDV email " . " </a><span>&nbsp;</span>";
+        $output .= "<a  class=\"btn btn-primary\"  href=\"" . "/public/admin/notes.php" . "\">Notes " . " </a><span>&nbsp;</span>";
+        $output .= "<a  class=\"btn btn-primary\"  href=\"" . "/public/admin/crud/ajax/new_ajax.php?class_name=Note" . "\">New Notes " . " </a><span>&nbsp;</span>";
 //        $output .= "<a  class=\"btn btn-primary\"  href=\"" . MyExpenseType::$page_new . "\">Add New Type " . " </a></a><span>&nbsp;</span>";
 //        $output .= "<a  class=\"btn btn-primary\"  href=\"" . MyExpensePerson::$page_manage . "\">View Person " . " </a><span>&nbsp;</span>";
 //        $output .= "<a  class=\"btn btn-primary\"  href=\"" . MyExpenseType::$page_manage . "\">View Type " . " </a>";

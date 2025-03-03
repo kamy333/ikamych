@@ -2,7 +2,7 @@
 <?php  $session->confirmation_protected_page(); ?>
 <?php //if(!User::is_admin()){redirect_to("index.php");}
 
-
+Note::quickupdate();
 
 ?>
 

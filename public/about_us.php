@@ -93,8 +93,6 @@
                         <p><a href="#kamran_nafisspour"  data-toggle="modal" class="btn btn-primary" role="button">Lire plus</a></p>
                     </div>
                 </li>
-
-
             </ul>
 		</div>
 
@@ -111,7 +109,7 @@
                     <h3 class="modal-title"><?php echo $nom_employee ?></h3>
                 </div>
                 <div class="modal-body">
-                    <p><img src="img/pablo_2.JPG" alt="<?php echo $nom_employee ?>" class="img-responsive pull-left"> Pablo is the founder, owner and manager of Transmed SA founded in 1999. The compagny is becoming more and more successfull and now have 5 full time employees. The strengh of the compagny is the flexibility for clients to use the services even at late hours or week-end . Transmed have few adapted vehicles for wheelchairs. The price are of the most competitive in the market</p>
+                    <p><img src="img/pablo_2.JPG" alt="<?php echo $nom_employee ?>" class="img-responsive pull-left"> Pablo is the founder, owner and manager of Transmed SA founded in 1999. The compagny is becoming more and more successfull and now have 5 full time employees. The strengh of the compagny is the flexibility for clients to use the services even at late hours or weekend . Transmed have few adapted vehicles for wheelchairs. The price are of the most competitive in the market</p>
                 </div>
                 <div class="modal-footer">
                     <button class="btn btn-primary" data-dismiss="modal">Close</button>
@@ -238,8 +236,8 @@ $nom_employee = "Kamran Nafisspour"; ?>
             <div class="modal-body">
                 <p><img src="img/kamy.JPG" style="width: 40%;height: 40%;" alt="<?php echo $nom_employee; ?>"
                         class="img-responsive pull-left "></p>
-
             </div>
+
             <div class="modal-footer">
                 <button class="btn btn-primary" data-dismiss="modal">Close</button>
             </div>
@@ -248,4 +246,5 @@ $nom_employee = "Kamran Nafisspour"; ?>
 </div>
 
 <div class="container-fluid">
-    <?php include(SITE_ROOT.DS.'public'.DS.'layouts'.DS."footer.php") ?>
+
+<?php include(SITE_ROOT.DS.'public'.DS.'layouts'.DS."footer.php") ?>

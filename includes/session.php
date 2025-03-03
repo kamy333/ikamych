@@ -39,8 +39,13 @@ class Session
 
     function __construct()
     {
-        //   session_save_path(SESSION_PATH);
-//        session_name('rajah');
+        // Set session parameters
+        ini_set('session.cookie_lifetime', 86400); // 24 hours in seconds
+        ini_set('session.gc_maxlifetime', 86400);  // 24 hours in seconds
+
+
+//      session_save_path(SESSION_PATH);
+//      session_name('rajah');
         session_start();
         $this->visitor_count();
         $this->check_message();

@@ -1,7 +1,9 @@
 <?php
 // If it's going to need the database, then it's 
 // probably smart to require it before we start.
-require_once(LIB_PATH . DS . 'database.php');
+
+
+//require_once(LIB_PATH . DS . 'database.php');
 
 class User extends DatabaseObject
 {
@@ -37,10 +39,10 @@ class User extends DatabaseObject
 //    public static $page_edit = "/public/admin/edit_user.php";
 //    public static $page_delete = "delete_user.php";
 
-    public static $page_manage = "/public/admin/crud/ajax/manage_ajax.php?class_name=User";
-    public static $page_new = "/public/admin/crud/ajax/new_ajax.php?class_name=User";
-    public static $page_edit = "/public/admin/crud/ajax/edit_ajax.php?class_name=User";
-    public static $page_delete = "/public/admin/crud/ajax/delete_ajax.php?class_name=User";
+    public static $page_manage = "/public/manage_user.php";
+    public static $page_new = "/public/admin/new_user.php";
+    public static $page_edit = "/public/admin/edit_user.php";
+    public static $fpage_delete = "/public/admin/delete_user.php";
 
 //    public static $position_table="positionRight"; // positionLeft // positionBoth  positionRight
     public static $position_table = "positionBoth"; // positionLeft // positionBoth  positionRight
@@ -772,7 +774,7 @@ class User extends DatabaseObject
     public static function delete_unwanted_users_after_ids($id_min)
     {
         global $database;
-        if($id_min <=779) {
+        if($id_min <815) {
             $session->message("We cannot delete ids $id_min below 779");
             redirect_to(static::$page_manage);
 

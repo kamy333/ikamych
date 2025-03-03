@@ -23,10 +23,10 @@ defined('MY_URL_ADMIN') ? null : define('MY_URL_ADMIN', MY_URL_PUBLIC . 'admin/'
 
 
 //----------------------------------------DELETE----------------------------------
-$server_name = $_SERVER['SERVER_NAME'];
+$server_name = $_SERVER['SERVER_NAME'] ?? 'ikamy.ch';
 $server_local = "localhost";
 //$server_phpstorm = "PhpStorm 8.0.3";
-$server_phpstorm = "PhpStorm 2016.1.2";
+$server_phpstorm = "PhpStorm 2023.3.3";
 
 if ($server_name === $server_local || $server_name === $server_phpstorm) {
 
@@ -47,6 +47,12 @@ if ($server_name === $server_local || $server_name === $server_phpstorm) {
 }
 
 //----------------------------------------DELETE----------------------------------
+
+
+defined('HEADERPUBLIC') ? null : define('HEADERPUBLIC', SITE_ROOT . DS . 'public' . DS . 'layouts' . DS . "header.php");
+defined('NAVPUBLIC') ? null : define('NAVPUBLIC', SITE_ROOT . DS . 'public' . DS . 'layouts' . DS . "nav.php");
+defined('FOOTERPUBLIC') ? null : define('FOOTERPUBLIC', SITE_ROOT . DS . 'public' . DS . 'layouts' . DS . "footer.php");
+
 
 defined('BR') ? null : define('BR', '<br>');
 
@@ -86,7 +92,12 @@ $logo .= "<span style='color:red'><b>.</b></span>";
 $logo .= "<span style='color: palevioletred'><b>c</b></span>";
 $logo .= "<span style='color: darkcyan'><b>h</b></span>";
 //$logo.="<b>".$logo."</b>";
+
+$img = "<img style='position: relative;top: -20px' src='/logo_kamy.jpg' alt='logo ilamy.ch' width='150px' height='55px'>";
+
+$logo2 = $img;
 defined('LOGO') ? null : define("LOGO", $logo);
+defined('LOGO2') ? null : define("LOGO2", $logo);
 
 
 // load config file first
@@ -95,6 +106,8 @@ defined('LOGO') ? null : define("LOGO", $logo);
 // load basic functions next so that everything after can use them
 require_once(LIB_PATH . DS . 'functions' . DS . 'functions.php');
 require_once(LIB_PATH . DS . 'functions' . DS . 'functions2.php');
+require_once(LIB_PATH . DS . 'functions' . DS . 'functions3.php');
+
 
 // load core objects
 require_once(LIB_PATH . DS . 'session.php');
@@ -111,17 +124,32 @@ require_once(LIB_PATH . DS . 'functions' . DS . "reset_token_functions.php");
 
 
 require_once(LIB_PATH . DS . 'config.php');
+
+
 require LIB_PATH_VENDOR . DS . 'autoload.php';
 
-$use_database_mysqli = false;
 
-require_once(LIB_PATH . DS . 'MyClasses.php');
 
-if ($use_database_mysqli) {
-    require_once(LIB_PATH . DS . 'database_mysqli.php');
+//$IS_TEST_NO_DB = true;
+
+if (isset($IS_PRODUCTION) && $IS_PRODUCTION==false) {
+    $database = false;
 } else {
-    require_once(LIB_PATH . DS . 'database.php');
+    $use_database_mysqli = false;
+
+    require_once(LIB_PATH . DS . 'MyClasses.php');
+
+    if ($use_database_mysqli) {
+        require_once(LIB_PATH . DS . 'database_mysqli.php');
+    } else {
+        require_once(LIB_PATH . DS . 'database.php');
+    }
 }
+
+
+
+
+
 
 require_once(LIB_PATH . DS . 'database_object.php');
 require_once(LIB_PATH . DS . 'pagination.php');
@@ -143,6 +171,7 @@ require_once(LIB_PATH . DS . 'Upload.php');
 
 // load database-related classes
 require_once(LIB_PATH . DS . 'SetUp.php');
+
 require_once(LIB_PATH . DS . 'user.php');
 require_once(LIB_PATH . DS . 'UserType.php');
 require_once(LIB_PATH . DS . 'FailedLogin.php');

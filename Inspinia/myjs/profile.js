@@ -65,6 +65,7 @@ function addListenersToDosEditDelete() {
 
 function addListenersh5href() {
     $("#h5href").on("click", function () {
+        // noinspection JSDeprecatedSymbols
         event.preventDefault();
         // alert('hello profile');
         updateRecord(this);

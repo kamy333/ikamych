@@ -36,10 +36,6 @@
 </script>
 
 
-
-
-
-
 <?php if ($stylesheets == "fade_php") { ?>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     <script src="/public/_js/examples/javascripts/jquery.easing.1.3.js"></script>

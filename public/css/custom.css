@@ -111,6 +111,39 @@ th {
 }
 
 
+.btn-chromewhite {
+    background-color: #E8F1D4;
+    border-color: #3F2B22;
+    color: #272829;
+}
+
+.btn-chromewhite:hover,
+.btn-chromewhite:focus,
+.btn-chromewhite:active,
+.btn-chromewhite.active,
+.open .dropdown-toggle.btn-beige {
+    color: #ffffff;
+    background-color: #FFF5EE;
+    border-color: #333;
+}
+
+.btn-taupe {
+    background-color: #483C32;
+    border-color: #3F2B22;
+    color: #FFFFFF;
+}
+
+.btn-taupe:hover,
+.btn-taupe:focus,
+.btn-taupe:active,
+.btn-taupe.active,
+.open .dropdown-toggle.btn-taupe {
+    color: #ffffff;
+    background-color: #EDE6D6;
+    border-color: #333;
+}
+
+
 
 .nav-pills.customKamy_red > li.active > a,
 .nav-pills.customKamy_red > li.active > a:hover,
@@ -268,9 +301,13 @@ p.btn-info a {
 
 hr.soften {
     height: 1px;
+    /*noinspection CssInvalidFunction*/
     background-image: -webkit-linear-gradient(left, transparent, rgba(0, 0, 0, 0.8), transparent);
+    /*noinspection CssInvalidFunction*/
     background-image: -moz-linear-gradient(left, transparent, rgba(0, 0, 0, 0.8), transparent);
+    /*noinspection CssInvalidFunction*/
     background-image: -ms-linear-gradient(left, transparent, rgba(0, 0, 0, 0.8), transparent);
+    /*noinspection CssInvalidFunction*/
     background-image: -o-linear-gradient(left, transparent, rgba(0, 0, 0, 0.8), transparent);
     border: 0;
 }

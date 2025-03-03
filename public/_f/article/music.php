@@ -85,16 +85,42 @@
 </div>
 
 <hr>
+xxx
 <div class="col-lg-12   col-lg-offset-1">
 
+<!--    Aya Nakamua -->
+    <iframe width="560" height="315" src="https://www.youtube.com/embed/66JWP4F5_tE?si=-K0DEujp17rqQJ0j"
+            title="YouTube video player" frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+    <!--    Aya Nakamua -->
+    <iframe width="560" height="315" src="https://www.youtube.com/embed/6hrHndpEelU?si=RwiCW1ZweYjqjHC2&amp;start=137"
+            title="YouTube video player" frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 
-    <iframe width="560" height="315" src="https://www.youtube.com/embed/UZp6dhheriM?si=9BPQyemEoviCr-GR&amp;start=9" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+    <iframe width="560" height="315" src="https://www.youtube.com/embed/fSUD-KCve8o?si=oyYtPUyQ7BOXkez5"
+            title="YouTube video player" frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+
+    <iframe width="560" height="315" src="https://www.youtube.com/embed/UZp6dhheriM?si=9BPQyemEoviCr-GR&amp;start=9"
+            title="YouTube video player" frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowfullscreen></iframe>
 
 
     <iframe width="560" height="315" src="https://www.youtube.com/embed/paNCdSCyQCU?start=106"
             title="YouTube video player" frameborder="0"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
             allowfullscreen></iframe>
+
+    <!-- Simply Red You make me feel brand new   -->
+    <iframe width="560" height="315" src="https://www.youtube.com/embed/hlW1ac81fFY?si=icWMZJLVv29nTdKv"
+            title="YouTube video player" frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 
     <iframe width="560" height="315" src="https://www.youtube.com/embed/KT8phNJ4i2I?start=69" frameborder="0"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
@@ -137,10 +163,10 @@
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
             allowfullscreen></iframe>
 
-<!--    <iframe width="560" height="315" src="https://www.youtube.com/embed/o3U4kxuBfIo?start=100" frameborder="0"-->
-<!--            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"-->
-<!--            allowfullscreen></iframe>-->
-<!--    -->
+    <!--    <iframe width="560" height="315" src="https://www.youtube.com/embed/o3U4kxuBfIo?start=100" frameborder="0"-->
+    <!--            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"-->
+    <!--            allowfullscreen></iframe>-->
+    <!--    -->
 
     <iframe width="560" height="315" src="https://www.youtube.com/embed/cSMB63GMfWM" frameborder="0"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
@@ -149,6 +175,11 @@
     <iframe width="560" height="315" src="https://www.youtube.com/embed/IChJ6eO3k48?start=90" frameborder="0"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
             allowfullscreen></iframe>
+
+    <iframe width="560" height="315" src="https://www.youtube.com/embed/OSayp2tArqA?si=JDckpq6f9klJOe_u"
+            title="YouTube video player" frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 
     <iframe width="560" height="315" src="https://www.youtube.com/embed/Iw3WbIbeXEU" title="YouTube video player"
             frameborder="0"
@@ -160,13 +191,45 @@
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
             allowfullscreen></iframe>
 
-    <iframe width="560" height="315" src="https://www.youtube.com/embed/IYzlVDlE72w" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+    <iframe width="560" height="315" src="https://www.youtube.com/embed/IYzlVDlE72w" title="YouTube video player"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowfullscreen></iframe>
 
-    <iframe width="560" height="315" src="https://www.youtube.com/embed/cRF4Xf9P6xU" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+    <iframe width="560" height="315" src="https://www.youtube.com/embed/cRF4Xf9P6xU" title="YouTube video player"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowfullscreen></iframe>
 
-    <iframe width="560" height="315" src="https://www.youtube.com/embed/oygrmJFKYZY?si=69_yqUzS_M6E1slw" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+    <iframe width="560" height="315" src="https://www.youtube.com/embed/oygrmJFKYZY?si=69_yqUzS_M6E1slw"
+            title="YouTube video player" frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowfullscreen></iframe>
 
-    <iframe width="560" height="315" src="https://www.youtube.com/embed/6CHdKORwPEQ?si=kq11s9SCklijHcu4" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+    <iframe width="560" height="315" src="https://www.youtube.com/embed/6CHdKORwPEQ?si=kq11s9SCklijHcu4"
+            title="YouTube video player" frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowfullscreen></iframe>
+
+
+    <!--  Jeito Moleque  Amor Eterno-->
+    <iframe width="560" height="315" src="https://www.youtube.com/embed/iEb7t0opHUo?si=p3UF5TXrT9nyvU4J"
+            title="YouTube video player" frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+    <!--    Sorriso Maroto Engano-->
+    <iframe width="560" height="315" src="https://www.youtube.com/embed/ucva7ktWT34?si=Z5FaJyxVQY7YTuyA"
+            title="YouTube video player" frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+    <!--  Jeito Moleque  Sobrenatural-->
+    <iframe width="560" height="315" src="https://www.youtube.com/embed/id-Vm89z8D8?si=AtoPetEXeBKWfwe0"
+            title="YouTube video player" frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
 
 </div>
 </div>

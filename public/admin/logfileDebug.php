@@ -5,7 +5,6 @@ if (!User::is_admin()) {
 }
 ?>
 
-
 <?php
 
 $logfile = SITE_ROOT . DS . 'logs' . DS . 'debug.txt';

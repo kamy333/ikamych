@@ -1,7 +1,9 @@
 <?php require_once('../includes/initialize.php');
 $session->confirmation_protected_page();
 
-if (!User::is_caroline()) { redirect_to('../index.php');}
+if (!User::is_caroline()) {
+    redirect_to('../index.php');
+}
 
 ?>
 
@@ -18,54 +20,56 @@ if (!User::is_caroline()) { redirect_to('../index.php');}
 <?php include_once(NAV_PUBLIC) ?>
 
 
-
 <div class="row">
-<div class="text-center">
-    <a href="/Inspinia/loan_exp.php">Go to expense</a>
-</div>
+    <div class="text-center">
+        <a href="/Inspinia/loan_exp.php">Go to expense</a>
+    </div>
 
 </div>
-    <div class="row">
+<div class="row">
 
     <?php
     echo MyExpense::form_select_year();
     echo "<hr>";
 
-       if(isset($_GET['Yr'])){
-           $year=$_GET['Yr'];
-       } else {
-           $year=date('Y');
-       }
+    if (isset($_GET['Yr'])) {
+        $year = (int)$_GET['Yr'];
+    } else {
+        $year = (int)date('Y');
+    }
 
 
-       if ($year == 2021){
-                       $kamy_id=19;
+    if ($year == 2021) {
+        $kamy_id = 19;
 
-       }elseif ($year == 2022){
-                       $kamy_id=21;
+    } elseif ($year == 2022) {
+        $kamy_id = 21;
 
-       }elseif ($year == 2023){
-           $kamy_id=24;
+    } elseif ($year == 2023) {
+        $kamy_id = 24;
 
-       }else{
-           $kamy_id=21;
-       }
+    } elseif ($year == 2024) {
+        $kamy_id = 25;
+
+    } else {
+        $kamy_id = 25;
+    }
 
     $txt = "Prêt-Rbt Mum + kamy $year";
-//    $kamy_id=19;
-    echo Table::ibox_table(ReportFinance::Report_YEAR(1,false,$year,19), $txt, 3, 0);
+    //    $kamy_id=19;
+    echo Table::ibox_table(ReportFinance::Report_YEAR(1, false, $year, $kamy_id), $txt, 3, 0);
 
 
     $txt = "Prêt-Rbt Mum Year";
-//    $a = "<a href='/Inspinia/loan_exp_2.php?report=Report&id=1'>Export Xl $txt</a>";
+    //    $a = "<a href='/Inspinia/loan_exp_2.php?report=Report&id=1'>Export Xl $txt</a>";
     echo Table::ibox_table(ReportFinance::Report(1), $txt, 3, 0);
 
     $txt = "Mum Prêt by Year";
-//    $a = "<a href='/Inspinia/loan_exp_2.php?report=Report&id=1'>Export Xl $txt</a>";
+    //    $a = "<a href='/Inspinia/loan_exp_2.php?report=Report&id=1'>Export Xl $txt</a>";
     echo Table::ibox_table(ReportFinance::Report(2), $txt, 3, 0);
 
     $txt = "Mum Rbt by Year";
-//    $a = "<a href='/Inspinia/loan_exp_2.php?report=Report&id=1'>Export Xl $txt</a>";
+    //    $a = "<a href='/Inspinia/loan_exp_2.php?report=Report&id=1'>Export Xl $txt</a>";
     echo Table::ibox_table(ReportFinance::Report(3), $txt, 3, 0);
 
     echo "</div>";
@@ -87,19 +91,19 @@ if (!User::is_caroline()) { redirect_to('../index.php');}
 
     $txt = "Prêt Mum Year Month";
     //    $a = "<a href='/Inspinia/loan_exp_2.php?report=Report1&id=0'>Export Xl $txt</a>";
-    echo Table::ibox_table(ReportFinance::Report1(false,"positive"), $txt, 5, 0);
+    echo Table::ibox_table(ReportFinance::Report1(false, "positive"), $txt, 5, 0);
 
     $txt = "Rbt Mum Year Month";
     //    $a = "<a href='/Inspinia/loan_exp_2.php?report=Report1&id=0'>Export Xl $txt</a>";
-    echo Table::ibox_table(ReportFinance::Report1(false,"negative"), $txt, 5, 0);
+    echo Table::ibox_table(ReportFinance::Report1(false, "negative"), $txt, 5, 0);
 
 
     $txt = "Prêt-Rbt Mum Year Month";
     //    $a = "<a href='/Inspinia/loan_exp_2.php?report=Report1&id=0'>Export Xl $txt</a>";
-    echo Table::ibox_table(ReportFinance::Report1(false,"both"), $txt, 5, 0);
+    echo Table::ibox_table(ReportFinance::Report1(false, "both"), $txt, 5, 0);
 
     echo "</div>";
-//    echo "<hr>";
+    //    echo "<hr>";
 
     $txt = "Mum All";
     //    $a = "<a href='/Inspinia/loan_exp_2.php?report=Report&id=1'>Export Xl $txt</a>";

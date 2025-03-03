@@ -377,6 +377,7 @@ function DateDifferenceFormat($date_1, $date_2)
 
 function mth_fr_name($month_name)
 {
+    setlocale(LC_TIME, 'fr_FR');
     switch ($month_name) {
         case "January":
             return "janvier";
@@ -639,10 +640,7 @@ function date_fr($str_time = 'now')
 
 }
 
-function hs($string)
-{
-    return htmlspecialchars($string);
-}
+
 
 // Sanitize for JavaScript output
 function j($string)
@@ -672,6 +670,16 @@ function h($string)
 {
 //    htmlspecialchars($string)
     return htmlentities($string, ENT_COMPAT, "utf-8");
+}
+
+function hs($string)
+{
+    return htmlspecialchars($string);
+}
+
+function hspc($string): string
+{
+    return htmlspecialchars($string, ENT_QUOTES, 'UTF-8');
 }
 
 function e($string)
@@ -1079,6 +1087,7 @@ function get_gallery_array($no = 1)
         $pages = array(
             'index' => 'Home',
 //            'index_gallery17_xavier' => 'Xavier',
+             '_papa'=> 'Papa',
             'index_gallery18_xavier' => 'Xavier',
             'index_gallery6' => 'Bralia',
             'index_gallery' => 'Desiree Wedding',
@@ -1124,6 +1133,8 @@ function gallery_menu_list($no = 1)
         } else {
             $class = "";
         }
+
+
 
         if ($page == 'index_gallery6' && (User::is_bralia())) {
             $output .= "<li class='$class'><a  href=\"$path_public $page.php\">$pa</a></li>";
@@ -1360,7 +1371,7 @@ function button_color($color, $txt = "xxx", $href = false, $href_env = "", $othe
         $new_href=$href;
     }
 
-    return "<a {$others_a} href='{$new_href}'><button class='{$class}' style='{$style}' role='button' >{$txt}</button></a>";
+    return "<a {$others_a} href='{$new_href}'><button class='{$class}'  style='{$style}' role='button' >{$txt}</button></a>";
 
 
 }

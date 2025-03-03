@@ -25,28 +25,7 @@
 
 <?php
 
-return;
 
-$user = new User();
-$user->username = "dumy";
-$user->password = "dumy";
-$user->email = "dumy@dumy.com";
-$user->first_name = "Dumy";
-$user->last_name = "Dumy";
-$user->nom = "Dumy Dumy";
-$user->block_user = 1;
-$user->user_type_id = 5;
-//$user->create();
-
-
-$current_page = 1;
-$per_page = 20;
-Article::count_all();
-echo $a = Article::count_all();
-$paginator = new Pagination($current_page, $per_page, $a);
-
-
-//echo $a
 
 ?>
 

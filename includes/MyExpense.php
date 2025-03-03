@@ -1,5 +1,7 @@
 <?php
 
+
+
 /**
  * Created by PhpStorm.
  * User: Kamran
@@ -1943,7 +1945,7 @@ ORDER BY year(e.expense_date) DESC";
 
     }
 
-    public static function Report_YEAR($No = 0, $XLS = false, $year = 2021, $kamy_id = 19)
+    public static function Report_YEAR($No = 0, $XLS = false, $year = 2024, $kamy_id = 25)
     {
         $output = "";
         $style = "";
@@ -2012,6 +2014,21 @@ ORDER BY year(e.expense_date) DESC";
                 $sum3 = 0;
                 $sum4 = 0;
                 $output .= static::Spec_Exception('2023', "kamy_2023", $sum2, $XLS);
+
+            } elseif ($year == 2024 || $year == "2024") {
+                $kamy_id = 25;
+                $sum2 = static::sum_field_where($field = "amount * rate", " WHERE person_id = $kamy_id    ");
+                $sum3 = 0;
+                $sum4 = 0;
+                $output .= static::Spec_Exception($year, "kamy_".$year, $sum2, $XLS);
+
+            } elseif ($year == 2025 || $year == "2025") {
+                $kamy_id = 26;
+                $sum2 = static::sum_field_where($field = "amount * rate", " WHERE person_id = $kamy_id    ");
+                $sum3 = 0;
+                $sum4 = 0;
+                $output .= static::Spec_Exception($year, "kamy_".$year, $sum2, $XLS);
+
 
 
             } else {

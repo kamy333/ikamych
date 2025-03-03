@@ -21,17 +21,17 @@
 <?php
 if (request_is_post() && request_is_same_domain()) {
     if (!csrf_token_is_valid() || !csrf_token_is_recent()) {
-        $message = "<h3 style='text-align: center;background-color: orange;color: white'>Request was not valid.</h3>";
+        $message = "Request was not valid";
     } else {
         $id_min = trim($_POST['id_username']);
 
-        $sql = "Delete from users where id > $id_min ";
+        $sql = "Delete from users where id >= $id_min ";
 
         if (User::delete_unwanted_users_after_ids($id_min)) {
-            $message = "<h3 style='text-align: center;background-color: green;color: white'>Users with ID above ids $id_min have been successfully deleted</h3>";
+            $message1 = "Users with ID above ids $id_min have been successfully deleted";
 //            $message="<div class='col-md-4 col-md-offset-4  col-lg-4 col-lg-offset-4'>$message</div>";
 
-            $session->message("Items been delete above id $id_min ");
+            $session->message($message1);
             $session->ok(true);
             unset($_POST);
             unset($id_min);
@@ -41,9 +41,9 @@ if (request_is_post() && request_is_same_domain()) {
 
         } else {
 
-            $message = "<h3 style='text-align: center;background-color: red;color: white'>Errors processing deleting Ids above $id_min or there is no affected rows.</h3>";
+            $message1 = "Errors processing deleting Ids above $id_min maybe because there is no affected rows.";
 //            $message="<div class='col-md-12  col-lg-12 '>$message</div>";
-            $session->message($message);
+            $session->message($message1);
             unset($_POST);
             unset($id_min);
             header('Location: ' . $_SERVER['PHP_SELF']);
@@ -89,8 +89,9 @@ if (request_is_post() && request_is_same_domain()) {
             <label for="id_username" class="sr-only">username</label>
             <input type="number" name="id_username" id="id_username" class="form-control" placeholder="id Number"
                    required
-                   value="780">
+                   value="815">
             <br>
+
 
             <button class="btn btn-lg btn-danger btn-block" id="submit" type="submit" name="submit" value="submit">
                 Delete users
