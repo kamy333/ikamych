@@ -112,31 +112,31 @@ function send_email_certificat_Medical($is_redirect = false): void
     $diff = $currentDate->diff($nextMonth)->format("%a");
 
 
-    $subject = "Renouvellement du certificat médical longue durée";
+    $subject = "Renouvellement du certificat mÃ©dical longue durÃ©e";
 //    $to = 'nafisspour@bluewin.ch';
 
     $nbsp = str_repeat("&nbsp;", 5);
     $message .= "
     <div lang='fr' style='background-color: white; margin: 10px; border-radius: 5px;'>
         <p>Cher Dr Mimouni </p>
-        <p>Je vous prie de bien vouloir établir le renouvellement du certificat médical longue durée:</p>
-        <p>La date d'échéance du dernier certificat au {$lastDayOfCert } arrive à sa fin. Pouvez-vous s'il vous plait établir le renouvellement du certificat médical :</p>
+        <p>Je vous prie de bien vouloir Ã©tablir le renouvellement du certificat mÃ©dical longue durÃ©e:</p>
+        <p>La date d'Ã©chÃ©ance du dernier certificat au {$lastDayOfCert } arrive Ã  sa fin. Pouvez-vous s'il vous plait Ã©tablir le renouvellement du certificat mÃ©dical :</p>
         <p style='color: blue'>$nbsp du $nbsp $dateFrom $nbsp jusqu'au $nbsp $dateTo   $nbsp $diff jours $nbsp   100%.</p>
         <p style='color: blue'>$nbsp Maladie</p>
         <p>Je vous remercie d'avance </p>
         <p>Meilleures salutations</p>
-        <p>Kamran Nafisspour<br>rue des Vollandes 68<br>1207 Genève<br>Tél: (079) 350 2132</p>";
+        <p>Kamran Nafisspour<br>rue des Vollandes 68<br>1207 GenÃ¨ve<br>TÃ©l: (079) 350 2132</p>";
     $message .= "</div>";
 
 //    $message .= "
 //        <p>Cher Dr Mimouni </p>
-//        <p>Je vous prie de bien vouloir établir le renouvellement du certificat médical longue durée:</p>
-//        <p>La date d'échéance du dernier certificat au {$lastDayCert} arrive à sa fin. Pouvez-vous s'il vous plait établir le renouvellement du certificat médical :</p>
+//        <p>Je vous prie de bien vouloir Ã©tablir le renouvellement du certificat mÃ©dical longue durÃ©e:</p>
+//        <p>La date d'Ã©chÃ©ance du dernier certificat au {$lastDayCert} arrive Ã  sa fin. Pouvez-vous s'il vous plait Ã©tablir le renouvellement du certificat mÃ©dical :</p>
 //                        <p style='color: blue'>du $dateFrom jusqu'au $dateTo     $diff jours   100%.</p>
 //                        <p style='color: blue'>Maladie</p>
 //                        <p>Je vous remercie d'avance </p>
 //                        <p>Meilleures salutations</p>
-//                        <p>Kamran Nafisspour<br>rue des Vollandes 68<br>1207 Genève<br>Tél: (079) 350 2132</p>";
+//                        <p>Kamran Nafisspour<br>rue des Vollandes 68<br>1207 GenÃ¨ve<br>TÃ©l: (079) 350 2132</p>";
 //
 
 
@@ -276,7 +276,6 @@ function generateLinksMonthly($name = "Certificat_Medical_Mimouni", $title = "Ce
 }
 
 //Ergo_Margot_Mum
-
 
 
 function createCalendar($date, $title, $heure, $comment = '', $person = "0", $is_birthday = "0")
@@ -516,7 +515,6 @@ $output .= "
 <input type='submit' value='Retour' class='btn btn-yellow'>   
     </form>
 ";
-
 
 
 $output .= "<br>";

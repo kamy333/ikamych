@@ -18,7 +18,6 @@
 </h4>
 
 
-
 <h3 class="text-center"> <?php echo $text; ?></h3>
 
 
@@ -48,7 +47,6 @@
 
 
     ?>
-
 
 
 </div>

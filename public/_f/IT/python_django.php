@@ -159,7 +159,7 @@ for proc in process_iter():
     </pre>";
 
 
-    $text .= "<pre>
+            $text .= "<pre>
 
                                                 GIT COMMANDS
     GIT INIT

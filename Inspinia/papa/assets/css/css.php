@@ -78,5 +78,12 @@
         }
     }
 
+    .menu a.active {
+        font-weight: bold;
+        background-color: darkblue;
+        /*color: red; !* ou toute autre couleur de surlignage *!*/
+    }
+
+
 
 </style>

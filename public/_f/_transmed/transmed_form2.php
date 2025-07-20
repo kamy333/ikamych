@@ -31,7 +31,7 @@ $publishedlnk = "<a href='{$published}'>Google published |</a>";
 $key = "1tP5RJcnRz8Xq5WjNarTymBLGsTiDvX5vGVzoYedljzI";
 $http = "https://spreadsheets.google.com/feeds/list/" . $key . "/od6/public/values?alt=json";
 $link = "<a href='$http'>Google JSON |</a>";
-echo $link." ".$publishedlnk;
+echo $link . " " . $publishedlnk;
 ?>
 
 <div class="row">
@@ -51,7 +51,7 @@ echo $link." ".$publishedlnk;
     </div>
 </div>
 <!--    <script>
-        var myHttp=<?php /*echo $http;  */?>
+        var myHttp=<?php /*echo $http;  */ ?>
             alert(myHttp);
     $.getJSON(myHttp,function (data) {
         console.log(data);

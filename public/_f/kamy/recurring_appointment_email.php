@@ -1,13 +1,12 @@
 <?php $IS_PRODUCTION = true; ?>
-<?php require_once('../../../includes/initialize.php');?>
+<?php require_once('../../../includes/initialize.php'); ?>
 <?php
 $msg = "<ul class='no-bullets'>";
 
 $nbsp = str_repeat("&nbsp;", 10);
 
 
-
-if ($IS_PRODUCTION){
+if ($IS_PRODUCTION) {
     if (isset($_GET["code"]) && $_GET["code"] == CODE_CALENDAR) {
         $msg .= "<li style='color: #0a6aa1' >You have the right code</li>";
     } else {
@@ -21,7 +20,6 @@ if ($IS_PRODUCTION){
         }
     }
 }
-
 
 
 function isCurrentDateBetweenTwoDates()
@@ -143,7 +141,7 @@ function send_email_certificat_Medical($is_redirect = False): void
     //number of days from to
     $diff = $currentDate->diff($nextMonth)->format("%a");
 
-    $subject = "Demande de renouvellement du certificat médical";
+    $subject = "Demande de renouvellement du certificat mÃ©dical";
 
     $nbsp = str_repeat("&nbsp;", 5);
 
@@ -154,37 +152,37 @@ function send_email_certificat_Medical($is_redirect = False): void
     <head>
         <meta charset='UTF-8'>
         <meta name='viewport' content='width=device-width, initial-scale=1.0'>
-        <title>Demande de renouvellement du certificat médical</title>
+        <title>Demande de renouvellement du certificat mÃ©dical</title>
     </head>
     <body>
 
     <div lang='fr' style='background-color: white; margin: 10px; border-radius: 5px;'>
      
-     <p><strong>Objet :</strong> Demande de renouvellement du certificat médical</p>
+     <p><strong>Objet :</strong> Demande de renouvellement du certificat mÃ©dical</p>
     
     <p>Cher Dr Mimouni,</p>
     
     <p>
-        Je vous serais reconnaissant d’établir le renouvellement du certificat médical de longue durée.
+        Je vous serais reconnaissant dâ€™Ã©tablir le renouvellement du certificat mÃ©dical de longue durÃ©e.
     </p>
     
     <p>
-        Le dernier certificat, valable jusqu’au <strong>{$lastDayOfCert}</strong>, arrive à échéance. 
-        Serait-il possible de renouveler celui-ci pour la période suivante :
+        Le dernier certificat, valable jusquâ€™au <strong>{$lastDayOfCert}</strong>, arrive Ã  Ã©chÃ©ance. 
+        Serait-il possible de renouveler celui-ci pour la pÃ©riode suivante :
     </p>
     
     <ul>
-        <li style='color: blue'><strong>Du $dateFrom au $dateTo</strong> ($diff jours, incapacité à 100 %, pour maladie).</li>
+        <li style='color: blue'><strong>Du $dateFrom au $dateTo</strong> ($diff jours, incapacitÃ© Ã  100 %, pour maladie).</li>
     </ul>
     
     <p>
-        Je vous remercie par avance pour votre aide et reste à votre disposition.
+        Je vous remercie par avance pour votre aide et reste Ã  votre disposition.
     </p>
     
     <p>
         Avec mes meilleures salutations,<br>
     </p>    
-    <p>Kamran Nafisspour<br>rue des Vollandes 68<br>1207 Genève<br>Tél: (079) 350 2132</p>
+    <p>Kamran Nafisspour<br>rue des Vollandes 68<br>1207 GenÃ¨ve<br>TÃ©l: (079) 350 2132</p>
    
     </div>
     </body>
@@ -219,7 +217,6 @@ function send_email_certificat_Medical($is_redirect = False): void
 
 
     }
-
 
 
 }
@@ -259,13 +256,13 @@ $layout_context = "public"; ?>
 <style>
     .no-bullets {
         list-style: none; /* Removes bullets */
-        padding: 0;       /* Removes padding */
-        margin: 0;        /* Removes margin */
+        padding: 0; /* Removes padding */
+        margin: 0; /* Removes margin */
     }
 </style>
 
 
-<div class="container"style="margin-top: 10em"><!--close default container-->
+<div class="container" style="margin-top: 10em"><!--close default container-->
 
     <h2 class="text-center"><a href="<?= $_SERVER['PHP_SELF'] ?>">Demande Certificat Email</a>
         <a href='recurring_appointment.php' class='btn btn-secondary'>Go to recurring appointment </a>
@@ -285,21 +282,21 @@ $layout_context = "public"; ?>
 
         <div class="col-md-12 text-center">
 
-        <?php
+            <?php
 
-        $output = "
+            $output = "
 <form class='form-inline' action='" . $_SERVER['PHP_SELF'] . "' method='get' name='day_number_form'>
     <!-- Select Day of Month Running -->
     <label for='dayNumber' class='control-label'>Day Running:</label>
     <select name='dayNumber' id='dayNumber' class='input-small'>
 ";
 
-        for ($i = 1; $i <= 31; $i++) {
-            $selected = ($i == (int)$todayDateDayInt) ? "selected" : "";
-            $output .= "<option $selected value='$i'>$i</option>";
-        }
+            for ($i = 1; $i <= 31; $i++) {
+                $selected = ($i == (int)$todayDateDayInt) ? "selected" : "";
+                $output .= "<option $selected value='$i'>$i</option>";
+            }
 
-        $output .= "
+            $output .= "
     </select>&nbsp;
 
     <!-- Select Day of Month Reporting -->
@@ -307,12 +304,12 @@ $layout_context = "public"; ?>
     <select name='dayReport' id='dayReport' class='input-small'>
 ";
 
-        for ($i = 1; $i <= 31; $i++) {
-            $selected = ($i == $dayReport) ? "selected" : "";
-            $output .= "<option $selected value='$i'>$i</option>";
-        }
+            for ($i = 1; $i <= 31; $i++) {
+                $selected = ($i == $dayReport) ? "selected" : "";
+                $output .= "<option $selected value='$i'>$i</option>";
+            }
 
-        $output .= "
+            $output .= "
     </select>&nbsp;
 
     <!-- Time Input -->
@@ -325,15 +322,15 @@ $layout_context = "public"; ?>
     </div>
 </form>
 ";
-        echo $output;
+            echo $output;
 
 
-        ?>
+            ?>
+        </div>
     </div>
-</div>
 
 
-<?php include(SITE_ROOT . DS . 'public' . DS . 'layouts' . DS . "footer.php") ?>
+    <?php include(SITE_ROOT . DS . 'public' . DS . 'layouts' . DS . "footer.php") ?>
 
 
 

@@ -15,8 +15,8 @@ if (isset($_GET['test']) && $_GET['test'] == 1) {
     $show_testing = true;
     $view = "<a href='$php_self'>Hide</a>$nbspace";
 } else {
-    $show_testing = false;
-    $view = "<a href='$php_self?test=1'>Show</a> ";
+$show_testing = false;
+$view = "<a href='$php_self?test=1'>Show</a> ";
 }
 ?>
 <?php $layout_context = "admin"; ?>
@@ -57,7 +57,7 @@ if (isset($_GET['test']) && $_GET['test'] == 1) {
 
     <div class="col-md-1 text-center">
         <?php if (User::is_kamy()) { ?>
-            <p><?= $view ?> </p>
+        <p><?= $view ?> </p>
         <?php } ?>
     </div>
 
@@ -76,13 +76,19 @@ if (isset($message)) {
 }
 ?>
 
-<div>
-    <div class="row">
-        <div class="row">
-            <div class="col-lg-8 col-lg-offset-2" style="margin-top: 2em;padding: 2em;background-color: white">
-                <h1 class="text-center"><a href="../../Inspinia/papa/francais_discours.php">Hommage  Papa</a></h1>
-            </div>
+
+<div class="row">
+    <div class="col-lg-8 col-lg-offset-2" style="margin-top: 2em;padding: 2em;background-color: white">
+<!--        <h1 class="text-center"><a href="../../Inspinia/papa/francais_discours.php">Hommage à mon père</a></h1>-->
+        <h1 class="text-center"><a href="../../Inspinia/papa/francais_discours.php">Hommage à mon père <br>Shmouel ben Galine-Acher 1932-2025</a></h1>
+
+        <div class="text-center">
+            <a href="../../Inspinia/papa/francais_discours.php">
+                <img class="thumb text-center" src="../../Inspinia/papa/assets/img/photos/Photo_2025-03-01_144725.jpg" alt="Papa" style="width:10%;height:10%">
+            </a>
+
         </div>
+    </div>
 </div>
 
 <div class='row'>
@@ -177,29 +183,29 @@ if (isset($message)) {
 
     if (User::is_kamy()) {
         echo "<div class='col-md-12 text-center'>";
-        echo DatabaseObject::form_structure();
+    echo DatabaseObject::form_structure();
 
-        if (isset($_GET['class_name'])) {
+    if (isset($_GET['class_name'])) {
 
-            echo '<br><br>';
-            $class_name = $_GET['class_name'];
-            $countrecords = $class_name::count_all();
-            echo "Number of records in db: <b>$countrecords</b> ";
-            echo "<br><br>";
-            echo $class_name::class_structure();
+    echo '<br><br>';
+    $class_name = $_GET['class_name'];
+    $countrecords = $class_name::count_all();
+    echo "Number of records in db: <b>$countrecords</b> ";
+    echo "<br><br>";
+    echo $class_name::class_structure();
 
-            echo $class_name::find_column_name();
-            echo "</div>";
+    echo $class_name::find_column_name();
+    echo "</div>";
 //    echo "";
-        }
-    }
+}
+}
 
 
-    ?>
+?>
 
 
 </div>
-</div>
+<!--</div>-->
 
 <?php include(SITE_ROOT . DS . 'public' . DS . 'layouts' . DS . "footer.php") ?>
-		
+

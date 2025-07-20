@@ -32,7 +32,7 @@ if (isset($_GET["amount4"])) {
     $amount4 = 0;
 }
 
-$total_amount=$amount1 + $amount2 + $amount3 + $amount4 ;
+$total_amount = $amount1 + $amount2 + $amount3 + $amount4;
 
 ?>
 
@@ -86,7 +86,7 @@ $output .= "<p style='font-size: smaller'>
 
 $output .= "Would you be kind to pay equivalent BRL with best FX rate to: <br><hr>";
 
-$nbsp= str_repeat("&nbsp;", 5);
+$nbsp = str_repeat("&nbsp;", 5);
 if (!$amount1 == 0) {
     $output .= "<b>CHF {$amount1}.-</b> <br>";
     $output .= "NOME:GEOVANI DIAS<br>

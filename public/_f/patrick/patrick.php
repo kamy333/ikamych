@@ -28,15 +28,17 @@
 
     <div class="col-lg-6   col-lg-offset-3">
 
-        <p><a href="/public/_f/patrick/doc/Nearscreen Admin - creation of product and creation of users - example MEDI.pdf">Nearscreen Admin - creation of product and creation of users - example MEDI.pdf</a></p>
+        <p>
+            <a href="/public/_f/patrick/doc/Nearscreen Admin - creation of product and creation of users - example MEDI.pdf">Nearscreen
+                Admin - creation of product and creation of users - example MEDI.pdf</a></p>
         <hr>
 
         <p><a href="/public/_f/patrick/doc/Nearscreen%20MEDI%20-%20mode%20d'emploi.pdf">Nearscreen Mode d'emploi</a></p>
         <hr>
 
-        <?php $v=mb_convert_encoding('Nearscreen Video presentation', 'UTF-8'); ?>
-<!--        --><?php //$v=utf8_encode('Nearscreen Vidéo présentation'); ?>
-        <p><a href="https://www.youtube.com/watch?v=lgbEJWhcFkA"><?php echo $v ;?></a></p>
+        <?php $v = mb_convert_encoding('Nearscreen Video presentation', 'UTF-8'); ?>
+        <!--        --><?php //$v=utf8_encode('Nearscreen Vidéo présentation'); ?>
+        <p><a href="https://www.youtube.com/watch?v=lgbEJWhcFkA"><?php echo $v; ?></a></p>
         <hr>
 
     </div>

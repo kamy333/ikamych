@@ -77,23 +77,22 @@
         }
 
 
+        $clients = Client::find_all();
 
-        $clients= Client::find_all();
-
-            ?>
+        ?>
         <!--       <div class="row">-->
         <div class="col-lg-3 " style="background-color: #fff9fb;margin-top: 2em;padding: 2em">
             <h5 class="text-center">Clients</h5>
             <?php
 
-        echo "<hr>";
-        echo "<ul  class=\"list-group\">";
-        foreach ($clients as $client) {
-            echo "<li><a href='" . $_SERVER["PHP_SELF"] . "?WithDate=1&pseudo={$client->pseudo}'>$client->pseudo</a></li>";
-        }
-        echo "</ul>";
-        echo "<hr>";
-?>
+            echo "<hr>";
+            echo "<ul  class=\"list-group\">";
+            foreach ($clients as $client) {
+                echo "<li><a href='" . $_SERVER["PHP_SELF"] . "?WithDate=1&pseudo={$client->pseudo}'>$client->pseudo</a></li>";
+            }
+            echo "</ul>";
+            echo "<hr>";
+            ?>
         </div>
 
         <div class="col-lg-7 col-lg-offset-2" style="background-color: #fff9fb;">
@@ -165,46 +164,46 @@
                     $list .= "<li>" . $text . "</li>";
                 } else {
 
-                $href="https://docs.google.com/forms/d/e/1FAIpQLSceb4LdbfQ3JGhtwQXUk300LMnuvVxVBtSjCqj3J1k0WhMUxw/viewform?usp=pp_url&entry.1208039262&entry.101774349&entry.2142128057&entry.1046506626={$chauffeur}&entry.1089038865&entry.1030479151&entry.1375757547=Standard&entry.1263918545=Aller+Simple&entry.1502494065&entry.539108433";
-                $href_frame=$href."&embedded=true#start=embed";
+                    $href = "https://docs.google.com/forms/d/e/1FAIpQLSceb4LdbfQ3JGhtwQXUk300LMnuvVxVBtSjCqj3J1k0WhMUxw/viewform?usp=pp_url&entry.1208039262&entry.101774349&entry.2142128057&entry.1046506626={$chauffeur}&entry.1089038865&entry.1030479151&entry.1375757547=Standard&entry.1263918545=Aller+Simple&entry.1502494065&entry.539108433";
+                    $href_frame = $href . "&embedded=true#start=embed";
 
                     $text = "<a target='_blank'  href='$href'>$chauffeur&nbsp;&nbsp;&nbsp;$pseudo</a>";
                     $list .= "<li>" . $text . "</li>";
 
+                }
+
             }
 
-        }
+            $list .= "</ul>";
 
-        $list.="</ul>";
-
-        echo $list;
+            echo $list;
 
 
-        $list="<ul  class=\"list-group\">";
-        foreach ($chauffeurs as $chauffeur) {
-            $href=$_SERVER["PHP_SELF"]."?chauffeur=$chauffeur";
-            isset($_GET['pseudo'])? $href.="&pseudo=$pseudo" : "";
-            $text = "<a href='$href'>$chauffeur      ". strftime("%B %d, %Y", time()) ." @ ".date('H', time())."h00"."&nbsp;&nbsp;&nbsp;$pseudo</a>";
-            $list.= "<li>" . $text . "</li>";
-        }
-        $list.="</ul>";
-        echo $list;
+            $list = "<ul  class=\"list-group\">";
+            foreach ($chauffeurs as $chauffeur) {
+                $href = $_SERVER["PHP_SELF"] . "?chauffeur=$chauffeur";
+                isset($_GET['pseudo']) ? $href .= "&pseudo=$pseudo" : "";
+                $text = "<a href='$href'>$chauffeur      " . strftime("%B %d, %Y", time()) . " @ " . date('H', time()) . "h00" . "&nbsp;&nbsp;&nbsp;$pseudo</a>";
+                $list .= "<li>" . $text . "</li>";
+            }
+            $list .= "</ul>";
+            echo $list;
 
-        $list="<ul  class=\"list-group\">";
+            $list = "<ul  class=\"list-group\">";
 
 
-        $href="https://docs.google.com/forms/d/e/1FAIpQLSceb4LdbfQ3JGhtwQXUk300LMnuvVxVBtSjCqj3J1k0WhMUxw/viewform?usp=pp_url&entry.1208039262&entry.101774349&entry.2142128057&entry.1089038865&entry.1030479151&entry.1375757547=Standard&entry.1263918545=Aller+Simple&entry.1502494065&entry.539108433";
-        $href_frame=$href."&embedded=true#start=embed";
+            $href = "https://docs.google.com/forms/d/e/1FAIpQLSceb4LdbfQ3JGhtwQXUk300LMnuvVxVBtSjCqj3J1k0WhMUxw/viewform?usp=pp_url&entry.1208039262&entry.101774349&entry.2142128057&entry.1089038865&entry.1030479151&entry.1375757547=Standard&entry.1263918545=Aller+Simple&entry.1502494065&entry.539108433";
+            $href_frame = $href . "&embedded=true#start=embed";
 
             $text = "<a href='$href' target='_blank'>Transmed Google Form</a>";
             $text .= "";
-        $list.= "<li>" . $text . "</li>";
+            $list .= "<li>" . $text . "</li>";
 
 
-                $list.="</ul>";
+            $list .= "</ul>";
 
-        echo $list;
-        ?>
+            echo $list;
+            ?>
 
         </div>
 

@@ -2,9 +2,10 @@
 
 <?php
 
-function modal($id,$img,$img1){
+function modal($id, $img, $img1)
+{
 
-    $output="
+    $output = "
 <a class='' style='width:1em;' href='#' data-toggle='modal' data-target='#myLinkprogram{$id}'><span class='' style='color: #0000ff;' aria-hidden='true'></span>$img</a>
 
 <div class='modal fade' id='myLinkprogram{$id}' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true'>
@@ -87,33 +88,43 @@ function modal($id,$img,$img1){
 
     </div>
     <div class="col-lg-4 col-lg-offset-1 ">
-<p>David Olère
-    <br><br>
-    une illustration sous licence libre serait bienvenue<br>
-    David Olère, né Oler1 est un artiste français du xxe siècle, né à Varsovie, le 19 janvier 1902, et mort à Noisy-le-Grand, le 21 août 1985.<br><br>
+        <p>David Olère
+            <br><br>
+            une illustration sous licence libre serait bienvenue<br>
+            David Olère, né Oler1 est un artiste français du xxe siècle, né à Varsovie, le 19 janvier 1902, et mort à
+            Noisy-le-Grand, le 21 août 1985.<br><br>
 
-    Ayant quitté sa Pologne natale pour devenir peintre et sculpteur en France, il est naturalisé français en 1937 et réalise notamment plusieurs affiches de cinéma. La Seconde Guerre Mondiale fait cependant irruption dans l’existence de ce Juif polonais qui est déporté au camp d’Auschwitz-Birkenau de 1943 à 1945. Employé dans une équipe de Sonderkommando chargée de traiter les cadavres des chambres à gaz, il parvient à échapper aux purges effectuées pour ne pas laisser de témoin, car ses dessins sont fort appréciés de ses gardiens SS. Il devient donc, après la guerre, un témoin visuel de premier plan de l’expérience concentrationnaire et du procédé d’extermination, qu’il ne cesse de représenter par le dessin et la peinture.<br><br>
-    <a href="https://fr.wikipedia.org/wiki/David_Ol%C3%A8re">Voir Wikipedia</a>
-</p>
-</div>
+            Ayant quitté sa Pologne natale pour devenir peintre et sculpteur en France, il est naturalisé français en
+            1937 et réalise notamment plusieurs affiches de cinéma. La Seconde Guerre Mondiale fait cependant irruption
+            dans l’existence de ce Juif polonais qui est déporté au camp d’Auschwitz-Birkenau de 1943 à 1945. Employé
+            dans une équipe de Sonderkommando chargée de traiter les cadavres des chambres à gaz, il parvient à échapper
+            aux purges effectuées pour ne pas laisser de témoin, car ses dessins sont fort appréciés de ses gardiens SS.
+            Il devient donc, après la guerre, un témoin visuel de premier plan de l’expérience concentrationnaire et du
+            procédé d’extermination, qu’il ne cesse de représenter par le dessin et la peinture.<br><br>
+            <a href="https://fr.wikipedia.org/wiki/David_Ol%C3%A8re">Voir Wikipedia</a>
+        </p>
+    </div>
 </div>
 
 <br>
 <hr>
 <br>
 <?php
-$w = 300;$h = 200;$width = $w;$height = $h;$pic_size = " width = '$width' height = '$height' ";
-$img_folder = "shoah".DS."david_olere";
+$w = 300;
+$h = 200;
+$width = $w;
+$height = $h;
+$pic_size = " width = '$width' height = '$height' ";
+$img_folder = "shoah" . DS . "david_olere";
 $dir = SITE_ROOT . DS . 'public' . DS . "/img/" . $img_folder;
 $output = "";
-
 
 
 if (is_dir($dir)) {
     $dir_array = scandir($dir);
 //    shuffle($dir_array);
 //    $output="<div class='col-lg-7   col-lg-offset-3'>";
-    $count =0;
+    $count = 0;
     foreach ($dir_array as $file) {
         if (stripos($file, '.') > 0) {
             $ext = pathinfo($file, PATHINFO_EXTENSION);
@@ -121,10 +132,18 @@ if (is_dir($dir)) {
                 list($width, $height, $type, $attr) = getimagesize($file);
 
                 $count++;
-                $w = 300;$h = 200;$width = $w;$height = $h;$pic_size = " width = '$width' height = '$height' ";
-                $img= "<img $pic_size src='/public/img/$img_folder/{$file}' alt='{$file}'  >";
-                $w = 600;$h = 400;$width = $w;$height = $h;$pic_size = " width = '$width' height = '$height' ";
-                $img1= "<img $pic_size src='/public/img/$img_folder/{$file}' alt='{$file}'  >";
+                $w = 300;
+                $h = 200;
+                $width = $w;
+                $height = $h;
+                $pic_size = " width = '$width' height = '$height' ";
+                $img = "<img $pic_size src='/public/img/$img_folder/{$file}' alt='{$file}'  >";
+                $w = 600;
+                $h = 400;
+                $width = $w;
+                $height = $h;
+                $pic_size = " width = '$width' height = '$height' ";
+                $img1 = "<img $pic_size src='/public/img/$img_folder/{$file}' alt='{$file}'  >";
                 $output .= modal($count, $img, $img1);
             }
         }
@@ -151,7 +170,6 @@ echo $output;
 //echo modal(1, $img, $img1);
 
 ?>
-
 
 
 <br><br>

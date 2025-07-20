@@ -235,7 +235,8 @@ Merci, oui.
         </div>
     </div>
 
-    <div class="col-lg-2  col-lg-offset-2 col-md-2  col-md-offset-2" style="background-color: #d9eeff;margin: 2em;;padding: 2em;height: 15em">
+    <div class="col-lg-2  col-lg-offset-2 col-md-2  col-md-offset-2"
+         style="background-color: #d9eeff;margin: 2em;;padding: 2em;height: 15em">
         <h4> le Monde Diplomatique</h4>
         <p>L’imposture<strong>Bernard Henri-Lévy</strong><br>
             On voit bien dans ce numéro la haine et l'acharnement envers BHL
@@ -245,7 +246,8 @@ Merci, oui.
     </div>
 
 
-    <div class="col-lg-2  col-lg-offset-2 col-md-2  col-md-offset-2" style="background-color: #d9eeff;margin: 2em;;padding: 2em;height: 15em">
+    <div class="col-lg-2  col-lg-offset-2 col-md-2  col-md-offset-2"
+         style="background-color: #d9eeff;margin: 2em;;padding: 2em;height: 15em">
         <h4> La Règle Du Jeu</h4>
         <p>Misère et déshonneur du Monde diplomatique de <strong>Bernard Henri-Lévy</strong><br>
             Réponse de BHL suite au numéro du <a href="http://www.monde-diplomatique.fr/dossier/BHL"
@@ -255,14 +257,14 @@ Merci, oui.
     </div>
 
 
-    <div class="col-lg-2  col-lg-offset-2 col-md-2  col-md-offset-2" style="background-color: #d9eeff;margin: 2em;;padding: 2em;height: 15em">
+    <div class="col-lg-2  col-lg-offset-2 col-md-2  col-md-offset-2"
+         style="background-color: #d9eeff;margin: 2em;;padding: 2em;height: 15em">
         <h4>Atlantico</h4>
         <p>Quand le Monde Diplomatique allume un bûcher pour brûler <strong>Bernard Henri-Lévy</strong><br>
 
             <a href="http://www.atlantico.fr/decryptage/quand-monde-diplomatique-allume-bucher-pour-bruler-bernard-henri-levy-3116439.html#YOyvAE6orMzwbY12.01"
                class="h"> Read more at atlantico.fr ... </a></p>
     </div>
-
 
 
     <div class="col-lg-2 col-md-2" style="background-color: #d9eeff;margin: 2em;padding: 2em;height: 15em">
@@ -280,8 +282,6 @@ Merci, oui.
 
 
 </div>
-
-
 
 
 <div id="fb-root"></div>

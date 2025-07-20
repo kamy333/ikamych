@@ -79,7 +79,7 @@
             <?php
 
             if (1 == 2) {
-                echo '<img src="/Inspinia/papa/assets/img/2025-03-02_rav_amar_bulletin.jpg" alt="Rav Ammar">';
+                echo '<img src="/Inspinia/papa_yearly_date/assets/img/2025-03-02_rav_amar_bulletin.jpg" alt="Rav Ammar">';
 
             ?>
 

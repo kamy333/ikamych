@@ -29,7 +29,7 @@
 Pour Alain Finkelkraut, \"c'est quand on n'est pas pratiquant que l'identité juive vous colle à la peau\". J'aime ce texte qui définit la condition de nombreux Juifs d'Europe, laïcs, intellectuels, humanistes, artistes, démocrates, libres penseurs, etc., mais profondément attachés à leur culture et à leur mémoire. Être juif sans pratiquer n'est une contradiction que pour ceux qui n'ont pas conscience de la dimension d'une identité qui ne se limite pas à une appartenance religieuse.
 « Je crois que c’est quand on n’est pas pratiquant que l’identité juive vous colle à la peau parce que, pour un pratiquant, c’est Dieu qui colle : le pratiquant est celui dont l’existence se tient toute entière, se déroule devant Dieu. Mon existence avance comme elle le peut, Dieu n’est pas son témoin et, en même temps, je me sens juif, parce que je ne suis pas un juif pratiquant, je suis un juif identitaire. Qu’est-ce que ça veut dire? Non que la judéité soit une propriété, une manière d’être, qu’elle constitue mon caractère, si c’est vrai je n’en sais rien. Être juif, pour moi, c’est me sentir impliqué, concerné, compromis parfois, par ce que font les autres juifs. C’est un sentiment d’appartenance, d’affiliation et dans cette affiliation, il y a, par exemple, le lien torturé à Israël. Il y a un fait de sollicitude, d’inquiétude, d’admiration et parfois, d’impatience critique. Et puis aussi, si mon existence ne se tient pas devant Dieu, elle se tient, peut-être, devant les grands-parents que je n’ai jamais eus. Raymond Aaron disait : « Si, par extraordinaire, je devais apparaître devant mon grand-père qui vivait à Rambervillers, encore fidèle à la tradition, je voudrais, devant lui, ne pas avoir honte. Je voudrais lui donner le sentiment que, n’étant plus juif comme il l’était, je suis resté d’une certaine manière fidèle. » Je n’ai pas connu mes grands-parents, mais je pense à eux. Si je devais apparaître devant eux, eux qui étaient, en effet, encore fidèle à la tradition – l’un d’entre eux aimait les textes sacrés –, je souhaiterais qu’ils pensent, que je suis, à ma façon, dans la culture, et en France, resté fidèle. » 
 Alain Finkelkraut";
-        echo "" . $text ;
+        echo "" . $text;
         ?>
     </div>
     <div class="col-lg-6" style="background-color: #f1ffff;margin-top: 2em;margin-right: 2em;padding: 2em">
@@ -53,13 +53,11 @@ Un Juif est un symbole de l’éternité.<br>
 La nation qui n’abat, ni ne torture pourrait exterminer, la nation que ni le feu ni l’épée des civilisations ont été en mesure d’effacer de la surface de la terre, la nation qui la première annonce la Parole de Dieu, la nation qui a préservé la prophétie depuis si longtemps et qui l’a passé au reste de l’humanité, une telle nation ne peut pas disparaître.
 Un Juif est éternel, il est une incarnation de l’éternité.
 1891";
-        echo "" . $text ;
+        echo "" . $text;
         ?>
     </div>
 
 </div>
-
-
 
 
 <?php include(SITE_ROOT . DS . 'public' . DS . 'layouts' . DS . "footer.php") ?>

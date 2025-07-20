@@ -48,6 +48,62 @@
     <?php $lang = 'fr' ?>
     <?php require 'functions/functions_1.php' ?>
     <?php include 'assets/layout/menu.php'; ?>
+
+    <style>
+        .memorial-container {
+            display: flex;
+            align-items: flex-start;
+            margin: 10px;
+        }
+
+        .memorial-img {
+            float: left; /* Ensures wrapping around image */
+            width: 100px; /* adjust size as needed */
+            height: auto;
+            margin-right: 15px;
+            border-radius: 8px; /* optional, adds soft corners */
+        }
+
+        .memorial-text {
+            flex: 1;
+            font-family: Arial, sans-serif;
+            line-height: 1.4;
+        }
+
+        .small-text {
+            font-size: small;
+            text-align: left;
+        }
+
+    </style>
+
+    <div class="memorial-container">
+        <a href="/Inspinia/papa/assets/img/kkl_arbre_planté.jpg">
+            <img src="/Inspinia/papa/assets/img/kkl_arbre_planté.jpg" alt="kkl" class="memorial-img">
+        </a>
+        <div class="memorial-text">
+            <p>Tree for Israel in memory of</p>
+            <p class="small-text">
+                La plantation de 50 arbres en Israël à la mémoire de Papa, au nom de nous tous Germaine, Caroline, Michael, Desirée, Farideh, Rosa et moi.
+                Ces arbres seront plantés à la frontière Sud, une région dont l'environnement a été ravagé par la guerre, avec l'espoir d'un horizon de paix.
+                Qu'est-ce qu'il nous manque !
+                <br>Kamran
+            </p>
+        </div>
+    </div>
+<!---->
+<!--    <ul>-->
+<!--        <li>nafisspour@bluewin.ch</li>-->
+<!--        <li>carolinerashtian@gmail.com</li>-->
+<!--        <li>michaelrashtian@gmail.com</li>-->
+<!--        <li>germaine.chatenet@gmail.com</li>-->
+<!--        <li>fsoofer@roadrunner.com</li>-->
+<!--        <li>desireeabdian@gmail.com</li>-->
+<!---->
+<!--    </ul>-->
+
+
+
     <?php echo $h1 . $h2 . $h3 . $h4; ?>
 
     <div>
@@ -108,6 +164,8 @@
             toujours mon modèle et ma source d’inspiration. Ton souvenir vivra à travers chaque sourire et chaque moment
             de bonheur partagé. Shalom, Papa.
         </p>
+
+<!--        <a href="https://ikamy.ch/Inspinia/papa/rav_ammar.php" target="_blank">Rav Ammar</a>-->
 
 
         <div class="signature">

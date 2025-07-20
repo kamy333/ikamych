@@ -51,15 +51,22 @@
 
     </div>
     <div class="col-lg-4 col-lg-offset-1 ">
-<p>David Olère
-    <br><br>
-    une illustration sous licence libre serait bienvenue<br>
-    David Olère, né Oler1 est un artiste français du xxe siècle, né à Varsovie, le 19 janvier 1902, et mort à Noisy-le-Grand, le 21 août 1985.<br><br>
+        <p>David Olère
+            <br><br>
+            une illustration sous licence libre serait bienvenue<br>
+            David Olère, né Oler1 est un artiste français du xxe siècle, né à Varsovie, le 19 janvier 1902, et mort à
+            Noisy-le-Grand, le 21 août 1985.<br><br>
 
-    Ayant quitté sa Pologne natale pour devenir peintre et sculpteur en France, il est naturalisé français en 1937 et réalise notamment plusieurs affiches de cinéma. La Seconde Guerre Mondiale fait cependant irruption dans l’existence de ce Juif polonais qui est déporté au camp d’Auschwitz-Birkenau de 1943 à 1945. Employé dans une équipe de Sonderkommando chargée de traiter les cadavres des chambres à gaz, il parvient à échapper aux purges effectuées pour ne pas laisser de témoin, car ses dessins sont fort appréciés de ses gardiens SS. Il devient donc, après la guerre, un témoin visuel de premier plan de l’expérience concentrationnaire et du procédé d’extermination, qu’il ne cesse de représenter par le dessin et la peinture.<br><br>
-    <a href="https://fr.wikipedia.org/wiki/David_Ol%C3%A8re">Voir Wikipedia</a>
-</p>
-</div>
+            Ayant quitté sa Pologne natale pour devenir peintre et sculpteur en France, il est naturalisé français en
+            1937 et réalise notamment plusieurs affiches de cinéma. La Seconde Guerre Mondiale fait cependant irruption
+            dans l’existence de ce Juif polonais qui est déporté au camp d’Auschwitz-Birkenau de 1943 à 1945. Employé
+            dans une équipe de Sonderkommando chargée de traiter les cadavres des chambres à gaz, il parvient à échapper
+            aux purges effectuées pour ne pas laisser de témoin, car ses dessins sont fort appréciés de ses gardiens SS.
+            Il devient donc, après la guerre, un témoin visuel de premier plan de l’expérience concentrationnaire et du
+            procédé d’extermination, qu’il ne cesse de représenter par le dessin et la peinture.<br><br>
+            <a href="https://fr.wikipedia.org/wiki/David_Ol%C3%A8re">Voir Wikipedia</a>
+        </p>
+    </div>
 </div>
 
 <br>
@@ -71,10 +78,9 @@ $h = 200;
 $width = $w;
 $height = $h;
 $pic_size = " width = '$width' height = '$height' ";
-$img_folder = "shoah".DS."david_olere";
+$img_folder = "shoah" . DS . "david_olere";
 $dir = SITE_ROOT . DS . 'public' . DS . "/img/" . $img_folder;
 $output = "";
-
 
 
 if (is_dir($dir)) {
@@ -96,9 +102,6 @@ if (is_dir($dir)) {
 echo $output;
 
 ?>
-
-
-
 
 
 <br><br>

@@ -1,18 +1,20 @@
 <?php require_once('../../../includes/initialize.php'); ?>
 
 <?php $layout_context = "public"; ?>
-<?php $active_menu="lesson"; ?>
-<?php $stylesheets="";  ?>
-<?php $fluid_view=true; ?>
-<?php $javascript=""; ?>
-<?php $incl_message_error=true; ?>
+<?php $active_menu = "lesson"; ?>
+<?php $stylesheets = ""; ?>
+<?php $fluid_view = true; ?>
+<?php $javascript = ""; ?>
+<?php $incl_message_error = true; ?>
 <?php //include_layout_template('header_2.php'); ?>
 <?php include(SITE_ROOT . DS . 'public' . DS . 'layouts' . DS . "header.php") ?>
 <?php //include_layout_template('nav.php'); ?>
 <?php include(SITE_ROOT . DS . 'public' . DS . 'layouts' . DS . "nav.php") ?>
 
-<h4 class="text-center"><mark><a href="<?php echo $_SERVER["PHP_SELF"] ?>">Git Version Software </a> </mark><span><a href="http://www.lynda.com/Git-tutorials/Understanding-version-control/100222/111248-4.html">Lynda GIT by Kevin Skoglund</a> </span></h4>
-
+<h4 class="text-center">
+    <mark><a href="<?php echo $_SERVER["PHP_SELF"] ?>">Git Version Software </a></mark>
+    <span><a href="http://www.lynda.com/Git-tutorials/Understanding-version-control/100222/111248-4.html">Lynda GIT by Kevin Skoglund</a> </span>
+</h4>
 
 
 <div id="myheader">
@@ -38,7 +40,7 @@
 </div>
 
 <div class="row">
-    <div class="col-md-3 box"  >
+    <div class="col-md-3 box">
 
         <span><a href="#myheader">&laquo;back</a></span><br>
         <h4 id="config"><strong>Configuration</strong></h4>
@@ -59,34 +61,38 @@
 
         User home .gitconfig
         To configure on user we can locate in C:\User\Kamran
-    <pre>
+        <pre>
     git config &ndash;global user.name  &ldquo;Kamran Nafisspour&rdquo; <br>
     git config &ndash;global user.email  &ldquo;nafisspour@bluewin.ch&rdquo;
     </pre>
         to add in config tell which editor to use and color
-    <pre>
+        <pre>
     git config &ndash;global core.editor &ldquo;notepad.exe&rdquo;
         git config &ndash;global color.ui true
     </pre>
 
         to see config
         <pre>git config &ndash;list</pre>
-        specific <pre>git config user.name</pre>
-        or <pre>git config user.email</pre>
+        specific
+        <pre>git config user.name</pre>
+        or
+        <pre>git config user.email</pre>
 
-        inside user <pre>.gitconfig</pre>
+        inside user
+        <pre>.gitconfig</pre>
 
-        to see file content <pre> cat .gitconfig</pre>
+        to see file content
+        <pre> cat .gitconfig</pre>
 
 
         help
-    <pre>
+        <pre>
     git help
     git help log or man git&ndash;log (unix)
     </pre>
     </div>
 
-    <div class="col-md-5"  >
+    <div class="col-md-5">
         <span><a href="#myheader">&laquo;back</a></span><br>
         <h4 id="starting"><strong>Initializing a repository</strong></h4>
         &ndash;ls &ndash;la (Unix) .git or dir (Window)
@@ -108,7 +114,7 @@
         will show all the commit
         <pre>git log</pre>
         <pre>git log help</pre>
-        limit no of commit most recent  in log or expressed in a date
+        limit no of commit most recent in log or expressed in a date
         <pre>git log &ndash;n 5</pre>
         <pre>git log &ndash;&ndash;since=2012-06-15</pre>
         <pre>git log &ndash;&ndash;until=2012-06-15</pre>
@@ -125,7 +131,7 @@
         <pre> git status</pre>
         to see modification in staging before committing
         <pre>git diff</pre>
-        to see staged diff  compare with repository
+        to see staged diff compare with repository
         <pre>git diff &ndash;&ndash;staged</pre>
         see diff in dif format one line
         <pre>git diff &ndash;&ndash;color&ndash;words filename.txt</pre>
@@ -135,10 +141,11 @@
         <span><a href="#myheader">&laquo;back</a></span><br>
         <h4 id="delete"><strong>Delete</strong></h4>
         Delete file from explorer ,when seeing in staged as delete then to delete in repository
-        <pre>git add/rm filename</pre> then we do regular commit
+        <pre>git add/rm filename</pre>
+        then we do regular commit
         if we want to delete the file from the folder and adds to stage as delete process and the we do commit after
         <pre>git rm filename.txt</pre>
-        rename  if changed from explorer will need to add new and rem, git will figure is a rename and the we commit.
+        rename if changed from explorer will need to add new and rem, git will figure is a rename and the we commit.
         2nd way ,we can rename from git files and will put it stagged
         <pre>git mv first_file.txt new_file.txt</pre>
         move to other place directory firstdir but you can also rename it at same time
@@ -159,7 +166,8 @@
         to bring back a version old version of a file do checkout with the SHA 10 first and it
         will bring it into staged and recommit if you want.
         <pre>git checkout  6ae98716b64286eb1 &ndash;&ndash; filename.txt </pre>
-        so we could re.commit git commit with message <pre>commit  git commit -m &ldquo;6ae98716b64286eb1 message
+        so we could re.commit git commit with message
+        <pre>commit  git commit -m &ldquo;6ae98716b64286eb1 message
 
 here&rdquo;</pre>
         or discard by unstaged reset and then checkout by taking latest version in repository.
@@ -178,7 +186,7 @@ here&rdquo;</pre>
         hard reset all including working dir. all the commit afterwards will be lost
         <pre>git reset &ndash;&ndash;hard f3b8da8c035641a62f67c94ff</pre>
         <hr>
-        to git remove file from being send to rep n test run   f forces only on unstaged items
+        to git remove file from being send to rep n test run f forces only on unstaged items
         it will remove it from the working dir caution permanent delete
         <pre>git clean &ndash;n</pre>
         <pre>git clean &ndash;f</pre>
@@ -196,7 +204,7 @@ here&rdquo;</pre>
 
         ignore file globally not just a project and we have the file be anywhere. Create as a above in user
 
-        .gitignore_global and all element to exclude  cat file to see
+        .gitignore_global and all element to exclude cat file to see
         <pre> git config &ndash;&ndash;global core excludesfiles c:/user/kamran/.gitignore_global  </pre>
 
         geet git to ignore file before .gitignore was created. so we must untracked.
@@ -206,7 +214,7 @@ here&rdquo;</pre>
         <pre>git rm &ndash;&ndash;cached filename.txt</pre>
 
     </div>
-    <div class="col-md-3"  >
+    <div class="col-md-3">
         <span><a href="#myheader">&laquo;back</a></span><br>
         <h4 id="branch">Branches</h4>
         to see branches
@@ -248,9 +256,9 @@ here&rdquo;</pre>
 </div>
 
 <div class="row">
-    <div class="col-md-3 box" >
+    <div class="col-md-3 box">
         <span><a href="#myheader">&laquo;back</a></span><br>
-<h4 id="stash"><strong>Stash</strong></h4>
+        <h4 id="stash"><strong>Stash</strong></h4>
         Stash is file that we can save temporary without to commit and we can save at a later stage
         not part of stagind or repository.
         If we make a change on branch for ex, it save and our repository and wrk directory previous state.
@@ -261,7 +269,7 @@ here&rdquo;</pre>
         <pre>git stash list</pre>
         will show summary change
         <pre>git stash show stash@{0}</pre>
-        to see more  p=patch
+        to see more p=patch
         <pre>git stash show &ndash;p stash@{0}</pre>
         to retrieve stash and will bring back in wrkg dir
         can use pop or apply
@@ -273,17 +281,20 @@ here&rdquo;</pre>
         to delete all stash once. caution it is destructive
         <pre>git stash clear</pre>
 
-</div>
-    <div class="col-md-5 box" >
+    </div>
+    <div class="col-md-5 box">
 
         <span><a href="#myheader">&laquo;back</a></span><br>
         <h4 id="remote"><strong>Github remote <a href="https://github.com/">&ndash;github kamy333</a> </strong></h4>
 
         <em>push </em> to upload to github creates the same branch in github
-        At same time git put a copy locally in a branch  <em>origin/master</em> which will be synchronized with github
+        At same time git put a copy locally in a branch <em>origin/master</em> which will be synchronized with github
         <em>fetch</em> to pull down from github eg other ppl change download go to branch origin/master
         and we can merge it if we want.
-        So generally speaking, the process that you go through when you're working with a remote, is that you'll do your commits locally, then you'll fetch the latest from the remote server, get your origin branch in sync, then merge any of the new work you did into what just came down from the server and then push the result back up to the remote server.
+        So generally speaking, the process that you go through when you're working with a remote, is that you'll do your
+        commits locally, then you'll fetch the latest from the remote server, get your origin branch in sync, then merge
+        any of the new work you did into what just came down from the server and then push the result back up to the
+        remote server.
 
         <hr>
 
@@ -300,7 +311,7 @@ here&rdquo;</pre>
         origin is alias and we can use others. info store .git/config
         <pre>git remote add origin https://github.com/kamy333/projectname.git</pre>
 
-        to push into github  can be a branch.  github may change.
+        to push into github can be a branch. github may change.
         Will need to provide username and password after. Creates a new branch
         &ndash;u to keep have reference with remote , withjot mean we just want to put there
         <pre>git push &ndash;u origin master</pre>
@@ -314,7 +325,8 @@ here&rdquo;</pre>
         <pre>git branch &ndash;a</pre>
 
         to bring down a project github for ex. go to the place you want to download.
-        find the link in gihub the path. you can name the directory name at the end eg ikamych if you don't want default.
+        find the link in gihub the path. you can name the directory name at the end eg ikamych if you don't want
+        default.
         &ndash;b if you wanted a branch (in github admin we can specify which branch we want)
         Note by downloading it tracks the remote
         <pre>git clone https://github.com/kamy333/projectname.git ikamych</pre>
@@ -334,12 +346,12 @@ here&rdquo;</pre>
         if we have only only 1 repository.
         Fetch often as it give latest github rep and see if any change was done.
         <pre>git fetch</pre>
-to check to repository as in github
+        to check to repository as in github
         <pre>git log &ndash;&ndash;oneline origin/master</pre>
         <pre>git log &ndash;&ndash;oneline origin/branchname</pre>
         will show remote
         <pre>git branch &ndash;r</pre>
-so now if we want to bring the remote origin/master local into our master we need to merge.
+        so now if we want to bring the remote origin/master local into our master we need to merge.
         Need to be in the receiver(master) to receive from (origin/master)
         <pre>git merge origin/master</pre>
 
@@ -357,15 +369,15 @@ so now if we want to bring the remote origin/master local into our master we nee
 
         <span><a href="http://www.lynda.com/Git-tutorials/Enabling-collaboration/100222/111339-4.html"> Enabling collaboration</a> </span>
 
-        </div>
-            <div class="col-md-3 box"  >
+    </div>
+    <div class="col-md-3 box">
 
-                <span><a href="#myheader">&laquo;back</a></span><br>
-                <h4 id="alias"><strong>Alias</strong></h4>
+        <span><a href="#myheader">&laquo;back</a></span><br>
+        <h4 id="alias"><strong>Alias</strong></h4>
 
         use alias if you want to use keyboard shortcut command. It should be set in the global config setting.
-                here some example  double quotes if there is space &ldquo; commit -a&rdquo;
-                Status
+        here some example double quotes if there is space &ldquo; commit -a&rdquo;
+        Status
         <pre>git config &ndash;&ndash;global alias.st status</pre>
         checkout
         <pre>git config &ndash;&ndash;global alias.co checkout</pre>
@@ -374,26 +386,24 @@ so now if we want to bring the remote origin/master local into our master we nee
         branch
         <pre>git config &ndash;&ndash;global alias.br branch</pre>
         <pre>git config &ndash;&ndash;global alias.dfs &ldquo;diff &ndash;&ndash;staged &rdquo </pre>
-                <pre>git config &ndash;&ndash;global alias.dfs &ldquo;diff &ndash;&ndash;staged &rdquo; </pre>
-                <pre>git config &ndash;&ndash;global alias.logg &ldquo;&ndash;&ndash;graph &ndash;&ndash;decorate &ndash;&ndash;oneline &ndash;&ndash;abbrev&ndash;commit &ndash;&ndash;all  &rdquo;</pre>
+        <pre>git config &ndash;&ndash;global alias.dfs &ldquo;diff &ndash;&ndash;staged &rdquo; </pre>
+        <pre>git config &ndash;&ndash;global alias.logg &ldquo;&ndash;&ndash;graph &ndash;&ndash;decorate &ndash;&ndash;oneline &ndash;&ndash;abbrev&ndash;commit &ndash;&ndash;all  &rdquo;</pre>
 
 
-                <span><a href="#myheader">&laquo;back</a></span><br>
-                <h4 id="ssh"><strong>SSH key</strong></h4>
+        <span><a href="#myheader">&laquo;back</a></span><br>
+        <h4 id="ssh"><strong>SSH key</strong></h4>
 
-To have connection to github and not having to type your username and password over and over
-<span><a href="https://help.github.com/articles/generating-ssh-keys/">Setting SSH</a> </span>
-                <br>
-  <span><a href="https://help.github.com/articles/changing-a-remote-s-url/"> to change remote between https and SSH</a> </span>
-                <pre></pre>
-
+        To have connection to github and not having to type your username and password over and over
+        <span><a href="https://help.github.com/articles/generating-ssh-keys/">Setting SSH</a> </span>
+        <br>
+        <span><a href="https://help.github.com/articles/changing-a-remote-s-url/"> to change remote between https and SSH</a> </span>
         <pre></pre>
 
         <pre></pre>
 
         <pre></pre>
 
-
+        <pre></pre>
 
 
     </div>
@@ -401,18 +411,17 @@ To have connection to github and not having to type your username and password o
 </div>
 
 
-
 <div>
 
-<ul>
-<li>jeter cig dehors</li>
-<li>donner mon vin à ses amis</li>
-<li>mes cig</li>
-<li>fin de mois sans argent</li>
-<li>Alcoolic </li>
-<li>Amener des gens</li>
+    <ul>
+        <li>jeter cig dehors</li>
+        <li>donner mon vin à ses amis</li>
+        <li>mes cig</li>
+        <li>fin de mois sans argent</li>
+        <li>Alcoolic</li>
+        <li>Amener des gens</li>
 
-</ul>
+    </ul>
 </div>
 
 

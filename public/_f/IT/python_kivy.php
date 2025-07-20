@@ -67,7 +67,7 @@ TheLabApp().run()
             </pre>";
 
 
-$text .= "<pre style='background-color: white'>
+            $text .= "<pre style='background-color: white'>
                                 KIVY File
 the kv file name must be equal to run method TheLabApp().run()   TheLab.kv   so without App at the end
 
@@ -78,8 +78,7 @@ BoxLayoutExample:
                               
 
 </pre>";
-            
-            
+
 
             echo $text;
 

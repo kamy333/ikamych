@@ -157,9 +157,6 @@ if (isset($_GET["date"]) && isset($_GET["name"])) {
 <h1 class="text-center"><a href="<?= $me ?>">Recurring Appointmement</a></h1>
 
 
-
-
-
 <?php
 
 $output = "";

@@ -17,9 +17,19 @@ if (User::is_visitor() && !User::is_caroline_only()) {
 
 
 
-<div class="row">
+
+
+<div class="row" >
     <div class="col-lg-8 col-lg-offset-2" style="margin-top: 2em;padding: 2em;background-color: white">
-        <h1 class="text-center"><a href="../Inspinia/papa/francais_discours.php">Hommage à Papa</a></h1>
+<!--        <h1 class="text-center"><a href="../Inspinia/papa/francais_discours.php">Hommage à mon père</a></h1>-->
+        <h1 class="text-center"><a href="../Inspinia/papa/francais_discours.php">Hommage à mon père <br>Shmouel ben Galine-Acher 1932-2025</a></h1>
+
+        <div class="text-center">
+            <a href="../Inspinia/papa/francais_discours.php">
+                <img class="thumb text-center" src="../Inspinia/papa/assets/img/photos/Photo_2025-03-01_144725.jpg" alt="Papa" style="width:10%;height:10%">
+            </a>
+
+        </div>
     </div>
 </div>
 

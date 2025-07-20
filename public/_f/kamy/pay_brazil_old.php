@@ -26,7 +26,7 @@ if (isset($_GET["amount3"])) {
     $amount3 = 0;
 }
 
-$total_amount=$amount1 + $amount2 + $amount3 ;
+$total_amount = $amount1 + $amount2 + $amount3;
 
 ?>
 
@@ -63,7 +63,6 @@ Amount Alex: <input type='number' value='{$amount2}' class='input-small' name='a
 Amount Weslley: <input type='number' value='{$amount3}' class='input-small' name='amount3' placeholder='amount'>
 <input type='submit' class='btn'>
 </form>";
-
 
 
 $output .= "<br><br><p>Bonjour Nico,<br>
@@ -143,14 +142,9 @@ if (!$amount3 == 0) {
 }
 
 
-
-
 $output .= "Pourras-tu m'envoyer une copie de l'avis de paiement<br>";
 $output .= "Je te remercie<br>";
 $output .= "Kamran";
-
-
-
 
 
 echo $output;

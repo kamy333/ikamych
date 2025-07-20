@@ -21,10 +21,25 @@
         </audio>
     </div>
 
+    <style>
+        .thumb {
+            width: 150px;
+            height: 150px;
+            object-fit: cover;
+            cursor: pointer;
+        }
+    </style>
+
     <div class="row">
-    <div class="col-lg-8 col-lg-offset-2" style="margin-top: 2em;padding: 2em;background-color: white">
-            <h1 class="text-center"><a href="papa/francais_discours.php">Hommage à Papa</a></h1>
-    </div>
+        <div class="col-lg-8 col-lg-offset-2" style="margin-top: 2em;padding: 2em;background-color: white">
+            <h1 class="text-center"><a href="papa/francais_discours.php">Hommage à mon père <br>Shmouel ben Galine-Acher 1932-2025</a></h1>
+            <div class="text-center">
+                <a href="papa/francais_discours.php">
+                <img class="thumb text-center" src="papa/assets/img/photos/Photo_2025-03-01_144725.jpg" alt="Papa" style="width:10%;height:10%">
+                </a>
+
+            </div>
+        </div>
     </div>
 
     <div class="row">
@@ -84,7 +99,7 @@ if (User::is_kamy()) {
     $text1 .= "<div class='row text-center'>";
     $text1 .= "<div class='col-lg-8 col-lg-offset-2' style='margin-top: 2em;padding: 2em;background-color: white'>";
     $text1 .= "<p>in fonding memory</p>";
-    $text1 .= "<p>Maman Bozorgue z'l 17.04.2011 | Xavier Raisin Dadre 01.01.2023 | Katy Samak | Farad Lavi | Maggy Herzet | Dahidjan Ezatollah 10.10.2020 | Dahidjan Ramatollah | Baba Bozorgue | Maman Bozorgue Motaram | Mr. Mme Manaz Sadigh 23.6.2020 | khaleh Aghdass | Dahidjan 3 | Amouh Aziz </p>";
+    $text1 .= "<p>Papa Said Nafisspour Shmouel ben Galine z'l 13.3.1932 - 22,2,2025 (92 ans)</p><p>Maman Bozorgue z'l 17.04.2011 | Xavier Raisin Dadre 01.01.2023 | Katy Samak | Farad Lavi | Maggy Herzet | Dahidjan Ezatollah 10.10.2020 | Dahidjan Ramatollah | Baba Bozorgue | Maman Bozorgue Motaram | Mr. Mme Manaz Sadigh 23.6.2020 | khaleh Aghdass | Dahidjan 3 | Amouh Aziz | Acher Nafisspour 1906-1959  </p>";
     echo "" . $text1;// . "<hr>";
     $text1 .= "</div>";
     $text1 .= "</div>";
@@ -106,8 +121,6 @@ if (User::is_kamy()) {
                             <iframe src="https://drive.google.com/file/d/0B71yHaesAeDTend4empIc0VIQXc/preview"
                                     width="320" height="240"></iframe>
                         </div>
-
-
 
 
                         <div class="col-md-5">

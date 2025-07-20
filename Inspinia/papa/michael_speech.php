@@ -50,11 +50,19 @@
 
 
     <div>
-        <p>
-            Papa Said in a few words is strong, fun, energetic, funny, enthusiastic, warm, optimistic, and full of life.
-            Every moment I spent with Papa Said was always filled with laughter. He always had a new joke up his sleeve. He always had such a positive view on life, and lived every moment to the fullest. He never complained about anything and was always extremely thankful. We went on countless walks in the city together whether it was Paris, LA, Geneva, you name it. We went on hikes in the forest in Brid le Bain. We always explored the best restaurants/ cafes, went to public swimming pools in Geneva, and even played basketball in my backyard in LA together. Every memory I have with Papa Said, I remember always laughing and joking around. He always had a smile on his face and it electrified and radiated  across the room with whoever he was with. Papa Said was way more than a grandpa for me. He was like a best friend that every time i visited Paris, I only wanted to spend time with him. It was never a dull moment, we always had something to talk about it (whether it be business, life, health/fitness, marriage, the world, anything you can think of. He was always very young at heart. I will always cherish our beautiful memories together and his soul will live on forever. I love you and miss you my PopSaid.
-
-    </p>
+<!--        <p>-->
+<!--            Papa Said in a few words is strong, fun, energetic, funny, enthusiastic, warm, optimistic, and full of life.-->
+<!--            Every moment I spent with Papa Said was always filled with laughter. He always had a new joke up his sleeve. He always had such a positive view on life, and lived every moment to the fullest. He never complained about anything and was always extremely thankful. We went on countless walks in the city together whether it was Paris, LA, Geneva, you name it. We went on hikes in the forest in Brid le Bain. We always explored the best restaurants/ cafes, went to public swimming pools in Geneva, and even played basketball in my backyard in LA together. Every memory I have with Papa Said, I remember always laughing and joking around. He always had a smile on his face and it electrified and radiated  across the room with whoever he was with. Papa Said was way more than a grandpa for me. He was like a best friend that every time i visited Paris, I only wanted to spend time with him. It was never a dull moment, we always had something to talk about it (whether it be business, life, health/fitness, marriage, the world, anything you can think of. He was always very young at heart. I will always cherish our beautiful memories together and his soul will live on forever. I love you and miss you my PopSaid.-->
+<!---->
+<!--    </p>-->
+        <p>Papa Said, in a few words, is strong, fun, energetic, funny, enthusiastic, warm, optimistic, and full of life.</p>
+        <p>Every moment I spent with Papa Said was always filled with laughter. He always had a new joke up his sleeve. He always had such a positive view on life and lived every moment to the fullest. He never complained about anything and was always extremely thankful.</p>
+        <p>We went on countless walks in the city together, whether it was Paris, LA, Geneva, you name it. We went on hikes in the forest in Brid le Bain. We always explored the best restaurants and cafés, went to public swimming pools in Geneva, and even played basketball in my backyard in LA together.</p>
+        <p>Every memory I have with Papa Said, I remember always laughing and joking around. He always had a smile on his face, and it electrified and radiated across the room with whoever he was with.</p>
+        <p>Papa Said was way more than a grandpa for me. He was like a best friend. Every time I visited Paris, I only wanted to spend time with him. It was never a dull moment; we always had something to talk about, whether it be business, life, health/fitness, marriage, the world, or anything you can think of.</p>
+        <p>He was always very young at heart.</p>
+        <p>I will always cherish our beautiful memories together, and his soul will live on forever.</p>
+        <p>I love you and miss you, my PopSaid.</p>
 
 
     <div class="signature">

@@ -51,6 +51,19 @@
     <?php $lang = 'en' ?>
     <?php require 'functions/functions_1.php' ?>
     <?php include 'assets/layout/menu.php'; ?>
+
+
+
+<div style="text-align: center;">
+    <p>
+        <span style="color: lightblue"><b><i>Ameh Farideh Art Book 2023</i></b></span>
+    </p>
+    <a href="https://issuu.com/sadaffoods/docs/fari_soofer_art_book_2023">
+        <img src="/Inspinia/papa/assets/img/2025-03-14_ameh_farideh.jpg" alt="ameh_farideh" style="width: 10%; height: 10%">
+    </a>
+
+</div>
+    
     <h1>Tribute to my brother </h1>
     <?php echo  $h2 . $h3 . $h4; ?>
 

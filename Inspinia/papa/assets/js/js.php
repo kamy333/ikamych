@@ -21,4 +21,17 @@
     });
 
 
+
+    // Récupérer tous les liens du menu
+    const navLinks = document.querySelectorAll('.menu a');
+
+    // Récupérer l'URL actuelle
+    const currentUrl = window.location.href;
+
+    // Parcourir les liens pour trouver celui correspondant à l'URL actuelle
+    navLinks.forEach(link => {
+        if (link.href === currentUrl) {
+            link.classList.add('active');
+        }
+    });
 </script>

@@ -71,7 +71,7 @@ function getH2($birthDate, $deathDate, $lang = 'fr')
 {
     $age = calculateAge($birthDate, $deathDate, $lang);
     if ($lang == 'fr') {
-        return "<h2>Said Nafisspour (Shmouel ben Galine et Asher 13 mars 1932 - 22 février 2025 ($age ans)</h2>";
+        return "<h2>Said Nafisspour (Shmouel ben Galine et Asher 13 mars 1932 - 22 février 2025 ($age)</h2>";
     } elseif ($lang == 'he') {
         return "<h2>סעיד נפיספור (שמואל בן גלינה ואשר 13 במרץ 1932 - 22 בפברואר 2025 ($age)</h2>";
     } elseif ($lang == 'pt') {
@@ -104,7 +104,7 @@ function getH3($birthDate, $deathDate, $lang = 'fr')
     $heb=' ('.getHebrewDate().')';
 
     if ($lang == 'fr') {
-        return "<h3> 13 mars 1932 - 22 février 2025 $heb ($age ans)</h3>";
+        return "<h3> 13 mars 1932 - 22 février 2025 $heb ($age)</h3>";
     } elseif ($lang == 'he') {
         return "<h3> 13 במרץ 1932 - 22 בפברואר 2025 ($age)</h3>";
     } elseif ($lang == 'pt') {
@@ -116,12 +116,20 @@ function getH3($birthDate, $deathDate, $lang = 'fr')
     }
 }
 
+
+
 function getH4($deathDate, $lang = 'fr')
 {
     $today = new DateTime();
-    $daysMonthSinceDeath = $deathDate->diff($today);
-    $daysMonthSinceDeath = $daysMonthSinceDeath->format('%d');
+// convert $deathDate 22-02-25 dd-mm-yyyy    to datetime object
+//    $deathDate = getTheDate($deathDate);
 
+
+    $daysMonthSinceDeath = $deathDate->diff($today);
+//    $daysMonthSinceDeath = $daysMonthSinceDeath->format('%d');
+    $daysMonthSinceDeath = $daysMonthSinceDeath->format('%a');
+
+    //how can you convert
 
 
     if ($lang == 'fr') {

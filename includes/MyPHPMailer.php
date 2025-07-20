@@ -20,6 +20,7 @@ class MyPHPMailer extends PHPMailer
         parent::__construct();
         $this->SMTPDebug=0;
         $this->Debugoutput = 'html';
+        $this->CharSet = 'UTF-8';
         $this->isSMTP();
         $this->Host =MY_HOST;
 //        $this->Port=465; bluewin

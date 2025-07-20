@@ -13,17 +13,17 @@
 class Note extends DatabaseObject
 {
 
-    public static $fields_numeric = array('id', 'rank', 'user_id', 'done', 'progress');
-    public static $get_form_element = array('note', 'user_id', 'web_address', 'done', 'due_date', 'rank', 'comment');
-    public static $get_form_element_others = array();
-    public static $form_default_value = array(
+    public static $fields_numeric = ['id', 'rank', 'user_id', 'done', 'progress'];
+    public static $get_form_element = ['note', 'user_id', 'web_address', 'done', 'due_date', 'rank', 'comment'];
+    public static $get_form_element_others =  [];
+    public static $form_default_value = [
         "rank" => "1",
         "user_id" => "2",
         "due_date" => "now()",
         "done" => "0",
         "progress" => "5"
-    );
-    public static $db_field_search = array('search_all', 'note', 'done', 'due_date', 'rank', 'web_address', 'download_csv');
+    ];
+    public static $db_field_search = ['search_all', 'note', 'done', 'due_date', 'rank', 'web_address', 'download_csv'];
     public static $page_name = "note";
 
 //    public static $page_manage = "manage_note.php";
@@ -35,29 +35,31 @@ class Note extends DatabaseObject
     public static $page_new = "/public/admin/crud/ajax/new_ajax.php?class_name=Note"; // "new_link.php";
     public static $page_edit = "/public/admin/crud/ajax/edit_ajax.php?class_name=Note"; //  "edit_link.php";
     public static $page_delete = "/public/admin/crud/ajax/delete_ajax.php?class_name=Note"; //  "delete_link.php";
+//    public static $page_delete = "/public/admin/crud/ajax/delete_ajax.php?class_name=MyExpense"; //  "delete_link.php";
+//    public static $page_delete = "/public/admin/crud/ajax/delete_ajax.php?class_name=ToDoList"; //  "delete_link.php";
+
     public static $position_table = "positionRight"; // positionLeft // positionBoth  positionRight
 
 
-    public static $form_class_dependency = array();
+    public static $form_class_dependency =  [];
     public static $per_page;
     protected static $table_name = "note";
-    protected static $db_fields = array('id', 'user_id', 'note', 'due_date', 'rank', 'web_address', 'comment', 'done', 'progress');
-    protected static $required_fields = array('user_id', 'note', 'done');
-    protected static $db_fields_table_display_short = array('id', 'user_id', 'notes', 'done', 'due_on', 'rank', 'comment');
-    protected static $db_fields_table_display_full = array('id', 'user_id', 'notes', 'done', 'progress', 'due_date', 'rank', 'web_address', 'comment', 'done');
-    protected static $db_field_exclude_table_display_sort = array();
-    protected static $db_field_include_table_display_sort = array(
-        'link' => 'web_address', 'prog' => 'progress', 'notes' => 'note', 'due_on' => 'due_date');
+    protected static $db_fields = ['id', 'user_id', 'note', 'due_date', 'rank', 'web_address', 'comment', 'done', 'progress'];
+    protected static $required_fields = ['user_id', 'note', 'done'];
+    protected static $db_fields_table_display_short = ['id', 'user_id', 'notes', 'done', 'due_on', 'rank', 'comment'];
+    protected static $db_fields_table_display_full = ['id', 'user_id', 'notes', 'done', 'progress', 'due_date', 'rank', 'web_address', 'comment', 'done'];
+    protected static $db_field_exclude_table_display_sort = [];
+    protected static $db_field_include_table_display_sort = ['link' => 'web_address', 'prog' => 'progress', 'notes' => 'note', 'due_on' => 'due_date'];
 
-    protected static $form_properties = array(
+    protected static $form_properties = [
 
-        "note" => array("type" => "text",
+        "note" => ["type" => "text",
             "name" => 'note',
             "label_text" => "Note",
             "placeholder" => "Note",
             "required" => true,
-        ),
-        "user_id" => array("type" => "selectchosen",
+        ],
+        "user_id" => ["type" => "selectchosen",
             "name" => 'user_id',
             "class" => "User",
             "label_text" => "User",
@@ -65,32 +67,32 @@ class Note extends DatabaseObject
             'field_option_0' => "id",
             'field_option_1' => "username",
             "required" => true,
-        ),
-        "due_date" => array("type" => "date",
+        ],
+        "due_date" => ["type" => "date",
             "name" => 'due_date',
             "label_text" => "Due Date",
             "placeholder" => "Input Due Date",
             "required" => true,
-        ),
-        "done" => array("type" => "radio",
-            array(0,
-                array(
+        ],
+        "done" => ["type" => "radio",
+            [0,
+                [
                     "label_all" => "Done/finished",
                     "name" => "done",
                     "label_radio" => "No",
                     "value" => "0",
                     "id" => "done_no",
-                    "default" => true)),
-            array(1,
-                array(
+                    "default" => true]],
+            [1,
+                [
                     "label_all" => "Done/finished",
                     "name" => "done",
                     "label_radio" => "Yes",
                     "value" => "1",
                     "id" => "done_yes",
-                    "default" => false)),
-        ),
-        "progress" => array("type" => "number",
+                    "default" => false]],
+        ],
+        "progress" => ["type" => "number",
             "name" => 'progress',
             "label_text" => "Progress",
             'min' => 0,
@@ -100,35 +102,35 @@ class Note extends DatabaseObject
             'datawidth' => "data-width='85'",
             'dataheight' => "data-height='85'",
             "required" => true,
-        ),
-        "web_address" => array("type" => "url",
+        ],
+        "web_address" => ["type" => "url",
             "name" => 'web_address',
             "label_text" => "Website address",
             "placeholder" => "Website Address",
             "required" => false,
-        ),
-        "comment" => array("type" => "textarea",
+        ],
+        "comment" => ["type" => "textarea",
             "name" => 'comment',
             "label_text" => "Comment",
             "placeholder" => "input Comment",
             "required" => false,
-        ),
-        "rank" => array("type" => "number",
+        ],
+        "rank" => ["type" => "number",
             "name" => 'rank',
             "label_text" => "Rank",
             'min' => 0,
             "placeholder" => "a number to sort",
             "required" => true,
-        ),
-    );
-    protected static $form_properties_search = array(
-        "search_all" => array("type" => "text",
+        ],
+    ];
+    protected static $form_properties_search = [
+        "search_all" => ["type" => "text",
             "name" => 'search_all',
             "label_text" => "",
             "placeholder" => "Search all",
             "required" => false,
-        ),
-        "note" => array("type" => "select",
+        ],
+        "note" => ["type" => "select",
             "name" => 'note',
             "id" => "search_note",
             "class" => "Note",
@@ -137,8 +139,8 @@ class Note extends DatabaseObject
             'field_option_0' => "note",
             'field_option_1' => "note",
             "required" => false,
-        ),
-        "done" => array("type" => "select",
+        ],
+        "done" => ["type" => "select",
             "name" => 'done',
             "id" => "search_done",
             "class" => "Note",
@@ -147,8 +149,8 @@ class Note extends DatabaseObject
             'field_option_0' => "done",
             'field_option_1' => "done",
             "required" => false,
-        ),
-        "rank" => array("type" => "select",
+        ],
+        "rank" => ["type" => "select",
             "name" => 'rank',
             "id" => "search_rank",
             "class" => "MyExpenseType",
@@ -157,27 +159,27 @@ class Note extends DatabaseObject
             'field_option_0' => "rank",
             'field_option_1' => "rank",
             "required" => false,
-        ),
-        "download_csv" => array("type" => "radio",
-            array(0,
-                array(
+        ],
+        "download_csv" => ["type" => "radio",
+            [0,
+                [
                     "label_all" => "Dnld csv",
                     "name" => "download_csv",
                     "label_radio" => "non",
                     "value" => "No",
                     "id" => "visible_no",
-                    "default" => true)),
-            array(1,
-                array(
+                    "default" => true]],
+            [1,
+                [
                     "label_all" => "Dnld csv",
                     "name" => "download_csv",
                     "label_radio" => "oui",
                     "value" => "Yes",
                     "id" => "visible_yes",
-                    "default" => true)),
-        ),
+                    "default" => true]],
+        ],
 
-    );
+    ];
     public $id;
     public $user_id;
     public $note;
@@ -587,12 +589,6 @@ class Note extends DatabaseObject
     {
         $output = "";
 
-
-
-
-
-
-
         $output .= "<style>
         .btn-inactif {
             background-color: #E8F1D4;
@@ -603,13 +599,6 @@ class Note extends DatabaseObject
             color: black;
             }"
             . "</style>";
-
-//        $color_btn_inactif = "chromewhite";
-//        $color_btn_actif = "yellow";
-
-//        $text_header_a = "<b>Notes</b>";
-//        $text_header_o = "<b>Notes</b>";
-//        $text_header_d = "<b>Notes</b>";
 
         $text_header= "<b>Notes</b>";
 
@@ -631,9 +620,6 @@ class Note extends DatabaseObject
         $btn_hidden_a = "";
         $btn_hidden_o = "";
         $btn_hidden_d = "";
-
-
-
 
         $notes = static::get_view_note('sql');
         if (isset($_GET['viewAllNote'])) {

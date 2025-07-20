@@ -126,9 +126,10 @@ Début des années 1950 : Expulsion des travailleurs palestiniens en grève , av
 <div class="row">
 
     <div class="col-lg-10 col-lg-offset-2" style="background-color: #f1ffff;margin-top: 2em;padding: 2em">
-        <h4> <a href="http://frblogs.timesofisrael.com/comment-le-monde-arabe-a-perdu-ses-juifs/">Comment le monde arabe a perdu ses Juifs</a></h4>
+        <h4><a href="http://frblogs.timesofisrael.com/comment-le-monde-arabe-a-perdu-ses-juifs/">Comment le monde arabe
+                a perdu ses Juifs</a></h4>
         <?php
-        
+
         $text = "Nathan Weinstock est un avocat, criminologue et historien belge né à Anvers en 1939. Après une scolarité juive orthodoxe il se tourne vers le trotskisme, devient en 1967 antisioniste et pro-palestinien, et se répand en harangues devant des auditoires nourris aux émissions de Radio-Le Caire, « savourant avec délices l’annonce que les vaillantes armées arabes sont sur le point de jeter les Juifs à la mer ». D’une violence verbale extrême, Weinstock appelle au démantèlement d’Israël en posant qu’on ne peut être à la fois sioniste et socialiste.<br><br>
 
 Recevez gratuitement notre édition quotidienne par mail pour ne rien manquer du meilleur de l'info   INSCRIPTION GRATUITE!<br><br>

@@ -1,5 +1,8 @@
 <?php
 
+
+
+
 include 'css.php';
 
 ?>
@@ -8,4 +11,7 @@ include 'css.php';
 <body>
 <div class="container">
 
-<?php include 'menu.php';?>
+<?php
+include './menu.php'
+
+?>

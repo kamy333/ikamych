@@ -85,10 +85,22 @@
 </div>
 
 <hr>
-xxx
+
 <div class="col-lg-12   col-lg-offset-1">
 
-<!--    Aya Nakamua -->
+    <!--    Adele Chasing pavements -->
+    <iframe width="560" height="315" src="https://www.youtube.com/embed/08DjMT-qR9g?si=tBLiz2VAXlTGN3DS"
+            title="YouTube video player" frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+    <!--Silence Wang (Chinese)-->
+    <iframe width="560" height="315" src="https://www.youtube.com/embed/yJEzuMn2cKs?si=IOc7aUHCSpNkGgow"
+            title="YouTube video player" frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+    <!--    Aya Nakamua -->
     <iframe width="560" height="315" src="https://www.youtube.com/embed/66JWP4F5_tE?si=-K0DEujp17rqQJ0j"
             title="YouTube video player" frameborder="0"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"

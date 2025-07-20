@@ -22,18 +22,19 @@
     <div class="col-lg-4 col-lg-offset-1" style="background-color: #f1ffff;margin-top: 2em;padding: 2em">
 
 
-            <p>Thought process</p>
-            <div class="fb-video" data-href="https://www.facebook.com/yitzgo/videos/1690269407933525/?hc_ref=ARTzcVQS5UdKB_ORqEKmwJv8qtAmRwVUl951lQAWGaDayz97-j5AB7QJksf26zcWq0k&pnref=story"
-                 data-width="3000" data-show-text="true">
-                <div class="fb-xfbml-parse-ignore">
-                    <blockquote cite="https://www.facebook.com/julcoh/videos/10152434170565251/"><a
-                            href="https://www.facebook.com/julcoh/videos/10152434170565251/">I truly believe these 8:54 minutes could change your life!
-                            please 👉 TAG A FRIEND to spread this important mind shift.
-                            LIKE Yitz Goldberg for more..</a>
-                        <p></p>Interview <a href="#" role="button"></a></blockquote>
-                </div>
+        <p>Thought process</p>
+        <div class="fb-video"
+             data-href="https://www.facebook.com/yitzgo/videos/1690269407933525/?hc_ref=ARTzcVQS5UdKB_ORqEKmwJv8qtAmRwVUl951lQAWGaDayz97-j5AB7QJksf26zcWq0k&pnref=story"
+             data-width="3000" data-show-text="true">
+            <div class="fb-xfbml-parse-ignore">
+                <blockquote cite="https://www.facebook.com/julcoh/videos/10152434170565251/"><a
+                            href="https://www.facebook.com/julcoh/videos/10152434170565251/">I truly believe these 8:54
+                        minutes could change your life!
+                        please 👉 TAG A FRIEND to spread this important mind shift.
+                        LIKE Yitz Goldberg for more..</a>
+                    <p></p>Interview <a href="#" role="button"></a></blockquote>
             </div>
-
+        </div>
 
 
         <?php
@@ -46,8 +47,6 @@
         ?>
     </div>
 </div>
-
-
 
 
 <div id="fb-root"></div>

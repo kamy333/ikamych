@@ -21,15 +21,15 @@
 
 <div class="row">
     <div class="col-lg-10 col-lg-offset-1" style="background-color: #fdfdff;margin-top: 2em;padding: 2em">
-    <?php
-    $text = "<a href='#'></a>";
-    $text .= "Aujourd'hui J'ai assisté  à la visite guidée du camp de Drancy ( à quelques kilomètres de Paris) où  84% des juifs de France ont séjounés avant d'être  exterminés Les Bâtiments de 4 étages que tu vois à gauche du wagon et de la voie ferrée sont actuellement habités et le musée  est situé en face . 
+        <?php
+        $text = "<a href='#'></a>";
+        $text .= "Aujourd'hui J'ai assisté  à la visite guidée du camp de Drancy ( à quelques kilomètres de Paris) où  84% des juifs de France ont séjounés avant d'être  exterminés Les Bâtiments de 4 étages que tu vois à gauche du wagon et de la voie ferrée sont actuellement habités et le musée  est situé en face . 
 Ces bâtiments étaient destinés à devenir un genre d'HLM mais à cause crise 29 la construction n'avait pas été achevée faute d'argent ( seules les façades avait été terminées et les escaliers intérieurs , pas de cloisons ni de sanitaires ni d'électricité ) Sur la 2e photo, tu peux voir une Sculpture de granit  de Chlomo Selinger ( je ne connais pas l'orthographe exact ) sculpteur qui ne parle jamais de ce qu'il a vécu et ne témoigne que par ses sculptures . 
 ";
-    echo "" . $text . "<hr>";
-    ?>
+        echo "" . $text . "<hr>";
+        ?>
 
-</div>
+    </div>
 </div>
 <div class="row">
     <div class="col-lg-4 col-lg-offset-1" style="background-color: #fdfdff;margin-top: 2em;padding: 2em">
@@ -37,14 +37,14 @@ Ces bâtiments étaient destinés à devenir un genre d'HLM mais à cause crise 
 
         <img src="/public/img/shoah/CampDrancy.JPG" width="500" height="500" alt="Camp Drancy">
     </div>
-        <div class="col-lg-4 col-lg-offset-1" style="background-color: #fdfdff;margin-top: 2em;padding: 2em">
-            <img src="/public/img/shoah/ShlomoSelingerSculpteur.JPG" width="500" height="500"
-                 alt="Shlomo Selinger Sculpteur">
+    <div class="col-lg-4 col-lg-offset-1" style="background-color: #fdfdff;margin-top: 2em;padding: 2em">
+        <img src="/public/img/shoah/ShlomoSelingerSculpteur.JPG" width="500" height="500"
+             alt="Shlomo Selinger Sculpteur">
 
     </div>
 
 </div>
-    <div class="row">
+<div class="row">
 
     <div class="col-lg-4 col-lg-offset-1" style="background-color: #f1ffff;margin-top: 2em;padding: 2em">
 
@@ -58,26 +58,21 @@ Ces bâtiments étaient destinés à devenir un genre d'HLM mais à cause crise 
         echo "" . $text . "<hr>";
         ?>
     </div>
-        <div class="col-lg-6 " style="background-color: #ffe2ee;margin-top: 2em;padding: 2em">
+    <div class="col-lg-6 " style="background-color: #ffe2ee;margin-top: 2em;padding: 2em">
 
-            <?php
+        <?php
 
-            $text = "Réflexions sur le nazisme , à l'occasion de la parution du livre éponyme de Saul Friedländer.<br>"
+        $text = "Réflexions sur le nazisme , à l'occasion de la parution du livre éponyme de Saul Friedländer.<br>"
 
-            ." <a href=\"https://www.franceculture.fr/emissions/repliques/reflexions-sur-le-nazisme\">Répliques  par Alain Finkielkraut  le samedi de 9h00 à 10h00 51min</a><br>".
-"<iframe src=\"https://www.franceculture.fr/player/export-reecouter?content=9687ed77-9c3c-4b9b-9a27-ba918eb441d0\" width=\"481\" frameborder=\"0\" scrolling=\"no\" height=\"137\"></iframe>"
-                .""
-            ;
-            echo "" . $text . "<hr>";
-            ?>
-
-
+            . " <a href=\"https://www.franceculture.fr/emissions/repliques/reflexions-sur-le-nazisme\">Répliques  par Alain Finkielkraut  le samedi de 9h00 à 10h00 51min</a><br>" .
+            "<iframe src=\"https://www.franceculture.fr/player/export-reecouter?content=9687ed77-9c3c-4b9b-9a27-ba918eb441d0\" width=\"481\" frameborder=\"0\" scrolling=\"no\" height=\"137\"></iframe>"
+            . "";
+        echo "" . $text . "<hr>";
+        ?>
 
 
     </div>
 </div>
-
-
 
 
 <div id="fb-root"></div>

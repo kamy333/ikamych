@@ -30,10 +30,10 @@
 </div>
 
 <div class="row">
-<div class="col-lg-4 col-lg-offset-1" style="background-color: #f1ffff;margin-top: 2em;padding: 2em">
-    <?php
-    $text = "<a href='#'></a>";
-    $text .= "Edouard Brainis J'ai peut-être la solution au dilemme de ceux qui ne savent pas se positionner sur le sionisme. Voici le commentaire que j'ai fait sur mon mur suite au dernier article de Joel Kotek dans Regard. 
+    <div class="col-lg-4 col-lg-offset-1" style="background-color: #f1ffff;margin-top: 2em;padding: 2em">
+        <?php
+        $text = "<a href='#'></a>";
+        $text .= "Edouard Brainis J'ai peut-être la solution au dilemme de ceux qui ne savent pas se positionner sur le sionisme. Voici le commentaire que j'ai fait sur mon mur suite au dernier article de Joel Kotek dans Regard. 
 
 \"Si je peux me permettre une critique, je regrette qu'il laisse - prudence intellectuelle sûrement - de l'espace à un antisionisme qui ne serait pas antisémite. Je n'ai jamais rencontré cet antisionisme-là hors de la sphère juive (où il est ultra-minoritaire). De la même façon que seuls les juifs peuvent être sionistes, seuls les juifs peuvent être (éventuellement) antisionistes. La question du sionisme porte sur le regard du peuple juif sur sa propre destinée. Je considère que l’antisionisme non juif est toujours un racisme. Que quiconque se déclare par principe anti-Belgique - tout en étant pro-France, pro-Pays Bas, pro-Luxembourg, pro-Allemagne, etc. - et voit d'un bon œil le démantèlement de la Belgique au détriment des Belges et contre leur volonté, il serait qualifié sans ambages de haineux et de raciste anti-Belges ... voire de psychopathe. Dans le cas d'Israël, certains continuent à prétendre qu'il s'agit d'une opinion intellectuellement tenable.\"
 
@@ -45,9 +45,9 @@ D'ailleurs, soit dit en passant, les Etats arabes qui refusent l'indépendance a
 'We won't allow the creation of a second Israel,' Iraq warns ahead of Kurdistan…
 HAARETZ.COM
 ";
-    echo "" . $text . "<hr>";
-    ?>
-</div>
+        echo "" . $text . "<hr>";
+        ?>
+    </div>
 
     <div class="col-lg-4  col-lg-offset-1" style="background-color: #f1ffff;margin-top: 2em;padding: 2em">
         <?php
@@ -60,11 +60,6 @@ L'entretien qui suit a été publié dans le journal britannique Solidarity en 2
     </div>
 
 </div>
-
-
-
-
-
 
 
 <div id="fb-root"></div>

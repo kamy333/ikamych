@@ -24,10 +24,10 @@
 
         <div class="col-lg-11 col-lg-offset-1 text-center"
              style="background-color: #f1ffff;margin-top: 2em;padding: 2em">
-       <?php
+            <?php
 
-       $output.="<hr><p>Médicament</p>";
-       $output.="<br>
+            $output .= "<hr><p>Médicament</p>";
+            $output .= "<br>
             Hallugen<br>
             Procto-giyvenol<br>
             Merfen<br>
@@ -41,8 +41,8 @@
             Alèse Attends
             ";
 
-       echo $output;
-       ?>
+            echo $output;
+            ?>
 
         </div>
     </div>
@@ -74,15 +74,16 @@
 
     </div>
     <div class="col-lg-11 col-lg-offset-1 text-center" style="background-color: #f1ffff;margin-top: 2em;padding: 2em">
-     <p style="font-size: x-large"><strong> ARJO LEVE MALADE</strong></p>
+        <p style="font-size: x-large"><strong> ARJO LEVE MALADE</strong></p>
         <p>Bonjour Monsieur,<br>
             <a target="_blank" href="/public/img/handicap/Arjo_Maxi_Sky2_Instructions_for_use.pdf">Arjo instruction</a>
 
             Ci-joint comme convenu le manuel du Maxi Sky 2<br><br>
 
-        Concernant le no d’appel en cas de question ou de problème <br>:
-        Vous pouvez contactez notre ligne téléphonique du service après-vente au 061 337 97 79   ou info.ch@arjo.com qui vous enverra un technicien si besoin.<br>
-        En vous remerciant de votre confiance je vous envoie mes plus cordiales salutations
+            Concernant le no d’appel en cas de question ou de problème <br>:
+            Vous pouvez contactez notre ligne téléphonique du service après-vente au 061 337 97 79 ou info.ch@arjo.com
+            qui vous enverra un technicien si besoin.<br>
+            En vous remerciant de votre confiance je vous envoie mes plus cordiales salutations
 
 
         </p>
