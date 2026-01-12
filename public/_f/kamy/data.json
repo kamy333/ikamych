@@ -1,0 +1,14 @@
+{
+  "Email": {
+    "Subject": "Renouvellement certificat médical longue durée",
+    "text1": "Je vous prie de bien vouloir établir le renouvellement du certificat médical longue durée pour mon fils Kamy   Nafisspour.",
+    "text2": "La date d'échéance $monthAbbrFrench le  arrrive bientot le arrive à échéance Pouvez-vous s'il vous plait établir le renouvellement du certificat médical :",
+    "text3": "du $dateFrom jusqu'au $dateTo $diff jours 100%.",
+    "text4": "Je vous remercie d'avance",
+    "text5": "Meilleures salutations",
+    "text6": "Kamran Nafisspour",
+    "text7": "rue des Vollandes 68",
+    "text8": "1207 Genève",
+    "text9": "Tél: (079) 350 2132"
+  }
+}

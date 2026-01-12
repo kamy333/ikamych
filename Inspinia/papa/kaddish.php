@@ -111,13 +111,29 @@
             Talmud, and is traditionally recited by a minyan, a quorum of ten Jewish adults.
 
         </h4>
+        <?php
+
+        $psalmNumber_2 = rand(1, 12);
+        ?>
+        
         <h5>
             <a href="https://www.shiva.com/learning-center/resources/psalms?srsltid=AfmBOoqp46ugN_yKgyRuHcwOHzBqOHDAcFpezVpBP57QvThInB7VOIqo"
             target="_blank">Psalm
                 Of David</a>
 
+            &nbsp;&nbsp;&nbsp;
+
+            Tehilim choose <b><?= $psalmNumber_2 ?></b>
+            &nbsp;&nbsp;&nbsp;
             <a href="https://www.shiva.com/learning-center/prayers/yizkor" target="_blank">Yitshor</a>
         </h5>
+
+        <div class="image-container">
+            <img src="/Inspinia/papa/assets/img/2025-03-01_Rav_Amar_kaddish.jpg" alt="Sefarade Mourner's Kaddish in Aramaic">
+
+
+            <img src="/Inspinia/papa/assets/img/2025-03-01_Rav_Amar_kaddish_french.jpg" alt="Sefarade french Mourner's Kaddish in Aramaic">
+        </div>     
 
         <div class="video-container" style="text-align: center">
 
@@ -131,7 +147,6 @@
         <div class="image-container">
             <!-- Replace 'path/to/your-image.jpg' with the actual URL or file path of your image -->
             <img src="/Inspinia/papa/assets/img/_kadish.jpg" alt="Mourner's Kaddish in Aramaic">
-            <img src="/Inspinia/papa/assets/img/2025-03-01_Rav_Amar_kaddish.jpg" alt="Sefarade Mourner's Kaddish in Aramaic">
             <img src="/Inspinia/papa/assets/img/2025-03-01_Rav_Amar_kaddish_french.jpg" alt="Sefarade french Mourner's Kaddish in Aramaic">
         </div>
 

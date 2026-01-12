@@ -20,6 +20,7 @@
     <a href="https://ikamy.ch/Inspinia/papa/kaddish.php">Kaddish</a>
     <a href="https://ikamy.ch/Inspinia/papa/shema.php">Shema</a>
     <a href="https://ikamy.ch/Inspinia/papa/shloshim.php">Shloshim Ythsor</a>
+    <a href="https://www.youtube.com/watch?v=w3EY7tEmeKc">Music</a>
 
 
 </nav>

@@ -4,6 +4,8 @@ header('Content-Type: text/html; charset=utf-8');
 
 // Generate a random psalm number between 1 and 150
 $psalmNumber = rand(1, 150);
+$psalmNumber_2 = rand(1, 12);
+
 
 // Build Sefaria API URL
 $sefariaUrl = "https://www.sefaria.org/api/texts/Psalms.$psalmNumber?lang=he&commentary=0&context=0";
@@ -93,6 +95,8 @@ $hatikvah = "
 // Compose email content
 $subject = "🕊 Psaume du jour – Psaume $psalmNumber";
 $body = "
+<h2>Tehilim choose $psalmNumber_2</h2>
+
 <h2>$subject</h2>
 <h3>📜 Texte en hébreu :</h3>
 <p style='direction: rtl; text-align: right; font-family: serif; margin-right: 200px; font-size: 24px;''>$hebrew</p>

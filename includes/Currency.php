@@ -213,6 +213,14 @@ class Currency extends DatabaseObject
         return $valid;
 
     }
+    
+    public static function find_by_name($name="") {
+        global $database;
+        $name = $database->escape_value($name);
+        $sql = "SELECT * FROM " . self::$table_name . " WHERE currency = '{$name}' LIMIT 1";
+        $result_array = self::find_by_sql($sql);
+        return !empty($result_array) ? array_shift($result_array) : false;
+    }
 
 
 

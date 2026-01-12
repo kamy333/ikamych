@@ -28,6 +28,7 @@ if (User::is_visitor() && !User::is_caroline_only()) {
             <a href="../Inspinia/papa/francais_discours.php">
                 <img class="thumb text-center" src="../Inspinia/papa/assets/img/photos/Photo_2025-03-01_144725.jpg" alt="Papa" style="width:10%;height:10%">
             </a>
+            <a href="https://www.instagram.com/reehttps://www.instagram.com/reel/DR2CycnjJwp/?igsh=YzAyMDM1MGJkZA%3D%3Dl/DR2CycnjJwp/?igsh=YzAyMDM1MGJkZA%3D%3D">Music</a>
 
         </div>
     </div>
