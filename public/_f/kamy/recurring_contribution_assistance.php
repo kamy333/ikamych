@@ -17,17 +17,10 @@ if ($IS_PRODUCTION) {
 $today = new DateTime();
 
 if ($IS_PRODUCTION) {
-//    $nextMonth = (new DateTime('third day of next month'));
 
     // Get the third day of next month
     $nextMonth = (new DateTime('first day of next month'))->modify('+2 days');
-//    echo $thirdDayNextMonth->format('Y-m-d');
 
-//    $today = new DateTime();
-
-//    $alert_date = new DateTime();
-//    $alert_date->setDate((int)$alert_date->format('Y'), (int)$alert_date->format('m'), 3);
-//    echo $alert_date->format('Y-m-d H:i:s');
 
     $alert_date = (new DateTime())->setDate((int)$today->format('Y'), (int)$today->format('m'), 3);
 

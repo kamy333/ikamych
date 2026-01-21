@@ -99,7 +99,7 @@ if (User::is_kamy()) {
     $text1 .= "<div class='row text-center'>";
     $text1 .= "<div class='col-lg-8 col-lg-offset-2' style='margin-top: 2em;padding: 2em;background-color: white'>";
     $text1 .= "<p>in fonding memory</p>";
-    $text1 .= "<p>Papa Said Nafisspour Shmouel ben Galine z'l 13.3.1932 - 22,2,2025 (92 ans)</p><p>Maman Bozorgue z'l 17.04.2011 | Xavier Raisin Dadre 01.01.2023 | Katy Samak | Farad Lavi | Maggy Herzet | Dahidjan Ezatollah 10.10.2020 | Dahidjan Ramatollah | Baba Bozorgue | Maman Bozorgue Motaram | Mr. Mme Manaz Sadigh 23.6.2020 | khaleh Aghdass | Dahidjan 3 | Amouh Aziz | Acher Nafisspour 1906-1959  </p>";
+    $text1 .= "<p>Papa Said Nafisspour Shmouel ben Galine z'l 13.3.1932 - 22,2,2025 (92 ans)</p><p>Maman Bozorgue z'l 17.04.2011 | Xavier Raisin Dadre 01.01.2023 | Katy Samak | Farad Lavi | Maggy Herzet | Dahidjan Ezatollah 10.10.2020 | Dahidjan Ramatollah | Baba Bozorgue | Maman Bozorgue Motaram | Mr. Mme Manaz Sadigh 23.6.2020 | khaleh Aghdass | Dahidjan 3 | Amouh Aziz | Acher Nafisspour 1906-1959 | Danièle Brami z'l 07.01.2026 </p>";
     echo "" . $text1;// . "<hr>";
     $text1 .= "</div>";
     $text1 .= "</div>";

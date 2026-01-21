@@ -77,6 +77,10 @@ $layout_context = "public"; ?>
     $classeNewNote = "<span ><i class='fa fa-plus-square' ></i></span> Note";
     $btnNoteAdd = " <a style='padding: 0.1em' href='https://www.ikamy.ch/public/admin/crud/ajax/new_ajax.php?class_name=Note''><button class='btn-warning'>$classeNewNote</button></a>";
 
+//    echo '<br><br>';
+
+    $btnGenPsalm = " <a style='padding: 0.1em' href='https://ikamy.ch/Inspinia/papa/email/daily_psalm.php''><button class='btn-warning'>Generate Psalm</button></a>";
+
 
 
 
@@ -95,11 +99,11 @@ $layout_context = "public"; ?>
         <h2 class="text-center"><a
                     href="https://www.ikamy.ch/public/admin/crud/ajax/manage_ajax.php?class_name=Calendar">
                 <span style="color: red"><b>PAST Appointments Calendar</b> <?php echo $txt; ?></span>
-            </a> <?php echo $btn . $btnRecur . $btnCert . $btnPrevious . $btnNote; ?></h2>
+            </a> <?php echo $btn . $btnRecur . $btnCert . $btnPrevious . $btnNote.$btnGenPsalm; ?></h2>
     <?php } else { ?>
         <h2 class="text-center"><a
                     href="https://www.ikamy.ch/public/admin/crud/ajax/manage_ajax.php?class_name=Calendar">Appointments
-                Calendar <?php echo $txt; ?> </a> <?php echo $btn . $btnRecur . $btnCert . $btnPrevious . $btnNote . $btnNoteAdd; ?>
+                Calendar <?php echo $txt; ?> </a> <?php echo $btn . $btnRecur . $btnCert . $btnPrevious . $btnNote . $btnNoteAdd.$btnGenPsalm; ?>
         </h2>
     <?php } ?>
 

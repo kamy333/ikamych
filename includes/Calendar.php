@@ -540,7 +540,9 @@ class Calendar extends DatabaseObject
 //        $classeNewNote = "<span ><i class='fa fa-plus-square' ></i></span> Note";
         $btnNoteAdd = " <a style='padding: 0.1em' href='https://www.ikamy.ch/public/admin/crud/ajax/new_ajax.php?class_name=Note''><button class='btn-warning'>Add Note</button></a>";
 
-        $btnview = $btn . "&nbsp;&nbsp;&nbsp;  " . $view . "&nbsp;&nbsp;&nbsp;  " . $btnCert . "&nbsp;&nbsp;&nbsp;  " . $btnPast . "&nbsp;&nbsp;&nbsp;  " . $btnNote."&nbsp;&nbsp;&nbsp;  " . $btnNoteAdd;
+        $btnGenPsalm = " <a style='padding: 0.1em' href='https://ikamy.ch/Inspinia/papa/email/daily_psalm.php''><button class='btn-warning'>Gen Psalm</button></a>";
+
+        $btnview = $btn . "&nbsp;&nbsp;&nbsp;  " . $view . "&nbsp;&nbsp;&nbsp;  " . $btnCert . "&nbsp;&nbsp;&nbsp;  " . $btnPast . "&nbsp;&nbsp;&nbsp;  " . $btnNote."&nbsp;&nbsp;&nbsp;  " . $btnNoteAdd."&nbsp;&nbsp;&nbsp;  " .$btnGenPsalm    ;
 
         $message .= "Geneva " . date("l d/m/Y") . " - " . date("H:i") . "<br>$btnview<br>";
 

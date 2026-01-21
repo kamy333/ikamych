@@ -100,6 +100,16 @@
     <?php include 'assets/layout/menu.php'; ?>
     <?php echo $h1 . $h2 . $h3 . $h4; ?>
 
+    <?php
+    $psalmNumber = rand(1, 150);
+    $sefariaLink = "https://www.sefaria.org/Psalms.$psalmNumber.1?with=Rashi&lang=bi";
+    $rachi="<a href='$sefariaLink' target='_blank'> Psalm  $psalmNumber; on Sefaria</a>";
+
+    $transliteration_link="<a href='https://theisraelbible.com/bible/psalms-{$psalmNumber}/'>Psaume $psalmNumber (Hébreu)</a>";
+
+
+    ?>
+
 
     <div>
         <h1>Mourner's Kaddish</h1>
@@ -126,6 +136,12 @@
             Tehilim choose <b><?= $psalmNumber_2 ?></b>
             &nbsp;&nbsp;&nbsp;
             <a href="https://www.shiva.com/learning-center/prayers/yizkor" target="_blank">Yitshor</a>
+            &nbsp;&nbsp;&nbsp;
+
+            <?= $rachi ?>
+            &nbsp;&nbsp;&nbsp;
+            <?= $transliteration_link ?>
+
         </h5>
 
         <div class="image-container">
