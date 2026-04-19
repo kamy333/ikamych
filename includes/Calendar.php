@@ -520,6 +520,8 @@ class Calendar extends DatabaseObject
 
         $btnCert = "<a  href='https://www.ikamy.ch//public/_f/kamy/recurring_appointment_email.php?code=65B0LXcRnSLqPLumdVjf' >Certificat Medical Email</a>";
 
+        $btnCert ="";
+
         $btn = " <a href='https://www.ikamy.ch/public/admin/crud/ajax/new_ajax.php?class_name=Calendar'><button class='btn-primary'>Add Date</button></a>";
         $view = " <a href='https://www.ikamy.ch/public/calendar.php'><button class='btn-primary'>View Web</button></a> $btnRecurApp ";
 

@@ -270,7 +270,7 @@ foreach ($eventDates as $dateStr => $eventName) {
 
 
     // Check if the event is within the next 7 days (inclusive)
-    if ($daysDiff >= 0 && $daysDiff <= 7) {
+    if ($daysDiff >= 0 && $daysDiff <= 1) {
 
         $subject_en = "Upcoming Event Reminder: $eventName";
         $subject_fr = "Rappel d'événement à venir : $eventName";

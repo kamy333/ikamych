@@ -103,9 +103,9 @@
     <?php
     $psalmNumber = rand(1, 150);
     $sefariaLink = "https://www.sefaria.org/Psalms.$psalmNumber.1?with=Rashi&lang=bi";
-    $rachi="<a href='$sefariaLink' target='_blank'> Psalm  $psalmNumber; on Sefaria</a>";
+    $rachi = "<a href='$sefariaLink' target='_blank'> Psalm  $psalmNumber; on Sefaria</a>";
 
-    $transliteration_link="<a href='https://theisraelbible.com/bible/psalms-{$psalmNumber}/'>Psaume $psalmNumber (Hébreu)</a>";
+    $transliteration_link = "<a href='https://theisraelbible.com/bible/psalms-{$psalmNumber}/'>Psaume $psalmNumber (Hébreu)</a>";
 
 
     ?>
@@ -125,10 +125,10 @@
 
         $psalmNumber_2 = rand(1, 12);
         ?>
-        
+
         <h5>
             <a href="https://www.shiva.com/learning-center/resources/psalms?srsltid=AfmBOoqp46ugN_yKgyRuHcwOHzBqOHDAcFpezVpBP57QvThInB7VOIqo"
-            target="_blank">Psalm
+               target="_blank">Psalm
                 Of David</a>
 
             &nbsp;&nbsp;&nbsp;
@@ -137,19 +137,21 @@
             &nbsp;&nbsp;&nbsp;
             <a href="https://www.shiva.com/learning-center/prayers/yizkor" target="_blank">Yitshor</a>
             &nbsp;&nbsp;&nbsp;
-
-            <?= $rachi ?>
             &nbsp;&nbsp;&nbsp;
+            <?= $rachi ?>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <?= $transliteration_link ?>
 
         </h5>
 
         <div class="image-container">
-            <img src="/Inspinia/papa/assets/img/2025-03-01_Rav_Amar_kaddish.jpg" alt="Sefarade Mourner's Kaddish in Aramaic">
+            <img src="/Inspinia/papa/assets/img/2025-03-01_Rav_Amar_kaddish.jpg"
+                 alt="Sefarade Mourner's Kaddish in Aramaic">
 
 
-            <img src="/Inspinia/papa/assets/img/2025-03-01_Rav_Amar_kaddish_french.jpg" alt="Sefarade french Mourner's Kaddish in Aramaic">
-        </div>     
+            <img src="/Inspinia/papa/assets/img/2025-03-01_Rav_Amar_kaddish_french.jpg"
+                 alt="Sefarade french Mourner's Kaddish in Aramaic">
+        </div>
 
         <div class="video-container" style="text-align: center">
 
@@ -163,7 +165,8 @@
         <div class="image-container">
             <!-- Replace 'path/to/your-image.jpg' with the actual URL or file path of your image -->
             <img src="/Inspinia/papa/assets/img/_kadish.jpg" alt="Mourner's Kaddish in Aramaic">
-            <img src="/Inspinia/papa/assets/img/2025-03-01_Rav_Amar_kaddish_french.jpg" alt="Sefarade french Mourner's Kaddish in Aramaic">
+            <img src="/Inspinia/papa/assets/img/2025-03-01_Rav_Amar_kaddish_french.jpg"
+                 alt="Sefarade french Mourner's Kaddish in Aramaic">
         </div>
 
         <p class="caption">

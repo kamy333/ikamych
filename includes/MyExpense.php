@@ -2029,7 +2029,12 @@ ORDER BY year(e.expense_date) DESC";
                 $sum4 = 0;
                 $output .= static::Spec_Exception($year, "kamy_".$year, $sum2, $XLS);
 
-
+            } elseif ($year == 2026 || $year == "2026") {
+                $kamy_id = 28;
+                $sum2 = static::sum_field_where($field = "amount * rate", " WHERE person_id = $kamy_id    ");
+                $sum3 = 0;
+                $sum4 = 0;
+                $output .= static::Spec_Exception($year, "kamy_".$year, $sum2, $XLS);
 
             } else {
                 $sum2 = 0;

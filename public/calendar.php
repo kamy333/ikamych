@@ -59,9 +59,12 @@ $layout_context = "public"; ?>
     $btn = "";
     $btnPrevious = "";
     $nbsp = str_repeat("&nbsp;", 5);
+
     $btnRecur = "{$nbsp}<a style='padding:0.1em'  class='btn-beige' href='https://www.ikamy.ch//public/_f/kamy/recurring_appointment.php'>Add Recurring Calendar</a>";
 
     $btnCert = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a style='padding:0.1em'  class='btn-info' href='https://www.ikamy.ch//public/_f/kamy/recurring_appointment_email.php?code=" . u(CODE_CALENDAR) . "'>Certificat Medical Email</a>";
+
+    $btnCert="";
 
 
     if (isCalendarPast()) {
