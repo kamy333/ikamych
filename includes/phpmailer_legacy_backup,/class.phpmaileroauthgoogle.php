@@ -4,7 +4,7 @@
  * PHP Version 5.4
  * @package PHPMailer
  * @link https://github.com/PHPMailer/PHPMailer/ The PHPMailer GitHub project
- * @author Marcus Bointon (Synchro/coolbru) <phpmailer@synchromedia.co.uk>
+ * @author Marcus Bointon (Synchro/coolbru) <phpmailer_legacy_backup,@synchromedia.co.uk>
  * @author Jim Jagielski (jimjag) <jimjag@gmail.com>
  * @author Andy Prevost (codeworxtech) <codeworxtech@users.sourceforge.net>
  * @author Brent R. Matzelle (original founder)
@@ -21,7 +21,7 @@
  * PHPMailerOAuthGoogle - Wrapper for League OAuth2 Google provider.
  * @package PHPMailer
  * @author @sherryl4george
- * @author Marcus Bointon (@Synchro) <phpmailer@synchromedia.co.uk>
+ * @author Marcus Bointon (@Synchro) <phpmailer_legacy_backup,@synchromedia.co.uk>
  * @link https://github.com/thephpleague/oauth2-client
  */
 class PHPMailerOAuthGoogle

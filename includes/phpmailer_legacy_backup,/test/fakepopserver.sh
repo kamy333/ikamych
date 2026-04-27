@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # Fake POP3 server
-# By Marcus Bointon <phpmailer@synchromedia.co.uk>
+# By Marcus Bointon <phpmailer_legacy_backup,@synchromedia.co.uk>
 # Based on code by 'Frater' found at http://www.linuxquestions.org/questions/programming-9/fake-pop3-server-to-capture-pop3-passwords-933733
 # Does not actually serve any mail, but supports commands sufficient to test POP-before SMTP
 # Can be run directly from a shell like this:

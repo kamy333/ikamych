@@ -7,7 +7,7 @@
  *
  * @package PHPMailer
  * @author Andy Prevost
- * @author Marcus Bointon <phpmailer@synchromedia.co.uk>
+ * @author Marcus Bointon <phpmailer_legacy_backup,@synchromedia.co.uk>
  * @copyright 2004 - 2009 Andy Prevost
  * @copyright 2010 Marcus Bointon
  * @license http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License
@@ -22,7 +22,7 @@ require_once '../PHPMailerAutoload.php';
 class PHPMailerLangTest extends PHPUnit_Framework_TestCase
 {
     /**
-     * Holds a phpmailer instance.
+     * Holds a phpmailer_legacy_backup, instance.
      * @private
      * @var PHPMailer
      */
@@ -57,7 +57,7 @@ class PHPMailerLangTest extends PHPUnit_Framework_TestCase
             }
             $matches = array();
             //Only look at language files, ignore anything else in there
-            if (preg_match('/^phpmailer\.lang-([a-z_]{2,})\.php$/', $fileInfo->getFilename(), $matches)) {
+            if (preg_match('/^phpmailer_legacy_backup,\.lang-([a-z_]{2,})\.php$/', $fileInfo->getFilename(), $matches)) {
                 $lang = $matches[1]; //Extract language code
                 $PHPMAILER_LANG = array(); //Language strings get put in here
                 include $fileInfo->getPathname(); //Get language strings

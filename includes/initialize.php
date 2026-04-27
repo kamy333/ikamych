@@ -161,9 +161,6 @@ require_once(LIB_PATH . DS . 'FormValidation.php');
 require_once(LIB_PATH . DS . 'Table.php');
 require_once(LIB_PATH . DS . 'Modal.php');
 
-require_once(LIB_PATH . DS . 'phpmailer' . DS . 'class.phpmailer.php');
-require_once(LIB_PATH . DS . 'phpmailer' . DS . 'class.smtp.php');
-require_once(LIB_PATH . DS . 'phpmailer' . DS . 'language' . DS . 'phpmailer.lang-am.php');
 require_once(LIB_PATH . DS . 'MyPHPMailer.php');
 
 require_once(LIB_PATH . DS . 'Nav.php');

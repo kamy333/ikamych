@@ -1,12 +1,14 @@
 <?php
 
+require_once dirname(__DIR__) . DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR . 'autoload.php';
+
 /**
  * Created by PhpStorm.
  * User: Kamran
  * Date: 9/22/2015
  * Time: 12:45 PM
  */
-class MyPHPMailer extends PHPMailer
+class MyPHPMailer extends \PHPMailer\PHPMailer\PHPMailer
 {
 
 //Enable SMTP debugging
@@ -15,9 +17,9 @@ class MyPHPMailer extends PHPMailer
 // 2 = client and server messages
 
 
-    public function __construct()
+    public function __construct($exceptions = null)
     {
-        parent::__construct();
+        parent::__construct($exceptions);
         $this->SMTPDebug=0;
         $this->Debugoutput = 'html';
         $this->CharSet = 'UTF-8';
@@ -27,7 +29,7 @@ class MyPHPMailer extends PHPMailer
         $this->Port=25;
 
 //        $this->SMTPSecure = "ssl"; bluewin
-        $this->SMTPSecure = "tls";
+        $this->SMTPSecure = self::ENCRYPTION_STARTTLS;
 
         $this->SMTPAuth=true;
         $this->Username=EMAIL_USERNAME ;

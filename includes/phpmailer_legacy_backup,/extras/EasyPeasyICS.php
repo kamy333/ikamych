@@ -1,7 +1,7 @@
 <?php
 /**
  * EasyPeasyICS Simple ICS/vCal data generator.
- * @author Marcus Bointon <phpmailer@synchromedia.co.uk>
+ * @author Marcus Bointon <phpmailer_legacy_backup,@synchromedia.co.uk>
  * @author Manuel Reinhard <manu@sprain.ch>
  *
  * Built with inspiration from
@@ -14,7 +14,7 @@
 /**
  * Class EasyPeasyICS.
  * Simple ICS data generator
- * @package phpmailer
+ * @package phpmailer_legacy_backup,
  * @subpackage easypeasyics
  */
 class EasyPeasyICS

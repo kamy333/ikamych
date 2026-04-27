@@ -1,6 +1,6 @@
 <?php
 /**
- * Dutch PHPMailer language file: refer to class.phpmailer.php for definitive list.
+ * Dutch PHPMailer language file: refer to class.phpmailer_legacy_backup,.php for definitive list.
  * @package PHPMailer
  * @author Tuxion <team@tuxion.nl>
  */

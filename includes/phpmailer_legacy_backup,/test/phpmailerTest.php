@@ -7,7 +7,7 @@
  *
  * @package PHPMailer
  * @author Andy Prevost
- * @author Marcus Bointon <phpmailer@synchromedia.co.uk>
+ * @author Marcus Bointon <phpmailer_legacy_backup,@synchromedia.co.uk>
  * @copyright 2004 - 2009 Andy Prevost
  * @copyright 2010 Marcus Bointon
  * @license http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License
@@ -22,7 +22,7 @@ require_once '../PHPMailerAutoload.php';
 class PHPMailerTest extends PHPUnit_Framework_TestCase
 {
     /**
-     * Holds the default phpmailer instance.
+     * Holds the default phpmailer_legacy_backup, instance.
      * @private
      * @type PHPMailer
      */
@@ -78,7 +78,7 @@ class PHPMailerTest extends PHPUnit_Framework_TestCase
         if (array_key_exists('mail_from', $_REQUEST)) {
             $this->Mail->From = $_REQUEST['mail_from'];
         } else {
-            $this->Mail->From = 'unit_test@phpmailer.example.com';
+            $this->Mail->From = 'unit_test@phpmailer_legacy_backup,.example.com';
         }
         $this->Mail->FromName = 'Unit Tester';
         $this->Mail->Sender = '';
@@ -101,13 +101,13 @@ class PHPMailerTest extends PHPUnit_Framework_TestCase
         $this->Mail->Username = '';
         $this->Mail->Password = '';
         $this->Mail->PluginDir = $this->INCLUDE_DIR;
-        $this->Mail->addReplyTo('no_reply@phpmailer.example.com', 'Reply Guy');
-        $this->Mail->Sender = 'unit_test@phpmailer.example.com';
+        $this->Mail->addReplyTo('no_reply@phpmailer_legacy_backup,.example.com', 'Reply Guy');
+        $this->Mail->Sender = 'unit_test@phpmailer_legacy_backup,.example.com';
         if (strlen($this->Mail->Host) > 0) {
             $this->Mail->Mailer = 'smtp';
         } else {
             $this->Mail->Mailer = 'mail';
-            $this->Mail->Sender = 'unit_test@phpmailer.example.com';
+            $this->Mail->Sender = 'unit_test@phpmailer_legacy_backup,.example.com';
         }
         if (array_key_exists('mail_to', $_REQUEST)) {
             $this->setAddress($_REQUEST['mail_to'], 'Test User', 'to');
@@ -164,7 +164,7 @@ class PHPMailerTest extends PHPUnit_Framework_TestCase
         $ReportBody .= '---------------------' . $eol;
         $ReportBody .= 'Unit Test Information' . $eol;
         $ReportBody .= '---------------------' . $eol;
-        $ReportBody .= 'phpmailer version: ' . $this->Mail->Version . $eol;
+        $ReportBody .= 'phpmailer_legacy_backup, version: ' . $this->Mail->Version . $eol;
         $ReportBody .= 'Content Type: ' . $this->Mail->ContentType . $eol;
         $ReportBody .= 'CharSet: ' . $this->Mail->CharSet . $eol;
 
@@ -715,7 +715,7 @@ class PHPMailerTest extends PHPUnit_Framework_TestCase
         $this->Mail->Body = 'Here is the text body';
         $this->Mail->Subject .= ': Plain + Multiple FileAttachments';
 
-        if (!$this->Mail->addAttachment('../examples/images/phpmailer.png')) {
+        if (!$this->Mail->addAttachment('../examples/images/phpmailer_legacy_backup,.png')) {
             $this->assertTrue(false, $this->Mail->ErrorInfo);
             return;
         }
@@ -890,14 +890,14 @@ EOT;
         <p>Russian text: Пустое тело сообщения</p>
         <p>Armenian text: Հաղորդագրությունը դատարկ է</p>
         <p>Czech text: Prázdné tělo zprávy</p>
-        Embedded Image: <img alt="phpmailer" src="cid:my-attach">
+        Embedded Image: <img alt="phpmailer_legacy_backup," src="cid:my-attach">
     </body>
 </html>
 EOT;
         $this->Mail->addEmbeddedImage(
-            '../examples/images/phpmailer.png',
+            '../examples/images/phpmailer_legacy_backup,.png',
             'my-attach',
-            'phpmailer.png',
+            'phpmailer_legacy_backup,.png',
             'base64',
             'image/png'
         );
@@ -986,7 +986,7 @@ EOT;
 
         if (!$this->Mail->addStringEmbeddedImage(
             file_get_contents('../examples/images/phpmailer_mini.png'),
-            md5('phpmailer_mini.png').'@phpmailer.0',
+            md5('phpmailer_mini.png').'@phpmailer_legacy_backup,.0',
             '', //intentionally empty name
             'base64',
             'image/png',
@@ -1014,7 +1014,7 @@ EOT;
             return;
         }
 
-        if (!$this->Mail->addAttachment('../examples/images/phpmailer.png', 'phpmailer.png')) {
+        if (!$this->Mail->addAttachment('../examples/images/phpmailer_legacy_backup,.png', 'phpmailer_legacy_backup,.png')) {
             $this->assertTrue(false, $this->Mail->ErrorInfo);
             return;
         }
@@ -1028,15 +1028,15 @@ EOT;
      */
     public function testEmbeddedImage()
     {
-        $this->Mail->Body = 'Embedded Image: <img alt="phpmailer" src="cid:my-attach">' .
+        $this->Mail->Body = 'Embedded Image: <img alt="phpmailer_legacy_backup," src="cid:my-attach">' .
             'Here is an image!';
         $this->Mail->Subject .= ': Embedded Image';
         $this->Mail->isHTML(true);
 
         if (!$this->Mail->addEmbeddedImage(
-            '../examples/images/phpmailer.png',
+            '../examples/images/phpmailer_legacy_backup,.png',
             'my-attach',
-            'phpmailer.png',
+            'phpmailer_legacy_backup,.png',
             'base64',
             'image/png'
         )
@@ -1057,15 +1057,15 @@ EOT;
      */
     public function testMultiEmbeddedImage()
     {
-        $this->Mail->Body = 'Embedded Image: <img alt="phpmailer" src="cid:my-attach">' .
+        $this->Mail->Body = 'Embedded Image: <img alt="phpmailer_legacy_backup," src="cid:my-attach">' .
             'Here is an image!</a>';
         $this->Mail->Subject .= ': Embedded Image + Attachment';
         $this->Mail->isHTML(true);
 
         if (!$this->Mail->addEmbeddedImage(
-            '../examples/images/phpmailer.png',
+            '../examples/images/phpmailer_legacy_backup,.png',
             'my-attach',
-            'phpmailer.png',
+            'phpmailer_legacy_backup,.png',
             'base64',
             'image/png'
         )
@@ -1571,7 +1571,7 @@ EOT;
             'organizationName' => 'PHP',
             'organizationalUnitName' => 'PHPMailer',
             'commonName' => 'PHPMailer Test',
-            'emailAddress' => 'phpmailer@example.com'
+            'emailAddress' => 'phpmailer_legacy_backup,@example.com'
         );
         $keyconfig = array(
             "digest_alg" => "sha256",
@@ -1628,7 +1628,7 @@ EOT;
             'organizationName' => 'PHP',
             'organizationalUnitName' => 'PHPMailer',
             'commonName' => 'PHPMailer Test',
-            'emailAddress' => 'phpmailer@example.com'
+            'emailAddress' => 'phpmailer_legacy_backup,@example.com'
         );
         $cacertprops = array(
             'countryName' => 'UK',
@@ -1637,7 +1637,7 @@ EOT;
             'organizationName' => 'PHP',
             'organizationalUnitName' => 'PHPMailer CA',
             'commonName' => 'PHPMailer Test CA',
-            'emailAddress' => 'phpmailer@example.com'
+            'emailAddress' => 'phpmailer_legacy_backup,@example.com'
         );
         $keyconfig = array(
             "digest_alg" => "sha256",
@@ -1713,7 +1713,7 @@ EOT;
         openssl_pkey_export_to_file($pk, $privatekeyfile);
         $this->Mail->DKIM_domain = 'example.com';
         $this->Mail->DKIM_private = $privatekeyfile;
-        $this->Mail->DKIM_selector = 'phpmailer';
+        $this->Mail->DKIM_selector = 'phpmailer_legacy_backup,';
         $this->Mail->DKIM_passphrase = ''; //key is not encrypted
         $this->assertTrue($this->Mail->send(), 'DKIM signed mail failed');
         unlink($privatekeyfile);
@@ -1918,7 +1918,7 @@ EOT;
  * which is probably more useful if you run these tests a lot
  * <html>
  * <body>
- * <h3>phpmailer Unit Test</h3>
+ * <h3>phpmailer_legacy_backup, Unit Test</h3>
  * By entering a SMTP hostname it will automatically perform tests with SMTP.
  *
  * <form name="phpmailer_unit" action=__FILE__ method="get">

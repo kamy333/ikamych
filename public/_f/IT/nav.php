@@ -4,6 +4,8 @@
 <li><a href="<?php echo $path_public; ?>_f/IT/programmingbooks2.php">Programming books2</a></li>
 <li><a href="<?php echo $path_public; ?>_f/IT/programmingbooks.php">Programming books</a></li>
 <li><a href="<?php echo $path_public; ?>_f/IT/lesson_git.php">Git</a></li>
+<li><a href="<?php echo $path_public; ?>_f/IT/lesson_git2.php">Git2</a></li>
+<li><a href="<?php echo $path_public; ?>_f/IT/lesson_git3.php">Git3</a></li>
 <li><a href="<?php echo $path_public; ?>_f/IT/lesson_OOP_PHP.php">OOP PHP</a></li>
 <li><a href="<?php echo $path_public; ?>_f/IT/lesson_OOP_PHP.php">grrrrrrrr</a></li>
 

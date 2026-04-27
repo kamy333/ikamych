@@ -411,18 +411,7 @@ here&rdquo;</pre>
 </div>
 
 
-<div>
 
-    <ul>
-        <li>jeter cig dehors</li>
-        <li>donner mon vin à ses amis</li>
-        <li>mes cig</li>
-        <li>fin de mois sans argent</li>
-        <li>Alcoolic</li>
-        <li>Amener des gens</li>
-
-    </ul>
-</div>
 
 
 <?php include(SITE_ROOT . DS . 'public' . DS . 'layouts' . DS . "footer.php") ?>
