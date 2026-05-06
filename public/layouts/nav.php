@@ -154,6 +154,7 @@ if ($layout_context == "public") {
 
                         <li><a href="<?php echo $path_public; ?>_f/IT/lesson_git.php">Git</a></li>
                         <li><a href="<?php echo $path_public; ?>_f/IT/lesson_git2.php">Git2 branch</a></li>
+                        <li><a href="<?php echo $path_public; ?>_f/IT/lesson_git3.php">Git2 branch update</a></li>
 
                         <li><a href="<?php echo $path_public; ?>_f/IT/lesson_OOP_PHP.php">OOP PHP</a></li>
                         <li><a href="<?php echo $path_public; ?>_f/IT/lesson_OOP_PHP.php">OOP PHP2</a></li>
