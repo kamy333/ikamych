@@ -437,7 +437,7 @@ if ($layout_context == "public") {
                                 Users</a></li>
                         <li><a href="http://api.ikamy.ch">API ikamy</a></li>
                         <li class="divider"></li>
-                        <li><a href="<?php echo $path_public; ?>_f/article/music.php">Music</a></li>
+                        <li><a href="<?php echo $path_public; ?>_f/music/music.php">Music</a></li>
 
                         <li><a href="<?php echo $path_public; ?>_f/kamy/kamy_1.php">Finance</a></li>
                         <li><a href="<?php echo $path_public; ?>_f/kamy/loan_expense.php">Loans Kamy</a></li>

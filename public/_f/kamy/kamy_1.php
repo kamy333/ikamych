@@ -12,7 +12,7 @@
 <?php include(SITE_ROOT . DS . 'public' . DS . 'layouts' . DS . "nav.php") ?>
 
 
-<h1 class="text-center">Finance Course <a href="/public/_f/article/music.php">or listen Music</a></h1>
+<h1 class="text-center">Finance Course <a href="../music/music.php">or listen Music</a></h1>
 
 
 <div class="row">
