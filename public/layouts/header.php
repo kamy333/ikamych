@@ -42,7 +42,6 @@
     <link rel="stylesheet" type="text/css" href="<?php echo $Nav->path_public; ?>css/styles.css">
 
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
     <?php if ($stylesheets == "fade_php") { ?>
         <link rel="stylesheet" href="/public/_js/dist/stylesheets/superslides.css">
@@ -120,6 +119,5 @@
     ?>
     <div id='container-view' class="container">
         <?php } ?>
-
 
 

@@ -16,7 +16,7 @@
 
 
 <script src="//code.jquery.com/jquery-latest.min.js"></script>
-
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
 
 <!--<script src="https://cdn.tiny.cloud/1/bd42pftj1phl7lgv2274y7i6ok8af0vdegi2yherw7rr3jux/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>-->
@@ -29,9 +29,11 @@
 
 <script>
     $(document).ready(function() {
-        $('.select2-dropdown-special').select2({
-            tags: false
-        });
+        if ($.fn.select2) {
+            $('.select2-dropdown-special').select2({
+                tags: false
+            });
+        }
     });
 </script>
 
