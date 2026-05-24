@@ -11,6 +11,33 @@ $email = "";
 $message = "";
 $csrf_token_id = 'contact';
 
+function contact_recent_mail_attempts(int $window_seconds): array
+{
+    $now = time();
+    $attempts = $_SESSION['contact_mail_attempts'] ?? [];
+
+    if (!is_array($attempts)) {
+        return [];
+    }
+
+    return array_values(array_filter($attempts, function ($attempt_time) use ($now, $window_seconds) {
+        return is_int($attempt_time) && $attempt_time >= ($now - $window_seconds);
+    }));
+}
+
+function contact_mail_rate_limit_exceeded(int $max_attempts = 3, int $window_seconds = 600): bool
+{
+    $_SESSION['contact_mail_attempts'] = contact_recent_mail_attempts($window_seconds);
+
+    return count($_SESSION['contact_mail_attempts']) >= $max_attempts;
+}
+
+function record_contact_mail_attempt(int $window_seconds = 600): void
+{
+    $_SESSION['contact_mail_attempts'] = contact_recent_mail_attempts($window_seconds);
+    $_SESSION['contact_mail_attempts'][] = time();
+}
+
 function generate_contact_challenge(): void
 {
     $previous_question = $_SESSION['contact_challenge_question'] ?? null;
@@ -41,6 +68,7 @@ if ($is_post) {
     $email = trim((string)($_POST['email'] ?? ''));
     $message = trim((string)($_POST['message'] ?? ''));
     $human = trim((string)($_POST['human'] ?? ''));
+    $website = trim((string)($_POST['website'] ?? ''));
     $expected_human = $_SESSION['contact_challenge_answer'] ?? null;
     $to = 'nafisspour@bluewin.ch';
     $subject = 'Message from ikamy.ch contact form';
@@ -49,6 +77,10 @@ if ($is_post) {
 
     if (!csrf_token_is_valid($csrf_token_id) || !csrf_token_is_recent($csrf_token_id)) {
         $errSecurity = 'Please refresh the page and try again.';
+    }
+
+    if ($website !== '') {
+        $errSecurity = 'Sorry, your message could not be sent. Please try again later.';
     }
 
     // Check if name has been entered
@@ -70,8 +102,13 @@ if ($is_post) {
         $errHuman = 'Your anti-spam is incorrect';
     }
 
+    if (!$errName && !$errEmail && !$errMessage && !$errHuman && !$errSecurity && contact_mail_rate_limit_exceeded()) {
+        $errSecurity = 'Too many messages were sent recently. Please try again later.';
+    }
+
 // If there are no errors, send the email
     if (!$errName && !$errEmail && !$errMessage && !$errHuman && !$errSecurity) {
+        record_contact_mail_attempt();
         $safe_email = str_replace(["\r", "\n"], '', $email);
         $safe_name = str_replace(["\r", "\n"], ' ', $name);
         $mail = new MyPHPMailer(true);
@@ -120,6 +157,10 @@ if ($is_post) {
             <h2 class="page-header text-center" style="color: #0000ff">Contact</h2>
             <form class="form-horizontal" role="form" method="post" action="<?php echo h($_SERVER['PHP_SELF']); ?>">
                 <?php echo csrf_token_tag($csrf_token_id); ?>
+                <div class="form-group" style="position: absolute; left: -10000px;" aria-hidden="true">
+                    <label for="website">Website</label>
+                    <input type="text" id="website" name="website" tabindex="-1" autocomplete="off">
+                </div>
                 <div class="form-group">
                     <label for="name" class="col-sm-3 control-label">Name</label>
                     <div class="col-sm-9">

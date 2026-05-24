@@ -540,7 +540,7 @@ Status update: A prepared-query path was added to the existing database wrappers
 
 Status update: Browser smoke testing covered `MyExpenseMum` AJAX/data manage, new, edit, and missing-ID delete/edit paths. Generic CRUD POST assignment now skips blank `id` values for creates, shared URL escaping helpers tolerate null input, edit/delete pages redirect cleanly when IDs are missing or invalid, and sort parameters are whitelisted in generic table queries plus user, user-type, and category manage pages.
 
-Status update: The public contact form now uses Composer-managed PHPMailer for SMTP delivery, a dynamic per-session anti-spam math challenge, and a CSRF token on POST. The shared CSRF comparison now uses `hash_equals()` and safely rejects missing session tokens without raising PHP notices.
+Status update: The public contact form now uses Composer-managed PHPMailer for SMTP delivery, a dynamic per-session anti-spam math challenge, a CSRF token on POST, a hidden honeypot field, and lightweight session rate limiting before SMTP delivery. The shared CSRF comparison now uses `hash_equals()` and safely rejects missing session tokens without raising PHP notices.
 
 ## Suggested first small PR
 
@@ -597,14 +597,14 @@ Expected result:
 - No `Warning:` or `Deprecated:` text in the page body.
 - Retired direct URLs such as `class_name=Course` and `class_name=Chauffeur` should be rejected cleanly.
 - Old `public/course.php` should redirect to `/public/index.php`.
-- Public contact POSTs should validate name, email, message, CSRF token, and the dynamic anti-spam answer before attempting SMTP delivery.
+- Public contact POSTs should validate name, email, message, CSRF token, honeypot, session rate limit, and the dynamic anti-spam answer before attempting SMTP delivery.
 
 ## Next Cleanup Candidates
 
 Recommended order:
 
 1. Finish the configuration/secrets migration plan without adding Composer dependencies unless needed.
-2. Continue contact-form hardening with rate limiting or a honeypot field if spam becomes an issue.
+2. Continue public-form hardening where needed: apply the same CSRF, honeypot, and rate-limit pattern to any other unauthenticated forms.
 3. Continue active CRUD hardening: invalid IDs, missing records, null handling, sort whitelisting, CSRF consistency, and prepared statements.
 4. Review old SQL dumps and historic folders after confirming external backups exist.
 5. Build a small script around the smoke-test checklist so the same checks can run after each cleanup pass.
