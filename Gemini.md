@@ -8,7 +8,6 @@ This document contains a review of the project, including a description of the f
 *   **`/includes`**: This is a core directory containing the main application logic, including database connection, session management, and various classes representing different parts of the application.
 *   **`/Inspinia`**: This folder seems to contain a theme or a UI framework named "Inspinia", along with various PHP files that use it.
 *   **`/logs`**: Intended for storing log files.
-*   **`/my_helps`**: This folder may contain helper files or libraries.
 *   **`/public`**: This is likely the web server's document root, containing publicly accessible files like `index.php`, CSS, and JavaScript.
 *   **`/sql`**: This folder probably contains SQL scripts for database creation or migration.
 *   **`/uploads`**: For storing user-uploaded files.

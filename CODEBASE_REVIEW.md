@@ -165,7 +165,6 @@ Risk: Medium to high, because the site appears to be personal/content-heavy. Do 
 Candidates:
 
 - `includes/src/PHPExcel/**`
-- `my_helps/PHPExcel_1.8.0/**`
 - `composer.phar`
 
 Reason:
@@ -174,6 +173,7 @@ Reason:
 - `mpdf/mpdf` and `phpmailer/phpmailer` are already in `composer.json`.
 - `includes/mpdf60` and `includes/phpmailer_legacy_backup,` have been removed.
 - PHPExcel is abandoned; if still needed, migrate to `phpoffice/phpspreadsheet`.
+- The unused `my_helps/PHPExcel_1.8.0` helper/example copy has been removed.
 - `composer.phar` should not normally be committed.
 
 Recommended change:
@@ -454,7 +454,7 @@ Do this after link/route inventory.
 ### Phase 5: Replace legacy libraries
 
 1. Replace PHPExcel with PhpSpreadsheet or delete if unused.
-2. Delete `my_helps/PHPExcel_1.8.0` examples/docs.
+2. Review whether `includes/src/PHPExcel` is still used by any active export flow.
 
 ### Phase 6: Security hardening in active code
 
