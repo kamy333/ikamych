@@ -253,7 +253,7 @@ public function read_xml(){
     $tns = 'send_email_loan';
 
     foreach ($xmlDoc->getElementsByTagNameNS($tns, "send_email_loan") as $node) {
-        var_dump($node->textContent);
+        print h($node->textContent) . "<br>";
     }
 
 }

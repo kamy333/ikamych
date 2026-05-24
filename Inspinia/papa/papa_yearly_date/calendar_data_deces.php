@@ -4,13 +4,7 @@
 <?php
 
 if ($IS_PRODUCTION) {
-    $secure_password = "myDoctoriswaiting";
-
-// Security Check
-    if (!isset($_GET['password']) || $_GET['password'] !== $secure_password) {
-        http_response_code(403);
-        die("Forbidden: Invalid Password.");
-    }
+    require_configured_get_token('PAPA_EVENT_REMINDER_TOKEN');
 }
 
 
@@ -24,7 +18,9 @@ $data = json_decode($jsonContent, true);
 
 // Check for errors
 if (json_last_error() !== JSON_ERROR_NONE) {
-    die("JSON Error: " . json_last_error_msg());
+    http_response_code(500);
+    echo "JSON Error: " . h(json_last_error_msg());
+    exit;
 }
 
 $todays_date = date("Y-m-d");

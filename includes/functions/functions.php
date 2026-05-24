@@ -883,21 +883,18 @@ function check_request()
 //    echo $_POST['project_id'][1]."<br>";
 //    echo array_count_values($_POST['project_id']);
 
-
+    $output = "";
     if (request_is_post() && $_POST) {
-        echo "<p>POST Request Value</p>" . "<br>";
-        echo "<pre>";
-        print_r($_POST);
-        echo "</pre>";
+        $output .= "<p>POST Request Value</p><br>";
+        $output .= "<pre>" . h(print_r($_POST, true)) . "</pre>";
     }
 
     if (request_is_get() && $_GET) {
-        echo "<p>GET Request Value</p>" . "<br>";
-        echo "<pre>";
-        print_r($_GET);
-        echo "</pre>";
+        $output .= "<p>GET Request Value</p><br>";
+        $output .= "<pre>" . h(print_r($_GET, true)) . "</pre>";
     }
 
+    return $output;
 
 }
 
@@ -1417,7 +1414,7 @@ function yes_no($int, $lang = 'e')
         } elseif ($integer === 1 && $lang == 'f') {
             $output .= "Oui";
         } else {
-            die('Error function only accept 0 or 1 and e and f 2nd args');
+            throw new InvalidArgumentException('yes_no only accepts 0 or 1 and e or f.');
         }
 
     }

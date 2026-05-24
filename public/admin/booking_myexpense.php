@@ -9,25 +9,37 @@ $response = [
 ];
 
 try {
-    $secret_token = 'YOUR_SECRET_TOKEN_IS_KAMY';
-    $provided_token = isset($_GET['token']) ? $_GET['token'] : null;
+    if (!defined('BOOKING_MYEXPENSE_TOKEN') || BOOKING_MYEXPENSE_TOKEN === '') {
+        http_response_code(503);
+        throw new Exception("Booking endpoint is not configured.");
+    }
 
-    if ($provided_token !== $secret_token) {
-        http_response_code(401); // Unauthorized
+    $provided_token = isset($_GET['token']) ? (string) $_GET['token'] : '';
+    if ($provided_token === '' || !hash_equals((string) BOOKING_MYEXPENSE_TOKEN, $provided_token)) {
+        http_response_code(401);
         throw new Exception("Unauthorized");
     }
 
-    $amount = isset($_GET['amount']) ? (float)$_GET['amount'] : 0;
-    $is_cash = isset($_GET['iscash']) ? (int)$_GET['iscash'] : 0;
-    $comment = isset($_GET['comment']) ? urldecode($_GET['comment']) : '';
-    $document = isset($_GET['document']) ? urldecode($_GET['document']) : '';
-    $person_name = isset($_GET['personName']) ? urldecode($_GET['personName']) : '';
-    $expense_type_name = isset($_GET['expensetype']) ? urldecode($_GET['expensetype']) : '';
-    $ccy_name = isset($_GET['ccy']) ? urldecode($_GET['ccy']) : 'CHF';
-    $rate = isset($_GET['rate']) ? (float)$_GET['rate'] : 1;
+    $amount = isset($_GET['amount']) ? (float) $_GET['amount'] : 0;
+    $is_cash = isset($_GET['iscash']) ? (int) $_GET['iscash'] : 0;
+    $comment = trim((string) ($_GET['comment'] ?? ''));
+    $document = trim((string) ($_GET['document'] ?? ''));
+    $person_name = trim((string) ($_GET['personName'] ?? ''));
+    $expense_type_name = trim((string) ($_GET['expensetype'] ?? ''));
+    $ccy_name = strtoupper(trim((string) ($_GET['ccy'] ?? 'CHF')));
+    $rate = isset($_GET['rate']) ? (float) $_GET['rate'] : 1;
 
-    if (empty($person_name) || empty($expense_type_name) || $amount == 0) {
-        throw new Exception("Missing required parameters (personName, expensetype, amount).");
+    if ($person_name === '' || $expense_type_name === '' || $amount <= 0) {
+        throw new Exception("Missing or invalid required parameters (personName, expensetype, amount).");
+    }
+    if (!in_array($is_cash, [0, 1], true)) {
+        throw new Exception("Invalid iscash value.");
+    }
+    if ($rate <= 0) {
+        throw new Exception("Invalid rate value.");
+    }
+    if (strlen($comment) > 500 || strlen($document) > 255 || strlen($person_name) > 100 || strlen($expense_type_name) > 100 || strlen($ccy_name) !== 3) {
+        throw new Exception("One or more parameters are too long.");
     }
 
     $person = MyExpensePerson::find_by_name($person_name);
@@ -61,7 +73,7 @@ try {
     $expense->modification_time = date('Y-m-d H:i:s');
 
     if ($expense->save()) {
-        http_response_code(200); // OK
+        http_response_code(200);
         $response['status'] = 'success';
         $response['message'] = 'Booking created successfully.';
         $response['data'] = ['id' => $expense->id];
@@ -70,12 +82,11 @@ try {
     }
 
 } catch (Exception $e) {
-    if (http_response_code() < 400) { // If no specific error code was set
-        http_response_code(400); // Bad Request
+    if (http_response_code() < 400) {
+        http_response_code(400);
     }
     $response['status'] = 'error';
     $response['message'] = $e->getMessage();
 }
 
-echo json_encode($response);
-exit();
+echo json_encode($response, JSON_UNESCAPED_UNICODE);

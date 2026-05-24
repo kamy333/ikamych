@@ -503,6 +503,11 @@ Production migration outline:
    - `IKAMY_MAIL_HOST`
    - `IKAMY_SECRET_KEY`
    - `IKAMY_CODE_CALENDAR`
+   - `IKAMY_BOOKING_MYEXPENSE_TOKEN`
+   - `IKAMY_MEDICAL_CERTIFICATE_REMINDER_TOKEN`
+   - `IKAMY_CONTRIBUTION_ASSISTANCE_REMINDER_TOKEN`
+   - `IKAMY_PAPA_EVENT_REMINDER_TOKEN`
+   - `IKAMY_DAILY_PSALM_TOKEN`
 2. If the host cannot provide environment variables, keep `includes/config.php` on production only, with production values, and never upload it from Git.
 3. Rotate database and mail passwords after moving the application to the new config source.
 4. Deploy the code change.
@@ -548,6 +553,16 @@ Status update: Shared public/admin navigation and active model-generated links n
 
 Status update: The `Inspinia/admin/index.php` smoke test exposed and fixed an active expense dashboard failure under strict MySQL grouping by including `monthname(e.expense_date)` in the monthly report `GROUP BY`. A PHP 8.3 `number_format(null)` deprecation in the same dashboard path was fixed by casting empty SQL sums to `0.00`.
 
+Status update: The external JSON booking endpoint no longer carries a literal shared secret in source code. It now requires `BOOKING_MYEXPENSE_TOKEN`/`IKAMY_BOOKING_MYEXPENSE_TOKEN`, compares the provided token with `hash_equals()`, validates key numeric/string inputs before saving, and uses prepared name lookups for expense person, expense type, and currency records.
+
+Status update: Public reminder/email endpoints no longer embed their literal URL passwords in source code. Medical certificate, contribution assistance, Papa event, and daily psalm endpoints now use configured tokens, compare with `hash_equals()`, and return structured HTTP errors instead of `die("Forbidden...")`. The Papa event reminder also avoids an accidental assignment in a date check and initializes optional bilingual reminder text to avoid future warnings.
+
+Status update: The active recurring appointment email page now compares `CODE_CALENDAR` with `hash_equals()`, bounds date/hour GET defaults before use, initializes the email body explicitly, and reports date/mail failures through page messages plus the existing error-email helper instead of terminating with `die()`. The Papa kaddish page now uses `random_int()` for random psalm selections and adds `rel="noopener noreferrer"` to its external links.
+
+Status update: The legacy crypto helper was renamed from `security_mcrypt_functions.php` to `security_crypto_functions.php`; it was already using OpenSSL internally, and the bootstrap now loads it through the neutral name. Active debug helpers no longer dump raw superglobals/object internals directly: request-debug helpers return escaped output, `User::kamy_debug()` returns structured arrays, `SmartNav::__toString()` appends escaped diagnostics instead of echoing during string conversion, XML helpers avoid `die()`/raw `print_r()`, and the admin-only `some_data.php` page now shows a small escaped server diagnostic subset instead of the full `$_SERVER` array.
+
+Status update: Cron/email scripts were gathered under `public/email_script/` for easier management. The new scripts keep comments pointing back to their original paths, and the old URLs now act as small compatibility wrappers while external cron jobs are migrated.
+
 ## Suggested first small PR
 
 The best first PR should be boring and reversible:
@@ -567,21 +582,10 @@ Run this checklist after every cleanup or security-hardening batch.
 Commands:
 
 ```powershell
-git status --short
-composer validate --no-check-publish
-composer audit
-git diff --check
+.\scripts\smoke.ps1
 
-$files = @(Get-ChildItem -Path includes,public -Recurse -Filter *.php | Where-Object { $_.FullName -notmatch '\\includes\\src\\' })
-$failed = $false
-foreach ($file in $files) {
-    php -l $file.FullName | Out-Null
-    if ($LASTEXITCODE -ne 0) {
-        Write-Output "PHP lint failed: $($file.FullName)"
-        $failed = $true
-    }
-}
-if ($failed) { exit 1 } else { Write-Output "PHP lint passed for includes and public" }
+# Optional browser-facing HTTP checks:
+.\scripts\smoke.ps1 -BaseUrl "http://ikamy.local"
 ```
 
 Browser URLs:
@@ -615,7 +619,7 @@ Recommended order:
 2. Continue public-form hardening where needed: apply the same CSRF, honeypot, and rate-limit pattern to any other unauthenticated forms.
 3. Continue active CRUD hardening: invalid IDs, missing records, null handling, sort whitelisting, CSRF consistency, and prepared statements.
 4. Review old SQL dumps and historic folders after confirming external backups exist.
-5. Build a small script around the smoke-test checklist so the same checks can run after each cleanup pass.
+5. Continue expanding `scripts/smoke.ps1` as more active routes are hardened.
 
 ## Style Modernization
 

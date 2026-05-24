@@ -7,8 +7,7 @@
  */
 
 
-// Encrypted cookie functions.
-// mcrypt was removed from PHP; use OpenSSL while keeping the old function names.
+// Encrypted cookie functions backed by OpenSSL.
 
 function ikamy_crypto_key($salt) {
     return hash('sha256', (string)$salt, true);

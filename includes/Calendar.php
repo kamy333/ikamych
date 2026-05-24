@@ -522,9 +522,9 @@ class Calendar extends DatabaseObject
 
         $btnRecurApp = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <a href='" . SITE_URL . "/public/_f/kamy/recurring_appointment.php'>Add Recuring Calendar</a>";
 
-        $code = "65B0LXcRnSLqPLumdVjf"; //".u($code)."
+        $code = CODE_CALENDAR; //".u($code)."
 
-        $btnCert = "<a  href='" . SITE_URL . "/public/_f/kamy/recurring_appointment_email.php?code=65B0LXcRnSLqPLumdVjf' >Certificat Medical Email</a>";
+        $btnCert = "<a  href='" . SITE_URL . "/public/email_script/appointment.php?code=" . u($code) . "' >Certificat Medical Email</a>";
 
         $btnCert ="";
 
@@ -548,7 +548,11 @@ class Calendar extends DatabaseObject
 //        $classeNewNote = "<span ><i class='fa fa-plus-square' ></i></span> Note";
         $btnNoteAdd = " <a style='padding: 0.1em' href='" . SITE_URL . "/public/admin/crud/ajax/new_ajax.php?class_name=Note'><button class='btn-warning'>Add Note</button></a>";
 
-        $btnGenPsalm = " <a style='padding: 0.1em' href='" . SITE_URL . "/Inspinia/papa/email/daily_psalm.php'><button class='btn-warning'>Gen Psalm</button></a>";
+        $dailyPsalmUrl = SITE_URL . "/public/email_script/daily_psalm.php";
+        if (defined('DAILY_PSALM_TOKEN') && DAILY_PSALM_TOKEN !== '') {
+            $dailyPsalmUrl .= "?password=" . u(DAILY_PSALM_TOKEN);
+        }
+        $btnGenPsalm = " <a style='padding: 0.1em' href='" . $dailyPsalmUrl . "'><button class='btn-warning'>Gen Psalm</button></a>";
 
         $btnview = $btn . "&nbsp;&nbsp;&nbsp;  " . $view . "&nbsp;&nbsp;&nbsp;  " . $btnCert . "&nbsp;&nbsp;&nbsp;  " . $btnPast . "&nbsp;&nbsp;&nbsp;  " . $btnNote."&nbsp;&nbsp;&nbsp;  " . $btnNoteAdd."&nbsp;&nbsp;&nbsp;  " .$btnGenPsalm    ;
 
@@ -580,7 +584,7 @@ class Calendar extends DatabaseObject
         $output = "</a><span>&nbsp;</span>";
         $output .= "<a  class=\"btn btn-primary\"  href=\"" . "/public/calendar.php" . "\">Calendar.php " . " </a><span>&nbsp;</span>";
         $output .= "<a  class=\"btn btn-primary\"  href=\"" . "/public/_f/kamy/recurring_appointment.php" . "\">Recurring RDV " . " </a><span>&nbsp;</span>";
-        $output .= "<a  class=\"btn btn-info\"  href=\"" . "/public/_f/kamy/recurring_appointment_email.php?code=65B0LXcRnSLqPLumdVjf" . "\">Recurring RDV email " . " </a><span>&nbsp;</span>";
+        $output .= "<a  class=\"btn btn-info\"  href=\"" . "/public/email_script/appointment.php?code=" . u(CODE_CALENDAR) . "\">Recurring RDV email " . " </a><span>&nbsp;</span>";
         $output .= "<a  class=\"btn btn-primary\"  href=\"" . "/public/admin/notes.php" . "\">Notes " . " </a><span>&nbsp;</span>";
         $output .= "<a  class=\"btn btn-primary\"  href=\"" . "/public/admin/crud/ajax/new_ajax.php?class_name=Note" . "\">New Notes " . " </a><span>&nbsp;</span>";
 //        $output .= "<a  class=\"btn btn-primary\"  href=\"" . MyExpenseType::$page_new . "\">Add New Type " . " </a></a><span>&nbsp;</span>";

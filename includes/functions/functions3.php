@@ -21,17 +21,33 @@ function get_json_data($filename = "data.json"): array
 {
     $json = file_get_contents($filename);
     if ($json === false) {
-        die('Error reading the JSON file');
+        throw new RuntimeException('Error reading the JSON file');
     }
 
     $json = mb_convert_encoding($json, 'UTF-8', 'UTF-8');
 
     $data = json_decode($json, true);
     if ($data === null) {
-        die('Error decoding JSON: ' . json_last_error_msg());
+        throw new RuntimeException('Error decoding JSON: ' . json_last_error_msg());
     }
 
     return $data;
+}
+
+function require_configured_get_token($constant, $parameter = 'password'): void
+{
+    if (!defined($constant) || constant($constant) === '') {
+        http_response_code(503);
+        echo 'Endpoint is not configured.';
+        exit;
+    }
+
+    $provided = isset($_GET[$parameter]) ? (string)$_GET[$parameter] : '';
+    if ($provided === '' || !hash_equals((string)constant($constant), $provided)) {
+        http_response_code(403);
+        echo 'Forbidden.';
+        exit;
+    }
 }
 
 function sendErrorEmail($msg="Error: send email missing code please check with the administrator")

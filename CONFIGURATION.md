@@ -30,11 +30,34 @@ Preferred production setup is environment variables:
 - `IKAMY_MAIL_HOST`
 - `IKAMY_SECRET_KEY`
 - `IKAMY_CODE_CALENDAR`
+- `IKAMY_BOOKING_MYEXPENSE_TOKEN`
+- `IKAMY_MEDICAL_CERTIFICATE_REMINDER_TOKEN`
+- `IKAMY_CONTRIBUTION_ASSISTANCE_REMINDER_TOKEN`
+- `IKAMY_PAPA_EVENT_REMINDER_TOKEN`
+- `IKAMY_DAILY_PSALM_TOKEN`
 
 Optional values:
 
 - `IKAMY_LOCALHOST_FOLDER`
 - `IKAMY_DISPLAY_ERRORS` (`On` or `Off`)
+
+`IKAMY_BOOKING_MYEXPENSE_TOKEN` protects the JSON booking endpoint at
+`public/admin/booking_myexpense.php`. Use a long random value and rotate the old
+literal token that used to be embedded in source code.
+
+The reminder tokens protect public cron/email endpoints. Update any external
+cron URLs after setting these values because the old literal passwords have been
+removed from source code.
+
+Cron/email scripts are now gathered under `public/email_script/`:
+
+- `appointment.php` from `public/_f/kamy/recurring_appointment_email.php`
+- `medical_certificate.php` from `public/_f/kamy/recurring_medical_certificate.php`
+- `contribution_assistance.php` from `public/_f/kamy/recurring_contribution_assistance.php`
+- `papa_event_reminder.php` from `Inspinia/papa/email/papa_yartzeit_hag.php`
+- `daily_psalm.php` from `Inspinia/papa/email/daily_psalm.php`
+
+The old paths are compatibility wrappers during the cron migration.
 
 If the production host cannot provide environment variables cleanly, keep an
 untracked `includes/config.php` on production with production values. Do not

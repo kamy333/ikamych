@@ -33,3 +33,8 @@ defined('MY_PORT') ? null : define('MY_PORT', 587);
 
 defined('SECRET_KEY') ? null : define('SECRET_KEY', 'replace-with-random-secret');
 defined('CODE_CALENDAR') ? null : define('CODE_CALENDAR', 'replace-with-calendar-code');
+defined('BOOKING_MYEXPENSE_TOKEN') ? null : define('BOOKING_MYEXPENSE_TOKEN', 'replace-with-random-booking-token');
+defined('MEDICAL_CERTIFICATE_REMINDER_TOKEN') ? null : define('MEDICAL_CERTIFICATE_REMINDER_TOKEN', 'replace-with-random-medical-certificate-token');
+defined('CONTRIBUTION_ASSISTANCE_REMINDER_TOKEN') ? null : define('CONTRIBUTION_ASSISTANCE_REMINDER_TOKEN', 'replace-with-random-contribution-assistance-token');
+defined('PAPA_EVENT_REMINDER_TOKEN') ? null : define('PAPA_EVENT_REMINDER_TOKEN', 'replace-with-random-papa-event-token');
+defined('DAILY_PSALM_TOKEN') ? null : define('DAILY_PSALM_TOKEN', 'replace-with-random-daily-psalm-token');

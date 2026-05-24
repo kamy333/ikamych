@@ -101,11 +101,11 @@
     <?php echo $h1 . $h2 . $h3 . $h4; ?>
 
     <?php
-    $psalmNumber = rand(1, 150);
+    $psalmNumber = random_int(1, 150);
     $sefariaLink = "https://www.sefaria.org/Psalms.$psalmNumber.1?with=Rashi&lang=bi";
-    $rachi = "<a href='$sefariaLink' target='_blank'> Psalm  $psalmNumber; on Sefaria</a>";
+    $rachi = "<a href='$sefariaLink' target='_blank' rel='noopener noreferrer'> Psalm  $psalmNumber; on Sefaria</a>";
 
-    $transliteration_link = "<a href='https://theisraelbible.com/bible/psalms-{$psalmNumber}/'>Psaume $psalmNumber (Hébreu)</a>";
+    $transliteration_link = "<a href='https://theisraelbible.com/bible/psalms-{$psalmNumber}/' target='_blank' rel='noopener noreferrer'>Psaume $psalmNumber (Hébreu)</a>";
 
 
     ?>
@@ -123,19 +123,19 @@
         </h4>
         <?php
 
-        $psalmNumber_2 = rand(1, 12);
+        $psalmNumber_2 = random_int(1, 12);
         ?>
 
         <h5>
             <a href="https://www.shiva.com/learning-center/resources/psalms?srsltid=AfmBOoqp46ugN_yKgyRuHcwOHzBqOHDAcFpezVpBP57QvThInB7VOIqo"
-               target="_blank">Psalm
+               target="_blank" rel="noopener noreferrer">Psalm
                 Of David</a>
 
             &nbsp;&nbsp;&nbsp;
 
             Tehilim choose <b><?= $psalmNumber_2 ?></b>
             &nbsp;&nbsp;&nbsp;
-            <a href="https://www.shiva.com/learning-center/prayers/yizkor" target="_blank">Yitshor</a>
+            <a href="https://www.shiva.com/learning-center/prayers/yizkor" target="_blank" rel="noopener noreferrer">Yitshor</a>
             &nbsp;&nbsp;&nbsp;
             &nbsp;&nbsp;&nbsp;
             <?= $rachi ?>

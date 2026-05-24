@@ -6,9 +6,9 @@ require_once('../includes/initialize.php');
 
 Note::quickupdate();
 
-$code = "65B0LXcRnSLqPLumdVjf";
+$code = CODE_CALENDAR;
 
-if (isset($_GET["code"]) && $_GET["code"] == CODE_CALENDAR) {
+if (isset($_GET["code"]) && hash_equals((string)CODE_CALENDAR, (string)$_GET["code"])) {
 
 } else {
 
@@ -62,7 +62,7 @@ $layout_context = "public"; ?>
 
     $btnRecur = "{$nbsp}<a style='padding:0.1em'  class='btn-beige' href='" . SITE_URL . "/public/_f/kamy/recurring_appointment.php'>Add Recurring Calendar</a>";
 
-    $btnCert = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a style='padding:0.1em'  class='btn-info' href='" . SITE_URL . "/public/_f/kamy/recurring_appointment_email.php?code=" . u(CODE_CALENDAR) . "'>Certificat Medical Email</a>";
+    $btnCert = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a style='padding:0.1em'  class='btn-info' href='" . SITE_URL . "/public/email_script/appointment.php?code=" . u(CODE_CALENDAR) . "'>Certificat Medical Email</a>";
 
     $btnCert="";
 
@@ -82,7 +82,11 @@ $layout_context = "public"; ?>
 
 //    echo '<br><br>';
 
-    $btnGenPsalm = " <a style='padding: 0.1em' href='" . SITE_URL . "/Inspinia/papa/email/daily_psalm.php'><button class='btn-warning'>Generate Psalm</button></a>";
+    $dailyPsalmUrl = SITE_URL . "/public/email_script/daily_psalm.php";
+    if (defined('DAILY_PSALM_TOKEN') && DAILY_PSALM_TOKEN !== '') {
+        $dailyPsalmUrl .= "?password=" . u(DAILY_PSALM_TOKEN);
+    }
+    $btnGenPsalm = " <a style='padding: 0.1em' href='" . $dailyPsalmUrl . "'><button class='btn-warning'>Generate Psalm</button></a>";
 
 
 
@@ -138,7 +142,7 @@ $layout_context = "public"; ?>
 
 
 <?php
-//redirect_to('public/_f/kamy/recurring_appointment_email.php?code=' . urlencode($code));
+//redirect_to('public/email_script/appointment.php?code=' . urlencode($code));
 //?>
 
 <?php include(SITE_ROOT . DS . 'public' . DS . 'layouts' . DS . "footer.php") ?>

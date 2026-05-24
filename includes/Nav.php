@@ -236,16 +236,8 @@ class SmartNav
 
         $output .= "\$http \$folder: =  " . $this->http . $this->folder;
 
-        echo "\$array_full_url";
-        echo '<pre>';
-        print_r($this->array_full_url);
-        echo '</pre>';
-        echo "\$array_url";
-        echo '<pre>';
-        print_r($this->array_url);
-        echo '</pre>';
-
-
+        $output .= "<br>\$array_full_url<pre>" . h(print_r($this->array_full_url, true)) . "</pre>";
+        $output .= "<br>\$array_url<pre>" . h(print_r($this->array_url, true)) . "</pre>";
 
         return $output;
 

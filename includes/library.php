@@ -208,8 +208,10 @@ class Library
 //        }
 
 
-        $xml = simplexml_load_file($full_path) or die("Error: Cannot create object");
-        print_r($xml);
+        $xml = simplexml_load_file($full_path);
+        if ($xml === false) {
+            throw new RuntimeException("Error: Cannot create object");
+        }
 
         $output = '<hr />';
 

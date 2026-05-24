@@ -51,6 +51,11 @@ $ikamy_env_keys = [
     'IKAMY_MAIL_PORT',
     'IKAMY_SECRET_KEY',
     'IKAMY_CODE_CALENDAR',
+    'IKAMY_BOOKING_MYEXPENSE_TOKEN',
+    'IKAMY_MEDICAL_CERTIFICATE_REMINDER_TOKEN',
+    'IKAMY_CONTRIBUTION_ASSISTANCE_REMINDER_TOKEN',
+    'IKAMY_PAPA_EVENT_REMINDER_TOKEN',
+    'IKAMY_DAILY_PSALM_TOKEN',
 ];
 
 $ikamy_use_env_config = false;
@@ -82,6 +87,11 @@ if ($ikamy_use_env_config) {
 
     ikamy_define_config('SECRET_KEY', 'IKAMY_SECRET_KEY');
     ikamy_define_config('CODE_CALENDAR', 'IKAMY_CODE_CALENDAR');
+    ikamy_define_config('BOOKING_MYEXPENSE_TOKEN', 'IKAMY_BOOKING_MYEXPENSE_TOKEN', false, null);
+    ikamy_define_config('MEDICAL_CERTIFICATE_REMINDER_TOKEN', 'IKAMY_MEDICAL_CERTIFICATE_REMINDER_TOKEN', false, null);
+    ikamy_define_config('CONTRIBUTION_ASSISTANCE_REMINDER_TOKEN', 'IKAMY_CONTRIBUTION_ASSISTANCE_REMINDER_TOKEN', false, null);
+    ikamy_define_config('PAPA_EVENT_REMINDER_TOKEN', 'IKAMY_PAPA_EVENT_REMINDER_TOKEN', false, null);
+    ikamy_define_config('DAILY_PSALM_TOKEN', 'IKAMY_DAILY_PSALM_TOKEN', false, null);
 
     $display_errors = ikamy_env_value('IKAMY_DISPLAY_ERRORS');
     if ($display_errors === null) {

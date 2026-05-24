@@ -23,9 +23,9 @@ date_default_timezone_set('Europe/Zurich');
 $bd=new BrowserDetective();
 ?>
 
-<a  target="_blank" href="http://whatsmy.browsersize.com/">browsersize</a> &nbsp;&nbsp;&nbsp;
-<a target="_blank"  href="https://github.com/garetjax/phpbrowscap">phpbrowscap</a> &nbsp;&nbsp;&nbsp;
-<a  target="_blank" href="https://github.com/piwik/device-detector">device-detector</a>
+<a target="_blank" rel="noopener noreferrer" href="http://whatsmy.browsersize.com/">browsersize</a> &nbsp;&nbsp;&nbsp;
+<a target="_blank" rel="noopener noreferrer" href="https://github.com/garetjax/phpbrowscap">phpbrowscap</a> &nbsp;&nbsp;&nbsp;
+<a target="_blank" rel="noopener noreferrer" href="https://github.com/piwik/device-detector">device-detector</a>
 <div class="row">
     <div class="col-md-offset-2">
         <h1 class="text-center">Is it Friday?</h1>
@@ -108,9 +108,7 @@ $bd=new BrowserDetective();
   ?>
         </p>
         <?php
- echo "<pre>";
- print_r(getdate());
-  echo "</pre>";?>
+ echo "<pre>" . h(print_r(getdate(), true)) . "</pre>";?>
 <?php echo date('l'); ?><br>
 <?php echo date('D'); ?><br>
 <?php echo date('N'); ?><br>
@@ -125,19 +123,14 @@ $bd=new BrowserDetective();
         <p>Browser Width:<strong><span id="window-width"></span> </strong></p>
         <p>Browser Height:<strong><span id="window-height"></span></strong></p>
 
- <p>Your IP address is: <strong> <?php echo $_SERVER['REMOTE_ADDR']?></strong></p>
- <p>Your Proxy (forwarded) IP address is:<strong> <?php echo forwarded_ip()?></strong></p>
-        <p>User Agent: <strong> <?php echo $_SERVER['HTTP_USER_AGENT']?></strong></p>
-        <p>Browser: <strong> <?php echo $bd->browser_name?></strong></p>
-        <p>Platform: <strong> <?php echo $bd->platform;?></strong></p>
+ <p>Your IP address is: <strong> <?php echo h($_SERVER['REMOTE_ADDR'] ?? '')?></strong></p>
+ <p>Your Proxy (forwarded) IP address is:<strong> <?php echo h(forwarded_ip())?></strong></p>
+        <p>User Agent: <strong> <?php echo h($_SERVER['HTTP_USER_AGENT'] ?? '')?></strong></p>
+        <p>Browser: <strong> <?php echo h($bd->browser_name)?></strong></p>
+        <p>Platform: <strong> <?php echo h($bd->platform);?></strong></p>
 
-        <p>Referrer: <strong> <?php echo $_SERVER['HTTP_REFERER']?></strong></p>
-        <p>Request time: <strong> <?php echo date('l, F j, Y g:ia',$_SERVER['REQUEST_TIME']) ?></strong></p>
-
-        <?php foreach ($_SERVER as $key=>$item):?>
-            <p><?php echo $key ?>: <strong> <?php echo $_SERVER[$key]?></strong></p>
-
-        <?php endforeach; ?>
+        <p>Referrer: <strong> <?php echo h($_SERVER['HTTP_REFERER'] ?? '')?></strong></p>
+        <p>Request time: <strong> <?php echo h(date('l, F j, Y g:ia', $_SERVER['REQUEST_TIME'] ?? time())) ?></strong></p>
 
 </div>
 </div>
@@ -150,9 +143,15 @@ $bd=new BrowserDetective();
 <div class="collapse" id="collapseExample">
     <div class="well">
         <?php
-        echo "<pre>";
-        print_r($_SERVER);
-        echo "</pre>";
+        $serverDiagnostics = [
+            'SERVER_NAME' => $_SERVER['SERVER_NAME'] ?? '',
+            'REQUEST_URI' => $_SERVER['REQUEST_URI'] ?? '',
+            'REQUEST_METHOD' => $_SERVER['REQUEST_METHOD'] ?? '',
+            'REMOTE_ADDR' => $_SERVER['REMOTE_ADDR'] ?? '',
+            'HTTP_USER_AGENT' => $_SERVER['HTTP_USER_AGENT'] ?? '',
+            'REQUEST_TIME' => $_SERVER['REQUEST_TIME'] ?? '',
+        ];
+        echo "<pre>" . h(print_r($serverDiagnostics, true)) . "</pre>";
         ?>
     </div>
 </div>

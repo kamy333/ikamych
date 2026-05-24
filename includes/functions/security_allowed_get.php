@@ -20,20 +20,22 @@ function allowed_get_params($allowed_params=[]) {
 
 function checking($bol=false){
 
+    $output = "";
     if($bol){
         if ($_GET) {
-            echo "<pre>";
-            echo 'Contents of the $_GET array: <br>';
-            var_dump($_GET);
-            echo "</pre>";
+            $output .= "<pre>";
+            $output .= 'Contents of the $_GET array: <br>';
+            $output .= h(print_r($_GET, true));
+            $output .= "</pre>";
         } elseif ($_POST) {
-            echo "<pre>";
-            echo 'Contents of the $_POST array: <br>';
-            var_dump($_POST);
-            echo "</pre>";
+            $output .= "<pre>";
+            $output .= 'Contents of the $_POST array: <br>';
+            $output .= h(print_r($_POST, true));
+            $output .= "</pre>";
         }
     }
 
+    return $output;
 }
 
 ?>

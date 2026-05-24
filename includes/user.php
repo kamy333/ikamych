@@ -924,11 +924,10 @@ class User extends DatabaseObject
 
     public function kamy_debug()
     {
-        var_dump(get_object_vars($this));
-        var_dump(get_defined_vars());
-        // var_dump( get_defined_functions());
-        var_dump(get_class_methods($this));
-
+        return [
+            'object_vars' => get_object_vars($this),
+            'class_methods' => get_class_methods($this),
+        ];
     }
 
     public function password_set($value)
