@@ -238,8 +238,15 @@ class ToDoList extends DatabaseObject
 
     public static function quickupdate($ajax = false)
     {
+        global $session;
 
-        if (isset($_GET) && isset($_GET['id']) && $_GET['class_name'] === 'ToDoList' && $_GET['action'] == 'quickupdate') {
+        if (isset($_GET['id']) && ($_GET['class_name'] ?? '') === 'ToDoList' && ($_GET['action'] ?? '') === 'quickupdate') {
+            if (!$session->is_logged_in()) {
+                if ($ajax) {
+                    return "Login required";
+                }
+                $session->confirmation_protected_page();
+            }
 
             $id = $_GET['id'];
 //      if(is_numeric
@@ -247,6 +254,15 @@ class ToDoList extends DatabaseObject
 
 
             if ($todo) {
+                if ((int)$todo->user_id !== (int)$session->user_id && !User::is_admin()) {
+                    $message = "You are not allowed to update todo $id";
+                    if ($ajax) {
+                        return $message;
+                    }
+                    $session->message($message);
+                    redirect_to($_SERVER['PHP_SELF']);
+                }
+
                 if ((int)$todo->done == 1) {
                     $todo->done = 0;
                 } else {
@@ -387,7 +403,9 @@ class ToDoList extends DatabaseObject
     {
         global $session;
         global $Nav;
-        $this->user_id = $session->user_id;
+        if (isset($session->user_id) && (!isset($this->user_id) || $this->user_id === "" || $this->user_id === null)) {
+            $this->user_id = $session->user_id;
+        }
 
         if (!empty($this->web_address) && isset($this->id)) {
             $this->link = "<a href='{$this->web_address}'  target='_blank'><u>link</u></a>";
