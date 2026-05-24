@@ -1,35 +1,36 @@
 <?php require_once('../includes/initialize.php'); ?>
-<?php redirect_to('/Inspinia/index.php');?>
 <?php
-$errName=null;
-$errEmail=null;
-$errMessage=null;
-$errHuman=null;
-$result=null;
+$errName = null;
+$errEmail = null;
+$errMessage = null;
+$errHuman = null;
+$result = null;
+$name = "";
+$email = "";
+$message = "";
 
 if (isset($_POST["submit"])) {
-    $name = $_POST['name'];
-    $email = $_POST['email'];
-    $message = $_POST['message'];
-    $human = intval($_POST['human']);
-    $from = 'Contact Form';
+    $name = trim((string)($_POST['name'] ?? ''));
+    $email = trim((string)($_POST['email'] ?? ''));
+    $message = trim((string)($_POST['message'] ?? ''));
+    $human = (int)($_POST['human'] ?? 0);
     $to = 'nafisspour@bluewin.ch';
-    $subject = 'Message from Contact Demo ';
+    $subject = 'Message from ikamy.ch contact form';
 
     $body ="From: $name\n E-Mail: $email\n Message:\n $message";
 
     // Check if name has been entered
-    if (!$_POST['name']) {
+    if ($name === '') {
         $errName = 'Please enter your name';
     }
 
     // Check if email has been entered and is valid
-    if (!$_POST['email'] || !filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
+    if ($email === '' || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
         $errEmail = 'Please enter a valid email address';
     }
 
     //Check if message has been entered
-    if (!$_POST['message']) {
+    if ($message === '') {
         $errMessage = 'Please enter your message';
     }
     //Check if simple anti-bot test is correct
@@ -39,7 +40,10 @@ if (isset($_POST["submit"])) {
 
 // If there are no errors, send the email
     if (!$errName && !$errEmail && !$errMessage && !$errHuman) {
-        if (mail ($to, $subject, $body, $from)) {
+        $safe_email = str_replace(["\r", "\n"], '', $email);
+        $headers = "From: no-reply@ikamy.ch\r\n";
+        $headers .= "Reply-To: {$safe_email}\r\n";
+        if (mail($to, $subject, $body, $headers)) {
             $result='<div class="alert alert-success">Thank You! I will be in touch</div>';
         } else {
             $result='<div class="alert alert-danger">Sorry there was an error sending your message. Please try again later.</div>';
@@ -63,36 +67,33 @@ if (isset($_POST["submit"])) {
     <div class="col-md-6 col-md-offset-3">
         <div class ="background_light_blue">
 
-            <h2 class="page-header text-center" style="color: #0000ff">Contact Us</h2>
-            <form class="form-horizontal" role="form" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+            <h2 class="page-header text-center" style="color: #0000ff">Contact</h2>
+            <form class="form-horizontal" role="form" method="post" action="<?php echo h($_SERVER['PHP_SELF']); ?>">
                 <div class="form-group">
                     <label for="name" class="col-sm-3 control-label">Name</label>
                     <div class="col-sm-9">
-                        <input type="text" class="form-control" id="name" name="name" placeholder="First & Last Name" value="<?php if(isset($_POST["name"])){ echo htmlspecialchars($_POST['name']);} ?>">
+                        <input type="text" class="form-control" id="name" name="name" placeholder="First & Last Name" value="<?php echo h($name); ?>" required>
                         <?php echo "<p class='text-danger'>$errName</p>";?>
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="email" class="col-sm-3 control-label">Email</label>
                     <div class="col-sm-9">
-                        <input type="email" class="form-control" id="email" name="email" placeholder="example@domain.com" value="
-                        <?php if(isset($_POST["email"])){echo htmlspecialchars($_POST['email']);} ?>
-                        ">
+                        <input type="email" class="form-control" id="email" name="email" placeholder="example@domain.com" value="<?php echo h($email); ?>" required>
                         <?php echo "<p class='text-danger'>$errEmail</p>";?>
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="message" class="col-sm-3 control-label">Message</label>
                     <div class="col-sm-9">
-                        <textarea class="form-control" rows="4" id="message" name="message">
-                            <?php  if(isset($_POST["message"])){echo htmlspecialchars($_POST['message']);}?></textarea>
+                        <textarea class="form-control" rows="4" id="message" name="message" required><?php echo h($message); ?></textarea>
                         <?php echo "<p class='text-danger'>$errMessage</p>";?>
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="human" class="col-sm-3 control-label">2 + 3 = ?</label>
                     <div class="col-sm-9">
-                        <input type="text" class="form-control" id="human" name="human" placeholder="Your Answer">
+                        <input type="text" class="form-control" id="human" name="human" placeholder="Your Answer" required>
                         <?php echo "<p class='text-danger'>$errHuman</p>";?>
                     </div>
                 </div>

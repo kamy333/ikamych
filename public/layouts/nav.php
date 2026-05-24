@@ -126,6 +126,12 @@ if ($layout_context == "public") {
                     } ?>
                 ><a href="<?php echo $path_public; ?>myLinks.php?category=Others">Links</a></li>
 
+                <li
+                    <?php if (isset($active_menu) && $active_menu == "contact") {
+                        echo "class=\"active\"";
+                    } ?>
+                ><a href="<?php echo $path_public; ?>contact.php">Contact</a></li>
+
 
                 <li
                     <?php if (isset($active_menu) && $active_menu == "Others") {
