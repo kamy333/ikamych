@@ -88,8 +88,11 @@
             animateScale: false
         };
 
-        var ctx = document.getElementById("doughnutChart").getContext("2d");
-        var DoughnutChart = new Chart(ctx).Doughnut(doughnutData, doughnutOptions);
+        var doughnutChart = document.getElementById("doughnutChart");
+        if (doughnutChart && typeof Chart !== "undefined") {
+            var doughnutCtx = doughnutChart.getContext("2d");
+            new Chart(doughnutCtx).Doughnut(doughnutData, doughnutOptions);
+        }
 
         var polarData = [
             {
@@ -127,8 +130,11 @@
             animateRotate: true,
             animateScale: false
         };
-        var ctx = document.getElementById("polarChart").getContext("2d");
-        var Polarchart = new Chart(ctx).PolarArea(polarData, polarOptions);
+        var polarChart = document.getElementById("polarChart");
+        if (polarChart && typeof Chart !== "undefined") {
+            var polarCtx = polarChart.getContext("2d");
+            new Chart(polarCtx).PolarArea(polarData, polarOptions);
+        }
 
     });
 </script>

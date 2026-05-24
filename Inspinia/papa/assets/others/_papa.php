@@ -1,4 +1,4 @@
-<?php require_once('../../includes/initialize.php'); ?>
+<?php require_once('../../../../includes/initialize.php'); ?>
 
 <?php include(HEADER_PUBLIC); ?>
 <?php include_once(NAV_PUBLIC) ?>

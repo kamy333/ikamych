@@ -109,36 +109,6 @@ if (User::is_kamy()) {
 
 
     <div class="wrapper wrapper-content">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12 col-lg-offset-1">
-                    <div class="ibox float-e-margins"
-                    ">
-                    <div class="ibox-content">
-                        <div class="col-md-5">
-                            <p class="text-justify">
-                                Full Wedding Part1</p>
-                            <iframe src="https://drive.google.com/file/d/0B71yHaesAeDTend4empIc0VIQXc/preview"
-                                    width="320" height="240"></iframe>
-                        </div>
-
-
-                        <div class="col-md-5">
-                            <p class="text-justify">
-                                Full Wedding Part2</p>
-                            <iframe src="https://drive.google.com/file/d/0B71yHaesAeDTSmJxbGluTktGUHc/preview"
-                                    width="320" height="240"></iframe>
-                        </div>
-
-                    </div>
-
-
-                </div>
-            </div>
-
-
-        </div>
-
         <!--        <iframe src="https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2FDailyViralStories%2Fvideos%2F1688674661198638%2F&show_text=1&width=476" width="476" height="593" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true" allowFullScreen="true"></iframe>-->
         <!--        -->
 
