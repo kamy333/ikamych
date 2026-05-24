@@ -186,7 +186,7 @@ class FormInspinia extends DatabaseObject
             $output .= "<label  ";
 
             if ($this->form_format_type == self::FORM_HORIZONTAL) {
-                $output .= "< class='{$this->col_sm_label} control-label' ";
+                $output .= " class='{$this->col_sm_label} control-label' ";
             } else {
                 $output .= "class='sr-only'";
             }
@@ -387,6 +387,10 @@ class FormInspinia extends DatabaseObject
                 $output .= " selected";
             }
 
+            if ($this->required) {
+                $output .= " required";
+            }
+
             $output .= ">";
             $output .= $this->select_option();
             $output .= "</select>";
@@ -539,6 +543,9 @@ class FormInspinia extends DatabaseObject
                 $output .= " selected";
             }
 
+            if ($this->required) {
+                $output .= " required";
+            }
 
             $output .= ">";
             $output .= $this->select_option();
@@ -677,7 +684,7 @@ class FormInspinia extends DatabaseObject
 
         $output .= "<label ";
         if ($this->form_format_type == self::FORM_HORIZONTAL) {
-            $output .= "<label class='{$this->col_sm_label} control-label' ";
+            $output .= "class='{$this->col_sm_label} control-label' ";
         } else {
             $output .= "class='sr-only'";
         }
@@ -698,16 +705,20 @@ class FormInspinia extends DatabaseObject
 
         !empty($this->cols) ? $cols = '' : $cols = '';
 
-        $output .= "<textarea rows='$this->rows' $cols  name='$this->name'  class='form-control'";
+        $output .= "<textarea rows='$this->rows' $cols  name='$this->name'  class='form-control' ";
 
         if (isset($this->id)) {
             $output .= "id='{$this->id}' ";
         } else {
-            $output .= "  id='$this->name'>";
+            $output .= "  id='$this->name'";
 
         }
+        if ($this->required) {
+            $output .= " required";
+        }
+        $output .= ">";
         if (isset($_POST) && isset($_POST[$this->name])) {
-            $output .= h(trim($_POST[$this->value]));
+            $output .= h(trim((string)$_POST[$this->name]));
         } else {
             if (isset($this->value)) {
                 $output .= h(trim($this->value));
