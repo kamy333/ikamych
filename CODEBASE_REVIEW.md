@@ -437,7 +437,7 @@ Update `.gitignore`:
 
 ### Phase 3: Delete or quarantine old pages
 
-Status: Initial old/test page cleanup is complete. Continue with route inventory before deleting any additional old generated variants. Stale search backup pages and the empty admin test stub have been removed.
+Status: Initial old/test page cleanup is complete. Continue with route inventory before deleting any additional old generated variants. Stale search backup pages, the empty admin test stub, and retired public demo folders have been removed.
 
 ### Phase 4: Remove retired SQL dumps
 

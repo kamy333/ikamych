@@ -412,6 +412,9 @@ class Links extends DatabaseObject
                 $categ = $category->category;
             }
 
+            if (self::is_retired_link_category($categ)) {
+                continue;
+            }
 
             if (isset($_GET['category']) && $_GET['category'] == $categ) {
                 $active = "active";
@@ -433,6 +436,20 @@ class Links extends DatabaseObject
         return $output;
 
 
+    }
+
+    private static function is_retired_link_category($category)
+    {
+        return strcasecmp((string)$category, 'SuperLearning') === 0;
+    }
+
+    private static function is_retired_public_asset($web_address)
+    {
+        $web_address = (string)$web_address;
+        return stripos($web_address, '/public/SuperLearning/') !== false
+            || stripos($web_address, '/public/superlearning/') !== false
+            || stripos($web_address, 'SuperLearning/') === 0
+            || stripos($web_address, 'superlearning/') === 0;
     }
 
     public static function find_name_category_links($name_category = "")
@@ -524,6 +541,11 @@ class Links extends DatabaseObject
 
             $link_id = $link->id;
             $web = $link->web_address;
+
+            if (self::is_retired_public_asset($web)) {
+                continue;
+            }
+
             $name = self::html($link->name);
             $href = "<a target='_blank' href='{$web}'>{$name}</a>";
 

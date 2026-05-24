@@ -72,8 +72,6 @@
           <tr>  <td><a target="_blank" href="http://kickass.to/usearch/ufc/?field=time_add&sorder=desc">Dnld UFC</a> </td></tr>
           <tr>  <td><a target="_blank" href="http://kickass.to/usearch/category:movies%20lang_id:5/">Dnld French Movie</a> </td></tr>
           <tr>  <td><a target="_blank" href="http://www.cpasbienstreaming.fr/2015/02/une-merveilleuse-histoire-du-temps.html">Film</a> </td></tr>
-            <tr>  <td><a target="_blank" href="SuperLearning/CourseSyllabusSuperLearner2.html"">Course Syllabus</a> </td></tr>
-            <tr>  <td><a target="_blank" href="SuperLearning/CourseSyllabusSuperLearnerV2.0Udemy.pdf"">SuperLearning Material </a> </td></tr>
  
  
  

@@ -287,6 +287,7 @@ class Note extends DatabaseObject
     public static function smallNotelist($ajax = false)
     {
         global $session;
+        global $Nav;
 
 //        $notes = static::find_all();
         $notes = static::find_by_sql("SELECT * FROM note  ORDER BY due_date ");
@@ -310,7 +311,7 @@ class Note extends DatabaseObject
         $output = "";
 
         $ibox = "";
-        if ($Nav->current_page == 'profile') {
+        if (isset($Nav) && $Nav->current_page == 'profile') {
             $ibox = "<div class=\"ibox-tools\">
             <a class=\"collapse-link\">
                 <i class=\"fa fa-chevron-up\"></i>

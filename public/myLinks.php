@@ -109,15 +109,6 @@
                        href="http://www.cpasbienstreaming.fr/2015/02/une-merveilleuse-histoire-du-temps.html">Film</a>
                 </td>
             </tr>
-            <tr>
-                <td><a target="_blank" href="SuperLearning/CourseSyllabusSuperLearner2.html"">Course Syllabus</a> </td>
-            </tr>
-            <tr>
-                <td><a target="_blank" href="SuperLearning/CourseSyllabusSuperLearnerV2.0Udemy.pdf"">SuperLearning
-                    Material </a> </td>
-            </tr>
-
-
         </table>
 
     </div>
