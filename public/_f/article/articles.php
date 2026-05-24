@@ -17,7 +17,7 @@
 <?php include(SITE_ROOT . DS . 'public' . DS . 'layouts' . DS . "nav.php") ?>
 
 <?php echo isset($valid) ? $valid->form_errors() : "" ?>
-<?php echo $message; ?>
+<?php echo isset($message) ? $message : ""; ?>
 
 
 <?php
@@ -29,11 +29,11 @@ echo article_subject();
 
 
 if (isset($_GET['submitBookCategory'])) {
-    echo book_by_sql($_GET['BookCategory']);
+    echo book_by_sql($_GET['BookCategory'] ?? 1);
 }
 
 if (isset($_GET['submitArticleSubject'])) {
-    echo article_by_sql($_GET['ArticleSubject']);
+    echo article_by_sql($_GET['ArticleSubject'] ?? 1);
 } else {
     if (!isset($_GET['submitBookCategory'])) {
         echo article_by_sql(1);

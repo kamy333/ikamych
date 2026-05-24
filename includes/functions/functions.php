@@ -1680,8 +1680,8 @@ use \Colors\RandomColor;
 function article_by_sql($article_where_subject = 1, $color_palette = 12, $is_row = true)
 {
 
-
-    $articles = Article::find_by_sql("SELECT * FROM article WHERE subject_id='{$article_where_subject}' order by id DESC");
+    $article_where_subject = (int)$article_where_subject;
+    $articles = Article::find_by_sql_prepared("SELECT * FROM article WHERE subject_id=? ORDER BY id DESC", array($article_where_subject), "i");
     $output = "";
     $output .= "<div class='row'>";
     foreach ($articles as $article) {
@@ -1755,7 +1755,7 @@ function article_by_sql($article_where_subject = 1, $color_palette = 12, $is_row
 
         $output .= "<div class='col-lg-9 col-lg-offset-2' style='background-color: {$my_color[0]};margin-top: 2em;padding: 2em'>";
         if (!empty($article->link)) {
-            $output .= "<h4  style='background-color:white}'><a target='_blank'  href='{$article->link}'>{$article->link_txt}</a></h4>";
+            $output .= "<h4 style='background-color:white'><a target='_blank' rel='noopener noreferrer' href='" . h($article->link) . "'>" . h($article->link_txt) . "</a></h4>";
         }
         if (trim($article->article !== "a")) {
             $output .= $article->article;
@@ -1776,6 +1776,7 @@ function article_subject()
     $output = "";
     $subjects = ArticleSubject::find_all();
     $path = $_SERVER['PHP_SELF'];
+    $selected_subject = isset($_GET["ArticleSubject"]) ? (int)$_GET["ArticleSubject"] : 1;
 
 
     $output .= "<div class='col-lg-3'>";
@@ -1788,8 +1789,8 @@ function article_subject()
     $output .= "<select name='ArticleSubject' id='ArticleSubjectLabel' >";
 
     foreach ($subjects as $subject) {
-        ($_GET ["ArticleSubject"] == $subject->id) ? $selected = "selected" : $selected = "";
-        $output .= " <option value='{$subject->id}' $selected >{$subject->subject}</option>";
+        ($selected_subject == (int)$subject->id) ? $selected = "selected" : $selected = "";
+        $output .= " <option value='" . h($subject->id) . "' $selected >" . h($subject->subject) . "</option>";
     }
 
     $output .= "</select>
@@ -1808,6 +1809,7 @@ function book_category()
     $output = "";
     $category = BookCategory::find_all();
     $path = $_SERVER['PHP_SELF'];
+    $selected_category = isset($_GET["BookCategory"]) ? (int)$_GET["BookCategory"] : 1;
 
     $output .= "<div class='col-lg-3  col-lg-offset-2'>";
 
@@ -1820,8 +1822,8 @@ function book_category()
     $output .= "<select name='BookCategory' id='BookCategoryLabel' >";
 
     foreach ($category as $categ) {
-        ($_GET ["ArticleSubject"] == $categ->id) ? $selected = "selected" : $selected = "";
-        $output .= " <option value='{$categ->id}' $selected >{$categ->category}</option>";
+        ($selected_category == (int)$categ->id) ? $selected = "selected" : $selected = "";
+        $output .= " <option value='" . h($categ->id) . "' $selected >" . h($categ->category) . "</option>";
     }
 
     $output .= "</select>
@@ -1863,7 +1865,8 @@ function book_by_sql($book_where_category = 1, $color_palette = 12, $is_row = tr
 {
     $output = "";
 
-    $books = Book::find_by_sql("SELECT * FROM book WHERE category_id='{$book_where_category}' order by id DESC");
+    $book_where_category = (int)$book_where_category;
+    $books = Book::find_by_sql_prepared("SELECT * FROM book WHERE category_id=? ORDER BY id DESC", array($book_where_category), "i");
 
 
 //    $output .= "<h2 id='top'>Top of page!</h2>";

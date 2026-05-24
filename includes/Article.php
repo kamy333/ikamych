@@ -341,7 +341,7 @@ class Article extends DatabaseObject
     public function set_up_display()
     {
         $ArticleSubject = ArticleSubject::find_by_id($this->subject_id);
-        $this->subject = $ArticleSubject->subject;
+        $this->subject = $ArticleSubject ? $ArticleSubject->subject : 'Unknown subject';
 
 //        $str_tags= strip_tags($this->article) ;
 //        $arr=str_word_count($str_tags,10);
@@ -352,7 +352,8 @@ class Article extends DatabaseObject
         $this->article_short = self::get_modal_article();
 
         if (!empty($this->link)) {
-            $this->link_short = "<a target='_blank' href='{$this->link}'>lnk</a>";
+            $safe_link = h($this->link);
+            $this->link_short = "<a target='_blank' rel='noopener noreferrer' href='{$safe_link}'>lnk</a>";
 
         }
 

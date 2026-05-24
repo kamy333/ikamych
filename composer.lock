@@ -772,16 +772,16 @@
         },
         {
             "name": "mistic100/randomcolor",
-            "version": "1.0.4",
+            "version": "1.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/mistic100/RandomColor.php.git",
-                "reference": "394b2a6f87b7cdc2ae0bfb02dd59b9e35fd08d8a"
+                "reference": "2de67f8e79a8005a3ea95defed1d552bb121de9b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mistic100/RandomColor.php/zipball/394b2a6f87b7cdc2ae0bfb02dd59b9e35fd08d8a",
-                "reference": "394b2a6f87b7cdc2ae0bfb02dd59b9e35fd08d8a",
+                "url": "https://api.github.com/repos/mistic100/RandomColor.php/zipball/2de67f8e79a8005a3ea95defed1d552bb121de9b",
+                "reference": "2de67f8e79a8005a3ea95defed1d552bb121de9b",
                 "shasum": ""
             },
             "type": "library",
@@ -810,9 +810,9 @@
             ],
             "support": {
                 "issues": "https://github.com/mistic100/RandomColor.php/issues",
-                "source": "https://github.com/mistic100/RandomColor.php/tree/master"
+                "source": "https://github.com/mistic100/RandomColor.php/tree/1.1.0"
             },
-            "time": "2018-04-16T19:31:57+00:00"
+            "time": "2024-09-09T17:21:32+00:00"
         },
         {
             "name": "monolog/monolog",
