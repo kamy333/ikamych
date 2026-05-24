@@ -445,6 +445,8 @@ Status: Initial old/test page cleanup is complete. Continue with route inventory
 2. Confirm they exist in backup storage.
 3. Remove old Transmed SQL dumps after backup confirmation.
 
+Status: Transmed-specific SQL dumps were removed after Transmed code was retired. Generic historic/test SQL dumps remain for separate backup review.
+
 ### Phase 5: Replace legacy libraries
 
 1. Keep CSV export on the small `includes/src/Foundationphp` helper until that flow is modernized.
