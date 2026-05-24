@@ -507,6 +507,12 @@ class Calendar extends DatabaseObject
 
 
         global $logo;
+        global $server_local_names;
+
+        if (isset($server_local_names) && in_array($_SERVER['SERVER_NAME'], $server_local_names, true)) {
+            return $msg;
+        }
+
         $mail = new MyPHPMailer();
 
         $kamy = User::find_by_username("kamy");
