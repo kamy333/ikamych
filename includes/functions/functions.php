@@ -1220,7 +1220,6 @@ function admin_button()
     }
 
     $output .= "                 <li><a href=\"minor.php\">Minor</a></li>
-                    <li><a href=\"01_test.php\">test 01</a></li>
 
                 </ul>
             </div>
@@ -2090,4 +2089,3 @@ function TD_NumberFormatColor($number=0,$strong=false){
 }
 
 ?>
-
