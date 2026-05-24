@@ -544,6 +544,10 @@ Status update: The public contact form now uses Composer-managed PHPMailer for S
 
 Status update: Active public links pages now use prepared statements for category filters in `Links::find_all_get()` and the named category lookup helpers. Generated category tabs and public link anchors now escape labels/URLs, and generated plus hard-coded links-table anchors include `rel="noopener noreferrer"` with `target="_blank"`.
 
+Status update: Shared public/admin navigation and active model-generated links now add `rel="noopener noreferrer"` to `target="_blank"` anchors in `Nav::menu_item()`, `Nav::menu_item_simple()`, `public/layouts/nav.php`, `Inspinia/layouts/sidebar.php`, `Book`, `Note`, `ToDoList`, and `MyExpense`. Dynamic href, title, note, and todo values touched in that pass are escaped before rendering.
+
+Status update: The `Inspinia/admin/index.php` smoke test exposed and fixed an active expense dashboard failure under strict MySQL grouping by including `monthname(e.expense_date)` in the monthly report `GROUP BY`. A PHP 8.3 `number_format(null)` deprecation in the same dashboard path was fixed by casting empty SQL sums to `0.00`.
+
 ## Suggested first small PR
 
 The best first PR should be boring and reversible:

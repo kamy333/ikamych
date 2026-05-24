@@ -505,7 +505,7 @@ public function format_menu_public($menu_name="Unknown",$class="")  {
         $output .= "'";
 
         if ($target) {
-            $output .= " target=\"_blank\" ";
+            $output .= " target=\"_blank\" rel=\"noopener noreferrer\" ";
         }
 
         $output .= ">";
@@ -543,7 +543,7 @@ public function format_menu_public($menu_name="Unknown",$class="")  {
         $output .= $page;
         $output .= "'";
         if ($target) {
-            $output .= " target=\"_blank\" ";
+            $output .= " target=\"_blank\" rel=\"noopener noreferrer\" ";
         }
 
         $output .= ">";

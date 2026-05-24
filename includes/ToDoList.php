@@ -408,8 +408,10 @@ class ToDoList extends DatabaseObject
         }
 
         if (!empty($this->web_address) && isset($this->id)) {
-            $this->link = "<a href='{$this->web_address}'  target='_blank'><u>link</u></a>";
-            $this->todos = "<a href='{$this->web_address}' target='_blank' style='text-decoration: none;'><u>" . $this->todo . "</u></a>";
+            $web_address = h($this->web_address);
+            $todo = h($this->todo);
+            $this->link = "<a href='{$web_address}' target='_blank' rel='noopener noreferrer'><u>link</u></a>";
+            $this->todos = "<a href='{$web_address}' target='_blank' rel='noopener noreferrer' style='text-decoration: none;'><u>" . $todo . "</u></a>";
 
 
             $class = get_called_class() . "-link-edit";

@@ -429,11 +429,13 @@ class Book extends DatabaseObject
         $this->about = $this->get_modal();
 
         if (!empty($this->apress_link)) {
-            $this->apress = "<a target='_blank' href='{$this->apress_link}'>lnk</a>";
+            $apress_link = h($this->apress_link);
+            $this->apress = "<a target='_blank' rel='noopener noreferrer' href='{$apress_link}'>lnk</a>";
         }
 
         if (!empty($this->download_source_link)) {
-            $this->download_source = "<a class='btn btn-primary' target='_blank' href='{$this->download_source_link}'>lnk</a>";
+            $download_source_link = h($this->download_source_link);
+            $this->download_source = "<a class='btn btn-primary' target='_blank' rel='noopener noreferrer' href='{$download_source_link}'>lnk</a>";
         }
 
 

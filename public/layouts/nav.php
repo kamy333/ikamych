@@ -393,16 +393,16 @@ if ($layout_context == "public") {
                         <li><a href="<?php echo $path_public; ?>_f/kamy/pay_brazil.php">Pay Bresil</a></li>
 
                         <li class="divider"></li>
-                        <li><a target="_blank" href="https://app.nearscreen.com/accounts/login/">nearscreen
+                        <li><a target="_blank" rel="noopener noreferrer" href="https://app.nearscreen.com/accounts/login/">nearscreen
                                 Seatable</a></li>
-                        <li><a target="_blank" href="https://cloud.seatable.io/accounts/login/">Kamran
+                        <li><a target="_blank" rel="noopener noreferrer" href="https://cloud.seatable.io/accounts/login/">Kamran
                                 Seatable</a></li>
-                        <li><a target="_blank" href="https://web.nearscreen.com/login/">nearscreen WeWeb</a>
+                        <li><a target="_blank" rel="noopener noreferrer" href="https://web.nearscreen.com/login/">nearscreen WeWeb</a>
                         </li>
 
-                        <li><a target="_blank" href="https://dashboard.weweb.io/sign-in">WeWeb
+                        <li><a target="_blank" rel="noopener noreferrer" href="https://dashboard.weweb.io/sign-in">WeWeb
                                 Dashboard(dev@nearscreen)</a></li>
-                        <li><a target="_blank" href="https://sso.nearscreen.com/admin">aMember</a></li>
+                        <li><a target="_blank" rel="noopener noreferrer" href="https://sso.nearscreen.com/admin">aMember</a></li>
 
                     </ul>
                 </li>

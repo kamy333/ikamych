@@ -531,8 +531,10 @@ class Note extends DatabaseObject
         }
 
         if (!empty($this->web_address) && isset($this->id)) {
-            $this->link = "<a href='{$this->web_address}'  target='_blank'><u>link</u></a>";
-            $this->notes = "<a href='{$this->web_address}' target='_blank' style='text-decoration: none;'><u>" . $this->note . "</u></a>";
+            $web_address = h($this->web_address);
+            $safe_note = h($this->note);
+            $this->link = "<a href='{$web_address}' target='_blank' rel='noopener noreferrer'><u>link</u></a>";
+            $this->notes = "<a href='{$web_address}' target='_blank' rel='noopener noreferrer' style='text-decoration: none;'><u>" . $safe_note . "</u></a>";
 
 
             $this->done_img = !empty($note->done) ?

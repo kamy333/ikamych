@@ -1029,15 +1029,18 @@ GROUP BY expense_type_id;";
                 $full_path2 = $_SERVER["DOCUMENT_ROOT"] . $folder . $file;
 
                 if (file_exists($full_path2)) {
+                    $safe_document = h($document);
                     if ($ext == "pdf") {
+                        $safe_full_path = h($full_path);
 
-                        $lnk .= "<a href='{$full_path}'  target='_blank'><button type='button' class='btn btn-danger' data-toggle='tooltip' data-placement='left' title='{$document}'><i class='fa fa-file-pdf-o'></i></button></a>";
+                        $lnk .= "<a href='{$safe_full_path}' target='_blank' rel='noopener noreferrer'><button type='button' class='btn btn-danger' data-toggle='tooltip' data-placement='left' title='{$safe_document}'><i class='fa fa-file-pdf-o'></i></button></a>";
 
 
                     } elseif ($ext == "jpg" || $ext == "jpeg" || $ext == "png") {
                         $href = $href_img . "?url=" . u($folder . $document);
+                        $safe_href = h($href);
 
-                        $lnk .= "<a href='{$href}' target='_blank'><button type='button' class='btn btn-info' data-toggle='tooltip' data-placement='left' title='{$document}'><i class='fa fa-file-photo-o'></i></button></a>";
+                        $lnk .= "<a href='{$safe_href}' target='_blank' rel='noopener noreferrer'><button type='button' class='btn btn-info' data-toggle='tooltip' data-placement='left' title='{$safe_document}'><i class='fa fa-file-photo-o'></i></button></a>";
 
                     }
 
@@ -1438,7 +1441,7 @@ GROUP BY expense_type_id;";
         $and_type
         $and_exclude";
 
-        $sum = number_format(static::sum_field_where_by_sql($sql), 2);
+        $sum = number_format((float)static::sum_field_where_by_sql($sql), 2);
 
 
         $output .= "<tr>";
@@ -1635,7 +1638,7 @@ class ReportFinance extends MyExpense
          INNER JOIN  myexpense_type as t ON e.expense_type_id = t.id
          INNER JOIN  currency as c ON e.ccy_id = c.id
 WHERE person_id = {$theid_person}   and(e.expense_type_id in (1,3)) $criteria
-GROUP BY year(e.expense_date),month(e.expense_date)
+GROUP BY year(e.expense_date), month(e.expense_date), monthname(e.expense_date)
 ORDER BY year(e.expense_date) DESC,month(e.expense_date) DESC";
 
 
