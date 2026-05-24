@@ -182,7 +182,7 @@ public $warnings=[];
 
         if (is_array($fields_with_email)){
             foreach($fields_with_email as $field) {
-                $email = $this->test_input($_POST[$field]);
+                $email = $this->test_input($_POST[$field] ?? '');
                 if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
                     // $emailErr = "Invalid email format";
                     if ($warning_me) {
@@ -196,7 +196,7 @@ public $warnings=[];
                 }
             }
         } else {
-            $email = $this->test_input($_POST[$fields_with_email]);
+            $email = $this->test_input($_POST[$fields_with_email] ?? '');
             if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
                 // $emailErr = "Invalid email format";
                 if ($warning_me) {
@@ -216,7 +216,7 @@ public $warnings=[];
 
     protected function test_input($data)
     {
-        $data = trim($data);
+        $data = trim((string)$data);
         $data = stripslashes($data);
         $data = htmlspecialchars($data);
         return $data;
@@ -229,7 +229,7 @@ public $warnings=[];
 
         // Expects an assoc. array
         foreach($fields_with_max_lengths as $field => $max) {
-            $value = trim($_POST[$field]);
+            $value = trim((string)($_POST[$field] ?? ''));
             if (!$this->has_max_length($value, $max)) {
 
                 if($warning_me){
@@ -250,7 +250,7 @@ public $warnings=[];
 
         // Expects an assoc. array
         foreach($fields_with_min_lengths as $field => $min) {
-            $value = trim($_POST[$field]);
+            $value = trim((string)($_POST[$field] ?? ''));
             if (!$this->has_min_length($value, $min)) {
 
                 if($warning_me){
@@ -388,8 +388,8 @@ public $warnings=[];
 
     public function is_equal($value1,$value2){
         if(isset($_POST[$value1]) &&isset($_POST[$value2]) ){
-            $v1=trim($_POST[$value1]);
-            $v2=trim($_POST[$value2]);
+            $v1=trim((string)$_POST[$value1]);
+            $v2=trim((string)$_POST[$value2]);
             if($v1!==$v2){
                 $this->errors["equality"]=$this->fieldname_as_text($value1). " and ". $this->fieldname_as_text($value2)." have different values";
             }
@@ -414,18 +414,19 @@ public $warnings=[];
 
 
        foreach($fields_with_dates as $field) {
-           $mydate = trim($_POST[$field]);
-           if ($format == 'YYYY-MM-DD') list($year, $month, $day) = explode('-', $mydate);
-           if ($format == 'YYYY/MM/DD') list($year, $month, $day) = explode('/', $mydate);
-           if ($format == 'YYYY.MM.DD') list($year, $month, $day) = explode('.', $mydate);
+           $year = ""; $day = ""; $month = "";
+           $mydate = trim((string)($_POST[$field] ?? ''));
+           if ($format == 'YYYY-MM-DD') list($year, $month, $day) = array_pad(explode('-', $mydate), 3, null);
+           if ($format == 'YYYY/MM/DD') list($year, $month, $day) = array_pad(explode('/', $mydate), 3, null);
+           if ($format == 'YYYY.MM.DD') list($year, $month, $day) = array_pad(explode('.', $mydate), 3, null);
 
-           if ($format == 'DD-MM-YYYY') list($day, $month, $year) = explode('-', $mydate);
-           if ($format == 'DD/MM/YYYY') list($day, $month, $year) = explode('/', $mydate);
-           if ($format == 'DD.MM.YYYY') list($day, $month, $year) = explode('.', $mydate);
+           if ($format == 'DD-MM-YYYY') list($day, $month, $year) = array_pad(explode('-', $mydate), 3, null);
+           if ($format == 'DD/MM/YYYY') list($day, $month, $year) = array_pad(explode('/', $mydate), 3, null);
+           if ($format == 'DD.MM.YYYY') list($day, $month, $year) = array_pad(explode('.', $mydate), 3, null);
 
-           if ($format == 'MM-DD-YYYY') list($month, $day, $year) = explode('-', $mydate);
-           if ($format == 'MM/DD/YYYY') list($month, $day, $year) = explode('/', $mydate);
-           if ($format == 'MM.DD.YYYY') list($month, $day, $year) = explode('.', $mydate);
+           if ($format == 'MM-DD-YYYY') list($month, $day, $year) = array_pad(explode('-', $mydate), 3, null);
+           if ($format == 'MM/DD/YYYY') list($month, $day, $year) = array_pad(explode('/', $mydate), 3, null);
+           if ($format == 'MM.DD.YYYY') list($month, $day, $year) = array_pad(explode('.', $mydate), 3, null);
 
            if (is_numeric($year) && is_numeric($month) && is_numeric($day)){
                if( !checkdate($month,$day,$year)){
@@ -456,13 +457,13 @@ public $warnings=[];
     {
         if (!is_array($fields_with_times)) {
             $field_time = $fields_with_times;
-            $myTime = trim($_POST[$field_time]);
+            $myTime = trim((string)($_POST[$field_time] ?? ''));
             $this->validate_time_individual($myTime, $field_time, $warning_me);
 
 
         } else {
             foreach ($fields_with_times as $fields_time) {
-                $myTime = trim($_POST[$fields_time]);
+                $myTime = trim((string)($_POST[$fields_time] ?? ''));
                 $this->validate_time_individual($myTime, $fields_time, $warning_me);
 
 
@@ -498,7 +499,7 @@ public $warnings=[];
   public  function validate_website ($field="",$warning_me=false){
 
       //  $field=" URL";
-        $website = $this->test_input($_POST[$field]);
+        $website = $this->test_input($_POST[$field] ?? '');
         if (!preg_match("/\b(?:(?:https?|ftp):\/\/|www\.)[-a-z0-9+&@#\/%?=~_|!:,.;]*[-a-z0-9+&@#\/%=~_|]/i",$website)) {
            // $websiteErr = "Invalid URL";
             if($warning_me){
@@ -522,7 +523,7 @@ public $warnings=[];
         global $database;
 
 
-        $safe_name=$database->escape_value(trim($_POST[$name]));
+        $safe_name=$database->escape_value(trim((string)($_POST[$name] ?? '')));
 
 
         $table=   $class_name::get_table_name();
@@ -557,8 +558,8 @@ public $warnings=[];
     public function unique_category($warning_me=false){
         global $database;
 
-     $category1=(int)$_POST['category_1_id'] ;
-     $category2=(int)$_POST['category_2_id'] ;
+     $category1=(int)($_POST['category_1_id'] ?? 0) ;
+     $category2=(int)($_POST['category_2_id'] ?? 0) ;
      $safe_category1=$database->escape_value($category1);
      $safe_category2=$database->escape_value($category2);
 
