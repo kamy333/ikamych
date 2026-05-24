@@ -11,6 +11,7 @@
 class Comment extends DatabaseObject
 {
     protected static $table_name = "comments";
+    protected static $db_fields = ['id', 'photo_id', 'author', 'body', 'input_date', 'modified_date'];
 
 //    protected static $db_table="comments";
     protected static $db_table_fields=['photo_id','author','body','input_date','modified_date']  ;
@@ -41,8 +42,8 @@ class Comment extends DatabaseObject
     public static function find_the_comment($photo_id){
         global $database;
 
-        $sql="SELECT * FROM ".self::$db_table;
-        $sql.=" WHERE photo_id =".$database->escape_string($photo_id) ;
+        $sql="SELECT * FROM ".self::$table_name;
+        $sql.=" WHERE photo_id =".$database->escape_value((int)$photo_id) ;
         $sql.=" ORDER BY photo_id ASC";
 
         return  self::find_by_sql($sql);
