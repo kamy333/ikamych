@@ -100,7 +100,7 @@ public $warnings=[];
 
         if (is_array($required_fields)) {
             foreach ($required_fields as $field) {
-                $value = trim($_POST[$field]);
+                $value = trim((string)($_POST[$field] ?? ''));
                 if (!$this->has_presence($value)) {
                     if ($warning_me) {
                         $this->warnings[$field] = $this->fieldname_as_text($field) . " can't be blank";
@@ -311,7 +311,7 @@ public $warnings=[];
                 //  print_r($fields_numeric);
 
 
-                $value = trim($_POST[$field]);
+                $value = trim((string)($_POST[$field] ?? ''));
                 if (!is_numeric($value)) {
 
                     if($warning_me){
@@ -342,12 +342,12 @@ public $warnings=[];
 
 
                 }
-                return true;
-
             } // end of each
 
+            return true;
+
         } else {
-            $value = trim($_POST[$fields_numeric]);
+            $value = trim((string)($_POST[$fields_numeric] ?? ''));
             if (!is_numeric($value)) {
 
                 if($warning_me){

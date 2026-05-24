@@ -138,6 +138,92 @@ if (substr($Nav->current_page, 0, 7) == "manage_" ||
     <script src="<?php echo $Nav->path_public; ?>myjs/ajax_db.js"></script>
 <?php } ?>
 
+<script>
+$(document).ready(function () {
+    function validateIkamyForm(form) {
+        var $form = $(form);
+        var firstInvalid = null;
+
+        $form.find('.js-inline-error').remove();
+        $form.find('.js-validation-summary').remove();
+        $form.find('.has-error').removeClass('has-error');
+        $form.find('[aria-invalid="true"]').removeAttr('aria-invalid');
+
+        $form.find('[required]').each(function () {
+            var field = this;
+            var $field = $(field);
+            var invalid = false;
+            var errorText = '';
+
+            if (field.type === 'radio') {
+                invalid = $form.find('input[type="radio"][name="' + field.name + '"]:checked').length === 0;
+            } else {
+                invalid = $.trim($field.val() || '') === '';
+            }
+
+            if (!invalid && field.validity && !field.validity.valid) {
+                invalid = true;
+            }
+
+            if (!invalid && $field.data('disallow-zero') && $.trim($field.val() || '') !== '' && parseFloat($field.val()) === 0) {
+                invalid = true;
+                errorText = 'cannot be zero.';
+            }
+
+            if (!invalid) {
+                return;
+            }
+
+            var $group = $field.closest('.form-group');
+            var label = $.trim($group.find('label').first().text()) || field.name;
+            var message = '';
+            var $target = $field.closest('div[class*="col-sm-"], .input-group');
+
+            if (!$group.length) {
+                $group = $field.parent();
+            }
+
+            if (!$target.length) {
+                $target = $field.parent();
+            }
+
+            if (!errorText) {
+                errorText = 'is required.';
+            }
+
+            $group.addClass('has-error');
+            $field.attr('aria-invalid', 'true');
+            message = $('<div>').text(label + ' ' + errorText).html();
+            $target.append('<p class="help-block js-inline-error">' + message + '</p>');
+
+            if (!firstInvalid) {
+                firstInvalid = field;
+            }
+        });
+
+        if (!firstInvalid) {
+            return true;
+        }
+
+        $form.prepend('<div class="alert alert-danger js-validation-summary">Please correct the highlighted fields.</div>');
+        $('html, body').animate({scrollTop: Math.max($form.offset().top - 80, 0)}, 200);
+        $(firstInvalid).focus();
+        return false;
+    }
+
+    $('form.form-horizontal').on('submit', function (event) {
+        if (!validateIkamyForm(this)) {
+            event.preventDefault();
+        }
+    });
+
+    $('form.form-horizontal').on('click', 'button[type="submit"], input[type="submit"]', function (event) {
+        if (!validateIkamyForm(this.form)) {
+            event.preventDefault();
+        }
+    });
+});
+</script>
 
 <script src="<?php echo $Nav->path_public; ?>js/test_tooltips.js"></script>
 

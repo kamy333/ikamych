@@ -59,6 +59,7 @@ class MyExpense extends DatabaseObject
             "placeholder" => "Amount",
             "step" => "0.01",
             "required" => true,
+            "disallow_zero" => true,
         ],
         "cash" => ["type" => "radio",
             [0,
@@ -973,6 +974,12 @@ GROUP BY expense_type_id;";
         $valid = new FormValidation();
 
         $valid->validate_presences(self::$required_fields);
+        $valid->is_numeric('amount');
+        $valid->is_numeric('rate');
+        $amount = trim((string)($_POST['amount'] ?? ''));
+        if ($amount !== '' && is_numeric($amount) && (float)$amount == 0.0) {
+            $valid->errors['amount_zero'] = "Amount cannot be zero";
+        }
 //        $valid->validate_min_lengths(array('currency'=>3));
 //        $valid->validate_max_lengths(array('currency'=>3));
         return $valid;

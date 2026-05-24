@@ -392,14 +392,12 @@ class DatabaseObject
         $output .= "</div>";
         $output .= "<div class =\"form-light-blue\">";
         $output .= "<form name='form_" . get_called_class() . "' id='form_" . get_called_class() . "'  class='form-horizontal' method='post' action='{$post_link}'> ";
-        if (request_is_get()) {
-            if (isset($_GET['id'])) {
-                $id = $_GET['id'];
-                $get_item = static::find_by_id($id);
-                $output .= static::construct_form($get_item, $_GET);
-            } else {
-                $output .= static::construct_form(false, $_GET);
-            }
+        if (isset($_GET['id'])) {
+            $id = $_GET['id'];
+            $get_item = static::find_by_id($id);
+            $output .= static::construct_form($get_item, request_is_get() ? $_GET : false);
+        } else {
+            $output .= static::construct_form(false, request_is_get() ? $_GET : false);
         }
 
 //        if there is $_GET['id'] it will put id but not $_GET['copy_record']

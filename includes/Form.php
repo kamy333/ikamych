@@ -40,6 +40,7 @@ class Form extends DatabaseObject
     public $datafgcolor;
     public $datawidth;
     public $dataheight;
+    public $disallow_zero = false;
 
     public $max;
     public $min;
@@ -186,7 +187,7 @@ class Form extends DatabaseObject
             $output .= "<label  ";
 
             if ($this->form_format_type == self::FORM_HORIZONTAL) {
-                $output .= "< class='{$this->col_sm_label} control-label' ";
+                $output .= " class='{$this->col_sm_label} control-label' ";
             } else {
                 $output .= "class='sr-only'";
             }
@@ -289,6 +290,10 @@ class Form extends DatabaseObject
             if ($this->required) {
                 $output .= " required";
             }
+
+            if ($this->disallow_zero) {
+                $output .= " data-disallow-zero='1'";
+            }
             $output .= ">"; //close input
             $output .= " </div>";
 
@@ -385,6 +390,10 @@ class Form extends DatabaseObject
 
             if ($this->selected) {
                 $output .= " selected";
+            }
+
+            if ($this->required) {
+                $output .= " required";
             }
 
             $output .= ">";
@@ -677,7 +686,7 @@ class Form extends DatabaseObject
 
         $output .= "<label ";
         if ($this->form_format_type == self::FORM_HORIZONTAL) {
-            $output .= "<label class='{$this->col_sm_label} control-label' ";
+            $output .= "class='{$this->col_sm_label} control-label' ";
         } else {
             $output .= "class='sr-only'";
         }
@@ -698,16 +707,20 @@ class Form extends DatabaseObject
 
         !empty($this->cols) ? $cols = '' : $cols = '';
 
-        $output .= "<textarea rows='$this->rows' $cols  name='$this->name'  class='form-control'";
+        $output .= "<textarea rows='$this->rows' $cols  name='$this->name'  class='form-control' ";
 
         if (isset($this->id)) {
             $output .= "id='{$this->id}' ";
         } else {
-            $output .= "  id='$this->name'>";
+            $output .= "  id='$this->name'";
 
         }
+        if ($this->required) {
+            $output .= " required";
+        }
+        $output .= ">";
         if (isset($_POST) && isset($_POST[$this->name])) {
-            $output .= h(trim($_POST[$this->value]));
+            $output .= h(trim((string)$_POST[$this->name]));
         } else {
             if (isset($this->value)) {
                 $output .= h(trim($this->value));
