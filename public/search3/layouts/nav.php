@@ -366,21 +366,11 @@ if ($layout_context == "public") {
                                 <?php echo $Nav->menu_item('', 'Comments', 'manage_comments.php', 'admin/wkg_progress') ?>
                                 <?php echo $Nav->menu_item('', 'Comment Photo', 'manage_comments_photo.php', 'admin/wkg_progress') ?>
 
-                                <?php echo "<li class=\"divider\"></li>"; ?>
-
-                                <?php echo $Nav->menu_item('', 'New Comment old', 'new_Comment_old.php', 'admin/wkg_progress') ?>
                                 <?php echo $Nav->menu_item('', 'New Photo', 'new_photo.php', 'admin/wkg_progress') ?>
 
                                 <?php echo "<li class=\"divider\"></li>"; ?>
                                 <?php echo $Nav->menu_item('', 'Public Photo', 'photo.php', "public") ?>
                                 <?php echo $Nav->menu_item('', 'Public Photo Gallery', 'photo_gallery.php', "public") ?>
-
-
-                                <?php echo "<li class=\"divider\"></li>"; ?>
-                                <?php echo $Nav->menu_item('', 'Photos Old', 'Manage_Photo.php', 'admin/wkg_progress') ?>
-                                <?php echo $Nav->menu_item('', 'Comments del?', 'manage_Comment.php', 'admin/wkg_progress') ?>
-                                <?php echo $Nav->menu_item('', 'Comment Old ', 'manage_Comment_old.php', 'admin/wkg_progress') ?>
-                                <?php echo $Nav->menu_item('', 'New Photo_old', 'new_photo_old.php', 'admin/wkg_progress') ?>
 
 
                             </ul>
@@ -406,21 +396,11 @@ if ($layout_context == "public") {
                                 <?php echo $Nav->menu_item('', 'Comments', 'manage_comments.php', 'admin/wkg_progress') ?>
                                 <?php echo $Nav->menu_item('', 'Comment Photo', 'manage_comments_photo.php', 'admin/wkg_progress') ?>
 
-                                <?php echo "<li class=\"divider\"></li>"; ?>
-
-                                <?php echo $Nav->menu_item('', 'New Comment old', 'new_Comment_old.php', 'admin/wkg_progress') ?>
                                 <?php echo $Nav->menu_item('', 'New Photo', 'new_photo.php', 'admin/wkg_progress') ?>
 
                                 <?php echo "<li class=\"divider\"></li>"; ?>
                                 <?php echo $Nav->menu_item('', 'Public Photo', 'photo.php', "public") ?>
                                 <?php echo $Nav->menu_item('', 'Public Photo Gallery', 'photo_gallery.php', "public") ?>
-
-
-                                <?php echo "<li class=\"divider\"></li>"; ?>
-                                <?php echo $Nav->menu_item('', 'Photos Old', 'Manage_Photo.php', 'admin/wkg_progress') ?>
-                                <?php echo $Nav->menu_item('', 'Comments del?', 'manage_Comment.php', 'admin/wkg_progress') ?>
-                                <?php echo $Nav->menu_item('', 'Comment Old ', 'manage_Comment_old.php', 'admin/wkg_progress') ?>
-                                <?php echo $Nav->menu_item('', 'New Photo_old', 'new_photo_old.php', 'admin/wkg_progress') ?>
 
 
                             </ul>
@@ -610,38 +590,6 @@ if ($layout_context == "public") {
 
             <ol class="breadcrumb">
 
-                <?php if ($user->is_admin() && $user->is_kamy()) { ?>
-                    &nbsp;&nbsp;
-
-                    <div class="btn-group">
-                        <button type="button" class="btn btn-default">Test</button>
-                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"
-                                aria-expanded="false">
-                            <span class="caret"></span>
-                            <span class="sr-only">Toggle Dropdown</span>
-                        </button>
-                        <ul class="dropdown-menu" role="menu">
-
-
-                            <?php
-                            for ($i = 1; $i <= 10; $i++) {
-                                if ($i == 3) {
-                                    continue;
-                                }
-                                $i < 10 ? $x = "0{$i}" : $x = $i;
-                                echo $Nav->menu_item('', "test{$x}", "test{$x}.php", 'admin/test');
-                            }
-                            ?>
-                            <?php echo $Nav->menu_item('', 'test03', 'test03.php?cl=ViewModelByChauffeur', 'admin/test'); ?>
-
-                            <li class="divider"></li>
-                            <li><a href="<?php echo $path_admin; ?>login.php">login</a></li>
-
-
-                        </ul>
-                    </div>
-
-                <?php } ?>
             </ol>
 
         <?php } ?>

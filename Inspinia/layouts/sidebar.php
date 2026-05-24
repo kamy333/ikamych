@@ -152,7 +152,6 @@
 
                             if (User::is_admin()) {
                                 echo $Nav->menu_item('', 'Minor', 'minor.php', 'public');
-                                echo $Nav->menu_item('', 'Old public Layout', 'index_old.php', 'public');
                             }
 
 

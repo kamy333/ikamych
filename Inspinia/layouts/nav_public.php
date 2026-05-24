@@ -28,7 +28,6 @@
                         <a aria-expanded="false" role="button" href="#" class="dropdown-toggle" data-toggle="dropdown">
                             Public <span class="caret"></span></a>
                         <ul role="menu" class="dropdown-menu">
-                            <li><a href="<?php echo $path; ?>index_old.php">Old public Layout</a></li>
                             <li><a href="<?php echo $Nav->path_admin; ?>minor.php">Minor</a></li>
                         </ul>
                     </li>

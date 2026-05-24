@@ -186,15 +186,15 @@ Risk: Medium. Legacy code may still include these paths directly.
 
 ### 7. Old/admin/test pages
 
-Candidates:
+Completed removals:
 
 - `public/admin/test/**`
 - `testDelete.php`
-- old/generated variants like `Inspinia/index_old.php`, `public/admin/wkg_progress/*_old.php`, and repeated gallery variants
+- old/generated variants including `Inspinia/index_old.php`, `public/_f/kamy/pay_brazil_old.php`, `public/admin/booking_myexpense_old.php`, and `public/admin/wkg_progress/*_old.php`
 
 Reason: Many files are named `old`, `test`, `todelete`, or duplicate similar functionality. PHP lint found many PHP 8 parse failures inside old admin files, mainly curly-brace string/array offset syntax.
 
-Status: `public/admin/old/**` was removed after route/link inventory found no active references.
+Status: `public/admin/old/**` was removed after route/link inventory found no active references. Old/test page links were removed from navigation before deleting the obsolete pages.
 
 Recommended change:
 
@@ -437,13 +437,7 @@ Update `.gitignore`:
 
 ### Phase 3: Delete or quarantine old pages
 
-Targets:
-
-- `public/admin/test/**`
-- `testDelete.php`
-- old generated variants under `Inspinia/**` and `public/admin/wkg_progress/*_old.php`
-
-Do this after link/route inventory.
+Status: Initial old/test page cleanup is complete. Continue with route inventory before deleting any additional old generated variants.
 
 ### Phase 4: Remove retired SQL dumps
 
