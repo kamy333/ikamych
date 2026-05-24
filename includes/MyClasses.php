@@ -71,29 +71,41 @@ class MyClasses
 
         static::short_class_check();
         if (!isset($_GET['class_name'])) {
-            $session->message('Sorry that was an invalid request');
-            redirect_to('index.php');
+            static::reject_class_request('Sorry that was an invalid request.');
 
         }
 
         if (isset($_GET['class_name']) && !in_array($_GET['class_name'], static::$all_class)) {
-            $session->message('Sorry that was an invalid request ' . $_GET['class_name']);
-            redirect_to('index.php');
+            static::reject_class_request('Sorry, "' . $_GET['class_name'] . '" is not an allowed admin class.');
 
         }
 
         if (isset($_GET['class_name']) && in_array($_GET['class_name'], static::$disable_db_classes)) {
-            $session->message('Sorry request for ' . $_GET['class_name'] . ' not accessible from here');
-            redirect_to('index.php');
+            static::reject_class_request('Sorry, "' . $_GET['class_name'] . '" is not accessible from here.');
 
         }
 
         if (class_exists($_GET['class_name'])) {
             return $_GET['class_name'];
         } else {
-            $session->message('Sorry request for ' . $_GET['class_name'] . ' not a class . Review code');
-            redirect_to('index.php');
+            static::reject_class_request('Sorry, "' . $_GET['class_name'] . '" is not available. Please check the link and try again.');
         }
+    }
+
+    private static function reject_class_request($message)
+    {
+        global $session;
+
+        $session->message($message);
+
+        if (function_exists('is_ajax_request') && is_ajax_request()) {
+            http_response_code(400);
+            header('Content-Type: application/json; charset=utf-8');
+            echo json_encode(array('errors' => $message));
+            exit;
+        }
+
+        redirect_to('/public/admin/index.php');
     }
 
 
