@@ -7,38 +7,38 @@
  */
 
 
-// Encrypted cookie functions
-// requires mcrypt: http://php.net/manual/en/book.mcrypt.php
+// Encrypted cookie functions.
+// mcrypt was removed from PHP; use OpenSSL while keeping the old function names.
+
+function ikamy_crypto_key($salt) {
+    return hash('sha256', (string)$salt, true);
+}
 
 function encrypt_string($salt, $string) {
-    // Configuration (must match decryption)
-    $cipher_type = MCRYPT_RIJNDAEL_256;
-    $cipher_mode = MCRYPT_MODE_CBC;
+    $cipher = 'aes-256-cbc';
+    $iv_size = openssl_cipher_iv_length($cipher);
+    $iv = random_bytes($iv_size);
 
-    // Using initialization vector adds more security
-    $iv_size = mcrypt_get_iv_size($cipher_type, $cipher_mode);
-    $iv =  mcrypt_create_iv($iv_size, MCRYPT_RAND);
+    $encrypted_string = openssl_encrypt((string)$string, $cipher, ikamy_crypto_key($salt), OPENSSL_RAW_DATA, $iv);
+    if ($encrypted_string === false) {
+        throw new RuntimeException('Unable to encrypt string.');
+    }
 
-    $encrypted_string = mcrypt_encrypt($cipher_type, $salt, $string, $cipher_mode, $iv);
-
-    // Return initialization vector + encrypted string
-    // We'll need the $iv when decoding.
     return $iv . $encrypted_string;
 }
 
 function decrypt_string($salt, $iv_with_string) {
-    // Configuration (must match encryption)
-    $cipher_type = MCRYPT_RIJNDAEL_256;
-    $cipher_mode = MCRYPT_MODE_CBC;
+    $cipher = 'aes-256-cbc';
+    $iv_size = openssl_cipher_iv_length($cipher);
+    $iv_with_string = (string)$iv_with_string;
+    if (strlen($iv_with_string) <= $iv_size) {
+        return false;
+    }
 
-    // Extract the initialization vector from the encrypted string.
-    // The $iv comes before encrypted string and has fixed size.
-    $iv_size = mcrypt_get_iv_size($cipher_type, $cipher_mode);
     $iv = substr($iv_with_string, 0, $iv_size);
     $encrypted_string = substr($iv_with_string, $iv_size);
 
-    $string = mcrypt_decrypt($cipher_type, $salt, $encrypted_string, $cipher_mode, $iv);
-    return $string;
+    return openssl_decrypt($encrypted_string, $cipher, ikamy_crypto_key($salt), OPENSSL_RAW_DATA, $iv);
 }
 
 // Encode after encryption to ensure encrypted characters are savable
@@ -48,7 +48,7 @@ function encrypt_string_and_encode($salt, $string) {
 
 // Decode before decryption
 function decrypt_string_and_decode($salt, $string) {
-    return decrypt_string($salt, base64_decode($string));
+    return decrypt_string($salt, base64_decode($string, true));
 }
 
 // Uncomment to demonstrate usage
