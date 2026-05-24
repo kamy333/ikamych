@@ -17,7 +17,7 @@ if (isset($_GET['download_csv']) && $_GET['download_csv']=="Yes") {
 
         $result = $database->query($sql);
 
-$time=strftime("%Y-%m-%d",time());
+$time = date("Y-m-d");
 
 
         try {

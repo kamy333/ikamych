@@ -60,7 +60,7 @@ if(User::is_employee() || User::is_secretary() || User::is_visitor()){ redirect_
 //                        $output.="<td style='text-center'><img  class='user-image' src=\"{$photo->picture_path()}\" alt=''></td>";
                         $output.="<td>$comment->author</td>";
                         $output.="<td>$comment->body</td>";
-                        $output.="<td>".strftime("%d %M %Y @ %Hh%M",strtotime($comment->input_date)) ."</td>";
+                        $output.="<td>".date("d i Y @ H\\hi", strtotime($comment->input_date)) ."</td>";
                         $output.="<td class='text-center'><a class='btn btn-danger btn-xs page-table-action' href='delete_comment.php?id=".urlencode($comment->id)."'>Delete</a></td>$blank";
                         $output.="<td class='text-center'><a class='btn btn-primary btn-xs  btn-xs page-table-action' href='edit_comment.php?id=".urlencode($comment->id)."'>Edit</a></td>$blank";
                         $output.="</tr>"   ;

@@ -1354,8 +1354,8 @@ $('.clockpicker').clockpicker({    placement:'top',    align: 'bottom',    donet
         $this->mn = (int)$oDiff->i;
         $this->heure = number_format($this->nbre_horaire, 2);
 
-        $this->date_ = strftime("%d-%m-%Y", strtotime($this->date_presence));
-        $this->date_to = strftime("%d-%m-%Y", strtotime($this->date_presence_fin));
+        $this->date_ = date("d-m-Y", strtotime($this->date_presence));
+        $this->date_to = date("d-m-Y", strtotime($this->date_presence_fin));
 
         $this->user_id = $session->user_id;
         $user = User::find_by_id((int)$this->user_id);
@@ -1426,7 +1426,7 @@ $('.clockpicker').clockpicker({    placement:'top',    align: 'bottom',    donet
 
         $this->nbre_horaire = (float)($oDiff->h . "." . $mn);
 
-        $this->date_ = strftime("%d-%m-%Y", strtotime($this->date_presence));
+        $this->date_ = date("d-m-Y", strtotime($this->date_presence));
         $this->user_id = $session->user_id;
         $user = User::find_by_id((int)$this->user_id);
         $this->username = $user->username;

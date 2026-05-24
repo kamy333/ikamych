@@ -177,9 +177,9 @@ echo "<ul class='list-group'>";
 	foreach($dir_array as $file) {
 	if(stripos($file, '.') > 0) {
 
-		$output= " &nbsp; &nbsp; last modified (content) - ".strftime('%d/%m/%Y %H:%M', filemtime($dir."/".$file)) . " | ";
-		$output.= "last changed (content or metadata) - ".strftime('%d/%m/%Y %H:%M', filectime($dir."/".$file)) . " | ";
-		$output.= "last accessed (any read/change) - ".strftime('%d/%m/%Y %H:%M', fileatime($dir."/".$file)) . " | ";
+		$output= " &nbsp; &nbsp; last modified (content) - ".date('d/m/Y H:i', filemtime($dir."/".$file)) . " | ";
+		$output.= "last changed (content or metadata) - ".date('d/m/Y H:i', filectime($dir."/".$file)) . " | ";
+		$output.= "last accessed (any read/change) - ".date('d/m/Y H:i', fileatime($dir."/".$file)) . " | ";
 
 		echo "<li class='list-group-item'><a href='../uploads/{$file}'>{$file}</a>{$output}</li>";
 

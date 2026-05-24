@@ -140,7 +140,7 @@ $comments=Comment::find_the_comment($photo->id);
                     <div class="media-body">
                         <h4 class="media-heading"><?php echo $comment->author; ?>
 <!--                            <small>August 25, 2014 at 9:30 PM</small>-->
-                            <small><?php echo strftime("%d %M %Y @ %Hh%M",strtotime($comment->input_date))   ;// ?></small>
+                            <small><?php echo date("d i Y @ H\\hi", strtotime($comment->input_date))   ;// ?></small>
                         </h4>
                      <?php echo $comment->body; ?>
                     </div>

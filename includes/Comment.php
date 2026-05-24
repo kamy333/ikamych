@@ -28,7 +28,7 @@ class Comment extends DatabaseObject
             $comment->photo_id =(int) $photo_id;
             $comment->author=$author;
             $comment->body=$body;
-            $comment->input_date=strftime("%Y-%m-%d  %H:%M:%S",time());
+            $comment->input_date = date("Y-m-d  H:i:s");
 
             return $comment;
 

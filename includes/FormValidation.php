@@ -646,8 +646,8 @@ public $warnings=[];
         $unix_time_date = strtotime($str_time);
         $unix_time_now = strtotime('now');
 
-        $date_input = strftime("%Y-%m-%d", $unix_time_date);
-        $date_now = strftime("%Y-%m-%d", $unix_time_now);
+        $date_input = date("Y-m-d", $unix_time_date);
+        $date_now = date("Y-m-d", $unix_time_now);
 
         list ($date_fr, $date_fr_short, $date_fr_long, $date_fr_hr, $date_fr_short_hr, $date_fr_long_hr, $date_fr_full_hr) = date_fr($date_input);
 

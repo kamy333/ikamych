@@ -38,7 +38,7 @@ if (isset($_POST['submit_new']) == "Send it") {
     $chatter = new ChatFriendDjamila();
     $chatter->user_id = $session->user_id;
     $chatter->message = trim($_POST['message']);
-    $chatter->date = strftime("%Y-%m-%d %H:%M:%S", time());
+    $chatter->date = date("Y-m-d H:i:s");
     if (isset($_FILES['chat_image'])) {
         $chatter->set_files($_FILES['chat_image']);
         $chatter->upload_photo();
