@@ -124,7 +124,7 @@ Recommended change:
 
 Risk: Medium, because config loading must be changed carefully. Do this before major refactors.
 
-Status: `includes/config.php` is already ignored and not tracked. `client_secret..json` has been removed from git tracking and deleted from the local working folder. `client_secret.example.json` remains as a placeholder for any future Google OAuth setup.
+Status: `includes/config.php` is already ignored and not tracked. `client_secret..json` has been removed from git tracking and deleted from the local working folder. The placeholder `client_secret.example.json` was also removed because the application has no active Google OAuth usage.
 
 ### 4. SQL dumps and historic data
 
@@ -441,7 +441,7 @@ Update `.gitignore`:
 3. Add `config.example.php`.
 4. Remove tracked secret files.
 
-Status: Tracked Google OAuth client secret was removed from git and replaced with `client_secret.example.json`; the ignored local `client_secret..json` copy was also deleted. `includes/config.example.php` and `CONFIGURATION.md` document the local/prod setup. Deleting or rotating the matching Google Console OAuth client remains an external account action.
+Status: Tracked Google OAuth client secret was removed from git, the ignored local `client_secret..json` copy was deleted, and the temporary `client_secret.example.json` placeholder was removed after confirming the application does not use Google OAuth. `includes/config.example.php` and `CONFIGURATION.md` document the remaining local/prod setup. Deleting the matching Google Console OAuth client remains an external account action.
 
 ### Phase 3: Delete or quarantine old pages
 

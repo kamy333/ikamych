@@ -4,7 +4,6 @@ _notes/
 dwsync.xml
 composer.phar
 /client_secret*.json
-!/client_secret.example.json
 *.zip
 *.gz
 log/*.log

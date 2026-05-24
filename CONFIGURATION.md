@@ -7,7 +7,6 @@ This project keeps environment-specific credentials out of Git.
 Create these files by copying the matching examples:
 
 - `includes/config.example.php` -> `includes/config.php`
-- `client_secret.example.json` -> `client_secret..json` if Google OAuth is needed locally
 
 Then fill in the local database and mail values.
 
@@ -15,8 +14,6 @@ Then fill in the local database and mail values.
 
 The same real config files must exist on production with production values.
 Do not commit the real config files because they contain database, mail, and secret-key credentials.
-
-If Google OAuth is used in production, keep the real `client_secret..json` on the server only.
 
 ## Environment detection
 
