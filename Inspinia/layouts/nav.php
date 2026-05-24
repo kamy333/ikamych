@@ -17,32 +17,30 @@
                 </li>
 
 
-                <?php if ($session->is_logged_in()) {?>
-        <?php   echo Chat::get_chat();?>
+                <?php if ($session->is_logged_in()) { ?>
+                    <?php echo Chat::get_chat(); ?>
 
 
-      <?php } // end of message chat when $session->is_logged_in() ?>
+                <?php } // end of message chat when $session->is_logged_in() ?>
 
                 <?php echo Notification::get_notification(); ?>
 
 
                 <?php
-                    if($session->is_logged_in()) {
-                        echo "<li><a href='{$Nav->path_admin}index.php'><i class=\"fa fa-home\"></i> Home</a></li>";
+                if ($session->is_logged_in()) {
+                    echo "<li><a href='{$Nav->path_admin}index.php'><i class=\"fa fa-home\"></i> Home</a></li>";
 
-                        echo "<li><a href='{$Nav->path_admin}logout.php'><i class=\"fa fa-sign-out\"></i> Log out</a></li>";
+                    echo "<li><a href='{$Nav->path_admin}logout.php'><i class=\"fa fa-sign-out\"></i> Log out</a></li>";
 
-                    } else {
-                        echo "<li><a href='{$Nav->path_admin}index.php'><i class=\"fa fa-home\"></i> Home </a></li>";
+                } else {
+                    echo "<li><a href='{$Nav->path_admin}index.php'><i class=\"fa fa-home\"></i> Home </a></li>";
 
-                     if ($active_menu_clean !=='login'){
-                         echo "<li><a href='{$Nav->path_admin}login.php'><i class=\"fa fa-sign-in\"></i> Log in</a></li>";
-                     }
-
+                    if ($active_menu_clean !== 'login') {
+                        echo "<li><a href='{$Nav->path_admin}login.php'><i class=\"fa fa-sign-in\"></i> Log in</a></li>";
                     }
-                    ?>
 
-
+                }
+                ?>
 
 
                 <li>

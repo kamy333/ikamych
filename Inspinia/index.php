@@ -16,7 +16,7 @@
         </audio>
 
         <audio controls>
-            <source src="img/Xavier/Rise Up - Andra Day (Cover).mp3" type="audio/mpeg">
+            <source src="img/Xavier/mp3/Rise Up - Andra Day (Cover).mp3" type="audio/mpeg">
             Your browser does not support the audio element.
         </audio>
     </div>

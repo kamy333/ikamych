@@ -430,14 +430,14 @@ $('.clockpicker').clockpicker({    placement:'top',    align: 'bottom',    donet
 
     public static function ByMonth()
     {
-        $sql = "SELECT DISTINCT year(date_presence) AS Year ,month(date_presence) AS Month,
+        $sql = "SELECT year(date_presence) AS Year ,month(date_presence) AS Month,
                 monthname(date_presence) AS MonthName,
 sum(hr)                                  AS totalHours,
 sum(mn)                                  AS totalMin,
 sum(mn)/60                               AS totalMinHour,
 ((sum(hr)+(sum(mn)/60)))                 AS sumHours,
 ((sum(hr)+(sum(mn)/60)))                                          AS reminder
-                FROM  heure_presence GROUP BY Year,Month ORDER BY date_presence DESC";
+                FROM  heure_presence GROUP BY Year,Month,MonthName ORDER BY MAX(date_presence) DESC";
         $fields = static::add_total_field(['Year', 'Month', 'MonthName']);
 
         return array($fields, static::find_by_sql($sql));
@@ -460,10 +460,10 @@ sum(mn)/60                               AS totalMinHour,
     public static function ByThisMonth()
     {
         $month = now_monthname();
-        $sql = "SELECT DISTINCT year(date_presence) AS Year ,month(date_presence) AS Month,
+        $sql = "SELECT year(date_presence) AS Year ,month(date_presence) AS Month,
                 monthname(date_presence) AS MonthName,
 sum(hr) AS totalHours,sum(mn) AS totalMin,sum(mn)/60 AS totalMinHour,(sum(hr)+(sum(mn)/60)) AS sumHours
-                FROM  heure_presence WHERE monthname(date_presence)='{$month}' GROUP BY Year,Month ORDER BY date_presence DESC";
+                FROM  heure_presence WHERE monthname(date_presence)='{$month}' GROUP BY Year,Month,MonthName ORDER BY MAX(date_presence) DESC";
         $fields = static::add_total_field(['Year', 'Month', 'MonthName']);
 
 
@@ -474,7 +474,7 @@ sum(hr) AS totalHours,sum(mn) AS totalMin,sum(mn)/60 AS totalMinHour,(sum(hr)+(s
     {
         $today = now_sql();
         $sql = "
-SELECT DISTINCT date_presence AS Date, year(date_presence) AS Year ,monthname(date_presence) AS MonthName,
+SELECT date_presence AS Date, year(date_presence) AS Year ,monthname(date_presence) AS MonthName,
 sum(hr) AS totalHours,sum(mn) AS totalMin,sum(mn)/60 AS totalMinHour,sum(hr)+sum(mn)/60 AS sumHours
  FROM heure_presence WHERE date_presence='{$today}'  GROUP BY date_presence,Year,MonthName ORDER BY date_presence DESC
 ";
@@ -488,10 +488,10 @@ sum(hr) AS totalHours,sum(mn) AS totalMin,sum(mn)/60 AS totalMinHour,sum(hr)+sum
     public static function ByWeek()
     {
         $sql = "
-SELECT DISTINCT year(date_presence) AS Year ,month(date_presence) AS Month,
+SELECT year(date_presence) AS Year ,month(date_presence) AS Month,
   monthname(date_presence) AS MonthName,   week(date_presence) AS Week,
 sum(hr) AS totalHours,sum(mn) AS totalMin,sum(mn)/60 AS totalMinHour,sum(hr)+sum(mn)/60 AS sumHours
-  FROM  heure_presence GROUP BY Year,Month,Week ORDER BY date_presence DESC
+  FROM  heure_presence GROUP BY Year,Month,MonthName,Week ORDER BY MAX(date_presence) DESC
 ";
         $fields = static::add_total_field(['Year', 'MonthName', 'Week']);
 
@@ -501,7 +501,7 @@ sum(hr) AS totalHours,sum(mn) AS totalMin,sum(mn)/60 AS totalMinHour,sum(hr)+sum
     public static function ByDay()
     {
         $sql = "
-SELECT DISTINCT date_presence AS Date, year(date_presence) AS Year ,monthname(date_presence) AS MonthName,
+SELECT date_presence AS Date, year(date_presence) AS Year ,monthname(date_presence) AS MonthName,
 sum(hr) AS totalHours,sum(mn) AS totalMin,sum(mn)/60 AS totalMinHour,sum(hr)+sum(mn)/60 AS sumHours
  FROM heure_presence GROUP BY date_presence,Year,MonthName ORDER BY date_presence DESC
 ";
@@ -512,9 +512,9 @@ sum(hr) AS totalHours,sum(mn) AS totalMin,sum(mn)/60 AS totalMinHour,sum(hr)+sum
 
     public static function ByYear()
     {
-        $sql = "SELECT DISTINCT  year(date_presence) AS Year ,
+        $sql = "SELECT year(date_presence) AS Year ,
 sum(hr) AS totalHours,sum(mn) AS totalMin,sum(mn)/60 AS totalMinHour,(sum(hr)+(sum(mn)/60)) AS sumHours
-FROM  heure_presence GROUP BY Year ORDER BY date_presence DESC";
+FROM  heure_presence GROUP BY Year ORDER BY MAX(date_presence) DESC";
 
         $fields = static::add_total_field(['Year']);
 

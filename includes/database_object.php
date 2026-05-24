@@ -841,10 +841,25 @@ class DatabaseObject
 
         } else {
             $table = static::$table_name;
-            $sql = "SELECT DISTINCT {$field0} , {$field1} FROM {$table}";
+            $field0_sql = static::quote_identifier($field0);
+            $field1_sql = static::quote_identifier($field1);
+            $table_sql = static::quote_identifier($table);
+            $sql = "SELECT DISTINCT {$field0_sql} , {$field1_sql} FROM {$table_sql}";
             return static::find_by_sql($sql);
         }
 
+    }
+
+    protected static function quote_identifier($identifier)
+    {
+        $parts = explode('.', $identifier);
+        foreach ($parts as $part) {
+            if (!preg_match('/^[A-Za-z0-9_]+$/', $part)) {
+                return $identifier;
+            }
+        }
+
+        return '`' . implode('`.`', $parts) . '`';
     }
 
     public static function get_distinct($name)

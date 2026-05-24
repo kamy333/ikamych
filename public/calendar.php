@@ -60,29 +60,29 @@ $layout_context = "public"; ?>
     $btnPrevious = "";
     $nbsp = str_repeat("&nbsp;", 5);
 
-    $btnRecur = "{$nbsp}<a style='padding:0.1em'  class='btn-beige' href='https://www.ikamy.ch//public/_f/kamy/recurring_appointment.php'>Add Recurring Calendar</a>";
+    $btnRecur = "{$nbsp}<a style='padding:0.1em'  class='btn-beige' href='" . SITE_URL . "/public/_f/kamy/recurring_appointment.php'>Add Recurring Calendar</a>";
 
-    $btnCert = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a style='padding:0.1em'  class='btn-info' href='https://www.ikamy.ch//public/_f/kamy/recurring_appointment_email.php?code=" . u(CODE_CALENDAR) . "'>Certificat Medical Email</a>";
+    $btnCert = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a style='padding:0.1em'  class='btn-info' href='" . SITE_URL . "/public/_f/kamy/recurring_appointment_email.php?code=" . u(CODE_CALENDAR) . "'>Certificat Medical Email</a>";
 
     $btnCert="";
 
 
     if (isCalendarPast()) {
-        $btnPrevious = "{$nbsp}<a  style='padding:0.1em'  class='btn-info' href='https://www.ikamy.ch/public/calendar.php'>Future</a>";
+        $btnPrevious = "{$nbsp}<a  style='padding:0.1em'  class='btn-info' href='" . SITE_URL . "/public/calendar.php'>Future</a>";
     } else {
-        $btnPrevious = "{$nbsp}<a  style='padding:0.1em'  class='btn-info' href='https://www.ikamy.ch/public/calendar.php?type=Past'>Past</a>";
+        $btnPrevious = "{$nbsp}<a  style='padding:0.1em'  class='btn-info' href='" . SITE_URL . "/public/calendar.php?type=Past'>Past</a>";
     }
 
 
 
 
-    $btnNote = " <a style='padding: 0.1em' href='https://www.ikamy.ch/public/admin/notes.php'><button class='btn-warning'>Note</button></a>";
+    $btnNote = " <a style='padding: 0.1em' href='" . SITE_URL . "/public/admin/notes.php'><button class='btn-warning'>Note</button></a>";
     $classeNewNote = "<span ><i class='fa fa-plus-square' ></i></span> Note";
-    $btnNoteAdd = " <a style='padding: 0.1em' href='https://www.ikamy.ch/public/admin/crud/ajax/new_ajax.php?class_name=Note''><button class='btn-warning'>$classeNewNote</button></a>";
+    $btnNoteAdd = " <a style='padding: 0.1em' href='" . SITE_URL . "/public/admin/crud/ajax/new_ajax.php?class_name=Note'><button class='btn-warning'>$classeNewNote</button></a>";
 
 //    echo '<br><br>';
 
-    $btnGenPsalm = " <a style='padding: 0.1em' href='https://ikamy.ch/Inspinia/papa/email/daily_psalm.php''><button class='btn-warning'>Generate Psalm</button></a>";
+    $btnGenPsalm = " <a style='padding: 0.1em' href='" . SITE_URL . "/Inspinia/papa/email/daily_psalm.php'><button class='btn-warning'>Generate Psalm</button></a>";
 
 
 
@@ -91,7 +91,7 @@ $layout_context = "public"; ?>
     if (User::is_admin()) {
 
         $btn = "<br>     
-        <a style='padding: 0.1em' href='https://www.ikamy.ch/public/admin/crud/ajax/new_ajax.php?class_name=Calendar'><button class='btn-primary'>Add Date</button></a>";
+        <a style='padding: 0.1em' href='" . SITE_URL . "/public/admin/crud/ajax/new_ajax.php?class_name=Calendar'><button class='btn-primary'>Add Date</button></a>";
     }
 
 
@@ -100,12 +100,12 @@ $layout_context = "public"; ?>
     <?php
     if (isCalendarPast()) { ?>
         <h2 class="text-center"><a
-                    href="https://www.ikamy.ch/public/admin/crud/ajax/manage_ajax.php?class_name=Calendar">
+                    href="<?php echo SITE_URL; ?>/public/admin/crud/ajax/manage_ajax.php?class_name=Calendar">
                 <span style="color: red"><b>PAST Appointments Calendar</b> <?php echo $txt; ?></span>
             </a> <?php echo $btn . $btnRecur . $btnCert . $btnPrevious . $btnNote.$btnGenPsalm; ?></h2>
     <?php } else { ?>
         <h2 class="text-center"><a
-                    href="https://www.ikamy.ch/public/admin/crud/ajax/manage_ajax.php?class_name=Calendar">Appointments
+                    href="<?php echo SITE_URL; ?>/public/admin/crud/ajax/manage_ajax.php?class_name=Calendar">Appointments
                 Calendar <?php echo $txt; ?> </a> <?php echo $btn . $btnRecur . $btnCert . $btnPrevious . $btnNote . $btnNoteAdd.$btnGenPsalm; ?>
         </h2>
     <?php } ?>

@@ -128,8 +128,8 @@
 
     <div class="container">
 
-        <a href="https://www.ikamy.ch/public/index.php">Home</a>
-        <a href="https://www.ikamy.ch/public/admin/index.php">Home Admin</a>
+        <a href="../../../../public/index.php">Home</a>
+        <a href="../../../../public/admin/index.php">Home Admin</a>
         <br>
         <a href="#french">Français</a>
         <a href="#english">English</a>
@@ -182,8 +182,8 @@
     </div>
 
     <div class="container">
-        <a href="https://www.ikamy.ch/public/index.php">Home</a>
-        <a href="https://www.ikamy.ch/public/admin/index.php">Home Admin</a>
+        <a href="../../../../public/index.php">Home</a>
+        <a href="../../../../public/admin/index.php">Home Admin</a>
         <br>
         <a href="#french">Français</a>
         <a href="#english">English</a>

@@ -17,7 +17,7 @@
 
                 <li>
                     <a aria-expanded="false" role="button"
-                       href="<?php echo $Nav->path_admin; ?>myLinks.php?category=Others">Links</a>
+                       href="<?php echo $Nav->path_public; ?>myLinks.php?category=Others">Links</a>
                 </li>
 
 
@@ -28,23 +28,8 @@
                         <a aria-expanded="false" role="button" href="#" class="dropdown-toggle" data-toggle="dropdown">
                             Public <span class="caret"></span></a>
                         <ul role="menu" class="dropdown-menu">
-
-                            <li><a href="<?php echo $Nav->http . "transmed/"; ?>index.php"><i class="fa fa-taxi"></i>
-                                    <span class="nav-label">Transport</span></a></li>
-                            <?php echo $Nav->menu_item('', 'Full version Inspinia', 'https://www.ikamy.ch/Inspinia_Full_Version/', '', true) ?>
-                            <?php
-                            echo $Nav->menu_item('', 'Inspinia Full2', '../Inspinia_Full_Version_2/index.php', 'public', true);
-
-                            ?>
-
                             <li><a href="<?php echo $path; ?>index_old.php">Old public Layout</a></li>
                             <li><a href="<?php echo $Nav->path_admin; ?>minor.php">Minor</a></li>
-                            <li><a href="<?php echo $Nav->path_admin; ?>landing.php">Landing Page</a></li>
-                            <li><a href="<?php echo $Nav->path_admin; ?>off_canvas_menu.php">Canvas view</a></li>
-                            <li><a href="<?php echo $Nav->path_admin; ?>player.php">players</a></li>
-
-                            <?php echo $Nav->menu_item('', 'SmartAdmin', 'https://www.ikamy.ch/smartAdmin/', 'none', true) ?>
-                            <?php echo $Nav->menu_item('', 'SmartAdmin full version', 'https://www.ikamy.ch/SmartAdmin_Full_Version_html/', 'none', true) ?>
                         </ul>
                     </li>
                 <?php } ?>
@@ -103,9 +88,9 @@
                             if (User::is_caroline()) {
                                 echo $Nav->menu_item('', 'Mum', 'loan_exp_1.php', 'public');
 
-                                echo "<li><a href=\"https://www.ikamy.ch/public/admin/crud/ajax/new_ajax.php?class_name=MyExpenseCaroline\">New Expense or Credit</a></li>";
+                                echo "<li><a href=\"" . SITE_URL . "/public/admin/crud/ajax/new_ajax.php?class_name=MyExpenseCaroline\">New Expense or Credit</a></li>";
 
-                                echo "<li><a href=\"https://www.ikamy.ch/public/admin/crud/ajax/manage_ajax.php?class_name=MyExpenseCaroline\">Manage Data</a></li>";
+                                echo "<li><a href=\"" . SITE_URL . "/public/admin/crud/ajax/manage_ajax.php?class_name=MyExpenseCaroline\">Manage Data</a></li>";
 
 //                                echo "<li><a href=\"https://www.ikamy.ch/public/admin/crud/ajax/manage_ajax.php?class_name=MyExpense\">Test Caro false MyExpense</a></li>";
 

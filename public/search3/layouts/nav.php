@@ -44,7 +44,7 @@ if ($layout_context == "public") {
                 <span class="icon-bar"></span>
             </button>
 
-            <a class="navbar-brand active" href="https://www.ikamy.ch/public/index.php"><?php echo LOGO ?><span
+            <a class="navbar-brand active" href="<?php echo SITE_URL; ?>/public/index.php"><?php echo LOGO ?><span
                         style="color: blue"> <?php if (isset($layout_context) && $layout_context == "admin") {
                         echo " Admin";
                     } ?></span></a>
@@ -404,7 +404,7 @@ if ($layout_context == "public") {
                                 <?php
 
                                 echo $Nav->menu_item('', 'Transmed fr', 'https://www.ikamy.fr/public/', '', true);
-                                echo $Nav->menu_item('', 'Transmed ch', 'https://www.ikamy.ch/transmed/', '', true);
+                                echo $Nav->menu_item('', 'Transmed ch', SITE_URL . '/transmed/', '', true);
                                 echo $Nav->menu_item('Course', 'Course', 'manage_ajax.php', 'admin/crud/ajax');
                                 echo $Nav->menu_item('Calendar', 'Calendar', 'manage_ajax.php', 'admin/crud/ajax');
                                 echo $Nav->menu_item('Client', 'Client', 'manage_ajax.php', 'admin/crud/ajax');

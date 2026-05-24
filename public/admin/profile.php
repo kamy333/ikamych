@@ -39,7 +39,7 @@
 
 <div class="row" style="margin-bottom: 2em  ">
     <div class="col-md-4">
-<a class="btn btn-primary" role="button" href="https://www.ikamy.ch/Inspinia/profile.php">Go to profile page</a>
+<a class="btn btn-primary" role="button" href="<?php echo SITE_URL; ?>/Inspinia/profile.php">Go to profile page</a>
 </div>
 </div>
 

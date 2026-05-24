@@ -67,8 +67,8 @@ function iframe_google($src, $title)
 
                 <div class=" text-center p-md">
                     <div class="col-lg-4">
-                        <a target='_blank' href="https://www.ikamy.ch/Inspinia/img/Xavier/0002_xavier.jpg"><img
-                                    alt="xavier Xavier" src='https://www.ikamy.ch/Inspinia/img/Xavier/0002_xavier.jpg'
+                        <a target='_blank' href="<?php echo SITE_URL; ?>/Inspinia/img/Xavier/0002_xavier.jpg"><img
+                                    alt="xavier Xavier" src='<?php echo SITE_URL; ?>/Inspinia/img/Xavier/0002_xavier.jpg'
                                     style='width: 25em;height: 30em'></a>
                     </div>
 
@@ -96,8 +96,8 @@ function iframe_google($src, $title)
                 </div>
 
                 <div class="row" style="margin-top: 2em">
-                    <a target='_blank' href="https://www.ikamy.ch/Inspinia/img/Xavier/0001_xavier.jpg"><img
-                                alt="xavier Xavier" src='https://www.ikamy.ch/Inspinia/img/Xavier/0001_xavier.jpg'
+                    <a target='_blank' href="<?php echo SITE_URL; ?>/Inspinia/img/Xavier/0001_xavier.jpg"><img
+                                alt="xavier Xavier" src='<?php echo SITE_URL; ?>/Inspinia/img/Xavier/0001_xavier.jpg'
                                 style='width: 30em;height: 30em'></a>
                 </div>
 
@@ -130,7 +130,7 @@ function iframe_google($src, $title)
             <div class="row" style="margin-top: 5em">
                 <div class="col-lg-12">
                     <?php
-                    $path = "https://www.ikamy.ch/Inspinia/img/Xavier/doc/";
+                    $path = SITE_URL . "/Inspinia/img/Xavier/doc/";
                     $filename_no_ext = "004_Temoignage de Didier lu lors de la ceremonie du 03.01.2023";
                     $alt = "Temoignage de Didier";
                     $txt = $alt;

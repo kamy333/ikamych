@@ -347,7 +347,7 @@ class Note extends DatabaseObject
 
         foreach ($notes as $note) {
 
-            $myId = "<a href='https://www.ikamy.ch/public/admin/crud/ajax/edit_ajax.php?class_name=Note&id=" . u($note->id) . "'>" . $note->id . "</a>";
+            $myId = "<a href='" . SITE_URL . "/public/admin/crud/ajax/edit_ajax.php?class_name=Note&id=" . u($note->id) . "'>" . $note->id . "</a>";
 
 //            $done= !empty($note->done)  ?
 //                "<span style='color:green;'><i  class='fa fa-check-square'></i></span>"  :

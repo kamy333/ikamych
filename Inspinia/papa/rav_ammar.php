@@ -83,7 +83,7 @@
 
             ?>
 
-            <a href="https://www.ikamy.ch/Inspinia/papa/assets/img/2025-03-02_rav_amar_bulletin.jpg" target="_blank">Rav Ammar bulletin</a>
+            <a href="assets/img/2025-03-02_rav_amar_bulletin.jpg" target="_blank">Rav Ammar bulletin</a>
 
             <p class="caption">
                 voici le nom de l'association et les coordonnées :<br>
@@ -97,7 +97,7 @@
 
             <hr>
 
-            <a href="https://www.ikamy.ch/Inspinia/papa/assets/img/2025-02-26_ElieBenhamou_RIB.pdf" target="_blank">Elie Benhamou rib</a>
+            <a href="assets/img/2025-02-26_ElieBenhamou_RIB.pdf" target="_blank">Elie Benhamou rib</a>
 
             <p class="caption">
 

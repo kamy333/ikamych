@@ -1009,20 +1009,25 @@ GROUP BY expense_type_id;";
             $nbsp = str_repeat("&nbsp;", 1);
 
             foreach ($documents as $document) {
+                $document = trim($document);
+                if ($document === '') {
+                    continue;
+                }
+
                 $pi = pathinfo($document);
                 $txt = $pi['filename'];
-                $ext = $pi['extension'];
+                $ext = strtolower($pi['extension'] ?? '');
                 $file = $document;
                 $full_path = $folder . $file;
                 $full_path2 = $_SERVER["DOCUMENT_ROOT"] . $folder . $file;
 
                 if (file_exists($full_path2)) {
-                    if (strtolower($ext) == "pdf") {
+                    if ($ext == "pdf") {
 
                         $lnk .= "<a href='{$full_path}'  target='_blank'><button type='button' class='btn btn-danger' data-toggle='tooltip' data-placement='left' title='{$document}'><i class='fa fa-file-pdf-o'></i></button></a>";
 
 
-                    } elseif (strtolower($ext) == "jpg" || strtolower($ext) == "jpeg" || strtolower($ext) == "png") {
+                    } elseif ($ext == "jpg" || $ext == "jpeg" || $ext == "png") {
                         $href = $href_img . "?url=" . u($folder . $document);
 
                         $lnk .= "<a href='{$href}' target='_blank'><button type='button' class='btn btn-info' data-toggle='tooltip' data-placement='left' title='{$document}'><i class='fa fa-file-photo-o'></i></button></a>";
@@ -1118,7 +1123,7 @@ GROUP BY expense_type_id;";
             ON t1.person_id = t2.id 
             WHERE t2.close_person=0 
             GROUP BY t1.person_id,t2.person_name 
-        ORDER BY t2.rank ASC";
+        ORDER BY MIN(t2.rank) ASC";
 
 
         $output .= " <div class='col-sm-5 form-inline'>";

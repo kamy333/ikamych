@@ -25,43 +25,43 @@
 
     <div class="col-lg-2 col-lg-offset-1 " style="background-color: white;margin-top: 2em;padding: 2em">
 
-        <a href="https://ikamy.ch/public/_f/_bralia/braliacuba.php">
+        <a href="<?php echo SITE_URL; ?>/public/_f/_bralia/braliacuba.php">
             <img class="img-responsive" width='100em' height='200em'
-                 src="https://ikamy.ch/public/img/Bralia/cuba/photo_09SantiagoCuba.JPG" alt="Voyage de Bralia a Cuba">Cuba
+                 src="<?php echo SITE_URL; ?>/public/img/Bralia/cuba/photo_09SantiagoCuba.JPG" alt="Voyage de Bralia a Cuba">Cuba
             Mexique</a>
     </div>
 
     <div class="col-lg-2 " style="background-color: white;margin-top: 2em;padding: 2em">
 
-        <a href="https://ikamy.ch/public/_f/_bralia/braliajordanie.php">
+        <a href="<?php echo SITE_URL; ?>/public/_f/_bralia/braliajordanie.php">
             <img class="img-responsive" width='100em' height='200em'
-                 src="https://ikamy.ch/public/img/Bralia/jordanie/001_bralia.jpg" alt="Voyage de Bralia Jordanie">Jordanie</a>
+                 src="<?php echo SITE_URL; ?>/public/img/Bralia/jordanie/001_bralia.jpg" alt="Voyage de Bralia Jordanie">Jordanie</a>
 
     </div>
 
     <div class="col-lg-2 " style="background-color: white;margin-top: 2em;padding: 2em">
 
-        <a href="https://ikamy.ch/public/_f/_bralia/braliajordanie2.php">
+        <a href="<?php echo SITE_URL; ?>/public/_f/_bralia/braliajordanie2.php">
             <img class="img-responsive" width='100em' height='200em'
-                 src="https://ikamy.ch/public/img/Bralia/jordanie/03_bralia.jpg" alt="Voyage de Bralia Jordanie2">Jordanie
+                 src="<?php echo SITE_URL; ?>/public/img/Bralia/jordanie/03_bralia.jpg" alt="Voyage de Bralia Jordanie2">Jordanie
             2</a>
 
     </div>
 
     <div class="col-lg-2 " style="background-color: white;margin-top: 2em;padding: 2em">
 
-        <a href="https://ikamy.ch/public/_f/_bralia/bralialoirezoo.php">
+        <a href="<?php echo SITE_URL; ?>/public/_f/_bralia/bralialoirezoo.php">
             <img class="img-responsive" width='100em' height='200em'
-                 src="https://ikamy.ch/public/img/Bralia/loire_zoo/IMG_9315.JPG" alt="Zoo Aloire">Zoo Aloire</a>
+                 src="<?php echo SITE_URL; ?>/public/img/Bralia/loire_zoo/IMG_9315.JPG" alt="Zoo Aloire">Zoo Aloire</a>
 
     </div>
 
     <div class="col-lg-2  " style="background-color: white;margin-top: 2em;padding: 2em">
 
 
-        <a href="https://ikamy.ch/public/_f/_bralia/braliabudapest.php">
+        <a href="<?php echo SITE_URL; ?>/public/_f/_bralia/braliabudapest.php">
             <img class="img-responsive" width='100em' height='200em'
-                 src="https://ikamy.ch/public/img/Bralia/budapest/photo04.PNG" alt="Budapest">Budapest</a>
+                 src="<?php echo SITE_URL; ?>/public/img/Bralia/budapest/photo04.PNG" alt="Budapest">Budapest</a>
 
     </div>
 
@@ -73,16 +73,16 @@
 
     <div class="col-lg-2  col-lg-offset-4 " style="background-color: white;margin-top: 2em;padding: 2em">
         <?php if (User::is_kamy()) { ?>
-            <a href="https://www.ikamy.ch/public/_f/article/judaisme.php">Judaisme</a><br>
-            <a href="https://www.ikamy.ch/public/_f/article/juif_iran.php">Juif Iran</a><br>
-            <a href="https://www.ikamy.ch/public/_f/article/antisemitism_1.php">Antisemitism</a><br>
-            <a href="https://www.ikamy.ch/public/_f/article/antisionism.php">Antisionism</a><br>
-            <a href="https://www.ikamy.ch/public/_f/article/shoah_1.php">Shoah Paint</a><br>
-            <a href="https://www.ikamy.ch/public/_f/article/shoah.php">Shoah Drancy</a><br>
-            <a href="https://www.ikamy.ch/public/_f/article/juif_arabe1.php">Juif Arabe</a><br>
-            <a href="https://www.ikamy.ch/public/_f/article/bhl.php">BHL</a><br>
-            <a href="https://www.ikamy.ch/public/_f/private/facebook_injure.php">Facebook injure</a><br>
-            <a href="https://www.ikamy.ch/public/_f/private/kamy_memories.php"> Kamy memories</a>
+            <a href="<?php echo SITE_URL; ?>/public/_f/article/judaisme.php">Judaisme</a><br>
+            <a href="<?php echo SITE_URL; ?>/public/_f/article/juif_iran.php">Juif Iran</a><br>
+            <a href="<?php echo SITE_URL; ?>/public/_f/article/antisemitism_1.php">Antisemitism</a><br>
+            <a href="<?php echo SITE_URL; ?>/public/_f/article/antisionism.php">Antisionism</a><br>
+            <a href="<?php echo SITE_URL; ?>/public/_f/article/shoah_1.php">Shoah Paint</a><br>
+            <a href="<?php echo SITE_URL; ?>/public/_f/article/shoah.php">Shoah Drancy</a><br>
+            <a href="<?php echo SITE_URL; ?>/public/_f/article/juif_arabe1.php">Juif Arabe</a><br>
+            <a href="<?php echo SITE_URL; ?>/public/_f/article/bhl.php">BHL</a><br>
+            <a href="<?php echo SITE_URL; ?>/public/_f/private/facebook_injure.php">Facebook injure</a><br>
+            <a href="<?php echo SITE_URL; ?>/public/_f/private/kamy_memories.php"> Kamy memories</a>
 
         <?php } ?>
 

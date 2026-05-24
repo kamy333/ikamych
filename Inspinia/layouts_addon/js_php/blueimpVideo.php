@@ -72,7 +72,7 @@
                 title: 'Desiree towards Chupah',
                 type: 'text/html',
                 vimeo: '162192645',
-                poster: 'http://www.ikamy.ch/Inspinia/img/DesireeVideo/DesireeStairs.jpg'
+                poster: '<?php echo SITE_URL; ?>/Inspinia/img/DesireeVideo/DesireeStairs.jpg'
             },
 //            {
 //                title: 'Gypsy King 1',
@@ -92,7 +92,7 @@
 //                type: 'video/mp4',
                 type: 'text/html',
                 vimeo: '162191272',
-                poster: 'http://www.ikamy.ch/Inspinia/img/DesireeVideo/CaroDancing.jpg'
+                poster: '<?php echo SITE_URL; ?>/Inspinia/img/DesireeVideo/CaroDancing.jpg'
             },
 
 
@@ -101,13 +101,13 @@
 //                type: 'video/mp4',
                 type: 'text/html',
                 vimeo: '162191966',
-                poster: 'http://www.ikamy.ch/Inspinia/img/DesireeVideo/Children.jpg'
+                poster: '<?php echo SITE_URL; ?>/Inspinia/img/DesireeVideo/Children.jpg'
             },
             {
                 title: 'Setareh Daughter dancing  ',
                 type: 'text/html',
                 vimeo: '162192412',
-                poster: 'http://www.ikamy.ch/Inspinia/img/DesireeVideo/SetarehDaughterDancing.jpg'
+                poster: '<?php echo SITE_URL; ?>/Inspinia/img/DesireeVideo/SetarehDaughterDancing.jpg'
             }
         ], {
             container: '#blueimp-video-carousel',

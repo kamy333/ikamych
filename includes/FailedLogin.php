@@ -150,6 +150,11 @@ class FailedLogin extends DatabaseObject
     public $host;
     public $input_date;
 
+    private function request_host()
+    {
+        return $_SERVER['REMOTE_HOST'] ?? gethostbyaddr($_SERVER['REMOTE_ADDR'] ?? '127.0.0.1');
+    }
+
    public function record_failed_login($username) {
 
        $failed_login=self::find_by_username($username);
@@ -159,23 +164,23 @@ class FailedLogin extends DatabaseObject
 
 
             $this->username=$username;
-            $this->login_attempt=1;
-            $this->last_time=time();
-            $this->ip= $_SERVER['REMOTE_ADDR'];
-            $this->host= $_SERVER['REMOTE_HOST'];
+             $this->login_attempt=1;
+             $this->last_time=time();
+             $this->ip= $_SERVER['REMOTE_ADDR'] ?? '';
+             $this->host= $this->request_host();
 
 
-        } else {
+         } else {
             // existing failed_login record
             $this->id=$failed_login->id;
-            $this->username=$failed_login->username;
-            $this->login_attempt=$failed_login->login_attempt +1;
-            $this->last_time=time();
-            $this->ip= $_SERVER['REMOTE_ADDR'];
-            $this->host= $_SERVER['REMOTE_HOST'];
-          //  $this->save();
+             $this->username=$failed_login->username;
+             $this->login_attempt=$failed_login->login_attempt +1;
+             $this->last_time=time();
+             $this->ip= $_SERVER['REMOTE_ADDR'] ?? '';
+             $this->host= $this->request_host();
+           //  $this->save();
 
-        }
+         }
 
        $this->save();
         return true;
@@ -193,13 +198,13 @@ class FailedLogin extends DatabaseObject
       //  $failed_login = find_one_in_fake_db('failed_logins', 'username', sql_prep($username));
         $failed_login=self::find_by_username($username);
 
-        if(isset($failed_login)) {
+        if($failed_login) {
             $this->id=$failed_login->id;
             $this->username=$username;
             $this->login_attempt=0;
             $this->last_time=time();
-            $this->ip= $_SERVER['REMOTE_ADDR'];
-            $this->host= $_SERVER['REMOTE_HOST'];
+            $this->ip= $_SERVER['REMOTE_ADDR'] ?? '';
+            $this->host= $this->request_host();
 
             $this->save();
 
@@ -222,7 +227,7 @@ class FailedLogin extends DatabaseObject
 
         // Once failure count is over $throttle_at value,
         // user must wait for the $delay period to pass.
-        if(isset($failed_login) && $failed_login->login_attempt >= $throttle_at) {
+        if($failed_login && $failed_login->login_attempt >= $throttle_at) {
             $remaining_delay = ($failed_login->last_time + $delay) - time();
             $remaining_delay_in_minutes = ceil($remaining_delay / 60);
             return $remaining_delay_in_minutes;
@@ -238,6 +243,7 @@ class FailedLogin extends DatabaseObject
         $epoch = $this->last_time;
         $dt = new DateTime("@$epoch");  // convert UNIX timestamp to PHP DateTime
         $this->date = $dt->format('Y-m-d H:i:s'); // output = 2017-01-01 00:00:00
+        $this->input_date = $this->input_date ?: date('Y-m-d H:i:s');
 
 
 

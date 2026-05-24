@@ -1087,7 +1087,7 @@ function get_gallery_array($no = 1)
         $pages = array(
             'index' => 'Home',
 //            'index_gallery17_xavier' => 'Xavier',
-             '_papa'=> 'Papa',
+            'papa/assets/others/_papa'=> 'Papa',
             'index_gallery18_xavier' => 'Xavier',
             'index_gallery6' => 'Bralia',
             'index_gallery' => 'Desiree Wedding',
@@ -1134,16 +1134,16 @@ function gallery_menu_list($no = 1)
             $class = "";
         }
 
-
+        $href = $path_public . $page . ".php";
 
         if ($page == 'index_gallery6' && (User::is_bralia())) {
-            $output .= "<li class='$class'><a  href=\"$path_public $page.php\">$pa</a></li>";
+            $output .= "<li class='$class'><a  href=\"$href\">$pa</a></li>";
         } elseif (($page == 'index_gallery12') && (User::is_djamila())) {
-            $output .= "<li class='$class'><a  href=\"$path_public $page.php\">$pa</a></li>";
+            $output .= "<li class='$class'><a  href=\"$href\">$pa</a></li>";
         } elseif (($page == 'index_gallery14') && (User::is_djamila())) {
-            $output .= "<li class='$class'><a  href=\"$path_public $page.php\">$pa</a></li>";
+            $output .= "<li class='$class'><a  href=\"$href\">$pa</a></li>";
         } elseif ($page == 'index_gallery9' && (User::is_admin())) {
-            $output .= "<li class='$class'><a  href=\"$path_public $page.php\">$pa</a></li>";
+            $output .= "<li class='$class'><a  href=\"$href\">$pa</a></li>";
         } elseif ($page == 'index_gallery6') {
             $output .= "";
         } elseif ($page == 'index_gallery9') {
@@ -1155,7 +1155,7 @@ function gallery_menu_list($no = 1)
             $output .= "";
 
         } else {
-            $output .= "<li class='$class'><a  href=\"$path_public $page.php\">$pa</a></li>";
+            $output .= "<li class='$class'><a  href=\"$href\">$pa</a></li>";
         }
 
     }
@@ -2090,5 +2090,4 @@ function TD_NumberFormatColor($number=0,$strong=false){
 }
 
 ?>
-
 

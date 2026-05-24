@@ -97,7 +97,7 @@ class SmartNav
          ),
 
      );
-    public $http = "http://www.ikamy.ch/";
+    public $http = "";
     public $path;
     public $path_admin;
     public $path_public;
@@ -126,17 +126,18 @@ class SmartNav
     public function get_path()
     {
 
-        global $server_local;
+        global $server_local_names;
         global $server_phpstorm;
 
 //        $this->find_top_folder();
-        $this->full_url = (!empty($_SERVER['HTTPS'])) ? "https://" . $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI'] : $_SERVER['REQUEST_URI'];
+        $scheme = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https' : 'http';
+        $this->full_url = $scheme . "://" . $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI'];
         $this->url = str_replace(SITE_URL, "", $this->full_url);
         $this->array_full_url = explode('/', $this->full_url);
         $this->array_url = explode('/', $this->url);
         $this->top_folder = $this->array_url[1];
-        $first_dir = SITE_URL . DS . $this->array_url[1] . DS;
-        $admin_dir = $first_dir . DS . 'admin' . DS;
+        $first_dir = SITE_URL . "/" . $this->array_url[1] . "/";
+        $admin_dir = $first_dir . 'admin' . "/";
         $this->path_public = $first_dir;
         $this->path_admin = $admin_dir;
 
@@ -149,7 +150,7 @@ class SmartNav
 
 //        $this->folder_immediate = $this->array_full_url[$count_full];
         if (isset($count_full) && isset($this->array_full_url)) {
-            $this->folder_immediate = $this->array_full_url[$count_full];
+            $this->folder_immediate = $this->array_full_url[$count_full - 1];
         }
 
         if (isset($count) && isset($this->array_full_url)) {
@@ -176,7 +177,7 @@ class SmartNav
         $pos_Dif2 = $pos4 - $pos3;
         $this->server_name = $_SERVER['SERVER_NAME'];
 
-        if ($_SERVER['SERVER_NAME'] == $server_local) {
+        if (isset($server_local_names) && in_array($_SERVER['SERVER_NAME'], $server_local_names, true)) {
             $this->folder = substr($_SERVER["PHP_SELF"], $pos3 + 1, $pos_Dif2 - 1);
         } elseif ($_SERVER['SERVER_NAME'] == $server_phpstorm) {
             echo "verify_link class SmartNav";
@@ -187,9 +188,9 @@ class SmartNav
 
 
         $this->path_relative();
-        if ($_SERVER['SERVER_NAME'] == $server_local) {
-            $this->http = "http://" . $_SERVER['SERVER_NAME'] . DS . LOCALHOST_FOLDER . DS;
-            $this->http = $this->array_full_url[0] . '//' . $_SERVER['SERVER_NAME'] . DS . LOCALHOST_FOLDER . DS;
+        if (isset($server_local_names) && in_array($_SERVER['SERVER_NAME'], $server_local_names, true)) {
+            $local_folder = ($_SERVER['SERVER_NAME'] === 'ikamy.local') ? "" : LOCALHOST_FOLDER . "/";
+            $this->http = $this->array_full_url[0] . '//' . $_SERVER['SERVER_NAME'] . "/" . $local_folder;
         } elseif ($_SERVER['SERVER_NAME'] == $server_phpstorm) {
             echo "verify_link class SmartNav";
         } else {

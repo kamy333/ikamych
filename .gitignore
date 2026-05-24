@@ -1,8 +1,14 @@
 *.idea
+_notes/
+**/_notes/
+dwsync.xml
+composer.phar
 *.zip
 *.gz
 log/*.log
 log/*.log.[0-9]
+logs/*.log
+logs/*.txt
 *.tmp
 log/*.txt
 logs/log.txt

@@ -408,12 +408,12 @@ class Calendar extends DatabaseObject
             $msg .= "<div lang='fr' style='background-color: $bcolor;color:$color;margin: 1em;padding: 0.7em '>";
             $mail .= "<div lang='fr' style='color:$bcolor_mail '>";
 
-            $edit = "<a href='https://www.ikamy.ch/public/admin/crud/ajax/edit_ajax.php?class_name=Calendar&id=$appointment->id'>$appointment->person</a>";
+            $edit = "<a href='" . SITE_URL . "/public/admin/crud/ajax/edit_ajax.php?class_name=Calendar&id=$appointment->id'>$appointment->person</a>";
             $edit1 = "$appointment->person";
 
             $onclick = "onclick=\"return confirm('Are you sure you want to delete ID {$appointment->id}?');\"";
 
-            $delete = "<a href='https://www.ikamy.ch/public/admin/crud/ajax/delete_ajax.php?class_name=Calendar&id=$appointment->id'>
+            $delete = "<a href='" . SITE_URL . "/public/admin/crud/ajax/delete_ajax.php?class_name=Calendar&id=$appointment->id'>
             <span style='background-color: white;color: indianred;margin: 2em;padding: 0.7em; '><b>Delete ($appointment->id)</b></span></a>";
             $delete1 = "$appointment->person";
 
@@ -514,35 +514,35 @@ class Calendar extends DatabaseObject
         $message = $logo . "<br><br>";
 
 
-        $btnRecurApp = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <a href='https://www.ikamy.ch//public/_f/kamy/recurring_appointment.php'>Add Recuring Calendar</a>";
+        $btnRecurApp = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <a href='" . SITE_URL . "/public/_f/kamy/recurring_appointment.php'>Add Recuring Calendar</a>";
 
         $code = "65B0LXcRnSLqPLumdVjf"; //".u($code)."
 
-        $btnCert = "<a  href='https://www.ikamy.ch//public/_f/kamy/recurring_appointment_email.php?code=65B0LXcRnSLqPLumdVjf' >Certificat Medical Email</a>";
+        $btnCert = "<a  href='" . SITE_URL . "/public/_f/kamy/recurring_appointment_email.php?code=65B0LXcRnSLqPLumdVjf' >Certificat Medical Email</a>";
 
         $btnCert ="";
 
-        $btn = " <a href='https://www.ikamy.ch/public/admin/crud/ajax/new_ajax.php?class_name=Calendar'><button class='btn-primary'>Add Date</button></a>";
-        $view = " <a href='https://www.ikamy.ch/public/calendar.php'><button class='btn-primary'>View Web</button></a> $btnRecurApp ";
+        $btn = " <a href='" . SITE_URL . "/public/admin/crud/ajax/new_ajax.php?class_name=Calendar'><button class='btn-primary'>Add Date</button></a>";
+        $view = " <a href='" . SITE_URL . "/public/calendar.php'><button class='btn-primary'>View Web</button></a> $btnRecurApp ";
 
         $btnPast = "";
 
         if (isCalendarPast()) {
-            $btnPast = " <a href='https://www.ikamy.ch/public/calendar.php?'><button class='btn-primary'>Future</button></a>";
+            $btnPast = " <a href='" . SITE_URL . "/public/calendar.php?'><button class='btn-primary'>Future</button></a>";
 
         } else {
-            $btnPast = " <a href='https://www.ikamy.ch/public/calendar.phptype=Past'><button class='btn-primary'>Past</button></a>";
+            $btnPast = " <a href='" . SITE_URL . "/public/calendar.php?type=Past'><button class='btn-primary'>Past</button></a>";
         }
 
 //        $btnNote = " <a class='btn btn-primary' href='https://www.ikamy.ch/public/admin/notes php'>Notes</a>";
 //        $classeNewNote = "<span style='color:green;'><i class='fa fa-plus-square' style='font-size: 1.5em;'></i></span> Note";
 //        $btnNoteAdd = " <a class='btn btn-primary' href='https://www.ikamy.ch/public/admin/crud/ajax/new_ajax.php?class_name=Note'>$classeNewNote</a>";
 
-        $btnNote = " <a style='padding: 0.1em' href='https://www.ikamy.ch/public/admin/notes.php'><button class='btn-warning'>Note</button></a>";
+        $btnNote = " <a style='padding: 0.1em' href='" . SITE_URL . "/public/admin/notes.php'><button class='btn-warning'>Note</button></a>";
 //        $classeNewNote = "<span ><i class='fa fa-plus-square' ></i></span> Note";
-        $btnNoteAdd = " <a style='padding: 0.1em' href='https://www.ikamy.ch/public/admin/crud/ajax/new_ajax.php?class_name=Note''><button class='btn-warning'>Add Note</button></a>";
+        $btnNoteAdd = " <a style='padding: 0.1em' href='" . SITE_URL . "/public/admin/crud/ajax/new_ajax.php?class_name=Note'><button class='btn-warning'>Add Note</button></a>";
 
-        $btnGenPsalm = " <a style='padding: 0.1em' href='https://ikamy.ch/Inspinia/papa/email/daily_psalm.php''><button class='btn-warning'>Gen Psalm</button></a>";
+        $btnGenPsalm = " <a style='padding: 0.1em' href='" . SITE_URL . "/Inspinia/papa/email/daily_psalm.php'><button class='btn-warning'>Gen Psalm</button></a>";
 
         $btnview = $btn . "&nbsp;&nbsp;&nbsp;  " . $view . "&nbsp;&nbsp;&nbsp;  " . $btnCert . "&nbsp;&nbsp;&nbsp;  " . $btnPast . "&nbsp;&nbsp;&nbsp;  " . $btnNote."&nbsp;&nbsp;&nbsp;  " . $btnNoteAdd."&nbsp;&nbsp;&nbsp;  " .$btnGenPsalm    ;
 

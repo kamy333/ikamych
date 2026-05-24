@@ -99,13 +99,13 @@ if (isset($message)) {
         <?php if (User::is_kamy()) { ?>
 
         <div class="row margin-button">
-            <a class="btn-custom" href="https://www.ikamy.ch/public/calendar.php">
+            <a class="btn-custom" href="<?php echo SITE_URL; ?>/public/calendar.php">
                 <button class="btn btn-info btn-custom ">
                     <i class="fa fa-calendar">&nbsp;Calendar.php</i>
                 </button>
             </a>
 
-            <a class="btn-custom" href="https://www.ikamy.ch/public/admin/notes.php">
+            <a class="btn-custom" href="<?php echo SITE_URL; ?>/public/admin/notes.php">
                 <button class="btn btn-warning btn-custom ">
                     <i class="fa fa-edit">&nbsp;Notes.php</i>
                 </button>
@@ -115,13 +115,13 @@ if (isset($message)) {
 
 
         <div class="row margin-button">
-            <a href="https://www.ikamy.ch/public/admin/crud/ajax/manage_ajax.php?class_name=Calendar">
+            <a href="<?php echo SITE_URL; ?>/public/admin/crud/ajax/manage_ajax.php?class_name=Calendar">
                 <button class="btn btn-primary btn-custom">
                     <i class="fa fa-calendar-o">&nbsp;&nbsp;Manage Calendar</i>
                 </button>
             </a>
 
-            <a href='https://www.ikamy.ch/public/admin/crud/ajax/new_ajax.php?class_name=Calendar'>
+            <a href='<?php echo SITE_URL; ?>/public/admin/crud/ajax/new_ajax.php?class_name=Calendar'>
                 <button class="btn btn-danger btn-custom">
                     <i class="fa fa-plus-square">&nbsp;New Calendar Date</i>
                 </button>
@@ -129,7 +129,7 @@ if (isset($message)) {
         </div>
 
         <div class="row margin-button">
-            <a href="https://www.ikamy.ch/public/admin/manage_user.php">
+            <a href="<?php echo SITE_URL; ?>/public/admin/manage_user.php">
                 <button class="btn btn-success btn-custom">
                     <i class="fa fa-user">&nbsp;Manage User</i>
                 </button>
@@ -140,14 +140,14 @@ if (isset($message)) {
         <div class="row margin-button">
 
 
-            <a href="https://www.ikamy.ch/public/admin/crud/ajax/manage_ajax.php?class_name=MyExpense">
+            <a href="<?php echo SITE_URL; ?>/public/admin/crud/ajax/manage_ajax.php?class_name=MyExpense">
                 <button class="btn btn-primary btn-custom">
                     <i class="fa fa-dollar">&nbsp;Manage MyExpense</i>
                 </button>
             </a>
 
 
-            <a href='https://www.ikamy.ch/public/admin/crud/ajax/new_ajax.php?class_name=MyExpense'>
+            <a href='<?php echo SITE_URL; ?>/public/admin/crud/ajax/new_ajax.php?class_name=MyExpense'>
                 <button class="btn btn-danger btn-custom">
                     <i class="fa fa-money">&nbsp;New MyExpense</i>
                 </button>
@@ -156,13 +156,13 @@ if (isset($message)) {
 
         <div class="row margin-button">
 
-            <a href='https://www.ikamy.ch/public/admin/crud/ajax/manage_ajax.php?class_name=MyExpenseMumPost'>
+            <a href='<?php echo SITE_URL; ?>/public/admin/crud/ajax/manage_ajax.php?class_name=MyExpenseMumPost'>
                 <button class="btn btn-primary btn-custom">
                     <i class="fa fa-dollar">&nbsp;Manage My Mum Post</i>
                 </button>
             </a>
 
-            <a href='https://www.ikamy.ch/public/admin/crud/ajax/new_ajax.php?class_name=MyExpenseMumPost'>
+            <a href='<?php echo SITE_URL; ?>/public/admin/crud/ajax/new_ajax.php?class_name=MyExpenseMumPost'>
                 <button class="btn btn-danger btn-custom">
                     <i class="fa fa-plus-square">&nbsp;New My Mum Post</i>
                 </button>

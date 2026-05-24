@@ -1,9 +1,19 @@
-SetOutputFilter DEFLATE
-AddOutputFilterByType DEFLATE "application/atom+xml" "application/javascript" "application/json" "application/ld+json" "application/manifest+json" "application/rdf+xml" "application/rss+xml" "application/schema+json" "application/vnd.geo+json" "application/vnd.ms-fontobject" "application/x-font-ttf" "application/x-javascript" "application/x-web-app-manifest+json" "application/xhtml+xml" "application/xml" "font/eot" "font/opentype" "image/bmp" "image/svg+xml" "image/vnd.microsoft.icon" "image/x-icon" "text/cache-manifest" "text/css" "text/html" "text/javascript" "text/plain" "text/vcard" "text/vnd.rim.location.xloc" "text/vtt" "text/x-component" "text/x-cross-domain-policy" "text/xml"
+# Compression should be configured by the host/server, not forced here.
+# These directives can produce a site-wide 500 if the required Apache
+# module is disabled.
+#SetOutputFilter DEFLATE
+#AddOutputFilterByType DEFLATE "application/atom+xml" "application/javascript" "application/json" "application/ld+json" "application/manifest+json" "application/rdf+xml" "application/rss+xml" "application/schema+json" "application/vnd.geo+json" "application/vnd.ms-fontobject" "application/x-font-ttf" "application/x-javascript" "application/x-web-app-manifest+json" "application/xhtml+xml" "application/xml" "font/eot" "font/opentype" "image/bmp" "image/svg+xml" "image/vnd.microsoft.icon" "image/x-icon" "text/cache-manifest" "text/css" "text/html" "text/javascript" "text/plain" "text/vnd.rim.location.xloc" "text/vtt" "text/x-component" "text/x-cross-domain-policy" "text/xml"
 
 # SECTION BEGIN GIT PROTECTION
 RedirectMatch 404 /\.git
 # SECTION END GIT PROTECTION
+
+# Backward compatibility for old local URLs when the vhost document root is
+# already S:\ikamych. Production links are root-based; this is only for local
+# bookmarks or generated links that still include the old /ikamych/... prefix.
+RewriteEngine On
+RewriteCond %{HTTP_HOST} ^(ikamy\.local|localhost|127\.0\.0\.1)$ [NC]
+RewriteRule ^ikamych/(.*)$ /$1 [R=302,L]
 
 
 ################################## Errors ######################################
@@ -118,28 +128,31 @@ RewriteRule ^users/([^/]+)(.+)$ /~$1/$2
 # php_flag display_errors "off "
 # added by kamy
 
-php_flag "allow_url_fopen" "On"
-php_flag "allow_url_include" "On"
-php_flag short_open_tag "On"
+# PHP runtime flags are managed by the hosting PHP configuration.
+# Keeping php_flag/php_value directives here can make Apache return 500
+# for every request when PHP runs through FastCGI/FPM instead of mod_php.
+#php_flag "allow_url_fopen" "On"
+#php_flag "allow_url_include" "On"
+#php_flag short_open_tag "On"
 #php_flag display_errors "off"
 
-php_flag display_startup_errors on
-php_flag display_errors on
-php_flag html_errors on
+#php_flag display_startup_errors on
+#php_flag display_errors on
+#php_flag html_errors on
 #php_flag display_startup_errors off
 #php_flag display_errors off
 #php_flag html_errors off
 
-php_flag log_errors on
-php_flag ignore_repeated_errors off
-php_flag ignore_repeated_source off
-php_flag report_memleaks on
-php_flag track_errors on
-php_value docref_root 0
-php_value docref_ext 0
-php_value error_log /home/path/public_html/domain/PHP_errors.log
-php_value error_reporting -1
-php_value log_errors_max_len 0
+#php_flag log_errors on
+#php_flag ignore_repeated_errors off
+#php_flag ignore_repeated_source off
+#php_flag report_memleaks on
+#php_flag track_errors on
+#php_value docref_root 0
+#php_value docref_ext 0
+#php_value error_log /home/path/public_html/domain/PHP_errors.log
+#php_value error_reporting -1
+#php_value log_errors_max_len 0
 #
 #RewriteEngine on
 #RewriteCond %{HTTP:X-Forwarded-Proto} !https

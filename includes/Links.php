@@ -277,11 +277,12 @@ class Links extends DatabaseObject
 
     public static function find_all_get($category_1 = false, $category_2 = false)
     {
+        global $database;
 
         $table = self::$table_name;
 
         if (isset($_GET['category'])) {
-            $category = $_GET['category'];
+            $category = $database->escape_value($_GET['category']);
         } else {
             $category = '';
 
@@ -290,15 +291,16 @@ class Links extends DatabaseObject
         $sql = "SELECT * FROM {$table} ";
 
         if ($category_1) {
-            $sql .= "WHERE  sub_category_1 = '{$category}' ORDER BY rank";
+            $sql .= "WHERE sub_category_1 = '{$category}' ";
         } elseif ($category_2) {
-            $sql .= "WHERE  sub_category_2 = '{$category}' ORDER BY rank";
+            $sql .= "WHERE sub_category_2 = '{$category}' ";
         } else {
             if (!empty($category)) {
-                $sql .= "WHERE category = '{$category}' ORDER BY rank";
+                $sql .= "WHERE category = '{$category}' ";
             }
         }
 
+        $sql .= "ORDER BY `rank` ASC, id ASC";
 
         return static::find_by_sql($sql);
 
@@ -308,8 +310,9 @@ class Links extends DatabaseObject
     public static function find_all_category_from_links()
     {
         // global $database;
-        $sql = "SELECT DISTINCT t1.category FROM links AS t1 INNER JOIN links_category AS t2 on t2.id = t1.category_id
-                ORDER BY t2.rank ASC, t1.id ASC ";
+        $sql = "SELECT t1.category FROM links AS t1 INNER JOIN links_category AS t2 on t2.id = t1.category_id
+                GROUP BY t1.category
+                ORDER BY MIN(t2.rank) ASC, MIN(t1.id) ASC ";
         return self::find_by_sql($sql);
     }
 
@@ -436,7 +439,7 @@ class Links extends DatabaseObject
     {
         global $database;
         $name_category = $database->escape_value($name_category);
-        $result_array = self::find_by_sql("SELECT * FROM " . self::$table_name . " WHERE category='{$name_category}' ORDER BY Rank ");
+        $result_array = self::find_by_sql("SELECT * FROM " . self::$table_name . " WHERE category='{$name_category}' ORDER BY `rank` ASC, id ASC");
         return !empty($result_array) ? $result_array : false;
     }
 
@@ -444,7 +447,7 @@ class Links extends DatabaseObject
     {
         global $database;
         $name_category = $database->escape_value($name_category);
-        $result_array = self::find_by_sql("SELECT * FROM " . self::$table_name . " WHERE sub_category_1='{$name_category}'");
+        $result_array = self::find_by_sql("SELECT * FROM " . self::$table_name . " WHERE sub_category_1='{$name_category}' ORDER BY `rank` ASC, id ASC");
         return !empty($result_array) ? $result_array : false;
     }
 
@@ -452,7 +455,7 @@ class Links extends DatabaseObject
     {
         global $database;
         $name_category = $database->escape_value($name_category);
-        $result_array = self::find_by_sql("SELECT * FROM " . self::$table_name . " WHERE sub_category_2='{$name_category}'");
+        $result_array = self::find_by_sql("SELECT * FROM " . self::$table_name . " WHERE sub_category_2='{$name_category}' ORDER BY `rank` ASC, id ASC");
         return !empty($result_array) ? $result_array : false;
     }
 
@@ -521,7 +524,7 @@ class Links extends DatabaseObject
 
             $link_id = $link->id;
             $web = $link->web_address;
-            $name = htmlentities($link->name, ENT_COMPAT, 'utf-8');
+            $name = self::html($link->name);
             $href = "<a target='_blank' href='{$web}'>{$name}</a>";
 
             if (User::is_kamy()) {
@@ -582,7 +585,7 @@ class Links extends DatabaseObject
                 $modal_body .= "{$grid_head}";
                 $modal_body .= "<dt><strong>Nom:" . "</strong></dt>";
                 $modal_body .= "";
-                $modal_body .= "<dd>" . htmlentities($val, ENT_COMPAT, 'utf-8') . "</dd>";
+                $modal_body .= "<dd>" . self::html($val) . "</dd>";
                 $modal_body .= "{$grid_2_DIV}";
             } elseif ($key == "privacy") {
                 if ($val == 0) {
@@ -591,22 +594,22 @@ class Links extends DatabaseObject
                     $val_yes_no = "Oui";
                 }
                 $modal_body .= "{$grid_head}";
-                $modal_body .= "<dt><strong>" . htmlentities($key_clean, ENT_COMPAT, 'utf-8') . ":</strong></dt>";
-                $modal_body .= "<dd> " . htmlentities($val_yes_no, ENT_COMPAT, 'utf-8') . "</dd>";
+                $modal_body .= "<dt><strong>" . self::html($key_clean) . ":</strong></dt>";
+                $modal_body .= "<dd> " . self::html($val_yes_no) . "</dd>";
                 $modal_body .= "{$grid_2_DIV}";
 
             } elseif ($key == "rank") {
 
                 $modal_body .= "{$grid_head}";
-                $modal_body .= "<dt><strong>" . htmlentities($key_clean, ENT_COMPAT, 'utf-8') . ":</strong></dt>";
-                $modal_body .= "<dd> " . htmlentities($val, ENT_COMPAT, 'utf-8') . "</dd>";
+                $modal_body .= "<dt><strong>" . self::html($key_clean) . ":</strong></dt>";
+                $modal_body .= "<dd> " . self::html($val) . "</dd>";
                 $modal_body .= "{$grid_2_DIV}";
 
 
             } elseif ($key == "description") {
                 $modal_body .= "{$grid_head}";
-                $modal_body .= "<dt><strong>" . htmlentities($key_clean, ENT_COMPAT, 'utf-8') . ":</strong></dt>";
-                $modal_body .= "<dd> " . htmlentities($val, ENT_COMPAT, 'utf-8') . "</dd>";
+                $modal_body .= "<dt><strong>" . self::html($key_clean) . ":</strong></dt>";
+                $modal_body .= "<dd> " . self::html($val) . "</dd>";
                 $modal_body .= "{$grid_2_DIV}";
 
 
@@ -617,8 +620,8 @@ class Links extends DatabaseObject
             } else {
 
                 $modal_body .= "{$grid_head}";
-                $modal_body .= "<dt><strong>" . htmlentities($key_clean, ENT_COMPAT, 'utf-8') . ":</strong></dt>";
-                $modal_body .= "<dd>" . htmlentities($val, ENT_COMPAT, 'utf-8') . "</dd>";
+                $modal_body .= "<dt><strong>" . self::html($key_clean) . ":</strong></dt>";
+                $modal_body .= "<dd>" . self::html($val) . "</dd>";
                 $modal_body .= "{$grid_2_DIV}";
 
             }
@@ -659,7 +662,7 @@ class Links extends DatabaseObject
         $output .= "        <div class='modal-content'>";
         $output .= "            <div class='modal-header'>";
         $output .= "                <button type='button' class='close' data-dismiss='modal' aria-label='Close'><span aria-hidden='true'>&times;</span></button>";
-        $output .= "                <h5 class='modal-title' id='myModalLabel'>link" . htmlentities($link->name, ENT_COMPAT, 'utf-8') . "</strong> Categ :" . htmlentities($link->category, ENT_COMPAT, 'utf-8') . "</strong></h5>";
+        $output .= "                <h5 class='modal-title' id='myModalLabel'>link" . self::html($link->name) . "</strong> Categ :" . self::html($link->category) . "</strong></h5>";
         $output .= "            </div>";
         $output .= "            <div class='modal-body'>";
 
@@ -714,6 +717,11 @@ class Links extends DatabaseObject
         $output .= "<span>&nbsp;</span><a  class=\"btn btn-primary\"  href=\"" . LinksCategory::$page_new . "\">Add New " . LinksCategory::$page_name . " </a><span>&nbsp;</span>";
 
         return $output;
+    }
+
+    protected static function html($value)
+    {
+        return htmlentities((string)($value ?? ''), ENT_COMPAT, 'utf-8');
     }
 
 

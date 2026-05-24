@@ -1086,7 +1086,7 @@ class User extends DatabaseObject
         $subject = "New visitor login " . $info;
         $to = $this->email;
 
-        $msg = "<a href='https://www.ikamy.ch/public/admin/manage_user.php'> " . $logo . "</a>";
+        $msg = "<a href='" . SITE_URL . "/public/admin/manage_user.php'> " . $logo . "</a>";
         $message = "<p>We have a new visitor that registered into $msg </p>";
 
 

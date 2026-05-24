@@ -22,7 +22,7 @@ $layout_context = "public"; ?>
     ?>
 
 <!--    <h4 class="text-center"><a href="--><?php //echo $_SERVER["PHP_SELF"] ?><!--">Appointments Calendar</a></h4>-->
-    <h2 class="text-center"><a href="https://www.ikamy.ch/public/admin/crud/ajax/manage_ajax.php?class_name=Course">Course<?php echo $txt;?> </a></h2>
+    <h2 class="text-center"><a href="<?php echo SITE_URL; ?>/public/admin/crud/ajax/manage_ajax.php?class_name=Course">Course<?php echo $txt;?> </a></h2>
 
 
 <div class="col-lg-12">

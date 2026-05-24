@@ -13,7 +13,8 @@
 
 /** @noinspection PhpExpressionResultUnusedInspection */
 defined('DS') ? null : define('DS', DIRECTORY_SEPARATOR);
-defined('SITE_URL') ? null : define("SITE_URL", "https://" . $_SERVER['SERVER_NAME']);
+$site_scheme = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https' : 'http';
+defined('SITE_URL') ? null : define("SITE_URL", $site_scheme . "://" . $_SERVER['SERVER_NAME']);
 defined('SITE_ROOT') ? null : define('SITE_ROOT', realpath(dirname(__FILE__) . DS . ".." . DS));
 //defined('MY_URL_PUBLIC') ? null : define('MY_URL_PUBLIC', SITE_URL . '/ikamych/public/');
 //defined('MY_URL_ADMIN') ? null : define('MY_URL_ADMIN',MY_URL_PUBLIC.'admin/');
@@ -24,10 +25,10 @@ defined('MY_URL_ADMIN') ? null : define('MY_URL_ADMIN', MY_URL_PUBLIC . 'admin/'
 
 //----------------------------------------DELETE-----------------
 $server_name = $_SERVER['SERVER_NAME'];
-$server_local = "localhost";
+$server_local_names = array("localhost", "127.0.0.1", "::1", "ikamy.local");
 $server_phpstorm = "PhpStorm 2016.1.2";
 
-if ($server_name === $server_local || $server_name === $server_phpstorm) {
+if (in_array($server_name, $server_local_names, true) || $server_name === $server_phpstorm) {
 
     defined('SESSION_PATH') ? null : define('SESSION_PATH', 'C:' . DS . 'xampp' . DS . 'tmp' . DS . 'session_kamy');
 

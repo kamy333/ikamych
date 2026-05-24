@@ -7,6 +7,8 @@
 
 <?php
 
+$show_testing = $show_testing ?? false;
+
 if ($layout_context == "public") {
     $path_admin = MY_URL_ADMIN;
     $path_public = MY_URL_PUBLIC;
@@ -44,7 +46,7 @@ if ($layout_context == "public") {
                 <span class="icon-bar"></span>
             </button>
 
-            <a class="navbar-brand active" href="https://www.ikamy.ch/public/index.php"><?php echo LOGO ?><span
+            <a class="navbar-brand active" href="<?php echo SITE_URL; ?>/public/index.php"><?php echo LOGO ?><span
                         style="color: blue"> <?php if (isset($layout_context) && $layout_context == "admin") {
                         echo " Admin";
                     } ?></span></a>
@@ -366,7 +368,7 @@ if ($layout_context == "public") {
                         <?php
 
                         echo $Nav->menu_item('', 'Transmed fr', 'https://www.ikamy.fr/public/', '', true);
-                        echo $Nav->menu_item('', 'Transmed ch', 'https://www.ikamy.ch/transmed/', '', true);
+                        echo $Nav->menu_item('', 'Transmed ch', SITE_URL . '/transmed/', '', true);
                         echo $Nav->menu_item('Course', 'Course', 'manage_ajax.php', 'admin/crud/ajax');
                         echo $Nav->menu_item('Client', 'Client', 'manage_ajax.php', 'admin/crud/ajax');
                         echo $Nav->menu_item('Chauffeur', 'Chauffeur', 'manage_ajax.php', 'admin/crud/ajax');
@@ -435,7 +437,6 @@ if ($layout_context == "public") {
                                 Calendar</a></li>
                         <li><a href="<?php echo $path_public; ?>admin/delete_unwanter_user.php">Del unwanted
                                 Users</a></li>
-                        <li><a href="http://api.ikamy.ch">API ikamy</a></li>
                         <li class="divider"></li>
                         <li><a href="<?php echo $path_public; ?>_f/music/music.php">Music</a></li>
 
@@ -443,15 +444,6 @@ if ($layout_context == "public") {
                         <li><a href="<?php echo $path_public; ?>_f/kamy/loan_expense.php">Loans Kamy</a></li>
                         <li><a href="<?php echo $path_public; ?>_f/kamy/pay_brazil.php">Pay Bresil</a></li>
 
-                        <li class="divider"></li>
-                        <li><a href="https://seekingalpha.com/account/portfolio/summary?portfolioId=59021836">Seeking
-                                Alpha</a></li>
-                        <li><a href="http://gynous.ikamy.ch">Gynous ikamy</a></li>
-
-                        <li><a href="/public/_f/patrick/patrick.php">Patrick</a></li>
-                        <li><a href="https://gynous.ikamy.ch">Gynous ikamy ??</a></li>
-                        <li><a href="https://gynous.ikamy.ch/gynous/public/assets/assets_public/index.html">Gynous
-                                ikamy</a></li>
                         <li class="divider"></li>
                         <li><a target="_blank" href="https://app.nearscreen.com/accounts/login/">nearscreen
                                 Seatable</a></li>
@@ -485,10 +477,10 @@ if ($layout_context == "public") {
             <ul class="nav navbar-nav navbar-right">
                 <?php
                 if (User::is_kamy()) {
-                    echo "<li  ><a href='https://www.ikamy.ch/public/calendar.php'><b>Calendar</b></a>";
-                    echo "<li  style='background-color: white;color: blue'><a href='https://www.ikamy.ch/public/admin/crud/ajax/new_ajax.php?class_name=Calendar'><b>+</b></a>";
-                    echo "<li  ><a href='https://www.ikamy.ch/public/admin/notes.php?viewAllNote=no'><b>Note</b></a>";
-                    echo "<li  style='background-color: white;color: blue'><a href='https://www.ikamy.ch/public/admin/crud/ajax/new_ajax.php?class_name=Note'><b>+</b></a>";
+                    echo "<li  ><a href='" . SITE_URL . "/public/calendar.php'><b>Calendar</b></a>";
+                    echo "<li  style='background-color: white;color: blue'><a href='" . SITE_URL . "/public/admin/crud/ajax/new_ajax.php?class_name=Calendar'><b>+</b></a>";
+                    echo "<li  ><a href='" . SITE_URL . "/public/admin/notes.php?viewAllNote=no'><b>Note</b></a>";
+                    echo "<li  style='background-color: white;color: blue'><a href='" . SITE_URL . "/public/admin/crud/ajax/new_ajax.php?class_name=Note'><b>+</b></a>";
                 }
                 ?>
 
