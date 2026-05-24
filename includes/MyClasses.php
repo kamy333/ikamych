@@ -62,6 +62,11 @@ class MyClasses
 
     public static function redirect_disable_class()
     {
+        return static::allowed_class_from_request();
+    }
+
+    public static function allowed_class_from_request()
+    {
         global $session;
 
         static::short_class_check();
@@ -89,8 +94,6 @@ class MyClasses
             $session->message('Sorry request for ' . $_GET['class_name'] . ' not a class . Review code');
             redirect_to('index.php');
         }
-
-
     }
 
 

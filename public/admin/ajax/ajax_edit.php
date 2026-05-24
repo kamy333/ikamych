@@ -14,7 +14,7 @@ if(User::is_caroline_only()){
 }
 
 if(User::is_employee() || User::is_visitor()){ redirect_to('index.php');}
-MyClasses::redirect_disable_class();
+$class_name = MyClasses::allowed_class_from_request();
 
 
 if(!is_ajax_request()) {
@@ -23,7 +23,7 @@ if(!is_ajax_request()) {
 
     exit; }
 
-$result = call_user_func(array($_GET['class_name'], 'Create_form'));
+$result = call_user_func(array($class_name, 'Create_form'));
 
 echo $result;
 

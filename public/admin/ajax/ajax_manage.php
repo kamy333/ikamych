@@ -13,18 +13,8 @@ if (User::is_caroline_only()) {
     redirect_to('../../index.php');
 }
 
-MyClasses::redirect_disable_class();
-
-if (isset($_GET['class_name'])) {
-    $class_name = $_GET['class_name'];
-    call_user_func_array(array($class_name, 'change_to_unique_data'), ['ajax']);
-
-} else {
-    $session->message('Error message contact your admin ');
-    redirect_to('index.php');
-    $class_name = "ToDoList";
-
-}
+$class_name = MyClasses::allowed_class_from_request();
+call_user_func_array(array($class_name, 'change_to_unique_data'), ['ajax']);
 
 $query_string = remove_get(array('view', 'page', $class_name));
 

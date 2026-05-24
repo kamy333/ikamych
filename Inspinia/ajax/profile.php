@@ -1,7 +1,7 @@
 <?php
 require_once('../../includes/initialize.php');
 $session->confirmation_protected_page();
-MyClasses::redirect_disable_class();
+$class_name = MyClasses::allowed_class_from_request();
 
 
 if(!is_ajax_request()) {
@@ -13,7 +13,7 @@ if(!is_ajax_request()) {
 
 
 
-echo  call_user_func_array(array($_GET['class_name'], $_GET['action']),[true]);
+echo  call_user_func_array(array($class_name, $_GET['action']),[true]);
 //echo 'wowww go it '. $_GET['class_name'].' '.$_GET['id']
 echo ToDoList::quickupdate(true);
 echo Note::quickupdate(true);

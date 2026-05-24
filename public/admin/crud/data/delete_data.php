@@ -19,21 +19,8 @@ if(User::is_caroline_only()){
 
 <?php
 
-MyClasses::redirect_disable_class();
-if (isset($_GET['class_name'])) {
-    $class_name = $_GET['class_name'];
-
-    call_user_func_array(array($class_name, 'change_to_unique_data'), ['data']);
-
-} else {
-    $class_name = "ToDoList";
-//    if ($Nav->folder_immediate!="admin"){
-//        $class_name::$page_manage=$Nav->path_admin.$Nav->folder_prev.'/manage/'.$class_name::$page_manage ;
-//        $class_name::$page_new=$Nav->path_admin.$Nav->folder_prev.'/new/'.$class_name::$page_new ;
-//        $class_name::$page_edit=$Nav->path_admin.$Nav->folder_prev.'/edit/'.$class_name::$page_edit ;
-//        $class_name::$page_delete=$Nav->path_admin.$Nav->folder_prev.'/delete/'.$class_name::$page_delete ;
-//    }
-}
+$class_name = MyClasses::allowed_class_from_request();
+call_user_func_array(array($class_name, 'change_to_unique_data'), ['data']);
 ?>
 <?php
 if (!isset($_GET["id"])) {

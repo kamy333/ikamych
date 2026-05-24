@@ -468,6 +468,8 @@ Status: Transmed-specific SQL dumps were removed after Transmed code was retired
 4. Replace reset/CSRF token generation with `random_bytes`.
 5. Centralize error handling/logging.
 
+Status: `MyClasses` now exposes `allowed_class_from_request()` and active CRUD/AJAX entry points use the validated class name for dynamic class calls instead of re-reading raw `$_GET['class_name']`.
+
 ## Suggested first small PR
 
 The best first PR should be boring and reversible:

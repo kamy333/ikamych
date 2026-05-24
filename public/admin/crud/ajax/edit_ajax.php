@@ -17,17 +17,9 @@ if(User::is_caroline_only()){
     redirect_to('../../index.php');
 }
 
-MyClasses::redirect_disable_class();
-
-if (isset($_GET['class_name'])) {
-    $class_name = $_GET['class_name'];
-    call_user_func_array(array($class_name, 'change_to_unique_data'), ['ajax']);
-    $is_data = true;
-} else {
-    $class_name = "ToDoList";
-    $is_data = false;
-
-}
+$class_name = MyClasses::allowed_class_from_request();
+call_user_func_array(array($class_name, 'change_to_unique_data'), ['ajax']);
+$is_data = true;
 
 
 $url = clean_query_string('http://' . $_SERVER['SERVER_NAME'] . $_SERVER['PHP_SELF'] . "?" . "class_name=" . u($class_name) . "&id=" . u($_GET['id']) . "&test=1");

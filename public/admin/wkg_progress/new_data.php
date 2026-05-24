@@ -5,16 +5,8 @@
 } ?>
 
 <?php
-MyClasses::redirect_disable_class();
-
-
-if (isset($_GET['class_name'])) {
-    $class_name = $_GET['class_name'];
-//    $class_name::change_to_unique_data;
-    call_user_func_array(array($class_name,'change_to_unique_data'),['data']);
-} else {
-    $class_name="ToDoList";
-}
+$class_name = MyClasses::allowed_class_from_request();
+call_user_func_array(array($class_name,'change_to_unique_data'),['data']);
 
 if ($Nav->folder_immediate != "admin") {
     $class_name::$page_manage = $Nav->path_admin . $Nav->folder_prev . '/manage/' . $class_name::$page_manage;
@@ -52,7 +44,7 @@ if(request_is_post() && request_is_same_domain()) {
         $expected_fields=$class_name::get_table_field();
         foreach($expected_fields as $field){
             if(isset($_POST[$field])){
-                $new_item->$field=trim($_POST{$field}) ;
+                $new_item->$field=trim($_POST[$field]) ;
             }
 
         }

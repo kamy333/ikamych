@@ -15,7 +15,7 @@ if(User::is_caroline_only()){
 //if(User::is_employee() || User::is_visitor()){ redirect_to('../index.php');}
 
 
-MyClasses::redirect_disable_class();
+$class_name = MyClasses::allowed_class_from_request();
 
 
 if(!is_ajax_request()) {
@@ -27,9 +27,6 @@ if(!is_ajax_request()) {
 // $json1= output_message(call_user_func_array([$_POST['class_name'],'post_form'], ['ajax']));
 
 //echo call_user_func_array([$_GET['class_name'],'post_form'], ['ajax']);
-
-$class_name=$_GET['class_name'];
-
 
 if (!isset($_GET["id"])) {
     $id="";

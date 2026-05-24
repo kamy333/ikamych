@@ -20,15 +20,8 @@ if(User::is_caroline_only()){
 
 <?php
 
-MyClasses::redirect_disable_class();
-
-if (isset($_GET['class_name'])) {
-    $class_name = $_GET['class_name'];
-    call_user_func_array(array($class_name, 'change_to_unique_data'), ['ajax']);
-
-} else {
-    $class_name = "ToDoList";
-}
+$class_name = MyClasses::allowed_class_from_request();
+call_user_func_array(array($class_name, 'change_to_unique_data'), ['ajax']);
 ?>
 <?php
 if (!isset($_GET["id"])) {

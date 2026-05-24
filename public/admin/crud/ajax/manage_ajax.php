@@ -16,24 +16,11 @@ if(User::is_caroline_only()){
     redirect_to('../../index.php');
 }
 
-MyClasses::redirect_disable_class();
+$class_name = MyClasses::allowed_class_from_request();
+call_user_func_array(array($class_name, 'change_to_unique_data'), ['ajax']);
 
-
-if (isset($_GET['class_name'])) {
-    $class_name = $_GET['class_name'];
-//    $is_data=true;
-    call_user_func_array(array($class_name, 'change_to_unique_data'), ['ajax']);
-
-    HeurePresence::quickaddhours();
-    HeurePresence::quicksubstracthours();
-
-} else {
-    $session->message('Error message contact your admin ');
-    redirect_to('index.php');
-    $class_name = "ToDoList";
-//    $is_data=true;
-
-}
+HeurePresence::quickaddhours();
+HeurePresence::quicksubstracthours();
 
 
 //$page= !empty($_GET['page'])? (int) $_GET["page"]:1;
