@@ -206,7 +206,7 @@ class Note extends DatabaseObject
         $output = "</a><span>&nbsp;</span>";
         $output .= "<a  class=\"btn btn-success\"  href=\"" . "/public/calendar.php" . "\">Calendar.php " . " </a><span>&nbsp;</span>";
         $output .= "<a  class=\"btn btn-primary\"  href=\"" . "/public/_f/kamy/recurring_appointment.php" . "\">Recurring_appointment " . " </a><span>&nbsp;</span>";
-        $output .= "<a  class=\"btn btn-info\"  href=\"" . "/public/email_script/appointment.php?code=" . u(CODE_CALENDAR) . "\">Recurring_appointment_email " . " </a><span>&nbsp;</span>";
+        $output .= "<a  class=\"btn btn-info\"  href=\"" . "/public/email_script/appointment.php" . "\">Recurring_appointment_email " . " </a><span>&nbsp;</span>";
         $output .= "<a  class=\"btn btn-success\"  href=\"" . "/public/admin/notes.php" . "\">Notes.php " . " </a><span>&nbsp;</span>";//        $output .= "<a  class=\"btn btn-primary\"  href=\"" . MyExpensePerson::$page_manage . "\">View Person " . " </a><span>&nbsp;</span>";
 //        $output .= "<a  class=\"btn btn-primary\"  href=\"" . MyExpenseType::$page_manage . "\">View Type " . " </a>";
 
@@ -267,12 +267,23 @@ class Note extends DatabaseObject
                 $session->confirmation_protected_page();
             }
 
-            $id = $_GET['id'];
+            $id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT, [
+                'options' => ['min_range' => 1],
+            ]);
+            if ($id === false || $id === null) {
+                $message = "A valid note ID is required";
+                if ($ajax) {
+                    return $message;
+                }
+                $session->message($message);
+                redirect_to($_SERVER['PHP_SELF'] . "?viewAllNote=yes");
+            }
+
             $note = static::find_by_id($id);
 
             if ($note) {
                 if ((int)$note->user_id !== (int)$session->user_id && !User::is_admin()) {
-                    $message = "You are not allowed to update note $id";
+                    $message = "You are not allowed to update note " . h((string)$id);
                     if ($ajax) {
                         return $message;
                     }
@@ -290,7 +301,7 @@ class Note extends DatabaseObject
                 }
 
             } else {
-                $session->message("Note $id not found");
+                $session->message("Note " . h((string)$id) . " not found");
             }
 
 

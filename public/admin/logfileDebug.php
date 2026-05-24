@@ -10,12 +10,14 @@ if (!User::is_admin()) {
 $logfile = SITE_ROOT . DS . 'logs' . DS . 'debug.txt';
 $user = User::find_by_id($session->user_id);
 
-if (isset($_GET['clear']) && $_GET['clear'] == 'true') {
+if (request_is_post() && request_is_same_domain() && ($_POST['clear_log'] ?? '') === 'true') {
+    if (!csrf_token_is_valid() || !csrf_token_is_recent()) {
+        $session->message("Request was not valid");
+        redirect_to('logfileDebug.php');
+    }
     file_put_contents($logfile, '');
     // Add the first log entry
     log_debug('Logs Cleared', "by Username {$user->username} with ID {$session->user_id}");
-    // redirect to this same page so that the URL won't 
-    // have "clear=true" anymore
     redirect_to('logfileDebug.php');
 }
 ?>
@@ -34,7 +36,12 @@ if (isset($_GET['clear']) && $_GET['clear'] == 'true') {
 
 <h2>Log Debug File</h2>
 
-<p><a href="logfileDebug.php?clear=<?php echo u('true'); ?>">Clear log file</a><p>
+<form action="logfileDebug.php" method="POST">
+    <?php echo csrf_token_tag(); ?>
+    <input type="hidden" name="clear_log" value="true">
+    <button type="submit" class="btn btn-danger">Clear log file</button>
+</form>
+<br>
 
     <?php
 
@@ -50,13 +57,13 @@ if (isset($_GET['clear']) && $_GET['clear'] == 'true') {
         while (!feof($handle)) {
             $entry = fgets($handle);
             if (trim($entry) != "") {
-                echo "<li>{$entry}</li>";
+                echo "<li>" . h($entry) . "</li>";
             }
         }
         echo "</ul>";
         fclose($handle);
     } else {
-        echo "Could not read from {$logfile}.";
+        echo "Could not read from " . h($logfile) . ".";
     }
 
     ?>

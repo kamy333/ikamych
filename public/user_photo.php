@@ -17,14 +17,20 @@ if (request_is_get()) {
 }
 
 
-if (empty($_GET['id']) || !isset($_GET['id'])) {
+$id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT, [
+    'options' => ['min_range' => 1],
+]);
+
+if ($id === false || $id === null) {
     $session->message("The photo was not found");
     redirect_to("index.php");
 
 }
-$id = $_GET['id'] ?? '1';
-$id = h($id);
-$the_user = User::find_by_id($_GET['id']);
+$the_user = User::find_by_id($id);
+if (!$the_user) {
+    $session->message("The user photo was not found");
+    redirect_to("index.php");
+}
 
 ?>
 <?php //var_dump($users) ?>
@@ -48,11 +54,11 @@ $the_user = User::find_by_id($_GET['id']);
 
 <div class="row">
     <div class="col-lg-12 col-md-12  text-center">
-        <h2 class="text-center"><?php echo "<b>Name:   </b> " . $the_user->full_name(); ?></h2>
-        <h2 class="text-center"><?php echo "<b>Username:   </b>" . $the_user->username; ?></h2>
+        <h2 class="text-center"><?php echo "<b>Name:   </b> " . h($the_user->full_name()); ?></h2>
+        <h2 class="text-center"><?php echo "<b>Username:   </b>" . h($the_user->username); ?></h2>
         <br><br>
         <div class="col-lg-9 col-lg-offset-3 text-center">
-            <img class="img-responsive" src="<?php echo $the_user->user_path_and_placeholder(); ?>" alt="">
+            <img class="img-responsive" src="<?php echo h($the_user->user_path_and_placeholder()); ?>" alt="">
         </div>
     </div>
 </div>

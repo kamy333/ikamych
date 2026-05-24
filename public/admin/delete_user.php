@@ -1,6 +1,6 @@
 <?php require_once('../../includes/initialize.php'); ?>
 <?php  $session->confirmation_protected_page(); ?>
-<?php if(User::is_employee() || User::is_visitor()){ redirect_to('index.php');}?>
+<?php if(User::is_caroline_only() || User::is_employee() || User::is_secretary() || User::is_visitor()){ redirect_to('index.php');}?>
 
 <?php $class_name = "User";
 
@@ -21,22 +21,27 @@ $class_name:: $page_delete = "/public/admin/delete_user.php";
 ?>
 
 <?php
-if (!isset($_GET["id"])) {
-    $id = "";
+$id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT, ['options' => ['min_range' => 1]]);
+if ($id === false || $id === null) {
+    $session->message('Sorry, a valid user ID is required for deletion.');
     redirect_to($class_name::$page_manage);
 } else {
 
-    $id = $_GET["id"];
     $class_found = $class_name::find_by_id($id);
+
+if (!$class_found) {
+    $session->message("User ID (" . h((string)$id) . ") was not found.");
+    redirect_to($class_name::$page_manage);
+}
+
+if ((int)$class_found->id === (int)$_SESSION["user_id"]) {
+    $session->message($class_found->username . " you cannot delete the active user logged in !(yourself)  ");
+    redirect_to($class_name::$page_manage);
+}
 
 if($class_found->username=="Admin" &&$class_name=="User"){
     $session->message($class_found->username." cannot be deleted  ") ;
     redirect_to($class_name::$page_manage);
-
-    if($class_found->id===$_SESSION["user_id"]){
-        $session->message($class_found->username." you cannot delete the active user logged in !(yourself)  ") ;
-        redirect_to($class_name::$page_manage);
-    }
 
 } else {
 

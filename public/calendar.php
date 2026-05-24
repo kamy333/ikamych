@@ -6,9 +6,9 @@ require_once('../includes/initialize.php');
 
 Note::quickupdate();
 
-$code = CODE_CALENDAR;
+$hasValidCalendarCode = isset($_GET["code"]) && hash_equals((string)CODE_CALENDAR, (string)$_GET["code"]);
 
-if (isset($_GET["code"]) && hash_equals((string)CODE_CALENDAR, (string)$_GET["code"])) {
+if ($hasValidCalendarCode) {
 
 } else {
 
@@ -46,7 +46,7 @@ $layout_context = "public"; ?>
     $date = date_create(datetime_sql());
     $dtTime = $date->format('l d.m.Y H:i') . "<br>";
     $txt = " <b>Geneva " . $dtTime . "</b>";
-    if (isset($_GET["type"]) && $_GET["type"] == "Past") {
+    if (isCalendarPast()) {
         $txt = " <b>before Geneva " . $dtTime . "</b>";
     }
 
@@ -60,33 +60,25 @@ $layout_context = "public"; ?>
     $btnPrevious = "";
     $nbsp = str_repeat("&nbsp;", 5);
 
-    $btnRecur = "{$nbsp}<a style='padding:0.1em'  class='btn-beige' href='" . SITE_URL . "/public/_f/kamy/recurring_appointment.php'>Add Recurring Calendar</a>";
-
-    $btnCert = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a style='padding:0.1em'  class='btn-info' href='" . SITE_URL . "/public/email_script/appointment.php?code=" . u(CODE_CALENDAR) . "'>Certificat Medical Email</a>";
-
-    $btnCert="";
+    $btnRecur = "";
+    $btnCert = "";
 
 
     if (isCalendarPast()) {
-        $btnPrevious = "{$nbsp}<a  style='padding:0.1em'  class='btn-info' href='" . SITE_URL . "/public/calendar.php'>Future</a>";
+        $btnPrevious = "{$nbsp}<a  style='padding:0.1em'  class='btn-info' href='" . h(SITE_URL . "/public/calendar.php") . "'>Future</a>";
     } else {
-        $btnPrevious = "{$nbsp}<a  style='padding:0.1em'  class='btn-info' href='" . SITE_URL . "/public/calendar.php?type=Past'>Past</a>";
+        $btnPrevious = "{$nbsp}<a  style='padding:0.1em'  class='btn-info' href='" . h(SITE_URL . "/public/calendar.php?type=Past") . "'>Past</a>";
     }
 
 
 
 
-    $btnNote = " <a style='padding: 0.1em' href='" . SITE_URL . "/public/admin/notes.php'><button class='btn-warning'>Note</button></a>";
-    $classeNewNote = "<span ><i class='fa fa-plus-square' ></i></span> Note";
-    $btnNoteAdd = " <a style='padding: 0.1em' href='" . SITE_URL . "/public/admin/crud/ajax/new_ajax.php?class_name=Note'><button class='btn-warning'>$classeNewNote</button></a>";
+    $btnNote = "";
+    $btnNoteAdd = "";
 
 //    echo '<br><br>';
 
-    $dailyPsalmUrl = SITE_URL . "/public/email_script/daily_psalm.php";
-    if (defined('DAILY_PSALM_TOKEN') && DAILY_PSALM_TOKEN !== '') {
-        $dailyPsalmUrl .= "?password=" . u(DAILY_PSALM_TOKEN);
-    }
-    $btnGenPsalm = " <a style='padding: 0.1em' href='" . $dailyPsalmUrl . "'><button class='btn-warning'>Generate Psalm</button></a>";
+    $btnGenPsalm = "";
 
 
 
@@ -94,8 +86,13 @@ $layout_context = "public"; ?>
 
     if (User::is_admin()) {
 
+        $btnRecur = "{$nbsp}<a style='padding:0.1em'  class='btn-beige' href='" . h(SITE_URL . "/public/_f/kamy/recurring_appointment.php") . "'>Add Recurring Calendar</a>";
+        $btnCert = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a style='padding:0.1em'  class='btn-info' href='" . h(SITE_URL . "/public/email_script/appointment.php") . "'>Certificat Medical Email</a>";
+        $btnNote = " <a style='padding: 0.1em' href='" . h(SITE_URL . "/public/admin/notes.php") . "'><button class='btn-warning'>Note</button></a>";
+        $classeNewNote = "<span ><i class='fa fa-plus-square' ></i></span> Note";
+        $btnNoteAdd = " <a style='padding: 0.1em' href='" . h(SITE_URL . "/public/admin/crud/ajax/new_ajax.php?class_name=Note") . "'><button class='btn-warning'>$classeNewNote</button></a>";
         $btn = "<br>     
-        <a style='padding: 0.1em' href='" . SITE_URL . "/public/admin/crud/ajax/new_ajax.php?class_name=Calendar'><button class='btn-primary'>Add Date</button></a>";
+        <a style='padding: 0.1em' href='" . h(SITE_URL . "/public/admin/crud/ajax/new_ajax.php?class_name=Calendar") . "'><button class='btn-primary'>Add Date</button></a>";
     }
 
 
@@ -104,12 +101,12 @@ $layout_context = "public"; ?>
     <?php
     if (isCalendarPast()) { ?>
         <h2 class="text-center"><a
-                    href="<?php echo SITE_URL; ?>/public/admin/crud/ajax/manage_ajax.php?class_name=Calendar">
+                    href="<?php echo h(SITE_URL . '/public/admin/crud/ajax/manage_ajax.php?class_name=Calendar'); ?>">
                 <span style="color: red"><b>PAST Appointments Calendar</b> <?php echo $txt; ?></span>
             </a> <?php echo $btn . $btnRecur . $btnCert . $btnPrevious . $btnNote.$btnGenPsalm; ?></h2>
     <?php } else { ?>
         <h2 class="text-center"><a
-                    href="<?php echo SITE_URL; ?>/public/admin/crud/ajax/manage_ajax.php?class_name=Calendar">Appointments
+                    href="<?php echo h(SITE_URL . '/public/admin/crud/ajax/manage_ajax.php?class_name=Calendar'); ?>">Appointments
                 Calendar <?php echo $txt; ?> </a> <?php echo $btn . $btnRecur . $btnCert . $btnPrevious . $btnNote . $btnNoteAdd.$btnGenPsalm; ?>
         </h2>
     <?php } ?>
@@ -142,7 +139,7 @@ $layout_context = "public"; ?>
 
 
 <?php
-//redirect_to('public/email_script/appointment.php?code=' . urlencode($code));
+//redirect_to('public/email_script/appointment.php');
 //?>
 
 <?php include(SITE_ROOT . DS . 'public' . DS . 'layouts' . DS . "footer.php") ?>

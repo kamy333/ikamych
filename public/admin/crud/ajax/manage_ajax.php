@@ -5,18 +5,8 @@ $session->confirmation_protected_page();
 //    redirect_to('index.php');
 //}
 
-if(User::is_caroline_only()){
-    if (isset($_GET['class_name'])) {
-        $class_name = $_GET['class_name'];
-        if ($class_name != "MyExpenseCaroline") {
-            redirect_to('../../index.php');
-        }
-    }
-} elseif (User::is_employee()  || User::is_secretary()  || User::is_visitor()) {
-    redirect_to('../../index.php');
-}
-
 $class_name = MyClasses::allowed_class_from_request();
+MyClasses::require_class_access($class_name);
 call_user_func_array([$class_name, 'change_to_unique_data'], ['ajax']);
 
 HeurePresence::quickaddhours();

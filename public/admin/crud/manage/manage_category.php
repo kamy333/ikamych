@@ -2,13 +2,11 @@
 
 require_once('../../../../includes/initialize.php');
 $session->confirmation_protected_page();
-if (User::is_employee() || User::is_secretary() || User::is_visitor()) {
-    redirect_to('index.php');
-}
 
 $class_name = "Category";
 $class_name_1 = "Category1";
 $class_name_2 = "Category2";
+MyClasses::require_class_access($class_name);
 
 if ($Nav->folder_immediate != "admin") {
     $class_name::$page_manage = $Nav->path_admin . $Nav->folder_prev . '/manage/' . $class_name::$page_manage;
@@ -38,17 +36,17 @@ $order_type = !empty($_GET["order_type"]) && strtoupper($_GET["order_type"]) ===
 
 //echo get_where_string($class_name);
 
-$page = !empty($_GET['page']) ? (int)$_GET["page"] : 1;
+$page = !empty($_GET['page']) ? max(1, (int)$_GET["page"]) : 1;
 $per_page = 20;
-$where = get_where_string($class_name);
-$total_count = $class_name::count_all_where($where);
+[$where, $params, $types] = $class_name::current_request_where_clause();
+$total_count = $class_name::count_all_where($where, $params, $types);
 $pagination = new Pagination($page, $per_page, $total_count);
 
 require_once LIB_PATH . DS . 'download' . DS . 'download_csv.php';
 
 $sql = "SELECT * FROM {$table_name} ";
 
-$sql .= " " . get_where_string($class_name);
+$sql .= " " . $where;
 
 if (isset($order_name)) {
     $sql .= " ORDER BY {$order_name} {$order_type} ";
@@ -61,11 +59,12 @@ $sql .= "OFFSET {$pagination->offset()}";
 //echo "<p>$sql</p>";
 //unset($_GET);
 
-$result_class = $class_name::find_by_sql($sql);
+$result_class = empty($params) ? $class_name::find_by_sql($sql) : $class_name::find_by_sql_prepared($sql, $params, $types);
 
 $query_string = remove_get(['view', 'page']);
 
 $view_full_table = !empty($_GET["view"]) ? (int)$_GET["view"] : 0;
+$view_full_table = $view_full_table === 1 ? 1 : 0;
 if ($view_full_table == 1) {
     $page_link_view = $class_name::$page_manage . $query_string . "page=" . u($page) . "&view=" . u(0);
     $page_link_text = $class_name::$page_name . " short view";

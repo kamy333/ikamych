@@ -1,11 +1,8 @@
 <?php
 
-function isCalendarPast():bool{
-    if (isset($_GET["type"]) && $_GET["type"] == "Past") {
-        return true;
-    } else {
-        return false;
-    }
+function isCalendarPast(): bool
+{
+    return isset($_GET["type"]) && !is_array($_GET["type"]) && $_GET["type"] === "Past";
 }
 
 function set_json_data($data, $filename = "data.json"): void

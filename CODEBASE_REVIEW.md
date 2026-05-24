@@ -563,6 +563,40 @@ Status update: The legacy crypto helper was renamed from `security_mcrypt_functi
 
 Status update: Cron/email scripts were gathered under `public/email_script/` for easier management. The new scripts keep comments pointing back to their original paths, and the old URLs now act as small compatibility wrappers while external cron jobs are migrated.
 
+Status update: Legacy and active admin AJAX CRUD entry points now share `MyClasses::require_class_access()` for role checks instead of repeating raw `$_GET['class_name']` permission blocks. AJAX delete paths validate positive integer IDs before lookup/delete, missing records return clean errors instead of fatal calls on `false`, and the CRUD AJAX class index is restricted to full admin users with escaped generated links.
+
+Status update: Calendar planning queries in `Calendar::get_message()` now use prepared statements for date/datetime filters, and generated calendar edit/delete links escape IDs and labels before rendering. Active AJAX new/edit/delete pages now normalize optional record IDs through `filter_input()` and redirect with clear messages for invalid or missing records.
+
+Status update: Data-mode admin CRUD pages now use the same `MyClasses::require_class_access()` role gate as the AJAX CRUD pages. Data new/edit/delete flows normalize optional record IDs through `filter_input()`, handle invalid or missing records with redirects and session messages, and escape generated class links in the data CRUD index.
+
+Status update: Standalone user admin pages now reject Caroline/employee/secretary/visitor roles consistently, validate user IDs with `filter_input()` before edit/delete/update, handle missing users with session messages instead of method calls on `false`, prevent deleting the active logged-in user before deletion, and no longer echo assigned field values during user edits.
+
+Status update: Standalone user and user-type listing pages now reject non-admin roles consistently, normalize page/view inputs, and rely on the shared managed-query path instead of building an unused manual `SELECT` query. The shared `DatabaseObject::getPagePagination()` helper now clamps page numbers to at least `1` to avoid negative offsets from `page=0` or negative page values.
+
+Status update: Shared CRUD form generation now validates `id` query parameters before building edit links, loading records, or emitting hidden form IDs. Invalid or missing records produce clean form-level errors, failed non-AJAX saves rebuild redirect URLs from validated object IDs, and hidden `class_name` values are escaped before rendering.
+
+Status update: Shared `DatabaseObject` manage-page filtering now has a prepared-query path for generic `search_all` and field-specific filters. Pagination counts and manage queries bind request values instead of concatenating them, while still preserving the older `get_where_string()` function for legacy callers not yet migrated.
+
+Status update: Admin log viewers now clear logs only through POST requests protected by the existing CSRF token instead of destructive `?clear=true` links. Log file output and read-error paths are escaped before rendering, the base log viewer is admin-only like the other log pages, the password reset route handles missing tokens without notices, and the dangerous unwanted-user deletion utility validates a positive integer cutoff ID before deleting.
+
+Status update: Shared CRUD table headers now use the same prepared request-filter path as the row query when counting filtered results, skip array-valued filter parameters, normalize sort-highlighting inputs, and escape query strings emitted into search-form attributes. Older fixed-class Category/MyExpense CRUD pages now use the shared class access gate, clamp pagination/view inputs, validate positive integer record IDs, handle missing records with session messages, and escape self-post/action links.
+
+Status update: CSV exports that are launched from manage/search pages now reuse the shared prepared request-filter builder instead of concatenating `get_where_string()` output. User, user-type, and legacy category listing pages now share that prepared count/export path, and the standalone admin CSV download page is limited to full admin roles, requires CSRF on POST, and escapes its self-post/select output. Legacy `remove_get()` and `get_where_string()` now skip array-valued query parameters to avoid warnings from crafted `field[]=...` input while remaining available for older pages not yet migrated.
+
+Status update: Remaining quick-action handlers received a first safety pass. `Note::quickupdate()` now validates positive integer note IDs before lookup/update and returns clean messages for invalid IDs. `HeurePresence` quick add/subtract handlers now validate bounded hour/minute inputs, reject malformed duration values before saving, cap free-text comments, and generate escaped quick-action URLs through `http_build_query()` instead of string-concatenating raw query parameters.
+
+Status update: `ToDoList::quickupdate()` now matches the hardened note quick-update path by validating positive integer IDs before lookup/update and returning clean messages for invalid or missing todos. Admin login and forgot-password forms now read POST fields with null-safe defaults and escape their self-post action URLs instead of rendering raw `PHP_SELF`.
+
+Status update: Chat image viewers now validate `chat_id` as a positive integer before loading records and escape generated chat/image attributes in the `ChatFriend`, `ChatFriend2`, and `ChatFriendDjamila` variants. The standalone session-backed calendar event helper now rejects malformed event IDs, returns JSON with explicit HTTP status codes, bounds string input, validates real dates and time ranges, and compares event IDs strictly for edit/delete lookups.
+
+Status update: Photo-related public pages now validate positive integer IDs before loading photos/users, redirect cleanly for missing records, and escape rendered photo, user, image, and comment output. The photo comment form now includes CSRF validation, and the photo gallery clamps page numbers, uses the shared prepared count path, fixes the stale paginator variable, escapes gallery image/link attributes, and adds `rel="noopener noreferrer"` to external-tab photo links.
+
+Status update: Small utility pages now validate simple query parameters before use. The diagnostics/leap-year page clamps `year` to a sane integer range and escapes the form value, the article/book listing helper validates category/subject IDs before passing them to SQL-backed helpers, and the Brazil payment text helper validates non-negative decimal amounts, escapes its self-post form/action output, and formats rendered amounts consistently.
+
+Status update: Loan expense summary pages now sanitize person, category, sort, and document-visibility query parameters before using them in SQL-backed summaries. The shared `MyExpense` loan helpers whitelist category filters and order direction, escape selected option/table output, use prepared person-ID bindings for loan table and total queries, and both public loan expense entry points handle missing people cleanly while removing the stray literal PHP close marker.
+
+Status update: Calendar and note navigation no longer renders cron/shared-secret tokens into browser-visible links. `public/calendar.php` now keeps manual calendar, appointment-email, note, and new-note action links admin-only, removes the Daily Psalm token link from the page, escapes generated calendar action URLs, and uses the shared calendar-past helper for the `type=Past` toggle. The helper itself now rejects array-valued `type` parameters cleanly.
+
 ## Suggested first small PR
 
 The best first PR should be boring and reversible:

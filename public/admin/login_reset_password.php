@@ -6,7 +6,12 @@
 
 
 $message = "";
-$token = $_GET['token'];
+$token = isset($_GET['token']) ? trim((string)$_GET['token']) : '';
+
+if ($token === '') {
+    $session->message("Did not find you try again");
+    redirect_to('login_forgot_password_user.php');
+}
 
 // Confirm that the token sent is valid
 $user = User::find_by_reset_token($token);
@@ -25,8 +30,8 @@ if(request_is_post() && request_is_same_domain()) {
     // CSRF tests passed--form was created by us recently.
 
 		// retrieve the values submitted via the form
-    $password = trim($_POST['password']);
-    $password_confirm = trim($_POST['password_confirm']);
+    $password = trim((string)($_POST['password'] ?? ''));
+    $password_confirm = trim((string)($_POST['password_confirm'] ?? ''));
 
     $valid=new FormValidation();
     $valid->validate_presences(['password','password_confirm'])  ;
@@ -99,7 +104,7 @@ if(request_is_post() && request_is_same_domain()) {
 
     <div class ="background_light_blue">
 
-        <form id="" class="form-horizontal" action="<?php echo $_SERVER['PHP_SELF'].$url;?>" method="POST">
+        <form id="" class="form-horizontal" action="<?php echo h($_SERVER['PHP_SELF'] . $url); ?>" method="POST">
 
             <fieldset id="login" title="Reset password">
                 <legend class="text-center" style="color: #005fbf">Set your new password</legend>

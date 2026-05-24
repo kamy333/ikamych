@@ -248,14 +248,24 @@ class ToDoList extends DatabaseObject
                 $session->confirmation_protected_page();
             }
 
-            $id = $_GET['id'];
-//      if(is_numeric
+            $id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT, [
+                'options' => ['min_range' => 1],
+            ]);
+            if ($id === false || $id === null) {
+                $message = "A valid todo ID is required";
+                if ($ajax) {
+                    return $message;
+                }
+                $session->message($message);
+                redirect_to($_SERVER['PHP_SELF']);
+            }
+
             $todo = static::find_by_id($id);
 
 
             if ($todo) {
                 if ((int)$todo->user_id !== (int)$session->user_id && !User::is_admin()) {
-                    $message = "You are not allowed to update todo $id";
+                    $message = "You are not allowed to update todo " . h((string)$id);
                     if ($ajax) {
                         return $message;
                     }
@@ -283,6 +293,8 @@ class ToDoList extends DatabaseObject
 //      redirect_to('profile.php');
 
             }
+
+            $session->message("Todo " . h((string)$id) . " not found");
 
 
         }

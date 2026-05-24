@@ -8,10 +8,10 @@ if (User::is_employee() || User::is_secretary() || User::is_visitor()) {
 ?>
 <?php
 $class_name = "Photo";
-$page = !empty($_GET['page']) ? (int)$_GET["page"] : 1;
+$page = !empty($_GET['page']) ? max(1, (int)$_GET["page"]) : 1;
 $per_page = 20;
-$where = get_where_string($class_name);
-$total_count = $class_name::count_all_where($where);
+[$where, $params, $types] = $class_name::current_request_where_clause();
+$total_count = $class_name::count_all_where($where, $params, $types);
 $pagination = new Pagination($page, $per_page, $total_count);
 
 //$page=!empty($_GET['page'])? (int)$_GET['page']:1;
@@ -33,7 +33,7 @@ $photos = Photo::find_by_sql($sql);
 <?php $layout_context = "public"; ?>
 <?php $active_menu = "public" ?>
 <?php $stylesheets = "" //custom_form  ?>
-<?php $view_full_table == 1 ? $fluid_view = true : $fluid_view = false; ?>
+<?php $fluid_view = false; ?>
 <?php $javascript = "form_admin" ?>
 <?php $sub_menu = false ?>
 <?php include(SITE_ROOT . DS . 'public' . DS . 'layouts' . DS . "header.php") ?>
@@ -69,8 +69,8 @@ $photos = Photo::find_by_sql($sql);
                    <?php foreach ($photos as $photo): ?>
                      <div class="col-xs-6 col-md-3 ">
 
-                   <a class="img-responsive home-page-photo" target="_blank" href="photo.php?id=<?php echo $photo->id; ?>">
-                     <img src="<?php echo $photo->picture_public_path(); ?>" alt="<?php echo $photo->alternate_text;?>">
+                   <a class="img-responsive home-page-photo" target="_blank" rel="noopener noreferrer" href="photo.php?id=<?php echo u($photo->id); ?>">
+                     <img src="<?php echo h($photo->picture_public_path()); ?>" alt="<?php echo h($photo->alternate_text);?>">
 
 
                          </a>
@@ -86,24 +86,24 @@ $photos = Photo::find_by_sql($sql);
     <div class="col-md-8 col-md-offset-3">
     <ul class="pager">
 
-        <?php if($paginate->page_total()>1) {
-                if($paginate->has_next()){
-                echo    "<li class='next'><a href='index.php?page={$paginate->next()}'>Next</a></li>";
+        <?php if($pagination->total_pages()>1) {
+                if($pagination->has_next_page()){
+                echo    "<li class='next'><a href='photo_gallery.php?page=" . u($pagination->next_page()) . "'>Next</a></li>";
                 }
 
-            for($i=1;$i<=$paginate->page_total();$i++){
-                if($i==$paginate->current_page){
-                    echo "<li class='active'><a href='index.php?page={$i}'>$i</a></li>";
+            for($i=1;$i<=$pagination->total_pages();$i++){
+                if($i==$page){
+                    echo "<li class='active'><a href='photo_gallery.php?page=" . u($i) . "'>" . h($i) . "</a></li>";
                 } else {
 
-                    echo "<li class=''><a href='index.php?page={$i}'>$i</a></li>";
+                    echo "<li class=''><a href='photo_gallery.php?page=" . u($i) . "'>" . h($i) . "</a></li>";
 
                 }
 
             }
 
-            if($paginate->has_previous()){
-                echo " <li class='previous'><a href='index.php?page={$paginate->previous()}'>Previous</a></li>";
+            if($pagination->has_previous_page()){
+                echo " <li class='previous'><a href='photo_gallery.php?page=" . u($pagination->previous_page()) . "'>Previous</a></li>";
             }
         }
 

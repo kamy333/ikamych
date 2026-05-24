@@ -3,7 +3,9 @@
 
 require_once('../../includes/initialize.php');
 $session->confirmation_protected_page();
-if(User::is_employee() || User::is_secretary()){ redirect_to('index.php');}
+if (User::is_caroline_only() || User::is_employee() || User::is_secretary() || User::is_visitor()) {
+    redirect_to('index.php');
+}
 
 require_once LIB_PATH.DS.'src'.DS.'Foundationphp'.DS.'Psr4Autoloader.php';
 
@@ -17,9 +19,13 @@ use Foundationphp\Exporter\Csv;
 
 if (isset($_POST['download'])) {
 
+    if (!csrf_token_is_valid() || !csrf_token_is_recent()) {
+        $message = "Sorry, request was not valid.";
+    } else {
 
-$class_name = MyClasses::allowed_class_from_post();
-$table_name=$class_name::get_table_name();
+        $class_name = MyClasses::allowed_class_from_post();
+        MyClasses::require_class_access($class_name);
+        $table_name = $class_name::get_table_name();
 
 //$database = new mysqli(DB_SERVER, DB_USER, DB_PASS, DB_NAME);
 //$database->set_charset('utf-8');
@@ -37,19 +43,20 @@ $table_name=$class_name::get_table_name();
 //
 //}
 
-    $sql = 'SELECT * FROM' . ' '.$table_name ;
-    $result = $database->query($sql);
+        $sql = 'SELECT * FROM' . ' ' . $table_name;
+        $result = $database->query($sql);
 
 
 
 
-    try {
+        try {
 //        $options['suppress'] = 'transmission';
 //        $options['delimiter'] = "\t";
-        $options['suppress'] = 'hashed_password';
-        new Csv($result, $table_name.'.csv', $options);
-    } catch (Exception $e) {
-        $error = $e->getMessage();
+            $options['suppress'] = 'hashed_password';
+            new Csv($result, $table_name.'.csv', $options);
+        } catch (Exception $e) {
+            $error = $e->getMessage();
+        }
     }
 }
 ?>
@@ -64,12 +71,12 @@ $table_name=$class_name::get_table_name();
 <?php include(SITE_ROOT.DS.'public'.DS.'layouts'.DS."header.php") ?>
 <?php include(SITE_ROOT.DS.'public'.DS.'layouts'.DS."nav.php") ?>
 <?php  echo isset($valid)? $valid->form_errors():"" ?>
-<?php echo $message; ?>
+<?php echo isset($message) ? output_message($message) : ''; ?>
 
 
 
 
-<h4 class="text-center"><a href="<?php echo $_SERVER["PHP_SELF"] ?>"><?php echo 'Download CSV' ?></a> </h4>
+<h4 class="text-center"><a href="<?php echo h($_SERVER["PHP_SELF"]) ?>"><?php echo 'Download CSV' ?></a> </h4>
 
 
 <div class="col-md-7 col-md-offset-2 col-lg-7 col-lg-offset-2">
@@ -77,13 +84,15 @@ $table_name=$class_name::get_table_name();
 
     <div class ="background_light_blue">
 
-<form name="form_client"  class="form-horizontal" method="post" action="<?php echo $_SERVER["PHP_SELF"];?>">
+<form name="form_client"  class="form-horizontal" method="post" action="<?php echo h($_SERVER["PHP_SELF"]);?>">
 
     <fieldset id="login" title="Client">
         <legend class="text-center" style="color: #0000ff"><?php echo 'Download CSV'?></legend>
 
 
     </fieldset>
+
+<?php echo csrf_token_tag(); ?>
 
 <?php $all_class = array_values(array_intersect(['User','UserType','Client','Category','BlacklistIp','FailedLogin','Links','LinksCategory','Project','Category1','Category2','InvoiceActual','InvoiceSend','MyCigarette','MyExpense','MyExpensePerson','MyExpenseType','MyHouseExpense','MyHouseExpenseType','Chat','Notification','ToDoList','Currency'], MyClasses::$all_class)); ?>
 
@@ -92,7 +101,7 @@ $table_name=$class_name::get_table_name();
         <div class='col-sm-9'>
             <select  class='form-control' id="xxxx" name='class_name'>
                 <?php foreach($all_class as $cl) {      ?>
-            <option value="<?php echo $cl ?>" ><?php echo $cl ?></option>
+            <option value="<?php echo h($cl) ?>" ><?php echo h($cl) ?></option>
 
                 <?php } ?>
 

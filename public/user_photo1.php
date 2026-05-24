@@ -25,18 +25,26 @@
     $user = "";
 }
 
-if (empty($_GET['id']) || !isset($_GET['id'])) {
+$id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT, [
+    'options' => ['min_range' => 1],
+]);
+
+if ($id === false || $id === null) {
     $session->message("The photo was not selected");
     redirect_to("index.php");
 }
 
-$the_user = User::find_by_id($_GET['id']);
+$the_user = User::find_by_id($id);
+if (!$the_user) {
+    $session->message("The user photo was not found");
+    redirect_to("index.php");
+}
 
 ?>
     <div class="row">
         <div class="col-lg-12 col-md-12">
-            <h1><?php echo $the_user->fullname(); ?></h1>
-            <img class="img-responsive" src="<?php echo $the_user->user_path_and_placeholder(); ?>" alt="">
+            <h1><?php echo h($the_user->fullname()); ?></h1>
+            <img class="img-responsive" src="<?php echo h($the_user->user_path_and_placeholder()); ?>" alt="">
         </div>
     </div>
     <!-- /.row -->

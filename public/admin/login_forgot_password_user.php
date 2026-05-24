@@ -23,7 +23,7 @@ $new_password=null;
       $message = "Sorry, request was not valid.";
   } else {
 
-      $username=trim($_POST['username']);
+      $username = trim((string)($_POST['username'] ?? ''));
       $valid=new FormValidation();
        $valid->validate_presences(['username']) ;
 
@@ -84,7 +84,7 @@ $new_password=null;
 
         <div class ="background_light_blue">
 
-            <form id="" class="form-horizontal" action="<?php echo $_SERVER['PHP_SELF'];?>" method="POST">
+            <form id="" class="form-horizontal" action="<?php echo h($_SERVER['PHP_SELF']);?>" method="POST">
                 <!-- <li>
                     <a href="index.php">&laquo; Public area</a><br />
                    </li>-->

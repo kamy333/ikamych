@@ -2,16 +2,11 @@
 
 require_once('../../includes/initialize.php');
 $session->confirmation_protected_page();
-if (User::is_employee() || User::is_secretary() || User::is_visitor()) {
+if (User::is_caroline_only() || User::is_employee() || User::is_secretary() || User::is_visitor()) {
     redirect_to('index.php');
 }
 
 $class_name = "User";
-$table_name = $class_name::get_table_name();
-
-$allowed_order_fields = $class_name::get_table_field();
-$order_name = !empty($_GET["order_name"]) && in_array($_GET["order_name"], $allowed_order_fields, true) ? $_GET["order_name"] : 'id';
-$order_type = !empty($_GET["order_type"]) && strtoupper($_GET["order_type"]) === 'DESC' ? 'DESC' : 'ASC';
 
 //if ($Nav->folder_immediate != "admin") {
 //    $class_name::$page_manage = $Nav->path_admin . $Nav->folder_prev . '/manage/' . $class_name::$page_manage;
@@ -28,35 +23,19 @@ $class_name:: $page_delete = "/public/admin/delete_user.php";
 
 //echo get_where_string($class_name);
 
-$page = !empty($_GET['page']) ? (int)$_GET["page"] : 1;
+$page = !empty($_GET['page']) ? max(1, (int)$_GET["page"]) : 1;
 $per_page = 20;
-$where = get_where_string($class_name);
-$total_count = $class_name::count_all_where($where);
+[$where, $params, $types] = $class_name::current_request_where_clause();
+$total_count = $class_name::count_all_where($where, $params, $types);
 $pagination = new Pagination($page, $per_page, $total_count);
 
 require_once LIB_PATH . DS . 'download' . DS . 'download_csv.php';
 
 
-$sql = "SELECT * FROM {$table_name} ";
-
-$sql.= " ".get_where_string($class_name);
-
-if(isset($order_name)){
-    $sql.=" ORDER BY {$order_name} {$order_type} ";
-}
-
-
-$sql .= "LIMIT {$per_page} ";
-$sql .= "OFFSET {$pagination->offset()}";
-
-//echo "<p>$sql</p>";
-//unset($_GET);
-
-$result_class = $class_name::find_by_sql($sql);
-
 $query_string=remove_get(['view','page']);
 
 $view_full_table=!empty($_GET["view"])? (int) $_GET["view"]:0;
+$view_full_table = $view_full_table === 1 ? 1 : 0;
 if($view_full_table==1){
     $page_link_view=$class_name::$page_manage.$query_string."page=".u($page)."&view=".u(0);
     $page_link_text=$class_name::$page_name." short view";
@@ -104,7 +83,7 @@ if($view_full_table==1){
     <div class="col-md-12  ">
 
 
-        <?php echo $class_name::display_all($result_class,$view_full_table) ?>
+        <?php echo $class_name::display_all('', $view_full_table) ?>
 
     </div>
 </div>

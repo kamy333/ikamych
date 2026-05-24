@@ -68,10 +68,11 @@ $bd=new BrowserDetective();
             return $is_leap_year;
         }
 
-        if (isset($_GET['year'])){
-            $year=intval ($_GET['year']);
-        }else{
-            $year=date('Y');
+        $year = filter_input(INPUT_GET, 'year', FILTER_VALIDATE_INT, [
+            'options' => ['default' => (int)date('Y'), 'min_range' => 1, 'max_range' => 9999],
+        ]);
+        if ($year === false || $year === null) {
+            $year = (int)date('Y');
         }
 
 
@@ -92,7 +93,7 @@ $bd=new BrowserDetective();
     </div>
 
         <form method="get" action="">
-            <input type="text" name="year" value="<?php echo $year; ?>">
+            <input type="text" name="year" value="<?php echo h((string)$year); ?>">
             <input type="submit" name="subnit">
 
         </form>

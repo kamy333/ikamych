@@ -5,21 +5,11 @@
 //    redirect_to('index.php');
 //}
 
-if(User::is_caroline_only()){
-    if (isset($_GET['class_name'])) {
-        $class_name = $_GET['class_name'];
-        if ($class_name != "MyExpenseCaroline") {
-            redirect_to('../../index.php');
-        }
-    }
-} elseif (User::is_employee() || User::is_secretary() || User::is_visitor()) {
-    redirect_to('../../index.php');
-}
-
 ?>
 
 <?php
 $class_name = MyClasses::allowed_class_from_request();
+MyClasses::require_class_access($class_name);
 call_user_func_array([$class_name, 'change_to_unique_data'], ['data']);
 
 //if ($Nav->folder_immediate != "admin") {
@@ -29,8 +19,9 @@ call_user_func_array([$class_name, 'change_to_unique_data'], ['data']);
 //    $class_name::$page_delete = $Nav->path_admin . $Nav->folder_prev . '/delete/' . $class_name::$page_delete;
 //}
 
-if (isset($_GET['id'])) {
-    $post_link = $_SERVER["PHP_SELF"] . "?class_name=" . u($class_name) . "&id=" . urlencode($_GET['id']);
+$requested_id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT, ['options' => ['min_range' => 1]]);
+if ($requested_id !== false && $requested_id !== null) {
+    $post_link = $_SERVER["PHP_SELF"] . "?class_name=" . u($class_name) . "&id=" . u($requested_id);
     $page = "Update";
     $page1 = "Update ";
     $text_post = "Updated";
@@ -78,8 +69,16 @@ if (request_is_post() && request_is_same_domain()) {
 } else {
     if (request_is_get()) {
         if (isset($_GET['id'])) {
-            $id = $_GET['id'];
-            $get_item = $class_name::find_by_id($id);
+            if ($requested_id === false || $requested_id === null) {
+                $session->message('Sorry, a valid record ID is required.');
+                redirect_to($class_name::$page_manage);
+            }
+
+            $get_item = $class_name::find_by_id($requested_id);
+            if (!$get_item) {
+                $session->message('Sorry, the requested record was not found.');
+                redirect_to($class_name::$page_manage);
+            }
         }
 
 

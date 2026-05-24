@@ -10,15 +10,7 @@ if(!is_ajax_request()) {
     exit; }
 
 $class_name = MyClasses::allowed_class_from_post();
-if (User::is_caroline_only()) {
-    if ($class_name != "MyExpenseCaroline") {
-        echo json_encode(["errors" => "Sorry, you cannot access this section."]);
-        exit;
-    }
-} elseif (User::is_employee() || User::is_secretary() || User::is_visitor()) {
-    echo json_encode(["errors" => "Sorry, you cannot access this section."]);
-    exit;
-}
+MyClasses::require_class_access($class_name);
 
 // $json1= output_message(call_user_func_array([$_POST['class_name'],'post_form'], ['ajax']));
 

@@ -2,24 +2,13 @@
 
 require_once('../../../includes/initialize.php');
 $session->confirmation_protected_page();
-if(User::is_caroline_only()){
-    if (isset($_GET['class_name'])) {
-        $class_name = $_GET['class_name'];
-        if ($class_name != "MyExpenseCaroline") {
-            redirect_to('../../index.php');
-        }
-    }
-} elseif (User::is_employee() || User::is_secretary() || User::is_visitor()) {
-    redirect_to('../../index.php');
-}
-//if(User::is_employee() || User::is_visitor()){ redirect_to('../index.php');}
-
 
 $class_name = MyClasses::allowed_class_from_request();
+MyClasses::require_class_access($class_name);
 
 
 if(!is_ajax_request()) {
-    echo $_SERVER['HTTP_X_REQUESTED_WITH'];
+    echo $_SERVER['HTTP_X_REQUESTED_WITH'] ?? '';
     echo "<p>Not Ajax request</p>";
 
     exit; }
@@ -28,16 +17,18 @@ if(!is_ajax_request()) {
 
 //echo call_user_func_array([$_GET['class_name'],'post_form'], ['ajax']);
 
-if (!isset($_GET["id"])) {
-    $id="";
-    $json=["errors"=>"id not set"];
+$id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT, ['options' => ['min_range' => 1]]);
+if ($id === false || $id === null) {
+    http_response_code(400);
+    $json=["errors"=>"Valid id is required."];
 } else {
 
-    $id=$_GET["id"];
     $class_found=$class_name::find_by_id($id);
 
-
-    if($class_found->delete()){
+    if (!$class_found) {
+        http_response_code(404);
+        $json=["errors"=>"id (".h((string)$id).") was not found"];
+    } elseif($class_found->delete()){
 
         $json=["success"=>"id (".$id.") successfully deleted"];
 

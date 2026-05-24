@@ -1,12 +1,11 @@
 <?php require_once('../../../../includes/initialize.php'); ?>
 <?php $session->confirmation_protected_page(); ?>
-<?php if (User::is_employee() || User::is_visitor()) {
-    redirect_to('index.php');
-} ?>
 
 <?php $class_name = "Category";
 $class_name_1 = "Category1";
 $class_name_2 = "Category2";
+MyClasses::require_class_access($class_name);
+$get_item = false;
 if ($Nav->folder_immediate != "admin") {
     $class_name::$page_manage = $Nav->path_admin . $Nav->folder_prev . '/manage/' . $class_name::$page_manage;
     $class_name::$page_new = $Nav->path_admin . $Nav->folder_prev . '/new/' . $class_name::$page_new;
@@ -24,8 +23,18 @@ if ($Nav->folder_immediate != "admin") {
     $class_name_2::$page_delete = $Nav->path_admin . $Nav->folder_prev . '/delete/' . $class_name_2::$page_delete;
 }
 
-if (isset($_GET['id'])) {
-    $post_link = $_SERVER["PHP_SELF"] . "?id=" . urldecode($_GET['id']);
+$requested_id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT, [
+    'options' => ['min_range' => 1],
+]);
+$has_id = isset($_GET['id']);
+
+if ($has_id && ($requested_id === false || $requested_id === null)) {
+    $session->message("Sorry, a valid record ID is required.");
+    redirect_to($class_name::$page_manage);
+}
+
+if ($has_id) {
+    $post_link = $_SERVER["PHP_SELF"] . "?id=" . u($requested_id);
     $page = "Update";
     $page1 = "Update ";
     $text_post = "Updated";
@@ -80,9 +89,12 @@ if (request_is_post() && request_is_same_domain()) {
     }
 } else {
     if (request_is_get()) {
-        if (isset($_GET['id'])) {
-            $id = $_GET['id'];
-            $get_item = $class_name::find_by_id($id);
+        if ($has_id) {
+            $get_item = $class_name::find_by_id($requested_id);
+            if (!$get_item) {
+                $session->message("Sorry, the requested record was not found.");
+                redirect_to($class_name::$page_manage);
+            }
         }
 
 
@@ -115,7 +127,7 @@ if (request_is_post() && request_is_same_domain()) {
 
 
 <h4 class="text-center"><a
-            href="<?php echo $_SERVER["PHP_SELF"] ?>"><?php echo $page . " " . $class_name::$page_name ?></a></h4>
+            href="<?php echo h($_SERVER["PHP_SELF"]) ?>"><?php echo h($page . " " . $class_name::$page_name) ?></a></h4>
 
 
 <div class="col-md-7 col-md-offset-2 col-lg-7 col-lg-offset-2">
@@ -128,7 +140,7 @@ if (request_is_post() && request_is_same_domain()) {
 
 
         <form name="form_client <?php echo "form_" . $class_name; ?>" class="form-horizontal" method="post"
-              action="<?php echo $post_link; ?>">
+              action="<?php echo h($post_link); ?>">
 
             <fieldset id="<?php echo $class_name; ?>" title="<?php echo $class_name::$page_name ?>">
                 <legend class="text-center"

@@ -1,6 +1,6 @@
 <?php require_once('../../includes/initialize.php'); ?>
 <?php  $session->confirmation_protected_page(); ?>
-<?php if(User::is_employee() || User::is_visitor()){ redirect_to('index.php');}?>
+<?php if(User::is_caroline_only() || User::is_employee() || User::is_secretary() || User::is_visitor()){ redirect_to('index.php');}?>
 
 <?php // var_dump($session) ?>
 
@@ -19,8 +19,16 @@ $class_name::$page_edit = "/public/admin/edit_user.php";
 $class_name:: $page_delete = "/public/admin/delete_user.php";
 
 
-if (isset($_GET['id'])) {
-    $post_link = $_SERVER["PHP_SELF"] . "?id=" . urldecode($_GET['id']);
+$requested_id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT, ['options' => ['min_range' => 1]]);
+$get_item = null;
+
+if (isset($_GET['id']) && ($requested_id === false || $requested_id === null)) {
+    $session->message('Sorry, a valid user ID is required for editing.');
+    redirect_to($class_name::$page_manage);
+}
+
+if ($requested_id !== false && $requested_id !== null) {
+    $post_link = $_SERVER["PHP_SELF"] . "?id=" . u($requested_id);
 
 } else {
     $post_link = $_SERVER["PHP_SELF"];
@@ -56,35 +64,45 @@ if(request_is_post() && request_is_same_domain()) {
 
         if (isset($_POST['submit'])) { // Form has been submitted.
 //            $new_this_class = new $class_name();
-            $new_this_class=$class_name::find_by_id($_POST['id']);
+            $posted_id = filter_input(INPUT_POST, 'id', FILTER_VALIDATE_INT, ['options' => ['min_range' => 1]]);
+            if ($posted_id === false || $posted_id === null) {
+                $message = 'Sorry, a valid user ID is required for editing.';
+            } else {
+                $new_this_class=$class_name::find_by_id($posted_id);
+            }
 
-            $expected_fields=$new_this_class::get_table_field();
-            foreach($expected_fields as $field){
-                if(isset($_POST[$field])){
-                echo $new_this_class->$field = trim($_POST[$field]);
+            if (isset($new_this_class) && !$new_this_class) {
+                $message = 'Sorry, the requested user was not found.';
+            }
+
+            if (isset($new_this_class) && $new_this_class) {
+                $expected_fields=$new_this_class::get_table_field();
+                foreach($expected_fields as $field){
+                    if(isset($_POST[$field])){
+                        $new_this_class->$field = trim($_POST[$field]);
+                    }
                 }
-            }
 
 
-            if (!isset($_POST['password']) || empty($_POST['password'])) {
+                if (!isset($_POST['password']) || empty($_POST['password'])) {
 
-                $required_field=$class_name::$required_fields_no_password;
-                $kamy= "not isset no password ";
-            }else{
-                $required_field=$class_name::$required_fields;
-                $kamy= "isset password";
-            }
-
-
-
-            $valid= new formValidation();
-            //    echo get_class_vars('User');
-
-            $valid->validate_presences($required_field);
-            $valid->validate_email('email' );
+                    $required_field=$class_name::$required_fields_no_password;
+                    $kamy= "not isset no password ";
+                }else{
+                    $required_field=$class_name::$required_fields;
+                    $kamy= "isset password";
+                }
 
 
-            if(empty($valid->errors)){
+
+                $valid= new formValidation();
+                //    echo get_class_vars('User');
+
+                $valid->validate_presences($required_field);
+                $valid->validate_email('email' );
+
+
+                if(empty($valid->errors)){
 
 //                // must static $fields and method set files
 //                $images=$new_this_class::$fields_image;
@@ -96,44 +114,47 @@ if(request_is_post() && request_is_same_domain()) {
 //                        }
 //                    }
 //                }
-                if (!empty($_FILES['user_image'])) {
-                    $new_this_class->set_files($_FILES['user_image']);
-                    $new_this_class->upload_photo();
-                }
+                    if (!empty($_FILES['user_image'])) {
+                        $new_this_class->set_files($_FILES['user_image']);
+                        $new_this_class->upload_photo();
+                    }
 
-                if (!isset($new_this_class->password)) {
+                    if (!isset($new_this_class->password)) {
 
-                    if (!$new_this_class->update_no_password()) {
-                        $session->message("User: " . $new_this_class->username . " " . "has been updated for ID (" . $new_this_class->id . ") but not the password ");
-                        $session->ok(true);
-                        redirect_to($class_name::$page_manage);
+                        if (!$new_this_class->update_no_password()) {
+                            $session->message("User: " . $new_this_class->username . " " . "has been updated for ID (" . $new_this_class->id . ") but not the password ");
+                            $session->ok(true);
+                            redirect_to($class_name::$page_manage);
 //                        redirect_to("manage_user.php");
 
+                        } else {
+                            $session->message($class_name.$new_this_class->username." "."edit failed");
+                        }
                     } else {
-                        $session->message($class_name.$new_this_class->username." "."edit failed");
-                    }
-                } else {
-                    if (!$user->save()){
-                        $session->message($class_name.$new_this_class->username." "."has been updated for ID (".$new_this_class->id .")");
-                        $session->ok(true);
-                        redirect_to($class_name::$page_manage);
-                    } else {
-                        $session->message("User: ".$new_this_class->username." "."edit failed");
+                        if (!$new_this_class->save()){
+                            $session->message($class_name.$new_this_class->username." "."has been updated for ID (".$new_this_class->id .")");
+                            $session->ok(true);
+                            redirect_to($class_name::$page_manage);
+                        } else {
+                            $session->message("User: ".$new_this_class->username." "."edit failed");
 
+                        }
                     }
+
 
                 }
-
-
             }
 
 
 
         }
     }
-} elseif(isset($_GET['id'])) {
-    $id=$_GET['id'];
-    $get_item=  $class_name::find_by_id($id);
+} elseif($requested_id !== false && $requested_id !== null) {
+    $get_item=  $class_name::find_by_id($requested_id);
+    if (!$get_item) {
+        $session->message('Sorry, the requested user was not found.');
+        redirect_to($class_name::$page_manage);
+    }
     //   $_GET['user_type_id']=$get_user->user_type_id;
 //   var_dump($get_user);
 
@@ -144,8 +165,8 @@ if(request_is_post() && request_is_same_domain()) {
 }
 
 
-if(isset($_GET['id'])){
-    $post_link=$_SERVER["PHP_SELF"]."?id=".urldecode($_GET['id']);
+if($requested_id !== false && $requested_id !== null){
+    $post_link=$_SERVER["PHP_SELF"]."?id=".u($requested_id);
 }else{
     $post_link=$_SERVER["PHP_SELF"];
 }

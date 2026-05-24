@@ -9,28 +9,15 @@
 
 <?php
 
-if (isset($_GET["amount1"])) {
-    $amount1 = $_GET["amount1"];
-} else {
-    $amount1 = 0;
-}
+$amount1 = filter_input(INPUT_GET, 'amount1', FILTER_VALIDATE_FLOAT);
+$amount2 = filter_input(INPUT_GET, 'amount2', FILTER_VALIDATE_FLOAT);
+$amount3 = filter_input(INPUT_GET, 'amount3', FILTER_VALIDATE_FLOAT);
+$amount4 = filter_input(INPUT_GET, 'amount4', FILTER_VALIDATE_FLOAT);
 
-if (isset($_GET["amount2"])) {
-    $amount2 = $_GET["amount2"];
-} else {
-    $amount2 = 0;
-}
-if (isset($_GET["amount3"])) {
-    $amount3 = $_GET["amount3"];
-} else {
-    $amount3 = 0;
-}
-
-if (isset($_GET["amount4"])) {
-    $amount4 = $_GET["amount4"];
-} else {
-    $amount4 = 0;
-}
+$amount1 = $amount1 === false || $amount1 === null ? 0 : max(0, $amount1);
+$amount2 = $amount2 === false || $amount2 === null ? 0 : max(0, $amount2);
+$amount3 = $amount3 === false || $amount3 === null ? 0 : max(0, $amount3);
+$amount4 = $amount4 === false || $amount4 === null ? 0 : max(0, $amount4);
 
 $total_amount = $amount1 + $amount2 + $amount3 + $amount4;
 
@@ -63,16 +50,22 @@ if (1 == 2) {
 
 $output = "";
 
-$output .= "<form class='form-inline' action='" . $_SERVER['PHP_SELF'] . "' method='get' name='amount'>
-Amount Geovani: <input type='number' value='{$amount1}' class='input-small' name='amount1' placeholder='amount'>
-Amount Alex: <input type='number' value='{$amount2}' class='input-small' name='amount2' placeholder='amount'>
-Amount Weslley: <input type='number' value='{$amount3}' class='input-small' name='amount3' placeholder='amount'>
-Amount Carolina: <input type='number' value='{$amount4}' class='input-small' name='amount4' placeholder='amount'>
+$amount1_display = h(number_format($amount1, 2, '.', ''));
+$amount2_display = h(number_format($amount2, 2, '.', ''));
+$amount3_display = h(number_format($amount3, 2, '.', ''));
+$amount4_display = h(number_format($amount4, 2, '.', ''));
+$total_amount_display = h(number_format($total_amount, 2, '.', ''));
+
+$output .= "<form class='form-inline' action='" . h($_SERVER['PHP_SELF']) . "' method='get' name='amount'>
+Amount Geovani: <input type='number' step='0.01' min='0' value='{$amount1_display}' class='input-small' name='amount1' placeholder='amount'>
+Amount Alex: <input type='number' step='0.01' min='0' value='{$amount2_display}' class='input-small' name='amount2' placeholder='amount'>
+Amount Weslley: <input type='number' step='0.01' min='0' value='{$amount3_display}' class='input-small' name='amount3' placeholder='amount'>
+Amount Carolina: <input type='number' step='0.01' min='0' value='{$amount4_display}' class='input-small' name='amount4' placeholder='amount'>
 <input type='submit' class='btn'>
 </form>";
 
 $output .= "<br><br><p>Hello ViaExpress,<br>
-I Kamran Nafisspour Client ID 1000 37425 sent an amount of <strong>CHF {$total_amount}.-</strong> :<br><br>
+I Kamran Nafisspour Client ID 1000 37425 sent an amount of <strong>CHF {$total_amount_display}.-</strong> :<br><br>
 ";
 $output .= "";
 
@@ -87,8 +80,8 @@ $output .= "<p style='font-size: smaller'>
 $output .= "Would you be kind to pay equivalent BRL with best FX rate to: <br><hr>";
 
 $nbsp = str_repeat("&nbsp;", 5);
-if (!$amount1 == 0) {
-    $output .= "<b>CHF {$amount1}.-</b> <br>";
+if ($amount1 > 0) {
+    $output .= "<b>CHF {$amount1_display}.-</b> <br>";
     $output .= "NOME:GEOVANI DIAS<br>
                 CPF: 048.782.901-88<br>
                 AGENCIA: 03252<br>
@@ -99,8 +92,8 @@ if (!$amount1 == 0) {
 }
 
 
-if (!$amount2 == 0) {
-    $output .= "<b>CHF {$amount2}.-</b> <br>";
+if ($amount2 > 0) {
+    $output .= "<b>CHF {$amount2_display}.-</b> <br>";
     $output .= "NOME:ALEX WENDELL ALENCAR DE OLIVEIRA<br>
                     ID:15769798 ssp MT<br>
                     CPF:008849501-90<br>
@@ -113,8 +106,8 @@ if (!$amount2 == 0) {
 
 }
 
-if (!$amount3 == 0) {
-    $output .= "<b>CHF {$amount3}.-</b> <br>";
+if ($amount3 > 0) {
+    $output .= "<b>CHF {$amount3_display}.-</b> <br>";
     $output .= "NOME:WESLLEY MICKAEL DIAS FERREIRA <br>                    
                     CPF:057.104.651-78<br>
                     NUMERO DE CONTA BANCARIA<br>
@@ -127,8 +120,8 @@ if (!$amount3 == 0) {
 }
 
 
-if (!$amount4 == 0) {
-    $output .= "<b>CHF {$amount4}.-</b> <br>";
+if ($amount4 > 0) {
+    $output .= "<b>CHF {$amount4_display}.-</b> <br>";
     $output .= "NOME:Carolina de Oliveira Fonseca<br>                    
                     CPF: 067.255.491-79<br>
                     NUMERO DE CONTA BANCARIA<br>

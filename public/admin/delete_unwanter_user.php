@@ -12,7 +12,14 @@ if (request_is_post() && request_is_same_domain()) {
     if (!csrf_token_is_valid() || !csrf_token_is_recent()) {
         $message = "Request was not valid";
     } else {
-        $id_min = (int)trim($_POST['id_username']);
+        $id_min = filter_input(INPUT_POST, 'id_username', FILTER_VALIDATE_INT, [
+            'options' => ['min_range' => 1],
+        ]);
+
+        if ($id_min === false || $id_min === null) {
+            $session->message("Please provide a valid positive user ID.");
+            redirect_to($_SERVER['PHP_SELF']);
+        }
 
         if (User::delete_unwanted_users_after_ids($id_min)) {
             $message1 = "Users with ID above ids $id_min have been successfully deleted";
@@ -66,7 +73,7 @@ if (request_is_post() && request_is_same_domain()) {
 <div class="row">
 
     <div class="col-md-4 col-md-offset-4  col-lg-4 col-lg-offset-4 ">
-        <form id="delete_users_unwanted" class="form-signin " action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST"
+        <form id="delete_users_unwanted" class="form-signin " action="<?php echo h($_SERVER['PHP_SELF']); ?>" method="POST"
               onsubmit="onFormSubmit();">
             <?php echo csrf_token_tag(); ?>
             <h2 class="form-signin-heading text-center">Delete Unwanted User</h2>

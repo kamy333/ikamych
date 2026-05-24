@@ -752,6 +752,10 @@ function remove_get($remove = [])
 
     if (isset($_GET)) {
         foreach ($_GET as $key => $val) {
+            if (is_array($val)) {
+                continue;
+            }
+
             if (!in_array($key, $remove)) {
                 $url_decode = urldecode($val);
                 $array[$key] = $url_decode;
@@ -795,7 +799,14 @@ function get_where_string($class_name)
 
 
             } else {
-                $unique_get = array_unique($_GET);
+                $scalar_get = [];
+                foreach ($_GET as $key => $val) {
+                    if (!is_array($val)) {
+                        $scalar_get[$key] = $val;
+                    }
+                }
+
+                $unique_get = array_unique($scalar_get);
                 $i = 0;
                 foreach ($unique_get as $key => $val) {
                     if (in_array($key, $class_name::get_table_field())) {

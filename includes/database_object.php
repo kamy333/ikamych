@@ -138,7 +138,12 @@ class DatabaseObject
 
 
                         } else {
-                            $url = clean_query_string('http://' . $_SERVER['SERVER_NAME'] . $_SERVER['PHP_SELF'] . "?" . "class_name=" . u(get_called_class()) . "&id=" . u($_GET['id']));
+                            $id = isset($new_item->id) ? filter_var($new_item->id, FILTER_VALIDATE_INT, ['options' => ['min_range' => 1]]) : null;
+                            $url = 'http://' . $_SERVER['SERVER_NAME'] . $_SERVER['PHP_SELF'] . "?" . "class_name=" . u(get_called_class());
+                            if ($id !== false && $id !== null) {
+                                $url .= "&id=" . u($id);
+                            }
+                            $url = clean_query_string($url);
 //                            $session->message(get_called_class().$new_item->pseudo." "."$text_post1 failed or maybe nothing changed");
                             $session->message($message);
 //                redirect_to($_SERVER['PHP_SELF']."?".$_SERVER['QUERY_STRING']);
@@ -367,10 +372,17 @@ class DatabaseObject
 //        echo $_SERVER['PHP_SELF'];
 
 
-        if (isset($_GET['id']) && !isset($_GET['duplicate_record'])) {
-            $post_link = clean_query_string(static::$page_edit . "?id=" . urlencode($_GET['id']));
+        $requested_id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT, ['options' => ['min_range' => 1]]);
+        $has_id = isset($_GET['id']);
+
+        if ($has_id && ($requested_id === false || $requested_id === null)) {
+            return output_message('Sorry, a valid record ID is required.', 'e');
+        }
+
+        if ($has_id && !isset($_GET['duplicate_record'])) {
+            $post_link = clean_query_string(static::$page_edit . "?id=" . u($requested_id));
             $page = "Update";
-            $page1 = "Update ID (" . $_GET['id'] . ")";
+            $page1 = "Update ID (" . h((string)$requested_id) . ")";
             $text_post = "Updated";
             $text_post1 = "update";
             $jquery = "update-form-button";
@@ -392,9 +404,11 @@ class DatabaseObject
         $output .= "</div>";
         $output .= "<div class =\"form-light-blue\">";
         $output .= "<form name='form_" . get_called_class() . "' id='form_" . get_called_class() . "'  class='form-horizontal' method='post' action='{$post_link}'> ";
-        if (isset($_GET['id'])) {
-            $id = $_GET['id'];
-            $get_item = static::find_by_id($id);
+        if ($has_id) {
+            $get_item = static::find_by_id($requested_id);
+            if (!$get_item) {
+                return output_message('Sorry, the requested record was not found.', 'e');
+            }
             $output .= static::construct_form($get_item, request_is_get() ? $_GET : false);
         } else {
             $output .= static::construct_form(false, request_is_get() ? $_GET : false);
@@ -742,6 +756,16 @@ class DatabaseObject
 
     }
 
+    public static function sum_field_where_by_sql_prepared($sql, array $params = [], $types = "")
+    {
+        global $database;
+//        $table = static::$table_name;
+        $result_set = $database->query_prepared($sql, $params, $types);
+        $row = $database->fetch_array($result_set);
+        return $row ? array_shift($row) : false;
+
+    }
+
 
     public static function find_max_id()
     {
@@ -930,8 +954,8 @@ class DatabaseObject
 
     static public function display_pagination($pagination = "", $page = "")
     {
-        $where = get_where_string(get_called_class());
-        $total_count = static::count_all_where($where);
+        [$where, $params, $types] = static::where_clause_from_request();
+        $total_count = static::count_all_where($where, $params, $types);
 
         if ($total_count > 1000) {
             return self::display_paginator();
@@ -995,9 +1019,9 @@ class DatabaseObject
     public static function NewPagination()
     {
 
-        $where = get_where_string(get_called_class());
+        [$where, $params, $types] = static::where_clause_from_request();
         $per_page = static::$pagination_per_page;
-        $total_count = static::count_all_where($where);
+        $total_count = static::count_all_where($where, $params, $types);
         $page = static::getPagePagination();
 
         return new Pagination($page, $per_page, $total_count);
@@ -1006,27 +1030,80 @@ class DatabaseObject
     public static function NewPaginator()
     {
 
-        $where = get_where_string(get_called_class());
-        $total_count = static::count_all_where($where);
+        [$where, $params, $types] = static::where_clause_from_request();
+        $total_count = static::count_all_where($where, $params, $types);
         return new Paginator($total_count, 5, [20, 15, 3, 6, 9, 12, 25, 50, 100, 250, 'All']);
     }
 
 
     public static function getPagePagination()
     {
-        return !empty($_GET['page']) ? (int)$_GET["page"] : 1;
+        return !empty($_GET['page']) ? max(1, (int)$_GET["page"]) : 1;
 
     }
 
-    public static function count_all_where($where = '')
+    public static function count_all_where($where = '', array $params = [], $types = '')
     {
         global $database;
         $table = static::$table_name;
-        $result_set = $database->query("SELECT count(*) FROM {$table} {$where} ");
+        $sql = "SELECT count(*) FROM {$table} {$where} ";
+        $result_set = empty($params) ? $database->query($sql) : $database->query_prepared($sql, $params, $types);
         $row = $database->fetch_array($result_set);
         return $row ? array_shift($row) : false;
 //        return $where;
 
+    }
+
+    public static function current_request_where_clause()
+    {
+        return static::where_clause_from_request();
+    }
+
+    protected static function where_clause_from_request()
+    {
+        $params = [];
+        $types = '';
+        $conditions = [];
+        $table_fields = static::get_table_field();
+        $numeric_fields = is_array(static::$fields_numeric ?? null) ? static::$fields_numeric : [];
+
+        $search_all = isset($_GET['search_all']) ? trim((string)urldecode($_GET['search_all'])) : '';
+        if ($search_all !== '') {
+            foreach ($table_fields as $field) {
+                $conditions[] = "`{$field}` LIKE ?";
+                $params[] = '%' . $search_all . '%';
+                $types .= 's';
+            }
+
+            return [empty($conditions) ? '' : ' WHERE ' . implode(' OR ', $conditions), $params, $types];
+        }
+
+        foreach ($_GET as $key => $val) {
+            if (!in_array($key, $table_fields, true)) {
+                continue;
+            }
+
+            if (is_array($val)) {
+                continue;
+            }
+
+            $value = trim((string)urldecode((string)$val));
+            if ($value === '') {
+                continue;
+            }
+
+            if (in_array($key, $numeric_fields, true)) {
+                $conditions[] = "`{$key}` = ?";
+                $params[] = (int)$value;
+                $types .= 'i';
+            } else {
+                $conditions[] = "`{$key}` = ?";
+                $params[] = $value;
+                $types .= 's';
+            }
+        }
+
+        return [empty($conditions) ? '' : ' WHERE ' . implode(' AND ', $conditions), $params, $types];
     }
 
 
@@ -1061,7 +1138,7 @@ class DatabaseObject
 
 //        $page= !empty($_GET['page'])? (int) $_GET["page"]:1;
         $per_page = 20;
-        $where = get_where_string(get_called_class());
+        [$where, $params, $types] = static::where_clause_from_request();
 
 
 //        $total_count=static::count_all_where($where);
@@ -1085,7 +1162,7 @@ class DatabaseObject
 //echo "<p>$sql</p>";
 //unset($_GET);
 
-        $result_class = static::find_by_sql($sql);
+        $result_class = empty($params) ? static::find_by_sql($sql) : static::find_by_sql_prepared($sql, $params, $types);
 
 //        $query_string=remove_get(array('view','page',get_called_class()));
 
@@ -1146,7 +1223,7 @@ class DatabaseObject
         </div>
     </div>
     <button id='button-search' type='submit' class='btn btn-primary'";
-        $output .= " data-href='" . $_SERVER['QUERY_STRING'] . "''";
+        $output .= " data-href='" . h($_SERVER['QUERY_STRING'] ?? '') . "'";
         $output .= ">
     <span class='glyphicon glyphicon-search' style='color: whitesmoke' aria-hidden='true' ";
         $output .= "  >
@@ -1159,8 +1236,8 @@ class DatabaseObject
 
 
         $output .= " <div class='panel-body'>";
-        $where = get_where_string(get_called_class());
-        $found_count = static::count_all_where($where);
+        [$where, $params, $types] = static::where_clause_from_request();
+        $found_count = static::count_all_where($where, $params, $types);
         $total_count = static::count_all();
 
         if ($found_count !== $total_count) {
@@ -1169,12 +1246,16 @@ class DatabaseObject
 
 
         foreach ($_GET as $key => $val) {
+            if (is_array($val)) {
+                continue;
+            }
+
             $key_clean = str_replace("_", " ", $key);
             $key_clean = ucfirst($key_clean);
 
 
-            if (!empty($_GET[$key]) && !in_array($key, ['page', 'view', 'class_name'])) {
-                $output .= "<b>" . h($key_clean) . "&nbsp;<span style='color:blue;'>&nbsp;" . h(urldecode($_GET[$key])) . "</span></b> | ";
+            if (!empty($val) && !in_array($key, ['page', 'view', 'class_name'])) {
+                $output .= "<b>" . h($key_clean) . "&nbsp;<span style='color:blue;'>&nbsp;" . h(urldecode((string)$val)) . "</span></b> | ";
             }
         }
         $output .= "</div>";
@@ -1191,6 +1272,11 @@ class DatabaseObject
                 $output .= "<th width='5%' colspan=\"2\" class=\"text-center\" style='vertical-align:middle;'>Actions</th>";
             }
         }
+
+        $allowed_order_fields = static::get_table_field();
+        $current_order_name = !empty($_GET['order_name']) && in_array($_GET['order_name'], $allowed_order_fields, true) ? $_GET['order_name'] : '';
+        $requested_order_type = !empty($_GET['order_type']) ? strtoupper((string)$_GET['order_type']) : '';
+        $current_order_type = in_array($requested_order_type, ['ASC', 'DESC'], true) ? $requested_order_type : '';
 
         foreach ($table_field as $fieldname) {
             $alt_fieldname = $fieldname;
@@ -1245,13 +1331,13 @@ class DatabaseObject
                     }
 
 
-                    if (isset($_GET['order_type']) && isset($_GET['order_name']) && $_GET['order_name'] == $alt_fieldname) {
+                    if ($current_order_name === $alt_fieldname && $current_order_type !== '') {
 
-                        if ($_GET['order_type'] === "ASC") {
+                        if ($current_order_type === "ASC") {
                             $new_query_ASC = "";
                             $output .= "<th class='text-center' style='vertical-align:middle;background-color:cornflowerblue;white-space:nowrap;'>" . $new_query_ASC . "&nbsp;" . $fieldname . $new_query_DESC . "&nbsp;" . "</th>";
 
-                        } elseif ($_GET['order_type'] === "DESC") {
+                        } elseif ($current_order_type === "DESC") {
                             $new_query_DESC = "";
                             $output .= "<th class='text-center' style='vertical-align:middle;background-color:cornflowerblue;white-space:nowrap;'>" . $new_query_ASC . "&nbsp;<strong>" . $fieldname . $new_query_DESC . "&nbsp;</strong>" . "</th>";
 
@@ -1326,7 +1412,7 @@ class DatabaseObject
         $value = null;
 
         $output .= "<div class ='background_light_pink'>";
-        $output .= "<form name='form_client_search'  class='form-horizontal' method='get' action='" . $_SERVER["PHP_SELF"] . "?page=1&class_name=" . get_called_class() . "'>";
+        $output .= "<form name='form_client_search'  class='form-horizontal' method='get' action='" . h($_SERVER["PHP_SELF"] . "?page=1&class_name=" . get_called_class()) . "'>";
 
         $output .= " <fieldset id='' title=''>";
         $output .= " <legend class='text-center' style='color: #0000ff'> Search " . static::$page_name . "</legend>";
@@ -1436,8 +1522,8 @@ class DatabaseObject
         $output = "";
 
 
-        $where = get_where_string(get_called_class());
-        $found_count = static::count_all_where($where);
+        [$where, $params, $types] = static::where_clause_from_request();
+        $found_count = static::count_all_where($where, $params, $types);
         $total_count = static::count_all();
 
         if ($found_count !== $total_count) {
@@ -1446,11 +1532,15 @@ class DatabaseObject
 
 
         foreach ($_GET as $key => $val) {
+            if (is_array($val)) {
+                continue;
+            }
+
             $key_clean = str_replace("_", " ", $key);
             $key_clean = ucfirst($key_clean);
 
 
-            if (!empty($_GET[$key]) && !in_array($key, ['page', 'view'])) {
+            if (!empty($val) && !in_array($key, ['page', 'view'])) {
 //                $output.="<b>".h($key_clean)." <span style='color:blue;'> ".h(urldecode($_GET[$key]))."</span></b> | ";
             }
         }

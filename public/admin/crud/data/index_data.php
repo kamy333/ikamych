@@ -5,14 +5,7 @@
 //    redirect_to('index.php');
 //}
 
-if(User::is_caroline_only()){
-    if (isset($_GET['class_name'])) {
-        $class_name = $_GET['class_name'];
-        if ($class_name != "MyExpenseCaroline") {
-            redirect_to('index.php');
-        }
-    }
-} elseif (User::is_employee() || User::is_secretary() || User::is_visitor()) {
+if (User::is_caroline_only() || User::is_employee() || User::is_secretary() || User::is_visitor()) {
     redirect_to('index.php');
 }
 ?>
@@ -38,8 +31,8 @@ if(User::is_caroline_only()){
     foreach (MyClasses::$all_class as $class) {
         if (!in_array($class, MyClasses::$disable_db_classes)) {
             echo "<tr>";
-            echo "<td><a href='/public/admin/crud/data/manage_data.php?class_name={$class}'>Manage {$class}</a></td>";
-            echo "<td><a href='/public/admin/crud/data/new_data.php?class_name={$class}'>New {$class}</a></td>";
+            echo "<td><a href='/public/admin/crud/data/manage_data.php?class_name=" . u($class) . "'>Manage " . h($class) . "</a></td>";
+            echo "<td><a href='/public/admin/crud/data/new_data.php?class_name=" . u($class) . "'>New " . h($class) . "</a></td>";
             echo "</tr>";
         }
     }

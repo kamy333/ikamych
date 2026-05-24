@@ -19,8 +19,8 @@ if (request_is_post() && request_is_same_domain()) {
     } else {
         // CSRF tests passed--form was created by us recently.
 
-        $username = trim($_POST['username']);
-        $password = trim($_POST['password']);
+        $username = trim((string)($_POST['username'] ?? ''));
+        $password = trim((string)($_POST['password'] ?? ''));
 
         $valid = new FormValidation();
 
@@ -97,7 +97,7 @@ if (request_is_post() && request_is_same_domain()) {
 <div class="row">
 
     <div class="col-md-4 col-md-offset-4  col-lg-4 col-lg-offset-4 ">
-        <form id="myform-signin" class="form-signin " action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
+        <form id="myform-signin" class="form-signin " action="<?php echo h($_SERVER['PHP_SELF']); ?>" method="POST">
             <?php echo csrf_token_tag(); ?>
             <h2 class="form-signin-heading text-center">Please sign into <br><?php echo $logo; ?> Admin area <small>ikamy.ch</small>
             </h2>

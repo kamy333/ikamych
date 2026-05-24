@@ -101,6 +101,17 @@ class MyClasses
         static::reject_class_request('Sorry, "' . $class_name . '" is not available. Please check the link and try again.');
     }
 
+    public static function require_class_access($class_name)
+    {
+        if (User::is_caroline_only() && $class_name !== 'MyExpenseCaroline') {
+            static::reject_access_request('Sorry, you cannot access this section.');
+        }
+
+        if (User::is_employee() || User::is_secretary() || User::is_visitor()) {
+            static::reject_access_request('Sorry, you cannot access this section.');
+        }
+    }
+
     private static function reject_class_request($message)
     {
         global $session;
@@ -109,6 +120,22 @@ class MyClasses
 
         if (function_exists('is_ajax_request') && is_ajax_request()) {
             http_response_code(400);
+            header('Content-Type: application/json; charset=utf-8');
+            echo json_encode(['errors' => $message]);
+            exit;
+        }
+
+        redirect_to('/public/admin/index.php');
+    }
+
+    private static function reject_access_request($message)
+    {
+        global $session;
+
+        $session->message($message);
+
+        if (function_exists('is_ajax_request') && is_ajax_request()) {
+            http_response_code(403);
             header('Content-Type: application/json; charset=utf-8');
             echo json_encode(['errors' => $message]);
             exit;

@@ -1118,13 +1118,80 @@ GROUP BY expense_type_id;";
 
     }
 
+    public static function loan_category_options()
+    {
+        return [
+            "All" => "All",
+            "1,3" => "Loan",
+            "4,5" => "Gift",
+            "6,7" => "Exclude",
+        ];
+    }
+
+    public static function normalize_loan_category($value, $default = "1,3")
+    {
+        $category = d((string) $value);
+        $options = static::loan_category_options();
+
+        if (array_key_exists($category, $options)) {
+            return $category;
+        }
+
+        return array_key_exists($default, $options) ? $default : "1,3";
+    }
+
+    public static function loan_category_filter_from_request($default = "1,3")
+    {
+        return static::normalize_loan_category($_GET["type_category"] ?? $default, $default);
+    }
+
+    public static function normalize_sort_direction($value, $default = "DESC")
+    {
+        $direction = strtoupper((string) $value);
+
+        if ($direction === "ASC" || $direction === "DESC") {
+            return $direction;
+        }
+
+        return $default === "ASC" ? "ASC" : "DESC";
+    }
+
+    public static function positive_int_or_default($value, $default = 2)
+    {
+        $id = filter_var($value, FILTER_VALIDATE_INT, ["options" => ["min_range" => 1]]);
+
+        return $id === false ? (int) $default : (int) $id;
+    }
+
+    public static function show_document_from_request()
+    {
+        return ($_GET["show_hide_doc"] ?? "hide_doc") === "show_doc";
+    }
+
+    private static function normalize_id_list($value)
+    {
+        $ids = [];
+
+        foreach (explode(",", (string) $value) as $id) {
+            $id = filter_var(trim($id), FILTER_VALIDATE_INT, ["options" => ["min_range" => 1]]);
+            if ($id !== false) {
+                $ids[] = (int) $id;
+            }
+        }
+
+        return implode(",", array_unique($ids));
+    }
+
     public static function form_select_person()
     {
 
         global $Nav;
 
         $output = "";
-        $desc = "DESC";
+        $currentPersonId = static::positive_int_or_default($_GET["person_id"] ?? 0, 0);
+        $currentCategory = static::loan_category_filter_from_request();
+        $currentSort = static::normalize_sort_direction($_GET["sort"] ?? "DESC");
+        $showHideDoc = static::show_document_from_request() ? "show_doc" : "hide_doc";
 
 
         $sql = "SELECT t1.person_id,t2.person_name
@@ -1145,18 +1212,20 @@ GROUP BY expense_type_id;";
             $output .= "<select class='form - control m - b' name='person_id'>";
             $results = static::find_by_sql($sql);
             if ($results) {
-                if (isset($_GET["person_id"])) {
-                    $p_id = $_GET["person_id"];
-                    $myperson1 = MyExpensePerson::find_by_id($p_id);
-                    $person1 = $myperson1->person_name;
-                    $output .= "<option selected value='{$p_id}'>{$person1}</option>";
+                if ($currentPersonId > 0) {
+                    $myperson1 = MyExpensePerson::find_by_id($currentPersonId);
+                    if ($myperson1) {
+                        $output .= "<option selected value='" . h($currentPersonId) . "'>" . h($myperson1->person_name) . "</option>";
+                    }
                 }
 
                 foreach ($results as $result) {
                     $myperson = MyExpensePerson::find_by_id($result->person_id);
-                    $person = $myperson->person_name;
+                    if (!$myperson) {
+                        continue;
+                    }
 
-                    $output .= "<option value='{$result->person_id}'>{$person}</option>";
+                    $output .= "<option value='" . h($result->person_id) . "'>" . h($myperson->person_name) . "</option>";
                 }
 
             }
@@ -1165,49 +1234,25 @@ GROUP BY expense_type_id;";
 
         }
         $output .= "<select class='form - control m - b' name='type_category'>";
-
-        if (isset($_GET["type_category"])) {
-
-            $exp_type_ids = d($_GET["type_category"]);
-            $cat = static::get_category_name($exp_type_ids);
-
-            $output .= "<option selected value='{$exp_type_ids}'>{$cat}</option>";
+        foreach (static::loan_category_options() as $value => $label) {
+            $selected = $value === $currentCategory ? " selected" : "";
+            $output .= "<option{$selected} value='" . h(u($value)) . "'>" . h($label) . "</option>";
         }
-
-        $output .= "<option value='" . u("All") . "'>All</option>";
-        $output .= "<option value='" . u("1,3") . "'>Loan</option>";
-        $output .= "<option value='" . u("4,5") . "'>Gift</option>";
-        $output .= "<option value='" . u("6,7") . "'>Exclude</option>";
 
         $output .= "</select>";
 
         $output .= "<select class='form - control m - b' name='sort'>";
-        if (isset($_GET["sort"])) {
-            $sort = $_GET["sort"];
-
-            if ($sort == "ASC") {
-                $output .= "<option selected value='" . u("ASC") . "'>ASC</option>";
-                $output .= "<option  value='" . u("DESC") . "'>DESC</option>";
-
-            } else {
-                $output .= "<option selected value='" . u("DESC") . "'>DESC</option>";
-                $output .= "<option  value='" . u("ASC") . "'>ASC</option>";
-
-            }
-
-        } else {
-            $output .= "<option selected value='" . u("DESC") . "'>DESC</option>";
-            $output .= "<option  value='" . u("ASC") . "'>ASC</option>";
-
+        foreach (["DESC", "ASC"] as $direction) {
+            $selected = $direction === $currentSort ? " selected" : "";
+            $output .= "<option{$selected} value='" . h(u($direction)) . "'>" . h($direction) . "</option>";
         }
-
         $output .= "</select>";
 
 
 //        if(User::is_kamy()){
         $output .= "<select class='form - control m - b' name='show_hide_doc'>";
-        $output .= "<option selected value='" . u("hide_doc") . "'>Hide</option>";
-        $output .= "<option  value='" . u("show_doc") . "'>Show</option>";
+        $output .= "<option" . ($showHideDoc === "hide_doc" ? " selected" : "") . " value='" . h(u("hide_doc")) . "'>Hide</option>";
+        $output .= "<option" . ($showHideDoc === "show_doc" ? " selected" : "") . " value='" . h(u("show_doc")) . "'>Show</option>";
 
         $output .= "</select>";
 
@@ -1263,6 +1308,11 @@ GROUP BY expense_type_id;";
     {
 
         $output = "";
+        $personId = static::positive_int_or_default($personId, 0);
+        if ($personId < 1) {
+            return $output;
+        }
+        $desc = static::normalize_sort_direction($desc);
 
         if ($NOT) {
             $newNot = "NOT";
@@ -1278,36 +1328,21 @@ GROUP BY expense_type_id;";
             $addCol = "";
         }
 
-        if (isset($_GET["type_category"])) {
-            $cat = d($_GET["type_category"]);
-            $cat_name = static::get_category_name($cat);
-
-            if ($cat == "All") {
-                $and_type = "";
-                $and_type1 = "";
-            } else {
-                $and_type = "";
-                $and_type = " AND t1.expense_type_id IN ($cat) ";
-                $and_type1 = " AND expense_type_id IN ($cat) ";
-            }
-
-
+        $cat = static::loan_category_filter_from_request();
+        $cat_name = static::get_category_name($cat);
+        if ($cat == "All") {
+            $and_type = "";
         } else {
-
-            $cat = "1,3";
-            $cat_name = MyExpense::get_category_name($cat);
             $and_type = " AND t1.expense_type_id IN ($cat) ";
-            $and_type1 = " AND expense_type_id IN ($cat) ";
-
         }
 
 
+        $exclude = static::normalize_id_list($exclude);
         if ($exclude == "") {
             $and_exclude = "";
         } else {
 
             $and_exclude = " AND t1.id $newNot IN ($exclude) ";
-            $and_exclude1 = " AND id $newNot IN ($exclude) ";
         }
 
 
@@ -1317,7 +1352,7 @@ GROUP BY expense_type_id;";
             ON t1.person_id = t2.id
            INNER JOIN myexpense_type AS t3  
             ON t1.expense_type_id=t3.id
-        WHERE t1.person_id=$personId
+        WHERE t1.person_id=?
         $and_type
         $and_exclude ORDER BY t1.id {$desc}";
 
@@ -1352,7 +1387,7 @@ GROUP BY expense_type_id;";
         $output .= "</tr>";
 
 
-        $results = static::find_by_sql($sql);
+        $results = static::find_by_sql_prepared($sql, [$personId], "i");
         if ($results) {
 
             foreach ($results as $result) {
@@ -1360,15 +1395,15 @@ GROUP BY expense_type_id;";
                 $result->set_up_display();
 
                 $myperson = MyExpensePerson::find_by_id($result->person_id);
-                $person = $myperson->person_name;
+                $person = $myperson ? $myperson->person_name : "";
 
                 $mytype = MyExpenseType::find_by_id($result->expense_type_id);
-                $type = $mytype->expense_type;
-                $categ = $mytype->category;
+                $type = $mytype ? $mytype->expense_type : "";
+                $categ = $mytype ? $mytype->category : "";
 
 
                 $myCurrency = Currency::find_by_id($result->ccy_id);
-                $ccy = $myCurrency->currency;
+                $ccy = $myCurrency ? $myCurrency->currency : "";
 
 
                 $date = date_create($result->expense_date);
@@ -1377,19 +1412,19 @@ GROUP BY expense_type_id;";
 
                 $output .= "<tr>";
                 if (User::is_admin()) {
-                    $lnk = "/public/admin/crud/data/edit_data.php?class_name=" . get_called_class() . "&id={$result->id}";
-                    $output .= "<td class='text-center'><a href='{$lnk}'>{$result->id}</a></td>";
+                    $lnk = "/public/admin/crud/data/edit_data.php?class_name=" . u(get_called_class()) . "&id=" . u($result->id);
+                    $output .= "<td class='text-center'><a href='" . h($lnk) . "'>" . h($result->id) . "</a></td>";
                 } else {
-                    $output .= "<td class='text-center'>{$result->id}</td>";
+                    $output .= "<td class='text-center'>" . h($result->id) . "</td>";
 
                 }
-                $output .= "<td class='text-center'>{$person}</td>";
-                $output .= "<td class='text-left'>{$result->comment}</td>";;
-                $output .= "<td class='text-center' STYLE='white-space:nowrap;'>{$mydate}</td>";
-                $output .= "<td class='text-center'>{$ccy}</td>";
+                $output .= "<td class='text-center'>" . h($person) . "</td>";
+                $output .= "<td class='text-left'>" . h($result->comment) . "</td>";;
+                $output .= "<td class='text-center' STYLE='white-space:nowrap;'>" . h($mydate) . "</td>";
+                $output .= "<td class='text-center'>" . h($ccy) . "</td>";
 
                 $output .= "<td class='text-right'>" . format_number($result->amount) . "</td>";
-                $output .= "<td class='text-right'>{$result->rate}</td>";
+                $output .= "<td class='text-right'>" . h($result->rate) . "</td>";
                 $output .= "<td class='text-right'>" . format_number($result->amountCHF) . "</td>";
 
                 if ($result->cash == 1) {
@@ -1402,8 +1437,8 @@ GROUP BY expense_type_id;";
 
                 }
 
-                $output .= "<td class='text-center'>{$type}</td>";
-                $output .= "<td class='text-center'>{$categ}</td>";
+                $output .= "<td class='text-center'>" . h($type) . "</td>";
+                $output .= "<td class='text-center'>" . h($categ) . "</td>";
 
                 if ($show_doc) {
 //                    if (User::is_kamy()) {
@@ -1412,10 +1447,10 @@ GROUP BY expense_type_id;";
 //                    }
                 }
                 if ($is_button) {
-                    $href = clean_query_string("class_edit.php?class_name=" . get_called_class() . "&id=" . urlencode($result->id));
-                    $output .= "<td class='text-center'><a class='btn btn-primary table-btn' style='width: 5em' href='" . $href . "'>Edit</a></td>";
-                    $href = clean_query_string("class_delete.php?class_name=" . get_called_class() . "&id=" . urlencode($result->id));
-                    $output .= "<td class='text-center'><a class='btn btn-danger table-btn' href='class_delete?class_name=" . get_called_class() . "&id=" . urlencode($result->id) . "'>Delete</a></td>";
+                    $href = clean_query_string("class_edit.php?class_name=" . u(get_called_class()) . "&id=" . u($result->id));
+                    $output .= "<td class='text-center'><a class='btn btn-primary table-btn' style='width: 5em' href='" . h($href) . "'>Edit</a></td>";
+                    $href = clean_query_string("class_delete.php?class_name=" . u(get_called_class()) . "&id=" . u($result->id));
+                    $output .= "<td class='text-center'><a class='btn btn-danger table-btn' href='" . h($href) . "'>Delete</a></td>";
 
                 }
 
@@ -1437,11 +1472,11 @@ GROUP BY expense_type_id;";
         FROM " . static::$table_name . " AS t1
           INNER JOIN currency AS t2
             ON t1.ccy_id = t2.id 
-        WHERE t1.person_id=$personId
+        WHERE t1.person_id=?
         $and_type
         $and_exclude";
 
-        $sum = number_format((float)static::sum_field_where_by_sql($sql), 2);
+        $sum = number_format((float)static::sum_field_where_by_sql_prepared($sql, [$personId], "i"), 2);
 
 
         $output .= "<tr>";
@@ -1450,7 +1485,7 @@ GROUP BY expense_type_id;";
         $output .= "<td class='text-center'><strong>Total</strong></td>";
         $output .= "<td class='text-right'><strong>" . "CHF" . "</strong></td>";
         $output .= "<td class='text-right'><strong>" . $sum . "</strong></td>";
-        $output .= "<td class='text-right'><strong>" . $cat_name . "</strong></td>";
+        $output .= "<td class='text-right'><strong>" . h($cat_name) . "</strong></td>";
         $output .= str_repeat("<td></td>", 1);
         $output .= "</tr>";
         $output .= "</table>";

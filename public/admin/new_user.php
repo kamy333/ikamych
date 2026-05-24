@@ -1,11 +1,13 @@
 <?php require_once('../../includes/initialize.php'); ?>
 <?php  $session->confirmation_protected_page(); ?>
-<?php if(User::is_employee() || User::is_visitor()){ redirect_to('index.php');}?>
+<?php if(User::is_caroline_only() || User::is_employee() || User::is_secretary() || User::is_visitor()){ redirect_to('index.php');}?>
 
 <?php // var_dump($session) ?>
 
 <?php
 $class_name="User";
+$get_item = null;
+$post_link = $_SERVER["PHP_SELF"];
 
 ?>
 <?php
@@ -36,7 +38,14 @@ if (!csrf_token_is_valid() || !csrf_token_is_recent()) {
         if (isset($_POST['first_name'])) {
             $user->last_name = trim($_POST['last_name']);
         }
-        if (isset($_POST['id'])){ $user->id= (int)$_POST['id'] ; }
+        if (isset($_POST['id'])) {
+            $posted_id = filter_input(INPUT_POST, 'id', FILTER_VALIDATE_INT, ['options' => ['min_range' => 1]]);
+            if ($posted_id === false || $posted_id === null) {
+                $message = 'Sorry, a valid user ID is required.';
+            } else {
+                $user->id = $posted_id;
+            }
+        }
 
         if (isset($_POST['id'])) {
             if (!isset($_POST['password']) || empty($_POST['password'])) {
@@ -97,8 +106,16 @@ if (!csrf_token_is_valid() || !csrf_token_is_recent()) {
     }
 }
 } elseif(isset($_GET['id'])) {
-    $id=$_GET['id'];
-    $get_item=  $class_name::find_by_id($id);
+    $requested_id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT, ['options' => ['min_range' => 1]]);
+    if ($requested_id === false || $requested_id === null) {
+        $session->message('Sorry, a valid user ID is required.');
+        redirect_to($class_name::$page_manage);
+    }
+    $get_item=  $class_name::find_by_id($requested_id);
+    if (!$get_item) {
+        $session->message('Sorry, the requested user was not found.');
+        redirect_to($class_name::$page_manage);
+    }
  //   $_GET['user_type_id']=$get_item->user_type_id;
 //   var_dump($get_item);
 
@@ -107,10 +124,8 @@ if (!csrf_token_is_valid() || !csrf_token_is_recent()) {
 
 
 
-if(isset($_GET['id'])){
- $post_link=$_SERVER["PHP_SELF"]."?id=".urldecode($_GET['id']);
-}else{
- $post_link=$_SERVER["PHP_SELF"];
+if(isset($requested_id)){
+ $post_link=$_SERVER["PHP_SELF"]."?id=".u($requested_id);
 }
 
 }

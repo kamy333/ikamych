@@ -1,11 +1,9 @@
 <?php require_once('../includes/initialize.php'); ?>
 
 <?php
-if (User::is_caroline() || User::is_weslley()) {
-} else {
-    redirect_to('../index.php');
+if (!User::is_caroline() && !User::is_weslley()) {
+    redirect_to('/public/index.php');
 }
-?>
 ?>
 
 
@@ -24,17 +22,8 @@ if (User::is_caroline() || User::is_weslley()) {
 <?php
 
 
-if (isset($_SESSION["user_id"])) {
-    $user = User::find_by_id($_SESSION['user_id']);
-} else {
-    $user = "";
-}
-
-if (isset($_GET["person_id"])) {
-    $p_id = $_GET["person_id"];
-} else {
-    $p_id = 2;
-}
+$user = isset($_SESSION["user_id"]) ? User::find_by_id($_SESSION['user_id']) : null;
+$p_id = MyExpense::positive_int_or_default($_GET["person_id"] ?? 2, 2);
 
 $persons = MyExpensePerson::find_all();
 
@@ -42,7 +31,7 @@ foreach ($persons as $person) {
     if ($person->authorized_user) {
         $auth_users = explode(",", $person->authorized_user);
         foreach ($auth_users as $auth_user) {
-            if ($user->username == $auth_user) {
+            if ($user && $user->username == trim($auth_user)) {
                 $p_id = $person->id;
             }
         }
@@ -50,63 +39,36 @@ foreach ($persons as $person) {
 }
 
 $myperson = MyExpensePerson::find_by_id($p_id);
+if (!$myperson) {
+    $session->message("Requested expense person was not found.");
+    redirect_to('/public/index.php');
+}
 $person = $myperson->person_name;
 
 if (User::is_caroline() || User::is_weslley()) {
     echo " <div>";
 
     $msg = "";
+    $output = "";
 
-    $sort = "DESC";
-    if (isset($_GET["sort"])) {
-        $sort = $_GET["sort"];
-    }
+    $sort = MyExpense::normalize_sort_direction($_GET["sort"] ?? "DESC");
 
-    $Url = $_SERVER['SERVER_NAME'] . parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
-    $urla = $url . "?sort=ASC";
-    $urld = $url . "?sort=DESC";
     $exclude = ""; //"10,11,29,43,44,45,58,63";
 
-    if (isset($_GET["type_category"])) {
-        $cat = d($_GET["type_category"]);
-        $cat_name = MyExpense::get_category_name($cat);
-
-        if ($cat == "All") {
-            $and_type = "";
-            $and_type1 = "";
-
-        } else {
-            $and_type = "";
-            $and_type = " AND t1.expense_type_id IN ($cat) ";
-            $and_type1 = " AND expense_type_id IN ($cat) ";
-        }
+    $cat = MyExpense::loan_category_filter_from_request();
+    $cat_name = MyExpense::get_category_name($cat);
+    if ($cat == "All") {
+        $and_type = "";
     } else {
-        $cat = "1,3";
-        $cat_name = MyExpense::get_category_name($cat);
         $and_type = " AND t1.expense_type_id IN ($cat) ";
-        $and_type1 = " AND expense_type_id IN ($cat) ";
     }
 
-
-    if (isset($_GET["show_hide_doc"])) {
-        $show_hide_doc = $_GET["show_hide_doc"];
-        if ($show_hide_doc == "hide_doc") {
-            $show_doc = false;
-        } else {
-            $show_doc = true;
-        }
-
-    } else {
-        $show_doc = false;
-    }
-
+    $show_doc = MyExpense::show_document_from_request();
 
     if ($exclude == "") {
         $and_exclude = "";
-        $and_exclude1 = "";
     } else {
         $and_exclude = " AND t1.id NOT IN ($exclude) ";
-        $and_exclude1 = " AND id NOT IN ($exclude) ";
     }
 
 
@@ -118,25 +80,27 @@ if (User::is_caroline() || User::is_weslley()) {
         FROM " . " myexpense " . " AS t1
           INNER JOIN currency AS t2
             ON t1.ccy_id = t2.id 
-        WHERE t1.person_id=$p_id
+        WHERE t1.person_id=?
         $and_type 
         $and_exclude ";
 
-    $sum = myExpense::sum_field_where_by_sql($sql);
+    $sum = (float) MyExpense::sum_field_where_by_sql_prepared($sql, [$p_id], "i");
+    $safeCatName = h($cat_name);
+    $safePerson = h($person);
 
     if ($sum < 0) {
         $sum = "<span style='color: red'><b>CHF " . number_format($sum, 2) . "</b></span>";
-        $due = "<span style='color: red'><b>$cat_name : Total Due in favor of {$person}:</b></span>";
+        $due = "<span style='color: red'><b>{$safeCatName} : Total Due in favor of {$safePerson}:</b></span>";
     } else {
         $sum = "<span style='color: blue'><b>CHF " . number_format($sum, 2) . "</b></span>";
-        $due = "<span style='color: blue'><b> $cat_name : Total Due in favor of Kamran:</b></span>";
+        $due = "<span style='color: blue'><b> {$safeCatName} : Total Due in favor of Kamran:</b></span>";
     }
 
     $msg .= "<br>";
     $msg .= MyExpense::form_select_person();
     $msg .= str_repeat("&nbsp;", 5) . $due . str_repeat("&nbsp;", 5) . $sum;
     if (User::is_admin()) {
-        $msg .= str_repeat("&nbsp;", 10) . "<a href='/public/admin/crud/ajax/manage_ajax.php?class_name=MyExpense'><span style='color:blueviolet;'><b>Add Expense Item</b></span></a>";
+        $msg .= str_repeat("&nbsp;", 10) . "<a href='" . h('/public/admin/crud/ajax/manage_ajax.php?class_name=MyExpense') . "'><span style='color:blueviolet;'><b>Add Expense Item</b></span></a>";
     }
 
     $msg .= "<br><br>";
@@ -150,7 +114,7 @@ if (User::is_caroline() || User::is_weslley()) {
     echo "<div class='row center'>";
     $exclude = "";// "10,11,29,43,44,45,58,63";
 
-    echo Table::ibox_table(myExpense::aPerson($p_id, true, $exclude, $sort, $show_doc, false), "$person - Kamran", 12, 0);
+    echo Table::ibox_table(MyExpense::aPerson($p_id, true, $exclude, $sort, $show_doc, false), h($person . " - Kamran"), 12, 0);
 
     echo "</div>";
 } ?>

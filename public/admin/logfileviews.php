@@ -9,12 +9,14 @@ if (!User::is_admin()) {
 $logfile = SITE_ROOT . DS . 'logs' . DS . 'views.txt';
 $user = User::find_by_id($session->user_id);
 
-if (isset($_GET['clear']) && $_GET['clear'] == 'true') {
+if (request_is_post() && request_is_same_domain() && ($_POST['clear_log'] ?? '') === 'true') {
+    if (!csrf_token_is_valid() || !csrf_token_is_recent()) {
+        $session->message("Request was not valid");
+        redirect_to('logfileviews.php');
+    }
     file_put_contents($logfile, '');
     // Add the first log entry
     log_action('Logs Views Cleared', "by Username {$user->username} with ID {$session->user_id}");
-    // redirect to this same page so that the URL won't 
-    // have "clear=true" anymore
     redirect_to('logfileviews.php');
 }
 ?>
@@ -33,7 +35,12 @@ if (isset($_GET['clear']) && $_GET['clear'] == 'true') {
 
 <h2>Log File Views</h2>
 
-<p><a href="logfileviews.php?clear=<?php echo u('true'); ?>">Clear log View file</a><p>
+<form action="logfileviews.php" method="POST">
+    <?php echo csrf_token_tag(); ?>
+    <input type="hidden" name="clear_log" value="true">
+    <button type="submit" class="btn btn-danger">Clear log View file</button>
+</form>
+<br>
 
     <?php
 
@@ -57,16 +64,16 @@ if (isset($_GET['clear']) && $_GET['clear'] == 'true') {
                 $userId = (int)substr($entry, $pos + $lensearch);
                 If ($userId) {
                     $user = User::find_by_id($userId);
-                    $u = $user->username . " " . $user->first_name . " " . $user->last_name;
+                    $u = $user ? $user->username . " " . $user->first_name . " " . $user->last_name : "Unknown user.";
                 } else {
 
                     $u = "Not logged in.";
                 }
 
                 if (!$userId) {
-                    echo "<li>{$entry} |  $u</li>";
+                    echo "<li>" . h($entry) . " |  " . h($u) . "</li>";
                 } else {
-                    echo "<li style='background-color: yellow'>{$entry} |  $u</li>";
+                    echo "<li style='background-color: yellow'>" . h($entry) . " |  " . h($u) . "</li>";
                 }
 
             }
@@ -74,7 +81,7 @@ if (isset($_GET['clear']) && $_GET['clear'] == 'true') {
         echo "</ul>";
         fclose($handle);
     } else {
-        echo "Could not read from {$logfile}.";
+        echo "Could not read from " . h($logfile) . ".";
     }
 
     ?>

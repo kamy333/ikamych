@@ -621,17 +621,22 @@ class ChatFriend2 extends DatabaseObject
 
     public static function img_viewer(){
         $output = "";
-        if(isset($_GET['chat_id'])){
-            $chat=static::find_by_id($_GET['chat_id']);
+        $chat_id = filter_input(INPUT_GET, 'chat_id', FILTER_VALIDATE_INT, [
+            'options' => ['min_range' => 1],
+        ]);
+
+        if($chat_id !== false && $chat_id !== null){
+            $chat=static::find_by_id($chat_id);
             if($chat){
+                $page_public = h(static::$page_public);
                 $output .= "<div class='row'>";
                 $output .= "<div class='col-lg-8 col-md-offset-2' >";
-                $output .= "<a href='".static::$page_public."'>Back to chat</a>";
-                $output .= "<a href='".static::$page_public."'>";
+                $output .= "<a href='{$page_public}'>Back to chat</a>";
+                $output .= "<a href='{$page_public}'>";
                 $output.="<img class=\"img-responsive\" alt=\"Responsive image\" style='width:100%; height:100%' ";
                 $output.="src='";
 
-                $output.=$chat->chat_path_and_placeholder();
+                $output.=h($chat->chat_path_and_placeholder());
 
                 $output.="' alt='' >";
                 $output .= "</a>";

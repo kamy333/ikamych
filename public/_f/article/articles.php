@@ -29,11 +29,17 @@ echo article_subject();
 
 
 if (isset($_GET['submitBookCategory'])) {
-    echo book_by_sql($_GET['BookCategory'] ?? 1);
+    $book_category = filter_input(INPUT_GET, 'BookCategory', FILTER_VALIDATE_INT, [
+        'options' => ['default' => 1, 'min_range' => 1],
+    ]);
+    echo book_by_sql($book_category ?: 1);
 }
 
 if (isset($_GET['submitArticleSubject'])) {
-    echo article_by_sql($_GET['ArticleSubject'] ?? 1);
+    $article_subject = filter_input(INPUT_GET, 'ArticleSubject', FILTER_VALIDATE_INT, [
+        'options' => ['default' => 1, 'min_range' => 1],
+    ]);
+    echo article_by_sql($article_subject ?: 1);
 } else {
     if (!isset($_GET['submitBookCategory'])) {
         echo article_by_sql(1);

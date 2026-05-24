@@ -5,6 +5,22 @@ if (User::is_employee() || User::is_secretary() || User::is_visitor()) {
     redirect_to('index.php');
 }
 
+$photo_id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT, [
+    'options' => ['min_range' => 1],
+]);
+
+if ($photo_id === false || $photo_id === null) {
+    $session->message("The photo was not selected");
+    redirect_to("index.php");
+}
+
+$photo = Photo::find_by_id($photo_id);
+
+if (!$photo) {
+    $session->message("This photo does not exist or has been removed");
+    redirect_to("index.php");
+}
+
 ?>
 
     <!---->
@@ -15,7 +31,7 @@ if (User::is_employee() || User::is_secretary() || User::is_visitor()) {
 <?php $layout_context = "admin"; ?>
 <?php $active_menu = "admin" ?>
 <?php $stylesheets = "" //custom_form  ?>
-<?php $view_full_table == 1 ? $fluid_view = true : $fluid_view = false; ?>
+<?php $fluid_view = false; ?>
 <?php $javascript = "form_admin" ?>
 <?php $sub_menu = false ?>
 <?php include(SITE_ROOT . DS . 'public' . DS . 'layouts' . DS . "header.php") ?>
@@ -31,29 +47,21 @@ if (User::is_employee() || User::is_secretary() || User::is_visitor()) {
 
 
 
-if(empty($_GET['id']) || !isset($_GET['id']) ){
-    $session->message("The photo was not selected");
-    redirect_to("index.php");
-}
+   if(isset($_POST['submit']) && request_is_same_domain()){
 
-$photo=Photo::find_by_id($_GET['id']);
+       if (!csrf_token_is_valid() || !csrf_token_is_recent()) {
+           $message = "Sorry, request was not valid.";
+       } else {
+           $author = trim((string)($_POST['author'] ?? ''));
+           $body = trim((string)($_POST['body'] ?? ''));
 
-if (!$photo) {
-    $session->message("This photo does not exists or have been removed");
-    redirect_to("index.php");
-}
-
-   if(isset($_POST['submit'])){
-
-   $author=   trim($_POST['author']) ;
-   $body=    trim($_POST['body'])  ;
-
-$new_comment=Comment::create_comment($photo->id,$author,$body);
-if($new_comment &&$new_comment->save()){
-    redirect_to("photo.php?id=" . urlencode($photo->id));
-} else {
-    $message="not able to save comment";
-}
+           $new_comment=Comment::create_comment($photo->id,$author,$body);
+           if($new_comment &&$new_comment->save()){
+               redirect_to("photo.php?id=" . u($photo->id));
+           } else {
+               $message="not able to save comment";
+           }
+       }
 
  } else {
        $message="";
@@ -76,11 +84,11 @@ $comments=Comment::find_the_comment($photo->id);
                 <!-- Blog Post -->
 
                 <!-- Title -->
-                <h1><?php echo $photo->title; ?></h1>
+                <h1><?php echo h($photo->title); ?></h1>
 
                 <!-- Author -->
-                <p class="lead"><?php echo $photo->caption; ?>
-                    by <a href="#"><?php echo $user->fullname(); ?></a>
+                <p class="lead"><?php echo h($photo->caption); ?>
+                    by <a href="#"><?php echo is_object($user) ? h($user->fullname()) : ''; ?></a>
                 </p>
 
                 <hr>
@@ -92,13 +100,13 @@ $comments=Comment::find_the_comment($photo->id);
 
 
                 <!-- Preview Image -->
-                <img class="img-responsive" src="<?php echo str_replace("../","",$photo->picture_path()) ;
+                <img class="img-responsive" src="<?php echo h(str_replace("../","",$photo->picture_path())) ;
                 ?>" alt="">
 
                 <hr>
 
                 <!-- Post Content -->
-                <p class="lead"><?php echo $photo->description ?></p>
+                <p class="lead"><?php echo h($photo->description) ?></p>
 
 
                 <hr>
@@ -112,6 +120,7 @@ $comments=Comment::find_the_comment($photo->id);
         <div class="well">
             <h4>Leave a Comment:</h4>
             <form role="form" method="post">
+                <?php echo csrf_token_tag(); ?>
                 <div class="form-group">
                     <label for="author">Author</label>
                     <input class="form-control" type="text" name="author" id="author">
@@ -138,11 +147,11 @@ $comments=Comment::find_the_comment($photo->id);
                         <img class="media-object" src="http://placehold.it/64x64" alt="">
                     </a>
                     <div class="media-body">
-                        <h4 class="media-heading"><?php echo $comment->author; ?>
+                        <h4 class="media-heading"><?php echo h($comment->author); ?>
 <!--                            <small>August 25, 2014 at 9:30 PM</small>-->
-                            <small><?php echo date("d i Y @ H\\hi", strtotime($comment->input_date))   ;// ?></small>
+                            <small><?php echo h(date("d i Y @ H\\hi", strtotime($comment->input_date)))   ;// ?></small>
                         </h4>
-                     <?php echo $comment->body; ?>
+                     <?php echo h($comment->body); ?>
                     </div>
                 </div>
 

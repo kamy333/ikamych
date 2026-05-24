@@ -294,12 +294,18 @@ $('.clockpicker').clockpicker({    placement:'top',    align: 'bottom',    donet
 
 
             if (isset($_GET['add_hour']) || isset($_GET['add_minute'])) {
-                if (isset($_GET['add_hour'])) {
-                    $add_hour = (int)$_GET['add_hour'];
+                $add_hour = filter_input(INPUT_GET, 'add_hour', FILTER_VALIDATE_INT, [
+                    'options' => ['default' => 0, 'min_range' => 0, 'max_range' => 12],
+                ]);
+                $add_minute = filter_input(INPUT_GET, 'add_minute', FILTER_VALIDATE_INT, [
+                    'options' => ['default' => 0, 'min_range' => 0, 'max_range' => 720],
+                ]);
+
+                if ($add_hour === false || $add_minute === false) {
+                    unset($_GET);
+                    return;
                 }
-                if (isset($_GET['add_minute'])) {
-                    $add_minute = (int)$_GET['add_minute'];
-                }
+
                 if (is_numeric($add_minute) && is_numeric($add_hour)) {
 
                     if ($add_hour > 0) {
@@ -328,8 +334,8 @@ $('.clockpicker').clockpicker({    placement:'top',    align: 'bottom',    donet
                 $hour = $add_hour . " hours";
             }
 
-            if (isset($_GET['commentaire'])) {
-                $me->commentaire = $_GET['commentaire'];
+            if (isset($_GET['commentaire']) && !is_array($_GET['commentaire'])) {
+                $me->commentaire = substr(trim((string)$_GET['commentaire']), 0, 255);
             } else {
                 $me->commentaire = "Quick Add!";
 
@@ -367,12 +373,18 @@ $('.clockpicker').clockpicker({    placement:'top',    align: 'bottom',    donet
         if (isset($_GET) && isset($_GET['class_name']) && isset($_GET['action']) && $_GET['class_name'] === 'HeurePresence' && $_GET['action'] == 'quicksubstracthours') {
 
             if (isset($_GET['add_hour']) || isset($_GET['add_minute'])) {
-                if (isset($_GET['add_hour'])) {
-                    $add_hour = (int)$_GET['add_hour'];
+                $add_hour = filter_input(INPUT_GET, 'add_hour', FILTER_VALIDATE_INT, [
+                    'options' => ['default' => 0, 'min_range' => 0, 'max_range' => 12],
+                ]);
+                $add_minute = filter_input(INPUT_GET, 'add_minute', FILTER_VALIDATE_INT, [
+                    'options' => ['default' => 0, 'min_range' => 0, 'max_range' => 720],
+                ]);
+
+                if ($add_hour === false || $add_minute === false) {
+                    unset($_GET);
+                    return;
                 }
-                if (isset($_GET['add_minute'])) {
-                    $add_minute = (int)$_GET['add_minute'];
-                }
+
                 if (is_numeric($add_minute) && is_numeric($add_hour)) {
 
                     if ($add_hour > 0) {
@@ -405,8 +417,8 @@ $('.clockpicker').clockpicker({    placement:'top',    align: 'bottom',    donet
                 $hour = $add_hour . " hours";
             }
 
-            if (isset($_GET['commentaire'])) {
-                $me->commentaire = $_GET['commentaire'];
+            if (isset($_GET['commentaire']) && !is_array($_GET['commentaire'])) {
+                $me->commentaire = substr(trim((string)$_GET['commentaire']), 0, 255);
             } else {
                 $me->commentaire = "Quick Add!";
 
@@ -929,29 +941,30 @@ The Search date Inputed is not valid " . $arg[0] . " </p>";
         $btn = "";
 
         $output = "";
-        $href = $Nav->http . "public/admin/manage_ajax.php?class_name=HeurePresence";
+        $params = ['class_name' => 'HeurePresence'];
 
         if ($add === "add") {
-            $href .= "&action=quickaddhours";
+            $params['action'] = 'quickaddhours';
         } elseif ($add === "substract") {
-            $href .= "&action=quicksubstracthours";
+            $params['action'] = 'quicksubstracthours';
 
         }
 
-
-        $href .= "&return_to=" . $_SERVER['PHP_SELF'];
+        $params['return_to'] = $_SERVER['PHP_SELF'];
         if (isset($hour) && $hour > 0) {
-            $href .= "&add_hour={$hour}";
+            $params['add_hour'] = (int)$hour;
         }
         if (isset($minute) && $minute > 0) {
-            $href .= "&add_minute={$minute}";
+            $params['add_minute'] = (int)$minute;
         }
         if ($commentaire) {
-            $href .= "&commentaire={$commentaire}";
+            $params['commentaire'] = $commentaire;
         }
 
+        $href = clean_query_string($Nav->http . "public/admin/manage_ajax.php?" . http_build_query($params));
+
         $output .= "|&nbsp;&nbsp;<a  class='{$btn}
-        '  href=\"" . $href . "\">{$text} " . " </a><span>&nbsp;</span>";
+        '  href=\"" . h($href) . "\">" . h($text) . " </a><span>&nbsp;</span>";
 
         return $output;
 

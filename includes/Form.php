@@ -90,8 +90,11 @@ class Form extends DatabaseObject
     {
 
         if (isset($_GET['id']) && !isset($_GET['duplicate_record'])) {
-            $value = (int)$_GET['id'];
-            return "<input type='hidden' name='id' value='{$value}'>";
+            $value = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT, ['options' => ['min_range' => 1]]);
+            if ($value === false || $value === null) {
+                return "";
+            }
+            return "<input type='hidden' name='id' value='" . u($value) . "'>";
         } else {
             return "";
         }
@@ -100,7 +103,7 @@ class Form extends DatabaseObject
 
     static public function class_name($class_name)
     {
-        return "<input type='hidden' name='class_name' value='{$class_name}'>";
+        return "<input type='hidden' name='class_name' value='" . h($class_name) . "'>";
 
     }
 

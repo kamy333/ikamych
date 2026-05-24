@@ -1,17 +1,22 @@
 <?php require_once("../../includes/initialize.php"); ?>
 <?php  $session->confirmation_protected_page(); ?>
+<?php if (!User::is_admin()) {
+    redirect_to("index.php");
+} ?>
 
 <?php
 
   $logfile = SITE_ROOT.DS.'logs'.DS.'log.txt';
   $user=User::find_by_id($session->user_id);
 
-  if( isset($_GET['clear'])&& $_GET['clear'] == 'true') {
+  if (request_is_post() && request_is_same_domain() && ($_POST['clear_log'] ?? '') === 'true') {
+      if (!csrf_token_is_valid() || !csrf_token_is_recent()) {
+          $session->message("Request was not valid");
+          redirect_to('logfile.php');
+      }
 		file_put_contents($logfile, '');
 	  // Add the first log entry
 	  log_action('Logs Cleared', "by Username {$user->username} with ID {$session->user_id}");
-    // redirect to this same page so that the URL won't 
-    // have "clear=true" anymore
     redirect_to('logfile.php');
   }
 ?>
@@ -30,7 +35,12 @@
 
 <h2>Log File</h2>
 
-<p><a href="logfile.php?clear=<?php echo u('true');?>">Clear log file</a><p>
+<form action="logfile.php" method="POST">
+    <?php echo csrf_token_tag(); ?>
+    <input type="hidden" name="clear_log" value="true">
+    <button type="submit" class="btn btn-danger">Clear log file</button>
+</form>
+<br>
 
 <?php
 
@@ -45,13 +55,13 @@ if(!file_exists($logfile)){
 		while(!feof($handle)) {
 			$entry = fgets($handle);
 			if(trim($entry) != "") {
-				echo "<li>{$entry}</li>";
+				echo "<li>" . h($entry) . "</li>";
 			}
 		}
 		echo "</ul>";
     fclose($handle);
   } else {
-    echo "Could not read from {$logfile}.";
+    echo "Could not read from " . h($logfile) . ".";
   }
 
 ?>

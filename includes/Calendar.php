@@ -201,7 +201,11 @@ class Calendar extends DatabaseObject
 
             $subject = "ATTENTION: Past Planning " . $date->format('l .m.Y');
 
-            $appointments = Calendar::find_by_sql("SELECT * FROM calendar WHERE start_date <'$dt'  ORDER BY start_datetime DESC ");
+            $appointments = Calendar::find_by_sql_prepared(
+                "SELECT * FROM calendar WHERE start_date < ? ORDER BY start_datetime DESC",
+                [$dt],
+                "s"
+            );
 
             if ($appointments) {
                 $count = count($appointments);
@@ -216,7 +220,11 @@ class Calendar extends DatabaseObject
         } else {
 
 
-            $appointments = Calendar::find_by_sql("SELECT * FROM calendar WHERE start_datetime >= '$hour_minus_1_comp' AND start_datetime <'$hour_add_1_comp' ORDER BY start_datetime ");
+            $appointments = Calendar::find_by_sql_prepared(
+                "SELECT * FROM calendar WHERE start_datetime >= ? AND start_datetime < ? ORDER BY start_datetime",
+                [$hour_minus_1_comp, $hour_add_1_comp],
+                "ss"
+            );
 
 
             if ($appointments) {
@@ -229,7 +237,11 @@ class Calendar extends DatabaseObject
                 $msg .= "<br><hr>";
             }
 
-            $appointments = Calendar::find_by_sql("SELECT * FROM calendar WHERE start_date ='$dt'  ORDER BY start_datetime ");
+            $appointments = Calendar::find_by_sql_prepared(
+                "SELECT * FROM calendar WHERE start_date = ? ORDER BY start_datetime",
+                [$dt],
+                "s"
+            );
 
             if ($appointments) {
                 $count = count($appointments);
@@ -241,7 +253,11 @@ class Calendar extends DatabaseObject
                 $msg .= "<br><hr>";
             }
 
-            $appointments = Calendar::find_by_sql("SELECT * FROM calendar WHERE start_date = '$tomorrow' ORDER BY start_datetime   ");
+            $appointments = Calendar::find_by_sql_prepared(
+                "SELECT * FROM calendar WHERE start_date = ? ORDER BY start_datetime",
+                [$tomorrow],
+                "s"
+            );
 
             if ($appointments) {
                 $count = count($appointments);
@@ -253,7 +269,11 @@ class Calendar extends DatabaseObject
                 $msg .= "<br><hr>";
             }
 
-            $appointments = Calendar::find_by_sql("SELECT * FROM calendar WHERE start_datetime >= '$after_tomorrow' ORDER BY start_datetime   ");
+            $appointments = Calendar::find_by_sql_prepared(
+                "SELECT * FROM calendar WHERE start_datetime >= ? ORDER BY start_datetime",
+                [$after_tomorrow],
+                "s"
+            );
 //        $appointments = Calendar::find_by_sql("SELECT * FROM calendar WHERE start_datetime > '$tomorrow' ORDER BY start_datetime   ");
 
 
@@ -408,14 +428,16 @@ class Calendar extends DatabaseObject
             $msg .= "<div lang='fr' style='background-color: $bcolor;color:$color;margin: 1em;padding: 0.7em '>";
             $mail .= "<div lang='fr' style='color:$bcolor_mail '>";
 
-            $edit = "<a href='" . SITE_URL . "/public/admin/crud/ajax/edit_ajax.php?class_name=Calendar&id=$appointment->id'>$appointment->person</a>";
-            $edit1 = "$appointment->person";
+            $appointment_id = (int) $appointment->id;
+            $appointment_person = h($appointment->person);
+            $edit = "<a href='" . SITE_URL . "/public/admin/crud/ajax/edit_ajax.php?class_name=Calendar&id=" . u($appointment_id) . "'>$appointment_person</a>";
+            $edit1 = $appointment_person;
 
-            $onclick = "onclick=\"return confirm('Are you sure you want to delete ID {$appointment->id}?');\"";
+            $onclick = "onclick=\"return confirm('Are you sure you want to delete ID {$appointment_id}?');\"";
 
-            $delete = "<a href='" . SITE_URL . "/public/admin/crud/ajax/delete_ajax.php?class_name=Calendar&id=$appointment->id'>
-            <span style='background-color: white;color: indianred;margin: 2em;padding: 0.7em; '><b>Delete ($appointment->id)</b></span></a>";
-            $delete1 = "$appointment->person";
+            $delete = "<a href='" . SITE_URL . "/public/admin/crud/ajax/delete_ajax.php?class_name=Calendar&id=" . u($appointment_id) . "' $onclick>
+            <span style='background-color: white;color: indianred;margin: 2em;padding: 0.7em; '><b>Delete ($appointment_id)</b></span></a>";
+            $delete1 = $appointment_person;
 
             $nbsp = str_repeat("&nbsp;", 20);
 
@@ -520,39 +542,31 @@ class Calendar extends DatabaseObject
         $message = $logo . "<br><br>";
 
 
-        $btnRecurApp = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <a href='" . SITE_URL . "/public/_f/kamy/recurring_appointment.php'>Add Recuring Calendar</a>";
+        $btnRecurApp = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <a href='" . h(SITE_URL . "/public/_f/kamy/recurring_appointment.php") . "'>Add Recuring Calendar</a>";
 
-        $code = CODE_CALENDAR; //".u($code)."
+        $btnCert = "";
 
-        $btnCert = "<a  href='" . SITE_URL . "/public/email_script/appointment.php?code=" . u($code) . "' >Certificat Medical Email</a>";
-
-        $btnCert ="";
-
-        $btn = " <a href='" . SITE_URL . "/public/admin/crud/ajax/new_ajax.php?class_name=Calendar'><button class='btn-primary'>Add Date</button></a>";
-        $view = " <a href='" . SITE_URL . "/public/calendar.php'><button class='btn-primary'>View Web</button></a> $btnRecurApp ";
+        $btn = " <a href='" . h(SITE_URL . "/public/admin/crud/ajax/new_ajax.php?class_name=Calendar") . "'><button class='btn-primary'>Add Date</button></a>";
+        $view = " <a href='" . h(SITE_URL . "/public/calendar.php") . "'><button class='btn-primary'>View Web</button></a> $btnRecurApp ";
 
         $btnPast = "";
 
         if (isCalendarPast()) {
-            $btnPast = " <a href='" . SITE_URL . "/public/calendar.php?'><button class='btn-primary'>Future</button></a>";
+            $btnPast = " <a href='" . h(SITE_URL . "/public/calendar.php") . "'><button class='btn-primary'>Future</button></a>";
 
         } else {
-            $btnPast = " <a href='" . SITE_URL . "/public/calendar.php?type=Past'><button class='btn-primary'>Past</button></a>";
+            $btnPast = " <a href='" . h(SITE_URL . "/public/calendar.php?type=Past") . "'><button class='btn-primary'>Past</button></a>";
         }
 
 //        $btnNote = " <a class='btn btn-primary' href='https://www.ikamy.ch/public/admin/notes php'>Notes</a>";
 //        $classeNewNote = "<span style='color:green;'><i class='fa fa-plus-square' style='font-size: 1.5em;'></i></span> Note";
 //        $btnNoteAdd = " <a class='btn btn-primary' href='https://www.ikamy.ch/public/admin/crud/ajax/new_ajax.php?class_name=Note'>$classeNewNote</a>";
 
-        $btnNote = " <a style='padding: 0.1em' href='" . SITE_URL . "/public/admin/notes.php'><button class='btn-warning'>Note</button></a>";
+        $btnNote = " <a style='padding: 0.1em' href='" . h(SITE_URL . "/public/admin/notes.php") . "'><button class='btn-warning'>Note</button></a>";
 //        $classeNewNote = "<span ><i class='fa fa-plus-square' ></i></span> Note";
-        $btnNoteAdd = " <a style='padding: 0.1em' href='" . SITE_URL . "/public/admin/crud/ajax/new_ajax.php?class_name=Note'><button class='btn-warning'>Add Note</button></a>";
+        $btnNoteAdd = " <a style='padding: 0.1em' href='" . h(SITE_URL . "/public/admin/crud/ajax/new_ajax.php?class_name=Note") . "'><button class='btn-warning'>Add Note</button></a>";
 
-        $dailyPsalmUrl = SITE_URL . "/public/email_script/daily_psalm.php";
-        if (defined('DAILY_PSALM_TOKEN') && DAILY_PSALM_TOKEN !== '') {
-            $dailyPsalmUrl .= "?password=" . u(DAILY_PSALM_TOKEN);
-        }
-        $btnGenPsalm = " <a style='padding: 0.1em' href='" . $dailyPsalmUrl . "'><button class='btn-warning'>Gen Psalm</button></a>";
+        $btnGenPsalm = "";
 
         $btnview = $btn . "&nbsp;&nbsp;&nbsp;  " . $view . "&nbsp;&nbsp;&nbsp;  " . $btnCert . "&nbsp;&nbsp;&nbsp;  " . $btnPast . "&nbsp;&nbsp;&nbsp;  " . $btnNote."&nbsp;&nbsp;&nbsp;  " . $btnNoteAdd."&nbsp;&nbsp;&nbsp;  " .$btnGenPsalm    ;
 
@@ -584,7 +598,7 @@ class Calendar extends DatabaseObject
         $output = "</a><span>&nbsp;</span>";
         $output .= "<a  class=\"btn btn-primary\"  href=\"" . "/public/calendar.php" . "\">Calendar.php " . " </a><span>&nbsp;</span>";
         $output .= "<a  class=\"btn btn-primary\"  href=\"" . "/public/_f/kamy/recurring_appointment.php" . "\">Recurring RDV " . " </a><span>&nbsp;</span>";
-        $output .= "<a  class=\"btn btn-info\"  href=\"" . "/public/email_script/appointment.php?code=" . u(CODE_CALENDAR) . "\">Recurring RDV email " . " </a><span>&nbsp;</span>";
+        $output .= "<a  class=\"btn btn-info\"  href=\"" . "/public/email_script/appointment.php" . "\">Recurring RDV email " . " </a><span>&nbsp;</span>";
         $output .= "<a  class=\"btn btn-primary\"  href=\"" . "/public/admin/notes.php" . "\">Notes " . " </a><span>&nbsp;</span>";
         $output .= "<a  class=\"btn btn-primary\"  href=\"" . "/public/admin/crud/ajax/new_ajax.php?class_name=Note" . "\">New Notes " . " </a><span>&nbsp;</span>";
 //        $output .= "<a  class=\"btn btn-primary\"  href=\"" . MyExpenseType::$page_new . "\">Add New Type " . " </a></a><span>&nbsp;</span>";
