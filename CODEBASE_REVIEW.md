@@ -27,7 +27,7 @@ Commands and scans run:
 - `rg --files` inventory excluding `.git` and `vendor`
 - Composer validation: `composer validate --no-check-publish`
 - PHP version check: `php -v` reported PHP 8.3.26
-- First-party PHP lint excluding bundled legacy libraries: `includes`, `public`, `transmed`, excluding `includes/src`, `includes/mpdf60`, and `includes/phpmailer_legacy_backup,`
+- First-party PHP lint excluding bundled legacy libraries: `includes`, `public`, `transmed`, excluding `includes/src`
 - Pattern scan for direct globals, raw SQL construction, debug output, deprecated crypto, dynamic execution, and exit/die usage
 
 ## Current repository shape
@@ -41,7 +41,7 @@ High-level PHP inventory:
 | `transmed` | 67 | 12,071 |
 | `csharp` | 2 | 40 |
 
-The `includes` count is inflated by checked-in library copies such as `includes/src/PHPExcel`, `includes/mpdf60`, and `includes/phpmailer_legacy_backup,`.
+The `includes` count is inflated by checked-in library copies such as `includes/src/PHPExcel`.
 
 Large tracked content includes:
 
@@ -168,14 +168,13 @@ Candidates:
 
 - `includes/src/PHPExcel/**`
 - `my_helps/PHPExcel_1.8.0/**`
-- `includes/mpdf60/**`
-- `includes/phpmailer_legacy_backup,/**`
 - `composer.phar`
 
 Reason:
 
 - Composer already manages modern packages in `vendor`.
 - `mpdf/mpdf` and `phpmailer/phpmailer` are already in `composer.json`.
+- `includes/mpdf60` and `includes/phpmailer_legacy_backup,` have been removed.
 - PHPExcel is abandoned; if still needed, migrate to `phpoffice/phpspreadsheet`.
 - `composer.phar` should not normally be committed.
 
@@ -459,10 +458,8 @@ Do this after link/route inventory.
 
 ### Phase 5: Replace legacy libraries
 
-1. Replace `includes/mpdf60` usage with Composer `mpdf/mpdf`.
-2. Replace legacy PHPMailer backup usage with Composer `phpmailer/phpmailer`.
-3. Replace PHPExcel with PhpSpreadsheet or delete if unused.
-4. Delete `my_helps/PHPExcel_1.8.0` examples/docs.
+1. Replace PHPExcel with PhpSpreadsheet or delete if unused.
+2. Delete `my_helps/PHPExcel_1.8.0` examples/docs.
 
 ### Phase 6: Security hardening in active code
 
