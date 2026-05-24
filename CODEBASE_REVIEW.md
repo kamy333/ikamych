@@ -189,12 +189,13 @@ Risk: Medium. Legacy code may still include these paths directly.
 
 Candidates:
 
-- `public/admin/old/**`
 - `public/admin/test/**`
 - `testDelete.php`
 - old/generated variants like `Inspinia/index_old.php`, `public/admin/wkg_progress/*_old.php`, and repeated gallery variants
 
 Reason: Many files are named `old`, `test`, `todelete`, or duplicate similar functionality. PHP lint found many PHP 8 parse failures inside old admin files, mainly curly-brace string/array offset syntax.
+
+Status: `public/admin/old/**` was removed after route/link inventory found no active references.
 
 Recommended change:
 
@@ -226,13 +227,10 @@ Representative errors:
 - `public/admin/crud/edit/edit_category.php`: same issue.
 - `public/admin/crud/edit/edit_MyExpense.php`: same issue.
 - `public/admin/crud/new/new_category.php`: same issue.
-- Many `public/admin/old/*.php` files: same issue.
-
 Priority:
 
-1. Decide whether `public/admin/old/**` is dead. If yes, delete instead of fixing.
-2. Fix active files only.
-3. Keep PHP lint in CI or as a local pre-merge command.
+1. Fix active files only.
+2. Keep PHP lint in CI or as a local pre-merge command.
 
 ## Architecture deficiencies
 
@@ -442,7 +440,6 @@ Update `.gitignore`:
 
 Targets:
 
-- `public/admin/old/**`
 - `public/admin/test/**`
 - `testDelete.php`
 - old generated variants under `Inspinia/**` and `public/admin/wkg_progress/*_old.php`
