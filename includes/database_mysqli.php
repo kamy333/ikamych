@@ -1,5 +1,7 @@
 <?php
-require_once("config.php");
+if (!defined('DB_SERVER')) {
+    require_once(__DIR__ . DIRECTORY_SEPARATOR . 'config_loader.php');
+}
 
 
 

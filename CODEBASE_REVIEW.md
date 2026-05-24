@@ -482,10 +482,10 @@ Status: Tracked Google OAuth client secret was removed from git, the ignored loc
 Recommended next step:
 
 - Do not add a Composer dependency just for environment variables yet.
-- Prefer native PHP configuration first:
-  - On production, set real values in the hosting control panel, Apache/PHP-FPM environment, or an untracked production `includes/config.php`.
-  - In local XAMPP, keep an ignored local `includes/config.php`.
-  - New code can read `getenv('IKAMY_DB_SERVER')`, `getenv('IKAMY_DB_USER')`, `getenv('IKAMY_DB_PASS')`, `getenv('IKAMY_DB_NAME')`, and mail/secret equivalents, with explicit failure if a required value is missing.
+- Native PHP configuration has been started through `includes/config_loader.php`:
+  - If any `IKAMY_*` config value exists, the loader uses environment mode and requires the full set of mandatory values.
+  - If no `IKAMY_*` config value exists, the loader falls back to the existing ignored `includes/config.php`.
+  - This preserves the one-file local/prod workflow while allowing production to move to server-level environment variables.
 - A Composer package such as `vlucas/phpdotenv` is optional later if local `.env` files become useful. It should not be the first change because production on shared hosting may not need or support that workflow cleanly.
 
 Production migration outline:

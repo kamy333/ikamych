@@ -124,7 +124,7 @@ require_once(LIB_PATH . DS . 'functions' . DS . "reset_token_functions.php");
 //require_once(LIB_PATH.DS . "function_links.php"); //todo clean up and move to function
 
 
-require_once(LIB_PATH . DS . 'config.php');
+require_once(LIB_PATH . DS . 'config_loader.php');
 
 
 require LIB_PATH_VENDOR . DS . 'autoload.php';

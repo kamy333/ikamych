@@ -1,7 +1,8 @@
 <?php
 
-// Copy this file to includes/config.php on each environment.
-// Never commit real credentials in includes/config.php.
+// Optional fallback config file.
+// Copy this file to includes/config.php only when the server cannot provide
+// IKAMY_* environment variables. Never commit real credentials.
 
 $server_name = $_SERVER['SERVER_NAME'] ?? 'localhost';
 $server_local_names = array('localhost', '127.0.0.1', '::1', 'ikamy.local');
@@ -13,14 +14,15 @@ if (in_array($server_name, $server_local_names, true) || $server_name === $serve
     defined('DB_SERVER') ? null : define('DB_SERVER', 'localhost');
     defined('DB_USER') ? null : define('DB_USER', 'root');
     defined('DB_PASS') ? null : define('DB_PASS', 'change-me');
-    $prefix = '';
+    ini_set('display_errors', 'On');
 } else {
     defined('DB_SERVER') ? null : define('DB_SERVER', 'production-db-host');
     defined('DB_USER') ? null : define('DB_USER', 'production-db-user');
     defined('DB_PASS') ? null : define('DB_PASS', 'production-db-password');
-    $prefix = '';
+    ini_set('display_errors', 'Off');
 }
 
+$prefix = '';
 defined('DB_NAME') ? null : define('DB_NAME', $prefix . 'database_name');
 defined('DB_NAME_API') ? null : define('DB_NAME_API', $prefix . 'api_database_name');
 
