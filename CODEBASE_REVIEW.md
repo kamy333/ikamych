@@ -114,7 +114,7 @@ Candidates:
 - `client_secret..json`
 - `includes/config.php`
 
-Reason: Google OAuth client secrets and database credentials are checked in. Even if old, they should be treated as compromised.
+Reason: Google OAuth client secrets were checked in, and database credentials exist in local-only config files. Even if old, committed secrets should be treated as compromised.
 
 Recommended change:
 
@@ -123,6 +123,8 @@ Recommended change:
 - Keep a committed `config.example.php` with placeholders only.
 
 Risk: Medium, because config loading must be changed carefully. Do this before major refactors.
+
+Status: `includes/config.php` is already ignored and not tracked. `client_secret..json` has been removed from git tracking, `client_secret.example.json` has been added as a placeholder, and the real local file remains on disk for the current environment.
 
 ### 4. SQL dumps and historic data
 
@@ -321,7 +323,7 @@ Recommended fix:
 
 ### Secrets committed
 
-`client_secret..json` and database config files are tracked.
+`client_secret..json` was tracked and has been removed from git tracking. Database config files are ignored locally; keep treating any existing real credentials as sensitive.
 
 Recommended fix:
 
@@ -438,6 +440,8 @@ Update `.gitignore`:
 2. Move credentials to environment variables or untracked local config.
 3. Add `config.example.php`.
 4. Remove tracked secret files.
+
+Status: Tracked Google OAuth client secret was removed from git and replaced with `client_secret.example.json`. `includes/config.example.php` and `CONFIGURATION.md` document the local/prod setup. Real credential rotation is still required outside the repository.
 
 ### Phase 3: Delete or quarantine old pages
 
