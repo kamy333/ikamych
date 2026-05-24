@@ -12,7 +12,7 @@ The biggest immediate improvement is not a framework migration. The safest first
 
 1. Remove or quarantine generated/deployment/editor artifacts.
 2. Stop tracking private secrets, logs, database dumps, and runtime uploads.
-3. Consolidate duplicated code between `includes/transport` and `transmed/lib/transport`.
+3. Continue deleting retired Transmed/transport surfaces that are no longer used.
 4. Replace checked-in legacy library copies with Composer dependencies.
 5. Add a small safety net: PHP lint, Composer validation, and a minimal route smoke test list.
 
@@ -193,7 +193,6 @@ Candidates:
 
 - `public/admin/old/**`
 - `public/admin/test/**`
-- `public/_f/_transmed/todelete.php`
 - `testDelete.php`
 - old/generated variants like `Inspinia/index_old.php`, `public/admin/wkg_progress/*_old.php`, and repeated gallery variants
 
@@ -207,33 +206,17 @@ Recommended change:
 
 Risk: Medium. Some old pages may still be linked manually.
 
-### 8. Duplicate `transmed` transport library
+### 8. Retired `transmed` transport library
 
 Findings:
 
-- `transmed/lib/transport` duplicates `includes/transport`.
-- 45 matching relative files are exact duplicates.
-- 1 matching file differs: `transport/Course.php`.
+- `includes/transport` and `transmed/lib/transport` were unused after Transmed was retired.
+- The main bootstrap no longer loads these classes.
+- The old transport admin pages and `_transmed` public forms were removed.
 
-Examples of exact duplicates:
+Reason: Keeping dead transport code made every bootstrap and class-registry cleanup riskier.
 
-- `transport/TransportClient.php`
-- `transport/TransportChauffeur.php`
-- `transport/TransportProgramming.php`
-- `transport/TransportProgrammingModel.php`
-- `transport/ViewTransportModel.php`
-- `transport/DataBaseClient.php`
-
-Reason: Maintaining two copies creates drift and makes refactors risky.
-
-Recommended change:
-
-- Choose one canonical location.
-- Update bootstrap(s) to load the canonical copy.
-- Delete duplicate exact copies after confirming route behavior.
-- Inspect the one differing `Course.php` before consolidation.
-
-Risk: Medium, but high payoff.
+Status: Removed in the transport cleanup phase.
 
 ## Runtime and compatibility blockers
 
@@ -242,8 +225,6 @@ PHP lint over 474 first-party files found 68 errors under PHP 8.3.
 Representative errors:
 
 - `includes/database_mysqli.php`: method signature conflicts with `mysqli::query`.
-- `includes/transport/Course.php`: curly-brace array/string offset syntax no longer supported.
-- `includes/transport/CourseMobile.php`: same curly-brace offset issue.
 - `public/admin/crud/edit/edit_category.php`: same issue.
 - `public/admin/crud/edit/edit_MyExpense.php`: same issue.
 - `public/admin/crud/new/new_category.php`: same issue.
@@ -465,18 +446,16 @@ Targets:
 
 - `public/admin/old/**`
 - `public/admin/test/**`
-- `public/_f/_transmed/todelete.php`
 - `testDelete.php`
 - old generated variants under `Inspinia/**` and `public/admin/wkg_progress/*_old.php`
 
 Do this after link/route inventory.
 
-### Phase 4: Consolidate duplicate transport code
+### Phase 4: Remove remaining retired Transmed shell
 
-1. Compare `includes/transport/Course.php` vs `transmed/lib/transport/Course.php`.
-2. Pick canonical source.
-3. Update bootstrap paths.
-4. Delete exact duplicate files from the non-canonical tree.
+1. Confirm no external links depend on `/transmed`.
+2. Delete remaining `transmed` configuration/database scaffolding.
+3. Remove old Transmed SQL dumps after backup confirmation.
 
 ### Phase 5: Replace legacy libraries
 

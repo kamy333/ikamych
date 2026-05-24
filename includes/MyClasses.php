@@ -22,35 +22,6 @@ class MyClasses
         'MyExpense', 'MyExpenseMum', 'MyExpenseMumPost','MyExpenseCaroline','MyLoan', 'MyExpensePerson', 'MyExpenseType', 'MyHouseExpense',
         'MyHouseExpenseType',
         'FailedLogin', 'BlacklistIp',
-        'TransportChauffeur',
-        'TransportClient',
-        'TransportProgramming',
-        'TransportProgrammingModel',
-        'TransportType',
-        'ViewTransportModel',
-        "ViewTransportModelVisibleNo",
-        "ViewTransportModelVisibleYes",
-        'ViewTransportModelPivot', //parent
-        "ViewTransportModelPivotNo",
-        "ViewTransportModelPivotYes",
-        "ViewTransportSummaryCourseDateProgram",
-        "ViewTransportModelByChauffeur",
-        "ViewTransportAdresse",
-
-        'DataBaseClient', 'DatabaseCourse', 'DatabaseCourse_Programe',
-        'DataBaseFacturation', 'DatabasePaiement',
-        'T_Adresse', 'T_Aller_Retour', 'T_Chauffeur',
-        'T_Frequence_Facturation', 'T_Genre', 'T_Heure', 'T_Pays', 'T_Prix_Course', 'T_Type_Transport', 'T_Ville', 'T_Type_Facturation',
-
-
-        "Model",
-        "Course",
-        "CourseByChauffeur",
-        "CourseForm",
-        "CourseMobile",
-        "CourseListePatient",
-        "CourseSang",
-        "CourseStandard",
 
 
         'Comment', 'Photos');
@@ -61,21 +32,6 @@ class MyClasses
         "ToDo" => "ToDoList", "Message" => "Chat", "Chat" => "ChatFriend",
 //        "User"=>"User","UserType"=>"UserType",
 //        ""=>"",""=>"",""=>"",""=>"",""=>"",""=>"",
-        "Course" => "TransportProgramming",
-        "Model" => "TransportProgrammingModel",
-        "Chauffeur" => "TransportChauffeur",
-        "TransportType" => "TransportType",
-        "tClient" => "TransportClient",
-        "ViewModel" => "ViewTransportModel",
-        "ViewVisibleNo" => "ViewTransportModelVisibleNo",
-        "ViewVisibleYes" => "ViewTransportModelVisibleYes",
-        "ViewPivot" => "ViewTransportModelPivot",
-        "ViewPivotNo" => "ViewTransportModelPivotNo",
-        "ViewPivotYes" => "ViewTransportModelPivotYes",
-        "ViewSummary" => "ViewTransportSummaryCourseDateProgram",
-        "ViewModelByChauffeur" => "ViewTransportModelByChauffeur",
-
-
 //        "Note"=>"Note",
 
 
@@ -96,11 +52,6 @@ class MyClasses
 //        'User',
         'Comment', 'InvoiceEstimate', 'Photos',
 //        'FailedLogin','BlacklistIp',
-//        'TransportChauffeur',
-//        'TransportClient',
-//        'TransportProgramming',
-//        'TransportProgrammingModel',
-//        'TransportType',
         '');
 
 
@@ -190,54 +141,13 @@ class MyClasses
     public static function require_file()
     {
 
-        foreach (self::$class_access as $file) {
-            require_once(LIB_PATH . DS . 'transport' . DS . "$file.php");
-        }
-
-        foreach (self::$class_transmed as $file) {
-            require_once(LIB_PATH . DS . 'transport' . DS . "$file.php");
-        }
-
-
     }
 
-    public static $transmed_class = [
-        'TransportChauffeur',
-        'TransportClient',
-        'TransportProgramming',
-        'TransportProgrammingModel',
-        'TransportType',
-        "Course",
-        "Model",
-        "ViewTransportAdresse",
-        "CourseByChauffeur",
-        "CourseForm",
-        "CourseMobile",
-        "CourseListePatient",
-        "CourseSang",
-        "CourseStandard",
-        "Chat", "ChatFriend", "Currency", "Message", "Note", "Notification", "ToDoList"
-    ];
+    public static $transmed_class = [];
 
-    public static $class_access = [
-        'DataBaseClient', 'DatabaseCourse', 'DatabaseCourse_Programe',
-        'DataBaseFacturation', 'DatabasePaiement',
-        'T_Adresse', 'T_Aller_Retour', 'T_Chauffeur',
-        'T_Frequence_Facturation', 'T_Genre', 'T_Heure', 'T_Pays', 'T_Prix_Course', 'T_Type_Facturation', 'T_Type_Transport', 'T_Ville'
-    ];
+    public static $class_access = [];
 
-    public static $class_transmed = [
-        'TransportChauffeur', 'TransportClient', 'TransportType', 'TransportProgramming', 'TransportProgrammingModel', 'ViewTransportModel', 'ViewTransportModel', 'ViewTransportModelVisibleNo', 'ViewTransportModelVisibleYes', 'ViewTransportModelPivot', 'ViewTransportModelPivotNo', 'ViewTransportModelPivotYes', 'ViewTransportSummaryCourseDateProgram', 'ViewTransportModelByChauffeur',
-        "Course",
-        "Model",
-        "ViewTransportAdresse",
-        "CourseByChauffeur",
-        "CourseForm",
-        "CourseMobile",
-        "CourseListePatient",
-        "CourseSang",
-        "CourseStandard",
-    ];
+    public static $class_transmed = [];
 
 
 }

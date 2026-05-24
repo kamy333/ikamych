@@ -79,23 +79,6 @@ class SmartNav
                      'class_manage?class_name=Chat'=>'Chat',
              ),
      ),
-         "Admin_transport"=>array(
-             'name'=>"admin",
-             'folder'=>'Inspinia',
-             'environment'=>'admin',
-             'order'=>1,
-             'menu'=>'Admin',
-             'query_string'=>'class_name',
-             'link'=>array(
-                 'class_manage?class_name=TransportProgramming'=>'Course',
-                 'class_manage?class_name=TransportProgrammingModel'=>'Course Model',
-                 'class_manage?class_name=TransportClient'=>'Clients',
-                 'class_manage?class_name=TransportChauffeur'=>'Chauffeur',
-                 'class_manage?class_name=TransportType'=>'Course type',
-                 'class_manage?class_name=Chat'=>'Chat',
-             ),
-         ),
-
      );
     public $http = "";
     public $path;

@@ -18,39 +18,8 @@ if (!is_ajax_request()) {
 
 
 // get the q parameter from URL
-$q = rtrim(e($_REQUEST["q"]));
+$q = rtrim(e($_REQUEST["q"] ?? ""));
 
-$hint = "";
-$hint2="";
-
-if(strlen(trim($q))<3){return;}
-
-
-if (strlen(trim($q)) > 0 && $q !== "") {
-
-    $sql = "SELECT  adresse FROM transport_view_adresse WHERE adresse LIKE '%$q%' GROUP BY adresse";
-
-    $adresses = ViewTransportAdresse::find_by_sql($sql);
-
-
-//    if ($adresses) {
-//        foreach ($adresses as $adresse) {
-//            $hint .= "<li class='hint-adresse' style='list-style-type: none;background-color: red;color: white'>" . $adresse->adresse . "</li>";
-//        }
-//    }
-
-    if ($adresses) {
-        foreach ($adresses as $adresse) {
-            $hint2 .= "<option value='" . $adresse->adresse . "'></option>";
-        }
-    }
-
-
-
-}
-
-
-// Output "no suggestion" if no hint was found or output correct values
-//echo $hint === "" ? "no suggestion" : "<ul>" . $hint . "</ul>";
-echo $hint2 === "" ? "no suggestion" : "<datalist id='input-adresse'>" . $hint2 . "</datalist>";
+http_response_code(410);
+echo "transport autocomplete disabled";
 ?>

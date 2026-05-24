@@ -1,8 +1,6 @@
 <?php
 // If it's going to need the database, then it's 
 // probably smart to require it before we start.
-//require_once(LIB_PATH.DS.'database_transmed.php');
-
 class DatabaseObject
 {
 
@@ -56,8 +54,6 @@ class DatabaseObject
     public static $get_form_element_all;
     public static $form_default_value;
     public static $fields_image; // todo  so image exist and are uploaded
-
-//    public static $all_class = array('Article','ToDoList', 'User', 'UserType', 'Client', 'Category', 'BlacklistIp', 'Links', 'LinksCategory', 'Project', 'Category1', 'Category2', 'InvoiceActual', 'InvoiceEstimate', 'FailedLogin', 'MyCigarette', 'MyExpense', 'MyExpensePerson', 'MyExpenseType', 'MyHouseExpense', 'MyHouseExpenseType', 'Chat', 'ChatFriend', 'Notification', 'TransportChauffeur', 'TransportClient', 'TransportProgramming', 'TransportProgrammingModel', 'TransportType');
 
     protected static $table_name; // used for form new the related links put class dependency in array
     protected static $existing_password;

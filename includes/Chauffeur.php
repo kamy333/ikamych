@@ -86,7 +86,7 @@ class Chauffeur extends DatabaseObject
         "chauffeur_name"=> array("type"=>"select",
             "name"=>'search_chauffeur_name',
             "id"=>"search_chauffeur_name",
-            "class"=>"TransportChauffeur",
+            "class"=>"Chauffeur",
             "label_text"=>"",
             "select_option_text"=>'chauffeur_name',
             'field_option_0'=>"chauffeur_name",
@@ -96,7 +96,7 @@ class Chauffeur extends DatabaseObject
         "initial"=> array("type"=>"select",
             "name"=>'search_initial',
             "id"=>"search_initial",
-            "class"=>"TransportChauffeur",
+            "class"=>"Chauffeur",
             "label_text"=>"Initial",
             "select_option_text"=>'Currency',
             'field_option_0'=>"initial",
@@ -128,12 +128,6 @@ class Chauffeur extends DatabaseObject
 
 
     public static $page_name="Chauffeur";
-//    public static $page_manage="manage_TransportChauffeur.php";
-//    public static $page_new="new_TransportChauffeur.php";
-//    public static $page_edit="edit_TransportChauffeur.php";
-//    public static $page_delete="delete_TransportChauffeur.php";
-
-
     public static $page_manage = "/public/admin/crud/data/manage_data.php?class_name=Chauffeur"; // "new_link.php";
     public static $page_new = "/public/admin/crud/ajax/new_ajax.php?class_name=Chauffeur"; // "new_link.php";
     public static $page_edit = "/public/admin/crud/data/edit_data.php?class_name=Chauffeur"; //  "edit_link.php"
@@ -191,12 +185,7 @@ public $username;
         global $Nav;
 //        $path= $Nav->http.$Nav->folder."/";
 
-        $output="</a><span>&nbsp;</span>";
-        $output .= "<a  class=\"btn btn-primary\"  href=\"" . TransportType::$page_new . "\">Add New TransportType " . " </a><span>&nbsp;</span>";
-        $output .= "<a  class=\"btn btn-primary\"  href=\"" . TransportProgramming::$page_manage . "\">Course " . " </a><span>&nbsp;</span>";
-        $output .= "<a  class=\"btn btn-primary\"  href=\"" . TransportProgrammingModel::$page_manage . "\">Model " . " </a><span>&nbsp;</span>";
-
-        return $output;
+        return "";
     }
 
 

@@ -192,22 +192,4 @@ require_once(LIB_PATH . DS . 'BookCategory.php');
 require_once(LIB_PATH . DS . 'Photo.php');
 require_once(LIB_PATH . DS . 'Comment.php');
 
-require_once(LIB_PATH . DS . 'transport' . DS . 'TransportChauffeur.php');
-require_once(LIB_PATH . DS . 'transport' . DS . 'TransportClient.php');
-require_once(LIB_PATH . DS . 'transport' . DS . 'TransportType.php');
-require_once(LIB_PATH . DS . 'transport' . DS . 'TransportProgramming.php');
-require_once(LIB_PATH . DS . 'transport' . DS . 'TransportProgrammingModel.php');
-require_once(LIB_PATH . DS . 'transport' . DS . 'ViewTransportModel.php');
-
-require_once(LIB_PATH . DS . 'transport' . DS . 'ViewTransportModelVisibleNo.php');
-require_once(LIB_PATH . DS . 'transport' . DS . 'ViewTransportModelVisibleYes.php');
-
-require_once(LIB_PATH . DS . 'transport' . DS . 'ViewTransportModelPivot.php');
-
-require_once(LIB_PATH . DS . 'transport' . DS . 'ViewTransportModelPivotNo.php');
-require_once(LIB_PATH . DS . 'transport' . DS . 'ViewTransportModelPivotYes.php');
-require_once(LIB_PATH . DS . 'transport' . DS . 'ViewTransportSummaryCourseDateProgram.php');
-require_once(LIB_PATH . DS . 'transport' . DS . 'ViewTransportModelByChauffeur.php');
-
-
 ?>
