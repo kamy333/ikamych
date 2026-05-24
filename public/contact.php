@@ -9,11 +9,37 @@ $name = "";
 $email = "";
 $message = "";
 
-if (isset($_POST["submit"])) {
+function generate_contact_challenge(): void
+{
+    $previous_question = $_SESSION['contact_challenge_question'] ?? null;
+    $question = null;
+
+    for ($attempt = 0; $attempt < 5; $attempt++) {
+        $left = random_int(1, 9);
+        $right = random_int(1, 9);
+        $question = "{$left} + {$right} = ?";
+
+        if ($question !== $previous_question) {
+            break;
+        }
+    }
+
+    $_SESSION['contact_challenge_question'] = $question;
+    $_SESSION['contact_challenge_answer'] = $left + $right;
+}
+
+$is_post = isset($_POST["submit"]);
+
+if (!$is_post || !isset($_SESSION['contact_challenge_answer'], $_SESSION['contact_challenge_question'])) {
+    generate_contact_challenge();
+}
+
+if ($is_post) {
     $name = trim((string)($_POST['name'] ?? ''));
     $email = trim((string)($_POST['email'] ?? ''));
     $message = trim((string)($_POST['message'] ?? ''));
-    $human = (int)($_POST['human'] ?? 0);
+    $human = trim((string)($_POST['human'] ?? ''));
+    $expected_human = $_SESSION['contact_challenge_answer'] ?? null;
     $to = 'nafisspour@bluewin.ch';
     $subject = 'Message from ikamy.ch contact form';
 
@@ -34,7 +60,7 @@ if (isset($_POST["submit"])) {
         $errMessage = 'Please enter your message';
     }
     //Check if simple anti-bot test is correct
-    if ($human !== 5) {
+    if ($expected_human === null || $human === '' || !ctype_digit($human) || (int)$human !== (int)$expected_human) {
         $errHuman = 'Your anti-spam is incorrect';
     }
 
@@ -65,6 +91,8 @@ if (isset($_POST["submit"])) {
             $result='<div class="alert alert-danger">Sorry there was an error sending your message. Please try again later.</div>';
         }
     }
+
+    generate_contact_challenge();
 }
 ?>
 <!---->
@@ -107,7 +135,7 @@ if (isset($_POST["submit"])) {
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="human" class="col-sm-3 control-label">2 + 3 = ?</label>
+                    <label for="human" class="col-sm-3 control-label"><?php echo h($_SESSION['contact_challenge_question']); ?></label>
                     <div class="col-sm-9">
                         <input type="text" class="form-control" id="human" name="human" placeholder="Your Answer" required>
                         <?php echo "<p class='text-danger'>$errHuman</p>";?>
