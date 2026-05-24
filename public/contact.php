@@ -41,9 +41,25 @@ if (isset($_POST["submit"])) {
 // If there are no errors, send the email
     if (!$errName && !$errEmail && !$errMessage && !$errHuman) {
         $safe_email = str_replace(["\r", "\n"], '', $email);
-        $headers = "From: no-reply@ikamy.ch\r\n";
-        $headers .= "Reply-To: {$safe_email}\r\n";
-        if (mail($to, $subject, $body, $headers)) {
+        $safe_name = str_replace(["\r", "\n"], ' ', $name);
+        $mail = new MyPHPMailer(true);
+        $sent = false;
+
+        try {
+            $mail->clearAddresses();
+            $mail->clearReplyTos();
+            $mail->addAddress($to);
+            $mail->addReplyTo($safe_email, $safe_name);
+            $mail->isHTML(false);
+            $mail->Subject = $subject;
+            $mail->Body = $body;
+            $sent = $mail->send();
+        } catch (Throwable $e) {
+            error_log('Contact form mail error: ' . $e->getMessage());
+            $sent = false;
+        }
+
+        if ($sent) {
             $result='<div class="alert alert-success">Thank You! I will be in touch</div>';
         } else {
             $result='<div class="alert alert-danger">Sorry there was an error sending your message. Please try again later.</div>';
