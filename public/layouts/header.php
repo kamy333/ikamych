@@ -36,12 +36,10 @@
 
 
     <link rel="stylesheet" type="text/css" href="<?php echo $Nav->path_public; ?>css/bootstrap.min.css">
-    <link href="https://netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
-
     <link rel="stylesheet" type="text/css" href="<?php echo $Nav->path_public; ?>css/custom.css">
     <link rel="stylesheet" type="text/css" href="<?php echo $Nav->path_public; ?>css/styles.css">
 
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <link href="<?php echo $Nav->path_public; ?>css/plugins/select2/select2.min.css" rel="stylesheet" />
 
     <?php if ($stylesheets == "fade_php") { ?>
         <link rel="stylesheet" href="/public/_js/dist/stylesheets/superslides.css">
@@ -119,5 +117,4 @@
     ?>
     <div id='container-view' class="container">
         <?php } ?>
-
 

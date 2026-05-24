@@ -15,16 +15,14 @@
 </div>   <!--Div class container-->
 
 
-<script src="//code.jquery.com/jquery-latest.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script src="<?php echo $Nav->path_public; ?>js/jquery-2.1.1.js"></script>
+<script src="<?php echo $Nav->path_public; ?>js/plugins/select2/select2.full.min.js"></script>
 
 
 <!--<script src="https://cdn.tiny.cloud/1/bd42pftj1phl7lgv2274y7i6ok8af0vdegi2yherw7rr3jux/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>-->
 <!--<script>tinymce.init({selector: 'textarea'});</script>-->
 
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
-        integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
-        crossorigin="anonymous"></script>
+<script src="<?php echo $Nav->path_public; ?>js/bootstrap.min.js"></script>
 <script src="<?php echo $Nav->path_public; ?>myjs/socialmedia.js"></script>
 
 <script>

@@ -28,7 +28,7 @@ if (User::is_visitor() && !User::is_caroline_only()) {
             <a href="../Inspinia/papa/francais_discours.php">
                 <img class="thumb text-center" src="../Inspinia/papa/assets/img/photos/Photo_2025-03-01_144725.jpg" alt="Papa" style="width:10%;height:10%">
             </a>
-            <a href="https://www.instagram.com/reehttps://www.instagram.com/reel/DR2CycnjJwp/?igsh=YzAyMDM1MGJkZA%3D%3Dl/DR2CycnjJwp/?igsh=YzAyMDM1MGJkZA%3D%3D">Music</a>
+            <a href="https://www.instagram.com/reel/DR2CycnjJwp/?igsh=YzAyMDM1MGJkZA%3D%3D">Music</a>
 
         </div>
     </div>
@@ -158,7 +158,8 @@ if (is_dir($dir)) {
             <!--        <li data-target="#carousel-example-generic" data-slide-to="1"></li>-->
 
             <?php
-            for ($i = 1; $i <= +$count; $i++) {
+            $extra_engagement_photos = 11;
+            for ($i = 1; $i <= $count + $extra_engagement_photos; $i++) {
 
                 $c = $i;
                 echo "<li data-target=\"#carousel-example-generic\" data-slide-to=\"{$c}\"></li>";
@@ -243,8 +244,6 @@ J’imagine qu’une des raisons pour lesquelles les gens s’accrochent à leur
 
 
             for ($i = 1; $i <= 11; $i++) {
-
-                $output .= "<img $pic_size src='img/$img_folder/{$file}' alt='{$file}'  >";
 //            <img src=\"img/Kamy/{$img}\" alt=\"tr1\" style=\"width: 100%;height: 100%\">
 
 

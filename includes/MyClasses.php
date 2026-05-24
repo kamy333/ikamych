@@ -16,8 +16,6 @@ class MyClasses
         'Project', 'InvoiceActual', 'InvoiceSend', 'Category', 'InvoiceEstimate', 'Currency',
         'MyCigarette',
         'Calendar',
-        'Course',
-        'Chauffeur',
         'Client',
         'MyExpense', 'MyExpenseMum', 'MyExpenseMumPost','MyExpenseCaroline','MyLoan', 'MyExpensePerson', 'MyExpenseType', 'MyHouseExpense',
         'MyHouseExpenseType',
