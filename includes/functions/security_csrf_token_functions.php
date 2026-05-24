@@ -45,13 +45,13 @@ function csrf_token_tag($id="") {
 // identical to the previously stored SESSION token.
 // Returns false otherwise.
 function csrf_token_is_valid($id="") {
-	if(isset($_POST['csrf_token'.$id])) {
-		$user_token = $_POST['csrf_token'.$id];
-		$stored_token = $_SESSION['csrf_token'.$id];
-		return $user_token === $stored_token;
-	} else {
-		return false;
+	if(isset($_POST['csrf_token'.$id], $_SESSION['csrf_token'.$id])) {
+		$user_token = (string) $_POST['csrf_token'.$id];
+		$stored_token = (string) $_SESSION['csrf_token'.$id];
+		return hash_equals($stored_token, $user_token);
 	}
+
+	return false;
 }
 
 // You can simply check the token validity and

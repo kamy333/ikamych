@@ -4,10 +4,12 @@ $errName = null;
 $errEmail = null;
 $errMessage = null;
 $errHuman = null;
+$errSecurity = null;
 $result = null;
 $name = "";
 $email = "";
 $message = "";
+$csrf_token_id = 'contact';
 
 function generate_contact_challenge(): void
 {
@@ -45,6 +47,10 @@ if ($is_post) {
 
     $body ="From: $name\n E-Mail: $email\n Message:\n $message";
 
+    if (!csrf_token_is_valid($csrf_token_id) || !csrf_token_is_recent($csrf_token_id)) {
+        $errSecurity = 'Please refresh the page and try again.';
+    }
+
     // Check if name has been entered
     if ($name === '') {
         $errName = 'Please enter your name';
@@ -65,7 +71,7 @@ if ($is_post) {
     }
 
 // If there are no errors, send the email
-    if (!$errName && !$errEmail && !$errMessage && !$errHuman) {
+    if (!$errName && !$errEmail && !$errMessage && !$errHuman && !$errSecurity) {
         $safe_email = str_replace(["\r", "\n"], '', $email);
         $safe_name = str_replace(["\r", "\n"], ' ', $name);
         $mail = new MyPHPMailer(true);
@@ -113,6 +119,7 @@ if ($is_post) {
 
             <h2 class="page-header text-center" style="color: #0000ff">Contact</h2>
             <form class="form-horizontal" role="form" method="post" action="<?php echo h($_SERVER['PHP_SELF']); ?>">
+                <?php echo csrf_token_tag($csrf_token_id); ?>
                 <div class="form-group">
                     <label for="name" class="col-sm-3 control-label">Name</label>
                     <div class="col-sm-9">
@@ -143,6 +150,7 @@ if ($is_post) {
                 </div>
                 <div class="form-group">
                     <div class="col-sm-9 col-sm-offset-3">
+                        <?php echo $errSecurity ? "<p class='text-danger'>$errSecurity</p>" : ""; ?>
                         <input id="submit" name="submit" type="submit" value="Send" class="btn btn-primary">
                     </div>
                 </div>
