@@ -4,6 +4,8 @@ Date: 2026-05-23
 Branch: `codex/review-codebase-cleanup`
 Scope: legacy PHP application in `S:\ikamych`, with emphasis on code that can be deleted, moved out of the repository, consolidated, or prepared for gradual modularization.
 
+Latest cleanup checkpoint: `39ff057 Retire legacy transport course feature`
+
 ## Executive summary
 
 This codebase is a legacy PHP application with a single large bootstrap, many direct `require_once` dependencies, procedural public pages, active code mixed with old experiments, static assets, logs, uploads, SQL dumps, and checked-in vendor/library copies.
@@ -221,6 +223,37 @@ Findings:
 Reason: Keeping dead transport code made every bootstrap and class-registry cleanup riskier.
 
 Status: Removed in the transport and Transmed cleanup phases.
+
+### 9. Retired transport/course model
+
+Findings:
+
+- `Course` and `Chauffeur` were legacy transport objects.
+- The public `course.php` page was fataling against the current schema, and the feature is no longer needed.
+- Direct admin access through `class_name=Course` and `class_name=Chauffeur` should fail closed.
+
+Completed cleanup:
+
+- Removed `includes/Course.php`.
+- Removed `includes/Chauffeur.php`.
+- Removed both classes from `includes/initialize.php`.
+- Removed both classes from the `MyClasses::$all_class` admin allow-list.
+- Replaced `public/course.php` with a redirect to `/public/index.php`.
+- Added SQL cleanup scripts:
+  - `sql/drop_legacy_transport_views.sql`
+  - `sql/drop_legacy_transport_tables.sql`
+
+Database cleanup notes:
+
+- Run `drop_legacy_transport_views.sql` before `drop_legacy_transport_tables.sql`.
+- The scripts target `hhbz_ikamych2` explicitly so they do not depend on the selected phpMyAdmin database.
+- Local verification after running the cleanup showed no remaining legacy `course`, `transport_*`, `programmed_courses*`, `modele*`, or `transport_model*` objects.
+
+Verification:
+
+- `public/course.php` redirects to the homepage.
+- Direct admin URLs for `class_name=Course` and `class_name=Chauffeur` redirect to admin with "not an allowed admin class".
+- Public pages and active admin CRUD pages smoke-tested without fatal/warning/deprecated output.
 
 ## Runtime and compatibility blockers
 
@@ -440,11 +473,39 @@ Update `.gitignore`:
 ### Phase 2: Sensitive-data cleanup PR
 
 1. Rotate database and Google credentials.
-2. Move credentials to environment variables or untracked local config.
-3. Add `config.example.php`.
+2. Move credentials to environment variables or an untracked local config file.
+3. Keep `config.example.php` as a placeholder-only template.
 4. Remove tracked secret files.
 
 Status: Tracked Google OAuth client secret was removed from git, the ignored local `client_secret..json` copy was deleted, and the temporary `client_secret.example.json` placeholder was removed after confirming the application does not use Google OAuth. `includes/config.example.php` and `CONFIGURATION.md` document the remaining local/prod setup. Deleting the matching Google Console OAuth client remains an external account action.
+
+Recommended next step:
+
+- Do not add a Composer dependency just for environment variables yet.
+- Prefer native PHP configuration first:
+  - On production, set real values in the hosting control panel, Apache/PHP-FPM environment, or an untracked production `includes/config.php`.
+  - In local XAMPP, keep an ignored local `includes/config.php`.
+  - New code can read `getenv('IKAMY_DB_SERVER')`, `getenv('IKAMY_DB_USER')`, `getenv('IKAMY_DB_PASS')`, `getenv('IKAMY_DB_NAME')`, and mail/secret equivalents, with explicit failure if a required value is missing.
+- A Composer package such as `vlucas/phpdotenv` is optional later if local `.env` files become useful. It should not be the first change because production on shared hosting may not need or support that workflow cleanly.
+
+Production migration outline:
+
+1. Confirm the production host can provide environment variables. If yes, create variables like:
+   - `IKAMY_DB_SERVER`
+   - `IKAMY_DB_USER`
+   - `IKAMY_DB_PASS`
+   - `IKAMY_DB_NAME`
+   - `IKAMY_DB_NAME_API`
+   - `IKAMY_EMAIL_USERNAME`
+   - `IKAMY_EMAIL_PASSWORD`
+   - `IKAMY_MAIL_HOST`
+   - `IKAMY_SECRET_KEY`
+   - `IKAMY_CODE_CALENDAR`
+2. If the host cannot provide environment variables, keep `includes/config.php` on production only, with production values, and never upload it from Git.
+3. Rotate database and mail passwords after moving the application to the new config source.
+4. Deploy the code change.
+5. Check the homepage, admin login, Article admin, MyExpenseMum admin, mail-sending flows, and calendar flows.
+6. Remove any old copied credentials from deployment notes, FTP folders, backups that are easy to clean, and local screenshots/docs.
 
 ### Phase 3: Delete or quarantine old pages
 
@@ -488,3 +549,56 @@ The best first PR should be boring and reversible:
 5. Run PHP lint over first-party code and record existing failures without trying to fix them.
 
 This reduces noise immediately and sets the pattern for slow, safe modernization.
+
+## Repeatable Smoke Test Checklist
+
+Run this checklist after every cleanup or security-hardening batch.
+
+Commands:
+
+```powershell
+git status --short
+composer validate --no-check-publish
+composer audit
+git diff --check
+
+$files = @(Get-ChildItem -Path includes,public -Recurse -Filter *.php | Where-Object { $_.FullName -notmatch '\\includes\\src\\' })
+$failed = $false
+foreach ($file in $files) {
+    php -l $file.FullName | Out-Null
+    if ($LASTEXITCODE -ne 0) {
+        Write-Output "PHP lint failed: $($file.FullName)"
+        $failed = $true
+    }
+}
+if ($failed) { exit 1 } else { Write-Output "PHP lint passed for includes and public" }
+```
+
+Browser URLs:
+
+- `http://ikamy.local/public/index.php`
+- `http://ikamy.local/public/about_us.php`
+- `http://ikamy.local/public/about_us_2.php`
+- `http://ikamy.local/public/myLinks.php?category=Others`
+- `http://ikamy.local/public/admin/crud/ajax/manage_ajax.php?&page=1&order_name=id&order_type=ASC&class_name=Article`
+- `http://ikamy.local/public/admin/crud/ajax/manage_ajax.php?class_name=MyExpenseMum`
+- `http://ikamy.local/public/admin/crud/ajax/new_ajax.php?class_name=MyExpenseMum`
+- `http://ikamy.local/public/calendar.php`
+- `http://ikamy.local/public/admin/crud/ajax/manage_ajax.php?class_name=Note`
+
+Expected result:
+
+- No `Fatal error`.
+- No `Warning:` or `Deprecated:` text in the page body.
+- Retired direct URLs such as `class_name=Course` and `class_name=Chauffeur` should be rejected cleanly.
+- Old `public/course.php` should redirect to `/public/index.php`.
+
+## Next Cleanup Candidates
+
+Recommended order:
+
+1. Finish the configuration/secrets migration plan without adding Composer dependencies unless needed.
+2. Investigate `public/contact.php`: it currently redirects to an Inspinia page, so verify whether the public contact form is intentionally retired or should be restored.
+3. Continue active CRUD hardening: invalid IDs, missing records, null handling, sort whitelisting, and prepared statements.
+4. Review old SQL dumps and historic folders after confirming external backups exist.
+5. Build a small script around the smoke-test checklist so the same checks can run after each cleanup pass.
