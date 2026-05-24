@@ -1221,6 +1221,7 @@ GROUP BY expense_type_id;";
 
     public static function form_select_year()
     {
+        $output = "";
 
         array_push(static::$db_fields, "Yr");
         $sql = "SELECT DISTINCT year(t1.expense_date) as Yr
@@ -1934,6 +1935,7 @@ ORDER BY year(e.expense_date) DESC";
 
     public static function Spec_Exception($txt1 = 2021, $txt2 = "Choose something", $sum = 0, $XLS = false)
     {
+        $output = "";
 
         $output .= "<tr>";
         $output .= "<td class='text-center'>{$txt1}</td>";
