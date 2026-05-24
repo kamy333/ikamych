@@ -4,7 +4,6 @@ This document contains a review of the project, including a description of the f
 
 ## Folder Structure
 
-*   **`/csharp`**: Contains C# related files. The presence of `.php` files in this folder is unusual and might indicate a mix of technologies or a misnamed folder.
 *   **`/error`**: Contains custom error pages for various HTTP status codes.
 *   **`/includes`**: This is a core directory containing the main application logic, including database connection, session management, and various classes representing different parts of the application.
 *   **`/Inspinia`**: This folder seems to contain a theme or a UI framework named "Inspinia", along with various PHP files that use it.

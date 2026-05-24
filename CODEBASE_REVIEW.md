@@ -39,7 +39,6 @@ High-level PHP inventory:
 | `includes` | 676 | 225,568 |
 | `public` | 283 | 28,738 |
 | `transmed` | 67 | 12,071 |
-| `csharp` | 2 | 40 |
 
 The `includes` count is inflated by checked-in library copies such as `includes/src/PHPExcel`.
 
