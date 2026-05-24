@@ -188,7 +188,7 @@ if (isset($message)) {
     if (isset($_GET['class_name'])) {
 
     echo '<br><br>';
-    $class_name = $_GET['class_name'];
+    $class_name = MyClasses::allowed_class_from_request();
     $countrecords = $class_name::count_all();
     echo "Number of records in db: <b>$countrecords</b> ";
     echo "<br><br>";

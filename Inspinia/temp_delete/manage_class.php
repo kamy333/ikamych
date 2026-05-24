@@ -3,7 +3,7 @@ $session->confirmation_protected_page();
 if(User::is_employee() || User::is_secretary()){ redirect_to('index.php');}
 ?>
 
-<?php if(isset($_GET["class_name"])){$class_name= urldecode($_GET["class_name"]) ;} else {$class_name="User";}  ?>
+<?php $class_name = MyClasses::allowed_class_from_request('User'); ?>
 
 <?php
 

@@ -5,18 +5,18 @@ if(User::is_visitor() ){ redirect_to('../index.php');}
 
 ?>
 
-<?php if(isset($_GET["class_name"])){$class_name= urldecode($_GET["class_name"]) ;} else {$class_name="User";}  ?>
+<?php $class_name = MyClasses::allowed_class_from_request('User'); ?>
 
 <?php
 if(isset($_GET['id'])){
-$post_link=$_SERVER["PHP_SELF"]."?id=".urldecode($_GET['id']);
+$post_link=$_SERVER["PHP_SELF"]."?class_name=".urlencode($class_name)."&id=".urlencode($_GET['id']);
 $page="Update";
 $page1="Update ";
 $text_post="Updated";
 $text_post1="update";
 
 }else{
-$post_link=$_SERVER["PHP_SELF"];
+$post_link=$_SERVER["PHP_SELF"]."?class_name=".urlencode($class_name);
 $page="New";
 $page1="Add New ";
 $text_post="created";
@@ -35,7 +35,7 @@ if(request_is_post() && request_is_same_domain()) {
         $expected_fields=$class_name::get_table_field();
         foreach($expected_fields as $field){
             if(isset($_POST[$field])){
-                $new_item->$field=trim($_POST{$field}) ;
+                $new_item->$field=trim($_POST[$field]) ;
             }
 
         }

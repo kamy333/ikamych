@@ -18,13 +18,7 @@ use Foundationphp\Exporter\Csv;
 if (isset($_POST['download'])) {
 
 
-if(isset($_POST['class_name'])){
-    $class_name=urldecode($_POST['class_name']);
-} else{
-    $class_name=false;
-    $session->message('No class name defined');
-    redirect_to('index.php');
-}
+$class_name = MyClasses::allowed_class_from_post();
 $table_name=$class_name::get_table_name();
 
 //$database = new mysqli(DB_SERVER, DB_USER, DB_PASS, DB_NAME);
@@ -63,6 +57,7 @@ $table_name=$class_name::get_table_name();
 <?php $layout_context = "admin"; ?>
 <?php $active_menu="download" ?>
 <?php $stylesheets="" //custom_form  ?>
+<?php $view_full_table = false; ?>
 <?php $view_full_table==1? $fluid_view=true :$fluid_view=false; ?>
 <?php $javascript="form_admin" ?>
 <?php $sub_menu=false ?>
@@ -90,7 +85,7 @@ $table_name=$class_name::get_table_name();
 
     </fieldset>
 
-<?php $all_class=array('User','UserType','Client','Category','BlacklistIp','FailedLogin','Links','LinksCategory','Project','Category1','Category2','InvoiceActual','InvoiceSend','FailedLogin','UserType','MyCigarette','MyExpense','MyExpensePerson','MyExpenseType','MyHouseExpense','MyHouseExpenseType','Chat','Notification','ToDoList','Currency') ?>
+<?php $all_class = array_values(array_intersect(array('User','UserType','Client','Category','BlacklistIp','FailedLogin','Links','LinksCategory','Project','Category1','Category2','InvoiceActual','InvoiceSend','MyCigarette','MyExpense','MyExpensePerson','MyExpenseType','MyHouseExpense','MyHouseExpenseType','Chat','Notification','ToDoList','Currency'), MyClasses::$all_class)); ?>
 
     <div class='form-group'>
     <label  class='col-sm-3 control-label' for="xxxx" >Choose</label>

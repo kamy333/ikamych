@@ -2,30 +2,28 @@
 
 require_once('../../../includes/initialize.php');
 $session->confirmation_protected_page();
-if(User::is_caroline_only()){
-    if (isset($_GET['class_name'])) {
-        $class_name = $_GET['class_name'];
-        if ($class_name != "MyExpenseCaroline") {
-            redirect_to('../../index.php');
-        }
-    }
-} elseif (User::is_employee() || User::is_secretary() || User::is_visitor()) {
-    redirect_to('../../index.php');
-}
-//MyClasses::redirect_disable_class();
-
 
 if(!is_ajax_request()) {
-    echo $_SERVER['HTTP_X_REQUESTED_WITH'];
+    echo $_SERVER['HTTP_X_REQUESTED_WITH'] ?? '';
     echo "<p>Not Ajax request</p>";
 
     exit; }
+
+$class_name = MyClasses::allowed_class_from_post();
+if (User::is_caroline_only()) {
+    if ($class_name != "MyExpenseCaroline") {
+        echo json_encode(array("errors" => "Sorry, you cannot access this section."));
+        exit;
+    }
+} elseif (User::is_employee() || User::is_secretary() || User::is_visitor()) {
+    echo json_encode(array("errors" => "Sorry, you cannot access this section."));
+    exit;
+}
 
 // $json1= output_message(call_user_func_array([$_POST['class_name'],'post_form'], ['ajax']));
 
 //echo call_user_func_array([$_GET['class_name'],'post_form'], ['ajax']);
 
-$class_name=$_POST['class_name'];
 //$a=output_message("text outcome");
 //$json=array("errors"=>$_POST['class_name']);
 

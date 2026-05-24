@@ -13,7 +13,7 @@ class MyClasses
         'SetUp','HeurePresence', 'Note', 'ToDoList', 'Message', 'Chat', 'ChatFriend', 'Notification',
         'User', 'UserType', 'Article', 'ArticleSubject', 'Book', 'BookCategory',
         'Links', 'LinksCategory', 'Category1', 'Category2',
-        'Project', 'InvoiceActual', 'Category', 'InvoiceEstimate', 'Currency',
+        'Project', 'InvoiceActual', 'InvoiceSend', 'Category', 'InvoiceEstimate', 'Currency',
         'MyCigarette',
         'Calendar',
         'Course',
@@ -65,31 +65,42 @@ class MyClasses
         return static::allowed_class_from_request();
     }
 
-    public static function allowed_class_from_request()
+    public static function allowed_class_from_request($default_class = null)
     {
-        global $session;
-
         static::short_class_check();
-        if (!isset($_GET['class_name'])) {
+        $class_name = $_GET['class_name'] ?? $default_class;
+
+        return static::allowed_class($class_name);
+    }
+
+    public static function allowed_class_from_post($key = 'class_name')
+    {
+        $class_name = $_POST[$key] ?? null;
+
+        return static::allowed_class($class_name);
+    }
+
+    public static function allowed_class($class_name)
+    {
+        $class_name = is_string($class_name) ? trim(urldecode($class_name)) : '';
+
+        if ($class_name === '') {
             static::reject_class_request('Sorry that was an invalid request.');
-
         }
 
-        if (isset($_GET['class_name']) && !in_array($_GET['class_name'], static::$all_class)) {
-            static::reject_class_request('Sorry, "' . $_GET['class_name'] . '" is not an allowed admin class.');
-
+        if (!in_array($class_name, static::$all_class, true)) {
+            static::reject_class_request('Sorry, "' . $class_name . '" is not an allowed admin class.');
         }
 
-        if (isset($_GET['class_name']) && in_array($_GET['class_name'], static::$disable_db_classes)) {
-            static::reject_class_request('Sorry, "' . $_GET['class_name'] . '" is not accessible from here.');
-
+        if (in_array($class_name, static::$disable_db_classes, true)) {
+            static::reject_class_request('Sorry, "' . $class_name . '" is not accessible from here.');
         }
 
-        if (class_exists($_GET['class_name'])) {
-            return $_GET['class_name'];
-        } else {
-            static::reject_class_request('Sorry, "' . $_GET['class_name'] . '" is not available. Please check the link and try again.');
+        if (class_exists($class_name)) {
+            return $class_name;
         }
+
+        static::reject_class_request('Sorry, "' . $class_name . '" is not available. Please check the link and try again.');
     }
 
     private static function reject_class_request($message)
