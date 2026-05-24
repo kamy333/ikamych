@@ -48,6 +48,7 @@ $ikamy_env_keys = [
     'IKAMY_EMAIL_USERNAME',
     'IKAMY_EMAIL_PASSWORD',
     'IKAMY_MAIL_HOST',
+    'IKAMY_MAIL_PORT',
     'IKAMY_SECRET_KEY',
     'IKAMY_CODE_CALENDAR',
 ];
@@ -77,6 +78,7 @@ if ($ikamy_use_env_config) {
     ikamy_define_config('EMAIL_USERNAME', 'IKAMY_EMAIL_USERNAME');
     ikamy_define_config('EMAIL_PASSWORD', 'IKAMY_EMAIL_PASSWORD');
     ikamy_define_config('MY_HOST', 'IKAMY_MAIL_HOST');
+    ikamy_define_config('MY_PORT', 'IKAMY_MAIL_PORT', false, 587);
 
     ikamy_define_config('SECRET_KEY', 'IKAMY_SECRET_KEY');
     ikamy_define_config('CODE_CALENDAR', 'IKAMY_CODE_CALENDAR');

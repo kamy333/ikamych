@@ -29,6 +29,7 @@ defined('DB_NAME_API') ? null : define('DB_NAME_API', $prefix . 'api_database_na
 defined('EMAIL_USERNAME') ? null : define('EMAIL_USERNAME', 'user@example.com');
 defined('EMAIL_PASSWORD') ? null : define('EMAIL_PASSWORD', 'email-password');
 defined('MY_HOST') ? null : define('MY_HOST', 'mail.example.com');
+defined('MY_PORT') ? null : define('MY_PORT', 587);
 
 defined('SECRET_KEY') ? null : define('SECRET_KEY', 'replace-with-random-secret');
 defined('CODE_CALENDAR') ? null : define('CODE_CALENDAR', 'replace-with-calendar-code');

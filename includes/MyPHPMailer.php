@@ -23,12 +23,11 @@ class MyPHPMailer extends \PHPMailer\PHPMailer\PHPMailer
         $this->SMTPDebug=0;
         $this->Debugoutput = 'html';
         $this->CharSet = 'UTF-8';
+        $this->Timeout = 15;
         $this->isSMTP();
         $this->Host =MY_HOST;
-//        $this->Port=465; bluewin
-        $this->Port=25;
+        $this->Port = defined('MY_PORT') ? (int) MY_PORT : 587;
 
-//        $this->SMTPSecure = "ssl"; bluewin
         $this->SMTPSecure = self::ENCRYPTION_STARTTLS;
 
         $this->SMTPAuth=true;
