@@ -78,12 +78,13 @@ if ($_SERVER['REQUEST_METHOD'] != 'POST'){
     // posted from our form
     // In testing, if you get an Inavlid referer error
     // comment out or remove the next three lines
-    $page = $_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF'];
-    if (!ereg($page, $_SERVER['HTTP_REFERER']))
+    $page = ($_SERVER['HTTP_HOST'] ?? '') . ($_SERVER['PHP_SELF'] ?? '');
+    $referer = $_SERVER['HTTP_REFERER'] ?? '';
+    if (strpos($referer, $page) === false)
         $errors[] = "Invalid referer";
 
     // check to see if a name was entered
-    if (!$_POST['Name'])
+    if (empty($_POST['Name']))
         $errors[] = "Name is required";
     // if there are any errors, display them
     if (count($errors)>0) {
@@ -92,7 +93,8 @@ if ($_SERVER['REQUEST_METHOD'] != 'POST'){
         echo "<br>Please use your browser's Back button to fix.";
     } else {
         // no errors, so we build our message
-        switch($_POST['color']){
+        $color = $_POST['color'] ?? 'red';
+        switch($color){
             case 'red':
                 $recipient = 'redperson@example.com';
                 break;
@@ -106,22 +108,22 @@ if ($_SERVER['REQUEST_METHOD'] != 'POST'){
                 $recipient = 'user@example.com';
         }
         $subject = "Widget On Line Order";
-        $from = stripslashes($_POST['Name']);
+        $from = stripslashes((string)($_POST['Name'] ?? ''));
         $msg = "Message sent by $from\n";
-        $msg.="\nSize: ".$_POST['size'];
-        $options=$_POST['options'];
+        $msg.="\nSize: ".($_POST['size'] ?? '');
+        $options=$_POST['options'] ?? [];
         $msg.="\nOptions:";
         if ($options)
             for ($i=0;$i<count($options);$i++)
                 $msg.= "\n- $options[$i]";
         else
             $msg.="\n- None";
-        $msg.="\nColor: ".$_POST['color'];
-        $extension=($_POST['extension'])?"Extension: Yes":"Extension: No";
-        $wallmount=($_POST['wallmount'])?"Wallmount: Yes":"Wallmount: No";
-        $deskmount=($_POST['deskmount'])?"Deskmount: Yes":"Deskmount: No";
+        $msg.="\nColor: ".$color;
+        $extension=(!empty($_POST['extension']))?"Extension: Yes":"Extension: No";
+        $wallmount=(!empty($_POST['wallmount']))?"Wallmount: Yes":"Wallmount: No";
+        $deskmount=(!empty($_POST['deskmount']))?"Deskmount: Yes":"Deskmount: No";
         $msg.="\n$extension\n$wallmount\n$deskmount";
-        $msg.="\n".stripslashes($_POST['MsgBody'])."\n";
+        $msg.="\n".stripslashes((string)($_POST['MsgBody'] ?? ''))."\n";
         if (mail($recipient,$subject,$msg)){
             echo "<p>Thanks for your order!</p>";
             echo nl2br($msg);
