@@ -72,7 +72,7 @@ if ($_SERVER['REQUEST_METHOD'] != 'POST'){
     error_reporting(0);
     // initialize a array to
     //hold any errors we encounter
-    $errors = array();
+    $errors = [];
 
     // test to see if the form was actually
     // posted from our form

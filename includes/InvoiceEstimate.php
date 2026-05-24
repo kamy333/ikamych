@@ -12,7 +12,7 @@ class InvoiceEstimate extends DatabaseObject {
 //todo
 
     protected static $table_name="invoice_estimate";
-    protected static $db_fields = array('id', 'estimate_no', 'project_id', 'project_code','start_date','end_date','quantity','category_id', 'category','category_1_id','category_1','category_2_id','category_2','ref_upload','comment');
+    protected static $db_fields = ['id', 'estimate_no', 'project_id', 'project_code','start_date','end_date','quantity','category_id', 'category','category_1_id','category_1','category_2_id','category_2','ref_upload','comment'];
 
     public $id;
     public $estimate_no;

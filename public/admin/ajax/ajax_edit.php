@@ -23,7 +23,7 @@ if(!is_ajax_request()) {
 
     exit; }
 
-$result = call_user_func(array($class_name, 'Create_form'));
+$result = call_user_func([$class_name, 'Create_form']);
 
 echo $result;
 

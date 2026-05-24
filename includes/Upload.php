@@ -16,8 +16,8 @@ class Upload
     public $full_path_directory = PATH_UPLOAD;
     public $image_placeholder = "https://www.mountaineers.org/images/placeholder-images/placeholder-400-x-400/image_preview";
     public $tmp_path;
-    public $errors = array();
-    public $upload_errors_array = array(
+    public $errors = [];
+    public $upload_errors_array = [
         // http://www.php.net/manual/en/features.file-upload.errors.php
         UPLOAD_ERR_OK => "No errors.",
         UPLOAD_ERR_INI_SIZE => "Larger than upload_max_filesize.",
@@ -27,7 +27,7 @@ class Upload
         UPLOAD_ERR_NO_TMP_DIR => "No temporary directory.",
         UPLOAD_ERR_CANT_WRITE => "Can't write to disk.",
         UPLOAD_ERR_EXTENSION => "File upload stopped by extension."
-    );
+    ];
 
 
     public function ajax_save_user_image($user_image, $user_id)

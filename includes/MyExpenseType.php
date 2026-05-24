@@ -13,83 +13,83 @@
 class MyExpenseType extends DatabaseObject {
     protected static $table_name="myexpense_type";
 
-    protected static $db_fields = array('id', 'expense_type', 'side', 'rank', 'category', 'comment');
+    protected static $db_fields = ['id', 'expense_type', 'side', 'rank', 'category', 'comment'];
 
-    protected static $required_fields =  array('expense_type','side','rank');
+    protected static $required_fields =  ['expense_type','side','rank'];
 
-    protected static $db_fields_table_display_short = array('id', 'expense_type', 'side', 'rank', 'category', 'comment');
+    protected static $db_fields_table_display_short = ['id', 'expense_type', 'side', 'rank', 'category', 'comment'];
 
-    protected static $db_fields_table_display_full = array('id', 'expense_type', 'side', 'rank', 'category', 'comment');
+    protected static $db_fields_table_display_full = ['id', 'expense_type', 'side', 'rank', 'category', 'comment'];
     protected static $db_field_exclude_table_display_sort = null;
 
-    public static $fields_numeric=array('id','rank','side');
+    public static $fields_numeric=['id','rank','side'];
 
 
-    public static $get_form_element = array('expense_type', 'rank', 'side', 'category', 'comment');
-    public static $get_form_element_others = array();
+    public static $get_form_element = ['expense_type', 'rank', 'side', 'category', 'comment'];
+    public static $get_form_element_others = [];
 
-    public static $form_default_value=array(
+    public static $form_default_value=[
         "rank"=>"1",
         "side"=>"0"
-    );
+    ];
 
 
-    protected static $form_properties= array(
+    protected static $form_properties= [
 
-        "expense_type"=> array("type"=>"text",
+        "expense_type"=> ["type"=>"text",
             "name"=>'expense_type',
             "label_text"=>"expense_type",
             "placeholder"=>"expense_type",
             "required" =>true,
-        ),
-        "side" =>array("type"=>"radio",
-            array(0,
-                array(
+        ],
+        "side" =>["type"=>"radio",
+            [0,
+                [
                     "label_all"=>"Positif Negatif",
                     "name"=>"side",
                     "label_radio"=>"Positif ",
                     "value"=>"1",
                     "id"=>"side_positif",
-                    "default" => true)),
-            array(1,
-                array(
+                    "default" => true]],
+            [1,
+                [
                     "label_all" => "Positif Negatif",
                     "name" => "side",
                     "label_radio" => "Negatif",
                     "value" => "-1",
                     "id" => "side_negative",
-                    "default" => true)),
-        ),
-        "category" => array("type" => "text",
+                    "default" => true]],
+        ],
+        "category" => ["type" => "text",
             "name" => 'category',
             "label_text" => "category",
             "placeholder" => "category",
             "required" => true,
-        ),
-        "comment" => array("type" => "textarea",
+        ],
+        "comment" => ["type" => "textarea",
             "name" => 'comment',
             "label_text" => "Comment",
             "placeholder" => "input Comment",
             "required" => false,
-        ),
-        "rank" => array("type" => "number",
+        ],
+        "rank" => ["type" => "number",
             "name" => 'rank',
             "label_text" => "Rank",
             'min' => 0,
             "placeholder"=>"a number to sort",
             "required" =>true,
-        ),
-    );
+        ],
+    ];
 
-    protected static $form_properties_search=array(
-        "search_all"=> array("type"=>"text",
+    protected static $form_properties_search=[
+        "search_all"=> ["type"=>"text",
             "name"=>'search_all',
             "label_text"=>"",
             "placeholder"=>"Search all",
             "required" =>false,
-        ),
+        ],
 
-        "expense_type"=> array("type"=>"select",
+        "expense_type"=> ["type"=>"select",
             "name"=>'search_expense_type',
             "id"=>"search_expense_type",
             "class"=>"MyExpenseType",
@@ -98,8 +98,8 @@ class MyExpenseType extends DatabaseObject {
             'field_option_0'=>"expense_type",
             'field_option_1'=>"expense_type",
             "required" =>false,
-        ),
-        "rank"=> array("type"=>"select",
+        ],
+        "rank"=> ["type"=>"select",
             "name"=>'rank',
             "id"=>"search_rank",
             "class"=>"MyExpenseType",
@@ -108,30 +108,30 @@ class MyExpenseType extends DatabaseObject {
             'field_option_0'=>"rank",
             'field_option_1'=>"rank",
             "required" =>false,
-        ),
-        "download_csv" =>array("type"=>"radio",
-            array(0,
-                array(
+        ],
+        "download_csv" =>["type"=>"radio",
+            [0,
+                [
                     "label_all"=>"Dnld csv",
                     "name"=>"download_csv",
                     "label_radio"=>"non",
                     "value"=>"No",
                     "id"=>"visible_no",
-                    "default"=>true)),
-            array(1,
-                array(
+                    "default"=>true]],
+            [1,
+                [
                     "label_all"=>"Dnld csv",
                     "name"=>"download_csv",
                     "label_radio"=>"oui",
                     "value"=>"Yes",
                     "id"=>"visible_yes",
-                    "default" => true)),
-        ),
+                    "default" => true]],
+        ],
 
-    );
+    ];
 
 
-    public static $db_field_search = array('search_all', 'expense_type', 'download_csv');
+    public static $db_field_search = ['search_all', 'expense_type', 'download_csv'];
 
 
     public static $page_name = "Expense Type";
@@ -147,7 +147,7 @@ class MyExpenseType extends DatabaseObject {
     public static $position_table = "positionRight"; // positionLeft // positionBoth  positionRight
 
 
-    public static $form_class_dependency = array('MyExpense', 'MyExpensePerson');
+    public static $form_class_dependency = ['MyExpense', 'MyExpensePerson'];
 
 
     public static $per_page;

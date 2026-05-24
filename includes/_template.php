@@ -12,23 +12,23 @@ class MyClass extends DatabaseObject{
 
     protected static $table_name="";
 
-    protected static $db_fields = array('','', '','','', '','','','', '','','','','');
+    protected static $db_fields = ['','', '','','', '','','','', '','','','',''];
 
-    protected static $required_fields = array('','', '','','', '','','','', '','','','','');
+    protected static $required_fields = ['','', '','','', '','','','', '','','','',''];
 
-    protected static $db_fields_table_display_short = array('','', '','','', '','','','', '','','','','');
+    protected static $db_fields_table_display_short = ['','', '','','', '','','','', '','','','',''];
 
-    protected static $db_fields_table_display_full = array('','', '','','', '','','','', '','','','','');
+    protected static $db_fields_table_display_full = ['','', '','','', '','','','', '','','','',''];
 
-    protected static $db_field_exclude_table_display_sort=array('','', '','','','','');
+    protected static $db_field_exclude_table_display_sort=['','', '','','','',''];
 
-    protected static $db_field_include_table_display_sort=array(
-        'link'=>'web_address','prog'=>'progress','todos'=>'todo','due_on'=>'due_date');
+    protected static $db_field_include_table_display_sort=[
+        'link'=>'web_address','prog'=>'progress','todos'=>'todo','due_on'=>'due_date'];
 
-    public static $fields_numeric=array('','', '','','', '','','','', '','','','','');
+    public static $fields_numeric=['','', '','','', '','','','', '','','','',''];
 
-    protected static $form_properties= array(
-        "project_id"=> array("type"=>"select",
+    protected static $form_properties= [
+        "project_id"=> ["type"=>"select",
             "name"=>'project_id',
             "class"=>"Project",
             "label_text"=>"Project",
@@ -36,29 +36,29 @@ class MyClass extends DatabaseObject{
             'field_option_0'=>"id",
             'field_option_1'=>"project_code",
             "required" =>true,
-        ),
-        "start_date"=> array("type"=>"date",
+        ],
+        "start_date"=> ["type"=>"date",
             "name"=>'start_date',
             "label_text"=>"Start Date",
             "placeholder"=>"Input Start Date",
             "required" =>true,
-        ),
-        "quantity"=> array("type"=>"number",
+        ],
+        "quantity"=> ["type"=>"number",
             "name"=>'quantity',
             "label_text"=>"Quantity",
             'min'=>1,
             "placeholder"=>"Quantity",
             "required" =>true,
-        ),
-        "company_unit_price"=> array("type"=>"number",
+        ],
+        "company_unit_price"=> ["type"=>"number",
             "name"=>'company_unit_price',
             "id"=>"company_unit_price",
             "label_text"=>"company unit price",
             'min'=>0,
             "placeholder"=>"Price per company Quantity",
             "required" =>true,
-        ),
-        "category_id"=> array("type"=>"select",
+        ],
+        "category_id"=> ["type"=>"select",
             "name"=>'category_id',
             "id"=>"category_id",
             "class"=>"Category",
@@ -67,56 +67,56 @@ class MyClass extends DatabaseObject{
             'field_option_1'=>"category",
             "required" =>true,
             "onchange"=>"myfunction(this)"
-        ),
+        ],
 
-        "ref_upload"=> array("type"=>"img",
+        "ref_upload"=> ["type"=>"img",
             "name"=>'ref_upload',
             "label_text"=>"upload",
             "placeholder"=>"input category_1",
             "required" =>true,
-        ),
-        "comment"=> array("type"=>"textarea",
+        ],
+        "comment"=> ["type"=>"textarea",
             "name"=>'comment',
             "label_text"=>"Comment",
             "placeholder"=>"input Comment",
             "required" =>false,
-        ),
-    );
+        ],
+    ];
 
-    protected static $form_properties_search= array(
-        "search_all"=> array("type"=>"text",
+    protected static $form_properties_search= [
+        "search_all"=> ["type"=>"text",
             "name"=>'search_all',
             "label_text"=>"",
             "placeholder"=>"Search all",
             "required" =>false,
-        ),
-        "download_csv" =>array("type"=>"radio",
-            array(0,
-                array(
+        ],
+        "download_csv" =>["type"=>"radio",
+            [0,
+                [
                     "label_all"=>"Dnld csv",
                     "name"=>"download_csv",
                     "label_radio"=>"non",
                     "value"=>"No",
                     "id"=>"visible_no",
-                    "default"=>true)),
-            array(1,
-                array(
+                    "default"=>true]],
+            [1,
+                [
                     "label_all"=>"Dnld csv",
                     "name"=>"download_csv",
                     "label_radio"=>"oui",
                     "value"=>"Yes",
                     "id"=>"visible_yes",
-                    "default"=>true)),
-        ),
-        "id"=> array("type"=>"number",
+                    "default"=>true]],
+        ],
+        "id"=> ["type"=>"number",
             "name"=>'id',
             "id"=>"search_id",
             "label_text"=>"",
             'min'=>0,
             "placeholder"=>"ID",
             "required" =>false,
-        ),
-        "project_code"=> array("type"=>"select",
+        ],
+        "project_code"=> ["type"=>"select",
             "name"=>'project_code',
             "id"=>"search_project_code",
             "class"=>"InvoiceActual",
@@ -125,8 +125,8 @@ class MyClass extends DatabaseObject{
             'field_option_0'=>"project_code",
             'field_option_1'=>"project_code",
             "required" =>false,
-        ),
-        "start_date"=> array("type"=>"select",
+        ],
+        "start_date"=> ["type"=>"select",
             "name"=>'start_date',
             "id"=>"search_start_date",
             "class"=>"InvoiceActual",
@@ -135,8 +135,8 @@ class MyClass extends DatabaseObject{
             'field_option_0'=>"start_date",
             'field_option_1'=>"start_date",
             "required" =>false,
-        ),
-        "end_date"=> array("type"=>"select",
+        ],
+        "end_date"=> ["type"=>"select",
             "name"=>'end_date',
             "id"=>"search_end_date",
             "class"=>"InvoiceActual",
@@ -145,9 +145,9 @@ class MyClass extends DatabaseObject{
             'field_option_0'=>"end_date",
             'field_option_1'=>"end_date",
             "required" =>false,
-        ),
+        ],
 
-        "category"=> array("type"=>"select",
+        "category"=> ["type"=>"select",
             "name"=>'category',
             "id"=>"search_category",
             "class"=>"InvoiceActual",
@@ -156,8 +156,8 @@ class MyClass extends DatabaseObject{
             'field_option_0'=>"category",
             'field_option_1'=>"category",
             "required" =>false,
-        ),
-        "unit_price"=> array("type"=>"select",
+        ],
+        "unit_price"=> ["type"=>"select",
             "name"=>'unit_price',
             "id"=>"search_unit_price",
             "class"=>"InvoiceActual",
@@ -166,8 +166,8 @@ class MyClass extends DatabaseObject{
             'field_option_0'=>"unit_price",
             'field_option_1'=>"unit_price",
             "required" =>false,
-        ),
-        "company_unit_price"=> array("type"=>"select",
+        ],
+        "company_unit_price"=> ["type"=>"select",
             "name"=>'company_unit_price',
             "id"=>"search_company_unit_price",
             "class"=>"InvoiceActual",
@@ -176,8 +176,8 @@ class MyClass extends DatabaseObject{
             'field_option_0'=>"company_unit_price",
             'field_option_1'=>"company_unit_price",
             "required" =>false,
-        ),
-        "invoice_id"=> array("type"=>"select",
+        ],
+        "invoice_id"=> ["type"=>"select",
             "name"=>'invoice_id',
             "id"=>"search_invoice_id",
             "class"=>"InvoiceActual",
@@ -186,8 +186,8 @@ class MyClass extends DatabaseObject{
             'field_option_0'=>"invoice_id",
             'field_option_1'=>"invoice_id",
             "required" =>false,
-        ),
-        "invoiced"=> array("type"=>"select",
+        ],
+        "invoiced"=> ["type"=>"select",
             "name"=>'invoiced',
             "id"=>"search_invoiced",
             "class"=>"InvoiceActual",
@@ -196,12 +196,12 @@ class MyClass extends DatabaseObject{
             'field_option_0'=>"invoiced",
             'field_option_1'=>"invoiced",
             "required" =>false,
-        ),
+        ],
 
 
-    );
+    ];
 
-    public static $db_field_search =array('search_all','project_id', 'project_code','start_date','end_date', 'quantity', 'category','ref_upload','invoice_id','invoiced','unit_price','company_unit_price','download_csv');
+    public static $db_field_search =['search_all','project_id', 'project_code','start_date','end_date', 'quantity', 'category','ref_upload','invoice_id','invoiced','unit_price','company_unit_price','download_csv'];
 
 
     public static $page_name="Invoice Actual";
@@ -278,7 +278,7 @@ class MyClass extends DatabaseObject{
 
         $valid->validate_presences(self::$required_fields) ;
 
-        $valid->is_numeric('quantity',array('min'=>1));
+        $valid->is_numeric('quantity',['min'=>1]);
 
         $valid->validate_Date('start_date');
 

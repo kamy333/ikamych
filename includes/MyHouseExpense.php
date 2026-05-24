@@ -14,25 +14,25 @@ class MyHouseExpense extends DatabaseObject {
     protected static $table_name="my_house_expense";
 
 
-    protected static $db_fields = array('id','amount','ccy_id','rate','person_id','expense_type_id','expense_date','comment','modification_time');
+    protected static $db_fields = ['id','amount','ccy_id','rate','person_id','expense_type_id','expense_date','comment','modification_time'];
 
-    protected static $required_fields = array('amount','ccy_id','person_id','expense_type_id','expense_date');
+    protected static $required_fields = ['amount','ccy_id','person_id','expense_type_id','expense_date'];
 
-    protected static $db_fields_table_display_short = array('id','amount','amountCHF','ccy_id','currency','rate','person_id','person_name','expense_type_id','expense_type','expense_date');
+    protected static $db_fields_table_display_short = ['id','amount','amountCHF','ccy_id','currency','rate','person_id','person_name','expense_type_id','expense_type','expense_date'];
 
-    protected static $db_fields_table_display_full = array('id','amount','amountCHF','currency','rate','person_id','person_name','expense_type_id','expense_type','expense_date','comment','modification_time');
+    protected static $db_fields_table_display_full = ['id','amount','amountCHF','currency','rate','person_id','person_name','expense_type_id','expense_type','expense_date','comment','modification_time'];
 
-    protected static $db_field_exclude_table_display_sort=array('amountCHF','person_name','expense_type','currency');
+    protected static $db_field_exclude_table_display_sort=['amountCHF','person_name','expense_type','currency'];
 
 
-    public static $fields_numeric=array('id','amount','amountCHF','person_id','expense_type_id','rate','ccy_id');
-    public static $fields_numeric_format=array('amount','amountCHF');
+    public static $fields_numeric=['id','amount','amountCHF','person_id','expense_type_id','rate','ccy_id'];
+    public static $fields_numeric_format=['amount','amountCHF'];
 
-    public static $get_form_element=array('amount','ccy_id','rate','expense_date','person_id','expense_type_id','comment','modification_time');
+    public static $get_form_element=['amount','ccy_id','rate','expense_date','person_id','expense_type_id','comment','modification_time'];
 
-    public static $get_form_element_others=array();
+    public static $get_form_element_others=[];
 
-    public static $form_default_value=array(
+    public static $form_default_value=[
         "expense_date"=>"now()",
         "modification_time"=>"nowtime()",
         "amount"=>"0",
@@ -40,21 +40,21 @@ class MyHouseExpense extends DatabaseObject {
 //        "currency"=>"CHF",
         "rate"=>"1"
         
-    );
+    ];
 
 
 
-    protected static $form_properties= array(
+    protected static $form_properties= [
 
-        "amount"=> array("type"=>"number",
+        "amount"=> ["type"=>"number",
             "name"=>'amount',
             "label_text"=>"Amount",
             'min'=>0,
             "placeholder"=>"Amount",
             "step"=>"0.01",
             "required" =>true,
-        ),
-        "ccy_id"=> array("type"=>"select",
+        ],
+        "ccy_id"=> ["type"=>"select",
             "name"=>'ccy_id',
             "class"=>"Currency",
             "label_text"=>"Currency",
@@ -62,8 +62,8 @@ class MyHouseExpense extends DatabaseObject {
             'field_option_0'=>"id",
             'field_option_1'=>"currency",
             "required" =>true,
-        ),
-        "rate"=> array("type"=>"number",
+        ],
+        "rate"=> ["type"=>"number",
             "name"=>'rate',
             "id"=>"rate",
             "label_text"=>"Rate",
@@ -71,8 +71,8 @@ class MyHouseExpense extends DatabaseObject {
             "placeholder"=>"Rate to CHF",
             "required" =>false,
             "step"=>"0.00001"
-        ),
-        "person_id"=> array("type"=>"select",
+        ],
+        "person_id"=> ["type"=>"select",
             "name"=>'person_id',
             "class"=>"MyExpensePerson",
             "label_text"=>"Person Name ID",
@@ -80,7 +80,7 @@ class MyHouseExpense extends DatabaseObject {
             'field_option_0'=>"id",
             'field_option_1'=>"person_name",
             "required" =>true,
-        ),
+        ],
 //        "person_name"=> array("type"=>"select",
 //            "name"=>'person_name',
 //            "class"=>"MyExpensePerson",
@@ -90,7 +90,7 @@ class MyHouseExpense extends DatabaseObject {
 //            'field_option_1'=>"person_name",
 //            "required" =>true,
 //        ),
-        "expense_type_id"=> array("type"=>"select",
+        "expense_type_id"=> ["type"=>"select",
             "name"=>'expense_type_id',
             "class"=>"MyHouseExpenseType",
             "label_text"=>"Expense Type",
@@ -98,7 +98,7 @@ class MyHouseExpense extends DatabaseObject {
             'field_option_0'=>"id",
             'field_option_1'=>"expense_type",
             "required" =>true,
-        ),
+        ],
 //        "expense_type"=> array("type"=>"select",
 //            "name"=>'expense_type',
 //            "class"=>"MyExpenseType",
@@ -108,34 +108,34 @@ class MyHouseExpense extends DatabaseObject {
 //            'field_option_1'=>"expense_type",
 //            "required" =>true,
 //        ),
-        "expense_date"=> array("type"=>"date",
+        "expense_date"=> ["type"=>"date",
             "name"=>'expense_date',
             "label_text"=>"Expense Date",
             "placeholder"=>"Input Date",
             "required" =>true,
-        ),
-        "comment"=> array("type"=>"textarea",
+        ],
+        "comment"=> ["type"=>"textarea",
             "name"=>'comment',
             "label_text"=>"Comment",
             "placeholder"=>"input Comment",
             "required" =>false,
-        ),
-        "modification_time"=> array("type"=>"datetime",
+        ],
+        "modification_time"=> ["type"=>"datetime",
             "name"=>'modification_time',
             "label_text"=>"modification_time",
             "placeholder"=>"modification_time",
             "required" =>true,
-        ),
-    );
+        ],
+    ];
 
-    protected static $form_properties_search=array(
-        "search_all"=> array("type"=>"text",
+    protected static $form_properties_search=[
+        "search_all"=> ["type"=>"text",
             "name"=>'search_all',
             "label_text"=>"",
             "placeholder"=>"Search all",
             "required" =>false,
-        ),
-        "person_name"=> array("type"=>"select",
+        ],
+        "person_name"=> ["type"=>"select",
             "name"=>'search_person_name',
             "id"=>"search_person_name",
             "class"=>"MyHouseExpense",
@@ -144,8 +144,8 @@ class MyHouseExpense extends DatabaseObject {
             'field_option_0'=>"person_name",
             'field_option_1'=>"person_name",
             "required" =>false,
-        ),
-        "ccy_id"=> array("type"=>"select",
+        ],
+        "ccy_id"=> ["type"=>"select",
             "name"=>'ccy_id',
             "id"=>"search_ccy_id",
             "class"=>"Currency",
@@ -154,8 +154,8 @@ class MyHouseExpense extends DatabaseObject {
             'field_option_0'=>"id",
             'field_option_1'=>"currency",
             "required" =>false,
-        ),
-        "currency"=> array("type"=>"select",
+        ],
+        "currency"=> ["type"=>"select",
             "name"=>'search_currency',
             "id"=>"search_person_name",
             "class"=>"MyHouseExpense",
@@ -164,17 +164,17 @@ class MyHouseExpense extends DatabaseObject {
             'field_option_0'=>"currency",
             'field_option_1'=>"currency",
             "required" =>false,
-        ),
-        "rate"=> array("type"=>"number",
+        ],
+        "rate"=> ["type"=>"number",
             "name"=>'search_rate',
             "id"=>"rate",
             "label_text"=>"Rate",
             'min'=>0,
             "placeholder"=>"Rate to CHF",
             "required" =>false,
-        ),
+        ],
 
-        "expense_type"=> array("type"=>"select",
+        "expense_type"=> ["type"=>"select",
             "name"=>'search_expense_type',
             "id"=>"search_expense_type",
             "class"=>"MyHouseExpense",
@@ -183,30 +183,30 @@ class MyHouseExpense extends DatabaseObject {
             'field_option_0'=>"expense_type",
             'field_option_1'=>"expense_type",
             "required" =>false,
-        ),
-        "download_csv" =>array("type"=>"radio",
-            array(0,
-                array(
+        ],
+        "download_csv" =>["type"=>"radio",
+            [0,
+                [
                     "label_all"=>"Dnld csv",
                     "name"=>"download_csv",
                     "label_radio"=>"non",
                     "value"=>"No",
                     "id"=>"visible_no",
-                    "default"=>true)),
-            array(1,
-                array(
+                    "default"=>true]],
+            [1,
+                [
                     "label_all"=>"Dnld csv",
                     "name"=>"download_csv",
                     "label_radio"=>"oui",
                     "value"=>"Yes",
                     "id"=>"visible_yes",
-                    "default" => true)),
-        ),
+                    "default" => true]],
+        ],
 
-    );
+    ];
 
 
-    public static $db_field_search = array('search_all', 'download_csv');
+    public static $db_field_search = ['search_all', 'download_csv'];
 
 
     public static $page_name = "House Expense";
@@ -222,7 +222,7 @@ class MyHouseExpense extends DatabaseObject {
     public static $position_table = "positionRight"; // positionLeft // positionBoth  positionRight
 
 
-    public static $form_class_dependency = array('MyHouseExpenseType', 'MyExpensePerson');
+    public static $form_class_dependency = ['MyHouseExpenseType', 'MyExpensePerson'];
 
 
     public static $per_page;

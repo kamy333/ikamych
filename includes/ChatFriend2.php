@@ -16,24 +16,24 @@ class ChatFriend2 extends DatabaseObject
 
     protected static $table_name="chat_friend";
 
-    protected static $db_fields = array('id', 'user_id','username', 'message','date','read1','img');
+    protected static $db_fields = ['id', 'user_id','username', 'message','date','read1','img'];
 
-    public static $required_fields=array('user_id' ,'message','date');
+    public static $required_fields=['user_id' ,'message','date'];
 
-    protected static $db_fields_table_display_short=array('id', 'user_id','username', 'message','date','read1','img');
+    protected static $db_fields_table_display_short=['id', 'user_id','username', 'message','date','read1','img'];
 
-    protected static $db_fields_table_display_full=array('id', 'user_id','username', 'message','date','read1','img');
+    protected static $db_fields_table_display_full=['id', 'user_id','username', 'message','date','read1','img'];
 
-    protected static $db_field_exclude_table_display_sort=array();
+    protected static $db_field_exclude_table_display_sort=[];
 
 
-    public static $get_form_element=array( 'user_id','username', 'message','date','read1','date','img');
-    public static $get_form_element_others=array();
+    public static $get_form_element=[ 'user_id','username', 'message','date','read1','date','img'];
+    public static $get_form_element_others=[];
 
-    public static $form_default_value=array(
+    public static $form_default_value=[
         "date"=>"nowtime()",
         "read1"=>"0"
-    );
+    ];
 
 
     protected static function set_form_default_value(){
@@ -41,9 +41,9 @@ class ChatFriend2 extends DatabaseObject
         static::$form_default_value["user_id"]=$session->user_id;
     }
 
-    protected static $form_properties= array(
+    protected static $form_properties= [
 
-        "user_id"=> array("type"=>"text",
+        "user_id"=> ["type"=>"text",
             "name"=>'user_id',
             "label_text"=>"From",
             "placeholder"=>"Message here",
@@ -51,8 +51,8 @@ class ChatFriend2 extends DatabaseObject
             "readonly"=>true,
             "add_class"=>"hidden",
 
-        ),
-        "username"=> array("type"=>"text",
+        ],
+        "username"=> ["type"=>"text",
             "name"=>'username',
             "label_text"=>"From",
             "placeholder"=>"Message here",
@@ -60,80 +60,80 @@ class ChatFriend2 extends DatabaseObject
             "readonly"=>true,
             "add_class"=>"hidden",
 
-        ),
+        ],
 
-        "message"=> array("type"=>"textarea",
+        "message"=> ["type"=>"textarea",
             "name"=>'message',
             "label_text"=>"Message",
             "placeholder"=>"Message here",
             "required" =>true,
 
-        ),
-        "read1" =>array("type"=>"radio",
-            array(0,
-                array(
+        ],
+        "read1" =>["type"=>"radio",
+            [0,
+                [
                     "label_all"=>"Read",
                     "name"=>"read1",
                     "label_radio"=>"No",
                     "value"=>"0",
                     "id"=>"read_no",
-                    "default"=>true)),
-            array(1,
-                array(
+                    "default"=>true]],
+            [1,
+                [
                     "label_all"=>"Read",
                     "name"=>"read1",
                     "label_radio"=>"Yes",
                     "value"=>"1",
                     "id"=>"read_yes",
-                    "default"=>true)),
-        ),
-        "date"=> array("type"=>"datetime",
+                    "default"=>true]],
+        ],
+        "date"=> ["type"=>"datetime",
             "name"=>'date',
             "label_text"=>"DateTime",
             "placeholder"=>"current",
             "required" =>true,
             "add_class"=>"hidden",
-        ),
-        "img"=> array("type"=>"file",
+        ],
+        "img"=> ["type"=>"file",
             "name"=>'img',
-        ),
+        ],
 
-    );
+    ];
 
-    protected static $form_properties_search=array(
-        "search_all"=> array("type"=>"text",
+    protected static $form_properties_search=[
+        "search_all"=> ["type"=>"text",
             "name"=>'search_all',
             "label_text"=>"",
             "placeholder"=>"Search all",
             "required" =>false,
-        ),
-        "download_csv" =>array("type"=>"radio",
-            array(0,
-                array(
+        ],
+        "download_csv" =>["type"=>"radio",
+            [0,
+                [
                     "label_all"=>"Dnld csv",
                     "name"=>"download_csv",
                     "label_radio"=>"non",
                     "value"=>"No",
                     "id"=>"visible_no",
-                    "default"=>true)),
-            array(1,
-                array(
+                    "default"=>true]],
+            [1,
+                [
                     "label_all"=>"Dnld csv",
                     "name"=>"download_csv",
                     "label_radio"=>"oui",
                     "value"=>"Yes",
                     "id"=>"visible_yes",
-                    "default"=>true)),
-        ),
-        "id"=> array("type"=>"number",
+                    "default"=>true]],
+        ],
+        "id"=> ["type"=>"number",
             "name"=>'id',
             "id"=>"search_id",
             "label_text"=>"",
             'min'=>0,
             "placeholder"=>"ID",
             "required" =>false,
-        ),
-        "user_id"=> array("type"=>"select",
+        ],
+        "user_id"=> ["type"=>"select",
             "name"=>'user_id',
             "id"=>"search_user_id",
             "class"=>"User",
@@ -142,10 +142,10 @@ class ChatFriend2 extends DatabaseObject
             'field_option_0' => "username",
             'field_option_1' => "username",
             "required" => false,
-        ),
+        ],
 
 
-    );
+    ];
 
 
     public static $page_name = "Chat Friend2";
@@ -187,8 +187,8 @@ class ChatFriend2 extends DatabaseObject
     public $tmp_path;
     public $type;
     public $size;
-    public $errors=array();
-    public $upload_errors_array=array(
+    public $errors=[];
+    public $upload_errors_array=[
         // http://www.php.net/manual/en/features.file-upload.errors.php
         UPLOAD_ERR_OK 			=> "No errors.",
         UPLOAD_ERR_INI_SIZE  	=> "Larger than upload_max_filesize.",
@@ -198,7 +198,7 @@ class ChatFriend2 extends DatabaseObject
         UPLOAD_ERR_NO_TMP_DIR   => "No temporary directory.",
         UPLOAD_ERR_CANT_WRITE   => "Can't write to disk.",
         UPLOAD_ERR_EXTENSION 	=> "File upload stopped by extension."
-    );
+    ];
 
     public function chat_path_and_placeholder(){
         $dir=   "../../". $this->upload_directory.DS.$this->img;

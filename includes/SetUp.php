@@ -12,57 +12,57 @@
 
 class SetUp extends DatabaseObject {
     protected static $table_name="setup";
-    protected static $db_fields = array('id', 'send_email_loan', 'comment');
-    protected static $required_fields =  array('send_email_loan');
+    protected static $db_fields = ['id', 'send_email_loan', 'comment'];
+    protected static $required_fields =  ['send_email_loan'];
 
-    protected static $db_fields_table_display_short = array('id','send_email_loan',  'comment');
+    protected static $db_fields_table_display_short = ['id','send_email_loan',  'comment'];
 
-    protected static $db_fields_table_display_full = array('id','send_email_loan',  'comment');
+    protected static $db_fields_table_display_full = ['id','send_email_loan',  'comment'];
 
     protected static $db_field_exclude_table_display_sort = null;
 
-    public static $fields_numeric=array('id',);
+    public static $fields_numeric=['id',];
 
-    public static $get_form_element = array('send_email_loan', 'comment');
-    public static $get_form_element_others = array();
+    public static $get_form_element = ['send_email_loan', 'comment'];
+    public static $get_form_element_others = [];
 
-    public static $form_default_value=array(
+    public static $form_default_value=[
         "rank"=>"1",
         "side"=>"0"
-    );
+    ];
 
 
-    protected static $form_properties= array(
+    protected static $form_properties= [
 
-        "send_email_loan" =>array("type"=>"radio",
-            array(0,
-                array(
+        "send_email_loan" =>["type"=>"radio",
+            [0,
+                [
                     "label_all"=>"Positif Negatif",
                     "name"=>"side",
                     "label_radio"=>"Positif ",
                     "value"=>"1",
                     "id"=>"side_positif",
-                    "default" => true)),
-            array(1,
-                array(
+                    "default" => true]],
+            [1,
+                [
                     "label_all" => "Positif Negatif",
                     "name" => "side",
                     "label_radio" => "Negatif",
                     "value" => "-1",
                     "id" => "side_negative",
-                    "default" => true)),
-        ),
-    );
+                    "default" => true]],
+        ],
+    ];
 
-    protected static $form_properties_search=array(
-        "search_all"=> array("type"=>"text",
+    protected static $form_properties_search=[
+        "search_all"=> ["type"=>"text",
             "name"=>'search_all',
             "label_text"=>"",
             "placeholder"=>"Search all",
             "required" =>false,
-        ),
+        ],
 
-        "send_email_loan"=> array("type"=>"select",
+        "send_email_loan"=> ["type"=>"select",
             "name"=>'search_expense_type',
             "id"=>"search_expense_type",
             "class"=>"SetUp",
@@ -71,8 +71,8 @@ class SetUp extends DatabaseObject {
             'field_option_0'=>"SetUp",
             'field_option_1'=>"SetUp",
             "required" =>false,
-        ),
-        "rank"=> array("type"=>"select",
+        ],
+        "rank"=> ["type"=>"select",
             "name"=>'rank',
             "id"=>"search_rank",
             "class"=>"MyExpenseType",
@@ -81,30 +81,30 @@ class SetUp extends DatabaseObject {
             'field_option_0'=>"rank",
             'field_option_1'=>"rank",
             "required" =>false,
-        ),
-        "download_csv" =>array("type"=>"radio",
-            array(0,
-                array(
+        ],
+        "download_csv" =>["type"=>"radio",
+            [0,
+                [
                     "label_all"=>"Dnld csv",
                     "name"=>"download_csv",
                     "label_radio"=>"non",
                     "value"=>"No",
                     "id"=>"visible_no",
-                    "default"=>true)),
-            array(1,
-                array(
+                    "default"=>true]],
+            [1,
+                [
                     "label_all"=>"Dnld csv",
                     "name"=>"download_csv",
                     "label_radio"=>"oui",
                     "value"=>"Yes",
                     "id"=>"visible_yes",
-                    "default" => true)),
-        ),
+                    "default" => true]],
+        ],
 
-    );
+    ];
 
 
-    public static $db_field_search = array('search_all', 'send_email_loan', 'download_csv');
+    public static $db_field_search = ['search_all', 'send_email_loan', 'download_csv'];
 
 
     public static $page_name = "SetUp";
@@ -120,7 +120,7 @@ class SetUp extends DatabaseObject {
     public static $position_table = "positionRight"; // positionLeft // positionBoth  positionRight
 
 
-    public static $form_class_dependency = array();
+    public static $form_class_dependency = [];
 
 
     public static $per_page;

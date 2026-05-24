@@ -273,7 +273,7 @@ class MyExpense extends DatabaseObject
     public static $page_delete = "/public/admin/crud/ajax/delete_ajax.php?class_name=MyExpense"; //  "delete_link.php";
     public static $position_table = "positionBoth"; // positionLeft // positionBoth  positionRight
 
-    public static $form_class_dependency = array('MyExpensePerson', 'MyExpenseType');
+    public static $form_class_dependency = ['MyExpensePerson', 'MyExpenseType'];
 
     public static $per_page;
 
@@ -1579,7 +1579,7 @@ class ReportFinance extends MyExpense
 
     protected static $id_person = 2;
 
-    protected static $db_fields = array('id', 'amount', 'cash', 'ccy_id', 'rate', 'person_id', 'expense_type_id', 'expense_type', 'expense_date', 'comment', 'document', 'modification_time', 'currency', 'person_name', 'Yr', 'Mth', 'total', 'itemsCount', 'amountCHF', 'Amt_Pret', 'Amt_PretCHF', 'MthName');
+    protected static $db_fields = ['id', 'amount', 'cash', 'ccy_id', 'rate', 'person_id', 'expense_type_id', 'expense_type', 'expense_date', 'comment', 'document', 'modification_time', 'currency', 'person_name', 'Yr', 'Mth', 'total', 'itemsCount', 'amountCHF', 'Amt_Pret', 'Amt_PretCHF', 'MthName'];
 
     public static function Report1($XLS = false, $what = "both")
     {
@@ -2308,7 +2308,7 @@ ORDER BY year(e.expense_date) DESC";
 class MyExpenseMum extends MyExpense
 {
 
-    public static $get_form_element = array('amount', 'cash', 'comment', 'document', 'person_id', 'expense_type_id', 'expense_date', 'ccy_id', 'rate', 'modification_time');
+    public static $get_form_element = ['amount', 'cash', 'comment', 'document', 'person_id', 'expense_type_id', 'expense_date', 'ccy_id', 'rate', 'modification_time'];
 
 //    public static $page_manage = "/public/admin/crud/ajax/manage_ajax.php?class_name=MyExpenseMum"; // "new_link.php
     public static $page_manage = "/public/admin/crud/data/manage_data.php?class_name=MyExpenseMum"; // "new_link.php
@@ -2317,7 +2317,7 @@ class MyExpenseMum extends MyExpense
     public static $page_edit = "/public/admin/crud/data/edit_data.php?class_name=MyExpenseMum"; //  "edit_link.php";
     public static $page_delete = "/public/admin/crud/ajax/delete_ajax.php?class_name=MyExpenseMum"; //  "delete_link.php";
 
-    public static $form_default_value = array(
+    public static $form_default_value = [
         "expense_date" => "now()",
         "modification_time" => "nowtime()",
         "amount" => "0",
@@ -2329,7 +2329,7 @@ class MyExpenseMum extends MyExpense
         "comment" => "Cs Mum Payt Fact"
 
 
-    );
+    ];
 
 }
 
@@ -2342,7 +2342,7 @@ class MyExpenseCaroline extends ReportFinance
     public static $id_person = 2;
 //    public static $get_form_element = array('amount', 'cash', 'comment', 'document', 'person_id', 'expense_type_id', 'expense_date', 'ccy_id', 'rate', 'modification_time');
 //
-    public static $get_form_element = array('amount', 'cash', 'expense_type_id', 'comment', 'document', 'expense_date', 'ccy_id', 'rate', 'modification_time');
+    public static $get_form_element = ['amount', 'cash', 'expense_type_id', 'comment', 'document', 'expense_date', 'ccy_id', 'rate', 'modification_time'];
 
     public static $page_name = "Caroline Transaction Mum";
 
@@ -2356,7 +2356,7 @@ class MyExpenseCaroline extends ReportFinance
     public static $page_delete = "/public/admin/crud/data/delete_data.php?class_name=MyExpenseMumCaroline";
 
 
-    public static $form_default_value = array(
+    public static $form_default_value = [
         "expense_date" => "now()",
         "modification_time" => "nowtime()",
         "amount" => "0",
@@ -2368,7 +2368,7 @@ class MyExpenseCaroline extends ReportFinance
         "comment" => "Mum"
 
 
-    );
+    ];
 
 
     protected function set_up_display()

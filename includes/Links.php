@@ -12,129 +12,129 @@ class Links extends DatabaseObject
 {
 
     protected static $table_name = "links";
-    protected static $db_fields = array('id', 'name', 'web_address', 'description', 'category_id', 'category', 'sub_category_1', 'sub_category_2', 'privacy', 'rank', 'username');
+    protected static $db_fields = ['id', 'name', 'web_address', 'description', 'category_id', 'category', 'sub_category_1', 'sub_category_2', 'privacy', 'rank', 'username'];
 
-    public static $required_fields = array('name', 'web_address', 'category_id', 'privacy', 'rank',);
+    public static $required_fields = ['name', 'web_address', 'category_id', 'privacy', 'rank',];
 
-    protected static $db_fields_table_display_short = array('id', 'name', 'link', 'category');
+    protected static $db_fields_table_display_short = ['id', 'name', 'link', 'category'];
 
-    protected static $db_fields_table_display_full = array('id', 'name', 'link', 'description', 'category_id', 'category', 'sub_category_1', 'sub_category_2', 'privacy', 'rank');
+    protected static $db_fields_table_display_full = ['id', 'name', 'link', 'description', 'category_id', 'category', 'sub_category_1', 'sub_category_2', 'privacy', 'rank'];
 
-    protected static $db_field_exclude_table_display_sort = array('link');
+    protected static $db_field_exclude_table_display_sort = ['link'];
 
-    public static $fields_numeric = array('id', 'privacy', 'rank', 'category_id');
+    public static $fields_numeric = ['id', 'privacy', 'rank', 'category_id'];
 
-    public static $get_form_element = array('name', 'web_address', 'description', 'category_id', 'sub_category_1', 'sub_category_2', 'privacy', 'rank');
+    public static $get_form_element = ['name', 'web_address', 'description', 'category_id', 'sub_category_1', 'sub_category_2', 'privacy', 'rank'];
 
-    public static $get_form_element_others = array();
+    public static $get_form_element_others = [];
 
-    public static $form_default_value = array(
+    public static $form_default_value = [
         "category_id" => "1",
         "privacy" => "0",
-        "rank" => "1",);
+        "rank" => "1",];
 
-    protected static $form_properties = array(
-        "name" => array("type" => "text",
+    protected static $form_properties = [
+        "name" => ["type" => "text",
             "name" => 'name',
             "label_text" => "Name",
             "placeholder" => "input a name",
             "required" => true,
-        ),
-        "web_address" => array("type" => "url",
+        ],
+        "web_address" => ["type" => "url",
             "name" => 'web_address',
             "label_text" => "Website",
             "placeholder" => "Website Address",
             "required" => true,
-        ),
-        "description" => array("type" => "textarea",
+        ],
+        "description" => ["type" => "textarea",
             "name" => 'description',
             "label_text" => "description",
             "placeholder" => "input description",
             "required" => false,
-        ),
-        "category_id" => array("type" => "select",
+        ],
+        "category_id" => ["type" => "select",
             "name" => 'category_id',
             "class" => "LinksCategory",
             "label_text" => "Category",
             'field_option_0' => "id",
             'field_option_1' => "category",
             "required" => true,
-        ),
-        "sub_category_1" => array("type" => "text",
+        ],
+        "sub_category_1" => ["type" => "text",
             "name" => 'sub_category_1',
             "label_text" => "Category 1",
             "placeholder" => "Category 1",
             "required" => false,
-        ),
-        "sub_category_2" => array("type" => "text",
+        ],
+        "sub_category_2" => ["type" => "text",
             "name" => 'sub_category_2',
             "label_text" => "Category 2",
             "placeholder" => "Category 2",
             "required" => false,
-        ),
-        "privacy" => array("type" => "radio",
-            array(0,
-                array(
+        ],
+        "privacy" => ["type" => "radio",
+            [0,
+                [
                     "label_all" => "Privacy",
                     "name" => "privacy",
                     "label_radio" => "No",
                     "value" => "0",
                     "id" => "privacy_no",
-                    "default" => true)),
-            array(1,
-                array(
+                    "default" => true]],
+            [1,
+                [
                     "label_all" => "Privacy",
                     "name" => "privacy",
                     "label_radio" => "Yes",
                     "value" => "1",
                     "id" => "privacy_yes",
-                    "default" => true)),
-        ),
-        "rank" => array("type" => "number",
+                    "default" => true]],
+        ],
+        "rank" => ["type" => "number",
             "name" => 'rank',
             "label_text" => "Rank",
             'min' => 0,
             "placeholder" => "a number to sort",
             "required" => true,
-        ),
+        ],
 
-    );
+    ];
 
-    protected static $form_properties_search = array(
-        "search_all" => array("type" => "text",
+    protected static $form_properties_search = [
+        "search_all" => ["type" => "text",
             "name" => 'search_all',
             "label_text" => "",
             "placeholder" => "Search all",
             "required" => false,
-        ),
-        "download_csv" => array("type" => "radio",
-            array(0,
-                array(
+        ],
+        "download_csv" => ["type" => "radio",
+            [0,
+                [
                     "label_all" => "Dnld csv",
                     "name" => "download_csv",
                     "label_radio" => "non",
                     "value" => "No",
                     "id" => "visible_no",
-                    "default" => true)),
-            array(1,
-                array(
+                    "default" => true]],
+            [1,
+                [
                     "label_all" => "Dnld csv",
                     "name" => "download_csv",
                     "label_radio" => "oui",
                     "value" => "Yes",
                     "id" => "visible_yes",
-                    "default" => true)),
-        ),
-        "id" => array("type" => "number",
+                    "default" => true]],
+        ],
+        "id" => ["type" => "number",
             "name" => 'id',
             "id" => "search_id",
             "label_text" => "",
             'min' => 0,
             "placeholder" => "ID",
             "required" => false,
-        ),
+        ],
 
-        "name" => array("type" => "select",
+        "name" => ["type" => "select",
             "name" => 'name',
             "id" => "search_name",
             "class" => "Links",
@@ -143,9 +143,9 @@ class Links extends DatabaseObject
             'field_option_0' => "name",
             'field_option_1' => "name",
             "required" => false,
-        ),
+        ],
 
-        "category" => array("type" => "select",
+        "category" => ["type" => "select",
             "name" => 'category',
             "id" => "search_category",
             "class" => "Links",
@@ -154,9 +154,9 @@ class Links extends DatabaseObject
             'field_option_0' => "category",
             'field_option_1' => "category",
             "required" => false,
-        ),
+        ],
 
-        "sub_category_1" => array("type" => "select",
+        "sub_category_1" => ["type" => "select",
             "name" => 'sub_category_1',
             "id" => "search_sub_category_1",
             "class" => "Links",
@@ -165,8 +165,8 @@ class Links extends DatabaseObject
             'field_option_0' => "sub_category_1",
             'field_option_1' => "sub_category_1",
             "required" => false,
-        ),
-        "sub_category_2" => array("type" => "select",
+        ],
+        "sub_category_2" => ["type" => "select",
             "name" => 'sub_category_2',
             "id" => "search_sub_category_2",
             "class" => "Links",
@@ -175,8 +175,8 @@ class Links extends DatabaseObject
             'field_option_0' => "sub_category_2",
             'field_option_1' => "sub_category_2",
             "required" => false,
-        ),
-        "privacy" => array("type" => "select",
+        ],
+        "privacy" => ["type" => "select",
             "name" => 'privacy',
             "id" => "search_privacy",
             "class" => "Links",
@@ -185,8 +185,8 @@ class Links extends DatabaseObject
             'field_option_0' => "privacy",
             'field_option_1' => "privacy",
             "required" => false,
-        ),
-        "rank" => array("type" => "select",
+        ],
+        "rank" => ["type" => "select",
             "name" => 'rank',
             "id" => "search_rank",
             "class" => "Links",
@@ -195,10 +195,10 @@ class Links extends DatabaseObject
             'field_option_0' => "rank",
             'field_option_1' => "rank",
             "required" => false,
-        ),
-    );
+        ],
+    ];
 
-    public static $db_field_search = array('search_all', 'name', 'web_address', 'description', 'category', 'sub_category_1', 'sub_category_2', 'privacy', 'rank', 'username', 'download_csv');
+    public static $db_field_search = ['search_all', 'name', 'web_address', 'description', 'category', 'sub_category_1', 'sub_category_2', 'privacy', 'rank', 'username', 'download_csv'];
 
 
     public static $page_name = "Links";
@@ -210,7 +210,7 @@ class Links extends DatabaseObject
     public static $page_delete = "/public/admin/crud/ajax/delete_ajax.php?class_name=Links"; //  "delete_link.php";
     public static $position_table = "positionleft"; // positionLeft // positionBoth  positionRight
 
-    public static $form_class_dependency = array('LinksCategory', 'MyExpenseType');
+    public static $form_class_dependency = ['LinksCategory', 'MyExpenseType'];
 
 
     public static $per_page;

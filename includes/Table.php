@@ -22,7 +22,7 @@ public static $table_striped="table-striped";
 return $output;
 }
 
-public function view($array_header=array()){
+public function view($array_header=[]){
  $output="";
 
 $output.="<table ";

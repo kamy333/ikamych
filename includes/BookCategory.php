@@ -13,80 +13,80 @@ class BookCategory extends DatabaseObject
 
     protected static $table_name = "book_category";
 
-    protected static $db_fields = array('id', 'category', 'rank');
+    protected static $db_fields = ['id', 'category', 'rank'];
 
-    public static $required_fields = array('category',);
+    public static $required_fields = ['category',];
 
-    protected static $db_fields_table_display_short = array('id', 'category', 'rank');
+    protected static $db_fields_table_display_short = ['id', 'category', 'rank'];
 
-    protected static $db_fields_table_display_full = array('id', 'category', 'rank');
+    protected static $db_fields_table_display_full = ['id', 'category', 'rank'];
 
     protected static $db_field_exclude_table_display_sort = null;
 
-    public static $fields_numeric = array('id', 'rank');
+    public static $fields_numeric = ['id', 'rank'];
 
-    public static $get_form_element = array('category', 'rank');
-    public static $get_form_element_others = array();
+    public static $get_form_element = ['category', 'rank'];
+    public static $get_form_element_others = [];
 
-    public static $form_default_value = array(
+    public static $form_default_value = [
         "input_date" => 'nowtime()',
         "category" => "PHP",
         "rank" => 1,
 
 
-    );
+    ];
 
-    protected static $form_properties = array(
-        "category" => array("type" => "text",
+    protected static $form_properties = [
+        "category" => ["type" => "text",
             "name" => 'category',
             "label_text" => "category",
             "placeholder" => "input a link category",
             "required" => true,
-        ),
-        "rank" => array("type" => "number",
+        ],
+        "rank" => ["type" => "number",
             "name" => 'rank',
             "label_text" => "Rank",
             'min' => 0,
             "placeholder" => "a number to sort",
             "required" => false,
-        ),
+        ],
 
-    );
+    ];
 
-    protected static $form_properties_search = array(
-        "search_all" => array("type" => "text",
+    protected static $form_properties_search = [
+        "search_all" => ["type" => "text",
             "name" => 'search_all',
             "label_text" => "",
             "placeholder" => "Search all",
             "required" => false,
-        ),
-        "download_csv" => array("type" => "radio",
-            array(0,
-                array(
+        ],
+        "download_csv" => ["type" => "radio",
+            [0,
+                [
                     "label_all" => "Dnld csv",
                     "name" => "download_csv",
                     "label_radio" => "non",
                     "value" => "No",
                     "id" => "visible_no",
-                    "default" => true)),
-            array(1,
-                array(
+                    "default" => true]],
+            [1,
+                [
                     "label_all" => "Dnld csv",
                     "name" => "download_csv",
                     "label_radio" => "oui",
                     "value" => "Yes",
                     "id" => "visible_yes",
-                    "default" => true)),
-        ),
-        "id" => array("type" => "number",
+                    "default" => true]],
+        ],
+        "id" => ["type" => "number",
             "name" => 'id',
             "id" => "search_id",
             "label_text" => "",
             'min' => 0,
             "placeholder" => "ID",
             "required" => false,
-        ),
-        "category" => array("type" => "select",
+        ],
+        "category" => ["type" => "select",
             "name" => 'subject',
             "id" => "search_subject",
             "class" => "BookCategory",
@@ -95,8 +95,8 @@ class BookCategory extends DatabaseObject
             'field_option_0' => "category",
             'field_option_1' => "category",
             "required" => false,
-        ),
-        "rank" => array("type" => "select",
+        ],
+        "rank" => ["type" => "select",
             "name" => 'rank',
             "id" => "search_rank",
             "class" => "Links",
@@ -105,11 +105,11 @@ class BookCategory extends DatabaseObject
             'field_option_0' => "rank",
             'field_option_1' => "rank",
             "required" => false,
-        ),
-    );
+        ],
+    ];
 
 
-    public static $db_field_search = array('search_all', 'subject', 'download_csv');
+    public static $db_field_search = ['search_all', 'subject', 'download_csv'];
 
 
     public static $page_name = "Book Category";

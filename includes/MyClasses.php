@@ -9,7 +9,7 @@
 class MyClasses
 {
 
-    public static $all_class = array(
+    public static $all_class = [
         'SetUp','HeurePresence', 'Note', 'ToDoList', 'Message', 'Chat', 'ChatFriend', 'Notification',
         'User', 'UserType', 'Article', 'ArticleSubject', 'Book', 'BookCategory',
         'Links', 'LinksCategory', 'Category1', 'Category2',
@@ -22,7 +22,7 @@ class MyClasses
         'FailedLogin', 'BlacklistIp',
 
 
-        'Comment', 'Photos');
+        'Comment', 'Photos'];
 
 
     public static $short_class = [
@@ -46,14 +46,14 @@ class MyClasses
 
     }
 
-    public static $disable_db_classes = array(
+    public static $disable_db_classes = [
 //        'User',
         'Comment', 'InvoiceEstimate', 'Photos',
 //        'FailedLogin','BlacklistIp',
-        '');
+        ''];
 
 
-    public static $helpers_class = array('DatabaseObject', 'Database', 'SmartNav', 'Pagination', 'Session', 'Table', 'Form', 'FormValidation', 'Modal', 'MyPHPMailer');
+    public static $helpers_class = ['DatabaseObject', 'Database', 'SmartNav', 'Pagination', 'Session', 'Table', 'Form', 'FormValidation', 'Modal', 'MyPHPMailer'];
 
     public static $menu_data_manage = [];
 
@@ -110,7 +110,7 @@ class MyClasses
         if (function_exists('is_ajax_request') && is_ajax_request()) {
             http_response_code(400);
             header('Content-Type: application/json; charset=utf-8');
-            echo json_encode(array('errors' => $message));
+            echo json_encode(['errors' => $message]);
             exit;
         }
 

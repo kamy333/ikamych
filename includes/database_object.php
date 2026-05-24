@@ -43,12 +43,12 @@ class DatabaseObject
     public static $position_table = "positionRight"; // positionLeft // positionBoth  positionRight
 
 
-    public static $form_class_dependency = array();
+    public static $form_class_dependency = [];
     public static $pagination_per_page = 20;
     public static $fields_numeric; // array assoc key->format feed see todo
 
     // todo not use but too attempt to have sort reference on table head an db field
-    public static $fields_numeric_format = array();
+    public static $fields_numeric_format = [];
     public static $db_field_search;
     public static $get_form_element;
     public static $get_form_element_all;
@@ -222,7 +222,7 @@ class DatabaseObject
 
     public function assign_posted_fields(array $post, array $expected_fields)
     {
-        $assigned_fields = array();
+        $assigned_fields = [];
         foreach ($expected_fields as $field) {
             if (isset($post[$field])) {
                 $value = trim($post[$field]);
@@ -247,7 +247,7 @@ class DatabaseObject
         // - single-quotes around all values
         // - escape all values to prevent SQL injection
         $attributes = $this->sanitized_attributes();
-        $attribute_pairs = array();
+        $attribute_pairs = [];
         foreach ($attributes as $key => $value) {
             $attribute_pairs[] = "`{$key}`='{$value}'";
         }
@@ -261,7 +261,7 @@ class DatabaseObject
     protected function sanitized_attributes()
     {
         global $database;
-        $clean_attributes = array();
+        $clean_attributes = [];
         // sanitize the values before submitting
         // Note: does not alter the actual value of each attribute
         foreach ($this->attributes() as $key => $value) {
@@ -282,7 +282,7 @@ class DatabaseObject
     private function attributes()
     {
         // return an array of attribute names and their values
-        $attributes = array();
+        $attributes = [];
         foreach (static::$db_fields as $field) {
             if (property_exists($this, $field)) {
                 $attributes[$field] = $this->$field;
@@ -339,7 +339,7 @@ class DatabaseObject
         $output .= $span . "<a href=\"" . static::$page_manage . "\"> Manage " . static::$page_name . "</a>";
 
         foreach ($array_classes as $class) {
-            call_user_func_array(array($class, 'change_to_unique_data'), ['data']);
+            call_user_func_array([$class, 'change_to_unique_data'], ['data']);
 
             $href = clean_query_string($class::$page_manage);
             $output .= $span . "<a href=\"" . $href . "\"> Manage " . $class::$page_name . "</a>";
@@ -422,7 +422,7 @@ class DatabaseObject
 
     public static function find_by_id($id = 0)
     {
-        $result_array = static::find_by_sql_prepared("SELECT * FROM " . static::$table_name . " WHERE id=? LIMIT 1", array((int) $id), "i");
+        $result_array = static::find_by_sql_prepared("SELECT * FROM " . static::$table_name . " WHERE id=? LIMIT 1", [(int) $id], "i");
         return !empty($result_array) ? array_shift($result_array) : false;
     }
 
@@ -430,18 +430,18 @@ class DatabaseObject
     {
         global $database;
         $result_set = $database->query($sql);
-        $object_array = array();
+        $object_array = [];
         while ($row = $database->fetch_array($result_set)) {
             $object_array[] = static::instantiate($row);
         }
         return $object_array;
     }
 
-    public static function find_by_sql_prepared($sql = "", array $params = array(), $types = "")
+    public static function find_by_sql_prepared($sql = "", array $params = [], $types = "")
     {
         global $database;
         $result_set = $database->query_prepared($sql, $params, $types);
-        $object_array = array();
+        $object_array = [];
         while ($row = $database->fetch_array($result_set)) {
             $object_array[] = static::instantiate($row);
         }
@@ -572,12 +572,12 @@ class DatabaseObject
             }
 
 // clockwise special hour format
-            $type_exception = array('radio', 'checkbox', 'checkboxinline', 'textarea');
+            $type_exception = ['radio', 'checkbox', 'checkboxinline', 'textarea'];
 
 //must be one of the following input to use ->text() todo checkbox
-            $type_no_exception = array("text", 'password', 'email', 'select', 'search', 'date', 'datetime', 'datetime-local', 'color', 'button', 'file', 'hidden', 'image', 'month', 'number', 'range', 'reset', 'search', 'submit', 'tel', 'file', 'url', 'selectchosen', 'time', 'datetime-local', 'clockwise');
+            $type_no_exception = ["text", 'password', 'email', 'select', 'search', 'date', 'datetime', 'datetime-local', 'color', 'button', 'file', 'hidden', 'image', 'month', 'number', 'range', 'reset', 'search', 'submit', 'tel', 'file', 'url', 'selectchosen', 'time', 'datetime-local', 'clockwise'];
 
-            $type_text = array("text", 'password', 'email', 'search', 'date', 'datetime', 'datetime-local', 'time', 'color', 'button', 'file', 'hidden', 'image', 'month', 'number', 'range', 'reset', 'search', 'submit', 'tel', 'url');
+            $type_text = ["text", 'password', 'email', 'search', 'date', 'datetime', 'datetime-local', 'time', 'color', 'button', 'file', 'hidden', 'image', 'month', 'number', 'range', 'reset', 'search', 'submit', 'tel', 'url'];
 
             if (is_array($vars)) {
                 $type = $vars['type'];
@@ -943,7 +943,7 @@ class DatabaseObject
         $pagination = static::NewPagination();
         $page = static::getPagePagination();
 
-        $query_string = remove_get(array('page', 'class_name'));
+        $query_string = remove_get(['page', 'class_name']);
 
         $output = "<div id=''>";
         $output .= " <nav>";
@@ -1010,7 +1010,7 @@ class DatabaseObject
 
         $where = get_where_string(get_called_class());
         $total_count = static::count_all_where($where);
-        return new Paginator($total_count, 5, array(20, 15, 3, 6, 9, 12, 25, 50, 100, 250, 'All'));
+        return new Paginator($total_count, 5, [20, 15, 3, 6, 9, 12, 25, 50, 100, 250, 'All']);
     }
 
 
@@ -1114,7 +1114,7 @@ class DatabaseObject
 //
 //        }
 
-        $query_string = remove_get(array('order_name', 'order_type', 'page', 'class_name'));
+        $query_string = remove_get(['order_name', 'order_type', 'page', 'class_name']);
 
 
         if ($long_short == 1) {
@@ -1175,7 +1175,7 @@ class DatabaseObject
             $key_clean = ucfirst($key_clean);
 
 
-            if (!empty($_GET[$key]) && !in_array($key, array('page', 'view', 'class_name'))) {
+            if (!empty($_GET[$key]) && !in_array($key, ['page', 'view', 'class_name'])) {
                 $output .= "<b>" . h($key_clean) . "&nbsp;<span style='color:blue;'>&nbsp;" . h(urldecode($_GET[$key])) . "</span></b> | ";
             }
         }
@@ -1425,7 +1425,7 @@ class DatabaseObject
 
         // $query_string= urldecode($_SERVER['QUERY_STRING']);
 
-        $query_string = remove_get(array('order_name', 'order_type', 'page'));
+        $query_string = remove_get(['order_name', 'order_type', 'page']);
 
         if ($long_short == 1) {
             $table_field = static::$db_fields_table_display_full;
@@ -1452,7 +1452,7 @@ class DatabaseObject
             $key_clean = ucfirst($key_clean);
 
 
-            if (!empty($_GET[$key]) && !in_array($key, array('page', 'view'))) {
+            if (!empty($_GET[$key]) && !in_array($key, ['page', 'view'])) {
 //                $output.="<b>".h($key_clean)." <span style='color:blue;'> ".h(urldecode($_GET[$key]))."</span></b> | ";
             }
         }

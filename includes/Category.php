@@ -11,93 +11,93 @@
 class Category extends DatabaseObject {
 
 protected static $table_name="category";
-protected static $db_fields =array('id','category','category_1_id','category_1','category_2_id','category_2','unit_price','company_unit_price','comment',);
-public static $required_fields =array('category_1_id','category_2_id','unit_price','company_unit_price',);
-protected static $db_fields_table_display_short =array('id','category','category_1','category_2','unit_price','company_unit_price','comment',);
-protected static $db_fields_table_display_full =array('id','category','category_1_id','category_1','category_2_id','category_2','unit_price','company_unit_price','comment',);
+protected static $db_fields =['id','category','category_1_id','category_1','category_2_id','category_2','unit_price','company_unit_price','comment',];
+public static $required_fields =['category_1_id','category_2_id','unit_price','company_unit_price',];
+protected static $db_fields_table_display_short =['id','category','category_1','category_2','unit_price','company_unit_price','comment',];
+protected static $db_fields_table_display_full =['id','category','category_1_id','category_1','category_2_id','category_2','unit_price','company_unit_price','comment',];
 
     protected static $db_field_exclude_table_display_sort=null;
-    public static $fields_numeric=array('id','category_1_id','category_2_id','unit_price','company_unit_price');
+    public static $fields_numeric=['id','category_1_id','category_2_id','unit_price','company_unit_price'];
 
-    public static $get_form_element=array('category_1_id','category_2_id','unit_price','company_unit_price','comment');
-    public static $get_form_element_others=array();
+    public static $get_form_element=['category_1_id','category_2_id','unit_price','company_unit_price','comment'];
+    public static $get_form_element_others=[];
 
-    protected static $form_properties= array(
-        "category_1_id"=> array("type"=>"select",
+    protected static $form_properties= [
+        "category_1_id"=> ["type"=>"select",
             "name"=>'category_1_id',
             "class"=>"Category1",
             "label_text"=>"Category 1",
             'field_option_0'=>"id",
             'field_option_1'=>"category_1",
             "required" =>true,
-        ),
-        "category_2_id"=> array("type"=>"select",
+        ],
+        "category_2_id"=> ["type"=>"select",
             "name"=>'category_2_id',
             "class"=>"Category2",
             "label_text"=>"Category 2",
             'field_option_0'=>"id",
             'field_option_1'=>"category_2",
             "required" =>true,
-        ),
-        "unit_price"=> array("type"=>"number",
+        ],
+        "unit_price"=> ["type"=>"number",
             "name"=>'unit_price',
             "id"=>"unit_price",
             "label_text"=>"Unit Price",
             'min'=>0,
             "placeholder"=>"Price per Quantity",
             "required" =>true,
-        ),
-        "company_unit_price"=> array("type"=>"number",
+        ],
+        "company_unit_price"=> ["type"=>"number",
             "name"=>'company_unit_price',
             "id"=>"company_unit_price",
             "label_text"=>"company unit price",
             'min'=>0,
             "placeholder"=>"Price per company Quantity",
             "required" =>true,
-        ),
-        "comment"=> array("type"=>"textarea",
+        ],
+        "comment"=> ["type"=>"textarea",
             "name"=>'comment',
             "label_text"=>"Comment",
             "placeholder"=>"input Comment",
             "required" =>false,
-        ),
-    );
+        ],
+    ];
 
-    protected static $form_properties_search = array(
-        "search_all"=> array("type"=>"text",
+    protected static $form_properties_search = [
+        "search_all"=> ["type"=>"text",
         "name"=>'search_all',
         "label_text"=>"",
         "placeholder"=>"Search all",
         "required" =>false,
-    ),
-        "download_csv" =>array("type"=>"radio",
-            array(0,
-                array(
+    ],
+        "download_csv" =>["type"=>"radio",
+            [0,
+                [
                     "label_all"=>"Dnld csv",
                     "name"=>"download_csv",
                     "label_radio"=>"non",
                     "value"=>"No",
                     "id"=>"visible_no",
-                    "default"=>true)),
-            array(1,
-                array(
+                    "default"=>true]],
+            [1,
+                [
                     "label_all"=>"Dnld csv",
                     "name"=>"download_csv",
                     "label_radio"=>"oui",
                     "value"=>"Yes",
                     "id"=>"visible_yes",
-                    "default"=>true)),
-        ),
-        "id"=> array("type"=>"number",
+                    "default"=>true]],
+        ],
+        "id"=> ["type"=>"number",
             "name"=>'id',
             "id"=>"search_id",
             "label_text"=>"",
             'min'=>0,
             "placeholder"=>"ID",
             "required" =>false,
-        ),
+        ],
 
-        "category_1"=> array("type"=>"select",
+        "category_1"=> ["type"=>"select",
             "name"=>'category_1',
             "id"=>"search_category_1",
             "class"=>"Category",
@@ -106,8 +106,8 @@ protected static $db_fields_table_display_full =array('id','category','category_
             'field_option_0'=>"category_1",
             'field_option_1'=>"category_1",
             "required" =>false,
-        ),
-        "category_2"=> array("type"=>"select",
+        ],
+        "category_2"=> ["type"=>"select",
             "name"=>'category_2',
             "id"=>"search_category_2",
             "class"=>"Category",
@@ -116,8 +116,8 @@ protected static $db_fields_table_display_full =array('id','category','category_
             'field_option_0'=>"category_2",
             'field_option_1'=>"category_2",
             "required" =>false,
-        ),
-        "unit_price"=> array("type"=>"select",
+        ],
+        "unit_price"=> ["type"=>"select",
             "name"=>'unit_price',
             "id"=>"search_unit_price",
             "class"=>"Category",
@@ -126,8 +126,8 @@ protected static $db_fields_table_display_full =array('id','category','category_
             'field_option_0'=>"unit_price",
             'field_option_1'=>"unit_price",
             "required" =>false,
-        ),
-        "company_unit_price"=> array("type"=>"select",
+        ],
+        "company_unit_price"=> ["type"=>"select",
             "name"=>'company_unit_price',
             "id"=>"search_company_unit_price",
             "class"=>"Category",
@@ -136,11 +136,11 @@ protected static $db_fields_table_display_full =array('id','category','category_
             'field_option_0'=>"company_unit_price",
             'field_option_1' => "company_unit_price",
             "required" => false,
-        ),
+        ],
 
-    );
+    ];
 
-    public static $db_field_search = array('search_all', 'id', 'category', 'category_1', 'category_2', 'unit_price', 'company_unit_price', 'download_csv');
+    public static $db_field_search = ['search_all', 'id', 'category', 'category_1', 'category_2', 'unit_price', 'company_unit_price', 'download_csv'];
 
 
     public static $page_name = "Category";
@@ -156,7 +156,7 @@ protected static $db_fields_table_display_full =array('id','category','category_
     public static $position_table = "positionRight"; // positionLeft // positionBoth  positionRight
 
 
-    public static $form_class_dependency = array('InvoiceActual', 'Category1', 'Category2');
+    public static $form_class_dependency = ['InvoiceActual', 'Category1', 'Category2'];
 
 
     public static $per_page;

@@ -5,7 +5,7 @@
 // IKAMY_* environment variables. Never commit real credentials.
 
 $server_name = $_SERVER['SERVER_NAME'] ?? 'localhost';
-$server_local_names = array('localhost', '127.0.0.1', '::1', 'ikamy.local');
+$server_local_names = ['localhost', '127.0.0.1', '::1', 'ikamy.local'];
 $server_phpstorm = 'PhpStorm';
 
 defined('LOCALHOST_FOLDER') ? null : define('LOCALHOST_FOLDER', 'ikamych');

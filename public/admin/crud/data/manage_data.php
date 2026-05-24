@@ -18,7 +18,7 @@ if(User::is_caroline_only()){
 
 
 $class_name = MyClasses::allowed_class_from_request();
-call_user_func_array(array($class_name, 'change_to_unique_data'), ['data']);
+call_user_func_array([$class_name, 'change_to_unique_data'], ['data']);
 
 //if ($Nav->folder_immediate!="admin"){
 //    $class_name::$page_manage=$Nav->path_admin.$Nav->folder_prev.'/manage/'.$class_name::$page_manage ;
@@ -28,7 +28,7 @@ call_user_func_array(array($class_name, 'change_to_unique_data'), ['data']);
 //}
 
 
-$query_string = remove_get(array('view', 'page', 'class_name'));
+$query_string = remove_get(['view', 'page', 'class_name']);
 
 $page = (!empty($_GET['page'])) ? (int)$_GET["page"] : 1;
 $view_full_table = !empty($_GET["view"]) ? (int)$_GET["view"] : 0;
@@ -67,7 +67,7 @@ if ($view_full_table == 1) {
 
 <?php
 
-echo call_user_func_array(array($class_name, 'table_nav'), [$page_link_view, $page_link_text, $offset]);
+echo call_user_func_array([$class_name, 'table_nav'], [$page_link_view, $page_link_text, $offset]);
 
 ?>
 
@@ -101,12 +101,12 @@ echo call_user_func_array(array($class_name, 'table_nav'), [$page_link_view, $pa
     <?php
     echo "<div class=\"row\">";
     echo "<div class=\"col-md-12 {$offset}\" id='pagination' >";
-    echo call_user_func_array(array($class_name, 'display_pagination'), []);
+    echo call_user_func_array([$class_name, 'display_pagination'], []);
     echo "</div>";
     echo "</div>";
 
     echo "<div class=\"row\">";
-    echo call_user_func_array(array($class_name, 'display_all'), ['', $view_full_table]);
+    echo call_user_func_array([$class_name, 'display_all'], ['', $view_full_table]);
     echo "</div>";
     ?>
 

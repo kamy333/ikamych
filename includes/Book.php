@@ -14,10 +14,10 @@
 class Book extends DatabaseObject
 {
 
-    public static $fields_numeric = array('id', 'category_id', 'rank', 'likes', 'is_row', 'num_column', 'num_offset');
+    public static $fields_numeric = ['id', 'category_id', 'rank', 'likes', 'is_row', 'num_column', 'num_offset'];
     public static $get_form_element = ['category_id', 'rank', 'h2', 'h3', 'about_book', 'about_author', 'pdf_name', 'download_source_link', 'apress_link', 'summary', 'author', 'photo', 'likes', 'is_row', 'num_column', 'num_offset', 'comment', 'input_date'];
-    public static $get_form_element_others = array();
-    public static $form_default_value = array(
+    public static $get_form_element_others = [];
+    public static $form_default_value = [
         "input_date" => 'nowtime()',
         "likes" => 0,
         "category_id" => 1,
@@ -34,8 +34,8 @@ class Book extends DatabaseObject
 //        "about_book" => "about_book",
 
 
-    );
-    public static $db_field_search = array('search_all', 'book', 'download_csv');
+    ];
+    public static $db_field_search = ['search_all', 'book', 'download_csv'];
     public static $form_user_id;
 
     public static $page_name = "Book";
@@ -57,179 +57,179 @@ class Book extends DatabaseObject
     protected static $table_name = "book";
     protected static $db_fields = ['id', 'category_id', 'rank', 'download_source_link', 'h2', 'h3', 'summary', 'pdf_name', 'author', 'about_book', 'about_author', 'photo', 'apress_link', 'likes', 'is_row', 'num_column', 'num_offset', 'comment', 'input_date'];
 
-    protected static $required_fields = array('category_id', 'pdf_name');
-    protected static $db_field_exclude_table_display_sort = array('about', 'category', 'download_source', 'apress', 'pdf');
+    protected static $required_fields = ['category_id', 'pdf_name'];
+    protected static $db_field_exclude_table_display_sort = ['about', 'category', 'download_source', 'apress', 'pdf'];
 
-    protected static $db_fields_table_display_short = array('id', 'rank', 'category', 'about', 'pdf_name', 'download_source', 'h2', 'h3');
+    protected static $db_fields_table_display_short = ['id', 'rank', 'category', 'about', 'pdf_name', 'download_source', 'h2', 'h3'];
 
     protected static $db_fields_table_display_full = ['id', 'category', 'download_source', 'h2', 'h3', 'summary', 'rank', 'pdf_name', 'author', 'about', 'photo', 'apress_link', 'likes', 'is_row', 'num_column', 'num_offset', 'comment', 'input_date'];
 
-    protected static $form_properties = array(
-        "rank" => array("type" => "number",
+    protected static $form_properties = [
+        "rank" => ["type" => "number",
             "name" => 'rank',
             "label_text" => "Rank",
             'min' => 0,
             "placeholder" => "a number to sort",
             "required" => true,
-        ),
+        ],
 
-        "category_id" => array("type" => "select",
+        "category_id" => ["type" => "select",
             "name" => 'category_id',
             "class" => "BookCategory",
             "label_text" => "Category",
             'field_option_0' => "id",
             'field_option_1' => "category",
             "required" => true,
-        ),
+        ],
 
-        "h2" => array("type" => "text",
+        "h2" => ["type" => "text",
             "name" => 'h2',
             "label_text" => "h2",
             "placeholder" => "Header 2",
             "required" => false,
-        ),
-        "h3" => array("type" => "text",
+        ],
+        "h3" => ["type" => "text",
             "name" => 'h3',
             "label_text" => "h3",
             "placeholder" => "Header 3",
             "required" => false,
-        ),
+        ],
 
-        "download_source_link" => array("type" => "url",
+        "download_source_link" => ["type" => "url",
             "name" => 'download_source_link',
             "label_text" => "download source link eg Git",
             "placeholder" => "download_source_link",
             "required" => false,
-        ),
-        "pdf_name" => array("type" => "text",
+        ],
+        "pdf_name" => ["type" => "text",
             "name" => 'pdf_name',
             "label_text" => "pdf_name",
             "placeholder" => "pdf name of file",
             "required" => false,
-        ),
+        ],
 
-        "apress_link" => array("type" => "url",
+        "apress_link" => ["type" => "url",
             "name" => 'apress_link',
             "label_text" => "apress_link",
             "placeholder" => "Apress Website Address of book",
             "required" => false,
-        ),
-        "author" => array("type" => "text",
+        ],
+        "author" => ["type" => "text",
             "name" => 'author',
             "label_text" => "Author",
             "placeholder" => "author",
             "required" => false,
-        ),
-        "about_book" => array("type" => "textarea",
+        ],
+        "about_book" => ["type" => "textarea",
             "name" => 'about_book',
             "label_text" => "about_book",
             "placeholder" => "about_book here",
             "required" => false,
-        ),
-        "about_author" => array("type" => "textarea",
+        ],
+        "about_author" => ["type" => "textarea",
             "name" => 'about_author',
             "label_text" => "about_author",
             "placeholder" => "about_author here",
             "required" => false,
-        ),
+        ],
 
-        "likes" => array("type" => "number",
+        "likes" => ["type" => "number",
             "name" => 'likes',
             "label_text" => "Likes",
             'min' => 0,
             "placeholder" => "Likes",
             "required" => false,
-        ),
+        ],
 
 
-        "photo" => array("type" => "file",
+        "photo" => ["type" => "file",
             "name" => 'photo',
             "label_text" => "photo",
             "required" => false,
             "autocomplete" => "off",
 
-        ),
-        "summary" => array("type" => "textarea",
+        ],
+        "summary" => ["type" => "textarea",
             "name" => 'summary',
             "label_text" => "summary",
             "placeholder" => "summary",
             "required" => false,
-        ),
+        ],
 
-        "comment" => array("type" => "textarea",
+        "comment" => ["type" => "textarea",
             "name" => 'comment',
             "label_text" => "comment",
             "placeholder" => "comment",
             "required" => false,
-        ),
+        ],
 
-        "is_row" => array("type" => "number",
+        "is_row" => ["type" => "number",
             "name" => 'is_row',
             "label_text" => "is_row",
             'min' => 0,
             'max' => 1,
             "placeholder" => "is row",
             "required" => false,
-        ),
-        "num_column" => array("type" => "number",
+        ],
+        "num_column" => ["type" => "number",
             "name" => 'num_column',
             "label_text" => "num_column",
             'min' => 0,
             'max' => 12,
             "placeholder" => "No of column",
             "required" => false,
-        ),
-        "num_offset" => array("type" => "number",
+        ],
+        "num_offset" => ["type" => "number",
             "name" => 'num_offset',
             "label_text" => "num_offset",
             'min' => 0,
             'max' => 12,
             "placeholder" => "No of offset",
             "required" => false,
-        ),
+        ],
 
-        "input_date" => array("type" => "datetime",
+        "input_date" => ["type" => "datetime",
             "name" => 'input_date',
             "label_text" => "DateTime",
             "placeholder" => "current date",
             "required" => true,
-        ),
+        ],
 
-    );
-    protected static $form_properties_search = array(
-        "search_all" => array("type" => "text",
+    ];
+    protected static $form_properties_search = [
+        "search_all" => ["type" => "text",
             "name" => 'search_all',
             "label_text" => "",
             "placeholder" => "Search all",
             "required" => false,
-        ),
-        "download_csv" => array("type" => "radio",
-            array(0,
-                array(
+        ],
+        "download_csv" => ["type" => "radio",
+            [0,
+                [
                     "label_all" => "Dnld csv",
                     "name" => "download_csv",
                     "label_radio" => "non",
                     "value" => "No",
                     "id" => "visible_no",
-                    "default" => true)),
-            array(1,
-                array(
+                    "default" => true]],
+            [1,
+                [
                     "label_all" => "Dnld csv",
                     "name" => "download_csv",
                     "label_radio" => "oui",
                     "value" => "Yes",
                     "id" => "visible_yes",
-                    "default" => true)),
-        ),
-        "id" => array("type" => "number",
+                    "default" => true]],
+        ],
+        "id" => ["type" => "number",
             "name" => 'id',
             "id" => "search_id",
             "label_text" => "",
             'min' => 0,
             "placeholder" => "ID",
             "required" => false,
-        ),
-        "category_id" => array("type" => "select",
+        ],
+        "category_id" => ["type" => "select",
             "name" => 'subject_id',
             "id" => "search_subject",
             "class" => "Book",
@@ -238,10 +238,10 @@ class Book extends DatabaseObject
             'field_option_0' => "category",
             'field_option_1' => "category",
             "required" => false,
-        ),
+        ],
 
 
-    );
+    ];
 
 
     public $id;

@@ -13,91 +13,91 @@
 class MyExpensePerson extends DatabaseObject {
     protected static $table_name="myexpense_person";
 
-    protected static $db_fields = array('id', 'person_name', 'close_person', 'authorized_user', 'language', 'rank', 'comment');
+    protected static $db_fields = ['id', 'person_name', 'close_person', 'authorized_user', 'language', 'rank', 'comment'];
 
-    protected static $required_fields =  array('person_name','rank');
+    protected static $required_fields =  ['person_name','rank'];
 
-    protected static $db_fields_table_display_short = array('id', 'person_name', 'close_person', 'authorized_user', 'rank', 'language', 'comment');
+    protected static $db_fields_table_display_short = ['id', 'person_name', 'close_person', 'authorized_user', 'rank', 'language', 'comment'];
 
-    protected static $db_fields_table_display_full = array('id', 'person_name', 'close_person', 'authorized_user', 'language', 'rank', 'comment');
+    protected static $db_fields_table_display_full = ['id', 'person_name', 'close_person', 'authorized_user', 'language', 'rank', 'comment'];
     protected static $db_field_exclude_table_display_sort = null;
 
-    public static $fields_numeric=array('id','rank');
+    public static $fields_numeric=['id','rank'];
 
-    public static $get_form_element = array('person_name', 'close_person', 'authorized_user', 'language', 'close', 'rank', 'comment');
-    public static $get_form_element_others = array();
+    public static $get_form_element = ['person_name', 'close_person', 'authorized_user', 'language', 'close', 'rank', 'comment'];
+    public static $get_form_element_others = [];
 
-    public static $form_default_value=array(
+    public static $form_default_value=[
         "person_name"=>"Pablo"
-    );
+    ];
 
-    protected static $form_properties= array(
+    protected static $form_properties= [
 
-        "person_name" => array("type" => "text",
+        "person_name" => ["type" => "text",
             "name" => 'person_name',
             "label_text" => "person_name",
             "placeholder" => "person_name",
             "required" => true,
-        ),
+        ],
 
 
-        "close_person" => array("type" => "radio",
-            array(0,
-                array(
+        "close_person" => ["type" => "radio",
+            [0,
+                [
                     "label_all" => "close_person",
                     "name" => "close_person",
                     "label_radio" => "No",
                     "value" => "0",
                     "id" => "close_person_no",
-                    "default" => true)),
-            array(1,
-                array(
+                    "default" => true]],
+            [1,
+                [
                     "label_all" => "close_person",
                     "name" => "close_person",
                     "label_radio" => "Yes",
                     "value" => "1",
                     "id" => "close_person_yes",
-                    "default" => false)),
-        ),
+                    "default" => false]],
+        ],
 
-        "authorized_user" => array("type" => "text",
+        "authorized_user" => ["type" => "text",
             "name" => 'authorized_user',
             "label_text" => "authorized_user",
             "placeholder" => "authorized user must be valid username and comma-separated if more than 1",
             "required" => false,
-        ),
+        ],
 
-        "language" => array("type" => "text",
+        "language" => ["type" => "text",
             "name" => 'language',
             "label_text" => "language",
             "placeholder" => "language comma-separated if more than 1 en,fr,ptg",
             "required" => false,
-        ),
+        ],
 
-        "comment" => array("type" => "textarea",
+        "comment" => ["type" => "textarea",
             "name" => 'comment',
             "label_text" => "Comment",
             "placeholder" => "input Comment",
             "required" => false,
-        ),
-        "rank" => array("type" => "number",
+        ],
+        "rank" => ["type" => "number",
             "name" => 'rank',
             "label_text" => "Rank",
             'min' => 0,
             "placeholder"=>"a number to sort",
             "required" =>false,
-        ),
-    );
+        ],
+    ];
 
-    protected static $form_properties_search=array(
-        "search_all"=> array("type"=>"text",
+    protected static $form_properties_search=[
+        "search_all"=> ["type"=>"text",
             "name"=>'search_all',
             "label_text"=>"",
             "placeholder"=>"Search all",
             "required" =>false,
-        ),
+        ],
 
-        "person_name"=> array("type"=>"select",
+        "person_name"=> ["type"=>"select",
             "name"=>'search_person_name',
             "id"=>"search_person_name",
             "class"=>"MyExpensePerson",
@@ -106,8 +106,8 @@ class MyExpensePerson extends DatabaseObject {
             'field_option_0'=>"person_name",
             'field_option_1'=>"person_name",
             "required" =>false,
-        ),
-        "rank"=> array("type"=>"select",
+        ],
+        "rank"=> ["type"=>"select",
             "name"=>'rank',
             "id"=>"search_rank",
             "class"=>"MyExpensePerson",
@@ -116,30 +116,30 @@ class MyExpensePerson extends DatabaseObject {
             'field_option_0'=>"rank",
             'field_option_1'=>"rank",
             "required" =>false,
-        ),
-        "download_csv" =>array("type"=>"radio",
-            array(0,
-                array(
+        ],
+        "download_csv" =>["type"=>"radio",
+            [0,
+                [
                     "label_all"=>"Dnld csv",
                     "name"=>"download_csv",
                     "label_radio"=>"non",
                     "value"=>"No",
                     "id"=>"visible_no",
-                    "default"=>true)),
-            array(1,
-                array(
+                    "default"=>true]],
+            [1,
+                [
                     "label_all"=>"Dnld csv",
                     "name"=>"download_csv",
                     "label_radio"=>"oui",
                     "value"=>"Yes",
                     "id"=>"visible_yes",
-                    "default" => true)),
-        ),
+                    "default" => true]],
+        ],
 
-    );
+    ];
 
 
-    public static $db_field_search = array('search_all', 'person_name', 'download_csv');
+    public static $db_field_search = ['search_all', 'person_name', 'download_csv'];
 
 
     public static $page_name = "Expense Person";
@@ -156,7 +156,7 @@ class MyExpensePerson extends DatabaseObject {
     public static $position_table = "positionRight"; // positionLeft // positionBoth  positionRight
 
 
-    public static $form_class_dependency = array('MyExpense', 'MyExpenseType');
+    public static $form_class_dependency = ['MyExpense', 'MyExpenseType'];
 
 
     public static $per_page;

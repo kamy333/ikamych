@@ -39,7 +39,7 @@
                 <?php
 
 
-                function ThumbnailModal($comments_array = array(), $img_folder = 'public')
+                function ThumbnailModal($comments_array = [], $img_folder = 'public')
                 {
                     $picture = get_picture_array($img_folder);
 
@@ -143,7 +143,7 @@
 
 
                 //                echo "<h2>$h2</h2>";
-                $comments = array();
+                $comments = [];
 
                 echo ThumbnailModal($comments, $fol);
 

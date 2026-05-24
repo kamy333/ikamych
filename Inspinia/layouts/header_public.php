@@ -22,7 +22,7 @@
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet"/>
 
 
-    <?php $pages = array('chat', 'chat2') ?>
+    <?php $pages = ['chat', 'chat2'] ?>
     <?php if (in_array($active_menu_clean, $pages)) { ?>
         <link href="css/plugins/summernote/summernote.css" rel="stylesheet">
         <link href="css/plugins/summernote/summernote-bs3.css" rel="stylesheet">
@@ -33,7 +33,7 @@
     unset($pages) ?>
 
 
-    <?php $pages = array('chat_djamila') ?>
+    <?php $pages = ['chat_djamila'] ?>
     <?php if (in_array($active_menu_clean, $pages)) { ?>
         <link href="css/plugins/summernote/summernote.css" rel="stylesheet">
         <link href="css/plugins/summernote/summernote-bs3.css" rel="stylesheet">
@@ -46,7 +46,7 @@
 
 
 
-    <?php $pages = array('index') ?>
+    <?php $pages = ['index'] ?>
     <?php if (in_array($active_menu_clean, $pages)) { ?>
         <!-- Toastr style -->
         <link href="<?php echo $path; ?>css/plugins/toastr/toastr.min.css" rel="stylesheet">
@@ -54,7 +54,7 @@
     unset($pages) ?>
 
 
-    <?php $pages = array('profile') ?>
+    <?php $pages = ['profile'] ?>
     <?php if (in_array($active_menu_clean, $pages)) { ?>
         <link href="<?php echo $path; ?>css/plugins/switchery/switchery.css" rel="stylesheet">
     <?php }
@@ -62,8 +62,8 @@
 
 
 
-    <?php $pages = array('index', 'index_gallery', 'index_gallery10', 'index_gallery2', 'index_gallery3', 'index_gallery5', 'index_gallery6',
-            'index_gallery7') ?>
+    <?php $pages = ['index', 'index_gallery', 'index_gallery10', 'index_gallery2', 'index_gallery3', 'index_gallery5', 'index_gallery6',
+            'index_gallery7'] ?>
     <?php if (in_array($active_menu_clean, $pages)) { ?>
         <?php include(SITE_ROOT . DS . $folder_project_name . DS . 'layouts_addon' . DS . "css_php" . DS . 'blueimpVideo.php'); ?>
     <?php }
@@ -80,7 +80,7 @@
 <body class="top-navigation" <?php echo $body_onload; ?> >
 
 
-<?php $pages = array('index', 'index_gallery', 'index_gallery4') ?>
+<?php $pages = ['index', 'index_gallery', 'index_gallery4'] ?>
 <?php if (in_array($active_menu_clean, $pages)) { ?>
 
     <div id="fb-root"></div>

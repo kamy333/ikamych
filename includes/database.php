@@ -40,7 +40,7 @@ class MySQLDatabase
         return $result;
     }
 
-    public function query_prepared($sql, array $params = array(), $types = "")
+    public function query_prepared($sql, array $params = [], $types = "")
     {
         $this->last_query = $sql;
         $stmt = mysqli_prepare($this->connection, $sql);
@@ -53,12 +53,12 @@ class MySQLDatabase
                 $types = $this->parameter_types($params);
             }
 
-            $bind_params = array($types);
+            $bind_params = [$types];
             foreach ($params as $key => $value) {
                 $bind_params[] = &$params[$key];
             }
 
-            if (!call_user_func_array(array($stmt, 'bind_param'), $bind_params)) {
+            if (!call_user_func_array([$stmt, 'bind_param'], $bind_params)) {
                 $this->confirm_query(false);
             }
         }

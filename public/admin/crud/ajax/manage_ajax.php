@@ -17,7 +17,7 @@ if(User::is_caroline_only()){
 }
 
 $class_name = MyClasses::allowed_class_from_request();
-call_user_func_array(array($class_name, 'change_to_unique_data'), ['ajax']);
+call_user_func_array([$class_name, 'change_to_unique_data'], ['ajax']);
 
 HeurePresence::quickaddhours();
 HeurePresence::quicksubstracthours();
@@ -29,7 +29,7 @@ HeurePresence::quicksubstracthours();
 $page = (!empty($_GET['page']) && isset($_GET)) ? (int)$_GET["page"] : 1;
 
 
-$query_string = remove_get(array('view', 'page', 'class_name'));
+$query_string = remove_get(['view', 'page', 'class_name']);
 
 $view_full_table = isset($_GET["view"]) ? (int)$_GET["view"] : 0;
 
@@ -73,7 +73,7 @@ if ($view_full_table == 1) {
 <?php
 
 //if (isset($page_link_view)) {
-echo call_user_func_array(array($class_name, 'table_nav'), [$page_link_view, $page_link_text, $offset]);
+echo call_user_func_array([$class_name, 'table_nav'], [$page_link_view, $page_link_text, $offset]);
 //}
 
 ?>
@@ -113,12 +113,12 @@ echo call_user_func_array(array($class_name, 'table_nav'), [$page_link_view, $pa
     <?php
     echo "<div class=\"row\">";
     echo "<div class=\"col-md-7 {$offset}\" id='pagination' >";
-    echo call_user_func_array(array($class_name, 'display_pagination'), []);
+    echo call_user_func_array([$class_name, 'display_pagination'], []);
     echo "</div>";
     echo "</div>";
 
     echo "<div class=\"row\">";
-    echo call_user_func_array(array($class_name, 'display_all'), ['', $view_full_table]);
+    echo call_user_func_array([$class_name, 'display_all'], ['', $view_full_table]);
     echo "</div>";
     ?>
 

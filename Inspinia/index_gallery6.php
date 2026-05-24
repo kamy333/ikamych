@@ -47,11 +47,11 @@
 
 
 
-function BraliaComment($comments_array=array(),$img_folder='public'){
+function BraliaComment($comments_array=[],$img_folder='public'){
 
   $picture=  get_picture_array($img_folder);
 
-    $array_cut=array(0,8);
+    $array_cut=[0,8];
 $output="";
 //    $output="<div class='row'>";
 //    $output.="    <div class=\"ibox-content\">";
@@ -108,7 +108,7 @@ $output="";
 
 
 
-function ThumbnailModal ($comments_array=array(),$img_folder='public'){
+function ThumbnailModal ($comments_array=[],$img_folder='public'){
     $picture=  get_picture_array($img_folder);
 
 
@@ -214,7 +214,7 @@ function ThumbnailModal ($comments_array=array(),$img_folder='public'){
 
 
 echo "<h2>$h2</h2>";
-$comments=array(
+$comments=[
     "Un shabbat à la maison avec mes parents il y a environ 3 ou 4 ans ",
     "Une photo de Halloween passé chez nous avec Gaëlle et Caroline ( les enfants de Suzanne) et leurs petits amis .Pas  mal non ? ",
     "Je te présente Doris , une cousine éloignée qui habite à San Diego . 
@@ -249,7 +249,7 @@ Tu te souviendras sans doute de Mahchid ( elle est à droite de la photo avec so
 
 
 
-);
+];
 $fol="Bralia/Bralia2";
 //echo BraliaComment($comments,$fol);
 echo ThumbnailModal($comments,$fol);

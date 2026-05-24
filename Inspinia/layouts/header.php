@@ -15,7 +15,7 @@
     <link href="<?php echo $path;?>font-awesome/css/font-awesome.css" rel="stylesheet">
 
 
-    <?php $pages=array('index') ?>
+    <?php $pages=['index'] ?>
     <?php if(in_array($active_menu_clean,$pages) ) { ?>
     <!-- Toastr style -->
     <link href="<?php echo $path;?>css/plugins/toastr/toastr.min.css" rel="stylesheet">
@@ -25,7 +25,7 @@
     <!-- Gritter -->
     <link href="<?php echo $path;?>js/plugins/gritter/jquery.gritter.css" rel="stylesheet">
 
-    <?php $pages=array('mailbox') ?>
+    <?php $pages=['mailbox'] ?>
     <?php if(in_array($active_menu_clean,$pages) ) { ?>
         <!-- iCheck style -->
         <link href="<?php echo $path;?>css/plugins/iCheck/custom.css" rel="stylesheet">
@@ -38,24 +38,24 @@
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 
 
-    <?php $pages=array('class_manage') ?>
+    <?php $pages=['class_manage'] ?>
     <?php if(in_array($active_menu_clean,$pages) ) { ?>
         <link href="<?php echo $path;?>css/plugins/dataTables/datatables.min.css" rel="stylesheet">
     <?php } unset($pages) ?>
 
 
-    <?php $pages=array('class_edit','class_new') ?>
+    <?php $pages=['class_edit','class_new'] ?>
     <?php if(in_array($active_menu_clean,$pages) ) { ?>
         <?php include_once (SITE_ROOT.DS.$folder_project_name.DS.'layouts_addon'.DS."css_php".DS.'forms_input.php');?>
     <?php } unset($pages) ?>
 
-    <?php $pages=array('login_forgot_password_email') ?>
+    <?php $pages=['login_forgot_password_email'] ?>
     <?php if(in_array($active_menu_clean,$pages) ) {
          $body="class=\"gray-bg\"";} else {$body="";}
         ?>
     <?php  unset($pages) ?>
 
-    <?php $pages = array('profile') ?>
+    <?php $pages = ['profile'] ?>
     <?php if (in_array($active_menu_clean, $pages)) { ?>
         <link href="<?php echo $Nav->path_public; ?>css/plugins/chosen/chosen.css" rel="stylesheet">
     <?php }

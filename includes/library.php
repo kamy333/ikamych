@@ -58,7 +58,7 @@ class Library
             throw new Exception("No book found with ISBN " . $isbn);
         }
 
-        $arrBook = array();
+        $arrBook = [];
         $arrBook["isbn"] = $isbn;
 
         // get the data from the elements based on their tag names
@@ -74,7 +74,7 @@ class Library
 
         $chapters = $book->getElementsByTagName("chapter");
 
-        $arrChapters = array();
+        $arrChapters = [];
 
         // iterate over the chapter elements
         foreach ($chapters as $chapter) {
@@ -173,7 +173,7 @@ class Library
         $xpath = new DOMXPath($this->domDocument);
         $result = $xpath->query($query);
 
-        $arrBooks = array();
+        $arrBooks = [];
 
         // iterate of the results
         foreach ($result as $book) {

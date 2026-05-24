@@ -20,7 +20,7 @@ if(User::is_caroline_only()){
 
 <?php
 $class_name = MyClasses::allowed_class_from_request();
-call_user_func_array(array($class_name, 'change_to_unique_data'), ['data']);
+call_user_func_array([$class_name, 'change_to_unique_data'], ['data']);
 
 //if ($Nav->folder_immediate != "admin") {
 //    $class_name::$page_manage = $Nav->path_admin . $Nav->folder_prev . '/manage/' . $class_name::$page_manage;
@@ -114,11 +114,11 @@ if (request_is_post() && request_is_same_domain()) {
 <div class="col-md-7 col-md-offset-2 col-lg-7 col-lg-offset-2">
 
 
-    <?php echo call_user_func_array(array($class_name, 'get_form_new_href'), array($class_name::$form_class_dependency)); ?>
+    <?php echo call_user_func_array([$class_name, 'get_form_new_href'], [$class_name::$form_class_dependency]); ?>
     <!--    <h4 class="text-center"><a href="--><?php //echo $_SERVER["PHP_SELF"] ?><!--">-->
     <?php //echo $page ." " .$class_name::$page_name ?><!--</a> </h4>-->
 
-    <?php echo call_user_func(array($class_name, 'Create_form')); ?>
+    <?php echo call_user_func([$class_name, 'Create_form']); ?>
 
 
 </div>

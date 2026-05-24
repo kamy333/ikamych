@@ -21,7 +21,7 @@ if(User::is_caroline_only()){
 <?php
 
 $class_name = MyClasses::allowed_class_from_request();
-call_user_func_array(array($class_name, 'change_to_unique_data'), ['ajax']);
+call_user_func_array([$class_name, 'change_to_unique_data'], ['ajax']);
 ?>
 <?php
 if (!isset($_GET["id"])) {

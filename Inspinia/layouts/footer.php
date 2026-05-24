@@ -22,7 +22,7 @@
 //    'login','logout','mail_compose','mail_detail','mailbox','minor','register') ?>
 
 
-<?php $pages=array('class_edit','class_new') // if not pages ?>
+<?php $pages=['class_edit','class_new'] // if not pages ?>
 <?php if(!in_array($active_menu_clean,$pages) ) { ?>
 <script src="<?php echo $path;?>js/jquery-2.1.1.js"></script>
 <script src="<?php echo $path;?>js/bootstrap.min.js"></script>
@@ -48,7 +48,7 @@
 <!--<script src="--><?php //echo $path;?><!--js/demo/peity-demo.js"></script>-->
 
 <!-- Custom and plugin javascript -->
-<?php $pages=array('class_edit','class_new') // if not pages ?>
+<?php $pages=['class_edit','class_new'] // if not pages ?>
 <?php if(!in_array($active_menu_clean,$pages) ) { ?>
 <script src="<?php echo $path;?>js/inspinia.js"></script>
 <script src="<?php echo $path;?>js/plugins/pace/pace.min.js"></script>
@@ -57,7 +57,7 @@
 <?php } unset($pages) ?>
 
 
-<?php $pages=array('index') ?>
+<?php $pages=['index'] ?>
 <?php if(in_array($active_menu_clean,$pages) ) { ?>
     <!-- Toastr -->
     <script src="<?php echo $path;?>js/plugins/toastr/toastr.min.js"></script>
@@ -66,24 +66,24 @@
 
 
 
-<?php $pages=array('class_manage') ?>
+<?php $pages=['class_manage'] ?>
 <?php if(in_array($active_menu_clean,$pages) ) { ?>
     <?php include (SITE_ROOT.DS.$folder_project_name.DS.'layouts_addon'.DS."js_php".DS.'DataTable.php');?>
 <?php } unset($pages) ?>
 
 
-<?php $pages=array('mailbox') ?>
+<?php $pages=['mailbox'] ?>
 <?php if(in_array($active_menu_clean,$pages) ) { ?>
     <?php include (SITE_ROOT.DS.$folder_project_name.DS.'layouts_addon'.DS."js_php".DS.'mailbox.php');?>
 <?php } unset($pages) ?>
 
 
-<?php $pages=array('class_edit','class_new') ?>
+<?php $pages=['class_edit','class_new'] ?>
 <?php if(in_array($active_menu_clean,$pages) ) { ?>
     <?php include (SITE_ROOT.DS.$folder_project_name.DS.'layouts_addon'.DS."js_php".DS.'forms_input.php');?>
 <?php } unset($pages) ?>
 
-<?php $pages=array('profile') ?>
+<?php $pages=['profile'] ?>
 <?php if(in_array($active_menu_clean,$pages) ) { ?>
 
     <!-- Chosen -->

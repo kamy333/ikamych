@@ -12,17 +12,17 @@ class HeurePresence extends DatabaseObject
 {
 
 
-    public static $fields_numeric = array('id', 'user_id', 'person_id',);
-    public static $get_form_element = array('id', 'person_id', 'date_presence', 'date_presence_fin', 'heure_debut', 'heure_fin', 'user_id', 'input_date', 'modification_time', "commentaire");
-    public static $form_default_value = array(
+    public static $fields_numeric = ['id', 'user_id', 'person_id',];
+    public static $get_form_element = ['id', 'person_id', 'date_presence', 'date_presence_fin', 'heure_debut', 'heure_fin', 'user_id', 'input_date', 'modification_time', "commentaire"];
+    public static $form_default_value = [
         "user_id" => "2",
         "date_presence" => "now()",
         "date_presence_fin" => "now()",
         "person_id" => "8",
         "heure_debut" => "timeNoSecond()",
         "heure_fin" => "timeNoSecond()",
-    );
-    public static $db_field_search = array('search_all', 'id', 'person_id', 'date_presence', 'datetime_presence', 'datetime_presence_fin', 'heure_debut', 'heure_fin', 'user_id', 'username', 'input_date', 'modification_time', "commentaire", 'download_csv');
+    ];
+    public static $db_field_search = ['search_all', 'id', 'person_id', 'date_presence', 'datetime_presence', 'datetime_presence_fin', 'heure_debut', 'heure_fin', 'user_id', 'username', 'input_date', 'modification_time', "commentaire", 'download_csv'];
     public static $page_name = "Presence";
 //    public static $page_manage = "manage_heure_presence.php";
 //
@@ -43,16 +43,16 @@ class HeurePresence extends DatabaseObject
     public static $pagination_per_page = 100;
     public static $per_page;
     protected static $table_name = "heure_presence";
-    protected static $db_fields = array('id', 'person_id',
-        'date_presence', 'datetime_presence', 'heure_debut', 'datetime_presence_fin', 'date_presence_fin', 'heure_fin', 'nbre_horaire', 'hr', 'mn', 'user_id', 'username', "commentaire", 'input_date', 'modification_time');
-    protected static $required_fields = array('person_id', 'date_presence', 'date_presence_fin', 'heure_debut', 'heure_fin',);
-    protected static $db_fields_table_display_short = array('id', 'person_name', 'date_', 'heure_debut', 'heure_fin', 'nbre_horaire', 'hr', 'mn', "commentaire",);
-    protected static $db_fields_table_display_full = array('id', 'person_id', 'date_', 'date_to', 'person_name', 'date_presence', 'date_presence_fin', 'datetime_presence', 'datetime_presence_fin', 'heure_debut', 'heure_fin', 'heure', 'hr', 'mn', 'nbre_horaire', 'user_id', 'username', "commentaire", 'input_date', 'modification_time',);
-    protected static $db_field_exclude_table_display_sort = array('', '', '', '', '', '', '');
-    protected static $db_field_include_table_display_sort = array(
-        'person_name' => 'person_id', 'date_' => 'date_presence', 'date_to' => 'date_presence_fin', 'heure' => 'nbre_horaire');
-    protected static $form_properties = array(
-        "person_id" => array("type" => "selectchosen",
+    protected static $db_fields = ['id', 'person_id',
+        'date_presence', 'datetime_presence', 'heure_debut', 'datetime_presence_fin', 'date_presence_fin', 'heure_fin', 'nbre_horaire', 'hr', 'mn', 'user_id', 'username', "commentaire", 'input_date', 'modification_time'];
+    protected static $required_fields = ['person_id', 'date_presence', 'date_presence_fin', 'heure_debut', 'heure_fin',];
+    protected static $db_fields_table_display_short = ['id', 'person_name', 'date_', 'heure_debut', 'heure_fin', 'nbre_horaire', 'hr', 'mn', "commentaire",];
+    protected static $db_fields_table_display_full = ['id', 'person_id', 'date_', 'date_to', 'person_name', 'date_presence', 'date_presence_fin', 'datetime_presence', 'datetime_presence_fin', 'heure_debut', 'heure_fin', 'heure', 'hr', 'mn', 'nbre_horaire', 'user_id', 'username', "commentaire", 'input_date', 'modification_time',];
+    protected static $db_field_exclude_table_display_sort = ['', '', '', '', '', '', ''];
+    protected static $db_field_include_table_display_sort = [
+        'person_name' => 'person_id', 'date_' => 'date_presence', 'date_to' => 'date_presence_fin', 'heure' => 'nbre_horaire'];
+    protected static $form_properties = [
+        "person_id" => ["type" => "selectchosen",
             "name" => 'person_id',
             "class" => "MyExpensePerson",
             "label_text" => "Person",
@@ -60,8 +60,8 @@ class HeurePresence extends DatabaseObject
             'field_option_0' => "id",
             'field_option_1' => "person_name",
             "required" => true,
-        ),
-        "date_presence" => array("type" => "date",
+        ],
+        "date_presence" => ["type" => "date",
             "name" => 'date_presence',
             "label_text" => "Date Presence",
             "placeholder" => "Date Presence",
@@ -79,8 +79,8 @@ class HeurePresence extends DatabaseObject
 
             "attr_class" => "form-control input-group date",
             "required" => true,
-        ),
-        "date_presence_fin" => array("type" => "date",
+        ],
+        "date_presence_fin" => ["type" => "date",
             "name" => 'date_presence_fin',
             "label_text" => "Date to",
             "placeholder" => "Date to",
@@ -98,8 +98,8 @@ class HeurePresence extends DatabaseObject
 
             "attr_class" => "form-control input-group date",
             "required" => true,
-        ),
-        "heure_debut" => array("type" => "clockwise",
+        ],
+        "heure_debut" => ["type" => "clockwise",
             "name" => 'heure_debut',
             "label_text" => "heure_debut",
             "placeholder" => "heure_debut",
@@ -109,62 +109,62 @@ $('.clockpicker').clockpicker({    placement:'top',    align: 'bottom',    donet
 </script>
 ",
             "required" => true,
-        ),
-        "heure_fin" => array("type" => "clockwise",
+        ],
+        "heure_fin" => ["type" => "clockwise",
             "name" => 'heure_fin',
             "label_text" => "heure_fin",
             "placeholder" => "heure_fin",
             "required" => true,
-        ),
-        "user_id" => array("type" => "selectchosen",
+        ],
+        "user_id" => ["type" => "selectchosen",
             "name" => 'user_id',
             "class" => "User",
             "label_text" => "User",
             'field_option_0' => "id",
             'field_option_1' => "username",
             "required" => true,
-        ),
-        "commentaire" => array("type" => "textarea",
+        ],
+        "commentaire" => ["type" => "textarea",
             "name" => 'commentaire',
             "label_text" => "Comment",
             "placeholder" => "input Comment",
             "required" => false,
-        ),
-    );
-    protected static $form_properties_search = array(
-        "search_all" => array("type" => "text",
+        ],
+    ];
+    protected static $form_properties_search = [
+        "search_all" => ["type" => "text",
             "name" => 'search_all',
             "label_text" => "",
             "placeholder" => "Search all",
             "required" => false,
-        ),
-        "download_csv" => array("type" => "radio",
-            array(0,
-                array(
+        ],
+        "download_csv" => ["type" => "radio",
+            [0,
+                [
                     "label_all" => "Dnld csv",
                     "name" => "download_csv",
                     "label_radio" => "non",
                     "value" => "No",
                     "id" => "visible_no",
-                    "default" => true)),
-            array(1,
-                array(
+                    "default" => true]],
+            [1,
+                [
                     "label_all" => "Dnld csv",
                     "name" => "download_csv",
                     "label_radio" => "oui",
                     "value" => "Yes",
                     "id" => "visible_yes",
-                    "default" => true)),
-        ),
-        "id" => array("type" => "number",
+                    "default" => true]],
+        ],
+        "id" => ["type" => "number",
             "name" => 'id',
             "id" => "search_id",
             "label_text" => "",
             'min' => 0,
             "placeholder" => "ID",
             "required" => false,
-        ),
-        "project_code" => array("type" => "select",
+        ],
+        "project_code" => ["type" => "select",
             "name" => 'project_code',
             "id" => "search_project_code",
             "class" => "InvoiceActual",
@@ -173,8 +173,8 @@ $('.clockpicker').clockpicker({    placement:'top',    align: 'bottom',    donet
             'field_option_0' => "project_code",
             'field_option_1' => "project_code",
             "required" => false,
-        ),
-        "date_presence" => array("type" => "select",
+        ],
+        "date_presence" => ["type" => "select",
             "name" => 'date_presence',
             "id" => "search_date_presence",
             "class" => "HeurePresence",
@@ -183,8 +183,8 @@ $('.clockpicker').clockpicker({    placement:'top',    align: 'bottom',    donet
             'field_option_0' => "date_presence",
             'field_option_1' => "date_presence",
             "required" => false,
-        ),
-        "heure_debut" => array("type" => "clockwise",
+        ],
+        "heure_debut" => ["type" => "clockwise",
             "name" => 'heure_debut',
             "id" => "search_heure_debut",
             "class" => "HeurePresence",
@@ -193,9 +193,9 @@ $('.clockpicker').clockpicker({    placement:'top',    align: 'bottom',    donet
             'field_option_0' => "heure_debut",
             'field_option_1' => "heure_debut",
             "required" => false,
-        ),
+        ],
 
-        "nbre_horaire" => array("type" => "select",
+        "nbre_horaire" => ["type" => "select",
             "name" => 'nbre_horaire',
             "id" => "search_nbre_horaire",
             "class" => "HeurePresence",
@@ -204,10 +204,10 @@ $('.clockpicker').clockpicker({    placement:'top',    align: 'bottom',    donet
             'field_option_0' => "nbre_horaire",
             'field_option_1' => "nbre_horaire",
             "required" => false,
-        ),
+        ],
 
 
-    );
+    ];
     public $id;
     public $person_id;
     public $date_presence;
@@ -440,7 +440,7 @@ sum(mn)/60                               AS totalMinHour,
                 FROM  heure_presence GROUP BY Year,Month,MonthName ORDER BY MAX(date_presence) DESC";
         $fields = static::add_total_field(['Year', 'Month', 'MonthName']);
 
-        return array($fields, static::find_by_sql($sql));
+        return [$fields, static::find_by_sql($sql)];
     }
 
     protected static function add_total_field(array $arrays = [])
@@ -467,7 +467,7 @@ sum(hr) AS totalHours,sum(mn) AS totalMin,sum(mn)/60 AS totalMinHour,(sum(hr)+(s
         $fields = static::add_total_field(['Year', 'Month', 'MonthName']);
 
 
-        return array($fields, static::find_by_sql($sql));
+        return [$fields, static::find_by_sql($sql)];
     }
 
     public static function ByToday()
@@ -480,7 +480,7 @@ sum(hr) AS totalHours,sum(mn) AS totalMin,sum(mn)/60 AS totalMinHour,sum(hr)+sum
 ";
         $fields = static::add_total_field(['Year', 'Month', 'MonthName']);
 
-        return array($fields, static::find_by_sql($sql));
+        return [$fields, static::find_by_sql($sql)];
 
 
     }
@@ -495,7 +495,7 @@ sum(hr) AS totalHours,sum(mn) AS totalMin,sum(mn)/60 AS totalMinHour,sum(hr)+sum
 ";
         $fields = static::add_total_field(['Year', 'MonthName', 'Week']);
 
-        return array($fields, static::find_by_sql($sql));
+        return [$fields, static::find_by_sql($sql)];
     }
 
     public static function ByDay()
@@ -507,7 +507,7 @@ sum(hr) AS totalHours,sum(mn) AS totalMin,sum(mn)/60 AS totalMinHour,sum(hr)+sum
 ";
         $fields = static::add_total_field(['Date', 'Year', 'MonthName']);
 
-        return array($fields, static::find_by_sql($sql));
+        return [$fields, static::find_by_sql($sql)];
     }
 
     public static function ByYear()
@@ -518,7 +518,7 @@ FROM  heure_presence GROUP BY Year ORDER BY MAX(date_presence) DESC";
 
         $fields = static::add_total_field(['Year']);
 
-        return array($fields, static::find_by_sql($sql));
+        return [$fields, static::find_by_sql($sql)];
     }
 
     public static function ByDate($date = null)
@@ -548,7 +548,7 @@ sum(hr)+sum(mn)/60 AS sumHours
 ";
         $fields = static::add_total_field(['id', 'Date', 'Year', 'MonthName', 'commentaire']);
 
-        return array($fields, static::find_by_sql($sql));
+        return [$fields, static::find_by_sql($sql)];
     }
 
     public static function ByDateSummary($date = null)
@@ -578,7 +578,7 @@ sum(hr)+sum(mn)/60 AS sumHours
 ";
         $fields = static::add_total_field(['Date', 'Year', 'MonthName', 'commentaire']);
 
-        return array($fields, static::find_by_sql($sql));
+        return [$fields, static::find_by_sql($sql)];
     }
 
     public static function report_period()

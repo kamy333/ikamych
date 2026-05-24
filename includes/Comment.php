@@ -13,7 +13,7 @@ class Comment extends DatabaseObject
     protected static $table_name = "comments";
 
 //    protected static $db_table="comments";
-    protected static $db_table_fields=array('photo_id','author','body','input_date','modified_date')  ;
+    protected static $db_table_fields=['photo_id','author','body','input_date','modified_date']  ;
     public $id;
     public $photo_id;
     public $author;

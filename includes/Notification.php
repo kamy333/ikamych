@@ -28,105 +28,105 @@ class Notification extends DatabaseObject
 
 
     protected static $table_name = "notifications";
-    protected static $db_fields = array('id', 'user_id', 'read', 'message', 'link', 'date');
+    protected static $db_fields = ['id', 'user_id', 'read', 'message', 'link', 'date'];
 
-    public static $required_fields = array('id', 'user_id', 'read', 'message', 'link');
+    public static $required_fields = ['id', 'user_id', 'read', 'message', 'link'];
 
-    protected static $db_fields_table_display_short = array('id', 'user_id', 'read', 'username', 'link', 'message', 'date');
+    protected static $db_fields_table_display_short = ['id', 'user_id', 'read', 'username', 'link', 'message', 'date'];
 
-    protected static $db_fields_table_display_full = array('id', 'user_id', 'read', 'username', 'message', 'link', 'date');
+    protected static $db_fields_table_display_full = ['id', 'user_id', 'read', 'username', 'message', 'link', 'date'];
 
-    protected static $db_field_exclude_table_display_sort=array('username');
-
-
-    public static $get_form_element=array('user_id', 'read', 'message','link','date');
-    public static $get_form_element_others=array();
+    protected static $db_field_exclude_table_display_sort=['username'];
 
 
-    public static $form_default_value=array(
+    public static $get_form_element=['user_id', 'read', 'message','link','date'];
+    public static $get_form_element_others=[];
+
+
+    public static $form_default_value=[
         "user_id"=>"2",
 
-    );
+    ];
 
-    protected static $form_properties= array(
+    protected static $form_properties= [
 
 
-        "user_id"=> array("type"=>"select",
+        "user_id"=> ["type"=>"select",
             "name"=>'user_id',
             "class"=>"User",
             "label_text"=>"User",
             'field_option_0'=>"id",
             'field_option_1'=>"username",
             "required" =>true,
-        ),
-        "read" =>array("type"=>"radio",
-            array(0,
-                array(
+        ],
+        "read" =>["type"=>"radio",
+            [0,
+                [
                     "label_all"=>"Read",
                     "name"=>"read",
                     "label_radio"=>"No",
                     "value"=>"0",
                     "id"=>"read_no",
-                    "default"=>true)),
-            array(1,
-                array(
+                    "default"=>true]],
+            [1,
+                [
                     "label_all"=>"Read",
                     "name"=>"read",
                     "label_radio"=>"Yes",
                     "value"=>"1",
                     "id"=>"read_yes",
-                    "default"=>true)),
-        ),
-        "message"=> array("type"=>"text",
+                    "default"=>true]],
+        ],
+        "message"=> ["type"=>"text",
             "name"=>'message',
             "label_text"=>"Message",
             "placeholder"=>"Message here",
             "required" =>true,
-        ),
+        ],
 
-        "date"=> array("type"=>"datetime",
+        "date"=> ["type"=>"datetime",
             "name"=>'date',
             "label_text"=>"DateTime",
             "placeholder"=>"current",
             "required" =>true,
-        ),
+        ],
         
-    );
+    ];
 
-    protected static $form_properties_search=array(
-        "search_all"=> array("type"=>"text",
+    protected static $form_properties_search=[
+        "search_all"=> ["type"=>"text",
             "name"=>'search_all',
             "label_text"=>"",
             "placeholder"=>"Search all",
             "required" =>false,
-        ),
-        "download_csv" =>array("type"=>"radio",
-            array(0,
-                array(
+        ],
+        "download_csv" =>["type"=>"radio",
+            [0,
+                [
                     "label_all"=>"Dnld csv",
                     "name"=>"download_csv",
                     "label_radio"=>"non",
                     "value"=>"No",
                     "id"=>"visible_no",
-                    "default"=>true)),
-            array(1,
-                array(
+                    "default"=>true]],
+            [1,
+                [
                     "label_all"=>"Dnld csv",
                     "name"=>"download_csv",
                     "label_radio"=>"oui",
                     "value"=>"Yes",
                     "id"=>"visible_yes",
-                    "default"=>true)),
-        ),
-        "id"=> array("type"=>"number",
+                    "default"=>true]],
+        ],
+        "id"=> ["type"=>"number",
             "name"=>'id',
             "id"=>"search_id",
             "label_text"=>"",
             'min'=>0,
             "placeholder"=>"ID",
             "required" =>false,
-        ),
-        "user_id"=> array("type"=>"select",
+        ],
+        "user_id"=> ["type"=>"select",
             "name"=>'user_id',
             "id"=>"search_user_id",
             "class"=>"User",
@@ -135,8 +135,8 @@ class Notification extends DatabaseObject
             'field_option_0'=>"username",
             'field_option_1'=>"username",
             "required" =>false,
-        ),
-        "to_user_id"=> array("type"=>"select",
+        ],
+        "to_user_id"=> ["type"=>"select",
             "name"=>'to_user_id',
             "id"=>"search_to_user_id",
             "class"=>"User",
@@ -145,10 +145,10 @@ class Notification extends DatabaseObject
             'field_option_0'=>"username",
             'field_option_1'=>"username",
             "required" =>false,
-        ),
+        ],
 
 
-    );
+    ];
 
     public function set_up_display(){
         $this->find_username();

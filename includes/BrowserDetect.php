@@ -27,7 +27,7 @@ class BrowserDetective {
     public function detect() {
         $this->detect_platform();
         $this->detect_browser();
-        return array($this->platform, $this->browser_name);
+        return [$this->platform, $this->browser_name];
     }
 
     public function detect_platform() {

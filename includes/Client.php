@@ -11,190 +11,190 @@
 class Client extends DatabaseObject
 {
 
-    public static $required_fields = array('pseudo', 'restricted_list', 'liste_rank', 'company_name');
-    public static $fields_numeric = array('id', 'restricted_list', 'liste_rank');
-    public static $get_form_element = array('pseudo', 'restricted_list', 'company_name', 'web_view', 'last_name', 'first_name', 'email', 'website', 'address', 'cp', 'city', 'country', 'phone', 'mobile', 'liste_rank', 'comment');
-    public static $get_form_element_others = array();
-    public static $form_default_value = array(
+    public static $required_fields = ['pseudo', 'restricted_list', 'liste_rank', 'company_name'];
+    public static $fields_numeric = ['id', 'restricted_list', 'liste_rank'];
+    public static $get_form_element = ['pseudo', 'restricted_list', 'company_name', 'web_view', 'last_name', 'first_name', 'email', 'website', 'address', 'cp', 'city', 'country', 'phone', 'mobile', 'liste_rank', 'comment'];
+    public static $get_form_element_others = [];
+    public static $form_default_value = [
         "restricted_list" => "0",
-    );
-    public static $db_field_search = array('search_all', 'pseudo', 'restricted_list', 'company_name', 'web_view', 'last_name', 'first_name', 'email', 'website', 'address', 'cp', 'city', 'country', 'phone', 'mobile', 'download_csv');
+    ];
+    public static $db_field_search = ['search_all', 'pseudo', 'restricted_list', 'company_name', 'web_view', 'last_name', 'first_name', 'email', 'website', 'address', 'cp', 'city', 'country', 'phone', 'mobile', 'download_csv'];
     public static $page_name = "Client";
     public static $page_manage = "/public/admin/crud/ajax/manage_ajax.php?class_name=Client";
     public static $page_new = "/public/admin/crud/ajax/new_ajax.php?class_name=Client";
     public static $page_edit = "/public/admin/crud/ajax/edit_ajax.php?class_name=Client";
     public static $page_delete = "/public/admin/crud/ajax/delete_ajax.php?class_name=Client";
     public static $position_table = "positionRight";
-    public static $form_class_dependency = array('Project', 'Currency');
+    public static $form_class_dependency = ['Project', 'Currency'];
     public static $per_page;
 //    public static $page_manage="manage_clients.php";
 //    public static $page_new="new_client.php";
 //    public static $page_edit="edit_client.php";
 //    public static $page_delete="delete_client.php";
     protected static $table_name = "clients"; // "new_link.php";
-    protected static $db_fields = array('id', 'pseudo', 'restricted_list', 'company_name', 'web_view', 'last_name', 'first_name', 'email', 'website', 'address', 'cp', 'city', 'country', 'phone', 'mobile', 'comment', 'liste_rank'); // "new_link.php";
-    protected static $db_fields_table_display_short = array('id', 'pseudo', 'restricted_list', 'company_name', 'web_view', 'last_name', 'first_name', 'email', 'website', 'liste_rank'); //  "edit_link.php";
-    protected static $db_fields_table_display_full = array('id', 'pseudo', 'restricted_list', 'company_name', 'web_view', 'last_name', 'first_name', 'email', 'website', 'address', 'cp', 'city', 'country', 'phone', 'mobile', 'comment'); //  "delete_link.php";
+    protected static $db_fields = ['id', 'pseudo', 'restricted_list', 'company_name', 'web_view', 'last_name', 'first_name', 'email', 'website', 'address', 'cp', 'city', 'country', 'phone', 'mobile', 'comment', 'liste_rank']; // "new_link.php";
+    protected static $db_fields_table_display_short = ['id', 'pseudo', 'restricted_list', 'company_name', 'web_view', 'last_name', 'first_name', 'email', 'website', 'liste_rank']; //  "edit_link.php";
+    protected static $db_fields_table_display_full = ['id', 'pseudo', 'restricted_list', 'company_name', 'web_view', 'last_name', 'first_name', 'email', 'website', 'address', 'cp', 'city', 'country', 'phone', 'mobile', 'comment']; //  "delete_link.php";
     protected static $db_field_exclude_table_display_sort = null; // positionLeft // positionBoth  positionRight
-    protected static $form_properties = array(
-        "pseudo" => array("type" => "text",
+    protected static $form_properties = [
+        "pseudo" => ["type" => "text",
             "name" => 'pseudo',
             "label_text" => "Pseudo",
             "placeholder" => "input Pseudo",
             "required" => true,
-        ),
-        "restricted_list" => array("type" => "radio",
-            array(0,
-                array(
+        ],
+        "restricted_list" => ["type" => "radio",
+            [0,
+                [
                     "label_all" => "Restricted List",
                     "name" => "restricted_list",
                     "label_radio" => "non",
                     "value" => "0",
                     "id" => "visible_no",
-                    "default" => true)),
-            array(1,
-                array(
+                    "default" => true]],
+            [1,
+                [
                     "label_all" => "Restricted List",
                     "name" => "restricted_list",
                     "label_radio" => "oui",
                     "value" => "1",
                     "id" => "visible_yes",
-                    "default" => true)),
-        ),
-        "company_name" => array("type" => "text",
+                    "default" => true]],
+        ],
+        "company_name" => ["type" => "text",
             "name" => 'company_name',
             "label_text" => "Company name",
             "placeholder" => "Company name",
             "required" => false,
-        ),
+        ],
 
-        "web_view" => array("type" => "text",
+        "web_view" => ["type" => "text",
             "name" => 'web_view',
             "label_text" => "Web view",
             "placeholder" => "How like name to display",
             "required" => false,
-        ),
+        ],
 
-        "first_name" => array("type" => "text",
+        "first_name" => ["type" => "text",
             "name" => 'first_name',
             "label_text" => "First name",
             "placeholder" => "First name",
             "required" => false,
-        ),
+        ],
 
-        "last_name" => array("type" => "text",
+        "last_name" => ["type" => "text",
             "name" => 'last_name',
             "label_text" => "Last Name",
             "placeholder" => "Last Name",
             "required" => false,
-        ),
+        ],
 
-        "email" => array("type" => "email",
+        "email" => ["type" => "email",
             "name" => 'email',
             "label_text" => "Email",
             "placeholder" => "eg yourname@example.com",
             "required" => false,
-        ),
+        ],
 
-        "website" => array("type" => "url",
+        "website" => ["type" => "url",
             "name" => 'website',
             "label_text" => "Website",
             "placeholder" => "Client website",
             "required" => false,
-        ),
-        "address" => array("type" => "text",
+        ],
+        "address" => ["type" => "text",
             "name" => 'address',
             "label_text" => "Address",
             "placeholder" => "Address",
             "required" => false,
-        ),
+        ],
 
-        "cp" => array("type" => "text",
+        "cp" => ["type" => "text",
             "name" => 'cp',
             "label_text" => "Postal Code",
             "placeholder" => "Postal Code",
             "required" => false,
-        ),
+        ],
 
-        "city" => array("type" => "text",
+        "city" => ["type" => "text",
             "name" => 'city',
             "label_text" => "City",
             "placeholder" => "City",
             "required" => false,
-        ),
+        ],
 
 
-        "country" => array("type" => "text",
+        "country" => ["type" => "text",
             "name" => 'country',
             "label_text" => "Country",
             "placeholder" => "Country",
             "required" => false,
-        ),
+        ],
 
-        "phone" => array("type" => "tel",
+        "phone" => ["type" => "tel",
             "name" => 'phone',
             "label_text" => "Phone no",
             "placeholder" => "Phone no",
             "required" => false,
-        ),
+        ],
 
-        "mobile" => array("type" => "tel",
+        "mobile" => ["type" => "tel",
             "name" => 'mobile',
             "label_text" => "Mobile no",
             "placeholder" => "Mobile no",
             "required" => false,
-        ),
-        "liste_rank" => array("type" => "number",
+        ],
+        "liste_rank" => ["type" => "number",
             "name" => 'liste_rank',
             "label_text" => "Rank",
             'min' => 0,
             "placeholder" => "a number to sort",
             "required" => true,
-        ),
-        "comment" => array("type" => "textarea",
+        ],
+        "comment" => ["type" => "textarea",
             "name" => 'comment',
             "label_text" => "comment",
             "placeholder" => "comment",
             "required" => false,
-        ),
+        ],
 
 
-    );
-    protected static $form_properties_search = array(
-        "search_all" => array("type" => "text",
+    ];
+    protected static $form_properties_search = [
+        "search_all" => ["type" => "text",
             "name" => 'search_all',
             "label_text" => "",
             "placeholder" => "Search all",
             "required" => false,
-        ),
-        "download_csv" => array("type" => "radio",
-            array(0,
-                array(
+        ],
+        "download_csv" => ["type" => "radio",
+            [0,
+                [
                     "label_all" => "Dnld csv",
                     "name" => "download_csv",
                     "label_radio" => "non",
                     "value" => "No",
                     "id" => "visible_no",
-                    "default" => true)),
-            array(1,
-                array(
+                    "default" => true]],
+            [1,
+                [
                     "label_all" => "Dnld csv",
                     "name" => "download_csv",
                     "label_radio" => "oui",
                     "value" => "Yes",
                     "id" => "visible_yes",
-                    "default" => false)),
-        ),
-        "id" => array("type" => "number",
+                    "default" => false]],
+        ],
+        "id" => ["type" => "number",
             "name" => 'id',
             "id" => "search_id",
             "label_text" => "",
             'min' => 0,
             "placeholder" => "ID",
             "required" => false,
-        ),
+        ],
 
-        "pseudo" => array("type" => "select",
+        "pseudo" => ["type" => "select",
             "name" => 'pseudo',
             "id" => "search_pseudo",
             "class" => "Client",
@@ -203,8 +203,8 @@ class Client extends DatabaseObject
             'field_option_0' => "pseudo",
             'field_option_1' => "pseudo",
             "required" => false,
-        ),
-        "restricted_list" => array("type" => "select",
+        ],
+        "restricted_list" => ["type" => "select",
             "name" => 'restricted_list',
             "id" => "search_restricted_list",
             "class" => "Client",
@@ -213,8 +213,8 @@ class Client extends DatabaseObject
             'field_option_0' => "restricted_list",
             'field_option_1' => "restricted_list",
             "required" => false,
-        ),
-        "company_name" => array("type" => "select",
+        ],
+        "company_name" => ["type" => "select",
             "name" => 'company_name',
             "id" => "search_company_name",
             "class" => "Client",
@@ -223,8 +223,8 @@ class Client extends DatabaseObject
             'field_option_0' => "company_name",
             'field_option_1' => "company_name",
             "required" => false,
-        ),
-        "web_view" => array("type" => "select",
+        ],
+        "web_view" => ["type" => "select",
             "name" => 'web_view',
             "id" => "search_web_view",
             "class" => "Client",
@@ -233,8 +233,8 @@ class Client extends DatabaseObject
             'field_option_0' => "web_view",
             'field_option_1' => "web_view",
             "required" => false,
-        ),
-        "last_name" => array("type" => "select",
+        ],
+        "last_name" => ["type" => "select",
             "name" => 'last_name',
             "id" => "search_last_name",
             "class" => "Client",
@@ -243,8 +243,8 @@ class Client extends DatabaseObject
             'field_option_0' => "last_name",
             'field_option_1' => "last_name",
             "required" => false,
-        ),
-        "first_name" => array("type" => "select",
+        ],
+        "first_name" => ["type" => "select",
             "name" => 'first_name',
             "id" => "search_first_name",
             "class" => "Client",
@@ -253,8 +253,8 @@ class Client extends DatabaseObject
             'field_option_0' => "first_name",
             'field_option_1' => "first_name",
             "required" => false,
-        ),
-        "email" => array("type" => "select",
+        ],
+        "email" => ["type" => "select",
             "name" => 'email',
             "id" => "search_email",
             "class" => "Client",
@@ -263,9 +263,9 @@ class Client extends DatabaseObject
             'field_option_0' => "email",
             'field_option_1' => "email",
             "required" => false,
-        ),
+        ],
 
-        "address" => array("type" => "select",
+        "address" => ["type" => "select",
             "name" => 'address',
             "id" => "search_address",
             "class" => "Client",
@@ -274,8 +274,8 @@ class Client extends DatabaseObject
             'field_option_0' => "address",
             'field_option_1' => "address",
             "required" => false,
-        ),
-        "cp" => array("type" => "select",
+        ],
+        "cp" => ["type" => "select",
             "name" => 'cp',
             "id" => "search_cp",
             "class" => "Client",
@@ -284,8 +284,8 @@ class Client extends DatabaseObject
             'field_option_0' => "cp",
             'field_option_1' => "cp",
             "required" => false,
-        ),
-        "city" => array("type" => "select",
+        ],
+        "city" => ["type" => "select",
             "name" => 'city',
             "id" => "search_city",
             "class" => "Client",
@@ -294,8 +294,8 @@ class Client extends DatabaseObject
             'field_option_0' => "city",
             'field_option_1' => "city",
             "required" => false,
-        ),
-        "country" => array("type" => "select",
+        ],
+        "country" => ["type" => "select",
             "name" => 'country',
             "id" => "search_country",
             "class" => "Client",
@@ -304,8 +304,8 @@ class Client extends DatabaseObject
             'field_option_0' => "country",
             'field_option_1' => "country",
             "required" => false,
-        ),
-        "phone" => array("type" => "select",
+        ],
+        "phone" => ["type" => "select",
             "name" => 'phone',
             "id" => "search_phone",
             "class" => "Client",
@@ -314,8 +314,8 @@ class Client extends DatabaseObject
             'field_option_0' => "phone",
             'field_option_1' => "phone",
             "required" => false,
-        ),
-        "mobile" => array("type" => "select",
+        ],
+        "mobile" => ["type" => "select",
             "name" => '',
             "id" => "search_mobile",
             "class" => "Client",
@@ -324,8 +324,8 @@ class Client extends DatabaseObject
             'field_option_0' => "mobile",
             'field_option_1' => "mobile",
             "required" => false,
-        ),
-        "liste_rank" => array("type" => "select",
+        ],
+        "liste_rank" => ["type" => "select",
             "name" => 'liste_rank',
             "id" => "search_liste_rank",
             "class" => "Client",
@@ -334,10 +334,10 @@ class Client extends DatabaseObject
             'field_option_0' => "liste_rank",
             'field_option_1' => "liste_rank",
             "required" => false,
-        ),
+        ],
 
 
-    );
+    ];
     public $id;
     public $pseudo;
     public $restricted_list;

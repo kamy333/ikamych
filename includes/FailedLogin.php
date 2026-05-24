@@ -10,10 +10,10 @@
  */
 class FailedLogin extends DatabaseObject
 {
-    public static $required_fields = array('username', 'login_attempt', 'last_time');
-    public static $get_form_element = array('username', 'login_attempt', 'last_time', 'ip', 'host');
-    public static $get_form_element_others = array();
-    public static $db_field_search = array('search_all', 'id', 'username', 'login_attempt', 'last_time', 'ip', 'host', 'download_csv');
+    public static $required_fields = ['username', 'login_attempt', 'last_time'];
+    public static $get_form_element = ['username', 'login_attempt', 'last_time', 'ip', 'host'];
+    public static $get_form_element_others = [];
+    public static $db_field_search = ['search_all', 'id', 'username', 'login_attempt', 'last_time', 'ip', 'host', 'download_csv'];
     public static $page_name = "FailedLogin";
 
 //    public static $page_manage = "manage_failed_logins.php";
@@ -29,75 +29,75 @@ class FailedLogin extends DatabaseObject
 
 
     protected static $table_name = "failed_logins";
-    protected static $db_field_exclude_table_display_sort = array('date');
+    protected static $db_field_exclude_table_display_sort = ['date'];
 
-    protected static $db_fields = array('id', 'username', 'login_attempt', 'last_time', 'ip', 'host', 'input_date');
-    protected static $db_fields_table_display_short = array('id', 'username', 'login_attempt', 'last_time', 'date', 'ip', 'host', 'input_date');
-    protected static $db_fields_table_display_full = array('id', 'username', 'login_attempt', 'last_time', 'date', 'ip', 'host', 'input_date');
-    protected static $form_properties = array(
-        "username" => array("type" => "text",
+    protected static $db_fields = ['id', 'username', 'login_attempt', 'last_time', 'ip', 'host', 'input_date'];
+    protected static $db_fields_table_display_short = ['id', 'username', 'login_attempt', 'last_time', 'date', 'ip', 'host', 'input_date'];
+    protected static $db_fields_table_display_full = ['id', 'username', 'login_attempt', 'last_time', 'date', 'ip', 'host', 'input_date'];
+    protected static $form_properties = [
+        "username" => ["type" => "text",
             "name" => 'username',
             "label_text"=>"Username",
             "placeholder"=>"username",
             "required" =>true,
-        ),
-        "login_attempt"=> array("type"=>"number",
+        ],
+        "login_attempt"=> ["type"=>"number",
             "name"=>'login_attempt',
             "id"=>"login_attempt",
             "label_text"=>"login_attempt",
             'min'=>0,
             "placeholder"=>"login_attempt",
             "required" =>false,
-        ),
-        "ip"=> array("type"=>"text",
+        ],
+        "ip"=> ["type"=>"text",
             "name"=>'ip',
             "label_text"=>"ip",
             "placeholder"=>"ip",
             "required" =>true,
-        ),
+        ],
 
-        "host"=> array("type"=>"text",
+        "host"=> ["type"=>"text",
             "name"=>'host',
             "label_text"=>"host",
             "placeholder"=>"host",
             "required" =>true,
-        ),
-    );
-    protected static $form_properties_search=array(
-        "search_all"=> array("type"=>"text",
+        ],
+    ];
+    protected static $form_properties_search=[
+        "search_all"=> ["type"=>"text",
             "name"=>'search_all',
             "label_text"=>"",
             "placeholder"=>"Search all",
             "required" =>false,
-        ),
-        "download_csv" =>array("type"=>"radio",
-            array(0,
-                array(
+        ],
+        "download_csv" =>["type"=>"radio",
+            [0,
+                [
                     "label_all"=>"Dnld csv",
                     "name"=>"download_csv",
                     "label_radio"=>"non",
                     "value"=>"No",
                     "id"=>"visible_no",
-                    "default"=>true)),
-            array(1,
-                array(
+                    "default"=>true]],
+            [1,
+                [
                     "label_all"=>"Dnld csv",
                     "name"=>"download_csv",
                     "label_radio"=>"oui",
                     "value"=>"Yes",
                     "id"=>"visible_yes",
-                    "default"=>true)),
-        ),
-        "id"=> array("type"=>"number",
+                    "default"=>true]],
+        ],
+        "id"=> ["type"=>"number",
             "name"=>'id',
             "id"=>"search_id",
             "label_text"=>"",
             'min'=>0,
             "placeholder"=>"ID",
             "required" =>false,
-        ),
+        ],
 
-        "login_attempt"=> array("type"=>"select",
+        "login_attempt"=> ["type"=>"select",
             "name"=>'login_attempt',
             "id"=>"search_login_attempt",
             "class"=>"FailedLogin",
@@ -106,9 +106,9 @@ class FailedLogin extends DatabaseObject
             'field_option_0'=>"login_attempt",
             'field_option_1'=>"login_attempt",
             "required" =>false,
-        ),
+        ],
 
-        "last_time"=> array("type"=>"select",
+        "last_time"=> ["type"=>"select",
             "name"=>'last_time',
             "id"=>"search_last_time",
             "class"=>"FailedLogin",
@@ -117,9 +117,9 @@ class FailedLogin extends DatabaseObject
             'field_option_0'=>"last_time",
             'field_option_1'=>"last_time",
             "required" =>false,
-        ),
+        ],
 
-        "ip"=> array("type"=>"select",
+        "ip"=> ["type"=>"select",
             "name"=>'ip',
             "id"=>"search_ip",
             "class"=>"FailedLogin",
@@ -128,8 +128,8 @@ class FailedLogin extends DatabaseObject
             'field_option_0'=>"ip",
             'field_option_1'=>"ip",
             "required" =>false,
-        ),
-        "host"=> array("type"=>"select",
+        ],
+        "host"=> ["type"=>"select",
             "name"=>'host',
             "id"=>"search_host",
             "class"=>"FailedLogin",
@@ -138,9 +138,9 @@ class FailedLogin extends DatabaseObject
             'field_option_0'=>"host",
             'field_option_1'=>"host",
             "required" =>false,
-        ),
+        ],
 
-    );
+    ];
     public $id;
     public $username;
     public $login_attempt;
@@ -188,7 +188,7 @@ class FailedLogin extends DatabaseObject
 
     public static function find_by_username($username = "")
     {
-        $result_array = self::find_by_sql_prepared("SELECT * FROM " . self::$table_name . " WHERE username=? LIMIT 1", array($username), "s");
+        $result_array = self::find_by_sql_prepared("SELECT * FROM " . self::$table_name . " WHERE username=? LIMIT 1", [$username], "s");
         return !empty($result_array) ? array_shift($result_array) : false;
     }
 

@@ -11,7 +11,7 @@ if(User::is_visitor() ){ redirect_to('../index.php');}
 <?php
 
 $page= !empty($_GET['page'])? (int) $_GET["page"]:1;
-$query_string=remove_get(array('view','page'));
+$query_string=remove_get(['view','page']);
 
 $view_full_table=!empty($_GET["view"])? (int) $_GET["view"]:0;
 if($view_full_table==1){

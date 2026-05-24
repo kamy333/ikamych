@@ -96,12 +96,12 @@
                 <?php
 
 
-                function DjamilaComment($comments_array = array(), $img_folder = 'public')
+                function DjamilaComment($comments_array = [], $img_folder = 'public')
                 {
 
                     $picture = get_picture_array($img_folder);
 
-                    $array_cut = array(0, 8);
+                    $array_cut = [0, 8];
                     $output = "";
 //    $output="<div class='row'>";
 //    $output.="    <div class=\"ibox-content\">";
@@ -154,7 +154,7 @@
                 }
 
 
-                function ThumbnailModal($comments_array = array(), $img_folder = 'public')
+                function ThumbnailModal($comments_array = [], $img_folder = 'public')
                 {
                     $picture = get_picture_array($img_folder);
 
@@ -258,7 +258,7 @@
 
 
                 echo "<h2>$h2</h2>";
-                $comments = array();
+                $comments = [];
 
                 echo ThumbnailModal($comments, $fol);
 

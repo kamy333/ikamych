@@ -13,8 +13,8 @@
  */
 class FormValidation {
 
-public $errors = array();
-public $warnings=array();
+public $errors = [];
+public $warnings=[];
 
 
   static  function get_warning_error_div($msg_arg,$warning_me=false)
@@ -96,7 +96,7 @@ public $warnings=array();
 //        $this->errors;
 //        $this->warnings;
 
-        $msg_presence = array();
+        $msg_presence = [];
 
         if (is_array($required_fields)) {
             foreach ($required_fields as $field) {
@@ -145,7 +145,7 @@ public $warnings=array();
         $this->errors;
         $this->warnings;
 
-        $msg_presence=array();
+        $msg_presence=[];
         foreach($required_fields as $field) {
             $value = trim($record[$field]);
             if (!$this->has_presence($value)) {

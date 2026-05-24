@@ -741,14 +741,14 @@ function clean_query_string($text_qry_str)
     }
 }
 
-function remove_get($remove = array())
+function remove_get($remove = [])
 {
 //var_dump($remove);
 //var_dump($_GET);
 
 //var_dump($class_name_exist);
 
-    $array = array();
+    $array = [];
 
     if (isset($_GET)) {
         foreach ($_GET as $key => $val) {
@@ -851,14 +851,14 @@ function validate_ip($ip)
 // return first found
 function forwarded_ip()
 {
-    $keys = array(
+    $keys = [
         'HTTP_X_FORWARDED_FOR',
         'HTTP_X_FORWARDED',
         'HTTP_FORWARDED_FOR',
         'HTTP_FORWARDED',
         'HTTP_CLIENT_IP',
         'HTTP_X_CLUSTER_CLIENT_IP'
-    );
+    ];
     foreach ($keys as $key) {
         if (isset($_SERVER[$key])) {
             $ip_array = explode(",", $_SERVER[$key]);
@@ -1000,7 +1000,7 @@ function get_picture_array($img_folder = "")
     $default_path = $Nav->folder;
     $dir = SITE_ROOT . DS . $default_path . DS . "/img/" . $img_folder;
 
-    $picture_array = array();
+    $picture_array = [];
 //    $output="";
     if (is_dir($dir)) {
         $dir_array = scandir($dir);
@@ -1021,7 +1021,7 @@ function get_picture_array($img_folder = "")
 
                     $img_src = "<img src='img/$img_folder/{$file}' alt='{$alt}' class='img-responsive pull-left'> ";
 
-                    $output = array(
+                    $output = [
                         "img_tag" => $img_html,
                         'img_file' => $file,
                         "img_name" => $file_no_ext,
@@ -1030,7 +1030,7 @@ function get_picture_array($img_folder = "")
                         "img_path" => $dir,
                         "img_src" => $img_src,
                         "img_alt" => $alt,
-                    );
+                    ];
 
 
                     array_push($picture_array, $output);
@@ -1082,9 +1082,9 @@ function blueimp_wrapper($h2 = "", $content="")
 
 function get_gallery_array($no = 1)
 {
-    $pages = array();
+    $pages = [];
     if ($no === 1) {
-        $pages = array(
+        $pages = [
             'index' => 'Home',
 //            'index_gallery17_xavier' => 'Xavier',
             'papa/assets/others/_papa'=> 'Papa',
@@ -1103,11 +1103,11 @@ function get_gallery_array($no = 1)
             'index_gallery12' => 'Djamila photo',
             'index_gallery14' => 'Djamila objectif',
             'index_gallery15' => 'Djamila helico',
-        );
+        ];
     } elseif ($no === 2) {
-        $pages = array(
+        $pages = [
             'index' => 'Home',
-        );
+        ];
 
     }
 
@@ -1499,7 +1499,7 @@ function remove_accents($str, $utf8 = true)
     if (!$utf8)
         $str = utf8_encode($str);
 
-    $transliteration = array(
+    $transliteration = [
         'Ĳ' => 'I', 'Ö' => 'O', 'Œ' => 'O', 'Ü' => 'U', 'ä' => 'a', 'æ' => 'a',
         'ĳ' => 'i', 'ö' => 'o', 'œ' => 'o', 'ü' => 'u', 'ß' => 's', 'ſ' => 's',
         'À' => 'A', 'Á' => 'A', 'Â' => 'A', 'Ã' => 'A', 'Ä' => 'A', 'Å' => 'A',
@@ -1593,7 +1593,7 @@ function remove_accents($str, $utf8 = true)
         'უ' => 'u', 'ფ' => 'p', 'ქ' => 'k', 'ღ' => 'g', 'ყ' => 'q', 'შ' => 's',
         'ჩ' => 'c', 'ც' => 't', 'ძ' => 'd', 'წ' => 't', 'ჭ' => 'c', 'ხ' => 'k',
         'ჯ' => 'j', 'ჰ' => 'h'
-    );
+    ];
     $str = str_replace(array_keys($transliteration),
         array_values($transliteration),
         $str);
@@ -1626,7 +1626,7 @@ function get_ebooks($img_folder = "")
     $default_path = $Nav->folder;
 //    $default_path = "";
     $dir = SITE_ROOT . DS . $default_path . DS . "/img/" . $img_folder;
-    $picture_array = array();
+    $picture_array = [];
 //    $output="";
     if (is_dir($dir)) {
         $dir_array = scandir($dir);
@@ -1647,7 +1647,7 @@ function get_ebooks($img_folder = "")
 
                     $img_src = "<img src='/public/img/$img_folder/{$file}' alt='{$alt}' class='img-responsive pull-left'> ";
                     $full_path = "/public/img/$img_folder/{$file}";
-                    $output = array(
+                    $output = [
                         "img_tag" => $img_html,
                         'img_file' => $file,
                         "img_name" => $file_no_ext,
@@ -1658,7 +1658,7 @@ function get_ebooks($img_folder = "")
                         "img_alt" => $alt,
                         "full_path" => $full_path,
                         "href" => "<a target='_blank' href='$full_path'>$file_no_ext</a>"
-                    );
+                    ];
 
 
                     array_push($picture_array, $output);
@@ -1681,7 +1681,7 @@ function article_by_sql($article_where_subject = 1, $color_palette = 12, $is_row
 {
 
     $article_where_subject = (int)$article_where_subject;
-    $articles = Article::find_by_sql_prepared("SELECT * FROM article WHERE subject_id=? ORDER BY id DESC", array($article_where_subject), "i");
+    $articles = Article::find_by_sql_prepared("SELECT * FROM article WHERE subject_id=? ORDER BY id DESC", [$article_where_subject], "i");
     $output = "";
     $output .= "<div class='row'>";
     foreach ($articles as $article) {
@@ -1694,44 +1694,44 @@ function article_by_sql($article_where_subject = 1, $color_palette = 12, $is_row
                 $my_color = RandomColor::many(36);
                 break;
             case 1:
-                $my_color = RandomColor::many(18, array('hue' => 'red'));
+                $my_color = RandomColor::many(18, ['hue' => 'red']);
                 break;
             case 2:
-                $my_color = RandomColor::many(18, array('hue' => 'orange'));
+                $my_color = RandomColor::many(18, ['hue' => 'orange']);
                 break;
             case 3:
-                $my_color = RandomColor::many(18, array('hue' => 'yellow'));
+                $my_color = RandomColor::many(18, ['hue' => 'yellow']);
                 break;
             case 4:
-                $my_color = RandomColor::many(18, array('hue' => 'green'));
+                $my_color = RandomColor::many(18, ['hue' => 'green']);
                 break;
             case 5:
-                $my_color = RandomColor::many(18, array('hue' => 'blue'));
+                $my_color = RandomColor::many(18, ['hue' => 'blue']);
                 break;
             case 6:
-                $my_color = RandomColor::many(18, array('hue' => 'purple'));
+                $my_color = RandomColor::many(18, ['hue' => 'purple']);
                 break;
             case 7:
-                $my_color = RandomColor::many(18, array('hue' => 'pink'));
+                $my_color = RandomColor::many(18, ['hue' => 'pink']);
                 break;
             case 8:
-                $my_color = RandomColor::many(18, array('hue' => 'monochrome'));
+                $my_color = RandomColor::many(18, ['hue' => 'monochrome']);
                 break;
             case 9:
-                $my_color = RandomColor::many(27, array('hue' => array('blue', 'yellow')));
+                $my_color = RandomColor::many(27, ['hue' => ['blue', 'yellow']]);
                 break;
             case 10:
-                $my_color = RandomColor::many(27, array('luminosity' => 'dark'));
+                $my_color = RandomColor::many(27, ['luminosity' => 'dark']);
                 break;
             case 11:
-                $my_color = RandomColor::many(36, array('luminosity' => 'random', 'hue' => 'random'));
+                $my_color = RandomColor::many(36, ['luminosity' => 'random', 'hue' => 'random']);
                 break;
             case 12:
-                $my_color = RandomColor::many(27, array('luminosity' => 'light'));
+                $my_color = RandomColor::many(27, ['luminosity' => 'light']);
                 break;
 
             default:
-                $my_color = RandomColor::many(27, array('luminosity' => 'light'));
+                $my_color = RandomColor::many(27, ['luminosity' => 'light']);
 
         }
         $output .= "<article>";
@@ -1866,7 +1866,7 @@ function book_by_sql($book_where_category = 1, $color_palette = 12, $is_row = tr
     $output = "";
 
     $book_where_category = (int)$book_where_category;
-    $books = Book::find_by_sql_prepared("SELECT * FROM book WHERE category_id=? ORDER BY id DESC", array($book_where_category), "i");
+    $books = Book::find_by_sql_prepared("SELECT * FROM book WHERE category_id=? ORDER BY id DESC", [$book_where_category], "i");
 
 
 //    $output .= "<h2 id='top'>Top of page!</h2>";
@@ -1914,50 +1914,50 @@ function book_by_sql($book_where_category = 1, $color_palette = 12, $is_row = tr
         $output .= "";
 
         $i = $color_palette; // $my_num[0]; using by default 12 light color but could use 12 other optioms in shuffle
-        $my_color = RandomColor::many(27, array('luminosity' => 'light'));
+        $my_color = RandomColor::many(27, ['luminosity' => 'light']);
         switch ($i) {
             case 0:
                 $my_color = RandomColor::many(36);
                 break;
             case 1:
-                $my_color = RandomColor::many(18, array('hue' => 'red'));
+                $my_color = RandomColor::many(18, ['hue' => 'red']);
                 break;
             case 2:
-                $my_color = RandomColor::many(18, array('hue' => 'orange'));
+                $my_color = RandomColor::many(18, ['hue' => 'orange']);
                 break;
             case 3:
-                $my_color = RandomColor::many(18, array('hue' => 'yellow'));
+                $my_color = RandomColor::many(18, ['hue' => 'yellow']);
                 break;
             case 4:
-                $my_color = RandomColor::many(18, array('hue' => 'green'));
+                $my_color = RandomColor::many(18, ['hue' => 'green']);
                 break;
             case 5:
-                $my_color = RandomColor::many(18, array('hue' => 'blue'));
+                $my_color = RandomColor::many(18, ['hue' => 'blue']);
                 break;
             case 6:
-                $my_color = RandomColor::many(18, array('hue' => 'purple'));
+                $my_color = RandomColor::many(18, ['hue' => 'purple']);
                 break;
             case 7:
-                $my_color = RandomColor::many(18, array('hue' => 'pink'));
+                $my_color = RandomColor::many(18, ['hue' => 'pink']);
                 break;
             case 8:
-                $my_color = RandomColor::many(18, array('hue' => 'monochrome'));
+                $my_color = RandomColor::many(18, ['hue' => 'monochrome']);
                 break;
             case 9:
-                $my_color = RandomColor::many(27, array('hue' => array('blue', 'yellow')));
+                $my_color = RandomColor::many(27, ['hue' => ['blue', 'yellow']]);
                 break;
             case 10:
-                $my_color = RandomColor::many(27, array('luminosity' => 'dark'));
+                $my_color = RandomColor::many(27, ['luminosity' => 'dark']);
                 break;
             case 11:
-                $my_color = RandomColor::many(36, array('luminosity' => 'random', 'hue' => 'random'));
+                $my_color = RandomColor::many(36, ['luminosity' => 'random', 'hue' => 'random']);
                 break;
             case 12:
-                $my_color = RandomColor::many(27, array('luminosity' => 'light'));
+                $my_color = RandomColor::many(27, ['luminosity' => 'light']);
                 break;
 
             default:
-                $my_color = RandomColor::many(27, array('luminosity' => 'light'));
+                $my_color = RandomColor::many(27, ['luminosity' => 'light']);
 
         }
 

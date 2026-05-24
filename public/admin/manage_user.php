@@ -54,7 +54,7 @@ $sql .= "OFFSET {$pagination->offset()}";
 
 $result_class = $class_name::find_by_sql($sql);
 
-$query_string=remove_get(array('view','page'));
+$query_string=remove_get(['view','page']);
 
 $view_full_table=!empty($_GET["view"])? (int) $_GET["view"]:0;
 if($view_full_table==1){

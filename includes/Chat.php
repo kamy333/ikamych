@@ -12,15 +12,15 @@
 
 class Chat extends DatabaseObject {
 
-    public static $fields_numeric = array('id', 'user_id', 'to_user_id', 'readit',);
-    public static $get_form_element = array('user_id', 'to_user_id', 'readit', 'message', 'input_date');
-    public static $get_form_element_others = array();
-    public static $form_default_value = array(
+    public static $fields_numeric = ['id', 'user_id', 'to_user_id', 'readit',];
+    public static $get_form_element = ['user_id', 'to_user_id', 'readit', 'message', 'input_date'];
+    public static $get_form_element_others = [];
+    public static $form_default_value = [
         "input_date" => 'nowtime()',
         "readit" => 0
 
-    );
-    public static $db_field_search = array('search_all', 'chat', 'download_csv');
+    ];
+    public static $db_field_search = ['search_all', 'chat', 'download_csv'];
     public static $form_user_id;
     public static $page_name = "Chat";
 
@@ -37,13 +37,13 @@ class Chat extends DatabaseObject {
 
 
     protected static $table_name = "chat";
-    protected static $db_fields = array('id', 'user_id', 'to_user_id', 'readit', 'message', 'input_date');
-    protected static $required_fields = array('user_id', 'to_user_id', 'readit', 'message', 'input_date');
-    protected static $db_fields_table_display_short = array('id', 'user_id', 'to_user_id', 'readit', 'message', 'input_date');
-    protected static $db_fields_table_display_full = array('id', 'user_id', 'to_user_id', 'readit', 'message', 'input_date');
+    protected static $db_fields = ['id', 'user_id', 'to_user_id', 'readit', 'message', 'input_date'];
+    protected static $required_fields = ['user_id', 'to_user_id', 'readit', 'message', 'input_date'];
+    protected static $db_fields_table_display_short = ['id', 'user_id', 'to_user_id', 'readit', 'message', 'input_date'];
+    protected static $db_fields_table_display_full = ['id', 'user_id', 'to_user_id', 'readit', 'message', 'input_date'];
     protected static $db_field_exclude_table_display_sort = null;
-    protected static $form_properties = array(
-        "user_id" => array("type" => "selectchosen",
+    protected static $form_properties = [
+        "user_id" => ["type" => "selectchosen",
             "name" => 'user_id',
             "class"=>"User",
             "label_text"=>"User",
@@ -51,7 +51,7 @@ class Chat extends DatabaseObject {
             'field_option_0'=>"id",
             'field_option_1'=>"username",
             "required" =>true,
-        ),
+        ],
 //        "user_id"=> array("type"=>"number",
 //            "name"=>'user_id',
 //            "label_text"=>"From",
@@ -62,7 +62,7 @@ class Chat extends DatabaseObject {
 //
 //        ),
 
-        "to_user_id" => array("type" => "selectchosen",
+        "to_user_id" => ["type" => "selectchosen",
             "name" => 'to_user_id[]',
             "class"=>"User",
             "label_text"=>"To",
@@ -72,73 +72,73 @@ class Chat extends DatabaseObject {
             "multiple" => true,
 
 //            "size"=>"100",
-        ),
-        "message"=> array("type"=>"textarea",
+        ],
+        "message"=> ["type"=>"textarea",
             "name"=>'message',
             "label_text"=>"Message",
             "placeholder"=>"Message here",
             "required" =>true,
-        ),
-        "readit" => array("type" => "radio",
-            array(0,
-                array(
+        ],
+        "readit" => ["type" => "radio",
+            [0,
+                [
                     "label_all" => "read",
                     "name" => "readit",
                     "label_radio"=>"No",
                     "value"=>"0",
                     "id" => "readit_no",
-                    "default"=>true)),
-            array(1,
-                array(
+                    "default"=>true]],
+            [1,
+                [
                     "label_all"=>"Read",
                     "name" => "readit",
                     "label_radio"=>"Yes",
                     "value"=>"1",
                     "id" => "readit_yes",
-                    "default"=>false)),
-        ),
-        "input_date"=> array("type"=>"datetime",
+                    "default"=>false]],
+        ],
+        "input_date"=> ["type"=>"datetime",
             "name"=>'input_date',
             "label_text"=>"DateTime",
             "placeholder"=>"current date",
             "required" =>true,
-        ),
+        ],
 
-    );
-    protected static $form_properties_search=array(
-        "search_all"=> array("type"=>"text",
+    ];
+    protected static $form_properties_search=[
+        "search_all"=> ["type"=>"text",
             "name"=>'search_all',
             "label_text"=>"",
             "placeholder"=>"Search all",
             "required" =>false,
-        ),
-        "download_csv" =>array("type"=>"radio",
-            array(0,
-                array(
+        ],
+        "download_csv" =>["type"=>"radio",
+            [0,
+                [
                     "label_all"=>"Dnld csv",
                     "name"=>"download_csv",
                     "label_radio"=>"non",
                     "value"=>"No",
                     "id"=>"visible_no",
-                    "default"=>true)),
-            array(1,
-                array(
+                    "default"=>true]],
+            [1,
+                [
                     "label_all"=>"Dnld csv",
                     "name"=>"download_csv",
                     "label_radio"=>"oui",
                     "value"=>"Yes",
                     "id"=>"visible_yes",
-                    "default"=>true)),
-        ),
-        "id"=> array("type"=>"number",
+                    "default"=>true]],
+        ],
+        "id"=> ["type"=>"number",
             "name"=>'id',
             "id"=>"search_id",
             "label_text"=>"",
             'min'=>0,
             "placeholder"=>"ID",
             "required" =>false,
-        ),
-        "user_id"=> array("type"=>"select",
+        ],
+        "user_id"=> ["type"=>"select",
             "name"=>'user_id',
             "id"=>"search_user_id",
             "class"=>"User",
@@ -147,8 +147,8 @@ class Chat extends DatabaseObject {
             'field_option_0'=>"username",
             'field_option_1'=>"username",
             "required" =>false,
-        ),
-        "to_user_id"=> array("type"=>"select",
+        ],
+        "to_user_id"=> ["type"=>"select",
             "name"=>'to_user_id',
             "id"=>"search_to_user_id",
             "class"=>"User",
@@ -157,10 +157,10 @@ class Chat extends DatabaseObject {
             'field_option_0'=>"username",
             'field_option_1'=>"username",
             "required" =>false,
-        ),
+        ],
 
 
-    );
+    ];
     public $id;
     public $user_id;
     public $to_user_id;

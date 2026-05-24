@@ -12,11 +12,11 @@ if(!is_ajax_request()) {
 $class_name = MyClasses::allowed_class_from_post();
 if (User::is_caroline_only()) {
     if ($class_name != "MyExpenseCaroline") {
-        echo json_encode(array("errors" => "Sorry, you cannot access this section."));
+        echo json_encode(["errors" => "Sorry, you cannot access this section."]);
         exit;
     }
 } elseif (User::is_employee() || User::is_secretary() || User::is_visitor()) {
-    echo json_encode(array("errors" => "Sorry, you cannot access this section."));
+    echo json_encode(["errors" => "Sorry, you cannot access this section."]);
     exit;
 }
 
@@ -49,7 +49,7 @@ if (request_is_post() && request_is_same_domain()) {
     if (!csrf_token_is_valid() || !csrf_token_is_recent()) {
         $message = "Sorry, request was not valid.";
 //        $message=$_POST['csrf_token'];
-        $json=array("errors"=>$message);
+        $json=["errors"=>$message];
 
 
 
@@ -90,7 +90,7 @@ if (request_is_post() && request_is_same_domain()) {
                     $my_success.="<li>".$result."</li>" ;
                 }
                 $my_success.="</ul>";
-                $json=array("success"=>$my_success);
+                $json=["success"=>$my_success];
 
 
             } else {
@@ -103,7 +103,7 @@ if (request_is_post() && request_is_same_domain()) {
                     $my_error.="<li>".$result."</li>" ;
                 }
                 $my_error.="</ul>";
-                $json=array("errors"=>$my_error);
+                $json=["errors"=>$my_error];
 
 
             }
@@ -118,7 +118,7 @@ if (request_is_post() && request_is_same_domain()) {
               $my_error.="<li><strong>".$error."</strong></li>" ;
             }
             $my_error.="</ul>";
-            $json=array("errors"=>$my_error);
+            $json=["errors"=>$my_error];
 
         }
 
@@ -130,14 +130,14 @@ if (request_is_post() && request_is_same_domain()) {
 
 } else {
 
-    $json=array("errors"=>'Transaction failed ');
+    $json=["errors"=>'Transaction failed '];
 
 }
 
 if (isset($json)) {
     echo json_encode($json);
 } else {
-   $json=array("errors"=>'json not be defined check code');
+   $json=["errors"=>'json not be defined check code'];
     echo json_encode($json);
 
 }

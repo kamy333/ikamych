@@ -12,57 +12,57 @@ class Currency extends DatabaseObject
 {
 
     protected static $table_name = "currency";
-    protected static $db_fields = array('id', 'currency', 'currency_country', 'rate_side', 'rate', 'date', 'rank', 'comment',);
-    public static $required_fields = array('currency', 'currency_country', 'rate_side', 'rate', 'date', 'rank');
-    protected static $db_fields_table_display_short = array('id', 'currency', 'rate_side', 'currency_country', 'rate', 'date', 'rank', 'comment',);
-    protected static $db_fields_table_display_full = array('id', 'currency', 'rate_side', 'currency_country', 'rate', 'date', 'rank', 'comment',);
+    protected static $db_fields = ['id', 'currency', 'currency_country', 'rate_side', 'rate', 'date', 'rank', 'comment',];
+    public static $required_fields = ['currency', 'currency_country', 'rate_side', 'rate', 'date', 'rank'];
+    protected static $db_fields_table_display_short = ['id', 'currency', 'rate_side', 'currency_country', 'rate', 'date', 'rank', 'comment',];
+    protected static $db_fields_table_display_full = ['id', 'currency', 'rate_side', 'currency_country', 'rate', 'date', 'rank', 'comment',];
     protected static $db_field_exclude_table_display_sort = null;
-    public static $fields_numeric = array('id', 'rate', 'rank');
+    public static $fields_numeric = ['id', 'rate', 'rank'];
 
-    public static $get_form_element = array('currency', 'currency_country', 'rate_side', 'rate', 'date', 'rank', 'comment');
+    public static $get_form_element = ['currency', 'currency_country', 'rate_side', 'rate', 'date', 'rank', 'comment'];
 
-    public static $get_form_element_others = array();
+    public static $get_form_element_others = [];
 
-    public static $form_default_value = array(
+    public static $form_default_value = [
         "currency_country" => "CHF",
         "date" => "now()",
         "rate_side" => "Multiply",
 
-    );
-    protected static $form_properties= array(
-        "currency"=> array("type"=>"text",
+    ];
+    protected static $form_properties= [
+        "currency"=> ["type"=>"text",
             "name"=>'currency',
             "id"=>"currency",
             "label_text"=>"Currency",
             "placeholder" => "Currency ISO",
             "required" => true,
-        ),
-        "currency_country" => array("type" => "text",
+        ],
+        "currency_country" => ["type" => "text",
             "name" => 'currency_country',
             "id" => "currency_country",
             "label_text" => "Currency Country",
             "placeholder" => "Currency Country Name",
             "required" => false,
-        ),
-        "rate_side" => array("type" => "radio",
-            array(0,
-                array(
+        ],
+        "rate_side" => ["type" => "radio",
+            [0,
+                [
                     "label_all" => "rate_side",
                     "name" => "rate_side",
                     "label_radio" => "Multiply",
                     "value" => "Multiply",
                     "id" => "rate_side_multiply",
-                    "default" => true)),
-            array(1,
-                array(
+                    "default" => true]],
+            [1,
+                [
                     "label_all" => "rate_side",
                     "name" => "rate_side",
                     "label_radio" => "Divide",
                     "value" => "Divide",
                     "id" => "rate_side_divide",
-                    "default" => false)),
-        ),
-        "rate" => array("type" => "number",
+                    "default" => false]],
+        ],
+        "rate" => ["type" => "number",
             "name" => 'rate',
             "id" => "rate",
             "label_text" => "currency rate",
@@ -70,63 +70,63 @@ class Currency extends DatabaseObject
             "step" => 'any',
             "placeholder" => "Rate to CHF multiplier",
             "required" => true,
-        ),
-        "date" => array("type" => "date",
+        ],
+        "date" => ["type" => "date",
             "name"=>'date',
             "id"=>"date",
             "label_text"=>"Date",
             "placeholder"=>"Input Date",
             "required" =>false,
-        ),
-        "rank"=> array("type"=>"number",
+        ],
+        "rank"=> ["type"=>"number",
             "name"=>'rank',
             "label_text"=>"Rank",
             'min'=>0,
             "placeholder"=>"a number to sort",
             "required" =>true,
-        ),
-        "comment"=> array("type"=>"textarea",
+        ],
+        "comment"=> ["type"=>"textarea",
             "name"=>'comment',
             "label_text"=>"Comment",
             "placeholder"=>"input Comment",
             "required" =>false,
-        ),
-    );
+        ],
+    ];
 
-    protected static $form_properties_search = array(
-        "search_all"=> array("type"=>"text",
+    protected static $form_properties_search = [
+        "search_all"=> ["type"=>"text",
             "name"=>'search_all',
             "label_text"=>"",
             "placeholder"=>"Search all",
             "required" =>false,
-        ),
-        "download_csv" =>array("type"=>"radio",
-            array(0,
-                array(
+        ],
+        "download_csv" =>["type"=>"radio",
+            [0,
+                [
                     "label_all"=>"Dnld csv",
                     "name"=>"download_csv",
                     "label_radio"=>"non",
                     "value"=>"No",
                     "id"=>"visible_no",
-                    "default"=>true)),
-            array(1,
-                array(
+                    "default"=>true]],
+            [1,
+                [
                     "label_all"=>"Dnld csv",
                     "name"=>"download_csv",
                     "label_radio"=>"oui",
                     "value"=>"Yes",
                     "id"=>"visible_yes",
-                    "default"=>true)),
-        ),
-        "id"=> array("type"=>"number",
+                    "default"=>true]],
+        ],
+        "id"=> ["type"=>"number",
             "name"=>'id',
             "id"=>"search_id",
             "label_text"=>"",
             'min'=>0,
             "placeholder"=>"ID",
             "required" =>false,
-        ),
-        "currency"=> array("type"=>"select",
+        ],
+        "currency"=> ["type"=>"select",
             "name"=>'currency',
             "id"=>"search_currency",
             "class"=>"Currency",
@@ -135,8 +135,8 @@ class Currency extends DatabaseObject
             'field_option_0'=>"currency",
             'field_option_1'=>"currency",
             "required" =>false,
-        ),
-        "currency_country"=> array("type"=>"select",
+        ],
+        "currency_country"=> ["type"=>"select",
             "name"=>'currency_country',
             "id"=>"search_currency_country",
             "class"=>"Currency",
@@ -145,8 +145,8 @@ class Currency extends DatabaseObject
             'field_option_0'=>"currency_country",
             'field_option_1'=>"currency_country",
             "required" =>false,
-        ),
-        "date"=> array("type"=>"select",
+        ],
+        "date"=> ["type"=>"select",
             "name"=>'date',
             "id"=>"search_date",
             "class"=>"Currency",
@@ -155,8 +155,8 @@ class Currency extends DatabaseObject
             'field_option_0'=>"date",
             'field_option_1'=>"date",
             "required" =>false,
-        ),
-        "rank"=> array("type"=>"select",
+        ],
+        "rank"=> ["type"=>"select",
             "name"=>'rank',
             "id"=>"search_rank",
             "class"=>"Currency",
@@ -165,11 +165,11 @@ class Currency extends DatabaseObject
             'field_option_0'=>"rank",
             'field_option_1' => "rank",
             "required" => false,
-        ),
-    );
+        ],
+    ];
 
 
-    public static $db_field_search = array('search_all', 'id', 'date', 'currency', 'currency_country', 'rate', 'download_csv');
+    public static $db_field_search = ['search_all', 'id', 'date', 'currency', 'currency_country', 'rate', 'download_csv'];
 
     public static $page_name = "Currency";
 //    public static $page_manage="manage_currency.php";
@@ -207,8 +207,8 @@ class Currency extends DatabaseObject
 //        if(!isset($this->id)){$valid->unique_category();}
 
         $valid->is_numeric('rate',['min'=>0]);
-        $valid->validate_min_lengths(array('currency'=>3));
-        $valid->validate_max_lengths(array('currency'=>3));
+        $valid->validate_min_lengths(['currency'=>3]);
+        $valid->validate_max_lengths(['currency'=>3]);
 
         return $valid;
 

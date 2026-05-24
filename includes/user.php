@@ -15,23 +15,23 @@ class User extends DatabaseObject
     const TYPE_VISITOR = 5;
     const TYPE_CHAUFFEUR = 6;
     public static  $required_fields = ['username', 'password', 'nom', 'email', 'user_type_id'];
-    public static  $required_fields_no_password = array('username', 'nom', 'email', 'user_type_id');
-    public static  $fields_numeric = array('id', 'user_type', 'block_user', 'unread_message', 'unread_notification',);
+    public static  $required_fields_no_password = ['username', 'nom', 'email', 'user_type_id'];
+    public static  $fields_numeric = ['id', 'user_type', 'block_user', 'unread_message', 'unread_notification',];
 
     public static $fields_image = ['user_image']; // todo
 
 
-    public static $get_form_element = array('user_image', 'username', 'password', 'nom', 'email', 'user_type_id', 'first_name', 'last_name', 'block_user');
+    public static $get_form_element = ['user_image', 'username', 'password', 'nom', 'email', 'user_type_id', 'first_name', 'last_name', 'block_user'];
 
-    public static  $get_form_element_others = array('address', 'cp', 'city', 'country', 'phone', 'mobile', '', '');
+    public static  $get_form_element_others = ['address', 'cp', 'city', 'country', 'phone', 'mobile', '', ''];
 
-    public static $form_default_value = array(
+    public static $form_default_value = [
         "block_user" => "0",
         "user_type_id" => "5"
-    );
+    ];
 
     // todo message per class
-    public static $db_field_search = array('search_all', 'id', 'username', 'nom', 'email', 'user_type', 'user_type_id', 'block_user', 'first_name', 'last_name', 'reset_token', 'address', 'cp', 'city', 'country', 'phone', 'mobile', 'download_csv');
+    public static $db_field_search = ['search_all', 'id', 'username', 'nom', 'email', 'user_type', 'user_type_id', 'block_user', 'first_name', 'last_name', 'reset_token', 'address', 'cp', 'city', 'country', 'phone', 'mobile', 'download_csv'];
     public static $page_name = "User";
 
 //    public static $page_manage = "manage_user.php";
@@ -64,70 +64,70 @@ class User extends DatabaseObject
     protected static $db_fields_table_display_full = ['id', 'username', 'nom', 'email', 'user_type', 'user_type_id', 'block_user', 'unread_message', 'unread_notification', 'first_name', 'last_name', 'user_image', 'reset_token', 'address', 'cp', 'city', 'country', 'phone', 'mobile'];
 
 
-    protected static $db_field_exclude_table_display_sort = array('photo');
-    protected static $form_properties = array(
-        "username" => array("type" => "text",
+    protected static $db_field_exclude_table_display_sort = ['photo'];
+    protected static $form_properties = [
+        "username" => ["type" => "text",
             "name" => 'username',
             "label_text" => "Username",
             "placeholder" => "username",
             "required" => true,
-        ),
-        "user_image" => array("type" => "file",
+        ],
+        "user_image" => ["type" => "file",
             "name" => 'user_image',
             "label_text" => "User photo",
             "required" => false,
             "autocomplete" => "off",
 
-        ),
-        "password" => array("type" => "password",
+        ],
+        "password" => ["type" => "password",
             "name" => 'password',
             "label_text" => "Password",
             "placeholder" => "Password",
             "required" => true,
             "autocomplete" => "off",
-        ),
-        "nom" => array("type" => "text",
+        ],
+        "nom" => ["type" => "text",
             "name" => 'nom',
             "label_text" => "Full Name",
             "placeholder" => "Full Name",
             "required" => true,
-        ),
+        ],
 
-        "email" => array("type" => "email",
+        "email" => ["type" => "email",
             "name" => 'email',
             "label_text" => "Email",
             "placeholder" => "eg example@domain.com",
             "required" => true,
-        ),
+        ],
 
-        "user_type_id" => array("type" => "selectchosen",
+        "user_type_id" => ["type" => "selectchosen",
             "name" => 'user_type_id',
             "class" => "UserType",
             "label_text" => "User type",
             'field_option_0' => "id",
             'field_option_1' => "user_type",
             "required" => true,
-        ),
-        "first_name" => array("type" => "text",
+        ],
+        "first_name" => ["type" => "text",
             "name" => 'first_name',
             "label_text" => "First Name",
             "placeholder" => "First Name",
             "required" => false,
-        ),
+        ],
 
-        "last_name" => array("type" => "text",
+        "last_name" => ["type" => "text",
             "name" => 'last_name',
             "label_text" => "Last Name",
             "placeholder" => "Last Name",
             "required" => false,
-        ),
+        ],
 
-        "reset_token" => array("type" => "text",
+        "reset_token" => ["type" => "text",
             "name" => 'reset_token',
             "label_text" => "Reset token",
             "placeholder" => "token only view or delete",
             "required" => false,
-        ),
+        ],
 // button block_user
 //        "block_user" =>array("type"=>"radio",
 //            array(0,
@@ -148,116 +148,116 @@ class User extends DatabaseObject
 //                    "default"=>false)),
 //        ),
 
-        "block_user1" => array("type" => "text",
+        "block_user1" => ["type" => "text",
             "name" => 'block_user',
             "label_text" => "Block User",
             "placeholder" => "unblock 0 or block 1",
             "required" => false,
-        ),
+        ],
 
-        "block_user" => array("type" => "radio",
-            array(0,
-                array(
+        "block_user" => ["type" => "radio",
+            [0,
+                [
                     "label_all" => "Block User",
                     "name" => "block_user",
                     "label_radio" => "No",
                     "value" => "0",
                     "id" => "block_user_no",
-                    "default" => true)),
-            array(1,
-                array(
+                    "default" => true]],
+            [1,
+                [
                     "label_all" => "Block User",
                     "name" => "block_user",
                     "label_radio" => "Yes",
                     "value" => "1",
                     "id" => "block_user_yes",
-                    "default" => false)),
-        ),
+                    "default" => false]],
+        ],
 
-        "address" => array("type" => "text",
+        "address" => ["type" => "text",
             "name" => 'address',
             "label_text" => "Adress",
             "placeholder" => "User address",
             "required" => false,
-        ),
+        ],
 
-        "cp" => array("type" => "text",
+        "cp" => ["type" => "text",
             "name" => 'cp',
             "label_text" => "Postal Code",
             "placeholder" => "Postal Code",
             "required" => false,
-        ),
+        ],
 
-        "city" => array("type" => "text",
+        "city" => ["type" => "text",
             "name" => 'city',
             "label_text" => "City",
             "placeholder" => "City",
             "required" => false,
-        ),
+        ],
 
 
-        "country" => array("type" => "text",
+        "country" => ["type" => "text",
             "name" => 'country',
             "label_text" => "Country",
             "placeholder" => "Country",
             "required" => false,
-        ),
+        ],
 
-        "phone" => array("type" => "tel",
+        "phone" => ["type" => "tel",
             "name" => 'phone',
             "label_text" => "Phone No",
             "placeholder" => "Phone No",
             "required" => false,
-        ),
+        ],
 
-        "mobile" => array("type" => "tel",
+        "mobile" => ["type" => "tel",
             "name" => 'mobile',
             "label_text" => "mobile No",
             "placeholder" => "mobile No",
             "required" => false,
-        ),
+        ],
 //
 //        "img"=> array("type"=>"file",
 //            "name"=>'img',
 //         ),
 
 
-    );
-    protected static $form_properties_search = array(
-        "search_all" => array("type" => "text",
+    ];
+    protected static $form_properties_search = [
+        "search_all" => ["type" => "text",
             "name" => 'search_all',
             "label_text" => "",
             "placeholder" => "Search all",
             "required" => false,
-        ),
-        "download_csv" => array("type" => "radio",
-            array(0,
-                array(
+        ],
+        "download_csv" => ["type" => "radio",
+            [0,
+                [
                     "label_all" => "Dnld csv",
                     "name" => "download_csv",
                     "label_radio" => "non",
                     "value" => "No",
                     "id" => "visible_no",
-                    "default" => true)),
-            array(1,
-                array(
+                    "default" => true]],
+            [1,
+                [
                     "label_all" => "Dnld csv",
                     "name" => "download_csv",
                     "label_radio" => "oui",
                     "value" => "Yes",
                     "id" => "visible_yes",
-                    "default" => true)),
-        ),
-        "id" => array("type" => "number",
+                    "default" => true]],
+        ],
+        "id" => ["type" => "number",
             "name" => 'id',
             "id" => "search_id",
             "label_text" => "",
             'min' => 0,
             "placeholder" => "ID",
             "required" => false,
-        ),
+        ],
 
-        "username" => array("type" => "select",
+        "username" => ["type" => "select",
             "name" => 'username',
             "id" => "search_username",
             "class" => "User",
@@ -266,9 +266,9 @@ class User extends DatabaseObject
             'field_option_0' => "username",
             'field_option_1' => "username",
             "required" => false,
-        ),
+        ],
 
-        "nom" => array("type" => "select",
+        "nom" => ["type" => "select",
             "name" => 'nom',
             "id" => "search_nom",
             "class" => "User",
@@ -277,8 +277,8 @@ class User extends DatabaseObject
             'field_option_0' => "nom",
             'field_option_1' => "nom",
             "required" => false,
-        ),
-        "email" => array("type" => "select",
+        ],
+        "email" => ["type" => "select",
             "name" => 'email',
             "id" => "search_email",
             "class" => "Client",
@@ -287,8 +287,8 @@ class User extends DatabaseObject
             'field_option_0' => "email",
             'field_option_1' => "email",
             "required" => false,
-        ),
-        "user_type" => array("type" => "select",
+        ],
+        "user_type" => ["type" => "select",
             "name" => 'user_type',
             "id" => "search_user_type",
             "class" => "UserType",
@@ -297,8 +297,8 @@ class User extends DatabaseObject
             'field_option_0' => "id",
             'field_option_1' => "user_type",
             "required" => false,
-        ),
-        "last_name" => array("type" => "select",
+        ],
+        "last_name" => ["type" => "select",
             "name" => 'last_name',
             "id" => "search_last_name",
             "class" => "User",
@@ -307,8 +307,8 @@ class User extends DatabaseObject
             'field_option_0' => "last_name",
             'field_option_1' => "last_name",
             "required" => false,
-        ),
-        "first_name" => array("type" => "select",
+        ],
+        "first_name" => ["type" => "select",
             "name" => 'first_name',
             "id" => "search_first_name",
             "class" => "User",
@@ -317,8 +317,8 @@ class User extends DatabaseObject
             'field_option_0' => "first_name",
             'field_option_1' => "first_name",
             "required" => false,
-        ),
-        "rest_token" => array("type" => "select",
+        ],
+        "rest_token" => ["type" => "select",
             "name" => 'rest_token',
             "id" => "search_rest_token",
             "class" => "User",
@@ -327,8 +327,8 @@ class User extends DatabaseObject
             'field_option_0' => "rest_token",
             'field_option_1' => "rest_token",
             "required" => false,
-        ),
-        "block_user" => array("type" => "select",
+        ],
+        "block_user" => ["type" => "select",
             "name" => 'block_user',
             "id" => "search_block_user",
             "class" => "User",
@@ -337,8 +337,8 @@ class User extends DatabaseObject
             'field_option_0' => "block_user",
             'field_option_1' => "block_user",
             "required" => false,
-        ),
-        "address" => array("type" => "select",
+        ],
+        "address" => ["type" => "select",
             "name" => 'address',
             "id" => "search_address",
             "class" => "Client",
@@ -347,8 +347,8 @@ class User extends DatabaseObject
             'field_option_0' => "address",
             'field_option_1' => "address",
             "required" => false,
-        ),
-        "cp" => array("type" => "select",
+        ],
+        "cp" => ["type" => "select",
             "name" => 'cp',
             "id" => "search_cp",
             "class" => "Client",
@@ -357,8 +357,8 @@ class User extends DatabaseObject
             'field_option_0' => "cp",
             'field_option_1' => "cp",
             "required" => false,
-        ),
-        "city" => array("type" => "select",
+        ],
+        "city" => ["type" => "select",
             "name" => 'city',
             "id" => "search_city",
             "class" => "Client",
@@ -367,8 +367,8 @@ class User extends DatabaseObject
             'field_option_0' => "city",
             'field_option_1' => "city",
             "required" => false,
-        ),
-        "country" => array("type" => "select",
+        ],
+        "country" => ["type" => "select",
             "name" => 'country',
             "id" => "search_country",
             "class" => "Client",
@@ -377,8 +377,8 @@ class User extends DatabaseObject
             'field_option_0' => "country",
             'field_option_1' => "country",
             "required" => false,
-        ),
-        "phone" => array("type" => "select",
+        ],
+        "phone" => ["type" => "select",
             "name" => 'phone',
             "id" => "search_phone",
             "class" => "Client",
@@ -387,8 +387,8 @@ class User extends DatabaseObject
             'field_option_0' => "phone",
             'field_option_1' => "phone",
             "required" => false,
-        ),
-        "mobile" => array("type" => "select",
+        ],
+        "mobile" => ["type" => "select",
             "name" => '',
             "id" => "search_mobile",
             "class" => "Client",
@@ -397,10 +397,10 @@ class User extends DatabaseObject
             'field_option_0' => "mobile",
             'field_option_1' => "mobile",
             "required" => false,
-        ),
+        ],
 
 
-    );
+    ];
     protected static $existing_password;
     public  $per_page;
 
@@ -694,7 +694,7 @@ class User extends DatabaseObject
     public static function find_by_username($username = "")
     {
         /** @noinspection SqlResolve */
-        $result_array = self::find_by_sql_prepared("SELECT * FROM " . self::$table_name . " WHERE username=? LIMIT 1", array($username), "s");
+        $result_array = self::find_by_sql_prepared("SELECT * FROM " . self::$table_name . " WHERE username=? LIMIT 1", [$username], "s");
         return !empty($result_array) ? array_shift($result_array) : false;
     }
 
@@ -714,14 +714,14 @@ class User extends DatabaseObject
     public static function find_by_email($email = "")
     {
         /** @noinspection SqlResolve */
-        $result_array = self::find_by_sql_prepared("SELECT * FROM " . self::$table_name . " WHERE email=? LIMIT 1", array($email), "s");
+        $result_array = self::find_by_sql_prepared("SELECT * FROM " . self::$table_name . " WHERE email=? LIMIT 1", [$email], "s");
         return !empty($result_array) ? array_shift($result_array) : false;
     }
 
     public static function find_by_reset_token($token = "")
     {
         /** @noinspection SqlResolve */
-        $result_array = self::find_by_sql_prepared("SELECT * FROM " . self::$table_name . " WHERE reset_token=? LIMIT 1", array($token), "s");
+        $result_array = self::find_by_sql_prepared("SELECT * FROM " . self::$table_name . " WHERE reset_token=? LIMIT 1", [$token], "s");
         return !empty($result_array) ? array_shift($result_array) : false;
     }
 
@@ -1262,7 +1262,7 @@ class UserUpdate extends User
 class RegisterUser extends User
 {
 
-    public static  $required_fields = array('username', 'password', 'first_name', 'last_name', 'email', 'user_type_id');
+    public static  $required_fields = ['username', 'password', 'first_name', 'last_name', 'email', 'user_type_id'];
 }
 
 class UpdateUserProfile extends User

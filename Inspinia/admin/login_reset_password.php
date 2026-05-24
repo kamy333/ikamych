@@ -29,7 +29,7 @@ if(request_is_post() && request_is_same_domain()) {
     $password_confirm = trim($_POST['password_confirm']);
 
     $valid=new FormValidation();
-    $valid->validate_presences(array('password','password_confirm'))  ;
+    $valid->validate_presences(['password','password_confirm'])  ;
     if ($password !== $password_confirm){
     $valid->errors['password_confirmation']="Password confirmation does not match password.";
     }

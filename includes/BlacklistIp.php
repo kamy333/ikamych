@@ -18,70 +18,70 @@ public $login_failed;
 //public $host;
 
     protected static $table_name="blacklist_ip";
-    protected static $db_fields = array('id', 'ip', 'login_failed',);
+    protected static $db_fields = ['id', 'ip', 'login_failed',];
 
-    public static $required_fields=array('ip', 'login_failed',);
+    public static $required_fields=['ip', 'login_failed',];
 
-    protected static $db_fields_table_display_short=array('id', 'ip', 'login_failed',);
+    protected static $db_fields_table_display_short=['id', 'ip', 'login_failed',];
 
-    protected static $db_fields_table_display_full=array('id', 'ip', 'login_failed',);
+    protected static $db_fields_table_display_full=['id', 'ip', 'login_failed',];
     protected static $db_field_exclude_table_display_sort=null;
 
-    public static $get_form_element=array('ip','login_failed');
-    public static $get_form_element_others=array();
+    public static $get_form_element=['ip','login_failed'];
+    public static $get_form_element_others=[];
 
-    protected static $form_properties= array(
-        "ip"=> array("type"=>"text",
+    protected static $form_properties= [
+        "ip"=> ["type"=>"text",
             "name"=>'ip',
             "label_text"=>"ip",
             "placeholder"=>"ip",
             "required" =>true,
-        ),
-        "login_failed"=> array("type"=>"number",
+        ],
+        "login_failed"=> ["type"=>"number",
             "name"=>'login_failed',
             "id"=>"login_failed",
             "label_text"=>"login_failed",
             'min'=>0,
             "placeholder"=>"login_failed",
             "required" =>false,
-        ),
-    );
+        ],
+    ];
 
 
-    protected static $form_properties_search=array(
-        "search_all"=> array("type"=>"text",
+    protected static $form_properties_search=[
+        "search_all"=> ["type"=>"text",
             "name"=>'search_all',
             "label_text"=>"",
             "placeholder"=>"Search all",
             "required" =>false,
-        ),
-        "download_csv" =>array("type"=>"radio",
-            array(0,
-                array(
+        ],
+        "download_csv" =>["type"=>"radio",
+            [0,
+                [
                     "label_all"=>"Dnld csv",
                     "name"=>"download_csv",
                     "label_radio"=>"non",
                     "value"=>"No",
                     "id"=>"visible_no",
-                    "default"=>true)),
-            array(1,
-                array(
+                    "default"=>true]],
+            [1,
+                [
                     "label_all"=>"Dnld csv",
                     "name"=>"download_csv",
                     "label_radio"=>"oui",
                     "value"=>"Yes",
                     "id"=>"visible_yes",
-                    "default"=>true)),
-        ),
-        "id"=> array("type"=>"number",
+                    "default"=>true]],
+        ],
+        "id"=> ["type"=>"number",
             "name"=>'id',
             "id"=>"search_id",
             "label_text"=>"",
             'min'=>0,
             "placeholder"=>"ID",
             "required" =>false,
-        ),
-        "login_failed"=> array("type"=>"select",
+        ],
+        "login_failed"=> ["type"=>"select",
             "name"=>'login_failed',
             "id"=>"search_login_failed",
             "class"=>"BlacklistIp",
@@ -90,10 +90,10 @@ public $login_failed;
             'field_option_0'=>"login_failed",
             'field_option_1' => "login_failed",
             "required" => false,
-        ),
-    );
+        ],
+    ];
 
-    public static $db_field_search = array('search_all', 'id', 'ip', 'login_failed',);
+    public static $db_field_search = ['search_all', 'id', 'ip', 'login_failed',];
 
 
     public static $page_name = "BlacklistIp";
@@ -111,7 +111,7 @@ public $login_failed;
 
     public static function find_by_ip($ip = "")
     {
-        $result_array = self::find_by_sql_prepared("SELECT * FROM " . self::$table_name . " WHERE ip=? LIMIT 1", array($ip), "s");
+        $result_array = self::find_by_sql_prepared("SELECT * FROM " . self::$table_name . " WHERE ip=? LIMIT 1", [$ip], "s");
         return !empty($result_array) ? array_shift($result_array) : false;
     }
 

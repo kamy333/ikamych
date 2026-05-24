@@ -6,6 +6,8 @@ Scope: legacy PHP application in `S:\ikamych`, with emphasis on code that can be
 
 Latest cleanup checkpoint: `39ff057 Retire legacy transport course feature`
 
+Latest style modernization checkpoint: converted tracked first-party PHP `array(...)` literals to short array syntax `[]`.
+
 ## Executive summary
 
 This codebase is a legacy PHP application with a single large bootstrap, many direct `require_once` dependencies, procedural public pages, active code mixed with old experiments, static assets, logs, uploads, SQL dumps, and checked-in vendor/library copies.
@@ -602,3 +604,20 @@ Recommended order:
 3. Continue active CRUD hardening: invalid IDs, missing records, null handling, sort whitelisting, and prepared statements.
 4. Review old SQL dumps and historic folders after confirming external backups exist.
 5. Build a small script around the smoke-test checklist so the same checks can run after each cleanup pass.
+
+## Style Modernization
+
+Completed:
+
+- Converted legacy `array(...)` literals to short array syntax `[]` across tracked first-party PHP files.
+- Excluded vendor and old bundled/third-party folders from the mechanical rewrite.
+- Used a PHP tokenizer-based rewrite so comments and strings were not changed.
+- Left valid PHP `array` type declarations alone, such as `array $params` and `function get_json_data(): array`.
+
+Verification:
+
+- Tokenizer check found `0` remaining old `array(...)` literal tokens in the target scope.
+- PHP lint passed for `includes`, `public`, and `Inspinia`.
+- Composer validate/audit passed.
+- Browser smoke test passed for homepage, `MyExpenseMum` admin, Article admin, and `Inspinia/index.php`.
+- Fixed the `Inspinia/index.php` `$text1` undefined-variable warning found during the smoke test.

@@ -25,7 +25,7 @@ defined('MY_URL_ADMIN') ? null : define('MY_URL_ADMIN', MY_URL_PUBLIC . 'admin/'
 
 //----------------------------------------DELETE----------------------------------
 $server_name = $_SERVER['SERVER_NAME'] ?? 'ikamy.ch';
-$server_local_names = array("localhost", "127.0.0.1", "::1", "ikamy.local");
+$server_local_names = ["localhost", "127.0.0.1", "::1", "ikamy.local"];
 //$server_phpstorm = "PhpStorm 8.0.3";
 $server_phpstorm = "PhpStorm 2023.3.3";
 

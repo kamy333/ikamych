@@ -26,9 +26,9 @@ if(request_is_post() && request_is_same_domain()) {
 
             //validation
             $valid= new formValidation();
-            $valid->validate_presences(array("password",'new_password','confirm_password'));
+            $valid->validate_presences(["password",'new_password','confirm_password']);
             $valid->is_equal('new_password','confirm_password');
-            $valid->validate_min_lengths(array('new_password'=>4));
+            $valid->validate_min_lengths(['new_password'=>4]);
 
              $user->password=trim($_POST["password"]);
              $user->new_password=trim($_POST["new_password"]);
@@ -106,9 +106,9 @@ if(request_is_post() && request_is_same_domain()) {
             $user->unset_required_fields("password",'nom','user_type_id');
 
             $valid->validate_presences(["first_name","last_name","email"]);
-            $valid->validate_email(array('email'));
+            $valid->validate_email(['email']);
 
-            $user->unset_table_fields(array("hashed_password","user_image","username","nom"));
+            $user->unset_table_fields(["hashed_password","user_image","username","nom"]);
 
             if(empty($valid->errors)){
 
@@ -155,7 +155,7 @@ if(request_is_post() && request_is_same_domain()) {
 
 //            $user->unset_table_fields(array('username', 'hashed_password', 'nom','email','user_type','user_type_id','block_user','unread_message','unread_notification','first_name', 'last_name','reset_token','address','cp','city','country','phone','mobile'));
 
-            $user->unset_table_fields(array('hashed_password'));
+            $user->unset_table_fields(['hashed_password']);
 
 
             if(empty($valid->errors)){

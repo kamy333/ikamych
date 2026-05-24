@@ -18,7 +18,7 @@ if(User::is_visitor() ){ redirect_to('../index.php');}
 <div class="wrapper wrapper-content animated fadeInRight">
 
     <?php
-    $_POST['mylist']=array(1,2,4);
+    $_POST['mylist']=[1,2,4];
     $listvals=$_POST['mylist'];
     $n=count($listvals);
     echo "User chose $n items from the list.<br>\n";

@@ -13,7 +13,7 @@ class Photo extends DatabaseObject
 
     protected static $table_name = "photos";
 //    protected static $db_table="photos";
-    protected static $db_table_fields=array('id','title','caption','alternate_text','description','filename','type','size','creation_date','modified_date')  ;
+    protected static $db_table_fields=['id','title','caption','alternate_text','description','filename','type','size','creation_date','modified_date']  ;
     public $id;
     public $title;
     public $description;
@@ -29,8 +29,8 @@ class Photo extends DatabaseObject
     public $tmp_path;
     public $upload_directory="uploads";
     public $full_path_directory=PATH_UPLOAD;
-    public $errors=array();
-    public $upload_errors_array=array(
+    public $errors=[];
+    public $upload_errors_array=[
         // http://www.php.net/manual/en/features.file-upload.errors.php
         UPLOAD_ERR_OK 			=> "No errors.",
         UPLOAD_ERR_INI_SIZE  	=> "Larger than upload_max_filesize.",
@@ -40,7 +40,7 @@ class Photo extends DatabaseObject
         UPLOAD_ERR_NO_TMP_DIR   => "No temporary directory.",
         UPLOAD_ERR_CANT_WRITE   => "Can't write to disk.",
         UPLOAD_ERR_EXTENSION 	=> "File upload stopped by extension."
-    );
+    ];
 
     public static function display_sidebar_data($photo_id)
     {

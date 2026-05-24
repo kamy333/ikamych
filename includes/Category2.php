@@ -11,64 +11,64 @@
 class Category2 extends DatabaseObject {
 
     protected static $table_name="category_2";
-    protected static $db_fields =array('id','category_2','comment',);
-    public static $required_fields =array('category_2');
-    protected static $db_fields_table_display_short =array('id','category_2','comment',);
-    protected static $db_fields_table_display_full =array('id','category_2','comment',);
+    protected static $db_fields =['id','category_2','comment',];
+    public static $required_fields =['category_2'];
+    protected static $db_fields_table_display_short =['id','category_2','comment',];
+    protected static $db_fields_table_display_full =['id','category_2','comment',];
     protected static $db_field_exclude_table_display_sort=null;
-    public static $fields_numeric=array('id');
-    public static $get_form_element=array('category_2','comment');
-    public static $get_form_element_others=array();
+    public static $fields_numeric=['id'];
+    public static $get_form_element=['category_2','comment'];
+    public static $get_form_element_others=[];
 
-    protected static $form_properties= array(
-        "category_2"=> array("type"=>"text",
+    protected static $form_properties= [
+        "category_2"=> ["type"=>"text",
             "name"=>'category_2',
             "label_text"=>"category_2",
             "placeholder"=>"input category_2",
             "required" =>true,
-        ),
-        "comment"=> array("type"=>"textarea",
+        ],
+        "comment"=> ["type"=>"textarea",
             "name"=>'comment',
             "label_text"=>"Comment",
             "placeholder"=>"input Comment",
             "required" =>false,
-        ),
-    );
-    protected static $form_properties_search= array(
-        "search_all"=> array("type"=>"text",
+        ],
+    ];
+    protected static $form_properties_search= [
+        "search_all"=> ["type"=>"text",
             "name"=>'search_all',
             "label_text"=>"",
             "placeholder"=>"Search all",
             "required" =>false,
-        ),
-        "download_csv" =>array("type"=>"radio",
-            array(0,
-                array(
+        ],
+        "download_csv" =>["type"=>"radio",
+            [0,
+                [
                     "label_all"=>"Dnld csv",
                     "name"=>"download_csv",
                     "label_radio"=>"non",
                     "value"=>"No",
                     "id"=>"visible_no",
-                    "default"=>true)),
-            array(1,
-                array(
+                    "default"=>true]],
+            [1,
+                [
                     "label_all"=>"Dnld csv",
                     "name"=>"download_csv",
                     "label_radio"=>"oui",
                     "value"=>"Yes",
                     "id"=>"visible_yes",
-                    "default"=>true)),
-        ),
-        "id"=> array("type"=>"number",
+                    "default"=>true]],
+        ],
+        "id"=> ["type"=>"number",
             "name"=>'id',
             "id"=>"search_id",
             "label_text"=>"",
             'min'=>0,
             "placeholder"=>"ID",
             "required" =>false,
-        ),
+        ],
 
-        "category_2"=> array("type"=>"select",
+        "category_2"=> ["type"=>"select",
             "name"=>'category_2',
             "id"=>"search_category_2",
             "class"=>"Category2",
@@ -77,9 +77,9 @@ class Category2 extends DatabaseObject {
             'field_option_0' => "category_2",
             'field_option_1' => "category_2",
             "required" => false,
-        ),
-    );
-    public static $db_field_search = array('search_all', 'id', 'category_2', 'download_csv');
+        ],
+    ];
+    public static $db_field_search = ['search_all', 'id', 'category_2', 'download_csv'];
 
     public static $page_name = "category 2";
 //    public static $page_manage="manage_category_2.php";
@@ -94,7 +94,7 @@ class Category2 extends DatabaseObject {
     public static $position_table = "positionRight"; // positionLeft // positionBoth  positionRight
 
 
-    public static $form_class_dependency = array('InvoiceActual', 'Category', 'Category1');
+    public static $form_class_dependency = ['InvoiceActual', 'Category', 'Category1'];
 
     public static $per_page;
 

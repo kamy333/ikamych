@@ -81,16 +81,16 @@ $pic_size = " width = '$width' height = '$height' ";
 //echo '</pre>';
 
 
-$folders = array(
+$folders = [
     "img/DesireeWedding/",
     "img/Kamy/",
     "img/DesireeWedding/Before/",
-);
+];
 
-$photos = array(
+$photos = [
     $folders[0] => "CarolineFeredoun.jpg",
     $folders[0] => "Chupah1.jpg",
-);
+];
 
 $count = 0;
 

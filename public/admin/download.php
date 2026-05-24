@@ -85,7 +85,7 @@ $table_name=$class_name::get_table_name();
 
     </fieldset>
 
-<?php $all_class = array_values(array_intersect(array('User','UserType','Client','Category','BlacklistIp','FailedLogin','Links','LinksCategory','Project','Category1','Category2','InvoiceActual','InvoiceSend','MyCigarette','MyExpense','MyExpensePerson','MyExpenseType','MyHouseExpense','MyHouseExpenseType','Chat','Notification','ToDoList','Currency'), MyClasses::$all_class)); ?>
+<?php $all_class = array_values(array_intersect(['User','UserType','Client','Category','BlacklistIp','FailedLogin','Links','LinksCategory','Project','Category1','Category2','InvoiceActual','InvoiceSend','MyCigarette','MyExpense','MyExpensePerson','MyExpenseType','MyHouseExpense','MyHouseExpenseType','Chat','Notification','ToDoList','Currency'], MyClasses::$all_class)); ?>
 
     <div class='form-group'>
     <label  class='col-sm-3 control-label' for="xxxx" >Choose</label>

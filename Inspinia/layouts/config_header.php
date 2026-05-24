@@ -54,11 +54,11 @@ if (basename(dirname($_SERVER['SCRIPT_FILENAME']))=="admin"){
 
 <?php
 
-$class_array_admin=array('User','Client','Project','InvoiceActual','InvoiceEstimate','InvoiceSend','Chat','Notification');
-$class_array_setup_admin=array('Currency','Category','Category1','Category2','UserType');
+$class_array_admin=['User','Client','Project','InvoiceActual','InvoiceEstimate','InvoiceSend','Chat','Notification'];
+$class_array_setup_admin=['Currency','Category','Category1','Category2','UserType'];
 
-$class_array_kamy=array('Links','MyExpense','MyCigarette','MyCigaretteDay','MyCigaretteMonth','MyCigaretteYear');
-$class_array_setup_kamy=array('MyExpensePerson','MyExpenseType');
+$class_array_kamy=['Links','MyExpense','MyCigarette','MyCigaretteDay','MyCigaretteMonth','MyCigaretteYear'];
+$class_array_setup_kamy=['MyExpensePerson','MyExpenseType'];
 if (!isset($class_name)) {
     $class_name = "";
 

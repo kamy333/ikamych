@@ -30,7 +30,7 @@ if(!is_ajax_request()) {
 
 if (!isset($_GET["id"])) {
     $id="";
-    $json=array("errors"=>"id not set");
+    $json=["errors"=>"id not set"];
 } else {
 
     $id=$_GET["id"];
@@ -39,10 +39,10 @@ if (!isset($_GET["id"])) {
 
     if($class_found->delete()){
 
-        $json=array("success"=>"id (".$id.") successfully deleted");
+        $json=["success"=>"id (".$id.") successfully deleted"];
 
             } else {
-        $json=array("errors"=>"id (".$id.") DID NOT successfully deleted");
+        $json=["errors"=>"id (".$id.") DID NOT successfully deleted"];
 
     }
 
@@ -56,7 +56,7 @@ if (!isset($_GET["id"])) {
 if (isset($json)) {
     echo json_encode($json);
 } else {
-   $json=array("errors"=>'json not be defined check code');
+   $json=["errors"=>'json not be defined check code'];
     echo json_encode($json);
 
 }

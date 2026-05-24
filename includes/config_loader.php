@@ -39,7 +39,7 @@ function ikamy_define_config($constant, $env_key, $required = true, $default = n
     define($constant, $value);
 }
 
-$ikamy_env_keys = array(
+$ikamy_env_keys = [
     'IKAMY_DB_SERVER',
     'IKAMY_DB_USER',
     'IKAMY_DB_PASS',
@@ -50,7 +50,7 @@ $ikamy_env_keys = array(
     'IKAMY_MAIL_HOST',
     'IKAMY_SECRET_KEY',
     'IKAMY_CODE_CALENDAR',
-);
+];
 
 $ikamy_use_env_config = false;
 foreach ($ikamy_env_keys as $ikamy_env_key) {
@@ -62,7 +62,7 @@ foreach ($ikamy_env_keys as $ikamy_env_key) {
 
 if ($ikamy_use_env_config) {
     $server_name = $_SERVER['SERVER_NAME'] ?? 'localhost';
-    $server_local_names = array('localhost', '127.0.0.1', '::1', 'ikamy.local');
+    $server_local_names = ['localhost', '127.0.0.1', '::1', 'ikamy.local'];
     $server_phpstorm = 'PhpStorm';
     $is_local = in_array($server_name, $server_local_names, true) || $server_name === $server_phpstorm;
 

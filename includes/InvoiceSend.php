@@ -15,32 +15,32 @@ class InvoiceSend extends DatabaseObject
 
     protected static $table_name="invoice_send";
 
-    protected static $db_fields = array('id','project_id','project_code','invoice_date','gross_amount','amount','vat','canceled','status','payment_date');
+    protected static $db_fields = ['id','project_id','project_code','invoice_date','gross_amount','amount','vat','canceled','status','payment_date'];
 
-    protected static $required_fields = array('project_id','invoice_date','gross_amount','vat','amount');
+    protected static $required_fields = ['project_id','invoice_date','gross_amount','vat','amount'];
 
 
-    protected static $db_fields_table_display_short = array('id','project_id','project_code','invoice_date','gross_amount','vat','amount','canceled','status','payment_date');
+    protected static $db_fields_table_display_short = ['id','project_id','project_code','invoice_date','gross_amount','vat','amount','canceled','status','payment_date'];
 
-    protected static $db_fields_table_display_full = array('id','project_id','project_code','invoice_date','gross_amount','vat','amount','canceled','status','payment_date');
+    protected static $db_fields_table_display_full = ['id','project_id','project_code','invoice_date','gross_amount','vat','amount','canceled','status','payment_date'];
 
-    protected static $db_field_exclude_table_display_sort=array();
+    protected static $db_field_exclude_table_display_sort=[];
 
-    public static $fields_numeric=array('id','project_id','gross_amount','vat','amount','company_unit_price','category_id');
+    public static $fields_numeric=['id','project_id','gross_amount','vat','amount','company_unit_price','category_id'];
 
-    public static $get_form_element=array('project_code','invoice_date','payment_date','gross_amount','vat','amount','canceled','status');
+    public static $get_form_element=['project_code','invoice_date','payment_date','gross_amount','vat','amount','canceled','status'];
 
-   public static $get_form_element_others=array();
+   public static $get_form_element_others=[];
 
-    public static $form_default_value=array(
+    public static $form_default_value=[
         "invoice_date"=>"now()",
         "canceled"=>"No",
         "vat"=>8.5,
         "status"=>"prepared"
-    );
+    ];
     
-    protected static $form_properties= array(
-        "project_id"=> array("type"=>"select",
+    protected static $form_properties= [
+        "project_id"=> ["type"=>"select",
             "name"=>'project_id',
             "class"=>"Project",
             "label_text"=>"Project",
@@ -48,127 +48,127 @@ class InvoiceSend extends DatabaseObject
             'field_option_0'=>"id",
             'field_option_1'=>"project_code",
             "required" =>true,
-        ),
-        "invoice_date"=> array("type"=>"date",
+        ],
+        "invoice_date"=> ["type"=>"date",
             "name"=>'invoice_date',
             "label_text"=>"Invoice Date",
             "placeholder"=>"Input Invoice Date",
             "required" =>true,
-        ),
-        "gross_amount"=> array("type"=>"number",
+        ],
+        "gross_amount"=> ["type"=>"number",
             "name"=>'gross_amount',
             "id"=>"gross_amount",
             "label_text"=>"Gross Amount",
             'min'=>0,
             "placeholder"=>"Amount No Vat",
             "required" =>true,
-        ),
-        "vat"=> array("type"=>"number",
+        ],
+        "vat"=> ["type"=>"number",
             "name"=>'vat',
             "id"=>"vat",
             "label_text"=>"Vat",
             'min'=>0,
             "placeholder"=>"Vat",
             "required" =>true,
-        ),
-        "amount"=> array("type"=>"number",
+        ],
+        "amount"=> ["type"=>"number",
             "name"=>'amount',
             "id"=>"amount",
             "label_text"=>"Amount",
             'min'=>0,
             "placeholder"=>"Amount",
             "required" =>false,
-        ),
+        ],
 
-        "canceled" =>array("type"=>"radio",
-            array(0,
-                array(
+        "canceled" =>["type"=>"radio",
+            [0,
+                [
                     "label_all"=>"canceled",
                     "name"=>"canceled",
                     "label_radio"=>"non",
                     "value"=>"No",
                     "id"=>"visible_no",
-                    "default"=>true)),
-            array(1,
-                array(
+                    "default"=>true]],
+            [1,
+                [
                     "label_all"=>"canceled",
                     "name"=>"canceled",
                     "label_radio"=>"oui",
                     "value"=>"Yes",
                     "id"=>"visible_yes",
-                    "default"=>false)),
-        ),
+                    "default"=>false]],
+        ],
 
-        "status" =>array("type"=>"radio",
-            array(0,
-                array(
+        "status" =>["type"=>"radio",
+            [0,
+                [
                     "label_all"=>"status",
                     "name"=>"status",
                     "label_radio"=>"Prepared",
                     "value"=>"prepared",
                     "id"=>"status_prepared",
-                    "default"=>true)),
-            array(1,
-                array(
+                    "default"=>true]],
+            [1,
+                [
                     "label_all"=>"status",
                     "name"=>"status",
                     "label_radio"=>"Send",
                     "value"=>"send",
                     "id"=>"status_send",
-                    "default"=>false)),
-            array(2,
-                array(
+                    "default"=>false]],
+            [2,
+                [
                     "label_all"=>"status",
                     "name"=>"status",
                     "label_radio"=>"Paid",
                     "value"=>"paid",
                     "id"=>"status_paid",
-                    "default"=>false)),
-            array(3,
-                array(
+                    "default"=>false]],
+            [3,
+                [
                     "label_all"=>"status",
                     "name"=>"status",
                     "label_radio"=>"Partially Paid",
                     "value"=>"partially_paid",
                     "id"=>"status_partially_paid",
-                    "default"=>false)),
+                    "default"=>false]],
 
-        ),
-        "payment_date"=> array("type"=>"date",
+        ],
+        "payment_date"=> ["type"=>"date",
             "name"=>'payment_date',
             "label_text"=>"Payment Date",
             "required" =>false,
-        ),
+        ],
 
-    );
+    ];
 
-    protected static $form_properties_search= array(
-        "search_all"=> array("type"=>"text",
+    protected static $form_properties_search= [
+        "search_all"=> ["type"=>"text",
             "name"=>'search_all',
             "label_text"=>"",
             "placeholder"=>"Search all",
             "required" =>false,
-        ),
-        "download_csv" =>array("type"=>"radio",
-            array(0,
-                array(
+        ],
+        "download_csv" =>["type"=>"radio",
+            [0,
+                [
                     "label_all"=>"Dnld csv",
                     "name"=>"download_csv",
                     "label_radio"=>"No",
                     "value"=>"No",
                     "id"=>"visible_no",
-                    "default"=>true)),
-            array(1,
-                array(
+                    "default"=>true]],
+            [1,
+                [
                     "label_all"=>"Dnld csv",
                     "name"=>"download_csv",
                     "label_radio"=>"Yes",
                     "value"=>"Yes",
                     "id"=>"visible_yes",
-                    "default"=>true)),
-        ),
+                    "default"=>true]],
+        ],
 
-        "project_code"=> array("type"=>"select",
+        "project_code"=> ["type"=>"select",
             "name"=>'project_code',
             "id"=>"search_project_code",
             "class"=>"InvoiceSend",
@@ -177,8 +177,8 @@ class InvoiceSend extends DatabaseObject
             'field_option_0'=>"project_code",
             'field_option_1'=>"project_code",
             "required" =>false,
-        ),
-        "invoice_date"=> array("type"=>"select",
+        ],
+        "invoice_date"=> ["type"=>"select",
             "name"=>'invoice_date',
             "id"=>"search_invoice_date",
             "class"=>"InvoiceSend",
@@ -187,8 +187,8 @@ class InvoiceSend extends DatabaseObject
             'field_option_0'=>"invoice_date",
             'field_option_1'=>"invoice_date",
             "required" =>false,
-        ),
-        "gross_amount"=> array("type"=>"select",
+        ],
+        "gross_amount"=> ["type"=>"select",
             "name"=>'igross_amount',
             "id"=>"search_gross_amount",
             "class"=>"InvoiceSend",
@@ -197,8 +197,8 @@ class InvoiceSend extends DatabaseObject
             'field_option_0'=>"gross_amount",
             'field_option_1'=>"gross_amount",
             "required" =>false,
-        ),
-        "vat"=> array("type"=>"select",
+        ],
+        "vat"=> ["type"=>"select",
             "name"=>'vat',
             "id"=>"search_vat",
             "class"=>"InvoiceSend",
@@ -207,8 +207,8 @@ class InvoiceSend extends DatabaseObject
             'field_option_0'=>"vat",
             'field_option_1'=>"vat",
             "required" =>false,
-        ),
-        "amount"=> array("type"=>"select",
+        ],
+        "amount"=> ["type"=>"select",
             "name"=>'amount',
             "id"=>"search_amount",
             "class"=>"InvoiceSend",
@@ -217,8 +217,8 @@ class InvoiceSend extends DatabaseObject
             'field_option_0'=>"amount",
             'field_option_1'=>"amount",
             "required" =>false,
-        ),
-        "canceled"=> array("type"=>"select",
+        ],
+        "canceled"=> ["type"=>"select",
             "name"=>'canceled',
             "id"=>"search_canceled",
             "class"=>"InvoiceSend",
@@ -227,8 +227,8 @@ class InvoiceSend extends DatabaseObject
             'field_option_0'=>"canceled",
             'field_option_1'=>"canceled",
             "required" =>false,
-        ),
-        "status"=> array("type"=>"select",
+        ],
+        "status"=> ["type"=>"select",
             "name"=>'status',
             "id"=>"search_status",
             "class"=>"InvoiceSend",
@@ -237,8 +237,8 @@ class InvoiceSend extends DatabaseObject
             'field_option_0'=>"status",
             'field_option_1'=>"status",
             "required" =>false,
-        ),
-        "payment_date"=> array("type"=>"select",
+        ],
+        "payment_date"=> ["type"=>"select",
             "name"=>'payment_date',
             "id"=>"search_payment_date",
             "class"=>"InvoiceSend",
@@ -247,10 +247,10 @@ class InvoiceSend extends DatabaseObject
             'field_option_0' => "payment_date",
             'field_option_1' => "payment_date",
             "required" => false,
-        ),
-    );
+        ],
+    ];
 
-    public static $db_field_search = array('search_all', 'project_id', 'project_code', 'invoice_date', 'gross_amount', 'vat', 'amount', 'canceled', 'status', 'payment_date', 'download_csv');
+    public static $db_field_search = ['search_all', 'project_id', 'project_code', 'invoice_date', 'gross_amount', 'vat', 'amount', 'canceled', 'status', 'payment_date', 'download_csv'];
 
 
     public static $page_name = "Invoice send";
@@ -298,9 +298,9 @@ public $payment_date  ;
 
         $valid->validate_presences(self::$required_fields) ;
 
-        $valid->is_numeric('gross_amount',array());
-        $valid->is_numeric('vat',array());
-        $valid->is_numeric('amount',array());
+        $valid->is_numeric('gross_amount',[]);
+        $valid->is_numeric('vat',[]);
+        $valid->is_numeric('amount',[]);
 
 
         $valid->validate_Date('invoice_date');

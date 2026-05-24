@@ -15,7 +15,7 @@ class Form extends DatabaseObject
     const FORM_INLINE = 1;
     const FORM_NONE = 2;
 
-    public $type_class_form = array('horizontal', 'inline', 'none');
+    public $type_class_form = ['horizontal', 'inline', 'none'];
     public $form_format_type = self::FORM_INLINE;
 
 
@@ -72,12 +72,12 @@ class Form extends DatabaseObject
     public $col_sm_input = "col-sm-9";
 
 //selected option 2 fields normal array which are the fields in the query eg 0 for value,1 for view
-    public $select_option_field = array();
+    public $select_option_field = [];
 
 //$radio=array(0,array("label_text"=>"Visible","name"=>"visible","label"=>"oui","value"="0","for"=>"visible_no","default"=>true))
 //todo
-    public $radio = array();
-    public $checkboxinline = array();
+    public $radio = [];
+    public $checkboxinline = [];
 
     public function __construct()
     {

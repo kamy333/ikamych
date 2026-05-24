@@ -10,152 +10,152 @@
  */
 class Project extends DatabaseObject {
     protected static $table_name="projects";
-    protected static $db_fields = array('id', 'project_code','project_name', 'client_id','pseudo','start_date', 'end_date','closed','currency_iso','vat', 'comment');
+    protected static $db_fields = ['id', 'project_code','project_name', 'client_id','pseudo','start_date', 'end_date','closed','currency_iso','vat', 'comment'];
 
-   public static $required_fields=array('project_code','project_name', 'client_id','start_date','currency_iso');
+   public static $required_fields=['project_code','project_name', 'client_id','start_date','currency_iso'];
 
-    public static $db_fields_table_display_short=array('id', 'project_code','project_name',  'pseudo','start_date','currency_iso','vat');
+    public static $db_fields_table_display_short=['id', 'project_code','project_name',  'pseudo','start_date','currency_iso','vat'];
 
-    public static $db_fields_table_display_full=array( 'project_code','project_name', 'client_id','pseudo','start_date', 'end_date','currency_iso','vat');
+    public static $db_fields_table_display_full=[ 'project_code','project_name', 'client_id','pseudo','start_date', 'end_date','currency_iso','vat'];
 
     protected static $db_field_exclude_table_display_sort=null;
 
-    public static $fields_numeric=array('id','client_id');
+    public static $fields_numeric=['id','client_id'];
 
-    public static $get_form_element=array('project_code','project_name','client_id','start_date','end_date','closed','currency_iso','vat','comment');
+    public static $get_form_element=['project_code','project_name','client_id','start_date','end_date','closed','currency_iso','vat','comment'];
 
-    public static $get_form_element_others=array();
+    public static $get_form_element_others=[];
 
 //    public static $form_default_value;
 
-    public static $form_default_value=array(
+    public static $form_default_value=[
         "start_date"=>"now()",
         "end_date"=>"now()",
         "closed"=>"0",
         "vat"=>"No"
-    );
+    ];
 
 
 
-    protected static $form_properties= array(
-           "project_code"=> array("type"=>"text",
+    protected static $form_properties= [
+           "project_code"=> ["type"=>"text",
             "name"=>'project_code',
             "label_text"=>"Project code",
             "placeholder"=>"input Project code",
             "required" =>true,
-        ),
-        "project_name"=> array("type"=>"text",
+        ],
+        "project_name"=> ["type"=>"text",
             "name"=>'project_name',
             "label_text"=>"Project Name",
             "placeholder"=>"Input project name",
             "required" =>true,
-        ),
-        "client_id"=> array("type"=>"select",
+        ],
+        "client_id"=> ["type"=>"select",
             "name"=>'client_id',
             "class"=>"Client",
             "label_text"=>"Client",
             'field_option_0'=>"id",
             'field_option_1'=>"pseudo",
             "required" =>true,
-        ),
-        "start_date"=> array("type"=>"date",
+        ],
+        "start_date"=> ["type"=>"date",
             "name"=>'start_date',
             "label_text"=>"Start Date",
             "placeholder"=>"Input Start Date",
             "required" =>true,
-        ),
-        "end_date"=> array("type"=>"date",
+        ],
+        "end_date"=> ["type"=>"date",
             "name"=>'end_date',
             "label_text"=>"End Date",
             "placeholder"=>"Input End Date",
             "required" =>false,
-        ),
-        "closed" =>array("type"=>"radio",
-            array(0,
-                array(
+        ],
+        "closed" =>["type"=>"radio",
+            [0,
+                [
                     "label_all"=>"Project closed",
                     "name"=>"closed",
                     "label_radio"=>"No",
                     "value"=>"0",
                     "id"=>"closed_no",
-                    "default"=>true)),
-            array(1,
-                array(
+                    "default"=>true]],
+            [1,
+                [
                     "label_all"=>"Project closed",
                     "name"=>"closed",
                     "label_radio"=>"Yes",
                     "value"=>"1",
                     "id"=>"closed_yes",
-                    "default"=>false)),
-        ),
-        "currency_iso"=> array("type"=>"text",
+                    "default"=>false]],
+        ],
+        "currency_iso"=> ["type"=>"text",
             "name"=>'currency_iso',
             "label_text"=>"Currency",
             "placeholder"=>"Currency ISO",
             "required" =>false,
-        ),
-        "vat" =>array("type"=>"radio",
-            array(0,
-                array(
+        ],
+        "vat" =>["type"=>"radio",
+            [0,
+                [
                     "label_all"=>"VAT",
                     "name"=>"vat",
                     "label_radio"=>"No",
                     "value"=>"No",
                     "id"=>"vat_no",
-                    "default"=>true)),
-            array(1,
-                array(
+                    "default"=>true]],
+            [1,
+                [
                     "label_all"=>"VAT",
                     "name"=>"vat",
                     "label_radio"=>"Yes",
                     "value"=>"Yes",
                     "id"=>"vat_yes",
-                    "default"=>false)),
-        ),
-        "comment"=> array("type"=>"textarea",
+                    "default"=>false]],
+        ],
+        "comment"=> ["type"=>"textarea",
             "name"=>'comment',
             "label_text"=>"comment",
             "placeholder"=>"comment",
             "required" =>false,
-        ),
+        ],
 
-    );
+    ];
 
-    protected static $form_properties_search=array(
-        "search_all"=> array("type"=>"text",
+    protected static $form_properties_search=[
+        "search_all"=> ["type"=>"text",
             "name"=>'search_all',
             "label_text"=>"",
             "placeholder"=>"Search all",
             "required" =>false,
-        ),
-        "download_csv" =>array("type"=>"radio",
-            array(0,
-                array(
+        ],
+        "download_csv" =>["type"=>"radio",
+            [0,
+                [
                     "label_all"=>"Dnld csv",
                     "name"=>"download_csv",
                     "label_radio"=>"non",
                     "value"=>"No",
                     "id"=>"visible_no",
-                    "default"=>true)),
-            array(1,
-                array(
+                    "default"=>true]],
+            [1,
+                [
                     "label_all"=>"Dnld csv",
                     "name"=>"download_csv",
                     "label_radio"=>"oui",
                     "value"=>"Yes",
                     "id"=>"visible_yes",
-                    "default"=>true)),
-        ),
-        "id"=> array("type"=>"number",
+                    "default"=>true]],
+        ],
+        "id"=> ["type"=>"number",
             "name"=>'id',
             "id"=>"search_id",
             "label_text"=>"",
             'min'=>0,
             "placeholder"=>"ID",
             "required" =>false,
-        ),
+        ],
 
-        "project_code"=> array("type"=>"select",
+        "project_code"=> ["type"=>"select",
             "name"=>'project_code',
             "id"=>"search_project_code",
             "class"=>"Project",
@@ -164,9 +164,9 @@ class Project extends DatabaseObject {
             'field_option_0'=>"project_code",
             'field_option_1'=>"project_code",
             "required" =>false,
-        ),
+        ],
 
-        "project_name"=> array("type"=>"select",
+        "project_name"=> ["type"=>"select",
             "name"=>'projet_name',
             "id"=>"search_project_code",
             "class"=>"Project",
@@ -175,16 +175,16 @@ class Project extends DatabaseObject {
             'field_option_0'=>"project_name",
             'field_option_1'=>"project_name",
             "required" =>false,
-        ),
-        "client_id"=> array("type"=>"number",
+        ],
+        "client_id"=> ["type"=>"number",
             "name"=>'client_id',
             "id"=>"search_client_id",
             "label_text"=>"",
             'min'=>0,
             "placeholder"=>"Client ID",
             "required" =>false,
-        ),
-        "pseudo"=> array("type"=>"select",
+        ],
+        "pseudo"=> ["type"=>"select",
             "name"=>'pseudo',
             "id"=>"search_pseudo",
             "class"=>"Project",
@@ -193,8 +193,8 @@ class Project extends DatabaseObject {
             'field_option_0'=>"pseudo",
             'field_option_1'=>"pseudo",
             "required" =>false,
-        ),
-        "start_date"=> array("type"=>"select",
+        ],
+        "start_date"=> ["type"=>"select",
             "name"=>'start_date',
             "id"=>"search_start_date",
             "class"=>"Project",
@@ -203,8 +203,8 @@ class Project extends DatabaseObject {
             'field_option_0'=>"start_date",
             'field_option_1'=>"start_date",
             "required" =>false,
-        ),
-        "end_date"=> array("type"=>"select",
+        ],
+        "end_date"=> ["type"=>"select",
             "name"=>'end_date',
             "id"=>"search_end_date",
             "class"=>"Project",
@@ -213,11 +213,11 @@ class Project extends DatabaseObject {
             'field_option_0'=>"end_date",
             'field_option_1' => "end_date",
             "required" => false,
-        ),
+        ],
 
-    );
+    ];
 
-    public static $db_field_search = array('search_all', 'id', 'project_code', 'project_name', 'client_id', 'pseudo', 'start_date', 'end_date', 'currency_iso', 'download_csv');
+    public static $db_field_search = ['search_all', 'id', 'project_code', 'project_name', 'client_id', 'pseudo', 'start_date', 'end_date', 'currency_iso', 'download_csv'];
 
 
     public static $page_name = "Project";
@@ -233,7 +233,7 @@ class Project extends DatabaseObject {
     public static $position_table = "positionRight"; // positionLeft // positionBoth  positionRight
 
 
-    public static $form_class_dependency = array('Client');
+    public static $form_class_dependency = ['Client'];
 
 
     public static $per_page;
@@ -295,7 +295,7 @@ public $input_date;
             $valid->validate_max_lengths(['currency_iso'=>3]);
         }
 
-        $valid->validate_Date(array('start_date'));
+        $valid->validate_Date(['start_date']);
 
         if(!empty($this->end_date) && isset($this->end_date)){
             $valid->validate_Date(['end_date']);

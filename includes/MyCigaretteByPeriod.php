@@ -2,11 +2,11 @@
 class MyCigaretteDay extends MyCigarette{
     protected static $table_name="mycigarette_view_by_day";
 
-    protected static $db_fields = array('year','month','date','total');
+    protected static $db_fields = ['year','month','date','total'];
 
-    protected static $db_fields_table_display_short = array('year','month','date','total');
+    protected static $db_fields_table_display_short = ['year','month','date','total'];
 
-    protected static $db_fields_table_display_full =  array('year','month','date','total');
+    protected static $db_fields_table_display_full =  ['year','month','date','total'];
 
 
 public $date;
@@ -47,11 +47,11 @@ public $total;
 class MyCigaretteMonth extends MyCigarette{
     protected static $table_name="mycigarette_view_by_month";
 
-    protected static $db_fields = array('year','month','total','monthno');
+    protected static $db_fields = ['year','month','total','monthno'];
 
-    protected static $db_fields_table_display_short = array('year','month','total');
+    protected static $db_fields_table_display_short = ['year','month','total'];
 
-    protected static $db_fields_table_display_full =  array('year','month','total');
+    protected static $db_fields_table_display_full =  ['year','month','total'];
 
 
 public $year;
@@ -91,11 +91,11 @@ public $year;
 class MyCigaretteYear extends MyCigarette{
     protected static $table_name="mycigarette_view_by_year";
 
-    protected static $db_fields = array('year','total');
+    protected static $db_fields = ['year','total'];
 
-    protected static $db_fields_table_display_short = array('year','month','date','total');
+    protected static $db_fields_table_display_short = ['year','month','date','total'];
 
-    protected static $db_fields_table_display_full =  array('year','month','date','total');
+    protected static $db_fields_table_display_full =  ['year','month','date','total'];
 
 
 

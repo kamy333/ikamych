@@ -8,10 +8,10 @@ function calculateAge($birthDate, $referenceDate, $lang = 'fr')
     $months = $interval->m;
     $days = $interval->d;
 
-    $lang_days = array('en' => 'days', 'fr' => 'jours', 'he' => 'ימים', 'pt' => 'dias');
-    $lang_months = array('en' => 'months', 'fr' => 'mois', 'he' => 'חודשים', 'pt' => 'meses');
-    $lang_years = array('en' => 'years', 'fr' => 'ans', 'he' => 'שנים', 'pt' => 'anos');
-    $lang_conj = array('en' => 'and', 'fr' => 'et', 'he' => '|', 'pt' => 'e');
+    $lang_days = ['en' => 'days', 'fr' => 'jours', 'he' => 'ימים', 'pt' => 'dias'];
+    $lang_months = ['en' => 'months', 'fr' => 'mois', 'he' => 'חודשים', 'pt' => 'meses'];
+    $lang_years = ['en' => 'years', 'fr' => 'ans', 'he' => 'שנים', 'pt' => 'anos'];
+    $lang_conj = ['en' => 'and', 'fr' => 'et', 'he' => '|', 'pt' => 'e'];
 
     $days_l = $lang_days[$lang];
     $months_l = $lang_months[$lang];

@@ -10,17 +10,17 @@ class SmartNav
 {
 
     public static $menus=
-     array(
-         "public_gallery"=>array(
+     [
+         "public_gallery"=>[
          'name'=>"gallery",
          'folder'=>'Inspinia',
          'environment'=>'public',
          'order'=>1,
          'menu'=>'Galleries',
-         'protection'=>array(
+         'protection'=>[
          'index_gallery6',
-             ),
-         'link'=>array(
+             ],
+         'link'=>[
              'index' => 'Home',
              'index_gallery6' => 'Bralia',
              'index_gallery' => 'Desiree Wedding',
@@ -34,18 +34,18 @@ class SmartNav
              'index_gallery8' => 'Film',
              'index_gallery11' => 'Film Classic',
              'index_gallery13' => 'Marco',
-         )
- ),
-         "admin_public_menu"=>array(
+         ]
+ ],
+         "admin_public_menu"=>[
              'name'=>"gallery",
              'folder'=>'Inspinia',
              'environment'=>'admin',
              'order'=>1,
              'menu'=>'Galleries',
-             'protection'=>array(
+             'protection'=>[
                  'index_gallery6',
-             ),
-             'link'=> array(
+             ],
+             'link'=> [
                  'index' => 'Home',
                  'index_gallery6' => 'Bralia',
                  'index_gallery' => 'Desiree Wedding',
@@ -61,25 +61,25 @@ class SmartNav
                  'index_gallery12' => 'Djam photo',
                  'index_gallery14' => 'Djam objectif',
                  'index_gallery15' => 'Djam helico',
-             )
-         ),
-             "Admin_class"=>array(
+             ]
+         ],
+             "Admin_class"=>[
                  'name'=>"admin",
                  'folder'=>'Inspinia',
                  'environment'=>'admin',
                  'order'=>1,
                  'menu'=>'Admin',
                  'query_string'=>'class_name',
-                 'link'=>array(
+                 'link'=>[
                      'class_manage?class_name=User'=>'Users',
                      'class_manage?class_name=Client'=>'Clients',
                      'class_manage?class_name=Project'=>'Project',
                      'class_manage?class_name=InvoiceActual'=>'Invoice Actual',
                      'class_manage?class_name=InvoiceSend'=>'Invoice Send',
                      'class_manage?class_name=Chat'=>'Chat',
-             ),
-     ),
-     );
+             ],
+     ],
+     ];
     public $http = "";
     public $path;
     public $path_admin;
@@ -256,7 +256,7 @@ public  function  public_menu($name="public_gallery",$env='public'){
 
 //    $p=$active_menu_clean;
 
-$array_class=array();
+$array_class=[];
     foreach (static::$menus[$name]['link']  as $page=>$page_title) {
 //    echo $page.'<br>';
         if (isset(static::$menus[$name]['query_string'])) {

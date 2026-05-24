@@ -24,7 +24,7 @@ class Paginator
     protected $return;
     protected $get_ipp;
 
-    public function __construct($total = 0, $mid_range = 7, $ipp_array = array(10, 25, 50, 100, "All"))
+    public function __construct($total = 0, $mid_range = 7, $ipp_array = [10, 25, 50, 100, "All"])
     {
         $this->total_items = (int)$total;
         if ($this->total_items <= 0) exit("Unable to paginate: Invalid total value (must be an integer > 0)");
