@@ -86,18 +86,6 @@
                                 class="nav-label">Dashboard</span></a>
                 </li>
 
-                <li class="<?php if (isset($class_transport_active)) {
-                    echo $class_transport_active;
-                } ?>">
-                    <a href="<?php echo $Nav->http . "transmed/"; ?>index.php"><i class="fa fa-taxi"></i> <span
-                                class="nav-label">Transport</span></a>
-
-                    <!--            <ul class="nav nav-second-level --><?php //echo $class_admin_collapse; ?><!--">-->
-                    <!--                --><?php //echo $Nav->menu_item('TransportProgramming','Course','class_manage.php') ?>
-                    <!--            </ul>-->
-                </li>
-
-
                 <li class="<?php if (isset($class_admin_active)) {
                     echo $class_admin_active;
                 } ?>">

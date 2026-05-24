@@ -403,8 +403,6 @@ if ($layout_context == "public") {
 
                                 <?php
 
-                                echo $Nav->menu_item('', 'Transmed fr', 'https://www.ikamy.fr/public/', '', true);
-                                echo $Nav->menu_item('', 'Transmed ch', SITE_URL . '/transmed/', '', true);
                                 echo $Nav->menu_item('Course', 'Course', 'manage_ajax.php', 'admin/crud/ajax');
                                 echo $Nav->menu_item('Calendar', 'Calendar', 'manage_ajax.php', 'admin/crud/ajax');
                                 echo $Nav->menu_item('Client', 'Client', 'manage_ajax.php', 'admin/crud/ajax');

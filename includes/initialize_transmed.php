@@ -112,7 +112,7 @@ require_once(LIB_PATH . DS . 'functions' . DS . "reset_token_functions.php");
 //require_once(LIB_PATH.DS . "function_links.php"); //todo clean up and move to function
 
 
-require_once(LIB_PATH . DS . 'config_transmed.php');
+require_once(LIB_PATH . DS . 'config.php');
 require LIB_PATH_VENDOR . DS . 'autoload.php';
 
 $use_database_mysqli = false;
@@ -208,6 +208,7 @@ require_once(LIB_PATH . DS . 'transport' . DS . 'ViewTransportModelPivotNo.php')
 require_once(LIB_PATH . DS . 'transport' . DS . 'ViewTransportModelPivotYes.php');
 require_once(LIB_PATH . DS . 'transport' . DS . 'ViewTransportSummaryCourseDateProgram.php');
 require_once(LIB_PATH . DS . 'transport' . DS . 'ViewTransportModelByChauffeur.php');
+require_once(LIB_PATH . DS . 'transport' . DS . 'ViewTransportAdresse.php');
 
 
 ?>

@@ -106,11 +106,6 @@
                 <?php } ?>
 
 
-
-                <?php if (User::is_manager()) { ?>
-                    <li><a href="<?php echo $Nav->http . "transmed/"; ?>index.php"><i class="fa fa-taxi"></i> <span
-                                class="nav-label">Transport</span></a></li>
-                <?php } ?>
                 <!--
                 <li class="dropdown">
                     <a aria-expanded="false" role="button" href="#" class="dropdown-toggle" data-toggle="dropdown"> Menu item <span class="caret"></span></a>

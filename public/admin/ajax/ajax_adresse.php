@@ -1,7 +1,7 @@
 <?php
 
 
-require_once('../../../includes/initialize_transmed.php');
+require_once('../../../includes/initialize.php');
 $session->confirmation_protected_page();
 if (User::is_visitor()) {
     redirect_to('../../index.php');

@@ -113,7 +113,6 @@ Candidates:
 
 - `client_secret..json`
 - `includes/config.php`
-- `includes/config_transmed.php`
 
 Reason: Google OAuth client secrets and database credentials are checked in. Even if old, they should be treated as compromised.
 
@@ -505,4 +504,3 @@ The best first PR should be boring and reversible:
 5. Run PHP lint over first-party code and record existing failures without trying to fix them.
 
 This reduces noise immediately and sets the pattern for slow, safe modernization.
-

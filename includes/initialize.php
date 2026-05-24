@@ -236,6 +236,7 @@ require_once(LIB_PATH . DS . 'transport' . DS . 'ViewTransportModelPivotNo.php')
 require_once(LIB_PATH . DS . 'transport' . DS . 'ViewTransportModelPivotYes.php');
 require_once(LIB_PATH . DS . 'transport' . DS . 'ViewTransportSummaryCourseDateProgram.php');
 require_once(LIB_PATH . DS . 'transport' . DS . 'ViewTransportModelByChauffeur.php');
+require_once(LIB_PATH . DS . 'transport' . DS . 'ViewTransportAdresse.php');
 
 
 ?>
