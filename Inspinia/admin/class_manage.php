@@ -13,7 +13,7 @@ if(User::is_visitor() ){ redirect_to('../index.php');}
 $page= !empty($_GET['page'])? (int) $_GET["page"]:1;
 $query_string=remove_get(array('view','page'));
 
-$view_full_table=!empty($_GET)? (int) $_GET["view"]:0;
+$view_full_table=!empty($_GET["view"])? (int) $_GET["view"]:0;
 if($view_full_table==1){
 
     $page_link_view = "class_manage.php" . $query_string . "page=" . u($page) . "&view=" . u(0);

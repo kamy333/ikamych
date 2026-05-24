@@ -10,6 +10,7 @@
 <?php $fluid_view = true; ?>
 <?php $javascript = ""; ?>
 <?php $incl_message_error = true; ?>
+<?php $text = $text ?? ""; ?>
 <?php include(SITE_ROOT . DS . 'public' . DS . 'layouts' . DS . "header.php") ?>
 <?php include(SITE_ROOT . DS . 'public' . DS . 'layouts' . DS . "nav.php") ?>
 

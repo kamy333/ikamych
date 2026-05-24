@@ -57,7 +57,7 @@
 
                             <?php
 
-                            echo blueimp_lightBoxGallery(get_picture_folder_blueimp_gallery("DesireeBabyShower", "Desiree Baby Shower $a", $folder_project_name)); ?>
+                            echo blueimp_lightBoxGallery(get_picture_folder_blueimp_gallery("DesireeBabyShower", "Desiree Baby Shower", $folder_project_name)); ?>
 
                     </div>
                 </div>
