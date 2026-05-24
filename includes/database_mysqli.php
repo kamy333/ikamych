@@ -3,7 +3,7 @@ require_once("config.php");
 
 
 
-class MySQLDatabaseMYSQLI extends mysqli
+class MySQLDatabaseMYSQLI
 {
 
 
@@ -87,7 +87,7 @@ class MySQLDatabaseMYSQLI extends mysqli
         return $this->connection->affected_rows;
     }
 
-    private function confirm_query()
+    private function confirm_query($result = null)
     {
         if ($this->connection->error) {
             $output = "<br><b><span style='color: deepskyblue'> query failed.</span></b><br>" .             $this->connection->error;
