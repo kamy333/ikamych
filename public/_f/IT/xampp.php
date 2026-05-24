@@ -1,7 +1,7 @@
 <?php require_once('../../../includes/initialize.php'); ?>
 <?php //if (!$session->is_logged_in()) { redirect_to("login.php"); } ?>
 <?php if (User::is_employee()) {
-    redirect_to('index.php');
+    redirect_to('/public/index.php');
 } ?>
 
 <?php $layout_context = "public"; ?>
@@ -12,6 +12,7 @@
 <?php $incl_message_error = true; ?>
 <?php include(SITE_ROOT . DS . 'public' . DS . 'layouts' . DS . "header.php") ?>
 <?php include(SITE_ROOT . DS . 'public' . DS . 'layouts' . DS . "nav.php") ?>
+<?php $text = ""; ?>
 
 <h4 class="text-center">
     <mark><a href="<?php echo $_SERVER["PHP_SELF"] ?>">Xampp

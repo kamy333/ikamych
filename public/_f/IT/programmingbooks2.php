@@ -1,7 +1,7 @@
 <?php require_once('../../../includes/initialize.php'); ?>
 <?php //if (!$session->is_logged_in()) { redirect_to("login.php"); } ?>
 <?php if (User::is_employee()) {
-    redirect_to('index.php');
+    redirect_to('/public/index.php');
 } ?>
 
 <?php $layout_context = "public"; ?>
