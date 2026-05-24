@@ -542,6 +542,8 @@ Status update: Browser smoke testing covered `MyExpenseMum` AJAX/data manage, ne
 
 Status update: The public contact form now uses Composer-managed PHPMailer for SMTP delivery, a dynamic per-session anti-spam math challenge, a CSRF token on POST, a hidden honeypot field, and lightweight session rate limiting before SMTP delivery. The shared CSRF comparison now uses `hash_equals()` and safely rejects missing session tokens without raising PHP notices.
 
+Status update: Active public links pages now use prepared statements for category filters in `Links::find_all_get()` and the named category lookup helpers. Generated category tabs and public link anchors now escape labels/URLs, and generated plus hard-coded links-table anchors include `rel="noopener noreferrer"` with `target="_blank"`.
+
 ## Suggested first small PR
 
 The best first PR should be boring and reversible:
@@ -584,6 +586,8 @@ Browser URLs:
 - `http://ikamy.local/public/about_us.php`
 - `http://ikamy.local/public/about_us_2.php`
 - `http://ikamy.local/public/myLinks.php?category=Others`
+- `http://ikamy.local/public/myLinks1.php?category=Udemy`
+- `http://ikamy.local/public/myLinks2.php`
 - `http://ikamy.local/public/admin/crud/ajax/manage_ajax.php?&page=1&order_name=id&order_type=ASC&class_name=Article`
 - `http://ikamy.local/public/admin/crud/ajax/manage_ajax.php?class_name=MyExpenseMum`
 - `http://ikamy.local/public/admin/crud/ajax/new_ajax.php?class_name=MyExpenseMum`

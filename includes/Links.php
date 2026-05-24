@@ -263,7 +263,8 @@ class Links extends DatabaseObject
     {
 
         if (isset($this->web_address) && isset($this->name)) {
-            $this->link = "<a target='_blank' href='{$this->web_address}'>lnk</a>";
+            $web_address = self::html($this->web_address);
+            $this->link = "<a target='_blank' rel='noopener noreferrer' href='{$web_address}'>lnk</a>";
 
         }
 
@@ -277,12 +278,11 @@ class Links extends DatabaseObject
 
     public static function find_all_get($category_1 = false, $category_2 = false)
     {
-        global $database;
-
         $table = self::$table_name;
+        $params = [];
 
         if (isset($_GET['category'])) {
-            $category = $database->escape_value($_GET['category']);
+            $category = trim((string)$_GET['category']);
         } else {
             $category = '';
 
@@ -291,18 +291,21 @@ class Links extends DatabaseObject
         $sql = "SELECT * FROM {$table} ";
 
         if ($category_1) {
-            $sql .= "WHERE sub_category_1 = '{$category}' ";
+            $sql .= "WHERE sub_category_1 = ? ";
+            $params[] = $category;
         } elseif ($category_2) {
-            $sql .= "WHERE sub_category_2 = '{$category}' ";
+            $sql .= "WHERE sub_category_2 = ? ";
+            $params[] = $category;
         } else {
             if (!empty($category)) {
-                $sql .= "WHERE category = '{$category}' ";
+                $sql .= "WHERE category = ? ";
+                $params[] = $category;
             }
         }
 
         $sql .= "ORDER BY `rank` ASC, id ASC";
 
-        return static::find_by_sql($sql);
+        return static::find_by_sql_prepared($sql, $params);
 
     }
 
@@ -360,40 +363,42 @@ class Links extends DatabaseObject
         }
 
 
-        $output .= "<li role='presentation' class=''><a href=";
-        $output .= static::$page_new; //"admin/new_link.php";
-        $output .= ">New</a></li>";
+        $output .= "<li role='presentation' class=''><a href=\"";
+        $output .= self::html(static::$page_new); //"admin/new_link.php";
+        $output .= "\">New</a></li>";
 
         if (User::is_admin()) {
             $output .= $Nav->menu_item('Article', 'New Article', 'new_data.php', 'admin/crud/data');
         }
 
 
-        $output .= "<li role='presentation' class='{$active1}'><a href=";
-        $output .= $_SERVER['PHP_SELF'];
-        $output .= ">All</a></li>";
+        $current_page = self::html($_SERVER['PHP_SELF'] ?? '');
+
+        $output .= "<li role='presentation' class='{$active1}'><a href=\"";
+        $output .= $current_page;
+        $output .= "\">All</a></li>";
 
         if ($category_1) {
-            $output .= "<li role='presentation' class=''><a href=";
+            $output .= "<li role='presentation' class=''><a href=\"";
             $output .= 'myLinks.php?category=Others';
-            $output .= ">All Category</a></li>";
-            $output .= "<li role='presentation' class=''><a href=";
+            $output .= "\">All Category</a></li>";
+            $output .= "<li role='presentation' class=''><a href=\"";
             $output .= 'myLinks2.php';
-            $output .= ">Sub Category 2</a></li>";
+            $output .= "\">Sub Category 2</a></li>";
         } elseif ($category_2) {
-            $output .= "<li role='presentation' class=''><a href=";
+            $output .= "<li role='presentation' class=''><a href=\"";
             $output .= 'myLinks.php?category=Others';
-            $output .= ">All Category</a></li>";
-            $output .= "<li role='presentation' class=''><a href=";
+            $output .= "\">All Category</a></li>";
+            $output .= "<li role='presentation' class=''><a href=\"";
             $output .= 'myLinks1.php?category=Udemy';
-            $output .= ">Sub Category 1</a></li>";
+            $output .= "\">Sub Category 1</a></li>";
         } else {
-            $output .= "<li role='presentation' class=''><a href=";
+            $output .= "<li role='presentation' class=''><a href=\"";
             $output .= 'myLinks1.php?category=Udemy';
-            $output .= ">Sub Category 1</a></li>";
-            $output .= "<li role='presentation' class=''><a href=";
+            $output .= "\">Sub Category 1</a></li>";
+            $output .= "<li role='presentation' class=''><a href=\"";
             $output .= 'myLinks2.php';
-            $output .= ">Sub Category 2</a></li>";
+            $output .= "\">Sub Category 2</a></li>";
         }
 
         $output .= "</ul>";
@@ -422,11 +427,11 @@ class Links extends DatabaseObject
                 $active = "";
             }
 
-            $output .= "<li role='presentation' class='{$active}'><a href=";
-            $output .= $_SERVER['PHP_SELF'];
+            $output .= "<li role='presentation' class='{$active}'><a href=\"";
+            $output .= $current_page;
             $output .= "?category=";
-            $output .= urlencode($categ);
-            $output .= ">{$categ}</a></li>";
+            $output .= rawurlencode((string)$categ);
+            $output .= "\">" . self::html($categ) . "</a></li>";
 
 
         }
@@ -454,35 +459,32 @@ class Links extends DatabaseObject
 
     public static function find_name_category_links($name_category = "")
     {
-        global $database;
-        $name_category = $database->escape_value($name_category);
-        $result_array = self::find_by_sql("SELECT * FROM " . self::$table_name . " WHERE category='{$name_category}' ORDER BY `rank` ASC, id ASC");
-        return !empty($result_array) ? $result_array : false;
+        return self::find_by_category_column('category', $name_category);
     }
 
     public static function find_name_category_1_links($name_category = "")
     {
-        global $database;
-        $name_category = $database->escape_value($name_category);
-        $result_array = self::find_by_sql("SELECT * FROM " . self::$table_name . " WHERE sub_category_1='{$name_category}' ORDER BY `rank` ASC, id ASC");
-        return !empty($result_array) ? $result_array : false;
+        return self::find_by_category_column('sub_category_1', $name_category);
     }
 
     public static function find_name_category_2_links($name_category = "")
     {
-        global $database;
-        $name_category = $database->escape_value($name_category);
-        $result_array = self::find_by_sql("SELECT * FROM " . self::$table_name . " WHERE sub_category_2='{$name_category}' ORDER BY `rank` ASC, id ASC");
-        return !empty($result_array) ? $result_array : false;
+        return self::find_by_category_column('sub_category_2', $name_category);
     }
 
-//    public static function find_name_category_3_links($name_category = "")
-//    {
-//        global $database;
-//        $name_category = $database->escape_value($name_category);
-//        $result_array = self::find_by_sql("SELECT * FROM " . self::$table_name . " WHERE sub_category_2='{$name_category}' ORDER BY Rank");
-//        return !empty($result_array) ? $result_array : false;
-//    }
+    private static function find_by_category_column($column, $name_category)
+    {
+        $allowed_columns = ['category', 'sub_category_1', 'sub_category_2'];
+
+        if (!in_array($column, $allowed_columns, true)) {
+            return [];
+        }
+
+        return self::find_by_sql_prepared(
+            "SELECT * FROM " . self::$table_name . " WHERE {$column} = ? ORDER BY `rank` ASC, id ASC",
+            [(string)$name_category]
+        );
+    }
 
     public static function output_links($name_category = null, $category_1 = false, $category_2 = false)
     {
@@ -530,7 +532,7 @@ class Links extends DatabaseObject
 
 
         $output .= "<tr>";
-        $output .= "<th class='text-center' style='vertical-align:middle;'>{$category}</th>";
+        $output .= "<th class='text-center' style='vertical-align:middle;'>" . self::html($category) . "</th>";
 
 
         $output .= "</tr>";
@@ -547,7 +549,8 @@ class Links extends DatabaseObject
             }
 
             $name = self::html($link->name);
-            $href = "<a target='_blank' href='{$web}'>{$name}</a>";
+            $web_address = self::html($web);
+            $href = "<a target='_blank' rel='noopener noreferrer' href='{$web_address}'>{$name}</a>";
 
             if (User::is_kamy()) {
                 $modal = "<small>" . self::get_modal_link($link_id) . "</small>";
