@@ -83,7 +83,10 @@ class Session
         // Use both for compatibility with all browsers
         // and all versions of PHP.
         unset($_SESSION['user_id']);
-        unset($this->user_id);
+        $this->user_id = null;
+        $this->ip = null;
+        $this->user_agent = null;
+        $this->last_login = null;
         $this->logged_in = false;
         $_SESSION = [];
 //        if (isset($_COOKIE[session_name()])) {
@@ -262,7 +265,7 @@ class Session
             $this->user_id = $_SESSION['user_id'];
             $this->logged_in = true;
         } else {
-            unset($this->user_id);
+            $this->user_id = null;
             $this->logged_in = false;
         }
     }
@@ -273,17 +276,17 @@ class Session
         if (isset($_SESSION['ip'])) {
             $this->ip = $_SESSION['ip'];
         } else {
-            unset($this->ip);
+            $this->ip = null;
         }
         if (isset($_SESSION['user_agent'])) {
             $this->user_agent = $_SESSION['user_agent'];
         } else {
-            unset($this->user_agent);
+            $this->user_agent = null;
         }
         if (isset($_SESSION['last_login'])) {
             $this->last_login = $_SESSION['last_login'];
         } else {
-            unset($this->last_login);
+            $this->last_login = null;
         }
 
     }
