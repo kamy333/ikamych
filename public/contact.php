@@ -130,6 +130,9 @@ if ($is_post) {
 
         if ($sent) {
             $result='<div class="alert alert-success">Thank You! I will be in touch</div>';
+            $name = "";
+            $email = "";
+            $message = "";
         } else {
             $result='<div class="alert alert-danger">Sorry there was an error sending your message. Please try again later.</div>';
         }
