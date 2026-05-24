@@ -11,11 +11,10 @@ This document contains a review of the project, including a description of the f
 *   **`/my_helps`**: This folder may contain helper files or libraries.
 *   **`/public`**: This is likely the web server's document root, containing publicly accessible files like `index.php`, CSS, and JavaScript.
 *   **`/sql`**: This folder probably contains SQL scripts for database creation or migration.
-*   **`/transmed`**: The purpose of this folder is not immediately clear from its name.
 *   **`/uploads`**: For storing user-uploaded files.
 *   **`/user_img`**: For storing user images.
 *   **`/vendor`**: This is the standard folder for Composer dependencies.
-*   **`/z_other_projects`**, **`/z_test`**, **`/z_transmed_old`**: These folders seem to contain other projects, test files, or old versions of the application.
+*   **`/z_other_projects`**, **`/z_test`**: These folders seem to contain other projects, test files, or old versions of the application.
 
 ## Analysis of `includes/database.php`
 

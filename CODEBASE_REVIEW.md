@@ -12,7 +12,7 @@ The biggest immediate improvement is not a framework migration. The safest first
 
 1. Remove or quarantine generated/deployment/editor artifacts.
 2. Stop tracking private secrets, logs, database dumps, and runtime uploads.
-3. Continue deleting retired Transmed/transport surfaces that are no longer used.
+3. Continue deleting retired surfaces that are no longer used.
 4. Replace checked-in legacy library copies with Composer dependencies.
 5. Add a small safety net: PHP lint, Composer validation, and a minimal route smoke test list.
 
@@ -27,7 +27,7 @@ Commands and scans run:
 - `rg --files` inventory excluding `.git` and `vendor`
 - Composer validation: `composer validate --no-check-publish`
 - PHP version check: `php -v` reported PHP 8.3.26
-- First-party PHP lint excluding bundled legacy libraries: `includes`, `public`, `transmed`, excluding `includes/src`
+- First-party PHP lint excluding bundled legacy libraries: `includes`, `public`, excluding `includes/src`
 - Pattern scan for direct globals, raw SQL construction, debug output, deprecated crypto, dynamic execution, and exit/die usage
 
 ## Current repository shape
@@ -38,7 +38,6 @@ High-level PHP inventory:
 |---|---:|---:|
 | `includes` | 676 | 225,568 |
 | `public` | 283 | 28,738 |
-| `transmed` | 67 | 12,071 |
 
 The `includes` count is inflated by checked-in library copies such as `includes/src/PHPExcel`.
 
@@ -205,17 +204,18 @@ Recommended change:
 
 Risk: Medium. Some old pages may still be linked manually.
 
-### 8. Retired `transmed` transport library
+### 8. Retired Transmed code
 
 Findings:
 
 - `includes/transport` and `transmed/lib/transport` were unused after Transmed was retired.
 - The main bootstrap no longer loads these classes.
 - The old transport admin pages and `_transmed` public forms were removed.
+- The remaining `transmed` shell was removed after route/link inventory found no active references.
 
 Reason: Keeping dead transport code made every bootstrap and class-registry cleanup riskier.
 
-Status: Removed in the transport cleanup phase.
+Status: Removed in the transport and Transmed cleanup phases.
 
 ## Runtime and compatibility blockers
 
@@ -236,12 +236,11 @@ Priority:
 
 ### Monolithic bootstrap
 
-`includes/initialize.php` manually requires a long list of functions, database classes, UI helpers, models, transport classes, and layout constants.
+`includes/initialize.php` manually requires a long list of functions, database classes, UI helpers, models, and layout constants.
 
 Evidence:
 
-- `includes/initialize.php` has many direct `require_once` calls from about line 107 through line 237.
-- `transmed/lib/config/initialize.php` repeats a similar list from about line 97 through line 209.
+- `includes/initialize.php` has many direct `require_once` calls from about line 107 through line 220.
 
 Impact:
 
@@ -446,10 +445,10 @@ Targets:
 
 Do this after link/route inventory.
 
-### Phase 4: Remove remaining retired Transmed shell
+### Phase 4: Remove retired SQL dumps
 
-1. Confirm no external links depend on `/transmed`.
-2. Delete remaining `transmed` configuration/database scaffolding.
+1. Identify SQL dumps that are no longer needed by local recovery.
+2. Confirm they exist in backup storage.
 3. Remove old Transmed SQL dumps after backup confirmation.
 
 ### Phase 5: Replace legacy libraries

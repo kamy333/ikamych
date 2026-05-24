@@ -7,7 +7,6 @@ This project keeps environment-specific credentials out of Git.
 Create these files by copying the matching examples:
 
 - `includes/config.example.php` -> `includes/config.php`
-- `transmed/lib/config/config.example.php` -> `transmed/lib/config/config.php`
 
 Then fill in the local database and mail values.
 

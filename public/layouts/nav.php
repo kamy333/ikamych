@@ -352,35 +352,6 @@ if ($layout_context == "public") {
                 <?php } ?>
 
 
-                <?php if ((User::is_admin() || User::is_kamy() ) && 1 == 2) { ?>
-
-                <li
-                    <?php if (isset($active_menu) && $active_menu == "transmed") {
-                        echo " class=\"dropdown active\"";
-                    } else {
-                        echo " class=\" dropdown\"";
-                    } ?>
-                >
-                    <a href="#" data-toggle="dropdown">Others<span class="caret"></span></a>
-
-                    <ul class="dropdown-menu">
-
-                        <?php
-
-                        echo $Nav->menu_item('Course', 'Course', 'manage_ajax.php', 'admin/crud/ajax');
-                        echo $Nav->menu_item('Client', 'Client', 'manage_ajax.php', 'admin/crud/ajax');
-                        echo $Nav->menu_item('Chauffeur', 'Chauffeur', 'manage_ajax.php', 'admin/crud/ajax');
-                        echo "<li class=\"divider\"></li>";
-                        ?>
-
-
-                    </ul>
-                </li>
-
-
-                <?php } ?>
-
-
                 <?php if (User::is_kamy() && 1 == 2) { ?>
 
                 <li

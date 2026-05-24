@@ -143,11 +143,6 @@ class MyClasses
 
     }
 
-    public static $transmed_class = [];
-
     public static $class_access = [];
-
-    public static $class_transmed = [];
-
 
 }
