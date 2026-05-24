@@ -32,6 +32,11 @@ if (!isset($_GET["id"])) {
     $id = $_GET["id"];
     $class_found = $class_name::find_by_id($id);
 
+    if (!$class_found) {
+        $session->message("Record ID (" . h($id) . ") was not found.");
+        redirect_to($class_name::$page_manage);
+    }
+
 //if($class_found->username=="Admin" &&$class_name=="User"){
 //    $session->message($class_found->username." cannot be deleted  ") ;
 //    redirect_to($class_name::$page_manage);

@@ -50,12 +50,59 @@ class MySQLDatabaseMYSQLI
         return $result;
     }
 
+    public function query_prepared($sql, array $params = array(), $types = "")
+    {
+        $this->last_query = $sql;
+        $stmt = $this->connection->prepare($sql);
+        if (!$stmt) {
+            $this->confirm_query(false);
+        }
+
+        if (!empty($params)) {
+            if ($types === "") {
+                $types = $this->parameter_types($params);
+            }
+
+            $bind_params = array($types);
+            foreach ($params as $key => $value) {
+                $bind_params[] = &$params[$key];
+            }
+
+            if (!call_user_func_array(array($stmt, 'bind_param'), $bind_params)) {
+                $this->confirm_query(false);
+            }
+        }
+
+        if (!$stmt->execute()) {
+            $this->confirm_query(false);
+        }
+
+        $result = $stmt->get_result();
+        $this->confirm_query($result);
+        return $result;
+    }
+
+    private function parameter_types(array $params)
+    {
+        $types = "";
+        foreach ($params as $param) {
+            if (is_int($param)) {
+                $types .= "i";
+            } elseif (is_float($param)) {
+                $types .= "d";
+            } else {
+                $types .= "s";
+            }
+        }
+        return $types;
+    }
+
     public function escape_value($string)
     {
 //        $this->connection;
 
 //        $escaped_string = mysqli_real_escape_string($this->connection, $string);
-        $escaped_string = $this->connection->real_escape_string( $string);
+        $escaped_string = $this->connection->real_escape_string((string) $string);
        
         return $escaped_string;
     }

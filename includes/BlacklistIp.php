@@ -111,9 +111,7 @@ public $login_failed;
 
     public static function find_by_ip($ip = "")
     {
-        global $database;
-        $ip = $database->escape_value($ip);
-        $result_array = self::find_by_sql("SELECT * FROM " . self::$table_name . " WHERE ip='{$ip}' LIMIT 1");
+        $result_array = self::find_by_sql_prepared("SELECT * FROM " . self::$table_name . " WHERE ip=? LIMIT 1", array($ip), "s");
         return !empty($result_array) ? array_shift($result_array) : false;
     }
 

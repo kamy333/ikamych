@@ -188,9 +188,7 @@ class FailedLogin extends DatabaseObject
 
     public static function find_by_username($username = "")
     {
-        global $database;
-        $username = $database->escape_value($username);
-        $result_array = self::find_by_sql("SELECT * FROM " . self::$table_name . " WHERE username='{$username}' LIMIT 1");
+        $result_array = self::find_by_sql_prepared("SELECT * FROM " . self::$table_name . " WHERE username=? LIMIT 1", array($username), "s");
         return !empty($result_array) ? array_shift($result_array) : false;
     }
 

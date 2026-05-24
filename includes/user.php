@@ -693,10 +693,8 @@ class User extends DatabaseObject
 
     public static function find_by_username($username = "")
     {
-        global $database;
-        $username = $database->escape_value($username);
         /** @noinspection SqlResolve */
-        $result_array = self::find_by_sql("SELECT * FROM " . self::$table_name . " WHERE username='{$username}' LIMIT 1");
+        $result_array = self::find_by_sql_prepared("SELECT * FROM " . self::$table_name . " WHERE username=? LIMIT 1", array($username), "s");
         return !empty($result_array) ? array_shift($result_array) : false;
     }
 
@@ -715,19 +713,15 @@ class User extends DatabaseObject
 
     public static function find_by_email($email = "")
     {
-        global $database;
-        $email = $database->escape_value($email);
         /** @noinspection SqlResolve */
-        $result_array = self::find_by_sql("SELECT * FROM " . self::$table_name . " WHERE email='{$email}' LIMIT 1");
+        $result_array = self::find_by_sql_prepared("SELECT * FROM " . self::$table_name . " WHERE email=? LIMIT 1", array($email), "s");
         return !empty($result_array) ? array_shift($result_array) : false;
     }
 
     public static function find_by_reset_token($token = "")
     {
-        global $database;
-        $token = $database->escape_value($token);
         /** @noinspection SqlResolve */
-        $result_array = self::find_by_sql("SELECT * FROM " . self::$table_name . " WHERE reset_token='{$token}' LIMIT 1");
+        $result_array = self::find_by_sql_prepared("SELECT * FROM " . self::$table_name . " WHERE reset_token=? LIMIT 1", array($token), "s");
         return !empty($result_array) ? array_shift($result_array) : false;
     }
 
@@ -957,9 +951,7 @@ class User extends DatabaseObject
 
     private function generate_salt($length)
     {
-        // Not 100% unique, not 100% random, but good enough for a salt
-        // MD5 returns 32 characters
-        $unique_random_string = md5(uniqid(mt_rand(), true));
+        $unique_random_string = random_bytes($length);
 
         // Valid characters for a salt are [a-zA-Z0-9./]
         $base64_string = base64_encode($unique_random_string);

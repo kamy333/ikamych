@@ -31,11 +31,13 @@ $is_data = true;
 //    $class_name::$page_delete=$Nav->path_admin.$Nav->folder_prev.'/delete/'.$class_name::$page_delete ;
 //}
 
+if (!isset($_GET['id']) || trim($_GET['id']) === '') {
+    $session->message('Sorry, no record ID was provided for editing.');
+    redirect_to($class_name::$page_manage);
+}
+
 $url = clean_query_string('http://' . $_SERVER['SERVER_NAME'] . $_SERVER['PHP_SELF'] . "?" . "class_name=" . u($class_name) . "&id=" . u($_GET['id']));
 //echo $url;
-
-http://localhost/rajah_production/public/admin/edit_data.php?class_name=BlacklistIp&id=12 ;
-
 
 if (isset($_GET['id'])) {
     $post_link = $_SERVER["PHP_SELF"] . "?class_name=" . u($class_name) . "&id=" . urlencode($_GET['id']);
@@ -62,12 +64,7 @@ if (request_is_post() && request_is_same_domain()) {
 
         $new_item = new $class_name();
         $expected_fields = $class_name::get_table_field();
-        foreach ($expected_fields as $field) {
-            if (isset($_POST[$field])) {
-                $new_item->$field = trim($_POST[$field]);
-            }
-
-        }
+        $new_item->assign_posted_fields($_POST, $expected_fields);
 
         //todo complete valid like pseudo
 
@@ -103,6 +100,10 @@ if (request_is_post() && request_is_same_domain()) {
         if (isset($_GET['id'])) {
             $id = $_GET['id'];
             $get_item = $class_name::find_by_id($id);
+            if (!$get_item) {
+                $session->message('Sorry, the requested record was not found.');
+                redirect_to($class_name::$page_manage);
+            }
         }
 
 

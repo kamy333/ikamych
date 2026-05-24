@@ -96,12 +96,7 @@ class DatabaseObject
 
                 $new_item = new static;
                 $expected_fields = static::get_table_field();
-                foreach ($expected_fields as $field) {
-                    if (isset($_POST[$field])) {
-                        $new_item->$field = trim($_POST[$field]);
-                    }
-
-                }
+                $new_item->assign_posted_fields($_POST, $expected_fields);
 
                 //todo complete valid like pseudo
 
@@ -225,6 +220,22 @@ class DatabaseObject
 
     }
 
+    public function assign_posted_fields(array $post, array $expected_fields)
+    {
+        $assigned_fields = array();
+        foreach ($expected_fields as $field) {
+            if (isset($post[$field])) {
+                $value = trim($post[$field]);
+                if ($field === 'id' && $value === '') {
+                    continue;
+                }
+                $this->$field = $value;
+                $assigned_fields[$field] = $value;
+            }
+        }
+        return $assigned_fields;
+    }
+
     public function update()
     {
 //        log_debug('action3');
@@ -259,6 +270,15 @@ class DatabaseObject
         return $clean_attributes;
     }
 
+    protected function sanitized_attributes_for_create()
+    {
+        $attributes = $this->sanitized_attributes();
+        if (array_key_exists('id', $attributes) && $attributes['id'] === '') {
+            unset($attributes['id']);
+        }
+        return $attributes;
+    }
+
     private function attributes()
     {
         // return an array of attribute names and their values
@@ -288,7 +308,7 @@ class DatabaseObject
         // - INSERT INTO table (key, key) VALUES ('value', 'value')
         // - single-quotes around all values
         // - escape all values to prevent SQL injection
-        $attributes = $this->sanitized_attributes();
+        $attributes = $this->sanitized_attributes_for_create();
         $sql = "INSERT INTO" . " " . static::$table_name . " (";
         $sql .= join(", ", array_keys($attributes));
         $sql .= ") VALUES ('";
@@ -402,9 +422,7 @@ class DatabaseObject
 
     public static function find_by_id($id = 0)
     {
-        global $database;
-
-        $result_array = static::find_by_sql("SELECT * FROM" . " " . static::$table_name . " WHERE id=" . $database->escape_value($id) . " LIMIT 1");
+        $result_array = static::find_by_sql_prepared("SELECT * FROM " . static::$table_name . " WHERE id=? LIMIT 1", array((int) $id), "i");
         return !empty($result_array) ? array_shift($result_array) : false;
     }
 
@@ -412,6 +430,17 @@ class DatabaseObject
     {
         global $database;
         $result_set = $database->query($sql);
+        $object_array = array();
+        while ($row = $database->fetch_array($result_set)) {
+            $object_array[] = static::instantiate($row);
+        }
+        return $object_array;
+    }
+
+    public static function find_by_sql_prepared($sql = "", array $params = array(), $types = "")
+    {
+        global $database;
+        $result_set = $database->query_prepared($sql, $params, $types);
         $object_array = array();
         while ($row = $database->fetch_array($result_set)) {
             $object_array[] = static::instantiate($row);
@@ -1027,8 +1056,9 @@ class DatabaseObject
     public static function manage_page_query()
     {
         $table_name = static::get_table_name();
-        $order_name = !empty($_GET["order_name"]) ? $_GET["order_name"] : 'id';
-        $order_type = !empty($_GET["order_type"]) ? $_GET["order_type"] : 'DESC';
+        $allowed_order_fields = static::get_table_field();
+        $order_name = !empty($_GET["order_name"]) && in_array($_GET["order_name"], $allowed_order_fields, true) ? $_GET["order_name"] : 'id';
+        $order_type = !empty($_GET["order_type"]) && strtoupper($_GET["order_type"]) === 'ASC' ? 'ASC' : 'DESC';
 
 
 //        $page= !empty($_GET['page'])? (int) $_GET["page"]:1;

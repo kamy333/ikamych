@@ -651,7 +651,7 @@ function j($string)
 // Sanitize for use in a URL
 function u($string)
 {
-    return urlencode($string);
+    return urlencode((string) $string);
 }
 
 function ud8($string)
@@ -669,7 +669,7 @@ function d($string)
 function h($string)
 {
 //    htmlspecialchars($string)
-    return htmlentities($string, ENT_COMPAT, "utf-8");
+    return htmlentities((string) $string, ENT_COMPAT, "utf-8");
 }
 
 function hs($string)

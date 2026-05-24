@@ -31,8 +31,9 @@ if ($Nav->folder_immediate != "admin") {
 
 $table_name = $class_name::get_table_name();
 
-$order_name = !empty($_GET["order_name"]) ? $_GET["order_name"] : 'id';
-$order_type = !empty($_GET["order_type"]) ? $_GET["order_type"] : 'ASC';
+$allowed_order_fields = $class_name::get_table_field();
+$order_name = !empty($_GET["order_name"]) && in_array($_GET["order_name"], $allowed_order_fields, true) ? $_GET["order_name"] : 'id';
+$order_type = !empty($_GET["order_type"]) && strtoupper($_GET["order_type"]) === 'DESC' ? 'DESC' : 'ASC';
 
 
 //echo get_where_string($class_name);
@@ -64,7 +65,7 @@ $result_class = $class_name::find_by_sql($sql);
 
 $query_string = remove_get(array('view', 'page'));
 
-$view_full_table = !empty($_GET) ? (int)$_GET["view"] : 0;
+$view_full_table = !empty($_GET["view"]) ? (int)$_GET["view"] : 0;
 if ($view_full_table == 1) {
     $page_link_view = $class_name::$page_manage . $query_string . "page=" . u($page) . "&view=" . u(0);
     $page_link_text = $class_name::$page_name . " short view";

@@ -59,12 +59,9 @@ if (request_is_post() && request_is_same_domain()) {
 
         $new_item = new $class_name;
         $expected_fields = $class_name::get_table_field();
-        foreach ($expected_fields as $field) {
-            if (isset($_POST[$field])) {
-                $new_item->$field = trim($_POST[$field]);
-             array_push( $result_array, $field. ' = '. $new_item->$field."<br>") ;
-            }
-
+        $assigned_fields = $new_item->assign_posted_fields($_POST, $expected_fields);
+        foreach ($assigned_fields as $field => $value) {
+            array_push($result_array, $field . ' = ' . $value . "<br>");
         }
 
 

@@ -14,7 +14,7 @@ function request_is_post() {
 // Generate a token for use with CSRF protection.
 // Does not store the token.
 function csrf_token() {
-	return md5(uniqid(rand(), TRUE));
+	return bin2hex(random_bytes(32));
 }
 
 // Generate and store CSRF token in user session.

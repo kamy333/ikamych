@@ -4,7 +4,7 @@
 // This function generates a string that can be
 // used as a reset token.
 function reset_token() {
-	return md5(uniqid(rand()));
+	return bin2hex(random_bytes(32));
 }
 
 //// Looks up a user and sets their reset_token to

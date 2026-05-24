@@ -152,7 +152,7 @@ public $username;
     {
         global $session;
         if (!isset($this->initial)) {
-            $this->initial = substr(md5(uniqid(mt_rand(), true)), 0, 3);
+            $this->initial = substr(bin2hex(random_bytes(2)), 0, 3);
         }
 
         if (!isset($this->username)) {

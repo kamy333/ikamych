@@ -53,10 +53,11 @@ Large tracked content includes:
 Composer state:
 
 - `composer.json` is valid.
-- Warnings:
-  - No license specified.
-  - Empty PSR-4 namespace prefix points to `api_class`, but `api_class` does not exist.
-  - Exact version constraints for `mistic100/randomcolor` and `twig/twig`.
+- Composer warnings from the initial review have been resolved:
+  - Added a proprietary license marker.
+  - Removed the empty PSR-4 namespace prefix that pointed to missing `api_class`.
+  - Relaxed exact version constraints for `mistic100/randomcolor` and `twig/twig`.
+- `setasign/fpdi` was updated from `v2.6.6` to `v2.6.7` to clear CVE-2026-45802 / GHSA-2mgw-7q6p-8grg reported by `composer audit`.
 
 ## Highest-value deletion candidates
 
@@ -383,6 +384,8 @@ Recommended fix:
 3. Keep legacy classes as-is until touched.
 4. Replace checked-in libraries with Composer packages.
 
+Status: The invalid empty PSR-4 rule was removed. No new application namespace was added yet because the current codebase still uses legacy global classes.
+
 ## Web root and deployment concerns
 
 The repository root contains:
@@ -469,6 +472,10 @@ Status: Transmed-specific SQL dumps were removed after Transmed code was retired
 5. Centralize error handling/logging.
 
 Status: `MyClasses` now exposes `allowed_class_from_request()` and active CRUD/AJAX entry points use the validated class name for dynamic class calls instead of re-reading raw `$_GET['class_name']`.
+
+Status update: A prepared-query path was added to the existing database wrappers and exposed through `DatabaseObject::find_by_sql_prepared()`. Security-sensitive lookups now use prepared statements for `DatabaseObject::find_by_id()`, `User::find_by_username()`, `User::find_by_email()`, `User::find_by_reset_token()`, `FailedLogin::find_by_username()`, and `BlacklistIp::find_by_ip()`. Reset tokens, CSRF tokens, user password salts, and chauffeur initials now use `random_bytes()` instead of `md5(uniqid(...))`.
+
+Status update: Browser smoke testing covered `MyExpenseMum` AJAX/data manage, new, edit, and missing-ID delete/edit paths. Generic CRUD POST assignment now skips blank `id` values for creates, shared URL escaping helpers tolerate null input, edit/delete pages redirect cleanly when IDs are missing or invalid, and sort parameters are whitelisted in generic table queries plus user, user-type, and category manage pages.
 
 ## Suggested first small PR
 
