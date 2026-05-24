@@ -105,6 +105,8 @@ Recommended change:
 
 Risk: Low for code behavior; possible operational risk only if production expects these exact files to exist. Use empty `.gitkeep` or deployment setup if needed.
 
+Status: `logs/debug.txt`, `logs/hacked.txt`, and `logs/views.txt` have been removed from git tracking while keeping the local files on disk. `logs/.htaccess` remains tracked.
+
 ### 3. Secrets and credentials
 
 Candidates:
@@ -419,6 +421,8 @@ Delete:
 - empty `_notes` folders if left behind
 - tracked runtime logs after confirming production does not depend on exact files
 - `composer.phar`
+
+Status: Runtime log text files were untracked. `_notes` ignore rules were already present, no tracked `dwsync.xml` files remained, and `composer.phar` was not tracked.
 
 Update `.gitignore`:
 
