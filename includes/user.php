@@ -921,7 +921,6 @@ class User extends DatabaseObject
             $href = "/public/photo.php?id=" . urlencode($this->id);
             $src = $this->user_path_and_placeholder();
             if (file_exists("../../user_img/{$this->username}.jpg")) {
-//                log_debug("found2");
                 $this->photo = "<a href='/public/user_photo.php?id=" . urlencode($this->id) . "'> <span><img class='img-thumbnail img-responsive img-circle'  src='{$src}' alt='{$this->username}' style='width:2em;height:2em;'</span></a>";
             }
         }
@@ -1001,9 +1000,7 @@ class User extends DatabaseObject
     {
         if (!isset($this->password)) {
             static::$required_fields = static::$required_fields_no_password;
-//            log_debug('action1');
         }
-//        log_debug('action2');
 //        static::$required_fields=static::$required_fields_no_password;
         $this->password_encrypt();
         parent::update();

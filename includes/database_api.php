@@ -81,11 +81,8 @@ class MySQLDatabaseApi
 
         }
         if (!$result) {
-            log_queries('query failed', $this->last_query);
             die($output);
         }
-
-//        log_debug('query successful', $this->last_query);
 
     }
 

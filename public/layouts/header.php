@@ -26,7 +26,6 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    ;
     <title>ikamy.ch
         <?php if ($layout_context == "admin") {
             echo "Admin";
@@ -117,4 +116,3 @@
     ?>
     <div id='container-view' class="container">
         <?php } ?>
-

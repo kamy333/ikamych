@@ -625,7 +625,6 @@ class FormInspinia extends DatabaseObject
             $output .= ">{$this->checkboxinline[0][1]['label_all']}</label>";
 
 //            echo "<pre>";
-//            log_debug('',print_r($this->checkboxinline));
 //
 //            echo "</pre>";
 //
@@ -657,8 +656,6 @@ class FormInspinia extends DatabaseObject
 
 
 //
-//log_debug('checkboxinline[$i][1][\'value\']',$this->checkboxinline[$i][1]['value']);
-//log_debug('POST checkboxinline[$i][1][\'value\']',$_POST[$this->checkboxinline[$i][1]['name']]);
 ////                return;
 
                 $output .= "   id='{$this->checkboxinline[$i][1]['id']}'  />";

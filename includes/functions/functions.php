@@ -156,62 +156,6 @@ function log_action($action, $message = "")
     }
 }
 
-function log_debug($action, $message = "")
-{
-    $logfile = SITE_ROOT . DS . 'logs' . DS . 'debug.txt';
-    $new = file_exists($logfile) ? false : true;
-    if ($handle = fopen($logfile, 'a')) { // append
-//        $timestamp = strftime("%Y-%m-%d %H:%M:%S", time());
-        $timestamp = date("Y-m-d H:i:s");
-        $content = "{$timestamp} | {$action}: {$message}\n";
-        fwrite($handle, $content);
-        fclose($handle);
-        if ($new) {
-            chmod($logfile, 0755);
-        }
-    } else {
-        echo "Could not open log debug file for writing.";
-    }
-}
-
-
-function log_queries($action, $message = "")
-{
-
-    $logfile = SITE_ROOT . DS . 'logs' . DS . 'queries.txt';
-    $new = file_exists($logfile) ? false : true;
-    if ($handle = fopen($logfile, 'a')) { // append
-//        $timestamp = strftime("%Y-%m-%d %H:%M:%S", time());
-        $timestamp = date("Y-m-d H:i:s");
-        $content = "{$timestamp} | {$action}: {$message}\n";
-        fwrite($handle, $content);
-        fclose($handle);
-        if ($new) {
-            chmod($logfile, 0755);
-        }
-    } else {
-        echo "Could not open log queries file for writing.";
-    }
-}
-
-function log_views($action, $message = "")
-{
-
-    $logfile = SITE_ROOT . DS . 'logs' . DS . 'views.txt';
-    $new = file_exists($logfile) ? false : true;
-    if ($handle = fopen($logfile, 'a')) { // append
-        $timestamp = date("Y-m-d H:i:s"); // strftime("%Y-%m-%d %H:%M:%S", time());
-        $content = "{$timestamp} | {$action}: {$message} \n";
-        fwrite($handle, $content);
-        fclose($handle);
-        if ($new) {
-            chmod($logfile, 0755);
-        }
-    } else {
-        echo "Could not open log views file for writing.";
-    }
-}
-
 
 function is_ajax_request()
 {

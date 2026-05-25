@@ -125,11 +125,8 @@ class MySQLDatabase
             } else {
                 $output = "<br><b><span style='color: deepskyblue'> query failed contact system Admin see watch debug.</span></b><br>"; //. $this->last_query;
             }
-            log_queries('query failed', $this->last_query);
             die($output);
         }
-
-//        log_debug('query successful', $this->last_query);
 
     }
 

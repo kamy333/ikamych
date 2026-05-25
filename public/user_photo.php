@@ -10,13 +10,6 @@ $session->confirmation_protected_page();
     $user = "";
 }
 
-if (request_is_get()) {
-    log_debug("yes");
-} else {
-    log_debug("no");
-}
-
-
 $id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT, [
     'options' => ['min_range' => 1],
 ]);

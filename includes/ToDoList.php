@@ -403,7 +403,6 @@ class ToDoList extends DatabaseObject
                     </div>
                     </div>
                     ";
-//        log_debug($output);
 
 
         return $output;

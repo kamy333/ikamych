@@ -243,7 +243,6 @@ class DatabaseObject
 
     public function update()
     {
-//        log_debug('action3');
 
         $this->set_up_display();
         global $database;

@@ -88,14 +88,11 @@ if ($layout_context == "public") {
                         ?>
                         <?php echo $Nav->menu_item('', 'About us1', 'about_us.php', 'public'); ?>
                         <?php echo $Nav->menu_item('', 'About us 2', 'about_us_2.php', 'public'); ?>
-                        <?php echo $Nav->menu_item('', 'About Us 3', 'angular.php', 'public'); ?>
                         <?php
                         if (User::is_admin()) {
                             echo "<li class=\"divider\"></li>";
                             echo $Nav->menu_item('', 'JB Video', 'web_jb_02/jb_request_02.html', 'public');
 
-                            echo "<li class=\"divider\"></li>";
-                            echo $Nav->menu_item('', 'AngularJS Login', 'angular2.php', 'public');
                             echo "<li class=\"divider\"></li>";
                             echo $Nav->menu_item('', 'Inspinia', '../inspinia/index.php', 'public');
                             echo $Nav->menu_item('', 'Inspinia Full2', '../Inspinia_Full_Version_2/index.php', 'public', true);
@@ -259,9 +256,6 @@ if ($layout_context == "public") {
 
                         <!--                            --><?php //if (isset($session->user_id) and $user->is_admin()) { ?>
                         <!--                                --><?php //echo $Nav->menu_item('', 'Log File', 'logfile.php', 'admin'); ?>
-                        <!--                                --><?php //echo $Nav->menu_item('', 'Log Views File', 'logfileviews.php', 'admin'); ?>
-                        <!--                                --><?php //echo $Nav->menu_item('', 'Log Debug File', 'logfileDebug.php', 'admin'); ?>
-                        <!--                                --><?php //echo $Nav->menu_item('', 'Log Queries File', 'logfilequeries.php', 'admin'); ?>
                         <!---->
                         <!--                            --><?php //} ?>
 
@@ -465,17 +459,10 @@ if ($layout_context == "public") {
                                 <?php echo $Nav->menu_item('UserType', 'Manage User Type', 'manage_ajax.php', 'admin/crud/ajax'); ?>
 
                                 <li><a href="<?php echo $path_admin; ?>logfile.php">Log File</a></li>
-                                <?php echo $Nav->menu_item('', 'Log Views File', 'logfileviews.php', 'admin'); ?>
-                                <?php echo $Nav->menu_item('', 'Log Debug File', 'logfileDebug.php', 'admin'); ?>
-                                <?php echo $Nav->menu_item('', 'Log Queries File', 'logfilequeries.php', 'admin'); ?>
 
                                 <li class="divider"></li>
-                                <li><a href="<?php echo $path_admin; ?>rajah_project.php">Rajah Project</a></li>
-                                <li class="divider"></li>
                             <?php } ?>
-                            <li><a href="<?php echo $path_admin; ?>manage_admins_my_page.php">My Page</a></li>
-                            <li><a href="<?php echo $path_admin; ?>edit_admin_individual.php">Edit Info</a></li>
-                            <li class="divider"></li>
+
                             <li><a href="<?php echo $path_admin; ?>logout.php">Logout</a></li>
 
                         </ul>
