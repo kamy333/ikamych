@@ -81,6 +81,10 @@ vendor
 /includes/transmed_config/config_transmed.php
 /includes/transmed_config/
 /public/img/*
+!/public/img/logo/
+!/public/img/logo/ikamy-logo-blue-1.png
+!/public/img/logo/ikamy-logo-blue-2.png
+!/public/img/logo/ikamy-logo-blue-4.png
 test2.sql
 Inspinia/css/patterns/
 Inspinia/css/plugins/images/

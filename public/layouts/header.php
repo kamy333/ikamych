@@ -35,7 +35,7 @@
 
 
     <link rel="stylesheet" type="text/css" href="<?php echo $Nav->path_public; ?>css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="<?php echo $Nav->path_public; ?>css/custom.css">
+    <link rel="stylesheet" type="text/css" href="<?php echo $Nav->path_public; ?>css/custom.css?v=<?php echo filemtime(SITE_ROOT . DS . 'public' . DS . 'css' . DS . 'custom.css'); ?>">
     <link rel="stylesheet" type="text/css" href="<?php echo $Nav->path_public; ?>css/styles.css">
 
     <link href="<?php echo $Nav->path_public; ?>css/plugins/select2/select2.min.css" rel="stylesheet" />

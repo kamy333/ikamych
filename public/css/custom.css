@@ -9,6 +9,27 @@ body {
     padding-top: 70px;
        }
 
+.ikamy-logo-inline {
+    display: inline-block;
+    width: auto;
+    height: 30px;
+    max-height: 30px;
+    max-width: none;
+    vertical-align: middle;
+}
+
+.navbar-brand .ikamy-logo-inline {
+    height: 32px;
+    max-height: 32px;
+    margin-top: -7px;
+}
+
+.my_footer .ikamy-logo-inline {
+    height: 18px !important;
+    max-height: 18px !important;
+    margin-top: 0 !important;
+}
+
 
 /*.about_us.container-fluid {*/
     /*margin-left: 20em;*/

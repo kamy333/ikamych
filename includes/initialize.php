@@ -84,21 +84,18 @@ defined('TABLE_MANAGE') ? null : define('TABLE_MANAGE', SITE_ROOT . DS . 'Inspin
 //include(SITE_ROOT.DS.'Inspinia'.DS.'layouts'.DS."footer.php")
 
 
-$logo = "<span style='color: #0016b0'><b>i</b></span>";
-$logo .= "<span style='color: green'><b>k</b></span>";
-$logo .= "<span style='color: red'><b>a</b></span>";
-$logo .= "<span style='color: darkorchid'><b>m</b></span>";
-$logo .= "<span style='color: royalblue'><b>y</b></span>";
-$logo .= "<span style='color:red'><b>.</b></span>";
-$logo .= "<span style='color: palevioletred'><b>c</b></span>";
-$logo .= "<span style='color: darkcyan'><b>h</b></span>";
-//$logo.="<b>".$logo."</b>";
+$logo_nav_file = SITE_ROOT . DS . 'public' . DS . 'img' . DS . 'logo' . DS . 'ikamy-logo-blue-1.png';
+$logo_login_file = SITE_ROOT . DS . 'public' . DS . 'img' . DS . 'logo' . DS . 'ikamy-logo-blue-4.png';
+$logo_nav_version = is_file($logo_nav_file) ? (string)filemtime($logo_nav_file) : '1';
+$logo_login_version = is_file($logo_login_file) ? (string)filemtime($logo_login_file) : '1';
 
-$img = "<img style='position: relative;top: -20px' src='/logo_kamy.jpg' alt='logo ilamy.ch' width='150px' height='55px'>";
+defined('IKAMY_LOGO_NAV_URL') ? null : define('IKAMY_LOGO_NAV_URL', MY_URL_PUBLIC . 'img/logo/ikamy-logo-blue-1.png?v=' . $logo_nav_version);
+defined('IKAMY_LOGO_LOGIN_URL') ? null : define('IKAMY_LOGO_LOGIN_URL', MY_URL_PUBLIC . 'img/logo/ikamy-logo-blue-4.png?v=' . $logo_login_version);
 
-$logo2 = $img;
+$logo = "<img class='ikamy-logo-inline' src='" . IKAMY_LOGO_NAV_URL . "' alt='ikamy.ch' style='display:inline-block;height:32px;width:auto;max-width:none;vertical-align:middle;margin-top:-7px;'>";
+$logo2 = $logo;
 defined('LOGO') ? null : define("LOGO", $logo);
-defined('LOGO2') ? null : define("LOGO2", $logo);
+defined('LOGO2') ? null : define("LOGO2", $logo2);
 
 
 // load config file first
