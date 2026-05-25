@@ -615,6 +615,8 @@ Status update: User create/edit and password-reset entry points received another
 
 Status update: Unlinked demo/admin sample surfaces were removed instead of hardened. Route inventory found no active references to `public/admin/manage_custom_form.php` or the tracked `public/pages/calendar/` ChatGPT demo files, so those tracked routes were deleted to reduce exposed, non-production code.
 
+Status update: Chat/message notification helpers now use prepared statements for session-user message lookups and counts instead of concatenating the session user ID into SQL strings.
+
 ## Suggested first small PR
 
 The best first PR should be boring and reversible:

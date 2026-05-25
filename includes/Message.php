@@ -190,11 +190,12 @@ class Message extends DatabaseObject
         global $session;
         global $path_admin;
 
-        $sql = "SELECT * FROM " . static::$table_name . ' WHERE to_user_id =' . $session->user_id . " ORDER BY input_date DESC";
         $output = "";
         if ($session->is_logged_in()) {
-            $chats = static::find_by_sql($sql);
-            $count_chat = static::count_all_where(' WHERE user_id =' . $session->user_id);
+            $user_id = (int)$session->user_id;
+            $sql = "SELECT * FROM " . static::$table_name . ' WHERE to_user_id = ? ORDER BY input_date DESC';
+            $chats = static::find_by_sql_prepared($sql, [$user_id], "i");
+            $count_chat = static::count_all_where(' WHERE user_id = ?', [$user_id], "i");
 
             $output .= "                <li class=\"dropdown\">
                     <a class=\"dropdown-toggle count-info\" data-toggle=\"dropdown\" href=\"#\">";
@@ -236,7 +237,6 @@ class Message extends DatabaseObject
     {
         global $session;
 
-        $sql = "SELECT * FROM " . static::$table_name . ' WHERE to_user_id =' . $session->user_id . " ORDER BY input_date DESC";
         $output = "";
 
         $form = "<div class='form-chat'>
@@ -246,8 +246,10 @@ class Message extends DatabaseObject
 </div>";
 
         if ($session->is_logged_in()) {
-            $chats = static::find_by_sql($sql);
-            $count_chat = static::count_all_where(' WHERE user_id =' . $session->user_id);
+            $user_id = (int)$session->user_id;
+            $sql = "SELECT * FROM " . static::$table_name . ' WHERE to_user_id = ? ORDER BY input_date DESC';
+            $chats = static::find_by_sql_prepared($sql, [$user_id], "i");
+            $count_chat = static::count_all_where(' WHERE user_id = ?', [$user_id], "i");
 
             $output .= "
 <div class='col-lg-4 col-lg-offset-1' style='margin-top: 2em'>
