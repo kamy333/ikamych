@@ -40,13 +40,11 @@ class Comment extends DatabaseObject
     }
 
     public static function find_the_comment($photo_id){
-        global $database;
-
         $sql="SELECT * FROM ".self::$table_name;
-        $sql.=" WHERE photo_id =".$database->escape_value((int)$photo_id) ;
+        $sql.=" WHERE photo_id = ?" ;
         $sql.=" ORDER BY photo_id ASC";
 
-        return  self::find_by_sql($sql);
+        return  self::find_by_sql_prepared($sql, [(int)$photo_id], "i");
     }
 
 

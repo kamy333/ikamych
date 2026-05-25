@@ -607,6 +607,8 @@ Status update: The legacy `wkg_progress` comment edit links now point to a real 
 
 Status update: The Daily Psalm cron endpoint now uses the shared token helper and configured `MyPHPMailer` transport instead of native `mail()`. The Sefaria API fetch has a timeout and JSON validation, external psalm text is escaped before email composition, external links include `rel="noopener noreferrer"`, and unauthorized requests still fail closed before any remote fetch or email send.
 
+Status update: Shared form validation helpers now use prepared statements for uniqueness/table-existence checks and validate dynamic table/field identifiers before querying. Photo comment lookup now uses a prepared `photo_id` filter, and legacy admin AJAX endpoints no longer echo request header values when called outside AJAX; JSON-producing handlers now send explicit JSON content types and escape posted field echoes in success/error summaries.
+
 ## Suggested first small PR
 
 The best first PR should be boring and reversible:

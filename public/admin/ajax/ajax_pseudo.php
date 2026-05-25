@@ -9,8 +9,8 @@ if (User::is_visitor()) {
 
 //
 if (!is_ajax_request()) {
-    echo $_SERVER['HTTP_X_REQUESTED_WITH'] ?? '';
-    echo "<p>Not Ajax request</p>";
+    http_response_code(400);
+    echo "Not Ajax request";
 
     exit;
 }
@@ -21,5 +21,6 @@ if (!is_ajax_request()) {
 $q = trim(e($_REQUEST["q"] ?? ""));
 
 http_response_code(410);
+header('Content-Type: text/plain; charset=UTF-8');
 echo "transport autocomplete disabled";
 ?>

@@ -4,10 +4,12 @@ require_once('../../../includes/initialize.php');
 $session->confirmation_protected_page();
 
 if(!is_ajax_request()) {
-    echo $_SERVER['HTTP_X_REQUESTED_WITH'] ?? '';
-    echo "<p>Not Ajax request</p>";
+    http_response_code(400);
+    echo "Not Ajax request";
 
     exit; }
+
+header('Content-Type: application/json; charset=UTF-8');
 
 $class_name = MyClasses::allowed_class_from_post();
 MyClasses::require_class_access($class_name);
@@ -53,7 +55,7 @@ if (request_is_post() && request_is_same_domain()) {
         $expected_fields = $class_name::get_table_field();
         $assigned_fields = $new_item->assign_posted_fields($_POST, $expected_fields);
         foreach ($assigned_fields as $field => $value) {
-            array_push($result_array, $field . ' = ' . $value . "<br>");
+            array_push($result_array, h((string)$field) . ' = ' . h((string)$value) . "<br>");
         }
 
 

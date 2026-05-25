@@ -23,11 +23,13 @@ if ($view_full_table == 1) {
 }
 
 if (!is_ajax_request()) {
-    echo $_SERVER['HTTP_X_REQUESTED_WITH'] ?? '';
-    echo "<p>Not Ajax request</p>";
+    http_response_code(400);
+    echo "Not Ajax request";
 
     exit;
 }
+
+header('Content-Type: text/html; charset=UTF-8');
 
 //echo json_encode($_GET, JSON_HEX_TAG);
 $query_string = remove_get(['view', 'page', 'class_name']);

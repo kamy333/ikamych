@@ -8,10 +8,12 @@ MyClasses::require_class_access($class_name);
 
 
 if(!is_ajax_request()) {
-    echo $_SERVER['HTTP_X_REQUESTED_WITH'] ?? '';
-    echo "<p>Not Ajax request</p>";
+    http_response_code(400);
+    echo "Not Ajax request";
 
     exit; }
+
+header('Content-Type: application/json; charset=UTF-8');
 
 // $json1= output_message(call_user_func_array([$_POST['class_name'],'post_form'], ['ajax']));
 

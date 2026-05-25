@@ -519,27 +519,37 @@ public $warnings=[];
 
 
 
+    private function validation_identifier($identifier)
+    {
+        return is_string($identifier) && preg_match('/^[A-Za-z0-9_]+$/', $identifier);
+    }
+
+    private function quote_validation_identifier($identifier)
+    {
+        return '`' . $identifier . '`';
+    }
+
     public function unique_name($name,$class_name,$warning_me=false){
-        global $database;
-
-
-        $safe_name=$database->escape_value(trim((string)($_POST[$name] ?? '')));
-
-
-        $table=   $class_name::get_table_name();
         $field = $name;
         $txt=" already exists. Choose a new one";
 
-
-        $sql="SELECT * FROM"." ".$table." WHERE {$name}=";
-        if(is_numeric($name)){
-            $sql.="{$safe_name}";
-        } else {
-            $sql.="'{$safe_name}'";
-
+        if (!class_exists($class_name) || !is_subclass_of($class_name, 'DatabaseObject')) {
+            $this->errors[$field] = "Invalid validation class.";
+            return;
         }
 
-        $result=$class_name::find_by_sql($sql);
+        $table = $class_name::get_table_name();
+        $table_fields = $class_name::get_table_field();
+        if (!$this->validation_identifier($table) || !$this->validation_identifier($name) || !in_array($name, $table_fields, true)) {
+            $this->errors[$field] = "Invalid validation field.";
+            return;
+        }
+
+        $value = trim((string)($_POST[$name] ?? ''));
+        $table_sql = $this->quote_validation_identifier($table);
+        $field_sql = $this->quote_validation_identifier($name);
+        $sql = "SELECT * FROM {$table_sql} WHERE {$field_sql} = ? LIMIT 1";
+        $result = $class_name::find_by_sql_prepared($sql, [$value], "s");
 
         if($result){
 
@@ -556,12 +566,8 @@ public $warnings=[];
 
 
     public function unique_category($warning_me=false){
-        global $database;
-
      $category1=(int)($_POST['category_1_id'] ?? 0) ;
      $category2=(int)($_POST['category_2_id'] ?? 0) ;
-     $safe_category1=$database->escape_value($category1);
-     $safe_category2=$database->escape_value($category2);
 
 
      $table=   Category::get_table_name();
@@ -569,9 +575,9 @@ public $warnings=[];
      $txt=" combination already exists. Choose a new one";
 
 
-        $sql="SELECT * FROM"." ".$table." WHERE category_1_id={$safe_category1} AND category_2_id={$safe_category2}";
+        $sql="SELECT * FROM {$table} WHERE category_1_id=? AND category_2_id=? LIMIT 1";
 
-        $result=Category::find_by_sql($sql);
+        $result=Category::find_by_sql_prepared($sql, [$category1, $category2], "ii");
 
         if($result){
 
@@ -597,15 +603,15 @@ public $warnings=[];
         global $database;
 
 
-        $safe_pseudo= $database->escape_value($pseudo);
+        $safe_pseudo = trim((string)$pseudo);
         $field = $safe_pseudo;
 
 
         $query  = "SELECT * ";
         $query .= "FROM clients ";
-        $query .= "WHERE pseudo = '{$safe_pseudo}' ";
+        $query .= "WHERE pseudo = ? ";
         $query .= "LIMIT 1";
-        $client_set = $database->query( $query);
+        $client_set = $database->query_prepared($query, [$safe_pseudo], "s");
       //  confirm_query($client_set);
 
         $msg="";
@@ -732,18 +738,21 @@ public $warnings=[];
     {
         global $database;
 
-        $safe_field = $database->escape_value($field);
-        $safe_criteria = $database->escape_value($criteria);
+        if (!$this->validation_identifier($table) || !$this->validation_identifier($field)) {
+            $this->errors[$field] = "Invalid table validation field.";
+            return "Invalid table validation field.";
+        }
 
-//    $field = $safe_pseudo;
+        $table_sql = $this->quote_validation_identifier($table);
+        $field_sql = $this->quote_validation_identifier($field);
 
 
         $query = "SELECT * ";
-        $query .= "FROM {$table} ";
-        $query .= "WHERE {$safe_field} = '{$safe_criteria}' ";
+        $query .= "FROM {$table_sql} ";
+        $query .= "WHERE {$field_sql} = ? ";
         $query .= "LIMIT 1";
 
-        $client_set = $database->query($query);
+        $client_set = $database->query_prepared($query, [(string)$criteria], "s");
 
         $txt = " is not included in {$table} table database. Please add if necessary as new {$table}";
 
