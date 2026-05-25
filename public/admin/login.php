@@ -4,11 +4,12 @@ $blacklist_ip = new BlacklistIp();
 $blacklist_ip->block_blacklisted_ips();
 
 if ($session->is_logged_in()) {
-    redirect_to("index.php");
+    redirect_to(login_redirect_url("index.php"));
 }
 
 $username = "";
 $password = "";
+$return_to = login_return_to();
 // Remember to give your form's submit tag a name="submit" attribute!
 
 
@@ -47,7 +48,7 @@ if (request_is_post() && request_is_same_domain()) {
                         $failed_login->clear_failed_logins($username);
                         $session->login($found_user);
                         log_action('Login', "{$found_user->username} logged in from public.");
-                        redirect_to("index.php");
+                        redirect_to(login_redirect_url("index.php"));
                     } else {
                         log_action('Login failed', "{$username} logged in failed because is blocked. (Public)");
                         $message = "Dear {$found_user->nom}, You are blocked until your registration is reviewed. Thank you for your understanding. ";
@@ -99,6 +100,9 @@ if (request_is_post() && request_is_same_domain()) {
     <div class="col-md-4 col-md-offset-4  col-lg-4 col-lg-offset-4 ">
         <form id="myform-signin" class="form-signin " action="<?php echo h($_SERVER['PHP_SELF']); ?>" method="POST">
             <?php echo csrf_token_tag(); ?>
+            <?php if ($return_to !== "") { ?>
+                <input type="hidden" name="return_to" value="<?php echo h($return_to); ?>">
+            <?php } ?>
             <h2 class="form-signin-heading text-center">Please sign into <br><?php echo $logo; ?> Admin area <small>ikamy.ch</small>
             </h2>
             <h6><a href="login_forgot_password_user.php">Forgot login?</a></h6>

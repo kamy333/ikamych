@@ -7,6 +7,63 @@ function redirect_to($location = NULL)
     }
 }
 
+function current_request_uri()
+{
+    $request_uri = $_SERVER['REQUEST_URI'] ?? '';
+
+    return is_safe_local_redirect($request_uri) ? $request_uri : '/';
+}
+
+function is_safe_local_redirect($location)
+{
+    if (!is_string($location) || $location === '') {
+        return false;
+    }
+
+    $decoded_location = rawurldecode($location);
+
+    if (preg_match('/[\x00-\x1F\x7F]/', $location) || preg_match('/[\x00-\x1F\x7F]/', $decoded_location)) {
+        return false;
+    }
+
+    if ($location[0] !== '/' || substr($location, 0, 2) === '//' || substr($location, 0, 2) === '/\\') {
+        return false;
+    }
+
+    if ($decoded_location[0] !== '/' || substr($decoded_location, 0, 2) === '//' || substr($decoded_location, 0, 2) === '/\\') {
+        return false;
+    }
+
+    $parts = parse_url($location);
+
+    if ($parts === false) {
+        return false;
+    }
+
+    return !isset($parts['scheme']) && !isset($parts['host']);
+}
+
+function login_return_to()
+{
+    $return_to = $_POST['return_to'] ?? ($_GET['return_to'] ?? '');
+
+    return is_safe_local_redirect($return_to) ? $return_to : '';
+}
+
+function login_redirect_url($default = 'index.php')
+{
+    $return_to = login_return_to();
+
+    return $return_to !== '' ? $return_to : $default;
+}
+
+function append_query_param($url, $key, $value)
+{
+    $separator = strpos($url, '?') === false ? '?' : '&';
+
+    return $url . $separator . rawurlencode($key) . '=' . rawurlencode($value);
+}
+
 function strip_zeros_from_date($marked_string = "")
 {
     // first remove the marked zeros

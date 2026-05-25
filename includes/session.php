@@ -306,12 +306,13 @@ class Session
     {
         global $Nav;
         if (!$this->is_logged_in()) {
+            $login_url = append_query_param($Nav->path_admin . 'login.php', 'return_to', current_request_uri());
             $this->logged_in = false;
             $this->end_session();
             // Note that header redirection requires output buffering
             // to be turned on or requires nothing has been output
             // (not even whitespace).
-            header("Location: {$Nav->path_admin}login.php");
+            header("Location: {$login_url}");
             exit;
         }
     }
@@ -322,11 +323,12 @@ class Session
     {
         global $Nav;
         if (!$this->is_session_valid()) {
+            $login_url = append_query_param($Nav->path_admin . 'login.php', 'return_to', current_request_uri());
             $this->end_session();
             // Note that header redirection requires output buffering
             // to be turned on or requires nothing has been output
             // (not even whitespace).
-            header("Location: {$Nav->path_admin}login.php");
+            header("Location: {$login_url}");
             exit;
         }
     }

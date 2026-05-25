@@ -4,11 +4,12 @@ $blacklist_ip = new BlacklistIp();
 $blacklist_ip->block_blacklisted_ips();
 
 if ($session->is_logged_in()) {
-    redirect_to("index.php");
+    redirect_to(login_redirect_url("index.php"));
 }
 
 $username = "";
 $password = "";
+$return_to = login_return_to();
 // Remember to give your form's submit tag a name="submit" attribute!
 
 
@@ -49,10 +50,12 @@ if (request_is_post() && request_is_same_domain()) {
                         $session->login($found_user);
                         log_action('Login', "{$found_user->username} logged in from Inspinia.");
 
-                        if (User::is_visitor()) {
+                        $redirect_url = login_redirect_url("index.php");
+
+                        if (User::is_visitor() && $redirect_url === "index.php") {
                             redirect_to('/Inspinia/index.php');
                         }
-                        redirect_to("index.php");
+                        redirect_to($redirect_url);
 
                     } else {
 //                        $found_user-> visitor_email('Registration successful but you are blocked');
@@ -113,9 +116,12 @@ if (request_is_post() && request_is_same_domain()) {
         <h2>Welcome to <?php echo $logo; ?></h2>
 
         <p>Login in to access to admin area</p>
-        <form class="m-t" role="form" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
+        <form class="m-t" role="form" action="<?php echo h($_SERVER['PHP_SELF']); ?>" method="POST">
 
             <?php echo csrf_token_tag(); ?>
+            <?php if ($return_to !== "") { ?>
+                <input type="hidden" name="return_to" value="<?php echo h($return_to); ?>">
+            <?php } ?>
 
             <div class="form-group">
                 <label for="username" class="sr-only">username</label>
