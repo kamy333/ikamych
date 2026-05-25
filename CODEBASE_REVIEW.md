@@ -613,6 +613,8 @@ Status update: Pagination helpers now clamp page, per-page, and total-count valu
 
 Status update: User create/edit and password-reset entry points received another input-handling pass. User image updates now use prepared SQL, upload handling ignores empty file fields without warnings, sanitizes uploaded filenames, verifies JPG/PNG extensions and MIME types, and escapes the returned image path. User create/edit forms now escape self-post/manage URLs, handle optional fields with null-safe defaults, and only process profile uploads when a file was actually submitted. Password reset URLs now reject malformed tokens before lookup.
 
+Status update: Unlinked demo/admin sample surfaces were removed instead of hardened. Route inventory found no active references to `public/admin/manage_custom_form.php` or the tracked `public/pages/calendar/` ChatGPT demo files, so those tracked routes were deleted to reduce exposed, non-production code.
+
 ## Suggested first small PR
 
 The best first PR should be boring and reversible:
