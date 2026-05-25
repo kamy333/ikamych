@@ -15,14 +15,78 @@ if (User::is_visitor() && !User::is_caroline_only()) {
 <?php include(SITE_ROOT . DS . 'public' . DS . 'layouts' . DS . "header.php") ?>
 <?php include(SITE_ROOT . DS . 'public' . DS . 'layouts' . DS . "nav.php") ?>
 
+<style>
+    @media (max-width: 767px) {
+        body {
+            padding-top: 52px;
+        }
+    }
+
+    #carousel-example-generic {
+        margin: 0 auto 2em;
+        max-width: 720px;
+    }
+
+    #carousel-example-generic .carousel-inner {
+        aspect-ratio: 72 / 46;
+        background-color: #f5f5f5;
+        overflow: hidden;
+        width: 100%;
+    }
+
+    #carousel-example-generic .carousel-photo-frame {
+        position: relative;
+    }
+
+    #carousel-example-generic .carousel-inner > .item {
+        height: 100%;
+    }
+
+    #carousel-example-generic .carousel-inner > .item > img {
+        height: 100%;
+        object-fit: contain;
+        width: 100%;
+    }
+
+    #carousel-example-generic .carousel-caption {
+        pointer-events: none;
+    }
+
+    #carousel-example-generic .carousel-control {
+        align-items: center;
+        background-image: none;
+        display: flex;
+        justify-content: center;
+        opacity: 1;
+        text-shadow: none;
+        width: 12%;
+    }
+
+    #carousel-example-generic .carousel-control .glyphicon {
+        background-color: rgba(0, 0, 0, 0.45);
+        border-radius: 50%;
+        color: #fff;
+        font-size: 22px;
+        height: 44px;
+        line-height: 44px;
+        margin: 0;
+        position: static;
+        width: 44px;
+    }
+
+    #carousel-example-generic .carousel-control:hover .glyphicon,
+    #carousel-example-generic .carousel-control:focus .glyphicon {
+        background-color: rgba(0, 0, 0, 0.65);
+    }
+</style>
 
 
 
 
 <div class="row" >
-    <div class="col-lg-8 col-lg-offset-2" style="margin-top: 2em;padding: 2em;background-color: white">
+    <div class="col-lg-8 col-lg-offset-2" style="margin-top: 0;padding: 0 2em 2em;background-color: white">
 <!--        <h1 class="text-center"><a href="../Inspinia/papa/francais_discours.php">Hommage à mon père</a></h1>-->
-        <h1 class="text-center"><a href="../Inspinia/papa/francais_discours.php">Hommage à mon père <br>Shmouel ben Galine-Acher 1932-2025</a></h1>
+        <h1 class="text-center" style="margin-top: 0"><a href="../Inspinia/papa/francais_discours.php">Hommage à mon père <br>Shmouel ben Galine-Acher 1932-2025</a></h1>
 
         <div class="text-center">
             <a href="../Inspinia/papa/francais_discours.php">
@@ -230,6 +294,7 @@ J’imagine qu’une des raisons pour lesquelles les gens s’accrochent à leur
         </div>
 
 
+        <div class="carousel-photo-frame">
         <div class="carousel-inner" role="listbox">
 
             <div class="item active">
@@ -275,6 +340,7 @@ J’imagine qu’une des raisons pour lesquelles les gens s’accrochent à leur
             <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
             <span class="sr-only">Next</span>
         </a>
+        </div>
     </div>
 
 </div>
