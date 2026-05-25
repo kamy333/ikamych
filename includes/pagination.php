@@ -16,9 +16,9 @@ class Pagination
 
     public function __construct($current_page = 1, $per_page = 20, $total_count = 0)
     {
-        $this->current_page = (int)$current_page;
-        $this->per_page = (int)$per_page;
-        $this->total_count = (int)$total_count;
+        $this->current_page = max(1, (int)$current_page);
+        $this->per_page = max(1, (int)$per_page);
+        $this->total_count = max(0, (int)$total_count);
 
     }
 
@@ -28,12 +28,12 @@ class Pagination
         // page 1 has an offset of 0    (1-1) * 20
         // page 2 has an offset of 20   (2-1) * 20
         //   in other words, page 2 starts with item 21
-        return ($this->current_page - 1) * $this->per_page;
+        return max(0, ($this->current_page - 1) * $this->per_page);
     }
 
     public function total_pages()
     {
-        return ceil($this->total_count / $this->per_page);
+        return (int)ceil($this->total_count / $this->per_page);
     }
 
     public function previous_page()
@@ -55,7 +55,7 @@ class Pagination
 
     public function has_next_page()
     {
-        return $this->previous_page() <= $this->total_pages() ? true : false;
+        return $this->next_page() <= $this->total_pages() ? true : false;
     }
 
 

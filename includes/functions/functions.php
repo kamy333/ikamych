@@ -236,19 +236,22 @@ function date_format_to_sql($date, $format = 'YYYY-MM-DD')
     // $field="Date" ;
 
     $mydate = trim($date);
+    if ($mydate === '') {
+        return false;
+    }
 
 //    return;
-    if ($format == 'YYYY-MM-DD') list($year, $month, $day) = explode('-', $mydate);
-    if ($format == 'YYYY/MM/DD') list($year, $month, $day) = explode('/', $mydate);
-    if ($format == 'YYYY.MM.DD') list($year, $month, $day) = explode('.', $mydate);
+    if ($format == 'YYYY-MM-DD' && substr_count($mydate, '-') === 2) list($year, $month, $day) = explode('-', $mydate);
+    if ($format == 'YYYY/MM/DD' && substr_count($mydate, '/') === 2) list($year, $month, $day) = explode('/', $mydate);
+    if ($format == 'YYYY.MM.DD' && substr_count($mydate, '.') === 2) list($year, $month, $day) = explode('.', $mydate);
 
-    if ($format == 'DD-MM-YYYY') list($day, $month, $year) = explode('-', $mydate);
-    if ($format == 'DD/MM/YYYY') list($day, $month, $year) = explode('/', $mydate);
-    if ($format == 'DD.MM.YYYY') list($day, $month, $year) = explode('.', $mydate);
+    if ($format == 'DD-MM-YYYY' && substr_count($mydate, '-') === 2) list($day, $month, $year) = explode('-', $mydate);
+    if ($format == 'DD/MM/YYYY' && substr_count($mydate, '/') === 2) list($day, $month, $year) = explode('/', $mydate);
+    if ($format == 'DD.MM.YYYY' && substr_count($mydate, '.') === 2) list($day, $month, $year) = explode('.', $mydate);
 
-    if ($format == 'MM-DD-YYYY') list($month, $day, $year) = explode('-', $mydate);
-    if ($format == 'MM/DD/YYYY') list($month, $day, $year) = explode('/', $mydate);
-    if ($format == 'MM.DD.YYYY') list($month, $day, $year) = explode('.', $mydate);
+    if ($format == 'MM-DD-YYYY' && substr_count($mydate, '-') === 2) list($month, $day, $year) = explode('-', $mydate);
+    if ($format == 'MM/DD/YYYY' && substr_count($mydate, '/') === 2) list($month, $day, $year) = explode('/', $mydate);
+    if ($format == 'MM.DD.YYYY' && substr_count($mydate, '.') === 2) list($month, $day, $year) = explode('.', $mydate);
 
 //    echo $date;
 //    echo $format;
@@ -263,7 +266,7 @@ function date_format_to_sql($date, $format = 'YYYY-MM-DD')
 //    return;
     if (is_numeric($year) && is_numeric($month) && is_numeric($day)) {
         if (!checkdate($month, $day, $year)) {
-            exit("error date look format");
+            return false;
 
         } else {
 
@@ -274,7 +277,7 @@ function date_format_to_sql($date, $format = 'YYYY-MM-DD')
         }
 
     } else {
-        exit("error date");
+        return false;
     }
 
 

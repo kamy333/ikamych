@@ -609,6 +609,8 @@ Status update: The Daily Psalm cron endpoint now uses the shared token helper an
 
 Status update: Shared form validation helpers now use prepared statements for uniqueness/table-existence checks and validate dynamic table/field identifiers before querying. Photo comment lookup now uses a prepared `photo_id` filter, and legacy admin AJAX endpoints no longer echo request header values when called outside AJAX; JSON-producing handlers now send explicit JSON content types and escape posted field echoes in success/error summaries.
 
+Status update: Pagination helpers now clamp page, per-page, and total-count values before computing offsets or next/previous links. The legacy large-result paginator no longer terminates the request on bad constructor input, avoids dynamic-property notices, validates `ipp` values against its allow-list, and escapes generated pagination URLs/query strings. The unused date-format helper now returns `false` for malformed input instead of ending the whole request with `exit()`.
+
 ## Suggested first small PR
 
 The best first PR should be boring and reversible:
