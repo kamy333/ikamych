@@ -599,6 +599,8 @@ Status update: Calendar and note navigation no longer renders cron/shared-secret
 
 Status update: Linked legacy photo/comment admin pages under `public/admin/wkg_progress/` now use the main bootstrap consistently, require full admin access, validate positive integer IDs before loading photos/comments, escape photo and comment table output, and use POST+CSRF forms for photo/comment deletion instead of destructive GET links. Broken local `includes/init.php`/`includes/header.php` dependencies in the edit/delete paths were replaced with the shared application layout.
 
+Status update: The active recurring appointment helper now uses POST+CSRF for calendar-booking and medical-certificate-email side effects instead of GET links. Appointment date/name/time inputs are validated against a small whitelist of known recurring appointment types, malformed GET query strings no longer trigger the booking/email actions, generated buttons/forms escape their action URLs and labels, and an old commented calendar-code literal was removed.
+
 ## Suggested first small PR
 
 The best first PR should be boring and reversible:

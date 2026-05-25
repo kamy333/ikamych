@@ -2,7 +2,7 @@
 
 <?php
 
-//if (isset($_GET["code"]) || $_GET["code"] == "65B0LXcRnSLqPLumdVjf") {
+//if (isset($_GET["code"])) {
 //    isset($session) ? $session->confirmation_protected_page() : redirect_to("/public/admin/login.php");
 //}
 
@@ -15,7 +15,7 @@ if (isset($session)) {
     /** @noinspection PhpMultipleClassDeclarationsInspection */
     if (!User::is_admin()) {
         $session->message("You are not authorized to access this page");
-        redirect_to('../../admin/index.php');
+        redirect_to('/public/admin/index.php');
     }
 }
 
@@ -59,10 +59,65 @@ if (isset($session)) {
 //    return false;
 //}
 
+function recurring_self_url(): string
+{
+    return $_SERVER['PHP_SELF'];
+}
+
+function recurring_day_number(): int
+{
+    $source = request_is_post() ? INPUT_POST : INPUT_GET;
+    $dayNumber = filter_input($source, 'dayNumber', FILTER_VALIDATE_INT, ['options' => ['default' => 18, 'min_range' => 1, 'max_range' => 31]]);
+
+    return $dayNumber === false || $dayNumber === null ? 18 : (int)$dayNumber;
+}
+
+function recurring_time_value($value, string $default): string
+{
+    $time = trim((string)$value);
+    if ($time === '') {
+        return $default;
+    }
+
+    if (preg_match('/^\d{2}:\d{2}$/', $time) === 1) {
+        return $time;
+    }
+
+    if (preg_match('/^\d{1,2}h\d{2}$/', $time) === 1) {
+        return str_replace('h', ':', $time);
+    }
+
+    return $default;
+}
+
+function recurring_date_value($value): ?string
+{
+    $date = DateTime::createFromFormat('Y-m-d', (string)$value);
+    if (!$date || $date->format('Y-m-d') !== (string)$value) {
+        return null;
+    }
+
+    return $date->format('Y-m-d');
+}
+
+function recurring_appointment_options(): array
+{
+    return [
+        "Physio_Fantine" => [["title" => "Physio Fantine", "heure" => "14:30", "person" => "0"]],
+        "Physio_Resp_Amandine" => [["title" => "Physio Resp Amandine", "heure" => "16:30", "person" => "0"]],
+        "Ergo_Margot_Mum" => [["title" => "Ergo Margot Mum", "heure" => "11:30", "person" => "2"]],
+        "Foyer_Oasis_Mum" => [
+            ["title" => "Foyer Oasis Mum", "heure" => "11:40", "person" => "2"],
+            ["title" => "Retour Foyer Oasis Mum", "heure" => "15:50", "person" => "2"],
+        ],
+        "Retour_Foyer_Oasis_Mum" => [["title" => "Retour Foyer Oasis Mum", "heure" => "15:50", "person" => "2"]],
+        "Certificat_Medical_Mimouni" => [["title" => "Certificat Medical Mimouni", "heure" => "11:00", "person" => "0"]],
+    ];
+}
+
 function getMonthDateFromdate(): string
 {
-    global $dayNumber;
-    $dayNumber = $_GET['dayNumber'] ?? 18;
+    $dayNumber = recurring_day_number();
 //    $date = new DateTime($date);
 //    $dayNumber = (int) 17;
     return (new DateTime())->setDate((new DateTime())->format('Y'), (new DateTime())->format('m'), $dayNumber)->format('Y-m-d');
@@ -98,9 +153,9 @@ function send_email_certificat_Medical($is_redirect = false): void
         $dateFrom = $currentDate->format('d.m.Y');
         $dateTo = $nextMonth->format('d.m.Y');
     } catch (Exception $e) {
-        $session->message("Date Malformed String Exception: " . $e->getMessage());
+        $session->message("Date Malformed String Exception: " . h($e->getMessage()));
         if ($is_redirect) {
-            redirect_to($_SERVER['PHP_SELF']);
+            redirect_to(recurring_self_url());
         } else {
             redirect_to("/public/calendar.php");
         }
@@ -116,11 +171,12 @@ function send_email_certificat_Medical($is_redirect = false): void
 //    $to = 'nafisspour@bluewin.ch';
 
     $nbsp = str_repeat("&nbsp;", 5);
+    $message = "";
     $message .= "
     <div lang='fr' style='background-color: white; margin: 10px; border-radius: 5px;'>
         <p>Cher Dr Mimouni </p>
         <p>Je vous prie de bien vouloir établir le renouvellement du certificat médical longue durée:</p>
-        <p>La date d'échéance du dernier certificat au {$lastDayOfCert } arrive à sa fin. Pouvez-vous s'il vous plait établir le renouvellement du certificat médical :</p>
+        <p>La date d'échéance du dernier certificat au {$lastDayCert} arrive à sa fin. Pouvez-vous s'il vous plait établir le renouvellement du certificat médical :</p>
         <p style='color: blue'>$nbsp du $nbsp $dateFrom $nbsp jusqu'au $nbsp $dateTo   $nbsp $diff jours $nbsp   100%.</p>
         <p style='color: blue'>$nbsp Maladie</p>
         <p>Je vous remercie d'avance </p>
@@ -151,7 +207,7 @@ function send_email_certificat_Medical($is_redirect = false): void
     try {
         if (!$mail->send()) {
             $session->message("Mailer Error: " . $mail->ErrorInfo);
-            redirect_to($_SERVER['PHP_SELF']);
+            redirect_to(recurring_self_url());
         } else {
             $session->message("Message certificat medical Dr. Mimouni has been sent successfully");
             $session->ok(true);
@@ -160,18 +216,10 @@ function send_email_certificat_Medical($is_redirect = false): void
 
     }
 
-    redirect_to($_SERVER['PHP_SELF']);
+    redirect_to(recurring_self_url());
 
 }
 
-
-if (isset($_GET["sendEmailCertifMedical"])) {
-//    $dayNumber = $_GET['dayNumber'] ?? 18;
-//    $dtMthCertifMedical = getMonthDateFromdate();
-//    $dayNumberCertifMedical = (int)(new DateTime($dtMthCertifMedical))->format('d');
-//    $dayNameMonthCertifMedical = (new DateTime($dtMthCertifMedical))->format('D');
-    send_email_certificat_Medical();
-}
 
 function getNextMonthsDates($date, $ocurrences = 5, $includeCurrent = true)
 {
@@ -251,7 +299,11 @@ function generateLinks($nextDays, $name, $title = "Physio Fantine", $color = "pr
         $date = new DateTime($day);
         $dayName = $date->format('D');
         $formatedDate = $date->format('d.m.Y');
-        $output .= "<a class='btn btn-$color' href='" . $_SERVER['PHP_SELF'] . "?date=$day&name=$name'>$dayName $title $formatedDate</a>$nbsp ";
+        $output .= "<form method='post' action='" . h(recurring_self_url()) . "' style='display:inline'>" . csrf_token_tag();
+        $output .= "<input type='hidden' name='date' value='" . h($day) . "'>";
+        $output .= "<input type='hidden' name='name' value='" . h($name) . "'>";
+        $output .= "<button type='submit' class='btn btn-" . h($color) . "'>" . h("$dayName $title $formatedDate") . "</button>";
+        $output .= "</form>$nbsp ";
     }
     $output .= "<br><br><br>";
     $output .= "</div>";
@@ -278,7 +330,7 @@ function generateLinksMonthly($name = "Certificat_Medical_Mimouni", $title = "Ce
 //Ergo_Margot_Mum
 
 
-function createCalendar($date, $title, $heure, $comment = '', $person = "0", $is_birthday = "0")
+function createCalendar($date, $title, $heure, $comment = '', $person = "0", $is_birthday = "0", $redirect = true)
 {
     global $session;
 
@@ -314,72 +366,40 @@ function createCalendar($date, $title, $heure, $comment = '', $person = "0", $is
                         $msg ");
         $session->ok(false);
     }
-    redirect_to($_SERVER['PHP_SELF']);
+    if ($redirect) {
+        redirect_to(recurring_self_url());
+    }
 
     //return $cal;    // return the calendar object
 }
 
-if (isset($_GET["date"]) && isset($_GET["name"])) {
-    $dt = $_GET["date"];
-    $name = $_GET["name"];
-    if (isset($_GET["heure"])) {
-        $heure = $_GET["heure"];
-    } else {
-        $heure = "";
-
+if (request_is_post() && request_is_same_domain()) {
+    if (!csrf_token_is_valid() || !csrf_token_is_recent()) {
+        $session->message("Sorry, request was not valid.");
+        redirect_to(recurring_self_url());
     }
 
-    $heure = urldecode($_GET["heure"]);
-
-    if ($name == "Physio_Fantine") {
-        if ($heure == "") {
-            $heure = "14:30";
-        }
-
-        $cal = createCalendar(date: $dt, title: "Physio Fantine", heure: $heure);
+    if (isset($_POST["sendEmailCertifMedical"])) {
+        send_email_certificat_Medical();
     }
 
-    if ($name == "Physio_Resp_Amandine") {
+    $dt = recurring_date_value($_POST["date"] ?? "");
+    $name = trim((string)($_POST["name"] ?? ""));
+    $options = recurring_appointment_options();
 
-        if ($heure == "") {
-            $heure = "16:30";
+    if ($dt !== null && isset($options[$name])) {
+        $requestedHour = $_POST["heure"] ?? ($_POST["time"] ?? "");
+        $appointmentCount = count($options[$name]);
+        foreach ($options[$name] as $appointment) {
+            $heure = recurring_time_value($appointmentCount === 1 ? $requestedHour : "", $appointment["heure"]);
+            createCalendar(date: $dt, title: $appointment["title"], heure: $heure, person: $appointment["person"], redirect: false);
         }
-        $cal = createCalendar(date: $dt, title: "Physio Resp Amandine", heure: '16:30');
-    }
-//    Ergo_Margot_Mum
-
-    if ($name == "Ergo_Margot_Mum") {
-
-        if ($heure == "") {
-            $heure = "11:30";
-        }
-        $cal = createCalendar(date: $dt, title: "Ergo Margot Mum", heure: '11:30', person: "2");
+        redirect_to(recurring_self_url());
     }
 
-    if ($name == "Certificat_Medical_Mimouni") {
-
-        if ($heure == "") {
-            $heure = "12h00";
-        }
-
-        //  $cal = createCalendar(date: $dt, title: "Certificat_Medical_Mimouni", heure: '16:30');
-    }
-
-    if ($name == "Foyer_Oasis_Mum") {
-
-        if ($heure == "") {
-            $heure = "11:40";
-        }
-        $cal = createCalendar(date: $dt, title: "Foyer Oasis Mum", heure: '11:40', person: "2");
-        $cal = createCalendar(date: $dt, title: "Retour Foyer Oasis Mum", heure: '15:50', person: "2");
-    }
-
-    if ($name == "Retour_Foyer_Oasis_Mum") {
-
-        if ($heure == "") {
-            $heure = "15:50";
-        }
-        $cal = createCalendar(date: $dt, title: "Retour Foyer Oasis Mum", heure: '15:50', person: "2");
+    if ($dt !== null || $name !== '') {
+        $session->message("The requested appointment was not valid.");
+        redirect_to(recurring_self_url());
     }
 
 }
@@ -400,8 +420,8 @@ if (isset($_GET["date"]) && isset($_GET["name"])) {
 <?php include(SITE_ROOT . DS . 'public' . DS . 'layouts' . DS . "header.php") ?>
 <?php include(SITE_ROOT . DS . 'public' . DS . 'layouts' . DS . "nav.php") ?>
 
-<?php $me = $_SERVER['PHP_SELF'] ?>
-<h1 class="text-center"><a href="<?= $me ?>">Recurring Appointmement</a></h1>
+<?php $me = recurring_self_url() ?>
+<h1 class="text-center"><a href="<?php echo h($me); ?>">Recurring Appointmement</a></h1>
 
 
 <?php
@@ -456,7 +476,8 @@ $output .= generateLinksMonthly("Certificat_Medical_Mimouni", "Certif Medical", 
 $nbsp = str_repeat('&nbsp;', 3);
 
 $output .= "
-    <form class='form-inline' action='" . $_SERVER['PHP_SELF'] . "' method='get' name='physio_fantine'>
+    <form class='form-inline' action='" . h(recurring_self_url()) . "' method='post' name='physio_fantine'>
+    " . csrf_token_tag() . "
     Date $dayNameMon: <input type='date' value='{$dtMon}' class='input-small' name='date' placeholder='date'>$nbsp 
     Heure: <input type='time' value='14:30' class='input-small' name='heure' placeholder='heure'>$nbsp
     Name: <input type='text' value='Physio_Fantine' class='input-small' name='name' placeholder='date'>
@@ -467,7 +488,8 @@ $output .= "
 $output .= "<br>";
 
 $output .= "
-    <form class='form-inline' action='" . $_SERVER['PHP_SELF'] . "' method='get' name='physio_fantine'>
+    <form class='form-inline' action='" . h(recurring_self_url()) . "' method='post' name='physio_fantine'>
+    " . csrf_token_tag() . "
     Date $dayNameThu: <input type='date' value='{$dtThu}' class='input-small' name='date' placeholder='date'>$nbsp 
     Heure: <input type='time' value='14:30' class='input-small' name='heure' placeholder='heure'>$nbsp
     Name: <input type='text' value='Physio_Fantine' class='input-small' name='name' placeholder='date'>
@@ -478,7 +500,8 @@ $output .= "
 $output .= "<br>";
 
 $output .= "
-    <form class='form-inline' action='" . $_SERVER['PHP_SELF'] . "' method='get' name='physio_amandine'>
+    <form class='form-inline' action='" . h(recurring_self_url()) . "' method='post' name='physio_amandine'>
+    " . csrf_token_tag() . "
     Date $dayNameTue: <input type='date' value='{$dtTue}' class='input-small' name='date' placeholder='date'>$nbsp
     Heure: <input type='time' value='16:30' class='input-small' name='time' placeholder='time'>$nbsp
     Name: <input type='text' value='Physio_Resp_Amandine' class='input-small' name='name' placeholder='date'>
@@ -488,7 +511,8 @@ $output .= "
 
 $output .= "<br>";
 $output .= "
-    <form class='form-inline' action='" . $_SERVER['PHP_SELF'] . "' method='get' name='Ergo_Margot_Mum'>
+    <form class='form-inline' action='" . h(recurring_self_url()) . "' method='post' name='Ergo_Margot_Mum'>
+    " . csrf_token_tag() . "
     Date $dayNameTue: <input type='date' value='{$dtTue}' class='input-small' name='date' placeholder='date'>$nbsp
     Heure: <input type='time' value='11:30' class='input-small' name='time' placeholder='time'>$nbsp
     Name: <input type='text' value='Ergo_Margot_Mum' class='input-small' name='name' placeholder='date'>
@@ -498,7 +522,8 @@ $output .= "
 
 $output .= "<br>";
 $output .= "
-    <form class='form-inline' action='" . $_SERVER['PHP_SELF'] . "' method='get' name='Foyer_Oasis_Mum'>
+    <form class='form-inline' action='" . h(recurring_self_url()) . "' method='post' name='Foyer_Oasis_Mum'>
+    " . csrf_token_tag() . "
     Date $dayNamefri: <input type='date' value='{$dtFr}' class='input-small' name='date' placeholder='date'>$nbsp &nbsp;
     Heure: <input type='time' value='11:40' class='input-small' name='time' placeholder='time'>$nbsp
     Name: <input type='text' value='Foyer_Oasis_Mum' class='input-small' name='name' placeholder='date'>
@@ -507,7 +532,8 @@ $output .= "
 ";
 $output .= "<br>";
 $output .= "
-    <form class='form-inline' action='" . $_SERVER['PHP_SELF'] . "' method='get' name='Retour_Foyer_Oasis_Mum'>
+    <form class='form-inline' action='" . h(recurring_self_url()) . "' method='post' name='Retour_Foyer_Oasis_Mum'>
+    " . csrf_token_tag() . "
     Date $dayNamefri: <input type='date' value='{$dtFr}' class='input-small' name='date' placeholder='date'>$nbsp &nbsp;
     Heure: <input type='time' value='15:50' class='input-small' name='time' placeholder='time'>$nbsp
     Name: <input type='text' value='Retour_Foyer_Oasis_Mum' class='input-small' name='name' placeholder='date'>
@@ -528,7 +554,7 @@ $nbsp2 = str_repeat('&nbsp;', 20);
 
 // provide me a form with select input with options each day number of a month
 $output .= "
-    <form class='form-inline' action='" . $_SERVER['PHP_SELF'] . "' method='get' name='day_number_form'>
+    <form class='form-inline' action='" . h(recurring_self_url()) . "' method='get' name='day_number_form'>
     <label for='dayNumber'>Day of  Certif Medical:</label>
     <select name='dayNumber' id='dayNumber' class='input-small'>
 ";
@@ -543,16 +569,20 @@ $output .= "
     
     <input type='submit' name='submit' class='btn btn-taupe' value='Submit'>
         $nbsp
-       <a href='" . $_SERVER['PHP_SELF'] . "?date=$dtMthCertifMedical&name=Certificat_Medical_Mimouni&dayNumber=$dayNumberCertifMedical&sendEmailCertifMedical=true' class='btn btn-purple'>Email Certif Med  $dayNameMonthCertifMedical $dayNumberCertifMedicalFormat</a>
-       <a href='recurring_appointment_email.php' class='btn btn-chromewhite'>Go to Email Certificat Medical</a>
        </form> 
+       <form method='post' action='" . h(recurring_self_url()) . "' style='display:inline'>" . csrf_token_tag() . "
+       <input type='hidden' name='dayNumber' value='" . h($dayNumberCertifMedical) . "'>
+       <button type='submit' name='sendEmailCertifMedical' value='true' class='btn btn-purple'>Email Certif Med " . h("$dayNameMonthCertifMedical $dayNumberCertifMedicalFormat") . "</button>
+       </form>
+       <a href='" . h('recurring_appointment_email.php') . "' class='btn btn-chromewhite'>Go to Email Certificat Medical</a>
     ";
 
 $output .= "";
 $output .= "<br>";
 
 $output .= "       
-    <form class='form-inline' action='" . $_SERVER['PHP_SELF'] . "' method='get' name='Certificat_Medical_Mimouni'>
+    <form class='form-inline' action='" . h(recurring_self_url()) . "' method='post' name='Certificat_Medical_Mimouni'>
+    " . csrf_token_tag() . "
     Date $dayNameMonthCertifMedical: <input type='date' value='{$dtMthCertifMedical}' class='input-small' name='date' placeholder='date'>$nbsp
     Heure: <input type='time' value='11:00' class='input-small' name='time' placeholder='time'>$nbsp
     Name: <input type='text' value='Certificat_Medical_Mimouni' class='input-small' name='name' placeholder='Name'>
