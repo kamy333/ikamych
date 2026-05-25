@@ -5,8 +5,8 @@
 
 <?php require_once('../../../includes/initialize.php'); ?>
 <?php $session->confirmation_protected_page(); ?>
-<?php if (User::is_employee() || User::is_visitor()) {
-    redirect_to('index.php');
+<?php if (!User::is_admin()) {
+    redirect_to('/public/admin/index.php');
 } ?>
 
 <?php //var_dump($users) ?>
@@ -27,20 +27,23 @@
 
 $the_message="";
 
-if (isset($_POST['submit'])){
+if (request_is_post() && isset($_POST['submit'])){
 //    echo "<pre>";
 //    print_r($_FILES["file_upload"]);
 //    echo "</pre>";
 
-    $photo= new Photo();
-    $photo->title=$_POST['title'];
-    $photo->set_files($_FILES['file_upload']) ;
-
-    if($photo->save()){
-        $the_message="File uploaded successfully";
+    if (!csrf_token_is_valid() || !csrf_token_is_recent()) {
+        $the_message = "Sorry, request was not valid.";
     } else {
+        $photo= new Photo();
+        $photo->title=trim((string)($_POST['title'] ?? ''));
+        $photo->set_files($_FILES['file_upload'] ?? []) ;
 
-        $the_message=join("<br>",$photo->errors) ;
+        if($photo->save()){
+            $the_message="File uploaded successfully";
+        } else {
+            $the_message=join("<br>", array_map('h', (array)$photo->errors)) ;
+        }
     }
 
 
@@ -79,7 +82,7 @@ if (isset($_POST['submit'])){
 <?php $layout_context = "admin"; ?>
 <?php $active_menu = "admin" ?>
 <?php $stylesheets = "" //custom_form  ?>
-<?php $view_full_table == 1 ? $fluid_view = true : $fluid_view = false; ?>
+<?php $fluid_view = false; ?>
 <?php $javascript = "form_admin" ?>
 <?php $sub_menu = false ?>
 <?php include(SITE_ROOT . DS . 'public' . DS . 'layouts' . DS . "header.php") ?>
@@ -117,10 +120,11 @@ if (isset($_POST['submit'])){
             <div class="col-md-2 ">
 
 
-                <form action="<?php  echo $_SERVER['PHP_SELF']; ?>" enctype="multipart/form-data" method="post">
+                <form action="<?php  echo h($_SERVER['PHP_SELF']); ?>" enctype="multipart/form-data" method="post">
+                    <?php echo csrf_token_tag(); ?>
 
 
-                    <h2><?php echo $the_message;?></h2>
+                    <h2><?php echo h($the_message);?></h2>
 
                     <div class="form-group">
                         <label for="title"></label>
@@ -129,7 +133,7 @@ if (isset($_POST['submit'])){
 
                     <div class="form-group">
                         <label for="file_upload"></label>
-                        <input type="file" id="file_upload" name="file_upload" " >
+                        <input type="file" id="file_upload" name="file_upload">
 
                     </div>
 

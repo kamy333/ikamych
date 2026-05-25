@@ -1,46 +1,28 @@
-<?php require_once('../../../includes/initialize.php'); ?>
-<?php $session->confirmation_protected_page(); ?>
-<?php if (User::is_employee() || User::is_visitor()) {
-    redirect_to('index.php');
-} ?>
-
-
-<?php $class_name = "Comment";
-
-if ($Nav->folder_immediate != "admin") {
-    $page_manage = $Nav->path_admin . $Nav->folder_prev . '/manage/' . $class_name::$page_manage;
-    $page_new = $Nav->path_admin . $Nav->folder_prev . '/new/' . $class_name::$page_new;
-    $page_edit = $Nav->path_admin . $Nav->folder_prev . '/edit/' . $class_name::$page_edit;
-    $page_delete = $Nav->path_admin . $Nav->folder_prev . '/delete/' . $class_name::$page_delete;
-
-} else {
-    $page_manage = "manage_Comment.php";
-
-} ?>
-
-
 <?php
-if(empty($_GET['id']) && !isset($_GET['id'])){
-    redirect_to($page_manage);
+require_once('../../../includes/initialize.php');
+
+$session->confirmation_protected_page();
+if (!User::is_admin()) {
+    redirect_to('/public/admin/index.php');
 }
 
+if (!request_is_post() || !request_is_same_domain() || !csrf_token_is_valid() || !csrf_token_is_recent()) {
+    $session->message("Sorry, request was not valid.");
+    redirect_to('manage_Comment.php');
+}
 
+$id = filter_input(INPUT_POST, 'id', FILTER_VALIDATE_INT, ['options' => ['min_range' => 1]]);
+if ($id === false || $id === null) {
+    $session->message("A valid comment ID is required.");
+    redirect_to('manage_Comment.php');
+}
 
-$id=urldecode($_GET['id']);
-$comment=Comment::find_by_id($id);
+$comment = Comment::find_by_id($id);
+if (!$comment) {
+    $session->message("The requested comment was not found.");
+    redirect_to('manage_Comment.php');
+}
+
 $comment->delete();
-redirect_to($page_manage);
-
-//if($photo && file_exists($photo->full_path_directory.DS.$photo->filename)){
-//    $user->delete();
-//    redirect("users.php");
-//} else {
-//    redirect("users.php");
-//}
-
-
-
-
-
-
-?>
+$session->message("Comment " . h($id) . " has been deleted.");
+redirect_to('manage_Comment.php');

@@ -597,6 +597,8 @@ Status update: Loan expense summary pages now sanitize person, category, sort, a
 
 Status update: Calendar and note navigation no longer renders cron/shared-secret tokens into browser-visible links. `public/calendar.php` now keeps manual calendar, appointment-email, note, and new-note action links admin-only, removes the Daily Psalm token link from the page, escapes generated calendar action URLs, and uses the shared calendar-past helper for the `type=Past` toggle. The helper itself now rejects array-valued `type` parameters cleanly.
 
+Status update: Linked legacy photo/comment admin pages under `public/admin/wkg_progress/` now use the main bootstrap consistently, require full admin access, validate positive integer IDs before loading photos/comments, escape photo and comment table output, and use POST+CSRF forms for photo/comment deletion instead of destructive GET links. Broken local `includes/init.php`/`includes/header.php` dependencies in the edit/delete paths were replaced with the shared application layout.
+
 ## Suggested first small PR
 
 The best first PR should be boring and reversible:

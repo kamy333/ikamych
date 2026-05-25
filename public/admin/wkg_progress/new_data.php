@@ -1,11 +1,11 @@
 <?php require_once('../../../includes/initialize.php'); ?>
 <?php $session->confirmation_protected_page(); ?>
-<?php if (User::is_employee() || User::is_visitor()) {
-    redirect_to('index.php');
+<?php if (!User::is_admin()) {
+    redirect_to('/public/admin/index.php');
 } ?>
 
 <?php
-$class_name = MyClasses::allowed_class_from_request();
+$class_name = MyClasses::require_class_access();
 call_user_func_array([$class_name,'change_to_unique_data'],['data']);
 
 if ($Nav->folder_immediate != "admin") {
@@ -15,15 +15,22 @@ if ($Nav->folder_immediate != "admin") {
     $class_name::$page_delete = $Nav->path_admin . $Nav->folder_prev . '/delete/' . $class_name::$page_delete;
 }
 
-if(isset($_GET['id'])){
-    $post_link=$_SERVER["PHP_SELF"]."?id=".urldecode($_GET['id']&"class_name=".$class_name);
+$requested_id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT, ['options' => ['min_range' => 1]]);
+$has_id = isset($_GET['id']);
+if ($has_id && ($requested_id === false || $requested_id === null)) {
+    $session->message("A valid record ID is required.");
+    redirect_to($class_name::$page_manage);
+}
+
+if($has_id){
+    $post_link = clean_query_string($_SERVER["PHP_SELF"] . "?id=" . u($requested_id) . "&class_name=" . u($class_name));
     $page="Update";
     $page1="Update ";
     $text_post="Updated";
     $text_post1="update";
 
 }else{
-    $post_link=$_SERVER["PHP_SELF"];
+    $post_link = clean_query_string($_SERVER["PHP_SELF"] . "?class_name=" . u($class_name));
     $page="New";
     $page1="Add New ";
     $text_post="created";
@@ -72,9 +79,12 @@ if(request_is_post() && request_is_same_domain()) {
     }
 } else {
     if(request_is_get()){
-        if(isset($_GET['id'])){
-            $id=$_GET['id'];
-            $get_item=  $class_name::find_by_id($id);
+        if($has_id){
+            $get_item = $class_name::find_by_id($requested_id);
+            if (!$get_item) {
+                $session->message("The requested record was not found.");
+                redirect_to($class_name::$page_manage);
+            }
         }
 
 

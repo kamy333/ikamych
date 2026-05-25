@@ -1,7 +1,7 @@
 <?php require_once('../../../includes/initialize.php'); ?>
 <?php $session->confirmation_protected_page(); ?>
-<?php if (User::is_employee() || User::is_visitor()) {
-    redirect_to('index.php');
+<?php if (!User::is_admin()) {
+    redirect_to('/public/admin/index.php');
 } ?>
 
 <?php //include("includes/header.php"); ?>
@@ -23,7 +23,7 @@
 <?php $layout_context = "admin"; ?>
 <?php $active_menu = "admin" ?>
 <?php $stylesheets = "" //custom_form  ?>
-<?php $view_full_table == 1 ? $fluid_view = true : $fluid_view = false; ?>
+<?php $fluid_view = false; ?>
 <?php $javascript = "form_admin" ?>
 <?php $sub_menu = false ?>
 <?php include(SITE_ROOT . DS . 'public' . DS . 'layouts' . DS . "header.php") ?>
@@ -64,23 +64,25 @@
        $output="";
         $blank="&nbsp;&nbsp;&nbsp;";
        foreach ($photos as $photo) {
+        $photo_id = (int)$photo->id;
+        $picture_path = h($photo->picture_path());
         $output.="<tr>"   ;
-           $output.="<td style='text-center'><img  class='admin-photo-thumbnail' src=\"{$photo->picture_path()}\" alt=''>";
+           $output.="<td style='text-center'><img  class='admin-photo-thumbnail' src=\"{$picture_path}\" alt=''>";
            $output.="<div class='picture_link'>";
-           $output.="<a href='delete_photo.php?id=".urlencode($photo->id)."'>Delete</a>$blank";
-           $output.="<a href='edit_photo.php?id=".urlencode($photo->id)."'>Edit</a>$blank";
-           $output.="<a href='../photo.php?id=".urlencode($photo->id)."'>View</a>$blank";
+           $output.="<form method='post' action='delete_photo.php' style='display:inline'>" . csrf_token_tag() . "<input type='hidden' name='id' value='" . h($photo_id) . "'><button type='submit' class='btn btn-link btn-xs' onclick=\"return confirm('Delete this photo?');\">Delete</button></form>$blank";
+           $output.="<a href='edit_photo.php?id=".u($photo_id)."'>Edit</a>$blank";
+           $output.="<a href='../photo.php?id=".u($photo_id)."'>View</a>$blank";
            $output.="</div>";
 $output.="</td>" ;
 //        $output.="<td><img src=\"{$photo->picture_path()}\" width='80' height='60' alt=''></td>" ;
-        $output.="<td>$photo->id</td>";
-        $output.="<td>$photo->filename</td>";
-        $output.="<td>$photo->title</td>";
-        $output.="<td>$photo->size</td>";
+        $output.="<td>" . h($photo_id) . "</td>";
+        $output.="<td>" . h($photo->filename) . "</td>";
+        $output.="<td>" . h($photo->title) . "</td>";
+        $output.="<td>" . h($photo->size) . "</td>";
 
-        $comments=Comment::find_the_comment($photo->id);
+        $comments=Comment::find_the_comment($photo_id);
 
-        $output.="<td><a href='comments_photo.php?id={$photo->id}'> ".count ($comments)." comments</a></td>";
+        $output.="<td><a href='manage_comments_photo.php?id=" . u($photo_id) . "'> " . h(count($comments)) . " comments</a></td>";
 
         $output.="</tr>"   ;
        }

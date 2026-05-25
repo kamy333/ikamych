@@ -4,19 +4,27 @@
 <?php
 require_once('../../../includes/initialize.php');
 $session->confirmation_protected_page();
-if (User::is_employee() || User::is_secretary() || User::is_visitor()) {
-    redirect_to('index.php');
+if (!User::is_admin()) {
+    redirect_to('/public/admin/index.php');
 }
 
 ?>
 
-<?php if(empty($_GET['id']) || !isset($_GET['id']) ){
-    redirect_to("photo.php");
+<?php
+$photo_id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT, ['options' => ['min_range' => 1]]);
+if ($photo_id === false || $photo_id === null) {
+    $session->message("A valid photo ID is required.");
+    redirect_to("manage_photos.php");
 }
 
-$comments=Comment::find_the_comment($_GET['id']);
-$photo=Photo::find_by_id($_GET['id']);
-$picture="<img  class='admin-photo-comment' src=\"{$photo->picture_path()}\" alt=''>";
+$photo=Photo::find_by_id($photo_id);
+if (!$photo) {
+    $session->message("The requested photo was not found.");
+    redirect_to("manage_photos.php");
+}
+
+$comments=Comment::find_the_comment($photo_id);
+$picture="<img  class='admin-photo-comment' src=\"" . h($photo->picture_path()) . "\" alt='" . h($photo->alternate_text) . "'>";
 ?>
 
 
@@ -35,7 +43,7 @@ $picture="<img  class='admin-photo-comment' src=\"{$photo->picture_path()}\" alt
 <?php $layout_context = "admin"; ?>
 <?php $active_menu = "admin" ?>
 <?php $stylesheets = "" //custom_form  ?>
-<?php $view_full_table == 1 ? $fluid_view = true : $fluid_view = false; ?>
+<?php $fluid_view = false; ?>
 <?php $javascript = "form_admin" ?>
 <?php $sub_menu = false ?>
 <?php include(SITE_ROOT . DS . 'public' . DS . 'layouts' . DS . "header.php") ?>
@@ -84,13 +92,14 @@ $picture="<img  class='admin-photo-comment' src=\"{$photo->picture_path()}\" alt
 
                         $output.="<tr>"   ;
 
-                        $output.="<td>$comment->id</td>";
+                        $comment_id = (int)$comment->id;
+                        $output.="<td>" . h($comment_id) . "</td>";
 //                        $output.="<td style='text-center'><img  class='user-image' src=\"{$photo->picture_path()}\" alt=''></td>";
-                        $output.="<td>$comment->author</td>";
-                        $output.="<td>$comment->body</td>";
-                        $output.="<td>".date("d i Y @ H\\hi", strtotime($comment->input_date)) ."</td>";
-                        $output.="<td class='text-center'><a class='btn btn-danger btn-xs page-table-action' href='delete_comment_photo.php?id=".urlencode($comment->id)."'>Delete</a></td>$blank";
-                        $output.="<td class='text-center'><a class='btn btn-primary btn-xs  btn-xs page-table-action' href='edit_comment.php?id=".urlencode($comment->id)."'>Edit</a></td>$blank";
+                        $output.="<td>" . h($comment->author) . "</td>";
+                        $output.="<td>" . h($comment->body) . "</td>";
+                        $output.="<td>" . h(date("d i Y @ H\\hi", strtotime($comment->input_date))) . "</td>";
+                        $output.="<td class='text-center'><form method='post' action='delete_comment_photo.php' style='display:inline'>" . csrf_token_tag() . "<input type='hidden' name='id' value='" . h($comment_id) . "'><button type='submit' class='btn btn-danger btn-xs page-table-action' onclick=\"return confirm('Delete this comment?');\">Delete</button></form></td>$blank";
+                        $output.="<td class='text-center'><a class='btn btn-primary btn-xs  btn-xs page-table-action' href='edit_comment.php?id=".u($comment_id)."'>Edit</a></td>$blank";
                         $output.="</tr>"   ;
                     }
                     unset($photo);

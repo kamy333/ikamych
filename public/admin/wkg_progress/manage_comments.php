@@ -15,8 +15,8 @@
 
 <?php require_once('../../../includes/initialize.php'); ?>
 <?php $session->confirmation_protected_page(); ?>
-<?php if (User::is_employee() || User::is_visitor()) {
-    redirect_to('index.php');
+<?php if (!User::is_admin()) {
+    redirect_to('/public/admin/index.php');
 } ?>
 
 <?php //var_dump($users) ?>
@@ -24,7 +24,7 @@
 <?php $layout_context = "admin"; ?>
 <?php $active_menu = "admin" ?>
 <?php $stylesheets = "" //custom_form  ?>
-<?php $view_full_table == 1 ? $fluid_view = true : $fluid_view = false; ?>
+<?php $fluid_view = false; ?>
 <?php $javascript = "form_admin" ?>
 <?php $sub_menu = false ?>
 <?php include(SITE_ROOT . DS . 'public' . DS . 'layouts' . DS . "header.php") ?>
@@ -72,13 +72,14 @@
 
                         $output.="<tr>"   ;
 
-                        $output.="<td>$comment->id</td>";
+                        $comment_id = (int)$comment->id;
+                        $output.="<td>" . h($comment_id) . "</td>";
 //                        $output.="<td style='text-center'><img  class='user-image' src=\"{$photo->picture_path()}\" alt=''></td>";
-                        $output.="<td>$comment->author</td>";
-                        $output.="<td>$comment->body</td>";
-                        $output.="<td>".date("d i Y @ H\\hi", strtotime($comment->input_date)) ."</td>";
-                        $output.="<td class='text-center'><a class='btn btn-danger btn-xs page-table-action' href='delete_comment.php?id=".urlencode($comment->id)."'>Delete</a></td>$blank";
-                        $output.="<td class='text-center'><a class='btn btn-primary btn-xs  btn-xs page-table-action' href='edit_comment.php?id=".urlencode($comment->id)."'>Edit</a></td>$blank";
+                        $output.="<td>" . h($comment->author) . "</td>";
+                        $output.="<td>" . h($comment->body) . "</td>";
+                        $output.="<td>" . h(date("d i Y @ H\\hi", strtotime($comment->input_date))) . "</td>";
+                        $output.="<td class='text-center'><form method='post' action='delete_Comment.php' style='display:inline'>" . csrf_token_tag() . "<input type='hidden' name='id' value='" . h($comment_id) . "'><button type='submit' class='btn btn-danger btn-xs page-table-action' onclick=\"return confirm('Delete this comment?');\">Delete</button></form></td>$blank";
+                        $output.="<td class='text-center'><a class='btn btn-primary btn-xs  btn-xs page-table-action' href='edit_comment.php?id=".u($comment_id)."'>Edit</a></td>$blank";
                         $output.="</tr>"   ;
                     }
                     unset($photo);

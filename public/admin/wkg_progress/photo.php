@@ -1,5 +1,8 @@
 <?php require_once('../../../includes/initialize.php'); ?>
 <?php $session->confirmation_protected_page(); ?>
+<?php if (!User::is_admin()) {
+    redirect_to('/public/admin/index.php');
+} ?>
 
 <?php $layout_context = "admin"; ?>
 <?php $active_menu = "admin"; ?>
@@ -13,7 +16,7 @@
 
 
 <h4 class="text-center">
-    <mark><a href="<?php echo $_SERVER["PHP_SELF"] ?>">Photos</a></mark>
+    <mark><a href="<?php echo h($_SERVER["PHP_SELF"]) ?>">Photos</a></mark>
 </h4>
 
 
