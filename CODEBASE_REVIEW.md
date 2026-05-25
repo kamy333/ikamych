@@ -603,6 +603,10 @@ Status update: The active recurring appointment helper now uses POST+CSRF for ca
 
 Status update: The linked admin upload page now requires full admin access, validates POST requests with CSRF, limits uploads to JPG/PNG images by extension and MIME type, sanitizes filenames, rejects overwrites, removes unsafe `chmod()` calls, and escapes uploaded-file/listing links before rendering.
 
+Status update: The legacy `wkg_progress` comment edit links now point to a real hardened route. The new `edit_comment.php` page requires full admin access, validates the comment ID, handles missing records cleanly, protects updates with POST+CSRF, requires author/body values, stamps `modified_date`, and escapes form output.
+
+Status update: The Daily Psalm cron endpoint now uses the shared token helper and configured `MyPHPMailer` transport instead of native `mail()`. The Sefaria API fetch has a timeout and JSON validation, external psalm text is escaped before email composition, external links include `rel="noopener noreferrer"`, and unauthorized requests still fail closed before any remote fetch or email send.
+
 ## Suggested first small PR
 
 The best first PR should be boring and reversible:
