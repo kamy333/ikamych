@@ -611,6 +611,8 @@ Status update: Shared form validation helpers now use prepared statements for un
 
 Status update: Pagination helpers now clamp page, per-page, and total-count values before computing offsets or next/previous links. The legacy large-result paginator no longer terminates the request on bad constructor input, avoids dynamic-property notices, validates `ipp` values against its allow-list, and escapes generated pagination URLs/query strings. The unused date-format helper now returns `false` for malformed input instead of ending the whole request with `exit()`.
 
+Status update: User create/edit and password-reset entry points received another input-handling pass. User image updates now use prepared SQL, upload handling ignores empty file fields without warnings, sanitizes uploaded filenames, verifies JPG/PNG extensions and MIME types, and escapes the returned image path. User create/edit forms now escape self-post/manage URLs, handle optional fields with null-safe defaults, and only process profile uploads when a file was actually submitted. Password reset URLs now reject malformed tokens before lookup.
+
 ## Suggested first small PR
 
 The best first PR should be boring and reversible:

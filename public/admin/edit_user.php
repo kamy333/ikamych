@@ -28,10 +28,10 @@ if (isset($_GET['id']) && ($requested_id === false || $requested_id === null)) {
 }
 
 if ($requested_id !== false && $requested_id !== null) {
-    $post_link = $_SERVER["PHP_SELF"] . "?id=" . u($requested_id);
+    $post_link = ($_SERVER["PHP_SELF"] ?? 'edit_user.php') . "?id=" . u($requested_id);
 
 } else {
-    $post_link = $_SERVER["PHP_SELF"];
+    $post_link = $_SERVER["PHP_SELF"] ?? 'edit_user.php';
 }
 
 ?>
@@ -79,7 +79,7 @@ if(request_is_post() && request_is_same_domain()) {
                 $expected_fields=$new_this_class::get_table_field();
                 foreach($expected_fields as $field){
                     if(isset($_POST[$field])){
-                        $new_this_class->$field = trim($_POST[$field]);
+                        $new_this_class->$field = trim((string)$_POST[$field]);
                     }
                 }
 
@@ -114,7 +114,7 @@ if(request_is_post() && request_is_same_domain()) {
 //                        }
 //                    }
 //                }
-                    if (!empty($_FILES['user_image'])) {
+                    if (isset($_FILES['user_image']) && ($_FILES['user_image']['error'] ?? UPLOAD_ERR_NO_FILE) !== UPLOAD_ERR_NO_FILE) {
                         $new_this_class->set_files($_FILES['user_image']);
                         $new_this_class->upload_photo();
                     }
@@ -166,9 +166,9 @@ if(request_is_post() && request_is_same_domain()) {
 
 
 if($requested_id !== false && $requested_id !== null){
-    $post_link=$_SERVER["PHP_SELF"]."?id=".u($requested_id);
+    $post_link=($_SERVER["PHP_SELF"] ?? 'edit_user.php')."?id=".u($requested_id);
 }else{
-    $post_link=$_SERVER["PHP_SELF"];
+    $post_link=$_SERVER["PHP_SELF"] ?? 'edit_user.php';
 }
 ?>
 
@@ -184,7 +184,7 @@ if($requested_id !== false && $requested_id !== null){
 
 <?php  echo isset($valid)? $valid->form_errors():"" ?>
 <?php  echo isset($valid)? $valid->form_warnings():"" ?>
-<?php if (isset($message)) {echo $message;} ?>
+<?php if (isset($message)) {echo output_message($message);} ?>
 <?php // echo output_message($message); ?>
 
 <?php
@@ -204,12 +204,12 @@ if($requested_id !== false && $requested_id !== null){
 
 <div class="col-md-7 col-md-offset-2 col-lg-7 col-lg-offset-2">
     <a class="btn btn-warning " href="index.php">Index</a> &nbsp;
-    <a class="btn btn-primary" href="<?php echo $class_name::$page_manage ?>" >Manage User</a>
+    <a class="btn btn-primary" href="<?php echo h($class_name::$page_manage) ?>" >Manage User</a>
 
     <div class ="background_light_blue">
 
 
-        <form name="form_client"  autocomplete="off"   class="form-horizontal" method="post" action="<?php echo $post_link;?>" enctype="multipart/form-data">
+        <form name="form_client"  autocomplete="off"   class="form-horizontal" method="post" action="<?php echo h($post_link);?>" enctype="multipart/form-data">
 
             <fieldset id="login" title="User">
                 <legend class="text-center" style="color: #0000ff">Update User</legend>
@@ -235,7 +235,7 @@ if($requested_id !== false && $requested_id !== null){
             </div>
 
             <div class="text-right " >
-                <a href="<?php echo $class_name::$page_manage; ?>" class="btn btn-info " role="button">Cancel</a>
+                <a href="<?php echo h($class_name::$page_manage); ?>" class="btn btn-info " role="button">Cancel</a>
             </div>
 
 

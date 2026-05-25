@@ -8,7 +8,7 @@
 $message = "";
 $token = isset($_GET['token']) ? trim((string)$_GET['token']) : '';
 
-if ($token === '') {
+if ($token === '' || !preg_match('/\A[a-f0-9]{64}\z/i', $token)) {
     $session->message("Did not find you try again");
     redirect_to('login_forgot_password_user.php');
 }

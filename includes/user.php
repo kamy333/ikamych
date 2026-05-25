@@ -790,11 +790,11 @@ class User extends DatabaseObject
         $this->id = $user_id;
 
 //     $this->save();
-        $sql = "UPDATE " . self::$table_name . " SET user_image = '{$this->user_image}'";
-        $sql .= " WHERE id={$this->id}";
-        $update_image = $database->query($sql);
+        $sql = "UPDATE " . self::$table_name . " SET user_image = ?";
+        $sql .= " WHERE id = ?";
+        $update_image = $database->query_prepared($sql, [(string)$this->user_image, (int)$this->id], "si");
 
-        echo $this->user_path_and_placeholder();
+        echo h($this->user_path_and_placeholder());
     }
 
     public function user_path_and_placeholder()
@@ -818,36 +818,54 @@ class User extends DatabaseObject
 
     public function set_files($files)
     {
-        $ext = strtolower(pathinfo(basename($files['name']), PATHINFO_EXTENSION));
-        $ext_accept = ['jpg', 'png'];
-
         if (empty($files) || !$files || !is_array($files)) {
 //            $this->no_picture=true;
 
-            $this->errors = "There was no file uploaded";
             return false;
+        }
 
-        } elseif ($files['error'] != 0) {
-            $this->errors[] = $this->upload_errors_array[$files['error']];
+        if (($files['error'] ?? UPLOAD_ERR_NO_FILE) === UPLOAD_ERR_NO_FILE) {
             return false;
-        } elseif ($ext == 'php' || $ext == 'js' || $ext == 'html' || $ext == 'phtml') {
-            log_action('Registration unsuccessful ', " upload extension violation " . $ext);
-            $this->errors[] = $this->upload_errors_array['these files not accepted'];
+        }
+
+        $original_name = basename((string)($files['name'] ?? ''));
+        $ext = strtolower(pathinfo($original_name, PATHINFO_EXTENSION));
+        $ext_accept = ['jpg', 'png'];
+        $safe_name = preg_replace('/[^A-Za-z0-9._-]/', '_', $original_name);
+        if ($safe_name === '' || $safe_name === '.' || $safe_name === '..') {
+            $safe_name = bin2hex(random_bytes(8)) . '.' . $ext;
+        }
+
+        if ($files['error'] != 0) {
+            $this->errors[] = $this->upload_errors_array[$files['error']];
             return false;
 
         } elseif (!in_array($ext, $ext_accept)) {
             log_action('Registration unsuccessful ', " upload extension violation array " . $ext);
             $this->errors[] = $this->upload_errors_array['these files not accepted'];
             return false;
+        } elseif (!is_uploaded_file($files['tmp_name'])) {
+            $this->errors[] = "Uploaded file could not be verified.";
+            return false;
+        } elseif (function_exists('finfo_open')) {
+            $finfo = finfo_open(FILEINFO_MIME_TYPE);
+            $mime_type = $finfo ? finfo_file($finfo, $files['tmp_name']) : '';
+            if ($finfo) {
+                finfo_close($finfo);
+            }
 
-
-        } else {
-            $this->user_image = basename($files['name']);
-            $this->tmp_path = $files['tmp_name'];
-            $this->type = $files['type'];
-            $this->size = $files['size'];
-            return true;
+            if (!in_array($mime_type, ['image/jpeg', 'image/png'], true)) {
+                log_action('Registration unsuccessful ', " upload MIME violation " . $mime_type);
+                $this->errors[] = $this->upload_errors_array['these files not accepted'];
+                return false;
+            }
         }
+
+        $this->user_image = $safe_name;
+        $this->tmp_path = $files['tmp_name'];
+        $this->type = $files['type'];
+        $this->size = $files['size'];
+        return true;
     }
 
     public function upload_photo()

@@ -7,7 +7,7 @@
 <?php
 $class_name="User";
 $get_item = null;
-$post_link = $_SERVER["PHP_SELF"];
+$post_link = $_SERVER["PHP_SELF"] ?? 'new_user.php';
 
 ?>
 <?php
@@ -25,18 +25,18 @@ if (!csrf_token_is_valid() || !csrf_token_is_recent()) {
 
         $user = new User();
 
-        $user->username = trim($_POST['username']);
-        $user->password = trim($_POST['password']);
-        $user->nom = trim($_POST['nom']);
-        $user->email = trim($_POST['email']);
-        $user->user_type_id = (int)trim($_POST['user_type_id']);
+        $user->username = trim((string)($_POST['username'] ?? ''));
+        $user->password = trim((string)($_POST['password'] ?? ''));
+        $user->nom = trim((string)($_POST['nom'] ?? ''));
+        $user->email = trim((string)($_POST['email'] ?? ''));
+        $user->user_type_id = (int)trim((string)($_POST['user_type_id'] ?? '0'));
 
 
         if (isset($_POST['first_name'])) {
-            $user->first_name = trim($_POST['first_name']);
+            $user->first_name = trim((string)$_POST['first_name']);
         }
-        if (isset($_POST['first_name'])) {
-            $user->last_name = trim($_POST['last_name']);
+        if (isset($_POST['last_name'])) {
+            $user->last_name = trim((string)$_POST['last_name']);
         }
         if (isset($_POST['id'])) {
             $posted_id = filter_input(INPUT_POST, 'id', FILTER_VALIDATE_INT, ['options' => ['min_range' => 1]]);
@@ -52,7 +52,7 @@ if (!csrf_token_is_valid() || !csrf_token_is_recent()) {
                 $user->password=null;
 
             } else {
-                $user->password = trim($_POST['password']);
+                $user->password = trim((string)$_POST['password']);
 
             }
         }
@@ -73,8 +73,10 @@ if (!csrf_token_is_valid() || !csrf_token_is_recent()) {
         $valid->validate_presences($required_field);
         $valid->validate_email('email');
 
-        $user->set_files($_FILES['user_image']) ;
-        $user->upload_photo();
+        if (isset($_FILES['user_image']) && ($_FILES['user_image']['error'] ?? UPLOAD_ERR_NO_FILE) !== UPLOAD_ERR_NO_FILE) {
+            $user->set_files($_FILES['user_image']);
+            $user->upload_photo();
+        }
         // to validation
 
         if(empty($valid->errors)){
@@ -125,7 +127,7 @@ if (!csrf_token_is_valid() || !csrf_token_is_recent()) {
 
 
 if(isset($requested_id)){
- $post_link=$_SERVER["PHP_SELF"]."?id=".u($requested_id);
+ $post_link=($_SERVER["PHP_SELF"] ?? 'new_user.php')."?id=".u($requested_id);
 }
 
 }
@@ -172,17 +174,17 @@ if(isset($requested_id)){
 ?>
 
 
-<h4 class="text-center"><mark><a href="<?php echo $post_link ?>">New User</a> </mark></h4>
+<h4 class="text-center"><mark><a href="<?php echo h($post_link) ?>">New User</a> </mark></h4>
 
 
 <div class="col-md-7 col-md-offset-2 col-lg-7 col-lg-offset-2">
     <a class="btn btn-warning" href="index.php">Index</a><span>&nbsp;</span>
-    <a class="btn btn-primary" href="<?php echo $class_name::$page_manage ?>" >Manage User</a><span>&nbsp;</span>
+    <a class="btn btn-primary" href="<?php echo h($class_name::$page_manage) ?>" >Manage User</a><span>&nbsp;</span>
 
     <div class ="background_light_blue">
 
 
-        <form name="form_user"  class="form-horizontal" method="post" action="<?php echo $_SERVER['PHP_SELF'];?>" enctype="multipart/form-data">
+        <form name="form_user"  class="form-horizontal" method="post" action="<?php echo h($post_link);?>" enctype="multipart/form-data">
 
             <fieldset id="login" title="User">
                 <legend class="text-center" style="color: #0000ff">New User</legend>
@@ -221,7 +223,7 @@ if(isset($requested_id)){
             </div>
 
             <div class="text-right " >
-                <a href="<?php echo $class_name::$page_manage; ?>" class="btn btn-info " role="button">Cancel</a>
+                <a href="<?php echo h($class_name::$page_manage); ?>" class="btn btn-info " role="button">Cancel</a>
             </div>
 
 

@@ -8,6 +8,7 @@
 $username = null;
 $server_name=$_SERVER['PHP_SELF'];
 $new_password=null;
+$message = "";
 ?>
 
 
