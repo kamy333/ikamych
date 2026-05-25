@@ -601,6 +601,8 @@ Status update: Linked legacy photo/comment admin pages under `public/admin/wkg_p
 
 Status update: The active recurring appointment helper now uses POST+CSRF for calendar-booking and medical-certificate-email side effects instead of GET links. Appointment date/name/time inputs are validated against a small whitelist of known recurring appointment types, malformed GET query strings no longer trigger the booking/email actions, generated buttons/forms escape their action URLs and labels, and an old commented calendar-code literal was removed.
 
+Status update: The linked admin upload page now requires full admin access, validates POST requests with CSRF, limits uploads to JPG/PNG images by extension and MIME type, sanitizes filenames, rejects overwrites, removes unsafe `chmod()` calls, and escapes uploaded-file/listing links before rendering.
+
 ## Suggested first small PR
 
 The best first PR should be boring and reversible:
