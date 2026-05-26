@@ -50,9 +50,11 @@ if (request_is_post() && request_is_same_domain()) {
             if ($new_item->save()) {
                 $session->message($class_name . $new_item->pseudo . " " . "has been $text_post with ID (" . $new_item->id . ")");
                 $session->ok(true);
-                redirect_to($class_name::$page_manage);
+                redirect_to(modal_form_return_url($class_name::$page_manage, $class_name, 'created', $new_item->id));
             } else {
                 $message = ($class_name . $new_item->pseudo . " " . "$text_post1 failed");
+                $session->message($message);
+                redirect_to(modal_form_return_url($class_name::$page_manage, $class_name, 'error'));
 
             }
 

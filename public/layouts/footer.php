@@ -84,6 +84,42 @@
             });
         };
 
+        var modalReturnTo = function() {
+            try {
+                var url = new URL(window.location.href);
+                url.searchParams.delete('ikamy_modal');
+                url.searchParams.delete('ikamy_modal_status');
+                url.searchParams.delete('ikamy_modal_id');
+
+                return url.pathname + url.search;
+            } catch (error) {
+                return window.location.pathname + window.location.search;
+            }
+        };
+
+        var setModalStatus = function(modal, message, type) {
+            var status = modal.querySelector('.ikamy-create-modal__status');
+
+            if (!status) {
+                return;
+            }
+
+            if (!message) {
+                status.hidden = true;
+                status.className = 'ikamy-create-modal__status';
+                status.textContent = '';
+                return;
+            }
+
+            status.hidden = false;
+            status.className = 'ikamy-create-modal__status ikamy-create-modal__status--' + (type || 'success');
+            status.textContent = message;
+        };
+
+        var setModalReturnTo = function(form) {
+            setInputValue(form, 'input[name="return_to"]', modalReturnTo());
+        };
+
         var setCalendarModalMode = function(modal, triggerElement) {
             var form = modal.querySelector('form.ikamy-create-modal__form');
 
@@ -98,6 +134,9 @@
             var title = modal.querySelector('#ikamy-calendar-modal-title');
             var submit = modal.querySelector('.ikamy-create-modal__submit');
             var idInput = form.querySelector('input[name="id"]');
+
+            setModalReturnTo(form);
+            setModalStatus(modal, '', 'success');
 
             if (isEdit) {
                 var appointmentId = getCalendarData('id');
@@ -155,6 +194,9 @@
             var title = modal.querySelector('#ikamy-note-modal-title');
             var submit = modal.querySelector('.ikamy-create-modal__submit');
             var idInput = form.querySelector('input[name="id"]');
+
+            setModalReturnTo(form);
+            setModalStatus(modal, '', 'success');
 
             if (isEdit) {
                 var noteId = getNoteData('id');
@@ -311,6 +353,66 @@
                 }
             }
         });
+
+        var cssAttributeValue = function(value) {
+            return String(value).replace(/\\/g, '\\\\').replace(/"/g, '\\"');
+        };
+
+        var autoOpenReturnedModal = function() {
+            var params;
+
+            try {
+                params = new URLSearchParams(window.location.search);
+            } catch (error) {
+                return;
+            }
+
+            var modalName = params.get('ikamy_modal');
+            var status = params.get('ikamy_modal_status');
+            var recordId = params.get('ikamy_modal_id') || '';
+
+            if (!modalName || !status) {
+                return;
+            }
+
+            var target = modalName === 'calendar' ? '#ikamy-calendar-modal' : (modalName === 'note' ? '#ikamy-note-modal' : '');
+            var modal = target ? document.querySelector(target) : null;
+
+            if (!modal) {
+                return;
+            }
+
+            var editTrigger = null;
+            if (recordId && modalName === 'calendar') {
+                editTrigger = document.querySelector('[data-ikamy-calendar-edit="1"][data-calendar-id="' + cssAttributeValue(recordId) + '"]');
+            }
+            if (recordId && modalName === 'note') {
+                editTrigger = document.querySelector('[data-ikamy-note-edit="1"][data-note-id="' + cssAttributeValue(recordId) + '"]');
+            }
+
+            if (modalName === 'calendar') {
+                setCalendarModalMode(modal, editTrigger || document.createElement('a'));
+            } else {
+                setNoteModalMode(modal, editTrigger || document.createElement('a'));
+            }
+
+            var noun = modalName === 'calendar' ? 'Calendar date' : 'Note';
+            var verb = status === 'updated' ? 'updated' : (status === 'error' ? 'could not be saved' : 'created');
+            var type = status === 'error' ? 'error' : 'success';
+            setModalStatus(modal, noun + ' ' + verb + '.', type);
+            showModal(modal);
+
+            try {
+                var cleanUrl = new URL(window.location.href);
+                cleanUrl.searchParams.delete('ikamy_modal');
+                cleanUrl.searchParams.delete('ikamy_modal_status');
+                cleanUrl.searchParams.delete('ikamy_modal_id');
+                window.history.replaceState({}, document.title, cleanUrl.pathname + cleanUrl.search);
+            } catch (error) {
+            }
+        };
+
+        autoOpenReturnedModal();
         };
 
         if (document.readyState === 'loading') {

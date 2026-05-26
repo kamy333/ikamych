@@ -503,6 +503,8 @@ if ($layout_context == "public") {
                       method="post">
                     <input type="hidden" name="csrf_token" value="<?php echo h($ikamy_nav_csrf_token); ?>">
                     <input type="hidden" name="id" value="">
+                    <input type="hidden" name="return_to" value="">
+                    <input type="hidden" name="ikamy_modal" value="calendar">
 
                     <div class="modal-header ikamy-create-modal__header ikamy-create-modal__header--calendar">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -513,6 +515,7 @@ if ($layout_context == "public") {
                     </div>
 
                     <div class="modal-body ikamy-create-modal__body">
+                        <div class="ikamy-create-modal__status" hidden></div>
                         <div class="ikamy-create-modal__row">
                             <div class="ikamy-create-modal__cell">
                                 <div class="form-group">
@@ -621,6 +624,8 @@ if ($layout_context == "public") {
                       method="post">
                     <input type="hidden" name="csrf_token" value="<?php echo h($ikamy_nav_csrf_token); ?>">
                     <input type="hidden" name="id" value="">
+                    <input type="hidden" name="return_to" value="">
+                    <input type="hidden" name="ikamy_modal" value="note">
                     <input type="hidden" name="user_id" value="<?php echo h($_SESSION['user_id']); ?>">
                     <input type="hidden" name="progress" value="5">
 
@@ -633,6 +638,7 @@ if ($layout_context == "public") {
                     </div>
 
                     <div class="modal-body ikamy-create-modal__body">
+                        <div class="ikamy-create-modal__status" hidden></div>
                         <div class="form-group">
                             <label class="control-label" for="ikamy-note-text">Note<span class="ikamy-required-star" aria-hidden="true">*</span></label>
                             <textarea class="form-control" id="ikamy-note-text" name="note" rows="4"

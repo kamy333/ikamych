@@ -340,6 +340,8 @@ body {
     max-width: 1180px;
     margin-right: auto;
     margin-left: auto;
+    padding-right: 18px;
+    padding-left: 18px;
 }
 
 .ikamy-calendar-page__notes {
@@ -350,7 +352,12 @@ body {
 }
 
 .ikamy-calendar-page__planning {
-    margin-top: 14px;
+    float: none !important;
+    width: 100% !important;
+    max-width: 980px;
+    margin: 14px auto 0 !important;
+    padding-right: 0 !important;
+    padding-left: 0 !important;
 }
 
 .ikamy-notes-page {
@@ -359,8 +366,12 @@ body {
 }
 
 .ikamy-notes-page__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
     margin-bottom: 12px;
-    text-align: center;
+    text-align: left;
 }
 
 .ikamy-notes-page__header h1 {
@@ -375,6 +386,29 @@ body {
     margin: 4px 0 0;
     color: #475569;
     font-size: 14px;
+}
+
+.ikamy-notes-page__add {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    min-height: 38px;
+    padding: 8px 13px;
+    border: 1px solid #f59e0b;
+    border-radius: 7px;
+    background: #fef3c7;
+    color: #92400e;
+    font-weight: 800;
+    text-decoration: none;
+    white-space: nowrap;
+}
+
+.ikamy-notes-page__add:hover,
+.ikamy-notes-page__add:focus {
+    background: #fde68a;
+    color: #78350f;
+    text-decoration: none;
 }
 
 .ikamy-notes-page__quick {
@@ -610,7 +644,8 @@ body {
 }
 
 .ikamy-calendar-card {
-    margin: 12px 14px;
+    width: 100%;
+    margin: 12px 0;
     padding: 14px 16px;
     border: 1px solid rgba(15, 23, 42, 0.08);
     border-left-width: 5px;
@@ -736,6 +771,11 @@ body {
 }
 
 @media (max-width: 767px) {
+    .ikamy-calendar-page__grid {
+        padding-right: 10px;
+        padding-left: 10px;
+    }
+
     .ikamy-calendar-page__header {
         margin-top: 10px;
         padding-right: 8px;
@@ -761,12 +801,21 @@ body {
         padding: 8px 6px 30px;
     }
 
+    .ikamy-notes-page__header {
+        display: block;
+        text-align: center;
+    }
+
     .ikamy-notes-page__header h1 {
         font-size: 23px;
     }
 
     .ikamy-notes-page__header p {
         font-size: 13px;
+    }
+
+    .ikamy-notes-page__add {
+        margin-top: 10px;
     }
 
     .ikamy-notes-page__quick .ibox-title {
@@ -899,6 +948,26 @@ body {
     padding: 22px 30px 0 !important;
     background: #ffffff;
     overflow-y: auto;
+}
+
+.ikamy-create-modal__status {
+    margin: 0 15px 16px;
+    padding: 10px 12px;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 800;
+}
+
+.ikamy-create-modal__status--success {
+    border: 1px solid #86efac;
+    background: #dcfce7;
+    color: #166534;
+}
+
+.ikamy-create-modal__status--error {
+    border: 1px solid #fecaca;
+    background: #fee2e2;
+    color: #991b1b;
 }
 
 .ikamy-create-modal__row {

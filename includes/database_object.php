@@ -313,8 +313,12 @@ class DatabaseObject
         // - single-quotes around all values
         // - escape all values to prevent SQL injection
         $attributes = $this->sanitized_attributes_for_create();
+        $field_names = [];
+        foreach (array_keys($attributes) as $key) {
+            $field_names[] = "`{$key}`";
+        }
         $sql = "INSERT INTO" . " " . static::$table_name . " (";
-        $sql .= join(", ", array_keys($attributes));
+        $sql .= join(", ", $field_names);
         $sql .= ") VALUES ('";
         $sql .= join("', '", array_values($attributes));
         $sql .= "')";

@@ -64,6 +64,69 @@ function append_query_param($url, $key, $value)
     return $url . $separator . rawurlencode($key) . '=' . rawurlencode($value);
 }
 
+function remove_query_params_from_url($url, array $keys)
+{
+    $parts = parse_url($url);
+
+    if ($parts === false) {
+        return $url;
+    }
+
+    $path = $parts['path'] ?? '/';
+    $query = [];
+
+    if (!empty($parts['query'])) {
+        parse_str($parts['query'], $query);
+    }
+
+    foreach ($keys as $key) {
+        unset($query[$key]);
+    }
+
+    $clean_url = $path;
+    if (!empty($query)) {
+        $clean_url .= '?' . http_build_query($query);
+    }
+
+    if (!empty($parts['fragment'])) {
+        $clean_url .= '#' . $parts['fragment'];
+    }
+
+    return $clean_url;
+}
+
+function modal_form_return_url($fallback, $class_name, $status, $record_id = null)
+{
+    $return_to = $_POST['return_to'] ?? '';
+    $modal = $_POST['ikamy_modal'] ?? '';
+    $allowed_modals = [
+        'Calendar' => 'calendar',
+        'Note' => 'note',
+    ];
+
+    if (!isset($allowed_modals[$class_name]) || $modal !== $allowed_modals[$class_name]) {
+        return $fallback;
+    }
+
+    if (!is_safe_local_redirect($return_to)) {
+        return $fallback;
+    }
+
+    $url = remove_query_params_from_url($return_to, [
+        'ikamy_modal',
+        'ikamy_modal_status',
+        'ikamy_modal_id',
+    ]);
+    $url = append_query_param($url, 'ikamy_modal', $modal);
+    $url = append_query_param($url, 'ikamy_modal_status', $status);
+
+    if ($record_id !== null && $record_id !== '') {
+        $url = append_query_param($url, 'ikamy_modal_id', (string)$record_id);
+    }
+
+    return $url;
+}
+
 function strip_zeros_from_date($marked_string = "")
 {
     // first remove the marked zeros

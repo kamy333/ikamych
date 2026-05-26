@@ -68,13 +68,15 @@ if (request_is_post() && request_is_same_domain()) {
             if ($new_item->save()) {
                 $session->message($class_name . $new_item->pseudo . " " . "has been $text_post with ID (" . $new_item->id . ")");
                 $session->ok(true);
+                $redirect_after_save = modal_form_return_url($class_name::$page_manage, $class_name, 'updated', $new_item->id);
                 unset($_POST);
-                redirect_to($class_name::$page_manage);
+                redirect_to($redirect_after_save);
             } else {
                 $session->message($class_name . $new_item->pseudo . " " . "$text_post1 failed or maybe nothing changed");
 //                redirect_to($_SERVER['PHP_SELF']."?".$_SERVER['QUERY_STRING']);
+                $redirect_after_failure = modal_form_return_url($url, $class_name, 'error', $new_item->id ?? $requested_id);
                 unset($_POST);
-                redirect_to($url);
+                redirect_to($redirect_after_failure);
 //                echo '<script type="text/javascript">location.reload(true);</script>';
 //                 echo '<script type="text/javascript">alert("hi");</script>';
 //

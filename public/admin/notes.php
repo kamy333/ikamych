@@ -28,8 +28,14 @@ Note::quickupdate();
     } ?>
 
     <header class="ikamy-notes-page__header">
-        <h1>Quick notes</h1>
-        <p>Tick an open note to mark it done; it leaves this list immediately.</p>
+        <div>
+            <h1>Quick notes</h1>
+            <p>Tick an open note to mark it done; it leaves this list immediately.</p>
+        </div>
+        <a class="ikamy-notes-page__add" href="<?php echo h(SITE_URL . '/public/admin/crud/ajax/new_ajax.php?class_name=Note'); ?>"
+           data-ikamy-modal-target="#ikamy-note-modal">
+            <i class="fa fa-plus" aria-hidden="true"></i> Add note
+        </a>
     </header>
 
     <div class="ikamy-notes-page__quick">
