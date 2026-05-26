@@ -438,7 +438,7 @@ class Calendar extends DatabaseObject
             $appointment_id = (int) $appointment->id;
             $appointment_person = h($person);
             $edit_url = SITE_URL . "/public/admin/crud/ajax/edit_ajax.php?class_name=Calendar&id=" . u($appointment_id);
-            $delete_url = SITE_URL . "/public/admin/crud/ajax/delete_ajax.php?class_name=Calendar&id=" . u($appointment_id);
+            $delete_url = SITE_URL . "/public/admin/crud/ajax/delete_ajax.php?class_name=Calendar&id=" . u($appointment_id) . "&return_to=" . u(current_request_uri());
             $calendar_person_value = (strtolower((string)$appointment->person) === "mum" || (string)$appointment->person === "1") ? "1" : "0";
             $calendar_birthday_value = ((string)$appointment->is_birthday === "1") ? "1" : "0";
             $calendar_start_time = !empty($appointment->start_time) ? date("H:i", strtotime($appointment->start_time)) : "";

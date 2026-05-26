@@ -231,6 +231,16 @@
     color: blue;
 }
 
+.ikamy-inspinia-footer {
+    min-height: 30px;
+}
+
+@media (max-width: 767px) {
+    .ikamy-inspinia-footer {
+        display: none !important;
+    }
+}
+
 
 
 .panel-darkgrey {

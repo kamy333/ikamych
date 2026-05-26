@@ -1,8 +1,15 @@
 
 </div><!-- end of id="wrapper" -->
 
+<style>
+    @media (max-width: 767px) {
+        .ikamy-inspinia-footer {
+            display: none !important;
+        }
+    }
+</style>
 
-<div class="row nav navbar-fixed-bottom">
+<div class="row nav navbar-fixed-bottom ikamy-inspinia-footer">
     <div class="pull-right">
 
     </div>

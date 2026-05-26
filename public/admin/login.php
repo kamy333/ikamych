@@ -168,10 +168,10 @@ if (request_is_post() && request_is_same_domain()) {
 
     .login-panel__title img {
         display: block;
-        width: 120px;
+        width: 190px;
         max-width: 100%;
         height: auto;
-        margin-bottom: 10px;
+        margin-bottom: 14px;
     }
 
     .login-panel__title span {
@@ -274,7 +274,7 @@ if (request_is_post() && request_is_same_domain()) {
         }
 
         .login-panel__title img {
-            width: 110px;
+            width: 160px;
         }
     }
 </style>

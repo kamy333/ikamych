@@ -32,6 +32,41 @@ $layout_context = "public"; ?>
 <?php include(SITE_ROOT . DS . 'public' . DS . 'layouts' . DS . "header.php") ?>
 <?php include(SITE_ROOT . DS . 'public' . DS . 'layouts' . DS . "nav.php") ?>
 
+<style>
+    .ikamy-calendar-page__grid {
+        display: flex;
+        justify-content: center;
+        max-width: 1180px;
+        margin-right: auto;
+        margin-left: auto;
+        padding-right: 18px;
+        padding-left: 18px;
+    }
+
+    .ikamy-calendar-page__planning {
+        flex: 0 1 980px;
+        float: none !important;
+        width: 100% !important;
+        max-width: 980px;
+        margin: 14px auto 0 !important;
+        padding-right: 0 !important;
+        padding-left: 0 !important;
+    }
+
+    .ikamy-calendar-card__comment {
+        overflow-wrap: anywhere;
+        word-break: break-word;
+    }
+
+    @media (max-width: 767px) {
+        .ikamy-calendar-page__grid {
+            display: block;
+            padding-right: 10px;
+            padding-left: 10px;
+        }
+    }
+</style>
+
 <div class="container-fluid ikamy-calendar-page"><!--close default container-->
 
     <!--  <div class="container-fluid about_us">-->
@@ -109,6 +144,8 @@ $layout_context = "public"; ?>
             </nav>
         </header>
     <?php } ?>
+
+    <?php echo $session->message(); ?>
 
 
     <div class="row ikamy-calendar-page__grid">

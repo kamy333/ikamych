@@ -16,20 +16,184 @@ if (User::is_visitor() && !User::is_caroline_only()) {
 <?php include(SITE_ROOT . DS . 'public' . DS . 'layouts' . DS . "nav.php") ?>
 
 <style>
+    body {
+        background-color: #f4f7fb;
+    }
+
     @media (max-width: 767px) {
         body {
             padding-top: 52px;
         }
     }
 
+    .ikamy-home {
+        color: #18233a;
+        margin: 0 auto;
+        overflow-x: hidden;
+    }
+
+    .ikamy-home a {
+        color: inherit;
+    }
+
+    .ikamy-home__section {
+        padding: 46px 18px;
+    }
+
+    .ikamy-home__section--hero {
+        background: linear-gradient(135deg, #eef8ff 0%, #ffffff 58%, #f8fbff 100%);
+        border-bottom: 1px solid #dbe8f4;
+        padding-top: 34px;
+    }
+
+    .ikamy-home__inner {
+        margin: 0 auto;
+        max-width: 1080px;
+    }
+
+    .ikamy-home__hero-grid {
+        align-items: center;
+        display: grid;
+        gap: 36px;
+        grid-template-columns: minmax(260px, 390px) minmax(0, 1fr);
+    }
+
+    .ikamy-home__portrait-link {
+        display: block;
+        justify-self: center;
+        max-width: 390px;
+        width: 100%;
+    }
+
+    .ikamy-home__portrait {
+        aspect-ratio: 4 / 5;
+        border: 10px solid #fff;
+        box-shadow: 0 22px 55px rgba(24, 35, 58, 0.18);
+        display: block;
+        height: auto;
+        object-fit: cover;
+        object-position: center 18%;
+        width: 100%;
+    }
+
+    .ikamy-home__eyebrow {
+        color: #08796f;
+        font-size: 15px;
+        font-weight: 800;
+        letter-spacing: 0;
+        margin-bottom: 10px;
+        text-transform: uppercase;
+    }
+
+    .ikamy-home__title {
+        color: #092f55;
+        font-size: 46px;
+        font-weight: 800;
+        line-height: 1.08;
+        margin: 0 0 14px;
+    }
+
+    .ikamy-home__subtitle {
+        color: #51627a;
+        font-size: 20px;
+        line-height: 1.55;
+        margin: 0 0 26px;
+        max-width: 620px;
+    }
+
+    .ikamy-home__button {
+        background-color: #0b8fcb;
+        border-radius: 6px;
+        box-shadow: 0 12px 28px rgba(11, 143, 203, 0.24);
+        color: #fff !important;
+        display: inline-flex;
+        font-size: 17px;
+        font-weight: 800;
+        line-height: 1;
+        padding: 15px 22px;
+        text-decoration: none !important;
+    }
+
+    .ikamy-home__button:hover,
+    .ikamy-home__button:focus {
+        background-color: #077fb6;
+        color: #fff;
+    }
+
+    .ikamy-home__section-title {
+        color: #075b86;
+        font-size: 34px;
+        font-weight: 700;
+        line-height: 1.2;
+        margin: 0 0 28px;
+        text-align: center;
+    }
+
+    .ikamy-home__welcome-logo {
+        display: inline-block;
+        height: 36px;
+        margin-left: 6px;
+        max-width: 150px;
+        object-fit: contain;
+        vertical-align: -6px;
+        width: auto;
+    }
+
+    .ikamy-home__quotes {
+        display: grid;
+        gap: 18px;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .ikamy-home__quote {
+        background: #fff;
+        border: 1px solid #dce7f0;
+        border-radius: 8px;
+        box-shadow: 0 16px 34px rgba(24, 35, 58, 0.08);
+        display: flex;
+        flex-direction: column;
+        font-size: 18px;
+        line-height: 1.55;
+        min-height: 230px;
+        padding: 24px;
+    }
+
+    .ikamy-home__quote p {
+        margin: 0;
+    }
+
+    .ikamy-home__quote footer {
+        color: #596a80;
+        font-size: 15px;
+        margin-top: auto;
+        padding-top: 18px;
+        text-align: right;
+    }
+
+    .ikamy-home__quote--wide {
+        grid-column: 1 / -1;
+        min-height: 0;
+    }
+
+    .ikamy-home__quote em {
+        color: #3d516d;
+    }
+
+    .ikamy-home__gallery {
+        background: #fff;
+        border-top: 1px solid #dbe8f4;
+    }
+
     #carousel-example-generic {
-        margin: 0 auto 2em;
-        max-width: 720px;
+        margin: 0 auto;
+        max-width: 860px;
     }
 
     #carousel-example-generic .carousel-inner {
         aspect-ratio: 72 / 46;
-        background-color: #f5f5f5;
+        background-color: #eef3f8;
+        border-radius: 8px;
+        box-shadow: 0 22px 55px rgba(24, 35, 58, 0.15);
         overflow: hidden;
         width: 100%;
     }
@@ -78,24 +242,71 @@ if (User::is_visitor() && !User::is_caroline_only()) {
     #carousel-example-generic .carousel-control:focus .glyphicon {
         background-color: rgba(0, 0, 0, 0.65);
     }
+
+    #carousel-example-generic .carousel-indicators {
+        bottom: 12px;
+        margin-bottom: 0;
+    }
+
+    @media (max-width: 991px) {
+        .ikamy-home__hero-grid,
+        .ikamy-home__quotes {
+            grid-template-columns: 1fr;
+        }
+
+        .ikamy-home__title {
+            font-size: 38px;
+        }
+
+        .ikamy-home__hero-copy {
+            text-align: center;
+        }
+
+        .ikamy-home__subtitle {
+            margin-left: auto;
+            margin-right: auto;
+        }
+    }
+
+    @media (max-width: 560px) {
+        .ikamy-home__section {
+            padding: 30px 14px;
+        }
+
+        .ikamy-home__title {
+            font-size: 31px;
+        }
+
+        .ikamy-home__subtitle,
+        .ikamy-home__quote {
+            font-size: 17px;
+        }
+
+        .ikamy-home__section-title {
+            font-size: 28px;
+        }
+
+        .ikamy-home__portrait-link {
+            max-width: 300px;
+        }
+    }
 </style>
 
-
-
-
-<div class="row" >
-    <div class="col-lg-8 col-lg-offset-2" style="margin-top: 0;padding: 0 2em 2em;background-color: white">
-<!--        <h1 class="text-center"><a href="../Inspinia/papa/francais_discours.php">Hommage à mon père</a></h1>-->
-        <h1 class="text-center" style="margin-top: 0"><a href="../Inspinia/papa/francais_discours.php">Hommage à mon père <br>Shmouel ben Galine-Acher 1932-2025</a></h1>
-
-        <div class="text-center">
-            <a href="../Inspinia/papa/francais_discours.php">
-                <img class="thumb text-center" src="../Inspinia/papa/assets/img/photos/Photo_2025-03-01_144725.jpg" alt="Papa" style="width:10%;height:10%">
+<main class="ikamy-home">
+    <section class="ikamy-home__section ikamy-home__section--hero">
+        <div class="ikamy-home__inner ikamy-home__hero-grid">
+            <a class="ikamy-home__portrait-link" href="../Inspinia/papa/francais_discours.php">
+                <img class="ikamy-home__portrait" src="../Inspinia/papa/assets/img/photos/Photo_2025-03-01_144725.jpg" alt="Papa">
             </a>
 
+            <div class="ikamy-home__hero-copy">
+                <div class="ikamy-home__eyebrow">Hommage</div>
+                <h1 class="ikamy-home__title">Hommage à mon père<br>Shmouel ben Galine-Acher</h1>
+                <p class="ikamy-home__subtitle">1932-2025. Un espace pour garder les mots, les souvenirs et la lumière de sa présence.</p>
+                <a class="ikamy-home__button" href="../Inspinia/papa/francais_discours.php">Lire l'hommage</a>
+            </div>
         </div>
-    </div>
-</div>
+    </section>
 
 <?php
 
@@ -205,144 +416,102 @@ if (is_dir($dir)) {
 
 ?>
 
+    <section class="ikamy-home__section">
+        <div class="ikamy-home__inner">
+            <h2 class="ikamy-home__section-title">
+                Welcome to
+                <img class="ikamy-home__welcome-logo" src="<?php echo IKAMY_LOGO_NAV_URL; ?>" alt="iKamy">
+            </h2>
 
-<h1 class="text-center">Welcome to <?php echo $logo ?></h1>
+            <div class="ikamy-home__quotes">
+                <article class="ikamy-home__quote">
+                    <p>En tant de crise, les intelligents cherchent des solutions, les imbéciles cherchent des coupables.</p>
+                    <footer>- Anonyme</footer>
+                </article>
 
-<?php
+                <article class="ikamy-home__quote">
+                    <p>Je t'aime dans le temps. Je t'aimerai jusqu'au bout du temps. Et quand le temps sera écoulé, alors, je t'aurai aimée. Et rien de cet amour, comme rien de ce qui a été, ne pourra jamais être effacé.</p>
+                    <footer>Jean d'Ormesson<br><em>Un jour je m'en irai sans avoir tout dit.</em></footer>
+                </article>
 
-?>
+                <article class="ikamy-home__quote">
+                    <p>J’imagine qu’une des raisons pour lesquelles les gens s’accrochent à leurs haines avec tellement d’obstination, est qu’ils sentent qu’une fois la haine partie, ils devront affronter leurs souffrances.</p>
+                    <footer>James Baldwin</footer>
+                </article>
 
-<div class="col-md-6 col-md-offset-3">
-
-    <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
-        <!-- Indicators -->
-        <ol class="carousel-indicators">
-            <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
-            <!--        <li data-target="#carousel-example-generic" data-slide-to="1"></li>-->
-
-            <?php
-            $extra_engagement_photos = 11;
-            for ($i = 1; $i <= $count + $extra_engagement_photos; $i++) {
-
-                $c = $i;
-                echo "<li data-target=\"#carousel-example-generic\" data-slide-to=\"{$c}\"></li>";
-            }
-
-
-            ?>
-
-
-        </ol>
-
-        <!-- Wrapper for slides -->
-
-        <div class="col-lg-8 col-lg-offset-2" style="margin-top: 2em;padding: 2em">
-
-            <?php
-            $text = "<p>En tant de crise, les intelligents cherchent des solutions, les imbéciles cherchent des coupables.<p>
-	<div class='pull-right'><p><small>- Anonyme</small></p>
-		<small><i></i></small></div>";
-            echo "" . $text . "<br><hr>";
-            ?>
-
-            <?php
-            $text = "<p>Je t'aime dans le temps. Je t'aimerai jusqu'au bout du temps. Et quand le temps sera écoulé, alors, je t'aurai aimée. Et rien de cet amour, comme rien de ce qui a été, ne pourra jamais être effacé.<p>
-	<div class='pull-right'><p>Jean d'Ormesson <small>(16 juin 1925 - 5 décembre 2017)</small></p>
-		<small><i>-Un jour je m'en irai sans avoir tout dit.</i></small></div>";
-            echo "" . $text . "<hr>";
-            ?>
-
-
-        </div>
-
-        <div class="row">
-            <div class="col-lg-8 col-lg-offset-2" style="margin-top: 2em;padding: 2em;background-color: white">
-                <?php
-                //          $text = "<a href='#'></a>";
-                $text = "<p>
-        <i>Ce n’est qu’un moment..</i><br> <br> 
-        
-        Je t'en prie mon amour ne pleure pas<br>
-        Ce n'est qu'un moment<br>
-        Plus jamais je ne pourrais te dire bonne nuit<br>
-        Parce que je suis sur le point d'aller vers la lumière éternelle<br>
-        Ce n’est qu’un moment chéri juste un moment.<br>
-        Tes peines s'estomperont dans le sentiment des étoiles<br>
-        Soit serein chéri ce n'est qu'un moment<br>
-        Mais après éternellement tu ressentiras l'amour<br>
-        Et en m’attendant tu souriras au soleil pour transformer mes larmes en sourire et en bonheur</p>
-            <div class='pull-right'><p><strong>Franseca Barzaghi Bassi</strong></p></div>";
-                echo "" . $text;
-
-                ?>
+                <article class="ikamy-home__quote ikamy-home__quote--wide">
+                    <p>
+                        <em>Ce n’est qu’un moment..</em><br><br>
+                        Je t'en prie mon amour ne pleure pas<br>
+                        Ce n'est qu'un moment<br>
+                        Plus jamais je ne pourrais te dire bonne nuit<br>
+                        Parce que je suis sur le point d'aller vers la lumière éternelle<br>
+                        Ce n’est qu’un moment chéri juste un moment.<br>
+                        Tes peines s'estomperont dans le sentiment des étoiles<br>
+                        Soit serein chéri ce n'est qu'un moment<br>
+                        Mais après éternellement tu ressentiras l'amour<br>
+                        Et en m’attendant tu souriras au soleil pour transformer mes larmes en sourire et en bonheur
+                    </p>
+                    <footer><strong>Franseca Barzaghi Bassi</strong></footer>
+                </article>
             </div>
         </div>
+    </section>
 
-        <div class="row">
-            <div class="col-lg-8 col-lg-offset-2" style="margin-top: 2em;padding: 2em;background-color: white">
-                <?php
-                //          $text = "<a href='#'></a>";
-                $text = "<p>
-J’imagine qu’une des raisons pour lesquelles les gens s’accrochent à leurs haines avec tellement d’obstination, est qu’ils sentent qu’une fois la haine partie, ils devront affronter leurs souffrances.<p>
-	<div class='pull-right'><p>James Baldwin</p>
-	</div>";
-                echo "" . $text;
+    <section class="ikamy-home__section ikamy-home__gallery">
+        <div class="ikamy-home__inner">
+            <h2 class="ikamy-home__section-title">Moments en images</h2>
 
-                ?>
-            </div>
-        </div>
+            <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+                <ol class="carousel-indicators">
+                    <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+                    <?php
+                    $extra_engagement_photos = 11;
+                    for ($i = 1; $i <= $count + $extra_engagement_photos; $i++) {
+                        $c = $i;
+                        echo "<li data-target=\"#carousel-example-generic\" data-slide-to=\"{$c}\"></li>";
+                    }
+                    ?>
+                </ol>
 
+                <div class="carousel-photo-frame">
+                    <div class="carousel-inner" role="listbox">
+                        <div class="item active">
+                            <img src="img/DesireeWedding/Chupah1.jpg" <?php echo $pic_size; ?> alt="tr1">
+                            <div class="carousel-caption"></div>
+                        </div>
 
-        <div class="carousel-photo-frame">
-        <div class="carousel-inner" role="listbox">
+                        <?php
+                        echo $output;
 
-            <div class="item active">
-                <img src="img/DesireeWedding/Chupah1.jpg" <?php echo $pic_size; ?> alt="tr1">
-                <div class="carousel-caption">
+                        for ($i = 1; $i <= 11; $i++) {
+                            $c = 1556 + $i;
+                            $img = "EngDesiree_{$c}.JPG";
+
+                            echo "        <div class=\"item\">
+                            <img $pic_size src=\"img/Kamy/{$img}\" alt=\"tr1\" >
+
+                            <div class='carousel-caption'>
+                                Fiançaille de desirée
+                            </div>
+                        </div>";
+                        }
+                        ?>
+                    </div>
+
+                    <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
+                        <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                        <span class="sr-only">Previous</span>
+                    </a>
+                    <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
+                        <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                        <span class="sr-only">Next</span>
+                    </a>
                 </div>
             </div>
-
-            <?php
-
-            echo $output;
-
-
-            for ($i = 1; $i <= 11; $i++) {
-//            <img src=\"img/Kamy/{$img}\" alt=\"tr1\" style=\"width: 100%;height: 100%\">
-
-
-                $c = 1556 + $i;
-                $img = "EngDesiree_{$c}.JPG";
-
-                echo "        <div class=\"item\">
-            <img $pic_size src=\"img/Kamy/{$img}\" alt=\"tr1\" >
-
-            <div class='carousel-caption'>
-                Fiançaille de desirée
-            </div>
-        </div>";
-
-            }
-
-
-            ?>
-
-
         </div>
-
-        <!-- Controls -->
-        <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
-            <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-            <span class="sr-only">Previous</span>
-        </a>
-        <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
-            <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-            <span class="sr-only">Next</span>
-        </a>
-        </div>
-    </div>
-
-</div>
+    </section>
+</main>
 <hr>
 <?php
 

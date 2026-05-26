@@ -9,6 +9,13 @@ body {
     padding-top: 70px;
        }
 
+.ikamy-logo-picture {
+    display: inline-flex;
+    align-items: center;
+    height: 32px;
+    vertical-align: middle;
+}
+
 .ikamy-logo-inline {
     display: inline-block;
     width: auto;
@@ -21,13 +28,50 @@ body {
 .navbar-brand .ikamy-logo-inline {
     height: 32px;
     max-height: 32px;
-    margin-top: -7px;
+    margin-top: 0;
+}
+
+.navbar-default .navbar-brand.active {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    height: 50px;
+    padding-top: 9px;
+    padding-bottom: 9px;
+}
+
+.navbar-brand .ikamy-logo-picture .ikamy-logo-inline {
+    margin-top: 0;
+}
+
+.ikamy-logo-context-label {
+    display: inline-flex;
+    align-items: center;
+    min-height: 20px;
+    padding: 3px 8px 2px;
+    border: 1px solid #b9ddf6;
+    border-radius: 4px;
+    background-color: #eaf6ff;
+    color: #0a64a0;
+    font-size: 12px;
+    font-weight: 800;
+    line-height: 1;
+    text-transform: uppercase;
+    vertical-align: middle;
 }
 
 .my_footer .ikamy-logo-inline {
-    height: 18px !important;
-    max-height: 18px !important;
+    height: 22px !important;
+    max-height: 22px !important;
     margin-top: 0 !important;
+}
+
+.my_footer .ikamy-logo-picture {
+    display: inline-flex;
+    align-items: center;
+    height: 22px;
+    margin-left: 4px;
+    vertical-align: middle;
 }
 
 .nav-quick-actions {
@@ -1440,10 +1484,79 @@ th {
 
 
 .my_footer {
-   background-color: darkgray;
-    color: white;
-    padding-top: 0.1em;
-    height: 1.4em;
+    display: flex;
+    align-items: center;
+    min-height: 42px;
+    border-top: 1px solid #d5dde7;
+    background-color: rgba(242, 246, 250, 0.96);
+    box-shadow: 0 -8px 24px rgba(15, 23, 42, 0.08);
+    color: #526276;
+    padding: 6px 22px;
+    z-index: 1030;
+}
+
+body {
+    padding-bottom: 52px;
+}
+
+.my_footer__inner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 18px;
+    width: 100%;
+    min-height: 30px;
+    margin: 0 auto;
+    position: relative;
+}
+
+.my_footer__copyright {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+    min-height: 24px;
+    line-height: 1.2;
+    text-align: center;
+}
+
+.my_footer__copyright small {
+    display: inline-flex;
+    align-items: center;
+}
+
+.my_footer__social {
+    position: absolute;
+    right: 0;
+    display: flex;
+    align-items: center;
+    min-height: 24px;
+}
+
+@media (max-width: 640px) {
+    .my_footer {
+        padding-right: 12px;
+        padding-left: 12px;
+    }
+
+    .my_footer__inner {
+        justify-content: space-between;
+        gap: 10px;
+    }
+
+    .my_footer__social {
+        position: static;
+    }
+}
+
+@media (max-width: 767px) {
+    body {
+        padding-bottom: 0;
+    }
+
+    .my_footer {
+        display: none !important;
+    }
 }
 
 .table-btn {
@@ -1568,20 +1681,33 @@ hr.soften {
 
 
 .socialmediaicons ul {
-  margin: 0;
-  padding: 0;
-  list-style: none;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
 }
 
 
 .socialmediaicons  ul li {
-  display: inline-block;
-  margin-left: 5px;
+    display: inline-flex;
+    margin-left: 0;
 }
 
 .socialmediaicons ul li img {
-  width: 20px;
-  border-radius: 50%;
+    display: block;
+    width: 21px;
+    height: 21px;
+    border-radius: 50%;
+    opacity: 0.9;
+    transition: opacity 140ms ease, transform 140ms ease;
+}
+
+.socialmediaicons ul li a:hover img,
+.socialmediaicons ul li a:focus img {
+    opacity: 1;
+    transform: translateY(-1px);
 }
 
 /*[class*="col-"] .chosen-container {*/

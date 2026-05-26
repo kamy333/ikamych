@@ -85,14 +85,15 @@ defined('TABLE_MANAGE') ? null : define('TABLE_MANAGE', SITE_ROOT . DS . 'Inspin
 
 
 $logo_nav_file = SITE_ROOT . DS . 'public' . DS . 'img' . DS . 'logo' . DS . 'ikamy-logo-blue-1.png';
-$logo_login_file = SITE_ROOT . DS . 'public' . DS . 'img' . DS . 'logo' . DS . 'ikamy-logo-blue-4.png';
+$logo_nav_square_file = SITE_ROOT . DS . 'public' . DS . 'img' . DS . 'logo' . DS . 'logo square blue.png';
 $logo_nav_version = is_file($logo_nav_file) ? (string)filemtime($logo_nav_file) : '1';
-$logo_login_version = is_file($logo_login_file) ? (string)filemtime($logo_login_file) : '1';
+$logo_nav_square_version = is_file($logo_nav_square_file) ? (string)filemtime($logo_nav_square_file) : '1';
 
 defined('IKAMY_LOGO_NAV_URL') ? null : define('IKAMY_LOGO_NAV_URL', MY_URL_PUBLIC . 'img/logo/ikamy-logo-blue-1.png?v=' . $logo_nav_version);
-defined('IKAMY_LOGO_LOGIN_URL') ? null : define('IKAMY_LOGO_LOGIN_URL', MY_URL_PUBLIC . 'img/logo/ikamy-logo-blue-4.png?v=' . $logo_login_version);
+defined('IKAMY_LOGO_NAV_COMPACT_URL') ? null : define('IKAMY_LOGO_NAV_COMPACT_URL', MY_URL_PUBLIC . 'img/logo/logo%20square%20blue.png?v=' . $logo_nav_square_version);
+defined('IKAMY_LOGO_LOGIN_URL') ? null : define('IKAMY_LOGO_LOGIN_URL', IKAMY_LOGO_NAV_URL);
 
-$logo = "<img class='ikamy-logo-inline' src='" . IKAMY_LOGO_NAV_URL . "' alt='ikamy.ch' style='display:inline-block;height:32px;width:auto;max-width:none;vertical-align:middle;margin-top:-7px;'>";
+$logo = "<picture class='ikamy-logo-picture'><source media='(max-width: 1100px)' srcset='" . IKAMY_LOGO_NAV_COMPACT_URL . "'><img class='ikamy-logo-inline' src='" . IKAMY_LOGO_NAV_URL . "' alt='ikamy.ch' style='display:inline-block;height:32px;width:auto;max-width:none;vertical-align:middle;margin-top:0;'></picture>";
 $logo2 = $logo;
 defined('LOGO') ? null : define("LOGO", $logo);
 defined('LOGO2') ? null : define("LOGO2", $logo2);

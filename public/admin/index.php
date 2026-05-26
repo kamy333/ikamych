@@ -404,7 +404,7 @@ $actions = [
         <section class="admin-dashboard__grid">
             <article class="admin-card admin-card--memorial">
                 <a class="admin-card__image-link" href="../../Inspinia/papa/francais_discours.php" aria-label="Open Hommage a mon pere">
-                    <img src="../../Inspinia/papa/assets/img/photos/Photo_2025-03-01_144725.jpg" alt="Papa">
+                    <img src="../../Inspinia/papa/assets/img/photos/WhatsApp Image 2025-02-25 at 06.11.22_2c7722bd.jpg" alt="Papa">
                 </a>
                 <div class="admin-card__body">
                     <p class="admin-card__label">Memory</p>

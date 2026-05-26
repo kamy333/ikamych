@@ -1,14 +1,9 @@
-<?php echo str_repeat("<br>", 4); ?>
-<footer class="row nav navbar-fixed-bottom my_footer">
-    <div class="row">
-        <div class="socialmediaicons pull-right" style="margin-right: 5em;">
-
-        </div>
-        <div class="text-center">
-            <p class="text-center">
-                <small>&#xA9;&nbsp;2014 - <?php echo date("Y"); ?>,<?php echo " " . $logo; ?> </small>
-            </p>
-        </div>
+<footer class="navbar-fixed-bottom my_footer" role="contentinfo">
+    <div class="my_footer__inner">
+        <p class="my_footer__copyright">
+            <small>&#xA9;&nbsp;2014 - <?php echo date("Y"); ?>,<?php echo " " . $logo; ?></small>
+        </p>
+        <div class="socialmediaicons my_footer__social" aria-label="Social links"></div>
     </div>
 </footer>
 
@@ -614,8 +609,6 @@ $(document).ready(function () {
 </script>
 
 <script src="<?php echo $Nav->path_public; ?>js/test_tooltips.js"></script>
-
-<?php echo str_repeat("<br>", 50) ?>
 
 </body>
 

@@ -8,6 +8,7 @@
 <?php
 
 $show_testing = $show_testing ?? false;
+$show_admin_context_label = (isset($layout_context) && $layout_context == "admin") || (isset($session) && $session->is_logged_in() && User::is_admin());
 
 if ($layout_context == "public") {
     $path_admin = MY_URL_ADMIN;
@@ -46,10 +47,7 @@ if ($layout_context == "public") {
                 <span class="icon-bar"></span>
             </button>
 
-            <a class="navbar-brand active" href="<?php echo SITE_URL; ?>/public/index.php"><?php echo LOGO ?><span
-                        style="color: blue"> <?php if (isset($layout_context) && $layout_context == "admin") {
-                        echo " Admin";
-                    } ?></span></a>
+            <a class="navbar-brand active" href="<?php echo SITE_URL; ?>/public/index.php"><?php echo LOGO ?><?php if ($show_admin_context_label) { ?><span class="ikamy-logo-context-label">Admin</span><?php } ?></a>
 
         </div>
         <div class="collapse navbar-collapse" id="collapse">
