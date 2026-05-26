@@ -260,6 +260,12 @@ class Note extends DatabaseObject
     {
         global $session;
         if (isset($_GET['id']) && ($_GET['class_name'] ?? '') === 'Note' && ($_GET['action'] ?? '') === 'quickupdate') {
+            $viewAllNote = $_GET['viewAllNote'] ?? 'yes';
+            if (!in_array($viewAllNote, ['yes', 'no', 'done'], true)) {
+                $viewAllNote = 'yes';
+            }
+            $redirectUrl = $_SERVER['PHP_SELF'] . "?viewAllNote=" . rawurlencode($viewAllNote);
+
             if (!$session->is_logged_in()) {
                 if ($ajax) {
                     return "Login required";
@@ -276,7 +282,7 @@ class Note extends DatabaseObject
                     return $message;
                 }
                 $session->message($message);
-                redirect_to($_SERVER['PHP_SELF'] . "?viewAllNote=yes");
+                redirect_to($redirectUrl);
             }
 
             $note = static::find_by_id($id);
@@ -288,16 +294,16 @@ class Note extends DatabaseObject
                         return $message;
                     }
                     $session->message($message);
-                    redirect_to($_SERVER['PHP_SELF'] . "?viewAllNote=yes");
+                    redirect_to($redirectUrl);
                 }
 
-                $note->done = !$note->done;
+                $note->done = ((int)$note->done === 1) ? 0 : 1;
                 $note->update();
 
                 if ($ajax == true) {
                     return static::smallNotelist();
                 } else {
-                    redirect_to($_SERVER['PHP_SELF'] . "?viewAllNote=yes");
+                    redirect_to($redirectUrl);
                 }
 
             } else {
@@ -349,7 +355,7 @@ class Note extends DatabaseObject
         }
 
         $classnew = "<span style='color:blue;'><i class='fa fa-plus' style='font-size: 1.5em;'></i></span>";
-        $new = "<a  href='" . static::$page_new . "'>
+        $new = "<a class='small-note-add-link' href='" . static::$page_new . "' title='Add note' data-ikamy-modal-target='#ikamy-note-modal'>
             $classnew
             </a>";
 
@@ -365,6 +371,7 @@ class Note extends DatabaseObject
 
         $class1 = "fa fa-check-square";
         $class2 = "m-l-xs";
+        $currentViewMode = $showall ? "yes" : "no";
 
 
         $output .= "<div class=\"ibox-content\">";
@@ -374,7 +381,38 @@ class Note extends DatabaseObject
 
         foreach ($notes as $note) {
 
-            $myId = "<a href='" . SITE_URL . "/public/admin/crud/ajax/edit_ajax.php?class_name=Note&id=" . u($note->id) . "'>" . $note->id . "</a>";
+            $noteId = u($note->id);
+            $noteEditHref = SITE_URL . "/public/admin/crud/ajax/edit_ajax.php?class_name=Note&id=" . $noteId;
+            $noteDueDate = isset($note->due_date) ? (string)$note->due_date : "";
+            $noteRank = isset($note->rank) ? (string)$note->rank : "";
+            $noteDone = !empty($note->done) ? "1" : "0";
+            $noteProgress = isset($note->progress) ? (string)$note->progress : "";
+            $noteText = isset($note->note) ? (string)$note->note : "";
+            $noteComment = isset($note->comment) ? (string)$note->comment : "";
+            $noteWebAddress = isset($note->web_address) ? (string)$note->web_address : "";
+            $noteUserId = isset($note->user_id) ? (string)$note->user_id : "";
+            $noteDoneLabel = $noteDone === "1" ? "Yes" : "No";
+            $noteDeleteHref = SITE_URL . static::$page_delete . "&id=" . $noteId . "&action=delete";
+
+            $myId = "<a href=\"" . h($noteEditHref) . "\"
+                class=\"small-note-edit-link\"
+                title=\"Edit note " . h((string)$note->id) . "\"
+                data-ikamy-modal-target=\"#ikamy-note-modal\"
+                data-ikamy-note-edit=\"1\"
+                data-note-id=\"" . h((string)$note->id) . "\"
+                data-note-user-id=\"" . h($noteUserId) . "\"
+                data-note-text=\"" . h($noteText) . "\"
+                data-note-due-date=\"" . h($noteDueDate) . "\"
+                data-note-rank=\"" . h($noteRank) . "\"
+                data-note-done=\"" . h($noteDone) . "\"
+                data-note-progress=\"" . h($noteProgress) . "\"
+                data-note-web-address=\"" . h($noteWebAddress) . "\"
+                data-note-comment=\"" . h($noteComment) . "\">" . h((string)$note->id) . "</a>";
+            $deleteLink = "<a href=\"" . h($noteDeleteHref) . "\"
+                class=\"small-note-delete-link\"
+                title=\"Delete note " . h((string)$note->id) . "\"
+                onclick=\"return confirm('Are you sure you want to delete this note " . h((string)$note->id) . "?');\">
+                <i class=\"fa fa-trash\" aria-hidden=\"true\"></i><span class=\"sr-only\">Delete note</span></a>";
 
 //            $done= !empty($note->done)  ?
 //                "<span style='color:green;'><i  class='fa fa-check-square'></i></span>"  :
@@ -423,27 +461,54 @@ class Note extends DatabaseObject
 
                 if ($myshow) {
 
-                    $short_href = $_SERVER['PHP_SELF'] . "?id={$note->id}&viewAllNote=yes&class_name=Note&action=quickupdate";
+                    $short_href = $_SERVER['PHP_SELF'] . "?id={$note->id}&viewAllNote={$currentViewMode}&class_name=Note&action=quickupdate";
 //                    $short_href = $_SERVER['PHP_SELF'] . "?id={$note->id}&viewAllNote=yes&class_name=Note&action=quickupdate";
 
 
-                    $new_href = "?id={$note->id}&viewAllNote=yes&class_name=Note&action=quickupdate";
+                    $new_href = "?id={$note->id}&viewAllNote={$currentViewMode}&class_name=Note&action=quickupdate";
 
 
                     if ($ajax) {
                         $output .= "<li style='list-style: none;font-size: smaller;margin-left: 0'  class='ul-list-SmallNote'  data-myid='{$note->id}' id='ul-list-SmallNote{$note->id}'>";
-//                        $output .= "<a href='$short_href' class='check-link smallNoteChecklink' data-newhref='{$new_href}'  ><i class='{$class1}'></i> </a>";
+                        $output .= "<div class='small-note-line'>";
                         $output .= "<a href='$short_href' class='check-link smallNoteChecklink' data-newhref='{$new_href}'  >$class1_1 </a>";
-                        $output .= "<span class='{$class2}'>";
-                        $output .= "&nbsp;&nbsp;" . $myId . " &nbsp;  " . $note->notes . "&nbsp;&nbsp;" . "  " . "<span style='font-size: xx-small;color: blueviolet'><b>" . $note->due_on . "</b></span>"; //."  ".$href
+                        $output .= $myId;
+                        $output .= "<span class='{$class2} small-note-summary'>";
+                        $output .= $note->notes . " <span class='small-note-due'>" . h((string)$note->due_on) . "</span>";
                         $output .= "</span>";
+                        $output .= "<button type='button' class='small-note-details-toggle' aria-expanded='false' aria-controls='small-note-details-{$noteId}' title='Show note details'><i class='fa fa-plus' aria-hidden='true'></i><span class='sr-only'>Show note details</span></button>";
+                        $output .= $deleteLink;
+                        $output .= "</div>";
+                        $output .= "<div class='small-note-details' id='small-note-details-{$noteId}' hidden>";
+                        $output .= "<dl>";
+                        $output .= "<dt>Due date</dt><dd>" . h((string)$note->due_on) . "</dd>";
+                        $output .= "<dt>Rank</dt><dd>" . h($noteRank) . "</dd>";
+                        $output .= "<dt>Done</dt><dd>" . h($noteDoneLabel) . "</dd>";
+                        $output .= "<dt>Website</dt><dd>" . (!empty($noteWebAddress) ? "<a href=\"" . h($noteWebAddress) . "\" target=\"_blank\" rel=\"noopener noreferrer\">" . h($noteWebAddress) . "</a>" : "<span class='text-muted'>None</span>") . "</dd>";
+                        $output .= "<dt>Comment</dt><dd>" . (!empty($noteComment) ? nl2br(h($noteComment)) : "<span class='text-muted'>None</span>") . "</dd>";
+                        $output .= "</dl>";
+                        $output .= "</div>";
                         $output .= "</li>";
                     } else {
                         $output .= "<li style='list-style: none;font-size: smaller;margin-left: 0'  class='ul-list-SmallNote'  data-myid='{$note->id}' id='ul-list-SmallNote{$note->id}'>";
+                        $output .= "<div class='small-note-line'>";
                         $output .= "<a href='$short_href' class='check-link smallNoteChecklink' data-newhref='{$new_href}'  >$class1_1 </a>";
-                        $output .= "<span class='{$class2}'>";
-                        $output .= "&nbsp;&nbsp;" . $myId . " &nbsp;  " . $note->notes . "&nbsp;&nbsp;" . "  " . "<span style='font-size: xx-small;color: blueviolet'><b>" . $note->due_on . "</b></span>"; //."  ".$href
+                        $output .= $myId;
+                        $output .= "<span class='{$class2} small-note-summary'>";
+                        $output .= $note->notes . " <span class='small-note-due'>" . h((string)$note->due_on) . "</span>";
                         $output .= "</span>";
+                        $output .= "<button type='button' class='small-note-details-toggle' aria-expanded='false' aria-controls='small-note-details-{$noteId}' title='Show note details'><i class='fa fa-plus' aria-hidden='true'></i><span class='sr-only'>Show note details</span></button>";
+                        $output .= $deleteLink;
+                        $output .= "</div>";
+                        $output .= "<div class='small-note-details' id='small-note-details-{$noteId}' hidden>";
+                        $output .= "<dl>";
+                        $output .= "<dt>Due date</dt><dd>" . h((string)$note->due_on) . "</dd>";
+                        $output .= "<dt>Rank</dt><dd>" . h($noteRank) . "</dd>";
+                        $output .= "<dt>Done</dt><dd>" . h($noteDoneLabel) . "</dd>";
+                        $output .= "<dt>Website</dt><dd>" . (!empty($noteWebAddress) ? "<a href=\"" . h($noteWebAddress) . "\" target=\"_blank\" rel=\"noopener noreferrer\">" . h($noteWebAddress) . "</a>" : "<span class='text-muted'>None</span>") . "</dd>";
+                        $output .= "<dt>Comment</dt><dd>" . (!empty($noteComment) ? nl2br(h($noteComment)) : "<span class='text-muted'>None</span>") . "</dd>";
+                        $output .= "</dl>";
+                        $output .= "</div>";
                         $output .= "</li>";
                     }
 
@@ -600,12 +665,14 @@ class Note extends DatabaseObject
     public static function get_view_note($search)
     {
 
+        $viewAllNote = $_GET['viewAllNote'] ?? 'yes';
+
         $sql = static::find_by_sql("SELECT * FROM note  ORDER BY due_date ");
-        if ($_GET['viewAllNote'] == 'yes') {
+        if ($viewAllNote == 'yes') {
             $sql = static::find_by_sql("SELECT * FROM note  ORDER BY due_date ");
-        } elseif ($_GET['viewAllNote'] == 'no') {
+        } elseif ($viewAllNote == 'no') {
             $sql = static::find_by_sql("SELECT * FROM note where done=0  ORDER BY due_date ");
-        } elseif ($_GET['viewAllNote'] == 'done') {
+        } elseif ($viewAllNote == 'done') {
             $sql = static::find_by_sql("SELECT * FROM note where done=1   ORDER BY due_date ");
         } else {
             $sql = static::find_by_sql("SELECT * FROM note  ORDER BY due_date ");

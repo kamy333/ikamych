@@ -416,13 +416,13 @@ if ($layout_context == "public") {
 
 <!--            <i class='fa fa-calendar'>&nbsp;-->
 
-            <ul class="nav navbar-nav navbar-right">
+            <ul class="nav navbar-nav navbar-right nav-quick-actions">
                 <?php
                 if (User::is_kamy()) {
-                    echo "<li  ><a href='" . SITE_URL . "/public/calendar.php'><b>Calendar</b></a>";
-                    echo "<li  style='background-color: white;color: blue'><a href='" . SITE_URL . "/public/admin/crud/ajax/new_ajax.php?class_name=Calendar'><b>+</b></a>";
-                    echo "<li  ><a href='" . SITE_URL . "/public/admin/notes.php?viewAllNote=no'><b>Note</b></a>";
-                    echo "<li  style='background-color: white;color: blue'><a href='" . SITE_URL . "/public/admin/crud/ajax/new_ajax.php?class_name=Note'><b>+</b></a>";
+                    echo "<li><a class='nav-quick-action nav-quick-action--calendar' href='" . SITE_URL . "/public/calendar.php' title='Manage calendar' aria-label='Manage calendar' data-tooltip='Manage calendar'><i class='fa fa-calendar' aria-hidden='true'></i><span class='sr-only'>Manage calendar</span></a></li>";
+                    echo "<li><a class='nav-quick-action nav-quick-action--add nav-quick-action--calendar-add' href='" . SITE_URL . "/public/admin/crud/ajax/new_ajax.php?class_name=Calendar' title='Add calendar date' aria-label='Add calendar date' data-tooltip='Add calendar date' data-ikamy-modal-target='#ikamy-calendar-modal'><span class='nav-quick-action__stack'><i class='fa fa-calendar-o' aria-hidden='true'></i><i class='fa fa-plus nav-quick-action__badge' aria-hidden='true'></i></span><span class='sr-only'>Add calendar date</span></a></li>";
+                    echo "<li><a class='nav-quick-action nav-quick-action--notes' href='" . SITE_URL . "/public/admin/notes.php?viewAllNote=no' title='Quick notes' aria-label='Quick notes' data-tooltip='Quick notes'><i class='fa fa-edit' aria-hidden='true'></i><span class='sr-only'>Quick notes</span></a></li>";
+                    echo "<li><a class='nav-quick-action nav-quick-action--add nav-quick-action--note-add' href='" . SITE_URL . "/public/admin/crud/ajax/new_ajax.php?class_name=Note' title='Add note' aria-label='Add note' data-tooltip='Add note' data-ikamy-modal-target='#ikamy-note-modal'><span class='nav-quick-action__stack'><i class='fa fa-edit' aria-hidden='true'></i><i class='fa fa-plus nav-quick-action__badge' aria-hidden='true'></i></span><span class='sr-only'>Add note</span></a></li>";
                 }
                 ?>
 
@@ -434,7 +434,7 @@ if ($layout_context == "public") {
                 <!---->
                 <?php if (isset($_SESSION["user_id"])) { ?>
 
-                    <li class="active"><a href="<?php echo $path_admin; ?>logout.php"
+                    <li class="active nav-user-menu"><a href="<?php echo $path_admin; ?>logout.php"
                                           data-toggle="dropdown"><?php echo "&nbsp;&nbsp;" ?>
                             <small><strong><?php echo $user->username . "&nbsp;&nbsp;"; ?></strong></small>
 
@@ -488,6 +488,213 @@ if ($layout_context == "public") {
 
 
 </div>
+
+<?php if (isset($_SESSION["user_id"]) && User::is_kamy()) { ?>
+    <?php $ikamy_nav_csrf_token = create_csrf_token(); ?>
+
+    <div class="modal fade ikamy-create-modal" id="ikamy-calendar-modal" tabindex="-1" role="dialog"
+         aria-labelledby="ikamy-calendar-modal-title">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <form class="form-horizontal ikamy-create-modal__form"
+                      data-create-action="<?php echo h(SITE_URL . '/public/admin/crud/ajax/new_ajax.php?class_name=Calendar'); ?>"
+                      data-edit-action="<?php echo h(SITE_URL . '/public/admin/crud/ajax/edit_ajax.php?class_name=Calendar&id=__ID__'); ?>"
+                      action="<?php echo h(SITE_URL . '/public/admin/crud/ajax/new_ajax.php?class_name=Calendar'); ?>"
+                      method="post">
+                    <input type="hidden" name="csrf_token" value="<?php echo h($ikamy_nav_csrf_token); ?>">
+                    <input type="hidden" name="id" value="">
+
+                    <div class="modal-header ikamy-create-modal__header ikamy-create-modal__header--calendar">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <p class="ikamy-create-modal__eyebrow">Calendar</p>
+                        <h4 class="modal-title" id="ikamy-calendar-modal-title">New calendar date</h4>
+                    </div>
+
+                    <div class="modal-body ikamy-create-modal__body">
+                        <div class="ikamy-create-modal__row">
+                            <div class="ikamy-create-modal__cell">
+                                <div class="form-group">
+                                    <span class="control-label ikamy-create-modal__group-label">Person<span class="ikamy-required-star" aria-hidden="true">*</span></span>
+                                    <div class="ikamy-choice-group" role="radiogroup" aria-label="Person">
+                                        <label class="ikamy-choice ikamy-choice--person-kamy">
+                                            <input id="ikamy-calendar-person-kamy" name="person" type="radio"
+                                                   value="0" required checked>
+                                            <span>Kamy</span>
+                                        </label>
+                                        <label class="ikamy-choice ikamy-choice--person-mum">
+                                            <input id="ikamy-calendar-person-mum" name="person" type="radio"
+                                                   value="1" required>
+                                            <span>Mum</span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="ikamy-create-modal__row">
+                            <div class="ikamy-create-modal__cell">
+                                <div class="form-group">
+                                    <label class="control-label" for="ikamy-calendar-title">Title<span class="ikamy-required-star" aria-hidden="true">*</span></label>
+                                    <input class="form-control" id="ikamy-calendar-title" name="title" type="text"
+                                           placeholder="What is planned?" required>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="ikamy-create-modal__row ikamy-create-modal__row--three">
+                            <div class="ikamy-create-modal__cell">
+                                <div class="form-group">
+                                    <label class="control-label" for="ikamy-calendar-date">Date<span class="ikamy-required-star" aria-hidden="true">*</span></label>
+                                    <input class="form-control js-flatpickr-date" id="ikamy-calendar-date" name="start_date" type="text"
+                                           value="<?php echo h(date('Y-m-d')); ?>" required>
+                                </div>
+                            </div>
+                            <div class="ikamy-create-modal__cell">
+                                <div class="form-group">
+                                    <label class="control-label" for="ikamy-calendar-start">Start<span class="ikamy-required-star" aria-hidden="true">*</span></label>
+                                    <input class="form-control js-flatpickr-time" id="ikamy-calendar-start" name="start_time" type="text"
+                                           placeholder="HH:MM"
+                                           required>
+                                </div>
+                            </div>
+                            <div class="ikamy-create-modal__cell">
+                                <div class="form-group">
+                                    <label class="control-label" for="ikamy-calendar-end">End</label>
+                                    <input class="form-control js-flatpickr-time" id="ikamy-calendar-end" name="end_time" type="text"
+                                           placeholder="HH:MM">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="ikamy-create-modal__row">
+                            <div class="ikamy-create-modal__cell">
+                                <div class="form-group">
+                                    <label class="control-label" for="ikamy-calendar-comment">Comment</label>
+                                    <textarea class="form-control" id="ikamy-calendar-comment" name="comment" rows="2"
+                                              placeholder="Optional details"></textarea>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="ikamy-create-modal__row">
+                            <div class="ikamy-create-modal__cell">
+                                <div class="form-group ikamy-create-modal__compact-group">
+                                    <span class="control-label ikamy-create-modal__group-label">Birthday<span class="ikamy-required-star" aria-hidden="true">*</span></span>
+                                    <div class="ikamy-choice-group ikamy-choice-group--compact" role="radiogroup" aria-label="Birthday">
+                                        <label class="ikamy-choice">
+                                            <input id="ikamy-calendar-birthday-no" name="is_birthday" type="radio"
+                                                   value="0" required checked>
+                                            <span>No</span>
+                                        </label>
+                                        <label class="ikamy-choice">
+                                            <input id="ikamy-calendar-birthday-yes" name="is_birthday" type="radio"
+                                                   value="1" required>
+                                            <span>Yes</span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer ikamy-create-modal__footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-primary ikamy-create-modal__submit">
+                            <i class="fa fa-calendar-plus-o" aria-hidden="true"></i> Create date
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade ikamy-create-modal" id="ikamy-note-modal" tabindex="-1" role="dialog"
+         aria-labelledby="ikamy-note-modal-title">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <form class="form-horizontal ikamy-create-modal__form"
+                      data-create-action="<?php echo h(SITE_URL . '/public/admin/crud/ajax/new_ajax.php?class_name=Note'); ?>"
+                      data-edit-action="<?php echo h(SITE_URL . '/public/admin/crud/ajax/edit_ajax.php?class_name=Note&id=__ID__'); ?>"
+                      action="<?php echo h(SITE_URL . '/public/admin/crud/ajax/new_ajax.php?class_name=Note'); ?>"
+                      method="post">
+                    <input type="hidden" name="csrf_token" value="<?php echo h($ikamy_nav_csrf_token); ?>">
+                    <input type="hidden" name="id" value="">
+                    <input type="hidden" name="user_id" value="<?php echo h($_SESSION['user_id']); ?>">
+                    <input type="hidden" name="progress" value="5">
+
+                    <div class="modal-header ikamy-create-modal__header ikamy-create-modal__header--note">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <p class="ikamy-create-modal__eyebrow">Notes</p>
+                        <h4 class="modal-title" id="ikamy-note-modal-title">New note</h4>
+                    </div>
+
+                    <div class="modal-body ikamy-create-modal__body">
+                        <div class="form-group">
+                            <label class="control-label" for="ikamy-note-text">Note<span class="ikamy-required-star" aria-hidden="true">*</span></label>
+                            <textarea class="form-control" id="ikamy-note-text" name="note" rows="4"
+                                      placeholder="Write the note..." required></textarea>
+                        </div>
+
+                        <div class="ikamy-create-modal__row ikamy-create-modal__row--note-meta">
+                            <div class="ikamy-create-modal__cell">
+                                <div class="form-group">
+                                    <label class="control-label" for="ikamy-note-due">Due date</label>
+                                    <input class="form-control js-flatpickr-date" id="ikamy-note-due" name="due_date" type="text"
+                                           value="<?php echo h(date('Y-m-d')); ?>">
+                                </div>
+                            </div>
+                            <div class="ikamy-create-modal__cell">
+                                <div class="form-group">
+                                    <label class="control-label" for="ikamy-note-rank">Rank</label>
+                                    <input class="form-control" id="ikamy-note-rank" name="rank" type="number" min="0"
+                                           value="1">
+                                </div>
+                            </div>
+                            <div class="ikamy-create-modal__cell">
+                                <div class="form-group">
+                                    <span class="control-label ikamy-create-modal__group-label">Done/finished<span class="ikamy-required-star" aria-hidden="true">*</span></span>
+                                    <div class="ikamy-choice-group ikamy-choice-group--compact" role="radiogroup" aria-label="Done or finished">
+                                        <label class="ikamy-choice">
+                                            <input id="ikamy-note-done-no" name="done" type="radio" value="0" required checked>
+                                            <span>No</span>
+                                        </label>
+                                        <label class="ikamy-choice">
+                                            <input id="ikamy-note-done-yes" name="done" type="radio" value="1" required>
+                                            <span>Yes</span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label" for="ikamy-note-web-address">Website address</label>
+                            <input class="form-control" id="ikamy-note-web-address" name="web_address" type="url"
+                                   placeholder="https://example.com">
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label" for="ikamy-note-comment">Comment</label>
+                            <textarea class="form-control" id="ikamy-note-comment" name="comment" rows="3"
+                                      placeholder="Optional details"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer ikamy-create-modal__footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-primary ikamy-create-modal__submit">
+                            <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Create note
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+<?php } ?>
 
 <?php //  echo "<p class='text-left'><small>".$complete_date."</small></p>";?>
 

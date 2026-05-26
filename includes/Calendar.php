@@ -392,10 +392,10 @@ class Calendar extends DatabaseObject
 
             if ($mydate >= $hour_minus_1_comp && $mydate <= $hour_add_1_comp && $appointment->start_date == $dt) {
                 if ($mydate < $dtTime) {
-                    $coming_up = "<span style='font-size: 1em;color: darkgrey;'><b>In Past</b></span>";
+                    $coming_up = "<span class='ikamy-calendar-card__status ikamy-calendar-card__status--past'>In Past</span>";
                     $coming_up_mail = "<span style='font-size: 1em;color: darkgrey;'><b>In Past<br></b></span>";
                 } else {
-                    $coming_up = "<span style='font-size: 1em;color: white;'><b>Coming Up</b></span>";
+                    $coming_up = "<span class='ikamy-calendar-card__status ikamy-calendar-card__status--soon'>Coming Up</span>";
                     $coming_up_mail = "<span style='font-size: 1em;color: teal;'><b>Coming Up<br></b></span>";
                 }
 
@@ -406,8 +406,14 @@ class Calendar extends DatabaseObject
             }
 
 
-            $myday = "<span lang='fr' style='background-color: white;font-size: smaller;padding: 0.2em'>$myday</span>";
+            $myday = "<span lang='fr' class='ikamy-calendar-card__day-offset'>$myday</span>";
             $myday_mail = "<span lang='fr' style='font-size: smaller;padding: 0.2em'>$myday</span>";
+
+            $bcolor = "#00dce3";
+            $color = "black";
+            $bcolor_mail = "blue";
+            $color_mail = "black";
+            $person = h((string)$appointment->person);
 
             if (strtolower($appointment->person) == "kamy" || $appointment->person == "0") {
                 $bcolor = "aqua";
@@ -425,47 +431,50 @@ class Calendar extends DatabaseObject
                 $person = "Mum";
             }
 
-            $msg .= "<div lang='fr' style='background-color: $bcolor;color:$color;margin: 1em;padding: 0.7em '>";
+            $person_class = ($person === "Mum") ? "mum" : "kamy";
+            $msg .= "<article lang='fr' class='ikamy-calendar-card ikamy-calendar-card--{$person_class}'>";
             $mail .= "<div lang='fr' style='color:$bcolor_mail '>";
 
             $appointment_id = (int) $appointment->id;
-            $appointment_person = h($appointment->person);
-            $edit = "<a href='" . SITE_URL . "/public/admin/crud/ajax/edit_ajax.php?class_name=Calendar&id=" . u($appointment_id) . "'>$appointment_person</a>";
-            $edit1 = $appointment_person;
+            $appointment_person = h($person);
+            $edit_url = SITE_URL . "/public/admin/crud/ajax/edit_ajax.php?class_name=Calendar&id=" . u($appointment_id);
+            $delete_url = SITE_URL . "/public/admin/crud/ajax/delete_ajax.php?class_name=Calendar&id=" . u($appointment_id);
+            $calendar_person_value = (strtolower((string)$appointment->person) === "mum" || (string)$appointment->person === "1") ? "1" : "0";
+            $calendar_birthday_value = ((string)$appointment->is_birthday === "1") ? "1" : "0";
+            $calendar_start_time = !empty($appointment->start_time) ? date("H:i", strtotime($appointment->start_time)) : "";
+            $calendar_end_time = (!empty($appointment->end_time) && $appointment->end_time !== "00:00:00") ? date("H:i", strtotime($appointment->end_time)) : "";
+            $calendar_edit_data = " data-ikamy-modal-target=\"#ikamy-calendar-modal\"" .
+                " data-ikamy-calendar-edit=\"1\"" .
+                " data-calendar-id=\"" . h($appointment_id) . "\"" .
+                " data-calendar-person=\"" . h($calendar_person_value) . "\"" .
+                " data-calendar-title=\"" . h($appointment->title) . "\"" .
+                " data-calendar-start-date=\"" . h($appointment->start_date) . "\"" .
+                " data-calendar-start-time=\"" . h($calendar_start_time) . "\"" .
+                " data-calendar-end-time=\"" . h($calendar_end_time) . "\"" .
+                " data-calendar-comment=\"" . h($appointment->comment) . "\"" .
+                " data-calendar-birthday=\"" . h($calendar_birthday_value) . "\"";
+            $edit = "<a class='ikamy-calendar-card__person' href='" . h($edit_url) . "' $calendar_edit_data>$appointment_person</a>";
+            $edit1 = "<span class='ikamy-calendar-card__person'>$appointment_person</span>";
 
             $onclick = "onclick=\"return confirm('Are you sure you want to delete ID {$appointment_id}?');\"";
 
-            $delete = "<a href='" . SITE_URL . "/public/admin/crud/ajax/delete_ajax.php?class_name=Calendar&id=" . u($appointment_id) . "' $onclick>
-            <span style='background-color: white;color: indianred;margin: 2em;padding: 0.7em; '><b>Delete ($appointment_id)</b></span></a>";
+            $delete = "<a class='ikamy-calendar-card__action ikamy-calendar-card__action--delete' href='" . h($delete_url) . "' $onclick aria-label='Delete appointment {$appointment_id}' title='Delete appointment {$appointment_id}'>
+            <i class='fa fa-trash' aria-hidden='true'></i><span class='sr-only'>Delete appointment {$appointment_id}</span></a>";
+            $edit_action = "<a class='ikamy-calendar-card__action ikamy-calendar-card__action--edit' href='" . h($edit_url) . "' $calendar_edit_data aria-label='Edit appointment {$appointment_id}' title='Edit appointment {$appointment_id}'>
+            <i class='fa fa-pencil' aria-hidden='true'></i><span class='sr-only'>Edit appointment {$appointment_id}</span></a>";
             $delete1 = $appointment_person;
 
             $nbsp = str_repeat("&nbsp;", 20);
 
-            $a1 = "<h3 lang='fr'>$coming_up $edit   : <b>" . h($appointment->title) . "</b> $myday</h3>";
-
-
-            $a = "<div class='col-md-6'>$a1</div>";
-            $b = "<div class='col-md-6 text-right'><span class='text-align-right' >  $delete</span></div>";
-
-            $c = "<div class='row'>";
-            $c .= $a;
-            $c .= $b;
-            $c .= "</div>";
-
-            $a = "<div class='col-md-6'>$a1 $delete</div>";
-            $b = "";
-
-            $d = "<div class='row'>";
-            $d .= $a;
-            $d .= $b;
-            $d .= "</div>";
-
-
             if (User::is_admin()) {
-//                $msg .= "<h3 lang='fr'>$coming_up $edit   : <b>" . h($appointment->title) . "</b> $myday</h3>";
-                $msg .= $c;
+                $msg .= "<div class='ikamy-calendar-card__top'>
+                    <div class='ikamy-calendar-card__title'>$coming_up $edit <span class='ikamy-calendar-card__separator'>:</span> <strong>" . h($appointment->title) . "</strong></div>
+                    <div class='ikamy-calendar-card__actions'>$edit_action $delete</div>
+                </div>";
             } else {
-                $msg .= "<h3 lang='fr'>$coming_up $edit1   : <b>" . h($appointment->title) . "</b> $myday</h3>";
+                $msg .= "<div class='ikamy-calendar-card__top'>
+                    <div class='ikamy-calendar-card__title'>$coming_up $edit1 <span class='ikamy-calendar-card__separator'>:</span> <strong>" . h($appointment->title) . "</strong></div>
+                </div>";
             }
 
             if (1 == 2) {
@@ -477,7 +486,7 @@ class Calendar extends DatabaseObject
             }
 
 
-            $mail .= "<p  lang='fr'>$coming_up_mail $edit: <b>" . h($appointment->title) . "</b> ";
+            $mail .= "<p  lang='fr'>$coming_up_mail $appointment_person: <b>" . h($appointment->title) . "</b> ";
 
             $date = new DateTimeImmutable($appointment->start_date);
 
@@ -485,26 +494,26 @@ class Calendar extends DatabaseObject
             $hourmin = date("H:i", strtotime($mydate));
 
 
-            $msg .= "<b> " . $date->format('l d.m.Y') . " @ " . $hourmin . "</b>";
+            $time_text = $date->format('l d.m.Y') . " @ " . $hourmin;
             $mail .= "<b> " . $date->format('l d.m.Y') . " @ " . $hourmin . "</b> $myday_mail $nbsp $delete";
 
             if ($appointment->end_time != '00:00:00') {
                 $mydate1 = "$appointment->start_date $appointment->end_time";
                 $hourmin1 = date("H:i", strtotime($mydate1));
-                $msg .= " To <b>" . $hourmin1 . "</b><br>";
+                $time_text .= " to " . $hourmin1;
                 $mail .= " To <b>" . $hourmin1 . "</b> ";
             } else {
-                $msg .= "<br>";
                 $mail .= "<br>";
             }
 
+            $msg .= "<div class='ikamy-calendar-card__meta'><span><i class='fa fa-clock-o' aria-hidden='true'></i> <b>" . h($time_text) . "</b></span>$myday</div>";
 
             if ($appointment->comment != "") {
-                $msg .= "<span lang='fr'>comment: <b>" . h($appointment->comment) . "</b></span><br>";
+                $msg .= "<div class='ikamy-calendar-card__comment'><span>comment:</span> <b>" . h($appointment->comment) . "</b></div>";
                 $mail .= "<span lang='fr'> <b>" . h($appointment->comment) . "</b></span><br>";
             }
 
-            $msg .= "</div>";
+            $msg .= "</article>";
 
             if ($x !== $counts_appoitments) {
                 $mail .= "----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------";

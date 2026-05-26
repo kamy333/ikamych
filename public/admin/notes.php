@@ -21,20 +21,21 @@ Note::quickupdate();
 <?php include(SITE_ROOT . DS . 'public' . DS . 'layouts' . DS . "header.php") ?>
 <?php include(SITE_ROOT . DS . 'public' . DS . 'layouts' . DS . "nav.php") ?>
 
-<?php echo isset($valid) ? $valid->form_errors() : "" ?>
-<?php if (isset($message)) {
-    echo $message;
-} ?>
+<div class="container-fluid ikamy-notes-page">
+    <?php echo isset($valid) ? $valid->form_errors() : "" ?>
+    <?php if (isset($message)) {
+        echo $message;
+    } ?>
 
+    <header class="ikamy-notes-page__header">
+        <h1>Quick notes</h1>
+        <p>Tick an open note to mark it done; it leaves this list immediately.</p>
+    </header>
 
-
-
-        <div class="col-lg-3">
+    <div class="ikamy-notes-page__quick">
         <?php echo Note::smallNotelist(); ?>
-        </div>
-        <div class="col-lg-7">
-            <?php echo Note::noteList(); ?>
-        </div>
+    </div>
+</div>
 
 
 

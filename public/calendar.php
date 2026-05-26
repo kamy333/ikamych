@@ -32,7 +32,7 @@ $layout_context = "public"; ?>
 <?php include(SITE_ROOT . DS . 'public' . DS . 'layouts' . DS . "header.php") ?>
 <?php include(SITE_ROOT . DS . 'public' . DS . 'layouts' . DS . "nav.php") ?>
 
-<div class="container-fluid"><!--close default container-->
+<div class="container-fluid ikamy-calendar-page"><!--close default container-->
 
     <!--  <div class="container-fluid about_us">-->
 
@@ -65,16 +65,13 @@ $layout_context = "public"; ?>
 
 
     if (isCalendarPast()) {
-        $btnPrevious = "{$nbsp}<a  style='padding:0.1em'  class='btn-info' href='" . h(SITE_URL . "/public/calendar.php") . "'>Future</a>";
+        $btnPrevious = "<a class='ikamy-calendar-page__action ikamy-calendar-page__action--secondary' href='" . h(SITE_URL . "/public/calendar.php") . "'><i class='fa fa-calendar-check-o' aria-hidden='true'></i> Future</a>";
     } else {
-        $btnPrevious = "{$nbsp}<a  style='padding:0.1em'  class='btn-info' href='" . h(SITE_URL . "/public/calendar.php?type=Past") . "'>Past</a>";
+        $btnPrevious = "<a class='ikamy-calendar-page__action ikamy-calendar-page__action--secondary' href='" . h(SITE_URL . "/public/calendar.php?type=Past") . "'><i class='fa fa-history' aria-hidden='true'></i> Past</a>";
     }
 
 
 
-
-    $btnNote = "";
-    $btnNoteAdd = "";
 
 //    echo '<br><br>';
 
@@ -86,13 +83,9 @@ $layout_context = "public"; ?>
 
     if (User::is_admin()) {
 
-        $btnRecur = "{$nbsp}<a style='padding:0.1em'  class='btn-beige' href='" . h(SITE_URL . "/public/_f/kamy/recurring_appointment.php") . "'>Add Recurring Calendar</a>";
-        $btnCert = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a style='padding:0.1em'  class='btn-info' href='" . h(SITE_URL . "/public/email_script/appointment.php") . "'>Certificat Medical Email</a>";
-        $btnNote = " <a style='padding: 0.1em' href='" . h(SITE_URL . "/public/admin/notes.php") . "'><button class='btn-warning'>Note</button></a>";
-        $classeNewNote = "<span ><i class='fa fa-plus-square' ></i></span> Note";
-        $btnNoteAdd = " <a style='padding: 0.1em' href='" . h(SITE_URL . "/public/admin/crud/ajax/new_ajax.php?class_name=Note") . "'><button class='btn-warning'>$classeNewNote</button></a>";
-        $btn = "<br>     
-        <a style='padding: 0.1em' href='" . h(SITE_URL . "/public/admin/crud/ajax/new_ajax.php?class_name=Calendar") . "'><button class='btn-primary'>Add Date</button></a>";
+        $btnRecur = "<a class='ikamy-calendar-page__action ikamy-calendar-page__action--neutral' href='" . h(SITE_URL . "/public/_f/kamy/recurring_appointment.php") . "'><i class='fa fa-repeat' aria-hidden='true'></i> Recurring</a>";
+        $btnCert = "<a class='ikamy-calendar-page__action ikamy-calendar-page__action--secondary' href='" . h(SITE_URL . "/public/email_script/appointment.php") . "'><i class='fa fa-envelope-o' aria-hidden='true'></i> Medical email</a>";
+        $btn = "<a class='ikamy-calendar-page__action ikamy-calendar-page__action--primary' href='" . h(SITE_URL . "/public/admin/crud/ajax/new_ajax.php?class_name=Calendar") . "' data-ikamy-modal-target='#ikamy-calendar-modal'><i class='fa fa-calendar-plus-o' aria-hidden='true'></i> Add date</a>";
     }
 
 
@@ -100,29 +93,27 @@ $layout_context = "public"; ?>
 
     <?php
     if (isCalendarPast()) { ?>
-        <h2 class="text-center"><a
-                    href="<?php echo h(SITE_URL . '/public/admin/crud/ajax/manage_ajax.php?class_name=Calendar'); ?>">
-                <span style="color: red"><b>PAST Appointments Calendar</b> <?php echo $txt; ?></span>
-            </a> <?php echo $btn . $btnRecur . $btnCert . $btnPrevious . $btnNote.$btnGenPsalm; ?></h2>
+        <header class="ikamy-calendar-page__header ikamy-calendar-page__header--past">
+            <h1><a href="<?php echo h(SITE_URL . '/public/admin/crud/ajax/manage_ajax.php?class_name=Calendar'); ?>">Past appointments calendar</a></h1>
+            <p><?php echo $txt; ?></p>
+            <nav class="ikamy-calendar-page__actions" aria-label="Calendar actions">
+                <?php echo $btn . $btnRecur . $btnCert . $btnPrevious . $btnGenPsalm; ?>
+            </nav>
+        </header>
     <?php } else { ?>
-        <h2 class="text-center"><a
-                    href="<?php echo h(SITE_URL . '/public/admin/crud/ajax/manage_ajax.php?class_name=Calendar'); ?>">Appointments
-                Calendar <?php echo $txt; ?> </a> <?php echo $btn . $btnRecur . $btnCert . $btnPrevious . $btnNote . $btnNoteAdd.$btnGenPsalm; ?>
-        </h2>
+        <header class="ikamy-calendar-page__header">
+            <h1><a href="<?php echo h(SITE_URL . '/public/admin/crud/ajax/manage_ajax.php?class_name=Calendar'); ?>">Appointments Calendar</a></h1>
+            <p><?php echo $txt; ?></p>
+            <nav class="ikamy-calendar-page__actions" aria-label="Calendar actions">
+                <?php echo $btn . $btnRecur . $btnCert . $btnPrevious . $btnGenPsalm; ?>
+            </nav>
+        </header>
     <?php } ?>
 
 
-    <div class="row">
+    <div class="row ikamy-calendar-page__grid">
 
-        <div class="col-lg-3" style="background-color:lightyellow;margin-top: 90px ">
-            <?php
-            echo Note::smallNotelist();
-            //            Note::SendsmallNotelist();
-            ?>
-        </div>
-
-
-        <div class="col-lg-8">
+        <div class="col-lg-10 col-lg-offset-1 ikamy-calendar-page__planning">
             <?php
             $msg = Calendar::get_message();
             echo $msg;
