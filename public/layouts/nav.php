@@ -417,10 +417,15 @@ if ($layout_context == "public") {
             <ul class="nav navbar-nav navbar-right nav-quick-actions">
                 <?php
                 if (User::is_kamy()) {
+                    $note_quick_class = User::is_admin() ? "nav-quick-action nav-quick-action--add nav-quick-action--note-add" : "nav-quick-action nav-quick-action--add nav-quick-action--note-add nav-quick-action--end";
                     echo "<li><a class='nav-quick-action nav-quick-action--calendar' href='" . SITE_URL . "/public/calendar.php' title='Manage calendar' aria-label='Manage calendar' data-tooltip='Manage calendar'><i class='fa fa-calendar' aria-hidden='true'></i><span class='sr-only'>Manage calendar</span></a></li>";
                     echo "<li><a class='nav-quick-action nav-quick-action--add nav-quick-action--calendar-add' href='" . SITE_URL . "/public/admin/crud/ajax/new_ajax.php?class_name=Calendar' title='Add calendar date' aria-label='Add calendar date' data-tooltip='Add calendar date' data-ikamy-modal-target='#ikamy-calendar-modal'><span class='nav-quick-action__stack'><i class='fa fa-calendar-o' aria-hidden='true'></i><i class='fa fa-plus nav-quick-action__badge' aria-hidden='true'></i></span><span class='sr-only'>Add calendar date</span></a></li>";
                     echo "<li><a class='nav-quick-action nav-quick-action--notes' href='" . SITE_URL . "/public/admin/notes.php?viewAllNote=no' title='Quick notes' aria-label='Quick notes' data-tooltip='Quick notes'><i class='fa fa-edit' aria-hidden='true'></i><span class='sr-only'>Quick notes</span></a></li>";
-                    echo "<li><a class='nav-quick-action nav-quick-action--add nav-quick-action--note-add' href='" . SITE_URL . "/public/admin/crud/ajax/new_ajax.php?class_name=Note' title='Add note' aria-label='Add note' data-tooltip='Add note' data-ikamy-modal-target='#ikamy-note-modal'><span class='nav-quick-action__stack'><i class='fa fa-edit' aria-hidden='true'></i><i class='fa fa-plus nav-quick-action__badge' aria-hidden='true'></i></span><span class='sr-only'>Add note</span></a></li>";
+                    echo "<li><a class='" . h($note_quick_class) . "' href='" . SITE_URL . "/public/admin/crud/ajax/new_ajax.php?class_name=Note' title='Add note' aria-label='Add note' data-tooltip='Add note' data-ikamy-modal-target='#ikamy-note-modal'><span class='nav-quick-action__stack'><i class='fa fa-edit' aria-hidden='true'></i><i class='fa fa-plus nav-quick-action__badge' aria-hidden='true'></i></span><span class='sr-only'>Add note</span></a></li>";
+                }
+                if (User::is_admin()) {
+                    $expense_quick_class = User::is_kamy() ? "nav-quick-action nav-quick-action--add nav-quick-action--expense-add" : "nav-quick-action nav-quick-action--add nav-quick-action--expense-add nav-quick-action--solo";
+                    echo "<li><a class='" . h($expense_quick_class) . "' href='" . SITE_URL . "/public/admin/crud/ajax/new_ajax.php?class_name=MyExpense' title='Add expense' aria-label='Add expense' data-tooltip='Add expense' data-ikamy-modal-target='#ikamy-expense-modal'><span class='nav-quick-action__stack'><i class='fa fa-money' aria-hidden='true'></i><i class='fa fa-plus nav-quick-action__badge' aria-hidden='true'></i></span><span class='sr-only'>Add expense</span></a></li>";
                 }
                 ?>
 
@@ -487,7 +492,7 @@ if ($layout_context == "public") {
 
 </div>
 
-<?php if (isset($_SESSION["user_id"]) && User::is_kamy()) { ?>
+<?php if (isset($_SESSION["user_id"]) && (User::is_kamy() || User::is_admin())) { ?>
     <?php $ikamy_nav_csrf_token = create_csrf_token(); ?>
 
     <div class="modal fade ikamy-create-modal" id="ikamy-calendar-modal" tabindex="-1" role="dialog"
@@ -698,6 +703,141 @@ if ($layout_context == "public") {
             </div>
         </div>
     </div>
+    <?php if (User::is_admin()) { ?>
+        <?php
+        $ikamy_expense_people = MyExpensePerson::find_by_sql("SELECT * FROM myexpense_person ORDER BY `rank` ASC, person_name ASC");
+        $ikamy_expense_types = MyExpenseType::find_by_sql("SELECT * FROM myexpense_type ORDER BY `rank` ASC, expense_type ASC");
+        $ikamy_expense_currencies = Currency::find_by_sql("SELECT * FROM currency ORDER BY `rank` ASC, currency ASC");
+        $ikamy_expense_default_person_id = "2";
+        ?>
+        <div class="modal fade ikamy-create-modal" id="ikamy-expense-modal" tabindex="-1" role="dialog"
+             aria-labelledby="ikamy-expense-modal-title">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <form class="form-horizontal ikamy-create-modal__form"
+                          data-create-action="<?php echo h(SITE_URL . '/public/admin/crud/ajax/new_ajax.php?class_name=MyExpense'); ?>"
+                          action="<?php echo h(SITE_URL . '/public/admin/crud/ajax/new_ajax.php?class_name=MyExpense'); ?>"
+                          method="post">
+                        <input type="hidden" name="csrf_token" value="<?php echo h($ikamy_nav_csrf_token); ?>">
+                        <input type="hidden" name="id" value="">
+                        <input type="hidden" name="return_to" value="">
+                        <input type="hidden" name="ikamy_modal" value="expense">
+                        <input type="hidden" name="modification_time" value="<?php echo h(datetime_sql()); ?>">
+
+                        <div class="modal-header ikamy-create-modal__header ikamy-create-modal__header--expense">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            <p class="ikamy-create-modal__eyebrow">Expense</p>
+                            <h4 class="modal-title" id="ikamy-expense-modal-title">New expense</h4>
+                            <a class="ikamy-create-modal__header-link" href="<?php echo h(SITE_URL . '/Inspinia/loan_exp.php'); ?>">
+                                <i class="fa fa-list" aria-hidden="true"></i> Manage expenses
+                            </a>
+                        </div>
+
+                        <div class="modal-body ikamy-create-modal__body">
+                            <div class="ikamy-create-modal__status" hidden></div>
+
+                            <div class="ikamy-create-modal__row ikamy-create-modal__row--three">
+                                <div class="ikamy-create-modal__cell">
+                                    <div class="form-group">
+                                        <label class="control-label" for="ikamy-expense-amount">Amount<span class="ikamy-required-star" aria-hidden="true">*</span></label>
+                                        <input class="form-control" id="ikamy-expense-amount" name="amount" type="number"
+                                               step="0.01" placeholder="0.00" required>
+                                    </div>
+                                </div>
+                                <div class="ikamy-create-modal__cell">
+                                    <div class="form-group">
+                                        <label class="control-label" for="ikamy-expense-ccy-id">Currency<span class="ikamy-required-star" aria-hidden="true">*</span></label>
+                                        <select class="form-control" id="ikamy-expense-ccy-id" name="ccy_id" required>
+                                            <?php foreach ($ikamy_expense_currencies as $currency) { ?>
+                                                <option value="<?php echo h((string)$currency->id); ?>"<?php echo (string)$currency->id === "1" ? " selected" : ""; ?>><?php echo h((string)$currency->currency); ?></option>
+                                            <?php } ?>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="ikamy-create-modal__cell">
+                                    <div class="form-group">
+                                        <label class="control-label" for="ikamy-expense-rate">Rate<span class="ikamy-required-star" aria-hidden="true">*</span></label>
+                                        <input class="form-control" id="ikamy-expense-rate" name="rate" type="number"
+                                               step="0.00001" min="0.00001" value="1" required>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="ikamy-create-modal__row ikamy-create-modal__row--three">
+                                <div class="ikamy-create-modal__cell">
+                                    <div class="form-group">
+                                        <label class="control-label" for="ikamy-expense-date">Expense date<span class="ikamy-required-star" aria-hidden="true">*</span></label>
+                                        <input class="form-control js-flatpickr-date" id="ikamy-expense-date" name="expense_date" type="text"
+                                               value="<?php echo h(date('Y-m-d')); ?>" required>
+                                    </div>
+                                </div>
+                                <div class="ikamy-create-modal__cell">
+                                    <div class="form-group">
+                                        <label class="control-label" for="ikamy-expense-person-id">Person<span class="ikamy-required-star" aria-hidden="true">*</span></label>
+                                        <select class="form-control" id="ikamy-expense-person-id" name="person_id" required>
+                                            <?php foreach ($ikamy_expense_people as $person) { ?>
+                                                <option value="<?php echo h((string)$person->id); ?>"<?php echo (string)$person->id === $ikamy_expense_default_person_id ? " selected" : ""; ?>><?php echo h((string)$person->person_name); ?></option>
+                                            <?php } ?>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="ikamy-create-modal__cell">
+                                    <div class="form-group">
+                                        <label class="control-label" for="ikamy-expense-type-id">Expense type<span class="ikamy-required-star" aria-hidden="true">*</span></label>
+                                        <select class="form-control" id="ikamy-expense-type-id" name="expense_type_id" required>
+                                            <option value="">Choose type</option>
+                                            <?php foreach ($ikamy_expense_types as $expense_type) { ?>
+                                                <option value="<?php echo h((string)$expense_type->id); ?>"><?php echo h((string)$expense_type->expense_type); ?></option>
+                                            <?php } ?>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="ikamy-create-modal__row">
+                                <div class="ikamy-create-modal__cell">
+                                    <div class="form-group ikamy-create-modal__compact-group">
+                                        <span class="control-label ikamy-create-modal__group-label">Cash<span class="ikamy-required-star" aria-hidden="true">*</span></span>
+                                        <div class="ikamy-choice-group ikamy-choice-group--compact" role="radiogroup" aria-label="Cash">
+                                            <label class="ikamy-choice">
+                                                <input id="ikamy-expense-cash-no" name="cash" type="radio" value="0" required checked>
+                                                <span>No</span>
+                                            </label>
+                                            <label class="ikamy-choice">
+                                                <input id="ikamy-expense-cash-yes" name="cash" type="radio" value="1" required>
+                                                <span>Yes</span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="control-label" for="ikamy-expense-comment">Comment</label>
+                                <textarea class="form-control" id="ikamy-expense-comment" name="comment" rows="3"
+                                          placeholder="Optional details"></textarea>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="control-label" for="ikamy-expense-document">Document</label>
+                                <input class="form-control" id="ikamy-expense-document" name="document" type="text"
+                                       placeholder="Document path or reference">
+                            </div>
+                        </div>
+
+                        <div class="modal-footer ikamy-create-modal__footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                            <button type="submit" class="btn btn-primary ikamy-create-modal__submit">
+                                <i class="fa fa-money" aria-hidden="true"></i> Create expense
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    <?php } ?>
 <?php } ?>
 
 <?php //  echo "<p class='text-left'><small>".$complete_date."</small></p>";?>

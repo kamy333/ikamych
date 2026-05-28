@@ -62,7 +62,7 @@ if (isset($_GET['test']) && $_GET['test'] == 1) {
 
     .admin-dashboard__eyebrow {
         margin: 0 0 4px;
-        color: #047857;
+        color: #0077b6;
         font-size: 12px;
         font-weight: 800;
         text-transform: uppercase;
@@ -70,7 +70,7 @@ if (isset($_GET['test']) && $_GET['test'] == 1) {
 
     .admin-dashboard__title {
         margin: 0;
-        color: #0f172a;
+        color: #06356f;
         font-size: 32px;
         line-height: 1.12;
         font-weight: 800;
@@ -78,7 +78,7 @@ if (isset($_GET['test']) && $_GET['test'] == 1) {
 
     .admin-dashboard__subtitle {
         margin: 6px 0 0;
-        color: #64748b;
+        color: #2e6f9f;
         font-size: 15px;
     }
 
@@ -144,7 +144,7 @@ if (isset($_GET['test']) && $_GET['test'] == 1) {
 
     .admin-card__label {
         margin: 0 0 8px;
-        color: #64748b;
+        color: #0077b6;
         font-size: 12px;
         font-weight: 800;
         text-transform: uppercase;
@@ -152,7 +152,7 @@ if (isset($_GET['test']) && $_GET['test'] == 1) {
 
     .admin-card__title {
         margin: 0;
-        color: #0f172a;
+        color: #06356f;
         font-size: 24px;
         line-height: 1.2;
         font-weight: 800;
@@ -165,7 +165,7 @@ if (isset($_GET['test']) && $_GET['test'] == 1) {
 
     .admin-card__title a:hover,
     .admin-card__title a:focus {
-        color: #0f766e;
+        color: #008bd2;
         text-decoration: none;
     }
 
@@ -340,6 +340,7 @@ $actions = [
         'title' => 'New calendar date',
         'meta' => 'Create a new appointment',
         'tone' => 'danger',
+        'modal_target' => '#ikamy-calendar-modal',
     ],
     [
         'href' => SITE_URL . '/public/admin/manage_user.php',
@@ -361,6 +362,7 @@ $actions = [
         'title' => 'New expense',
         'meta' => 'Add a personal expense',
         'tone' => 'danger',
+        'modal_target' => '#ikamy-expense-modal',
     ],
     [
         'href' => SITE_URL . '/public/admin/crud/ajax/manage_ajax.php?class_name=MyExpenseMumPost',
@@ -403,13 +405,13 @@ $actions = [
 
         <section class="admin-dashboard__grid">
             <article class="admin-card admin-card--memorial">
-                <a class="admin-card__image-link" href="../../Inspinia/papa/francais_discours.php" aria-label="Open Hommage a mon pere">
+                <a class="admin-card__image-link" href="../../Inspinia/papa/francais_discours.php" aria-label="Open Hommage à mon Père">
                     <img src="../../Inspinia/papa/assets/img/photos/WhatsApp Image 2025-02-25 at 06.11.22_2c7722bd.jpg" alt="Papa">
                 </a>
                 <div class="admin-card__body">
                     <p class="admin-card__label">Memory</p>
                     <h2 class="admin-card__title">
-                        <a href="../../Inspinia/papa/francais_discours.php">Hommage a mon pere<br>Shmouel ben Galine-Acher 1932-2025</a>
+                        <a href="../../Inspinia/papa/francais_discours.php">Hommage à mon Père<br>Shmouel ben Galine-Acher 1932-2025</a>
                     </h2>
                 </div>
             </article>
@@ -420,7 +422,9 @@ $actions = [
                         <p class="admin-card__label">Shortcuts</p>
                         <div class="admin-actions">
                             <?php foreach ($actions as $action) { ?>
-                                <a class="admin-action <?php echo $action['tone'] !== '' ? 'admin-action--' . h($action['tone']) : ''; ?>" href="<?php echo h($action['href']); ?>">
+                                <?php $modal_target = $action['modal_target'] ?? ''; ?>
+                                <a class="admin-action <?php echo $action['tone'] !== '' ? 'admin-action--' . h($action['tone']) : ''; ?>"
+                                   href="<?php echo h($action['href']); ?>"<?php echo $modal_target !== '' ? ' data-ikamy-modal-target="' . h($modal_target) . '"' : ''; ?>>
                                     <span class="admin-action__icon"><i class="fa <?php echo h($action['icon']); ?>" aria-hidden="true"></i></span>
                                     <span>
                                         <span class="admin-action__title"><?php echo h($action['title']); ?></span>

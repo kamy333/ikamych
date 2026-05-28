@@ -1,61 +1,33 @@
-
 <?php require_once('../includes/initialize.php'); ?>
+<?php require_once('links_public_hub_view.php'); ?>
 
-<?php $class_name="Links"; ?>
+<?php
+$class_name = "Links";
+$layout_context = "public";
+$active_menu = "links";
+$stylesheets = "";
+$fluid_view = true;
+$javascript = "";
+$incl_message_error = true;
+?>
 
-<?php $layout_context = "public"; ?>
-<?php $active_menu="links"; ?>
-<?php $stylesheets="";  ?>
-<?php $fluid_view=true; ?>
-<?php $javascript=""; ?>
-<?php $incl_message_error=true; ?>
-<?php //include_layout_template('header_2.php'); ?>
-<?php include(SITE_ROOT.DS.'public'.DS.'layouts'.DS."header.php") ?>
-<?php //include_layout_template('nav.php'); ?>
-<?php include(SITE_ROOT.DS.'public'.DS.'layouts'.DS."nav.php") ?>
+<?php include(SITE_ROOT . DS . 'public' . DS . 'layouts' . DS . "header.php"); ?>
+<?php include(SITE_ROOT . DS . 'public' . DS . 'layouts' . DS . "nav.php"); ?>
 
+<?php
+public_links_render_page([
+    'kicker' => 'Blue Remini subcategory 2',
+    'title' => 'Second subcategory links.',
+    'copy' => 'The second subcategory view, modernized with compact rows, blue cards, and cleaner navigation.',
+    'messages' => $session->message() . (isset($valid) ? $valid->form_errors() : ''),
+    'category_html' => Links::get_search_category(false, true),
+    'section_title' => 'Sub category 2 links',
+    'columns' => 2,
+    'sections' => [
+        Links::output_links(null, false, true),
+        Links::output_links('PHP'),
+    ],
+]);
+?>
 
-<div class="row">
-    <?php echo $session->message(); ?>
-    <?php  echo isset($valid)? $valid->form_errors():"" ?>
-</div>
-
-
-
-    <div class="row">
-        <div class="col-lg-11 col-lg-offset-1 col-md-11 col-md-offset-1 col-sm-5">
-            <?php echo Links::get_search_category(false,true); ?>
-        </div>
-    </div>
-
-    <br>
-
-    <div class="row">
-        <div class="col-lg-3 col-lg-offset-1">
-            <?php //echo get_search_category(); ?>
-
-            <?php echo Links::output_links(null,false,true); ?>
-        </div>
-
-        <div class="col-lg-3 col-lg-offset-1">
-            <?php //echo get_search_category(); ?>
-
-            <?php echo Links::output_links('PHP'); ?>
-        </div>
-
-
-        </div>
-
-
-    
-    
-    
-
-
-
-
-
-
-<?php include(SITE_ROOT.DS.'public'.DS.'layouts'.DS."footer.php") ?>
-
-
+<?php include(SITE_ROOT . DS . 'public' . DS . 'layouts' . DS . "footer.php"); ?>

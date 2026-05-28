@@ -675,8 +675,9 @@ class Links extends DatabaseObject
         $output = "";
 
 
-        $output .= "<a class='' style='width:1em;' href='#' data-toggle='modal' data-target='#{$div_id}'>";
-        $output .= "<span class=\"glyphicon glyphicon-info-sign\" style='color: #0000ff;' aria-hidden='true'>";
+        $output .= "<a class='links-info-trigger' href='#' data-target='#{$div_id}' onclick=\"return window.linksOpenDetailModal ? window.linksOpenDetailModal('{$div_id}') : true;\" aria-label='View details for " . self::html($link->name) . "' title='View details'>";
+        $output .= "<span class='sr-only'>View details</span>";
+        $output .= "<span class=\"glyphicon glyphicon-info-sign\" aria-hidden='true'>";
         $output .= "</span>";
         $output .= "</a>";
 
@@ -687,7 +688,7 @@ class Links extends DatabaseObject
         $output .= "        <div class='modal-content'>";
         $output .= "            <div class='modal-header'>";
         $output .= "                <button type='button' class='close' data-dismiss='modal' aria-label='Close'><span aria-hidden='true'>&times;</span></button>";
-        $output .= "                <h5 class='modal-title' id='myModalLabel'>link" . self::html($link->name) . "</strong> Categ :" . self::html($link->category) . "</strong></h5>";
+        $output .= "                <h5 class='modal-title' id='myModalLabel'>" . self::html($link->name) . " <span>Categ: " . self::html($link->category) . "</span></h5>";
         $output .= "            </div>";
         $output .= "            <div class='modal-body'>";
 
@@ -697,7 +698,8 @@ class Links extends DatabaseObject
 
         $p_edit = static::$page_edit . $class;
         $p_del = static::$page_delete . $class;
-        $p_new = static::$page_new . $class;
+        $p_copy = static::$page_new . $class;
+        $p_new = static::$page_new;
 
 
         $output .= "<div class='container-fluid text-left'> ";
@@ -710,17 +712,23 @@ class Links extends DatabaseObject
 
         $output .= "            </div>";
 
-        $style_width_button = "style='width: 6em;'";
-
-
         $output .= "            <div class='modal-footer'>";
-        $output .= "                <div class='btn-group btn-group-justified' role='group' aria-label='...'>";
-        $output .= "                <p class='btn'><a class='btn btn-primary btn-xm'{$style_width_button} href='{$p_edit}" . urlencode($link_id) . "'>Edit</a></p>";
-        $output .= "                <p class='btn'><a class='btn btn-danger btn-xm' {$style_width_button} href='{$p_del}" . urlencode($link_id) . "'>Delete</a></p>";
-        $output .= "                <p class='btn' ><a class='btn btn-success btn-xm' {$style_width_button} href='{$p_new}" . urlencode($link_id) . "'>add</a></p>";
+        $output .= "                <div class='links-modal-actions' role='group' aria-label='Link actions'>";
+        $link_data = " data-link-id=\"" . self::html($link->id) . "\"";
+        $link_data .= " data-link-name=\"" . self::html($link->name) . "\"";
+        $link_data .= " data-link-web-address=\"" . self::html($link->web_address) . "\"";
+        $link_data .= " data-link-description=\"" . self::html($link->description) . "\"";
+        $link_data .= " data-link-category-id=\"" . self::html($link->category_id) . "\"";
+        $link_data .= " data-link-sub-category-1=\"" . self::html($link->sub_category_1) . "\"";
+        $link_data .= " data-link-sub-category-2=\"" . self::html($link->sub_category_2) . "\"";
+        $link_data .= " data-link-privacy=\"" . self::html($link->privacy) . "\"";
+        $link_data .= " data-link-rank=\"" . self::html($link->rank) . "\"";
 
-        $output .= "                <p class='btn' data-dismiss='modal'><a class=' btn btn-info btn-xm' {$style_width_button}>close</a> </p>";
-
+        $output .= "                    <a class='links-modal-btn links-modal-btn--edit btn btn-primary' href='{$p_edit}" . urlencode($link_id) . "' data-link-action='edit' data-link-action-title='Edit link' data-link-submit-url='{$p_edit}" . urlencode($link_id) . "'{$link_data} onclick='return window.linksOpenActionModal ? window.linksOpenActionModal(this) : true;'><i class='fa fa-pencil' aria-hidden='true'></i> Edit</a>";
+        $output .= "                    <a class='links-modal-btn links-modal-btn--copy btn btn-success' href='{$p_copy}" . urlencode($link_id) . "&duplicate_record=1' data-link-action='copy' data-link-action-title='Copy link' data-link-submit-url='{$p_new}'{$link_data} onclick='return window.linksOpenActionModal ? window.linksOpenActionModal(this) : true;'><i class='fa fa-clone' aria-hidden='true'></i> Copy</a>";
+        $output .= "                    <a class='links-modal-btn links-modal-btn--add btn btn-info' href='{$p_new}' data-link-action='new' data-link-action-title='New link' data-link-submit-url='{$p_new}' onclick='return window.linksOpenActionModal ? window.linksOpenActionModal(this) : true;'><i class='fa fa-plus' aria-hidden='true'></i> New</a>";
+        $output .= "                    <a class='links-modal-btn links-modal-btn--delete btn btn-danger' href='{$p_del}" . urlencode($link_id) . "' data-link-action='delete' data-link-action-title='Delete link' data-link-name=\"" . self::html($link->name) . "\" onclick='return window.linksOpenActionModal ? window.linksOpenActionModal(this) : true;'><i class='fa fa-trash' aria-hidden='true'></i> Delete</a>";
+        $output .= "                    <button type='button' class='links-modal-btn links-modal-btn--close btn btn-info' data-dismiss='modal' onclick='return window.linksCloseModalButton ? window.linksCloseModalButton(this) : true;'><i class='fa fa-times' aria-hidden='true'></i> Close</button>";
         $output .= "                </div>";
 
 

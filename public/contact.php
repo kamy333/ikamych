@@ -152,61 +152,78 @@ if ($is_post) {
 <?php include(SITE_ROOT.DS.'public'.DS.'layouts'.DS."header.php") ?>
 <?php include(SITE_ROOT.DS.'public'.DS.'layouts'.DS."nav.php") ?>
 
-<div class="row">
+<main class="contact-page">
+    <section class="contact-shell" aria-labelledby="contact-title">
+        <div class="contact-intro">
+            <div class="contact-intro__photo">
+                <img src="<?php echo $Nav->path_public; ?>img/kamy_gemini_blue.png" alt="Kamy">
+            </div>
+            <p class="contact-intro__eyebrow">Contact</p>
+            <h1 id="contact-title">Send me a message</h1>
+            <p class="contact-intro__copy">
+                A short note is enough. I will receive your message by email and answer as soon as I can.
+            </p>
+            <div class="contact-intro__meta">
+                <span><i class="fa fa-envelope-o" aria-hidden="true"></i> Private email reply</span>
+                <span><i class="fa fa-shield" aria-hidden="true"></i> Protected form</span>
+            </div>
+        </div>
 
-    <div class="col-md-6 col-md-offset-3">
-        <div class ="background_light_blue">
+        <div class="contact-panel">
+            <div class="contact-panel__header">
+                <p class="contact-panel__eyebrow">Write here</p>
+                <h2>How can I help?</h2>
+            </div>
 
-            <h2 class="page-header text-center" style="color: #0000ff">Contact</h2>
-            <form class="form-horizontal" role="form" method="post" action="<?php echo h($_SERVER['PHP_SELF']); ?>">
+            <form class="form-horizontal contact-form" role="form" method="post" action="<?php echo h($_SERVER['PHP_SELF']); ?>">
                 <?php echo csrf_token_tag($csrf_token_id); ?>
-                <div class="form-group" style="position: absolute; left: -10000px;" aria-hidden="true">
+                <div class="form-group contact-honeypot" aria-hidden="true">
                     <label for="website">Website</label>
                     <input type="text" id="website" name="website" tabindex="-1" autocomplete="off">
                 </div>
-                <div class="form-group">
-                    <label for="name" class="col-sm-3 control-label">Name</label>
-                    <div class="col-sm-9">
-                        <input type="text" class="form-control" id="name" name="name" placeholder="First & Last Name" value="<?php echo h($name); ?>" required>
-                        <?php echo "<p class='text-danger'>$errName</p>";?>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="email" class="col-sm-3 control-label">Email</label>
-                    <div class="col-sm-9">
-                        <input type="email" class="form-control" id="email" name="email" placeholder="example@domain.com" value="<?php echo h($email); ?>" required>
-                        <?php echo "<p class='text-danger'>$errEmail</p>";?>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="message" class="col-sm-3 control-label">Message</label>
-                    <div class="col-sm-9">
-                        <textarea class="form-control" rows="4" id="message" name="message" required><?php echo h($message); ?></textarea>
-                        <?php echo "<p class='text-danger'>$errMessage</p>";?>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="human" class="col-sm-3 control-label"><?php echo h($_SESSION['contact_challenge_question']); ?></label>
-                    <div class="col-sm-9">
-                        <input type="text" class="form-control" id="human" name="human" placeholder="Your Answer" required>
-                        <?php echo "<p class='text-danger'>$errHuman</p>";?>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-sm-9 col-sm-offset-3">
-                        <?php echo $errSecurity ? "<p class='text-danger'>$errSecurity</p>" : ""; ?>
-                        <input id="submit" name="submit" type="submit" value="Send" class="btn btn-primary">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-sm-9 col-sm-offset-3">
+
+                <?php if ($result) { ?>
+                    <div class="contact-form__status">
                         <?php echo $result; ?>
                     </div>
+                <?php } ?>
+
+                <?php if ($errSecurity) { ?>
+                    <div class="alert alert-danger contact-form__status"><?php echo h($errSecurity); ?></div>
+                <?php } ?>
+
+                <div class="contact-form__grid">
+                    <div class="form-group contact-field">
+                        <label for="name" class="control-label">Name</label>
+                        <input type="text" class="form-control" id="name" name="name" placeholder="First and last name" value="<?php echo h($name); ?>" required>
+                        <?php echo $errName ? "<p class='text-danger'>" . h($errName) . "</p>" : ""; ?>
+                    </div>
+
+                    <div class="form-group contact-field">
+                        <label for="email" class="control-label">Email</label>
+                        <input type="email" class="form-control" id="email" name="email" placeholder="example@domain.com" value="<?php echo h($email); ?>" required>
+                        <?php echo $errEmail ? "<p class='text-danger'>" . h($errEmail) . "</p>" : ""; ?>
+                    </div>
+                </div>
+
+                <div class="form-group contact-field">
+                    <label for="message" class="control-label">Message</label>
+                    <textarea class="form-control" rows="5" id="message" name="message" placeholder="Write your message here" required><?php echo h($message); ?></textarea>
+                    <?php echo $errMessage ? "<p class='text-danger'>" . h($errMessage) . "</p>" : ""; ?>
+                </div>
+
+                <div class="contact-form__bottom">
+                    <div class="form-group contact-field contact-field--challenge">
+                        <label for="human" class="control-label"><?php echo h($_SESSION['contact_challenge_question']); ?></label>
+                        <input type="text" class="form-control" id="human" name="human" placeholder="Answer" required>
+                        <?php echo $errHuman ? "<p class='text-danger'>" . h($errHuman) . "</p>" : ""; ?>
+                    </div>
+
+                    <input id="submit" name="submit" type="submit" value="Send message" class="btn contact-submit">
                 </div>
             </form>
         </div>
-    </div>
-</div>
+    </section>
+</main>
 
-<?php echo str_repeat("<br>", 20) ?>
 <?php include(SITE_ROOT . DS . 'public' . DS . 'layouts' . DS . "footer.php") ?>

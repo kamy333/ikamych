@@ -102,6 +102,8 @@ function modal_form_return_url($fallback, $class_name, $status, $record_id = nul
     $allowed_modals = [
         'Calendar' => 'calendar',
         'Note' => 'note',
+        'MyExpense' => 'expense',
+        'Links' => 'links',
     ];
 
     if (!isset($allowed_modals[$class_name]) || $modal !== $allowed_modals[$class_name]) {

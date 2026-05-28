@@ -11,7 +11,19 @@ function daily_psalm_lines(array $data, string $key, string $fallback): string
         return h($fallback);
     }
 
-    return implode("<br>", array_map('h', $data[$key]));
+    return implode("<br>", array_map(function ($line) {
+        return h(daily_psalm_clean_text((string)$line));
+    }, $data[$key]));
+}
+
+function daily_psalm_clean_text(string $line): string
+{
+    $line = html_entity_decode($line, ENT_QUOTES | ENT_HTML5, 'UTF-8');
+    $line = strip_tags($line);
+    $line = preg_replace('/[\x{2009}\x{200A}\x{200B}]+/u', ' ', $line) ?? $line;
+    $line = preg_replace('/[ \t]+/u', ' ', $line) ?? $line;
+
+    return trim($line);
 }
 
 function daily_psalm_link(string $url, string $label): string
@@ -20,7 +32,6 @@ function daily_psalm_link(string $url, string $label): string
 }
 
 $psalmNumber = random_int(1, 150);
-$psalmNumberSecondary = random_int(1, 12);
 
 $sefariaUrl = "https://www.sefaria.org/api/texts/Psalms.$psalmNumber?lang=he&commentary=0&context=0";
 $context = stream_context_create([
@@ -50,6 +61,7 @@ $commentaryLink = daily_psalm_link("https://www.sefaria.org/Psalms.$psalmNumber.
 $transliterationLink = daily_psalm_link("https://theisraelbible.com/bible/psalms-$psalmNumber/", "Psaume $psalmNumber (Hébreu)");
 $hatikvahLink = daily_psalm_link("https://www.youtube.com/watch?v=1DPqNHkm1bM", "Hatikvah");
 
+$senderName = 'Psaume du jour - ikamy.ch';
 $subject = "Psaume du jour - Psaume $psalmNumber";
 $body = "
 <!DOCTYPE html>
@@ -59,7 +71,6 @@ $body = "
     <title>" . h($subject) . "</title>
 </head>
 <body>
-    <h2>Tehilim choose " . h($psalmNumberSecondary) . "</h2>
     <h2>" . h($subject) . "</h2>
 
     <h3>Texte en hébreu :</h3>
@@ -87,6 +98,7 @@ $body = "
 
 $mail = new MyPHPMailer(true);
 $mail->CharSet = 'UTF-8';
+$mail->setFrom($mail->From, $senderName, false);
 $mail->addAddress('nafisspour@bluewin.ch');
 $mail->isHTML(true);
 $mail->Subject = $subject;

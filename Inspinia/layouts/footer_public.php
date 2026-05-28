@@ -1,7 +1,34 @@
 
 
 <style>
+    body {
+        padding-bottom: 24px;
+    }
+
+    .ikamy-inspinia-footer {
+        min-height: 22px;
+        height: 22px;
+        margin: 0;
+        padding: 2px 12px;
+        background: rgba(248, 250, 252, 0.96);
+        border-top: 1px solid #d8e0ea;
+        color: #64748b;
+        font-size: 11px;
+        line-height: 18px;
+        z-index: 500;
+    }
+
+    .ikamy-inspinia-footer img {
+        max-height: 18px;
+        width: auto;
+        vertical-align: middle;
+    }
+
     @media (max-width: 767px) {
+        body {
+            padding-bottom: 0;
+        }
+
         .ikamy-inspinia-footer {
             display: none !important;
         }

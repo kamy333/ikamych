@@ -237,6 +237,34 @@
             }
         };
 
+        var setExpenseModalMode = function(modal) {
+            var form = modal.querySelector('form.ikamy-create-modal__form');
+            var submit = modal.querySelector('.ikamy-create-modal__submit');
+
+            if (!form) {
+                return;
+            }
+
+            form.action = form.getAttribute('data-create-action') || form.action;
+            setModalReturnTo(form);
+            setModalStatus(modal, '', 'success');
+            setInputValue(form, 'input[name="id"]', '');
+            setInputValue(form, 'input[name="amount"]', '');
+            setInputValue(form, 'select[name="ccy_id"]', '1');
+            setInputValue(form, 'input[name="rate"]', '1');
+            setInputValue(form, 'input[name="expense_date"]', '<?php echo h(date('Y-m-d')); ?>');
+            setInputValue(form, 'select[name="person_id"]', '2');
+            setInputValue(form, 'select[name="expense_type_id"]', '');
+            setRadioValue(form, 'cash', '0');
+            setInputValue(form, 'textarea[name="comment"]', '');
+            setInputValue(form, 'input[name="document"]', '');
+            setInputValue(form, 'input[name="modification_time"]', '<?php echo h(datetime_sql()); ?>');
+
+            if (submit) {
+                submit.innerHTML = '<i class="fa fa-money" aria-hidden="true"></i> Create expense';
+            }
+        };
+
         var showModal = function(modal) {
             if ($ && $.fn.modal) {
                 $(modal).modal('show');
@@ -333,6 +361,10 @@
                     setNoteModalMode(modal, modalTrigger);
                 }
 
+                if (target === '#ikamy-expense-modal') {
+                    setExpenseModalMode(modal);
+                }
+
                 showModal(modal);
                 return;
             }
@@ -370,7 +402,7 @@
                 return;
             }
 
-            var target = modalName === 'calendar' ? '#ikamy-calendar-modal' : (modalName === 'note' ? '#ikamy-note-modal' : '');
+            var target = modalName === 'calendar' ? '#ikamy-calendar-modal' : (modalName === 'note' ? '#ikamy-note-modal' : (modalName === 'expense' ? '#ikamy-expense-modal' : ''));
             var modal = target ? document.querySelector(target) : null;
 
             if (!modal) {
@@ -387,11 +419,13 @@
 
             if (modalName === 'calendar') {
                 setCalendarModalMode(modal, editTrigger || document.createElement('a'));
-            } else {
+            } else if (modalName === 'note') {
                 setNoteModalMode(modal, editTrigger || document.createElement('a'));
+            } else {
+                setExpenseModalMode(modal);
             }
 
-            var noun = modalName === 'calendar' ? 'Calendar date' : 'Note';
+            var noun = modalName === 'calendar' ? 'Calendar date' : (modalName === 'note' ? 'Note' : 'Expense');
             var verb = status === 'updated' ? 'updated' : (status === 'error' ? 'could not be saved' : 'created');
             var type = status === 'error' ? 'error' : 'success';
             setModalStatus(modal, noun + ' ' + verb + '.', type);

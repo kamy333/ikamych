@@ -680,7 +680,11 @@ class User extends DatabaseObject
     public static function authenticate($username = "", $password = "")
     {
         $record_user = self::find_by_username($username);
-        $check = self::password_check($password);
+        if (!$record_user) {
+            return false;
+        }
+
+        $check = self::password_check($password, $record_user->hashed_password);
         if ($check) {
             return $record_user;
         } else {
@@ -698,11 +702,14 @@ class User extends DatabaseObject
         return !empty($result_array) ? array_shift($result_array) : false;
     }
 
-    private static function password_check($password)
+    private static function password_check($password, $existing_hash)
     {
         // new function password_verify($password,$existing_password)
         // existing hash contains format and salt at start
-        $existing_hash = self::$existing_password;
+        if (!is_string($existing_hash) || $existing_hash === '') {
+            return false;
+        }
+
         $hash = crypt($password, $existing_hash);
         if ($hash === $existing_hash) {
             return true;
@@ -805,10 +812,10 @@ class User extends DatabaseObject
         $dirfile = SITE_ROOT . DS . $this->upload_directory_img . DS . $this->user_image;
         $this->image_placeholder = $Nav->http . DS . $this->upload_directory_img . DS . "no_user.jpg";
 
-        if (!file_exists($dirfile)){
-            return $dir;
+        if (empty($this->user_image) || !file_exists($dirfile)){
+            return $this->image_placeholder;
         }
-        return empty($this->user_image) ? $this->image_placeholder : $dir;
+        return $dir;
 
 
     }

@@ -1,3 +1,15 @@
+<style>
+    .navbar .ikamy-nav-brand-logo {
+        padding-top: 9px !important;
+        padding-bottom: 9px !important;
+        line-height: 32px;
+    }
+
+    .ikamy-nav-brand-logo .ikamy-logo-inline {
+        display: block !important;
+    }
+</style>
+
 <div class="row border-bottom white-bg">
     <nav class="navbar navbar-static-top" role="navigation">
         <div class="navbar-header">
@@ -6,7 +18,7 @@
                 <i class="fa fa-reorder"></i>
             </button>
             <a href="<?php echo $Nav->path_admin; ?>index.php" style="background-color: honeydew"
-               class="navbar-brand"><?php echo LOGO; ?></a>
+               class="navbar-brand ikamy-nav-brand-logo"><?php echo LOGO; ?></a>
         </div>
         <div class="navbar-collapse collapse" id="navbar">
             <ul class="nav navbar-nav">
@@ -120,7 +132,6 @@
             <ul class="nav navbar-top-links navbar-right">
 
                 <?php
-                echo "<li>Welcome to $logo</li>";
                 if (isset($_SESSION["user_id"])) {
                     echo Chat::get_chat();
                     echo Notification::get_notification();
