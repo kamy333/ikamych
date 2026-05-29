@@ -1,4 +1,6 @@
 {
+    "name": "ikamych/ikamych",
+    "description": "Legacy PHP application for ikamy.ch.",
     "license": "proprietary",
     "require": {
         "php": "^8.3 || ^8.4",
