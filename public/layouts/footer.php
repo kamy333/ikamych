@@ -31,6 +31,35 @@
         window.ikamyFooterReady = true;
         var $ = window.jQuery;
 
+        var syncNavbarDropdownActive = function() {
+            var nav = document.querySelector('.navbar-default .navbar-nav');
+
+            if (!nav) {
+                return;
+            }
+
+            var openDropdown = nav.querySelector('li.dropdown.open');
+
+            nav.querySelectorAll('li.dropdown').forEach(function(item) {
+                var isOpen = item === openDropdown;
+                item.classList.toggle('ikamy-nav-open-active', isOpen);
+                item.classList.toggle('ikamy-nav-active-muted', !!openDropdown && item.classList.contains('active') && !isOpen);
+            });
+        };
+
+        var scheduleNavbarDropdownActiveSync = function() {
+            window.setTimeout(syncNavbarDropdownActive, 0);
+        };
+
+        document.addEventListener('click', scheduleNavbarDropdownActiveSync);
+        document.addEventListener('keyup', scheduleNavbarDropdownActiveSync);
+
+        if ($) {
+            $('.navbar-default .navbar-nav > li.dropdown').on('shown.bs.dropdown hidden.bs.dropdown', syncNavbarDropdownActive);
+        }
+
+        syncNavbarDropdownActive();
+
         if ($ && $.fn.select2) {
             $('.select2-dropdown-special').select2({
                 tags: false
@@ -317,6 +346,219 @@
                 label.textContent = isExpanded ? 'Show note details' : 'Hide note details';
             });
         };
+
+        var managementScrollState = null;
+        var suppressManagementScrollbarClick = false;
+        var suppressManagementScrollbarClickTimer = null;
+
+        var scheduleManagementScrollbarClickRelease = function() {
+            if (suppressManagementScrollbarClickTimer) {
+                window.clearTimeout(suppressManagementScrollbarClickTimer);
+            }
+
+            suppressManagementScrollbarClickTimer = window.setTimeout(function() {
+                suppressManagementScrollbarClick = false;
+                suppressManagementScrollbarClickTimer = null;
+            }, 450);
+        };
+
+        var isManagementDropdownOpen = function(dropdown) {
+            var parent = dropdown ? dropdown.closest('.ikamy-management-menu') : null;
+
+            return !!(dropdown && parent && parent.classList.contains('open') && dropdown.offsetParent !== null);
+        };
+
+        var ensureManagementScrollbar = function(dropdown) {
+            if (dropdown._ikamyScrollbar) {
+                return dropdown._ikamyScrollbar;
+            }
+
+            var track = document.createElement('div');
+            var thumb = document.createElement('div');
+
+            track.className = 'ikamy-management-scrollbar';
+            thumb.className = 'ikamy-management-scrollbar__thumb';
+            track.setAttribute('aria-hidden', 'true');
+            track.style.display = 'none';
+            track._ikamyDropdown = dropdown;
+            track.appendChild(thumb);
+            document.body.appendChild(track);
+
+            dropdown._ikamyScrollbar = {
+                track: track,
+                thumb: thumb
+            };
+
+            return dropdown._ikamyScrollbar;
+        };
+
+        var setManagementScrollbarHidden = function(dropdown) {
+            if (dropdown && dropdown._ikamyScrollbar) {
+                dropdown._ikamyScrollbar.track.style.display = 'none';
+                dropdown._ikamyScrollbar.track.classList.remove('is-dragging');
+            }
+        };
+
+        var updateManagementScrollbar = function(dropdown) {
+            if (!dropdown) {
+                return;
+            }
+
+            var scrollbar = ensureManagementScrollbar(dropdown);
+            var track = scrollbar.track;
+            var thumb = scrollbar.thumb;
+            var scrollable = dropdown.scrollHeight - dropdown.clientHeight;
+
+            if (!isManagementDropdownOpen(dropdown) || scrollable <= 1) {
+                setManagementScrollbarHidden(dropdown);
+                return;
+            }
+
+            var rect = dropdown.getBoundingClientRect();
+            var railPadding = 7;
+            var trackWidth = 18;
+            var trackHeight = Math.max(rect.height - (railPadding * 2), 44);
+            var thumbHeight = Math.max(42, Math.min(trackHeight, trackHeight * (dropdown.clientHeight / dropdown.scrollHeight)));
+            var maxThumbTop = Math.max(trackHeight - thumbHeight, 0);
+            var thumbTop = (dropdown.scrollTop / scrollable) * maxThumbTop;
+
+            track.style.display = 'block';
+            track.style.left = Math.round(rect.right - trackWidth - 8) + 'px';
+            track.style.top = Math.round(rect.top + railPadding) + 'px';
+            track.style.height = Math.round(trackHeight) + 'px';
+            thumb.style.top = Math.round(thumbTop) + 'px';
+            thumb.style.height = Math.round(thumbHeight) + 'px';
+        };
+
+        var updateAllManagementScrollbars = function() {
+            document.querySelectorAll('.ikamy-management-dropdown').forEach(function(dropdown) {
+                updateManagementScrollbar(dropdown);
+            });
+        };
+
+        var scrollManagementToPointer = function(dropdown, clientY, dragOffset) {
+            var scrollbar = ensureManagementScrollbar(dropdown);
+            var trackRect = scrollbar.track.getBoundingClientRect();
+            var thumbHeight = scrollbar.thumb.offsetHeight || 42;
+            var usableHeight = Math.max(trackRect.height - thumbHeight, 1);
+            var scrollable = Math.max(dropdown.scrollHeight - dropdown.clientHeight, 0);
+            var localY = Math.max(0, Math.min(usableHeight, clientY - trackRect.top - dragOffset));
+
+            dropdown.scrollTop = (localY / usableHeight) * scrollable;
+            updateManagementScrollbar(dropdown);
+        };
+
+        var handleManagementScrollbarStart = function(event) {
+            var track = event.target.closest ? event.target.closest('.ikamy-management-scrollbar') : null;
+
+            if (!track || !track._ikamyDropdown) {
+                return;
+            }
+
+            var dropdown = track._ikamyDropdown;
+            var thumb = dropdown._ikamyScrollbar.thumb;
+            var thumbRect = thumb.getBoundingClientRect();
+            var isThumb = event.target === thumb;
+            var dragOffset = isThumb ? event.clientY - thumbRect.top : thumbRect.height / 2;
+
+            event.preventDefault();
+            event.stopPropagation();
+            event.stopImmediatePropagation();
+            suppressManagementScrollbarClick = true;
+            track.classList.add('is-dragging');
+
+            if (track.setPointerCapture && event.pointerId !== undefined) {
+                try {
+                    track.setPointerCapture(event.pointerId);
+                } catch (captureError) {
+                    // Some older browsers do not allow capture here; the document handlers still cover dragging.
+                }
+            }
+
+            scrollManagementToPointer(dropdown, event.clientY, dragOffset);
+
+            managementScrollState = {
+                dropdown: dropdown,
+                dragOffset: dragOffset
+            };
+        };
+
+        var handleManagementScrollbarMove = function(event) {
+            if (!managementScrollState) {
+                return;
+            }
+
+            event.preventDefault();
+            event.stopPropagation();
+            event.stopImmediatePropagation();
+            scrollManagementToPointer(managementScrollState.dropdown, event.clientY, managementScrollState.dragOffset);
+        };
+
+        var handleManagementScrollbarEnd = function(event) {
+            if (!managementScrollState) {
+                return;
+            }
+
+            event.preventDefault();
+            event.stopPropagation();
+            event.stopImmediatePropagation();
+
+            if (managementScrollState.dropdown && managementScrollState.dropdown._ikamyScrollbar) {
+                var track = managementScrollState.dropdown._ikamyScrollbar.track;
+                track.classList.remove('is-dragging');
+
+                if (track.releasePointerCapture && event.pointerId !== undefined) {
+                    try {
+                        track.releasePointerCapture(event.pointerId);
+                    } catch (captureError) {
+                        // Ignore failed release; the capture may already be gone.
+                    }
+                }
+            }
+
+            managementScrollState = null;
+            suppressManagementScrollbarClick = true;
+            scheduleManagementScrollbarClickRelease();
+        };
+
+        document.querySelectorAll('.ikamy-management-dropdown').forEach(function(dropdown) {
+            ensureManagementScrollbar(dropdown);
+            dropdown.addEventListener('scroll', function() {
+                updateManagementScrollbar(dropdown);
+            });
+        });
+
+        document.addEventListener('pointerdown', handleManagementScrollbarStart, true);
+        document.addEventListener('pointermove', handleManagementScrollbarMove, true);
+        document.addEventListener('pointerup', handleManagementScrollbarEnd, true);
+        document.addEventListener('pointercancel', handleManagementScrollbarEnd, true);
+
+        document.addEventListener('click', function(event) {
+            var track = event.target.closest ? event.target.closest('.ikamy-management-scrollbar') : null;
+
+            if (!track && !suppressManagementScrollbarClick) {
+                return;
+            }
+
+            event.preventDefault();
+            event.stopPropagation();
+            event.stopImmediatePropagation();
+            suppressManagementScrollbarClick = false;
+
+            if (suppressManagementScrollbarClickTimer) {
+                window.clearTimeout(suppressManagementScrollbarClickTimer);
+                suppressManagementScrollbarClickTimer = null;
+            }
+
+            updateAllManagementScrollbars();
+        }, true);
+
+        document.addEventListener('click', function() {
+            window.setTimeout(updateAllManagementScrollbars, 0);
+        });
+
+        window.addEventListener('resize', updateAllManagementScrollbars);
+        window.addEventListener('scroll', updateAllManagementScrollbars, true);
 
         document.addEventListener('click', function(event) {
             var detailsToggle = event.target.closest('.small-note-details-toggle');

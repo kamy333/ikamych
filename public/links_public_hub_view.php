@@ -985,7 +985,7 @@ if (!function_exists('public_links_render_page')) {
                     <?php } ?>
                 </div>
             </div>
-            <img class="gemini-links-hero__logo" src="/public/img/kamy_gemini_blue.png" alt="Kamy Blue Remini">
+            <img class="gemini-links-hero__logo" src="/public/img/kamy_jet_geneva.png" alt="Kamy Blue Remini">
         </section>
 
         <div class="gemini-links-messages">

@@ -77,6 +77,7 @@ body {
 .nav-quick-actions {
     display: flex;
     align-items: center;
+    margin-right: 0 !important;
 }
 
 .nav-quick-actions > li > a.nav-quick-action {
@@ -300,6 +301,474 @@ body {
 .navbar-default .navbar-nav > li.nav-user-menu .dropdown-menu > li > a:focus {
     background: #e0f2fe;
     color: #075985;
+}
+
+.navbar-default .navbar-nav > li.ikamy-management-menu > a {
+    font-weight: 700;
+}
+
+.navbar-default .navbar-nav > li.dropdown.open > a,
+.navbar-default .navbar-nav > li.dropdown.open > a:hover,
+.navbar-default .navbar-nav > li.dropdown.open > a:focus,
+.navbar-default .navbar-nav > li.ikamy-nav-open-active > a,
+.navbar-default .navbar-nav > li.ikamy-nav-open-active > a:hover,
+.navbar-default .navbar-nav > li.ikamy-nav-open-active > a:focus {
+    background-color: #e7e7e7 !important;
+    color: #0f172a !important;
+    box-shadow: inset 0 3px 9px rgba(0, 0, 0, 0.075);
+}
+
+.navbar-default .navbar-nav:has(> li.dropdown.open) > li.dropdown.active:not(.open) > a,
+.navbar-default .navbar-nav:has(> li.dropdown.open) > li.dropdown.active:not(.open) > a:hover,
+.navbar-default .navbar-nav:has(> li.dropdown.open) > li.dropdown.active:not(.open) > a:focus,
+.navbar-default .navbar-nav > li.ikamy-nav-active-muted > a,
+.navbar-default .navbar-nav > li.ikamy-nav-active-muted > a:hover,
+.navbar-default .navbar-nav > li.ikamy-nav-active-muted > a:focus {
+    background: transparent !important;
+    color: #555555 !important;
+    box-shadow: none !important;
+}
+
+@media (min-width: 768px) {
+    .navbar-default .navbar-nav > li > a {
+        padding-right: 15px;
+        padding-left: 15px;
+    }
+
+    .navbar-default .navbar-brand.active {
+        padding-right: 15px;
+        padding-left: 15px;
+    }
+
+    .nav-quick-actions > li > a.nav-quick-action {
+        min-width: 42px;
+        padding-right: 9px;
+        padding-left: 9px;
+    }
+
+    .nav-quick-actions > li.nav-user-menu {
+        margin-left: 12px;
+        padding-left: 12px;
+    }
+
+    .navbar-default .navbar-nav > li.nav-user-menu > a,
+    .navbar-default .navbar-nav > li.nav-user-menu.active > a {
+        margin-right: 0;
+        padding-right: 14px;
+        padding-left: 14px;
+    }
+}
+
+@media (max-width: 1280px) {
+    .navbar.navbar-default .navbar-header {
+        float: none !important;
+    }
+
+    .navbar.navbar-default .navbar-toggle {
+        display: block !important;
+        margin-right: 10px;
+    }
+
+    .navbar.navbar-default.navbar-fixed-top .navbar-collapse,
+    .navbar.navbar-default .navbar-collapse {
+        max-height: calc(100vh - 52px) !important;
+        overflow-x: visible !important;
+        overflow-y: auto !important;
+        border-top: 1px solid transparent;
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    }
+
+    .navbar.navbar-default .navbar-collapse.collapse {
+        display: none !important;
+    }
+
+    .navbar.navbar-default .navbar-collapse.collapse.in {
+        display: block !important;
+        height: auto !important;
+    }
+
+    .navbar.navbar-default .navbar-nav {
+        float: none !important;
+        margin: 7.5px 0;
+    }
+
+    .navbar.navbar-default .navbar-nav > li {
+        float: none !important;
+    }
+
+    .navbar.navbar-default .navbar-nav > li > a {
+        padding-top: 8px;
+        padding-bottom: 8px;
+    }
+
+    .navbar.navbar-default.navbar-fixed-top .navbar-collapse,
+    .navbar-default .navbar-collapse {
+        max-height: calc(100vh - 52px) !important;
+        overflow-y: auto !important;
+        border-top: 1px solid #dbe5ef;
+        background: #ffffff;
+        box-shadow: 0 18px 36px rgba(15, 23, 42, 0.12);
+    }
+
+    .navbar-default .navbar-nav > li > a {
+        padding-right: 14px;
+        padding-left: 14px;
+        color: #1f2937;
+        font-weight: 700;
+    }
+
+    .navbar-default .navbar-nav .open .dropdown-menu {
+        position: static;
+        float: none;
+        width: auto;
+        margin-top: 0;
+        border: 0;
+        background: #f8fafc;
+        box-shadow: none;
+    }
+
+    .navbar-default .navbar-nav .open .ikamy-management-dropdown {
+        width: 100%;
+        max-height: calc(100vh - 330px) !important;
+        overflow-y: auto !important;
+    }
+
+    .navbar-default .navbar-nav .open .ikamy-management-item {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        width: fit-content;
+        max-width: 100%;
+    }
+
+    .navbar-default .navbar-nav .open .ikamy-management-item__label {
+        flex: 0 1 220px;
+        width: 220px;
+        max-width: 220px;
+    }
+
+    .navbar-default .navbar-nav .open .ikamy-management-item__actions {
+        flex: 0 0 auto;
+    }
+}
+
+.ikamy-management-dropdown {
+    width: 520px;
+    max-height: calc(100vh - 92px);
+    overflow-y: auto;
+    padding: 8px;
+    border: 1px solid #dbe5ef;
+    background: #ffffff;
+    box-shadow: 0 18px 42px rgba(15, 23, 42, 0.16);
+}
+
+.ikamy-management-dropdown .dropdown-header {
+    margin: 8px 4px 5px;
+    padding: 9px 10px 6px;
+    border-top: 1px solid #edf2f7;
+    color: #64748b;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0;
+    line-height: 1;
+    text-transform: uppercase;
+}
+
+.ikamy-management-dropdown .dropdown-header:first-child {
+    margin-top: 0;
+    border-top: 0;
+}
+
+.ikamy-management-item {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 8px;
+    width: fit-content;
+    max-width: 100%;
+    min-height: 42px;
+    margin: 2px 0;
+    padding: 3px 4px;
+    border-radius: 6px;
+}
+
+.ikamy-management-item.active,
+.ikamy-management-item:hover,
+.ikamy-management-item:focus-within {
+    background: #eef6ff;
+}
+
+.ikamy-management-item__label {
+    display: block;
+    flex: 0 1 210px;
+    width: 210px;
+    max-width: 210px;
+    min-width: 0;
+    padding: 8px 9px;
+    border-radius: 5px;
+    color: #1f2937;
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 1.25;
+    overflow-wrap: anywhere;
+}
+
+.ikamy-management-item__label:hover,
+.ikamy-management-item__label:focus {
+    color: #075985;
+    text-decoration: none;
+}
+
+.ikamy-management-item__actions {
+    display: inline-flex;
+    flex: 0 0 auto;
+    align-items: center;
+    gap: 5px;
+}
+
+.ikamy-management-item__action {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    min-width: 78px;
+    min-height: 30px;
+    padding: 6px 8px;
+    border: 1px solid #bfdbfe;
+    border-radius: 5px;
+    background: #eff6ff;
+    color: #075985;
+    font-size: 12px;
+    font-weight: 800;
+    line-height: 1;
+    text-decoration: none;
+    white-space: nowrap;
+}
+
+.ikamy-management-item__action:hover,
+.ikamy-management-item__action:focus {
+    background: #dbeafe;
+    color: #0c4a6e;
+    text-decoration: none;
+}
+
+.ikamy-management-item__action--new {
+    border-color: #bbf7d0;
+    background: #ecfdf5;
+    color: #047857;
+}
+
+.ikamy-management-item__action--new:hover,
+.ikamy-management-item__action--new:focus {
+    background: #d1fae5;
+    color: #065f46;
+}
+
+@media (max-width: 767px) {
+    body {
+        padding-top: 56px;
+    }
+
+    .navbar-default .navbar-brand.active {
+        max-width: calc(100vw - 78px);
+        padding-right: 8px;
+        padding-left: 12px;
+    }
+
+    .navbar-brand .ikamy-logo-inline {
+        height: 28px;
+        max-height: 28px;
+    }
+
+    .ikamy-logo-context-label {
+        padding-right: 6px;
+        padding-left: 6px;
+        font-size: 11px;
+    }
+
+    .navbar-default .navbar-collapse {
+        max-height: calc(100vh - 56px);
+        border-top: 1px solid #dbe5ef;
+        background: #ffffff;
+        box-shadow: 0 18px 36px rgba(15, 23, 42, 0.12);
+    }
+
+    .navbar-default .navbar-nav > li > a {
+        padding-top: 8px;
+        padding-bottom: 8px;
+        color: #1f2937;
+        font-weight: 700;
+    }
+
+    .navbar-default .navbar-nav .open .dropdown-menu {
+        background: #f8fafc;
+    }
+
+    .nav-quick-actions {
+        flex-wrap: wrap;
+        gap: 7px;
+        margin: 0;
+        padding: 8px 10px 12px;
+    }
+
+    .nav-quick-actions > li > a.nav-quick-action,
+    .nav-quick-actions > li > a.nav-quick-action--calendar,
+    .nav-quick-actions > li > a.nav-quick-action--expense-add,
+    .nav-quick-actions > li > a.nav-quick-action--end,
+    .nav-quick-actions > li > a.nav-quick-action--solo {
+        min-width: 44px;
+        margin: 0;
+        border: 1px solid rgba(148, 163, 184, 0.26);
+        border-radius: 7px;
+    }
+
+    .nav-quick-actions > li > a.nav-quick-action::before,
+    .nav-quick-actions > li > a.nav-quick-action::after {
+        display: none;
+    }
+
+    .nav-quick-actions > li.nav-user-menu {
+        width: 100%;
+        margin: 4px 0 0;
+        padding-left: 0;
+    }
+
+    .nav-quick-actions > li.nav-user-menu::before {
+        display: none;
+    }
+
+    .navbar-default .navbar-nav > li.nav-user-menu > a,
+    .navbar-default .navbar-nav > li.nav-user-menu.active > a {
+        display: flex;
+        justify-content: center;
+        width: 100%;
+        margin: 0;
+    }
+
+    .ikamy-management-dropdown {
+        width: 100%;
+        max-height: calc(100vh - 330px) !important;
+        overflow-y: auto !important;
+        padding: 8px 10px 12px;
+        border: 0;
+        box-shadow: none;
+    }
+
+    .ikamy-management-item {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        gap: 6px;
+        width: fit-content;
+        max-width: 100%;
+        padding: 5px 6px;
+        border: 1px solid #e2e8f0;
+        background: #ffffff;
+    }
+
+    .ikamy-management-item__label {
+        flex: 0 1 150px;
+        width: 150px;
+        max-width: 150px;
+        padding: 4px 0;
+        font-size: 14px;
+    }
+
+    .ikamy-management-item__actions {
+        display: inline-flex;
+        flex: 0 0 auto;
+        width: auto;
+    }
+
+    .ikamy-management-item__action {
+        min-width: 58px;
+        min-height: 32px;
+        padding-right: 6px;
+        padding-left: 6px;
+    }
+}
+
+.navbar-default .navbar-nav > li.ikamy-management-menu > .ikamy-management-dropdown {
+    position: relative;
+    max-height: calc(100vh - 92px) !important;
+    padding: 6px 40px 6px 8px !important;
+    overflow-y: auto !important;
+    background: #ffffff !important;
+    box-shadow:
+        0 18px 42px rgba(15, 23, 42, 0.16);
+    scrollbar-width: none;
+}
+
+.navbar-default .navbar-nav > li.ikamy-management-menu > .ikamy-management-dropdown::before,
+.navbar-default .navbar-nav > li.ikamy-management-menu > .ikamy-management-dropdown::after {
+    display: none;
+}
+
+.navbar-default .navbar-nav > li.ikamy-management-menu > .ikamy-management-dropdown::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+}
+
+.ikamy-management-scrollbar {
+    position: fixed;
+    z-index: 3000;
+    width: 18px;
+    border: 1px solid #bae6fd;
+    border-radius: 11px;
+    background: #e0f2fe;
+    box-shadow: 0 4px 14px rgba(2, 132, 199, 0.18);
+    cursor: pointer;
+    user-select: none;
+    touch-action: none;
+}
+
+.ikamy-management-scrollbar__thumb {
+    position: absolute;
+    left: 3px;
+    width: 10px;
+    min-height: 42px;
+    border-radius: 9px;
+    background: #0284c7;
+    box-shadow: 0 1px 4px rgba(2, 132, 199, 0.44);
+    cursor: grab;
+}
+
+.ikamy-management-scrollbar__thumb:hover,
+.ikamy-management-scrollbar.is-dragging .ikamy-management-scrollbar__thumb {
+    background: #0369a1;
+}
+
+.ikamy-management-scrollbar.is-dragging .ikamy-management-scrollbar__thumb {
+    cursor: grabbing;
+}
+
+@media (max-width: 1280px) {
+    .navbar-default .navbar-nav > li.ikamy-management-menu > .ikamy-management-dropdown {
+        max-height: calc(100vh - 330px) !important;
+    }
+}
+
+@media (min-width: 768px) {
+    .ikamy-management-dropdown .dropdown-header {
+        margin: 4px 2px 2px;
+        padding: 6px 8px 4px;
+    }
+
+    .ikamy-management-item {
+        min-height: 34px;
+        margin: 1px 0;
+        padding: 2px 3px;
+    }
+
+    .ikamy-management-item__label {
+        padding: 5px 8px;
+    }
+
+    .ikamy-management-item__action {
+        min-width: 68px;
+        min-height: 26px;
+        padding: 4px 7px;
+    }
 }
 
 .ikamy-calendar-page {

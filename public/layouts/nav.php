@@ -75,15 +75,6 @@ if ($layout_context == "public") {
                     <ul class="dropdown-menu">
 
 
-                        <?php
-                        if (User::is_caroline() || User::is_weslley()) {
-                            echo $Nav->menu_item('', 'Loans', 'loan_expense.php', 'public');
-                        }
-                        if (User::is_caroline() || User::is_weslley()) {
-                            echo $Nav->menu_item('', 'Loans Mum', 'loan_expense_1.php', 'public');
-                        }
-
-                        ?>
                         <?php echo $Nav->menu_item('', 'About us1', 'about_us.php', 'public'); ?>
                         <?php echo $Nav->menu_item('', 'About us 2', 'about_us_2.php', 'public'); ?>
                         <?php
@@ -193,114 +184,128 @@ if ($layout_context == "public") {
 
                 <?php
 
-                if (isset($_SESSION["user_id"]) && ($user->is_manager() || $user->is_admin() || $user->is_secretary())) { ?>
+                if (isset($_SESSION["user_id"]) && ($user->is_manager() || $user->is_admin() || $user->is_secretary())) {
+                    $management_menu_is_active = isset($active_menu) && ($active_menu == "admin" || $active_menu == "adminNew");
+
+                    $management_item = function ($class, $label, $allow_new = true, $manage_page = 'manage_ajax.php', $new_page = 'new_ajax.php', $area = 'admin/crud/ajax') use ($Nav) {
+                        $active = '';
+                        $class_query = '';
+
+                        if ($class !== '') {
+                            $class_query = '?class_name=' . rawurlencode($class);
+
+                            if (isset($_GET['class_name']) && $_GET['class_name'] == $class) {
+                                $active = ' active';
+                            }
+                        }
+
+                        $findme = '/';
+                        $pos = strpos($area, $findme);
+
+                        if ($area == 'admin') {
+                            $path = $Nav->path_admin;
+                        } elseif ($area == 'public') {
+                            $path = $Nav->path_public;
+                        } elseif ($pos === false) {
+                            $path = $area;
+                        } else {
+                            $array = explode($findme, $area);
+                            $count = count($array);
+                            $path = "/" . $Nav->top_folder;
+
+                            for ($x = 0; $x < $count; $x++) {
+                                $path .= "/" . $array[$x];
+                            }
+
+                            $path .= "/";
+                        }
+
+                        $manage_url = str_replace("///", "/", $path . $manage_page . $class_query);
+                        $new_url = str_replace("///", "/", $path . $new_page . $class_query);
+                        $output = "<li class=\"ikamy-management-item{$active}\">";
+                        $output .= "<a class=\"ikamy-management-item__label\" href=\"" . h($manage_url) . "\">" . h($label) . "</a>";
+                        $output .= "<span class=\"ikamy-management-item__actions\">";
+                        $output .= "<a class=\"ikamy-management-item__action\" href=\"" . h($manage_url) . "\" title=\"Manage " . h($label) . "\"><i class=\"fa fa-list\" aria-hidden=\"true\"></i><span>Manage</span></a>";
+
+                        if ($allow_new) {
+                            $output .= "<a class=\"ikamy-management-item__action ikamy-management-item__action--new\" href=\"" . h($new_url) . "\" title=\"New " . h($label) . "\"><i class=\"fa fa-plus\" aria-hidden=\"true\"></i><span>New</span></a>";
+                        }
+
+                        $output .= "</span>";
+                        $output .= "</li>";
+
+                        return $output;
+                    };
+
+                    $management_link = function ($label, $page, $title, $icon = 'fa-external-link') use ($Nav) {
+                        $href = str_replace("///", "/", $Nav->path_public . $page);
+                        $script_name = basename((string)($_SERVER['SCRIPT_NAME'] ?? ''));
+                        $active = ($script_name === basename($page)) ? ' active' : '';
+                        $output = "<li class=\"ikamy-management-item{$active}\">";
+                        $output .= "<a class=\"ikamy-management-item__label\" href=\"" . h($href) . "\">" . h($label) . "</a>";
+                        $output .= "<span class=\"ikamy-management-item__actions\">";
+                        $output .= "<a class=\"ikamy-management-item__action\" href=\"" . h($href) . "\" title=\"" . h($title) . "\"><i class=\"fa " . h($icon) . "\" aria-hidden=\"true\"></i><span>Open</span></a>";
+                        $output .= "</span>";
+                        $output .= "</li>";
+
+                        return $output;
+                    };
+                    ?>
 
 
                 <li
-                    <?php if (isset($active_menu) && $active_menu == "admin") {
-                        echo " class=\"dropdown active\"";
+                    <?php if ($management_menu_is_active) {
+                        echo " class=\"dropdown ikamy-management-menu active\"";
                     } else {
-                        echo " class=\" dropdown\"";
+                        echo " class=\"dropdown ikamy-management-menu\"";
                     } ?>
-                ><a href="#" data-toggle="dropdown">Admin<span class="caret"></span></a>
+                ><a href="#" data-toggle="dropdown">Management<span class="caret"></span></a>
 
-                    <ul class="dropdown-menu">
+                    <ul class="dropdown-menu ikamy-management-dropdown">
+                        <?php if (User::is_admin()) { ?>
+                            <li class="dropdown-header">Planning</li>
+                            <?php echo $management_item('Calendar', 'Calendar'); ?>
+                        <?php } ?>
 
-                        <?php if (User::is_admin()) {
+                        <li class="dropdown-header">Content and tools</li>
+                        <?php echo $management_item('Article', 'Article'); ?>
+                        <?php echo $management_item('Book', 'Book'); ?>
+                        <?php echo $management_item('ToDoList', 'To Do List'); ?>
+                        <?php echo $management_item('Chat', 'Chat'); ?>
+                        <?php echo $management_item('ChatFriend', 'Chat Friend'); ?>
 
-                            echo $Nav->menu_item('MyExpenseMum', 'New Expense Mum', 'new_ajax.php', 'admin/crud/ajax');
-                            echo $Nav->menu_item('MyExpenseMum', 'Expense Mum', 'manage_ajax.php', 'admin/crud/ajax');
-                            echo $Nav->menu_item('MyExpenseMumPost', 'Expense Mum Post', 'manage_ajax.php', 'admin/crud/ajax');
-                            echo $Nav->menu_item('Calendar', '<i class="icon-calendar"></i>', 'manage_ajax.php', 'admin/crud/ajax');
-                        } ?>
+                        <li class="dropdown-header">Expenses</li>
+                        <?php echo $management_item('MyHouseExpense', 'House Expense'); ?>
+                        <?php echo $management_item('MyExpense', 'Expense'); ?>
+                        <?php if (User::is_admin()) { ?>
+                            <?php echo $management_item('MyExpenseMum', 'Expense Mum'); ?>
+                            <?php echo $management_item('MyExpenseMumPost', 'Expense Mum Post'); ?>
+                        <?php } ?>
+                        <?php if (User::is_admin() || User::is_caroline()) { ?>
+                            <?php echo $management_item('MyExpenseCaroline', 'Expense Mum Caroline'); ?>
+                        <?php } ?>
+                        <?php echo $management_item('MyLoan', 'Loan'); ?>
+                        <?php if (User::is_admin() || User::is_caroline() || User::is_weslley()) { ?>
+                            <?php echo $management_link('Loans', 'loan_expense.php', 'Open loans overview', 'fa-table'); ?>
+                            <?php echo $management_link('Loans Mum', 'loan_expense_1.php', 'Open mum loans summary', 'fa-line-chart'); ?>
+                        <?php } ?>
+                        <?php echo $management_item('MyExpensePerson', 'Expense Person'); ?>
+                        <?php echo $management_item('MyExpenseType', 'Expense Type'); ?>
+                        <?php echo $management_item('MyHouseExpenseType', 'House Expense Type'); ?>
+                        <?php echo $management_item('Currency', 'Currency'); ?>
 
+                        <li class="dropdown-header">People</li>
+                        <li class="ikamy-management-item">
+                            <a class="ikamy-management-item__label" href="/public/admin/manage_user.php">User</a>
+                            <span class="ikamy-management-item__actions">
+                                <a class="ikamy-management-item__action" href="/public/admin/manage_user.php" title="Manage User"><i class="fa fa-list" aria-hidden="true"></i><span>Manage</span></a>
+                                <a class="ikamy-management-item__action ikamy-management-item__action--new" href="<?php echo h(str_replace("///", "/", "/" . $Nav->top_folder . "/admin/crud/ajax/new_ajax.php?class_name=User")); ?>" title="New User"><i class="fa fa-plus" aria-hidden="true"></i><span>New</span></a>
+                            </span>
+                        </li>
 
-                        <?php if (User::is_admin() || User::is_caroline()) {
-
-                            echo $Nav->menu_item('MyExpenseCaroline', 'New Expense Mum Caroline', 'new_ajax.php', 'admin/crud/ajax');
-                            echo $Nav->menu_item('MyExpenseCaroline', 'Expense Mum Caroline', 'manage_ajax.php', 'admin/crud/ajax');
-                        } ?>
-
-
-                        <li class="divider"></li>
-                        <?php echo $Nav->menu_item('Article', 'Article', 'manage_ajax.php', 'admin/crud/ajax'); ?>
-                        <?php echo $Nav->menu_item('Book', 'Book', 'manage_ajax.php', 'admin/crud/ajax'); ?>
-                        <?php echo $Nav->menu_item('ToDoList', 'To Do List', 'manage_ajax.php', 'admin/crud/ajax'); ?>
-                        <?php echo $Nav->menu_item('Chat', 'Chat', 'manage_ajax.php', 'admin/crud/ajax'); ?>
-                        <?php echo $Nav->menu_item('ChatFriend', 'Chat Friend', 'manage_ajax.php', 'admin/crud/ajax'); ?>
-
-                        <?php echo "<li class=\"divider\"></li>"; ?>
-                        <?php echo $Nav->menu_item('MyHouseExpense', 'House Expense', 'manage_ajax.php', 'admin/crud/ajax'); ?>
-                        <?php echo $Nav->menu_item('MyExpense', 'Expense', 'manage_ajax.php', 'admin/crud/ajax'); ?>
-                        <?php echo $Nav->menu_item('MyExpenseMum', 'Expense Mum', 'manage_ajax.php', 'admin/crud/ajax'); ?>
-                        <?php echo $Nav->menu_item('MyExpenseMumPost', 'Expense Mum Post', 'manage_ajax.php', 'admin/crud/ajax'); ?>
-                        <?php echo $Nav->menu_item('MyLoan', 'Loan', 'manage_ajax.php', 'admin/crud/ajax'); ?>
-                        <?php echo $Nav->menu_item('MyExpensePerson', 'Expense Person', 'manage_ajax.php', 'admin/crud/ajax'); ?>
-                        <?php echo $Nav->menu_item('MyExpenseType', 'Expense Type', 'manage_ajax.php', 'admin/crud/ajax'); ?>
-                        <?php echo $Nav->menu_item('MyHouseExpenseType', 'House Expense Type', 'manage_ajax.php', 'admin/crud/ajax'); ?>
-                        <?php echo $Nav->menu_item('Currency', 'Currency', 'manage_ajax.php', 'admin/crud/ajax'); ?>
-
-                        <?php echo "<li class=\"divider\"></li>"; ?>
-
-                        <?php echo "<li><a href='/public/admin/manage_user.php'>User</a></li>" ?>
-                        <!--                            --><?php //echo $Nav->menu_item('User', 'User t', 'manage_ajax.php', 'admin/crud/ajax'); ?>
-                        <?php echo "<li class=\"divider\">Links</li>"; ?>
-
-                        <?php echo $Nav->menu_item('Links', 'Links', 'manage_ajax.php', 'admin/crud/ajax'); ?>
-                        <?php echo $Nav->menu_item('LinksCategory', 'Links Category', 'manage_ajax.php', 'admin/crud/ajax'); ?>
-
-                        <?php echo "<li class=\"divider\"></li>"; ?>
-
-
-                        <!--                            --><?php //if (isset($session->user_id) and $user->is_admin()) { ?>
-                        <!--                                --><?php //echo $Nav->menu_item('', 'Log File', 'logfile.php', 'admin'); ?>
-                        <!---->
-                        <!--                            --><?php //} ?>
-
-
-                    </ul>
-                </li>
-
-
-                <li
-                    <?php if (isset($active_menu) && $active_menu == "adminNew") {
-                        echo " class='dropdown active'";
-                    } else {
-                        echo " class=' dropdown'";
-                    } ?>
-                ><a href="#" data-toggle="dropdown">New<span class="caret"></span></a>
-
-                    <ul class="dropdown-menu">
-
-
-                        <?php echo $Nav->menu_item('MyExpenseMum', 'Expense Mum', 'new_ajax.php', 'admin/crud/ajax'); ?>
-                        <?php echo $Nav->menu_item('MyExpenseMumPost', 'Expense Mum Post', 'new_ajax.php', 'admin/crud/ajax'); ?>
-
-                        <li class="divider"></li>
-
-                        <?php echo $Nav->menu_item('Article', 'Article', 'new_ajax.php', 'admin/crud/ajax'); ?>
-                        <?php echo $Nav->menu_item('Book', 'Book', 'new_ajax.php', 'admin/crud/ajax'); ?>
-                        <?php echo $Nav->menu_item('ToDoList', 'To Do List', 'new_ajax.php', 'admin/crud/ajax'); ?>
-                        <?php echo $Nav->menu_item('Chat', 'Chat', 'new_ajax.php', 'admin/crud/ajax'); ?>
-                        <?php echo $Nav->menu_item('ChatFriend', 'Chat Friend', 'new_ajax.php', 'admin/crud/ajax'); ?>
-                        <?php echo "<li class=\"divider\"></li>"; ?>
-                        <?php echo $Nav->menu_item('MyHouseExpense', 'House Expense', 'new_ajax.php', 'admin/crud/ajax'); ?>
-                        <?php echo $Nav->menu_item('MyExpense', 'Expense', 'new_ajax.php', 'admin/crud/ajax'); ?>
-                        <?php echo $Nav->menu_item('MyExpenseMum', 'Expense Mum', 'new_ajax.php', 'admin/crud/ajax'); ?>
-                        <?php echo $Nav->menu_item('MyExpenseMumPost', 'Expense Mum Post', 'new_ajax.php', 'admin/crud/ajax'); ?>
-                        <?php echo $Nav->menu_item('MyLoan', 'Loan', 'new_ajax.php', 'admin/crud/ajax'); ?>
-                        <?php echo $Nav->menu_item('MyExpensePerson', 'Expense Person', 'new_ajax.php', 'admin/crud/ajax'); ?>
-                        <?php echo $Nav->menu_item('MyExpenseType', 'Expense Type', 'new_ajax.php', 'admin/crud/ajax'); ?>
-                        <?php echo $Nav->menu_item('MyHouseExpenseType', 'House Expense Type', 'new_ajax.php', 'admin/crud/ajax'); ?>
-                        <?php echo $Nav->menu_item('Currency', 'Currency', 'new_ajax.php', 'admin/crud/ajax'); ?>
-                        <?php echo "<li class=\"divider\"></li>"; ?>
-                        <?php echo $Nav->menu_item('User', 'User', 'new_ajax.php', 'admin/crud/ajax'); ?>
-                        <?php echo "<li class=\"divider\">Links</li>"; ?>
-                        <?php echo $Nav->menu_item('Links', 'Links', 'new_ajax.php', 'admin/crud/ajax'); ?>
-                        <?php echo $Nav->menu_item('LinksCategory', 'Links Category', 'new_ajax.php', 'admin/crud/ajax'); ?>
-                        <?php echo "<li class=\"divider\"></li>"; ?>
-
-
+                        <li class="dropdown-header">Links</li>
+                        <?php echo $management_item('Links', 'Links'); ?>
+                        <?php echo $management_item('LinksCategory', 'Links Category'); ?>
                     </ul>
                 </li>
 

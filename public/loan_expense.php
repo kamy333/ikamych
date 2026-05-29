@@ -1352,7 +1352,7 @@ $status_messages = [
             </div>
         </div>
         <div class="loan-exp-header-actions">
-            <a class="btn btn-info" href="/Inspinia/loan_exp_1.php">Summary Mum</a>
+            <a class="btn btn-info" href="/public/loan_expense_1.php">Summary Mum</a>
             <?php if (User::is_admin()) { ?>
                 <button class="btn btn-success js-loan-exp-open" type="button" data-loan-exp-target="#loanExpenseCreateModal">
                     <i class="fa fa-plus" aria-hidden="true"></i> Add expense

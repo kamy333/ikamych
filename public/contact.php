@@ -156,7 +156,7 @@ if ($is_post) {
     <section class="contact-shell" aria-labelledby="contact-title">
         <div class="contact-intro">
             <div class="contact-intro__photo">
-                <img src="<?php echo $Nav->path_public; ?>img/kamy_gemini_blue.png" alt="Kamy">
+                <img src="<?php echo $Nav->path_public; ?>img/kamy_jet_geneva.png" alt="Kamy">
             </div>
             <p class="contact-intro__eyebrow">Contact</p>
             <h1 id="contact-title">Send me a message</h1>

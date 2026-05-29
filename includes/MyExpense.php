@@ -1626,10 +1626,17 @@ class ReportFinance extends MyExpense
 
     protected static $db_fields = ['id', 'amount', 'cash', 'ccy_id', 'rate', 'person_id', 'expense_type_id', 'expense_type', 'expense_date', 'comment', 'document', 'modification_time', 'currency', 'person_name', 'Yr', 'Mth', 'total', 'itemsCount', 'amountCHF', 'Amt_Pret', 'Amt_PretCHF', 'MthName'];
 
+    protected static function excelExportButton($report, $id, $filename)
+    {
+        $href = "/Inspinia/loan_exp_2.php?report=" . rawurlencode((string)$report) . "&id=" . (int)$id . "&filename=" . (string)$filename;
+        return "<a class='loan-export-btn' href='" . h($href) . "'><i class='fa fa-file-excel-o' aria-hidden='true'></i> Export Excel</a>";
+    }
+
     public static function Report1($XLS = false, $what = "both")
     {
         $output = "";
         $style = "";
+        $a = "";
         $criteria = "";
         $criteria2 = "";
 
@@ -1648,9 +1655,7 @@ class ReportFinance extends MyExpense
         if (!$XLS) {
             $filename = u("Pret-Rbt Mum Year Month");
 //            $a = "<a href='/Inspinia/loan_exp_2.php?report=Report1&id=0'>Export Xl</a>";
-            $a = "<button style='background-color: #00A300;'>
-                <a href='/Inspinia/loan_exp_2.php?report=Report1&id=0&filename=$filename'><span style='color: white'>Export XlS</span></a>
-                </button>";
+            $a = static::excelExportButton("Report1", 0, $filename);
         }
 
 //        $array_header = ["Year", "Month Name", "Mth", "No Item", "Amount CHF"];
@@ -1865,6 +1870,7 @@ ORDER BY year(e.expense_date) DESC";
     {
         $output = "";
         $style = "";
+        $a = "";
 
 //        $array_header = ["Year", "Month Name", "Mth", "No Item", "Amount CHF"];
 
@@ -1891,7 +1897,7 @@ ORDER BY year(e.expense_date) DESC";
 
         if (!$XLS) {
 //            $txt = "Prêt-Rbt Mum Year Month";
-            $a = "<button style='background-color: #00A300;'><a href='/Inspinia/loan_exp_2.php?report=Report&id=$No&filename=$filename'><span style='color: white'>Export XlS</span></a></button>";
+            $a = static::excelExportButton("Report", $No, $filename);
         }
 
 
@@ -1916,7 +1922,7 @@ ORDER BY year(e.expense_date) DESC";
                 if (!$XLS) {
                     $output .= TD_NumberFormatColor($result->amountCHF, false);;
                 } else {
-                    $output .= (float)$result->amountCHF;;
+                    $output .= "<td class='text-right'>" . (float)$result->amountCHF . "</td>";;
                 }
 
 
@@ -2001,6 +2007,7 @@ ORDER BY year(e.expense_date) DESC";
     {
         $output = "";
         $style = "";
+        $a = "";
 
 //        $year=2021;
 
@@ -2010,7 +2017,7 @@ ORDER BY year(e.expense_date) DESC";
         }
 
         if (!$XLS) {
-            $a = "<button style='background-color: #00A300;'><a href='/Inspinia/loan_exp_2.php?report=Report&id=$No&filename=$filename'><span style='color: white'>Export XlS</span></a></button>";
+            $a = static::excelExportButton("Report", $No, $filename);
         }
 
 
@@ -2129,6 +2136,7 @@ ORDER BY year(e.expense_date) DESC";
     {
         $output = "";
         $style = "";
+        $a = "";
 
 
         $sql = static::SQL4();
@@ -2136,7 +2144,7 @@ ORDER BY year(e.expense_date) DESC";
 
         if (!$XLS) {
 //            $txt = "Prêt-Rbt Mum Year Month";
-            $a = "<button style='background-color: #00A300;'><a href='/Inspinia/loan_exp_2.php?report=Report4&id=0&filename=$filename'><span style='color: white'>Export XlS</span></a></button>";
+            $a = static::excelExportButton("Report4", 0, $filename);
         }
 
 
@@ -2171,7 +2179,7 @@ ORDER BY year(e.expense_date) DESC";
             foreach ($results as $result) {
                 $output .= "<tr>";
                 if (User::is_admin()) {
-                    $lnk = "/public/admin/crud/data/edit_data.php?class_name=" . get_parent_class() . "&id={$result->id}";
+                    $lnk = "/public/admin/crud/data/edit_data.php?class_name=" . (get_parent_class(static::class) ?: static::class) . "&id={$result->id}";
                     $output .= "<td class='text-center'><a href='{$lnk}'>{$result->id}</a></td>";
                 } else {
                     $output .= "<td class='text-center'>{$result->id}</td>";
@@ -2199,10 +2207,14 @@ ORDER BY year(e.expense_date) DESC";
 
                 if ($result->cash == 1) {
 //                  $output .= "<td class='text-center' style='color:blue;background-color:#EBF5FB'><strong>Yes</strong></td>";
-                    $output .= "<td class='text-center' style='color:blue;background-color:#EBF5FB'><strong><i class='fa fa-check'></i></strong></td>";
+                    if ($XLS) {
+                        $output .= "<td class='text-center'>Yes</td>";
+                    } else {
+                        $output .= "<td class='text-center' style='color:blue;background-color:#EBF5FB'><strong><i class='fa fa-check'></i></strong></td>";
+                    }
 
                 } else {
-                    $output .= "<td style='color:blue;background-color:lavenderblush' class='text-center'>-</td>";
+                    $output .= $XLS ? "<td class='text-center'>No</td>" : "<td style='color:blue;background-color:lavenderblush' class='text-center'>-</td>";
                 }
 
                 $output .= "<td class='text-center'>{$result->ccy_id}</td>";
@@ -2240,6 +2252,7 @@ ORDER BY year(e.expense_date) DESC";
     {
         $output = "";
         $style = "";
+        $a = "";
 
 
         $sql = static::SQL4a();
@@ -2247,7 +2260,7 @@ ORDER BY year(e.expense_date) DESC";
 
         if (!$XLS) {
 //            $txt = "Prêt-Rbt Mum Year Month";
-            $a = "<button style='background-color: #00A300;'><a href='/Inspinia/loan_exp_2.php?report=Report4&id=0&filename=$filename'><span style='color: white'>Export XlS</span></a></button>";
+            $a = static::excelExportButton("Report4a", 0, $filename);
         }
 
 
@@ -2282,7 +2295,7 @@ ORDER BY year(e.expense_date) DESC";
             foreach ($results as $result) {
                 $output .= "<tr>";
                 if (User::is_admin()) {
-                    $lnk = "/public/admin/crud/data/edit_data.php?class_name=" . get_parent_class() . "&id={$result->id}";
+                    $lnk = "/public/admin/crud/data/edit_data.php?class_name=" . (get_parent_class(static::class) ?: static::class) . "&id={$result->id}";
                     $output .= "<td class='text-center'><a href='{$lnk}'>{$result->id}</a></td>";
                 } else {
                     $output .= "<td class='text-center'>{$result->id}</td>";
@@ -2310,7 +2323,11 @@ ORDER BY year(e.expense_date) DESC";
 
                 if ($result->cash == 1) {
 //                    $output .= "<td class='text-center' style='color:blue;background-color:#EBF5FB'><strong>Yes</strong></td>";
-                    $output .= "<td class='text-center' style='color:blue;background-color:#EBF5FB'><strong><i class='fa fa-envelope'></i></strong></td>";
+                    if ($XLS) {
+                        $output .= "<td class='text-center'>Yes</td>";
+                    } else {
+                        $output .= "<td class='text-center' style='color:blue;background-color:#EBF5FB'><strong><i class='fa fa-envelope'></i></strong></td>";
+                    }
                 } else {
                     $output .= "<td class='text-center'>No</td>";
                 }
