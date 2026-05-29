@@ -16,6 +16,11 @@ class Upload
     public $full_path_directory = PATH_UPLOAD;
     public $image_placeholder = "https://www.mountaineers.org/images/placeholder-images/placeholder-400-x-400/image_preview";
     public $tmp_path;
+    public $user_image;
+    public $type;
+    public $size;
+    public $photo;
+    public $username;
     public $errors = [];
     public $upload_errors_array = [
         // http://www.php.net/manual/en/features.file-upload.errors.php
