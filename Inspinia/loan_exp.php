@@ -118,14 +118,43 @@ if (!function_exists('loan_exp_int')) {
             return null;
         }
 
-        return $path . (isset($parts["query"]) ? "?" . $parts["query"] : "");
+        return $path
+            . (isset($parts["query"]) ? "?" . $parts["query"] : "")
+            . (isset($parts["fragment"]) ? "#" . $parts["fragment"] : "");
     }
 
-    function loan_exp_redirect_back($status, $fallback = null)
+    function loan_exp_url_with_params($url, array $params)
+    {
+        $parts = parse_url($url);
+        if ($parts === false) {
+            return $url;
+        }
+
+        $query = [];
+        if (isset($parts["query"])) {
+            parse_str($parts["query"], $query);
+        }
+
+        foreach ($params as $key => $value) {
+            if ($value === null || $value === "") {
+                unset($query[$key]);
+            } else {
+                $query[$key] = $value;
+            }
+        }
+
+        return ($parts["path"] ?? "")
+            . ($query ? "?" . http_build_query($query) : "")
+            . (isset($parts["fragment"]) ? "#" . $parts["fragment"] : "");
+    }
+
+    function loan_exp_redirect_back($status, $fallback = null, $id = null)
     {
         $fallback = loan_exp_safe_return_url($fallback) ?: loan_exp_current_url(["page" => 1]);
-        $separator = strpos($fallback, "?") === false ? "?" : "&";
-        redirect_to($fallback . $separator . "loan_status=" . u($status));
+        redirect_to(loan_exp_url_with_params($fallback, [
+            "loan_status" => $status,
+            "loan_id" => $id,
+        ]));
     }
 
     function loan_exp_select_options($items, $valueField, $labelField, $selectedValue)
@@ -352,17 +381,18 @@ if (request_is_post() && isset($_POST["loan_exp_action"])) {
     }
 
     $action = $_POST["loan_exp_action"];
+    $actionId = loan_exp_int($_POST["id"] ?? 0, 0);
     $ok = false;
 
     if ($action === "create") {
         $ok = loan_exp_save_expense($_POST);
     } elseif ($action === "update") {
-        $ok = loan_exp_save_expense($_POST, loan_exp_int($_POST["id"] ?? 0, 0));
+        $ok = loan_exp_save_expense($_POST, $actionId);
     } elseif ($action === "delete") {
-        $ok = loan_exp_delete_expense($_POST["id"] ?? 0);
+        $ok = loan_exp_delete_expense($actionId);
     }
 
-    loan_exp_redirect_back($ok ? $action . "_success" : $action . "_error", $_POST["return_to"] ?? null);
+    loan_exp_redirect_back($ok ? $action . "_success" : $action . "_error", $_POST["return_to"] ?? null, $actionId ?: null);
 }
 
 $user = isset($_SESSION["user_id"]) ? User::find_by_id($_SESSION['user_id']) : null;
@@ -477,13 +507,14 @@ $rows = loan_exp_fetch_rows(
 include(HEADER_PUBLIC);
 include_once(NAV_PUBLIC);
 
+$status_id = loan_exp_int($_GET["loan_id"] ?? 0, 0);
 $status_messages = [
     "create_success" => ["success", "Expense item created."],
-    "update_success" => ["success", "Expense item updated."],
+    "update_success" => ["success", $status_id ? "Successfully edited ID {$status_id}." : "Expense item updated."],
     "create_error" => ["danger", "Expense item could not be created. Please check the required fields."],
-    "update_error" => ["danger", "Expense item could not be updated. Please check the required fields."],
-    "delete_success" => ["success", "Expense item deleted."],
-    "delete_error" => ["danger", "Expense item could not be deleted."],
+    "update_error" => ["danger", $status_id ? "Could not edit ID {$status_id}. Please check the required fields." : "Expense item could not be updated. Please check the required fields."],
+    "delete_success" => ["success", $status_id ? "Deleted ID {$status_id}." : "Expense item deleted."],
+    "delete_error" => ["danger", $status_id ? "Could not delete ID {$status_id}." : "Expense item could not be deleted."],
     "csrf" => ["danger", "Security token expired. Please try again."],
     "forbidden" => ["danger", "You do not have permission to save expense items."],
 ];
@@ -684,6 +715,61 @@ $status_messages = [
 
     .loan-exp-positive {
         color: #075da8;
+    }
+
+    .loan-exp-row--status td {
+        animation: loan-exp-row-pulse 2.8s ease-out;
+    }
+
+    .loan-exp-toast {
+        position: fixed;
+        right: 22px;
+        bottom: 22px;
+        z-index: 2050;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        min-width: 260px;
+        max-width: min(420px, calc(100vw - 32px));
+        padding: 14px 16px;
+        border: 1px solid transparent;
+        border-radius: 8px;
+        box-shadow: 0 18px 40px rgba(15, 23, 42, 0.22);
+        font-weight: 800;
+        line-height: 1.3;
+        opacity: 0;
+        transform: translateY(14px);
+        transition: opacity 180ms ease, transform 180ms ease;
+    }
+
+    .loan-exp-toast.is-visible {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    .loan-exp-toast--success {
+        border-color: #86efac;
+        background: #dcfce7;
+        color: #14532d;
+    }
+
+    .loan-exp-toast--danger {
+        border-color: #fecaca;
+        background: #fee2e2;
+        color: #7f1d1d;
+    }
+
+    .loan-exp-toast .fa {
+        flex: 0 0 auto;
+    }
+
+    @keyframes loan-exp-row-pulse {
+        0% {
+            background: #dcfce7;
+        }
+        100% {
+            background: transparent;
+        }
     }
 
     .loan-exp-pagination {
@@ -1333,7 +1419,8 @@ $status_messages = [
 <main class="loan-exp-page loan-exp-page--public">
     <?php if (isset($_GET["loan_status"], $status_messages[$_GET["loan_status"]])) {
         [$type, $message] = $status_messages[$_GET["loan_status"]];
-        echo "<div class='alert alert-" . h($type) . "'>" . h($message) . "</div>";
+        $icon = $type === "success" ? "fa-check-circle" : "fa-exclamation-circle";
+        echo "<div class='loan-exp-toast loan-exp-toast--" . h($type) . "' id='loan-exp-toast' role='status' aria-live='polite' data-auto-dismiss='2800'><i class='fa " . h($icon) . "' aria-hidden='true'></i><span>" . h($message) . "</span></div>";
     } ?>
 
     <section class="loan-exp-header">
@@ -1464,7 +1551,7 @@ $status_messages = [
                         $displayDate = $date ? $date->format('d-M-Y') : $row["expense_date"];
                         $amountChf = (float) $row["amountCHF"];
                         ?>
-                        <tr>
+                        <tr id="loan-exp-row-<?php echo h($row["id"]); ?>"<?php echo $status_id === (int) $row["id"] ? " class='loan-exp-row--status'" : ""; ?>>
                             <td class="text-center"><?php echo h($row["id"]); ?></td>
                             <td><?php echo h($row["person_name"]); ?></td>
                             <td class="loan-exp-comment"><?php echo h(loan_exp_comment_text($row["comment"])); ?></td>
@@ -1655,8 +1742,19 @@ $status_messages = [
                 window.loanExpHideModalFallback(modal);
             };
 
+            var currentReturnUrl = function(fragment) {
+                var url = new URL(window.location.href);
+                url.searchParams.delete('loan_status');
+                url.searchParams.delete('loan_id');
+                url.hash = fragment || '';
+                return url.pathname + url.search + url.hash;
+            };
+
             document.querySelectorAll('.js-loan-exp-edit').forEach(function(button) {
-                button.addEventListener('click', function() {
+                button.addEventListener('click', function(event) {
+                    event.preventDefault();
+                    event.stopPropagation();
+
                     var modal = document.getElementById('loanExpenseEditModal');
                     if (!modal) {
                         return;
@@ -1685,12 +1783,20 @@ $status_messages = [
                         radio.checked = radio.value === String(button.dataset.cash || '0');
                     });
 
+                    var returnTo = modal.querySelector('input[name="return_to"]');
+                    if (returnTo && button.dataset.id) {
+                        returnTo.value = currentReturnUrl('loan-exp-row-' + button.dataset.id);
+                    }
+
                     showLoanModal(modal);
                 });
             });
 
             document.querySelectorAll('.js-loan-exp-delete').forEach(function(button) {
-                button.addEventListener('click', function() {
+                button.addEventListener('click', function(event) {
+                    event.preventDefault();
+                    event.stopPropagation();
+
                     var modal = document.getElementById('loanExpenseDeleteModal');
                     if (!modal) {
                         return;
@@ -1704,6 +1810,11 @@ $status_messages = [
                     }
                     if (summary) {
                         summary.textContent = button.dataset.comment || ('Expense #' + (button.dataset.id || ''));
+                    }
+
+                    var returnTo = modal.querySelector('input[name="return_to"]');
+                    if (returnTo && button.dataset.id) {
+                        returnTo.value = currentReturnUrl('loan-exp-row-' + button.dataset.id);
                     }
 
                     showLoanModal(modal);
@@ -1741,6 +1852,22 @@ $status_messages = [
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
+        var toast = document.getElementById('loan-exp-toast');
+        if (toast) {
+            window.setTimeout(function() {
+                toast.classList.add('is-visible');
+            }, 40);
+
+            window.setTimeout(function() {
+                toast.classList.remove('is-visible');
+                window.setTimeout(function() {
+                    if (toast.parentNode) {
+                        toast.parentNode.removeChild(toast);
+                    }
+                }, 220);
+            }, parseInt(toast.getAttribute('data-auto-dismiss'), 10) || 2800);
+        }
+
         var searchInput = document.getElementById('loan-search');
         var searchStatus = document.getElementById('loan-search-status');
         var searchForm = searchInput ? searchInput.form : null;
