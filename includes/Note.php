@@ -206,7 +206,6 @@ class Note extends DatabaseObject
         $output = "</a><span>&nbsp;</span>";
         $output .= "<a  class=\"btn btn-success\"  href=\"" . "/public/calendar.php" . "\">Calendar.php " . " </a><span>&nbsp;</span>";
         $output .= "<a  class=\"btn btn-primary\"  href=\"" . "/public/_f/kamy/recurring_appointment.php" . "\">Recurring_appointment " . " </a><span>&nbsp;</span>";
-        $output .= "<a  class=\"btn btn-info\"  href=\"" . "/public/email_script/appointment.php" . "\">Recurring_appointment_email " . " </a><span>&nbsp;</span>";
         $output .= "<a  class=\"btn btn-success\"  href=\"" . "/public/admin/notes.php" . "\">Notes.php " . " </a><span>&nbsp;</span>";//        $output .= "<a  class=\"btn btn-primary\"  href=\"" . MyExpensePerson::$page_manage . "\">View Person " . " </a><span>&nbsp;</span>";
 //        $output .= "<a  class=\"btn btn-primary\"  href=\"" . MyExpenseType::$page_manage . "\">View Type " . " </a>";
 

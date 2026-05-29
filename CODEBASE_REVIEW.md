@@ -617,7 +617,7 @@ Status update: Unlinked demo/admin sample surfaces were removed instead of harde
 
 Status update: Chat/message notification helpers now use prepared statements for session-user message lookups and counts instead of concatenating the session user ID into SQL strings.
 
-Status update: Superseded `old_` recurring appointment implementations under `public/_f/kamy/` were removed after confirming no active references. The active compatibility wrapper remains at `public/_f/kamy/recurring_appointment_email.php` and points to `public/email_script/appointment.php`.
+Status update: Superseded `old_` recurring appointment implementations under `public/_f/kamy/` were removed after confirming no active references. The appointment email script and its compatibility wrapper were later removed when that recurring email page was retired.
 
 ## Suggested first small PR
 

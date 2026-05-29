@@ -51,7 +51,6 @@ removed from source code.
 
 Cron/email scripts are now gathered under `public/email_script/`:
 
-- `appointment.php` from `public/_f/kamy/recurring_appointment_email.php`
 - `medical_certificate.php` from `public/_f/kamy/recurring_medical_certificate.php`
 - `contribution_assistance.php` from `public/_f/kamy/recurring_contribution_assistance.php`
 - `papa_event_reminder.php` from `Inspinia/papa/email/papa_yartzeit_hag.php`

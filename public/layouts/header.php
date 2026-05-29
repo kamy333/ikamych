@@ -108,7 +108,7 @@
 
 </head>
 
-<body>
+<body<?php echo !empty($body_class) ? ' class="' . h($body_class) . '"' : ''; ?>>
 
 
 <?php if (isset($fluid_view) && ($fluid_view)){ ?>

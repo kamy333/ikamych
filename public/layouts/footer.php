@@ -330,6 +330,120 @@
             });
         };
 
+        var appendUrlParam = function(url, key, value) {
+            try {
+                var parsedUrl = new URL(url, window.location.href);
+                parsedUrl.searchParams.set(key, value);
+                return parsedUrl.pathname + parsedUrl.search + parsedUrl.hash;
+            } catch (error) {
+                return url;
+            }
+        };
+
+        var setCrudModalMode = function(triggerElement) {
+            var modal = document.getElementById('adminCrudModal');
+            var frame = document.getElementById('adminCrudModalFrame');
+            var title = document.getElementById('adminCrudModalTitle');
+
+            if (!modal || !frame || !triggerElement) {
+                return false;
+            }
+
+            var href = triggerElement.getAttribute('href') || '';
+            href = appendUrlParam(href, 'crud_modal', '1');
+            href = appendUrlParam(href, 'return_to', modalReturnTo());
+
+            frame.setAttribute('src', href);
+            if (title) {
+                title.textContent = modal.getAttribute('data-admin-crud-page-name') || 'Record';
+            }
+
+            showModal(modal);
+            return true;
+        };
+
+        var showCrudStatus = function(status, className, recordId) {
+            var messageTarget = document.getElementById('message-ajax') || document.getElementById('message-php');
+
+            if (!messageTarget) {
+                return;
+            }
+
+            var verb = status === 'updated' ? 'updated' : (status === 'error' ? 'could not be saved' : 'created');
+            var alertClass = status === 'error' ? 'alert-danger' : 'alert-success';
+            var label = className || 'Record';
+            var suffix = recordId ? ' #' + recordId : '';
+            messageTarget.innerHTML = '<div class="alert ' + alertClass + ' admin-crud-alert" role="alert">' +
+                '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>' +
+                '<strong>' + label + suffix + '</strong> ' + verb + '.' +
+                '</div>';
+            messageTarget.style.display = 'block';
+        };
+
+        var handleCrudStatusFromUrl = function() {
+            var params;
+
+            try {
+                params = new URLSearchParams(window.location.search);
+            } catch (error) {
+                return;
+            }
+
+            var status = params.get('crud_modal_status');
+            if (!status) {
+                return;
+            }
+
+            var className = params.get('crud_modal_class') || '';
+            var recordId = params.get('crud_modal_id') || '';
+
+            if (window.parent && window.parent !== window) {
+                window.parent.postMessage({
+                    type: 'ikamyCrudModalSaved',
+                    status: status,
+                    className: className,
+                    recordId: recordId
+                }, window.location.origin);
+                return;
+            }
+
+            showCrudStatus(status, className, recordId);
+
+            try {
+                var cleanUrl = new URL(window.location.href);
+                cleanUrl.searchParams.delete('crud_modal_status');
+                cleanUrl.searchParams.delete('crud_modal_class');
+                cleanUrl.searchParams.delete('crud_modal_id');
+                window.history.replaceState({}, document.title, cleanUrl.pathname + cleanUrl.search);
+            } catch (error) {
+            }
+        };
+
+        window.addEventListener('message', function(event) {
+            if (event.origin !== window.location.origin || !event.data) {
+                return;
+            }
+
+            if (event.data.type === 'ikamyCrudModalCancel') {
+                var cancelModal = document.getElementById('adminCrudModal');
+                if (cancelModal) {
+                    hideModal(cancelModal);
+                }
+                return;
+            }
+
+            if (event.data.type === 'ikamyCrudModalSaved') {
+                var savedModal = document.getElementById('adminCrudModal');
+                if (savedModal) {
+                    hideModal(savedModal);
+                }
+                showCrudStatus(event.data.status, event.data.className, event.data.recordId);
+                window.setTimeout(function() {
+                    window.location.reload();
+                }, 700);
+            }
+        });
+
         var toggleNoteDetails = function(detailsToggle) {
             var detailsId = detailsToggle.getAttribute('aria-controls');
             var detailsPanel = detailsId ? document.getElementById(detailsId) : null;
@@ -348,6 +462,7 @@
         };
 
         var managementScrollState = null;
+        var adminCrudPageScrollState = null;
         var suppressManagementScrollbarClick = false;
         var suppressManagementScrollbarClickTimer = null;
 
@@ -436,6 +551,140 @@
             });
         };
 
+        var isAdminCrudScrollablePage = function() {
+            return document.body.classList.contains('admin-crud-manage-body') ||
+                document.body.classList.contains('crud-modal-body');
+        };
+
+        var ensureAdminCrudPageScrollbar = function() {
+            if (!isAdminCrudScrollablePage()) {
+                return null;
+            }
+
+            var existing = document.querySelector('.admin-crud-page-scrollbar');
+            if (existing) {
+                return {
+                    track: existing,
+                    thumb: existing.querySelector('.admin-crud-page-scrollbar__thumb')
+                };
+            }
+
+            var track = document.createElement('div');
+            var thumb = document.createElement('div');
+
+            track.className = 'admin-crud-page-scrollbar';
+            thumb.className = 'admin-crud-page-scrollbar__thumb';
+            track.setAttribute('aria-hidden', 'true');
+            track.style.display = 'none';
+            track.appendChild(thumb);
+            document.body.appendChild(track);
+
+            return {
+                track: track,
+                thumb: thumb
+            };
+        };
+
+        var updateAdminCrudPageScrollbar = function() {
+            var scrollbar = ensureAdminCrudPageScrollbar();
+
+            if (!scrollbar || !scrollbar.track || !scrollbar.thumb) {
+                return;
+            }
+
+            var doc = document.documentElement;
+            var scrollable = Math.max(doc.scrollHeight - doc.clientHeight, 0);
+
+            if (scrollable <= 1 || (document.body.classList.contains('admin-crud-manage-body') && document.body.classList.contains('modal-open'))) {
+                scrollbar.track.style.display = 'none';
+                scrollbar.track.classList.remove('is-dragging');
+                return;
+            }
+
+            var isCrudModalFrame = document.body.classList.contains('crud-modal-body');
+            var top = isCrudModalFrame ? 10 : 76;
+            var bottom = isCrudModalFrame ? 10 : 46;
+            var trackHeight = Math.max(window.innerHeight - top - bottom, 90);
+            var thumbHeight = Math.max(48, Math.min(trackHeight, trackHeight * (doc.clientHeight / doc.scrollHeight)));
+            var maxThumbTop = Math.max(trackHeight - thumbHeight, 0);
+            var thumbTop = (window.scrollY / scrollable) * maxThumbTop;
+
+            scrollbar.track.style.display = 'block';
+            scrollbar.track.style.top = top + 'px';
+            scrollbar.track.style.height = Math.round(trackHeight) + 'px';
+            scrollbar.thumb.style.top = Math.round(thumbTop) + 'px';
+            scrollbar.thumb.style.height = Math.round(thumbHeight) + 'px';
+        };
+
+        var isScrollableInsideAdminCrudPage = function(target) {
+            var node = target;
+
+            while (node && node !== document.body && node !== document.documentElement) {
+                if (node.closest && node.closest('.modal, .dropdown-menu, textarea, select')) {
+                    return true;
+                }
+
+                var style = window.getComputedStyle(node);
+                var overflowY = style.overflowY;
+                var canScroll = (overflowY === 'auto' || overflowY === 'scroll') && node.scrollHeight > node.clientHeight + 1;
+
+                if (canScroll) {
+                    return true;
+                }
+
+                node = node.parentElement;
+            }
+
+            return false;
+        };
+
+        var handleAdminCrudPageWheel = function(event) {
+            if (!isAdminCrudScrollablePage() || event.ctrlKey || event.metaKey) {
+                return;
+            }
+
+            if (isScrollableInsideAdminCrudPage(event.target)) {
+                return;
+            }
+
+            var doc = document.documentElement;
+            var scrollable = Math.max(doc.scrollHeight - doc.clientHeight, 0);
+
+            if (scrollable <= 1) {
+                return;
+            }
+
+            var delta = event.deltaY;
+
+            if (event.deltaMode === 1) {
+                delta *= 16;
+            } else if (event.deltaMode === 2) {
+                delta *= window.innerHeight;
+            }
+
+            event.preventDefault();
+            window.scrollTo(0, Math.max(0, Math.min(scrollable, window.scrollY + delta)));
+            updateAdminCrudPageScrollbar();
+        };
+
+        var scrollAdminCrudPageToPointer = function(clientY, dragOffset) {
+            var scrollbar = ensureAdminCrudPageScrollbar();
+
+            if (!scrollbar || !scrollbar.track || !scrollbar.thumb) {
+                return;
+            }
+
+            var doc = document.documentElement;
+            var trackRect = scrollbar.track.getBoundingClientRect();
+            var thumbHeight = scrollbar.thumb.offsetHeight || 48;
+            var usableHeight = Math.max(trackRect.height - thumbHeight, 1);
+            var scrollable = Math.max(doc.scrollHeight - doc.clientHeight, 0);
+            var localY = Math.max(0, Math.min(usableHeight, clientY - trackRect.top - dragOffset));
+
+            window.scrollTo(0, (localY / usableHeight) * scrollable);
+            updateAdminCrudPageScrollbar();
+        };
+
         var scrollManagementToPointer = function(dropdown, clientY, dragOffset) {
             var scrollbar = ensureManagementScrollbar(dropdown);
             var trackRect = scrollbar.track.getBoundingClientRect();
@@ -483,6 +732,39 @@
             };
         };
 
+        var handleAdminCrudPageScrollbarStart = function(event) {
+            var track = event.target.closest ? event.target.closest('.admin-crud-page-scrollbar') : null;
+
+            if (!track) {
+                return;
+            }
+
+            var thumb = track.querySelector('.admin-crud-page-scrollbar__thumb');
+            var thumbRect = thumb.getBoundingClientRect();
+            var isThumb = event.target === thumb;
+            var dragOffset = isThumb ? event.clientY - thumbRect.top : thumbRect.height / 2;
+
+            event.preventDefault();
+            event.stopPropagation();
+            event.stopImmediatePropagation();
+            track.classList.add('is-dragging');
+
+            if (track.setPointerCapture && event.pointerId !== undefined) {
+                try {
+                    track.setPointerCapture(event.pointerId);
+                } catch (captureError) {
+                    // Document handlers still cover dragging when pointer capture is not available.
+                }
+            }
+
+            scrollAdminCrudPageToPointer(event.clientY, dragOffset);
+
+            adminCrudPageScrollState = {
+                track: track,
+                dragOffset: dragOffset
+            };
+        };
+
         var handleManagementScrollbarMove = function(event) {
             if (!managementScrollState) {
                 return;
@@ -492,6 +774,17 @@
             event.stopPropagation();
             event.stopImmediatePropagation();
             scrollManagementToPointer(managementScrollState.dropdown, event.clientY, managementScrollState.dragOffset);
+        };
+
+        var handleAdminCrudPageScrollbarMove = function(event) {
+            if (!adminCrudPageScrollState) {
+                return;
+            }
+
+            event.preventDefault();
+            event.stopPropagation();
+            event.stopImmediatePropagation();
+            scrollAdminCrudPageToPointer(event.clientY, adminCrudPageScrollState.dragOffset);
         };
 
         var handleManagementScrollbarEnd = function(event) {
@@ -521,6 +814,27 @@
             scheduleManagementScrollbarClickRelease();
         };
 
+        var handleAdminCrudPageScrollbarEnd = function(event) {
+            if (!adminCrudPageScrollState) {
+                return;
+            }
+
+            event.preventDefault();
+            event.stopPropagation();
+            event.stopImmediatePropagation();
+            adminCrudPageScrollState.track.classList.remove('is-dragging');
+
+            if (adminCrudPageScrollState.track.releasePointerCapture && event.pointerId !== undefined) {
+                try {
+                    adminCrudPageScrollState.track.releasePointerCapture(event.pointerId);
+                } catch (captureError) {
+                    // Ignore failed release; the capture may already be gone.
+                }
+            }
+
+            adminCrudPageScrollState = null;
+        };
+
         document.querySelectorAll('.ikamy-management-dropdown').forEach(function(dropdown) {
             ensureManagementScrollbar(dropdown);
             dropdown.addEventListener('scroll', function() {
@@ -528,10 +842,17 @@
             });
         });
 
+        updateAdminCrudPageScrollbar();
+
         document.addEventListener('pointerdown', handleManagementScrollbarStart, true);
+        document.addEventListener('pointerdown', handleAdminCrudPageScrollbarStart, true);
         document.addEventListener('pointermove', handleManagementScrollbarMove, true);
+        document.addEventListener('pointermove', handleAdminCrudPageScrollbarMove, true);
         document.addEventListener('pointerup', handleManagementScrollbarEnd, true);
+        document.addEventListener('pointerup', handleAdminCrudPageScrollbarEnd, true);
         document.addEventListener('pointercancel', handleManagementScrollbarEnd, true);
+        document.addEventListener('pointercancel', handleAdminCrudPageScrollbarEnd, true);
+        document.addEventListener('wheel', handleAdminCrudPageWheel, { capture: true, passive: false });
 
         document.addEventListener('click', function(event) {
             var track = event.target.closest ? event.target.closest('.ikamy-management-scrollbar') : null;
@@ -559,6 +880,8 @@
 
         window.addEventListener('resize', updateAllManagementScrollbars);
         window.addEventListener('scroll', updateAllManagementScrollbars, true);
+        window.addEventListener('resize', updateAdminCrudPageScrollbar);
+        window.addEventListener('scroll', updateAdminCrudPageScrollbar, true);
 
         document.addEventListener('click', function(event) {
             var detailsToggle = event.target.closest('.small-note-details-toggle');
@@ -608,6 +931,29 @@
                 }
 
                 showModal(modal);
+                return;
+            }
+
+            var crudSearchTrigger = event.target.closest('[data-admin-crud-search-modal]');
+
+            if (crudSearchTrigger && (!($ && $.fn.modal))) {
+                var searchTarget = crudSearchTrigger.getAttribute('data-admin-crud-search-modal');
+                var searchModal = searchTarget ? document.querySelector(searchTarget) : null;
+
+                if (searchModal) {
+                    event.preventDefault();
+                    showModal(searchModal);
+                    return;
+                }
+            }
+
+            var crudModalTrigger = event.target.closest('a[data-admin-crud-modal]');
+
+            if (crudModalTrigger) {
+                if (document.getElementById('adminCrudModal')) {
+                    event.preventDefault();
+                    setCrudModalMode(crudModalTrigger);
+                }
                 return;
             }
 
@@ -684,6 +1030,7 @@
         };
 
         autoOpenReturnedModal();
+        handleCrudStatusFromUrl();
         };
 
         if (document.readyState === 'loading') {

@@ -8,6 +8,8 @@ $session->confirmation_protected_page();
 $class_name = MyClasses::allowed_class_from_request();
 MyClasses::require_class_access($class_name);
 call_user_func_array([$class_name, 'change_to_unique_data'], ['ajax']);
+$table_name = $class_name::get_table_name();
+require_once LIB_PATH . DS . 'download' . DS . 'download_csv.php';
 
 HeurePresence::quickaddhours();
 HeurePresence::quicksubstracthours();
@@ -49,6 +51,7 @@ if ($view_full_table == 1) {
 <?php $view_full_table == 1 ? $fluid_view = true : $fluid_view = false; ?>
 <?php $javascript = "ajax" ?>
 <?php $sub_menu = false ?>
+<?php $body_class = "admin-crud-manage-body" ?>
 <?php include(SITE_ROOT . DS . 'public' . DS . 'layouts' . DS . "header.php") ?>
 <?php include(SITE_ROOT . DS . 'public' . DS . 'layouts' . DS . "nav.php") ?>
 <?php echo isset($valid) ? $valid->form_errors() : "" ?>
@@ -57,6 +60,22 @@ if ($view_full_table == 1) {
     <?php if (isset($message)) {
         echo $message;
     } ?>
+</div>
+<div class="modal fade admin-crud-modal" id="adminCrudModal" tabindex="-1" role="dialog" aria-labelledby="adminCrudModalTitle" data-admin-crud-page-name="<?php echo h($class_name::$page_name); ?>">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header admin-crud-modal__header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <p class="admin-crud-modal__eyebrow"><?php echo h($class_name); ?></p>
+                <h4 class="modal-title" id="adminCrudModalTitle"><?php echo h($class_name::$page_name); ?></h4>
+            </div>
+            <div class="modal-body admin-crud-modal__body">
+                <iframe id="adminCrudModalFrame" class="admin-crud-modal__frame" title="CRUD form"></iframe>
+            </div>
+        </div>
+    </div>
 </div>
 
 
@@ -102,7 +121,7 @@ echo call_user_func_array([$class_name, 'table_nav'], [$page_link_view, $page_li
 
     <?php
     echo "<div class=\"row\">";
-    echo "<div class=\"col-md-7 {$offset}\" id='pagination' >";
+    echo "<div class=\"col-md-12 {$offset} admin-crud-pagination-wrap\" id='pagination' >";
     echo call_user_func_array([$class_name, 'display_pagination'], []);
     echo "</div>";
     echo "</div>";

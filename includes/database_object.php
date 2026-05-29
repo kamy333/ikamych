@@ -335,22 +335,33 @@ class DatabaseObject
 //used to add related links on new and page get from this and other classes
 
         $output = "";
+        $is_crud_modal = !empty($_GET['crud_modal']) || !empty($_POST['crud_modal']);
+        if ($is_crud_modal) {
+            return "";
+        }
 
 //       $array_classes=['MyExpensePerson', 'MyHouseExpense'];
 
-        $span = "<span>&nbsp;&nbsp; |&nbsp;&nbsp; </span>";
+        $is_new_page = isset($_SERVER['PHP_SELF']) && basename($_SERVER['PHP_SELF']) === 'new_ajax.php';
+        $link_class = " class='admin-crud-form-nav__link'";
+        $output .= "<nav class='admin-crud-form-nav' aria-label='Form navigation'>";
 //      $output .= get_called_class().BR;
 
-        $output .= "<a href=\"index.php\">Index</a> &nbsp;&nbsp";
+        $output .= "<a{$link_class} href=\"" . h(SITE_URL . "/public/admin/index.php") . "\"><i class='fa fa-th-large' aria-hidden='true'></i><span>Index</span></a>";
 
         $href = clean_query_string(static::$page_manage);
-        $output .= $span . "<a href=\"" . static::$page_manage . "\"> Manage " . static::$page_name . "</a>";
+        $output .= "<a{$link_class} href=\"" . h($href) . "\"><i class='fa fa-list' aria-hidden='true'></i><span>Manage " . h(static::$page_name) . "</span></a>";
+
+        if (!$is_new_page) {
+            $href = clean_query_string(static::$page_new);
+            $output .= "<a{$link_class} href=\"" . h($href) . "\"><i class='fa fa-plus' aria-hidden='true'></i><span>Add " . h(static::$page_name) . "</span></a>";
+        }
 
         foreach ($array_classes as $class) {
             call_user_func_array([$class, 'change_to_unique_data'], ['data']);
 
             $href = clean_query_string($class::$page_manage);
-            $output .= $span . "<a href=\"" . $href . "\"> Manage " . $class::$page_name . "</a>";
+            $output .= "<a{$link_class} href=\"" . h($href) . "\"><i class='fa fa-list' aria-hidden='true'></i><span>Manage " . h($class::$page_name) . "</span></a>";
 ////           var_dump($class);
 //           $output1 .= $class::$page_manage.BR;
         }
@@ -358,8 +369,9 @@ class DatabaseObject
 
         foreach ($array_classes as $class) {
             $href = clean_query_string($class::$page_new);
-            $output .= $span . "<a href=\"" . $href . "\"> Add New " . $class::$page_name . "</a>";
+            $output .= "<a{$link_class} href=\"" . h($href) . "\"><i class='fa fa-plus' aria-hidden='true'></i><span>Add " . h($class::$page_name) . "</span></a>";
         }
+        $output .= "</nav>";
 //       $output = "";
 //       $arr = array(1, 2, 3, 4);
 //       foreach ($arr as $value) {
@@ -398,15 +410,22 @@ class DatabaseObject
             $text_post1 = "creation";
             $jquery = "add-form-button";
         }
+
+        $is_crud_modal = !empty($_GET['crud_modal']) || !empty($_POST['crud_modal']);
+        $return_to = $_GET['return_to'] ?? ($_POST['return_to'] ?? '');
+        $safe_return_to = is_safe_local_redirect($return_to) ? $return_to : current_request_uri();
+
         $output = "";
-        $link = "<a  href='" . $post_link . " '>" . ' ' . $page1 . " "
-            . clean_query_string(static::$page_name) . "</a>";
+        $title_text = trim($page1 . " " . static::$page_name);
+        $link = $is_crud_modal
+            ? "<span>" . h($title_text) . "</span>"
+            : "<a  href='" . h($post_link) . " '>" . h($title_text) . "</a>";
         $h4 = "<h4 class='text-center'>{$link} </h4>";
-        $output .= "<div class ='form-header-dark-blue'  >";
-        $output .= "<p>$link<p>";
+        $output .= "<div class ='form-header-dark-blue admin-crud-form__header'  >";
+        $output .= "<p>$link</p>";
         $output .= "</div>";
-        $output .= "<div class =\"form-light-blue\">";
-        $output .= "<form name='form_" . get_called_class() . "' id='form_" . get_called_class() . "'  class='form-horizontal' method='post' action='{$post_link}'> ";
+        $output .= "<div class =\"form-light-blue admin-crud-form__shell\">";
+        $output .= "<form name='form_" . get_called_class() . "' id='form_" . get_called_class() . "'  class='form-horizontal admin-crud-form' method='post' action='{$post_link}'> ";
         if ($has_id) {
             $get_item = static::find_by_id($requested_id);
             if (!$get_item) {
@@ -422,12 +441,19 @@ class DatabaseObject
 
         $output .= csrf_token_tag();
         $output .= form::class_name(get_called_class());
+        if ($is_crud_modal) {
+            $output .= "<input type='hidden' name='crud_modal' value='1'>";
+            $output .= "<input type='hidden' name='ikamy_modal' value='crud'>";
+            $output .= "<input type='hidden' name='return_to' value='" . h($safe_return_to) . "'>";
+        }
 //        $output .= "</fieldset>";
-        $output .= " <div class='col-sm-offset-3 col-sm-7 col-xs-3'>
+        $actions_class = $is_crud_modal ? "admin-crud-form__actions" : "admin-crud-form__actions col-sm-offset-3 col-sm-7 col-xs-3";
+        $output .= " <div class='{$actions_class}'>
                    <button  type='submit' name='submit' id='{$jquery}' class='btn btn-primary' >"
             . $page . ' ' . static::$page_name . "</button></div>";
-        $output .= "<div class='text-right' ><a href='"
-            . clean_query_string(static::$page_manage) . "'" . " id='cancel-update-new' class='btn btn-info' role='button' >Cancel</a></div>";
+        $cancel_attrs = $is_crud_modal ? " data-dismiss='modal' onclick='if (window.parent && window.parent !== window) { window.parent.postMessage({type: \"ikamyCrudModalCancel\"}, window.location.origin); return false; }'" : "";
+        $output .= "<div class='text-right admin-crud-form__cancel' ><a href='"
+            . clean_query_string(static::$page_manage) . "'" . " id='cancel-update-new' class='btn btn-info' role='button'{$cancel_attrs} >Cancel</a></div>";
         $output .= "";
         $output .= "</form>";
         $output .= "</div>";
@@ -617,7 +643,7 @@ class DatabaseObject
 //                        $form->radio[$attr] = $val;
                         }
                     } else {
-                        $form->radio[(int)$attr] = $val;
+                        $form->$attr = $val;
                     }
 
                 }
@@ -645,7 +671,7 @@ class DatabaseObject
 //                        $form->radio[$attr] = $val;
                         }
                     } else {
-                        $form->checkboxinline[(int)$attr] = $val;
+                        $form->$attr = $val;
                     }
 
                 }
@@ -655,7 +681,7 @@ class DatabaseObject
 
 
 //to do
-            if (!empty($value) || (int)$value === 0) {
+            if ($value !== '' && $value !== null) {
 //                echo "<script>alert('DDD $name ----$value')</script>";
 
                 $form->value = $value;
@@ -719,18 +745,51 @@ class DatabaseObject
     public static function table_nav($page_link_view, $page_link_text, $offset)
     {
         $href = clean_query_string($page_link_view);
+        $new_href = static::crud_form_link(clean_query_string(static::$page_new));
 
-        $output = "<div class=\"row\" >";
-        $output .= "<div class=\"col-md-10 {$offset}\" > ";
-        $output .= "<a  class=\"btn btn-info\"  href=\"index.php\">Index</a><span>&nbsp;</span>";
-        $output .= "<a  class=\"btn btn-primary\"  href=\" $href\"> $page_link_text</a><span>&nbsp;</span>";
-        $output .= "<a  class=\"btn btn-primary button-add-form\"  href=\"" . clean_query_string(static::$page_new) . "\">Add New " . static::$page_name . " </a>";
+        $output = "<div class=\"row admin-crud-toolbar-row\" >";
+        $output .= "<div class=\"col-md-12 {$offset}\" > ";
+        $output .= "<div class=\"admin-crud-toolbar\">";
+        $output .= "<div class=\"admin-crud-toolbar__title\">";
+        $output .= "<span class=\"admin-crud-toolbar__eyebrow\">Management</span>";
+        $output .= "<h1>" . h(static::$page_name) . "</h1>";
+        $output .= "</div>";
+        $output .= "<div class=\"admin-crud-toolbar__actions\">";
+        $output .= "<a class=\"btn btn-default admin-crud-btn\" href=\"" . h(SITE_URL . "/public/admin/index.php") . "\"><i class=\"fa fa-th-large\" aria-hidden=\"true\"></i><span>Index</span></a>";
+        $output .= "<a class=\"btn btn-info admin-crud-btn ajax-pagination\" href=\"" . h($href) . "\"><i class=\"fa fa-table\" aria-hidden=\"true\"></i><span>" . h($page_link_text) . "</span></a>";
+        $output .= "<a class=\"btn btn-primary admin-crud-btn button-add-form\" href=\"" . h($new_href) . "\"" . static::crud_modal_attributes("Add " . static::$page_name) . "><i class=\"fa fa-plus\" aria-hidden=\"true\"></i><span>Add " . h(static::$page_name) . "</span></a>";
         $output .= static::table_nav_additional();
+        $output .= "</div>";
+        $output .= "</div>";
         $output .= "</div>";
         $output .= "</div>";
 //     $output.="";
         return $output;
 
+    }
+
+    protected static function crud_modal_url($url)
+    {
+        $url = clean_query_string($url);
+        $url = append_query_param($url, 'crud_modal', '1');
+        $url = append_query_param($url, 'return_to', current_request_uri());
+
+        return clean_query_string($url);
+    }
+
+    protected static function crud_modal_enabled()
+    {
+        return isset($_SERVER['PHP_SELF']) && basename($_SERVER['PHP_SELF']) === 'manage_ajax.php';
+    }
+
+    protected static function crud_form_link($url)
+    {
+        return static::crud_modal_enabled() ? static::crud_modal_url($url) : clean_query_string($url);
+    }
+
+    protected static function crud_modal_attributes($title)
+    {
+        return static::crud_modal_enabled() ? " data-admin-crud-modal=\"1\" data-admin-crud-title=\"" . h($title) . "\"" : "";
     }
 
     public static function table_nav_additional()
@@ -941,9 +1000,9 @@ class DatabaseObject
 
         $pages = static::NewPaginator();
         $output = "";
-        $output = "<div id=''>";
-        $output .= " <nav>";
-        $output .= " <ul class='pagination'>";
+        $output = "<div class='admin-crud-pagination'>";
+        $output .= " <nav class='admin-crud-pagination__nav' aria-label='" . h(static::$page_name) . " pages'>";
+        $output .= " <ul class='pagination admin-crud-pagination__list'>";
 
         $output .= $pages->display_pages();
         $output .= "<span class=\"\">" . $pages->display_jump_menu() . $pages->display_items_per_page() . "</span>";
@@ -970,31 +1029,39 @@ class DatabaseObject
 
         $query_string = remove_get(['page', 'class_name']);
 
-        $output = "<div id=''>";
-        $output .= " <nav>";
-        $output .= " <ul class='pagination'>";
+        $total_pages = $pagination->total_pages();
 
-        if ($pagination->total_pages() > 1) {
+        if ($total_pages <= 1) {
+            return "";
+        }
+
+        $output = "<div class='admin-crud-pagination'>";
+        $output .= "<div class='admin-crud-pagination__meta'><span>Page " . h($page) . " of " . h($total_pages) . "</span></div>";
+        $output .= " <nav class='admin-crud-pagination__nav' aria-label='" . h(static::$page_name) . " pages'>";
+        $output .= " <ul class='pagination admin-crud-pagination__list'>";
 
 
             //     <li><a href="#">Previous</a></li>
             if ($pagination->has_previous_page()) {
+                $href = clean_query_string(static::$page_manage . $query_string . "page=1");
+                $output .= "<li><a class='ajax-pagination first' href=\"" . h($href) . "\">&laquo; First</a></li> ";
+
                 $href = clean_query_string(static::$page_manage . $query_string . "page=" . urlencode($pagination->previous_page()));
 
                 $output .= "<li><a  class='ajax-pagination previous' href=\"";
-                $output .= $href;
+                $output .= h($href);
                 $output .= "\">&laquo; Previous</a></li> ";
             }
 
-            for ($i = 1; $i <= $pagination->total_pages(); $i++) {
+            for ($i = 1; $i <= $total_pages; $i++) {
 
                 if ($i == $page) {
-                    $output .= " <li class=\"active\"><a class='ajax-pagination' href='#'>{$i}</a></li> ";
+                    $output .= " <li class=\"active\"><a class='ajax-pagination' href='#' aria-current='page'>{$i}</a></li> ";
 
                 } else {
                     $href = clean_query_string(static::$page_manage . $query_string . "page=" . $i);
 
-                    $output .= "<li class=\"\"><a class='ajax-pagination' href=\"" . $href . "\">" . $i . "</a></li> ";
+                    $output .= "<li class=\"\"><a class='ajax-pagination' href=\"" . h($href) . "\">" . $i . "</a></li> ";
 
                 }
             }
@@ -1003,13 +1070,13 @@ class DatabaseObject
                 $href = clean_query_string(static::$page_manage . $query_string . "page=" . urlencode($pagination->next_page()));
 
                 $output .= "<li> <a  class='ajax-pagination next' href=\"";
-                $output .= $href;
+                $output .= h($href);
 
                 $output .= "\">Next &raquo;</a></li> ";
+
+                $href = clean_query_string(static::$page_manage . $query_string . "page=" . urlencode($total_pages));
+                $output .= "<li><a class='ajax-pagination last' href=\"" . h($href) . "\">Last &raquo;</a></li> ";
             }
-
-        }
-
 
         $output .= "       </ul>";
         $output .= "    </nav>";
@@ -1205,15 +1272,20 @@ class DatabaseObject
 
         $output = "";
 
-        $output .= "<div class='panel panel-info text-center'>";
+        $output .= "<div class='panel panel-info text-center admin-crud-panel'>";
         // <!-- Default panel contents -->
 
-        $output .= "<div class='panel-heading'>"
+        $output .= "<div class='panel-heading admin-crud-panel__heading'>"
             . "<div class='row'>"
-            . "<div id='panel-heading-search' class='col-md-12 text-center'>"
-            . "<a  class='btn btn-default ajax-pagination' style='color:blue;font-size:1.3em;' href='" . clean_query_string(static::$page_manage) . "'>Manage " . static::$page_name . "</a> ";
+            . "<div id='panel-heading-search' class='col-md-12 admin-crud-panel__titlebar'>"
+            . "<a class='admin-crud-panel__title ajax-pagination' href='" . clean_query_string(static::$page_manage) . "'><span>Manage</span> " . h(static::$page_name) . "</a> ";
 
         $output .= static::get_modal_search();
+        if (static::search_filters_are_active()) {
+            $output .= "<a class='btn btn-default admin-crud-icon-btn admin-crud-filter-clear' href='" . h(clean_query_string(static::$page_manage)) . "' title='Clear filters' aria-label='Clear filters'>";
+            $output .= "<i class='fa fa-filter' aria-hidden='true'></i><i class='fa fa-times admin-crud-filter-clear__mark' aria-hidden='true'></i>";
+            $output .= "<span class='sr-only'>Clear filters</span></a>";
+        }
         $output .= "</div>";
 
 
@@ -1238,13 +1310,15 @@ class DatabaseObject
         $output .= "</div>";
 
 
-        $output .= " <div class='panel-body'>";
+        $output .= " <div class='panel-body admin-crud-panel__summary'>";
         [$where, $params, $types] = static::where_clause_from_request();
         $found_count = static::count_all_where($where, $params, $types);
         $total_count = static::count_all();
 
         if ($found_count !== $total_count) {
-            $output .= "<b>Found records: <span style='color:blue;'> " . h($found_count) . " of " . h($total_count) . "</span></b> | ";
+            $output .= "<span class='admin-crud-chip'><b>Found</b> " . h($found_count) . " of " . h($total_count) . "</span>";
+        } else {
+            $output .= "<span class='admin-crud-chip'><b>Total</b> " . h($total_count) . "</span>";
         }
 
 
@@ -1258,21 +1332,21 @@ class DatabaseObject
 
 
             if (!empty($val) && !in_array($key, ['page', 'view', 'class_name'])) {
-                $output .= "<b>" . h($key_clean) . "&nbsp;<span style='color:blue;'>&nbsp;" . h(urldecode((string)$val)) . "</span></b> | ";
+                $output .= "<span class='admin-crud-chip'><b>" . h($key_clean) . "</b> " . h(urldecode((string)$val)) . "</span>";
             }
         }
         $output .= "</div>";
 
 
-        $output .= "<div class='table-responsive'>";
-        $output .= "<table class='table table-striped table-bordered table-hover table-condensed '>";
-        $output .= "<tr>";
+        $output .= "<div class='table-responsive admin-crud-table-wrap'>";
+        $output .= "<table class='table table-striped table-bordered table-hover table-condensed admin-crud-table'>";
+        $output .= "<thead><tr>";
 
         if (strtolower(static::$position_table) == "positionleft" ||
             strtolower(static::$position_table) == "positionboth") {
 
             if ($edit) {
-                $output .= "<th width='5%' colspan=\"2\" class=\"text-center\" style='vertical-align:middle;'>Actions</th>";
+                $output .= "<th width='5%' colspan=\"2\" class=\"text-center admin-crud-table__actions-head\" style='vertical-align:middle;'>Actions</th>";
             }
         }
 
@@ -1314,11 +1388,11 @@ class DatabaseObject
 
                     $href = clean_query_string($_SERVER["PHP_SELF"] . "" . $query_string . "page=" . u(1) . "&order_name=" . u($fieldname) . "&order_type=" . u('DESC') . "&class_name=" . get_called_class());
 
-                    $new_query_ASC .= "<span class='glyphicon glyphicon-triangle-bottom' style='color: white' aria-hidden='true'></span></a>";
+                    $new_query_ASC .= "<span class='glyphicon glyphicon-triangle-bottom' aria-hidden='true'></span></a>";
 
 
                     $new_query_DESC = "<a class='ajax-pagination' href='" . $href . "'>";
-                    $new_query_DESC .= "<span class='glyphicon glyphicon-triangle-top' style='color: white'  aria-hidden='true'></span></a>";
+                    $new_query_DESC .= "<span class='glyphicon glyphicon-triangle-top' aria-hidden='true'></span></a>";
 
                     $fieldname = str_replace("_", " ", $fieldname);
                     $fieldname = ucfirst($fieldname);
@@ -1338,17 +1412,17 @@ class DatabaseObject
 
                         if ($current_order_type === "ASC") {
                             $new_query_ASC = "";
-                            $output .= "<th class='text-center' style='vertical-align:middle;background-color:cornflowerblue;white-space:nowrap;'>" . $new_query_ASC . "&nbsp;" . $fieldname . $new_query_DESC . "&nbsp;" . "</th>";
+                            $output .= "<th class='text-center admin-crud-table__sorted' style='vertical-align:middle;white-space:nowrap;'>" . $new_query_ASC . "&nbsp;" . $fieldname . $new_query_DESC . "&nbsp;" . "</th>";
 
                         } elseif ($current_order_type === "DESC") {
                             $new_query_DESC = "";
-                            $output .= "<th class='text-center' style='vertical-align:middle;background-color:cornflowerblue;white-space:nowrap;'>" . $new_query_ASC . "&nbsp;<strong>" . $fieldname . $new_query_DESC . "&nbsp;</strong>" . "</th>";
+                            $output .= "<th class='text-center admin-crud-table__sorted' style='vertical-align:middle;white-space:nowrap;'>" . $new_query_ASC . "&nbsp;<strong>" . $fieldname . $new_query_DESC . "&nbsp;</strong>" . "</th>";
 
                         } else {
 
                         }
                     } else {
-                        $output .= "<th class='text-center' style='vertical-align:middle;background-color:=red;white-space:nowrap;'>" . $new_query_ASC . "&nbsp;" . $fieldname . $new_query_DESC . "&nbsp;" . "</th>";
+                        $output .= "<th class='text-center' style='vertical-align:middle;white-space:nowrap;'>" . $new_query_ASC . "&nbsp;" . $fieldname . $new_query_DESC . "&nbsp;" . "</th>";
 
                     }
 
@@ -1363,24 +1437,57 @@ class DatabaseObject
             strtolower(static::$position_table) == "positionboth") {
 
             if ($edit) {
-                $output .= "<th colspan=\"2\" class=\"text-center\" style='vertical-align:middle;'>Actions</th>";
+                $output .= "<th colspan=\"2\" class=\"text-center admin-crud-table__actions-head\" style='vertical-align:middle;'>Actions</th>";
             }
         }
 
-        $output .= "</tr>";
+        $output .= "</tr></thead><tbody>";
         return $output;
+    }
+
+    protected static function search_filters_are_active()
+    {
+        $ignored_keys = ['page', 'view', 'class_name', 'order_name', 'order_type', 'ipp', 'submit'];
+
+        foreach ($_GET as $key => $val) {
+            if (in_array($key, $ignored_keys, true) || is_array($val)) {
+                continue;
+            }
+
+            $value = trim((string)urldecode((string)$val));
+
+            if ($value === '') {
+                continue;
+            }
+
+            if ($key === 'download_csv' && strtolower($value) !== 'yes') {
+                continue;
+            }
+
+            return true;
+        }
+
+        return false;
     }
 
     public static function get_modal_search()
     {
         $output = "";
-        $output .= "      <button id='form-table-search-origin' style='display: inline' type='button' class='btn btn-primary btn-lg' data-toggle='modal' data-target='.bs-example-modal-lg'>";
-        $output .= "           <span class='glyphicon glyphicon-search' style='color: whitesmoke' aria-hidden='true'></span>";
+        $search_field_count = is_array(static::$db_field_search) ? count(static::$db_field_search) : 0;
+        $search_size_class = "admin-crud-search-modal--spacious";
+        if ($search_field_count <= 2) {
+            $search_size_class = "admin-crud-search-modal--compact";
+        } elseif ($search_field_count <= 6) {
+            $search_size_class = "admin-crud-search-modal--medium";
+        }
+
+        $output .= "      <button id='form-table-search-origin' style='display: inline' type='button' class='btn btn-default admin-crud-icon-btn' data-toggle='modal' data-target='.bs-example-modal-lg' data-admin-crud-search-modal='.admin-crud-search-modal' title='Search " . h(static::$page_name) . "'>";
+        $output .= "           <span class='glyphicon glyphicon-search' aria-hidden='true'></span>";
         $output .= "        </button>";
 
 
-        $output .= "       <div class='modal fade bs-example-modal-lg' tabindex='-1' role='dialog' aria-labelledby='myLargeModalLabel'>";
-        $output .= "          <div class='modal-dialog modal-lg'>";
+        $output .= "       <div class='modal fade bs-example-modal-lg admin-crud-search-modal " . h($search_size_class) . "' tabindex='-1' role='dialog' aria-labelledby='myLargeModalLabel'>";
+        $output .= "          <div class='modal-dialog admin-crud-search-modal__dialog'>";
         $output .= "             <div class='modal-content'>";
         $output .= "                  <div class='modal-header'>";
         $output .= "                    <button type='button' class='close' data-dismiss='modal' aria-label='Close'><span aria-hidden='true'>&times;</span></button>";
@@ -1397,11 +1504,87 @@ class DatabaseObject
         $output .= "                      </div>";
         $output .= "                <div class='modal-footer'>";
         $output .= "                    <button type='button' class='btn btn-default' data-dismiss='modal'>Close</button>";
-        $output .= "                   <button type='button' class='btn btn-primary'>Save changes</button>";
+        $output .= "                   <button type='submit' form='form_client_search' class='btn btn-primary'><i class='fa fa-search' aria-hidden='true'></i> Search</button>";
         $output .= "              </div>";
         $output .= "           </div>";
         $output .= "        </div>";
         $output .= "   </div>";
+        $output .= <<<HTML
+<script>
+(function() {
+    if (window.ikamyCrudSearchModalReady) {
+        return;
+    }
+
+    window.ikamyCrudSearchModalReady = true;
+
+    var hasBootstrapModal = function() {
+        return !!(window.jQuery && window.jQuery.fn && window.jQuery.fn.modal);
+    };
+
+    var showSearchModal = function(modal) {
+        if (hasBootstrapModal()) {
+            window.jQuery(modal).modal('show');
+            return;
+        }
+
+        modal.style.display = 'block';
+        modal.removeAttribute('aria-hidden');
+        modal.setAttribute('aria-modal', 'true');
+        modal.classList.add('in');
+        document.body.classList.add('modal-open');
+
+        if (!document.querySelector('.modal-backdrop[data-admin-crud-search-backdrop="1"]')) {
+            var backdrop = document.createElement('div');
+            backdrop.className = 'modal-backdrop fade in';
+            backdrop.setAttribute('data-admin-crud-search-backdrop', '1');
+            document.body.appendChild(backdrop);
+        }
+    };
+
+    var hideSearchModal = function(modal) {
+        if (hasBootstrapModal()) {
+            window.jQuery(modal).modal('hide');
+            return;
+        }
+
+        modal.style.display = 'none';
+        modal.setAttribute('aria-hidden', 'true');
+        modal.removeAttribute('aria-modal');
+        modal.classList.remove('in');
+        document.body.classList.remove('modal-open');
+        document.querySelectorAll('.modal-backdrop[data-admin-crud-search-backdrop="1"]').forEach(function(backdrop) {
+            if (backdrop.parentNode) {
+                backdrop.parentNode.removeChild(backdrop);
+            }
+        });
+    };
+
+    document.addEventListener('click', function(event) {
+        var trigger = event.target.closest('[data-admin-crud-search-modal]');
+
+        if (trigger && !hasBootstrapModal()) {
+            var target = trigger.getAttribute('data-admin-crud-search-modal');
+            var modal = target ? document.querySelector(target) : null;
+
+            if (modal) {
+                event.preventDefault();
+                showSearchModal(modal);
+                return;
+            }
+        }
+
+        var dismiss = event.target.closest('[data-dismiss="modal"]');
+        var searchModal = dismiss ? dismiss.closest('.admin-crud-search-modal') : null;
+
+        if (searchModal && !hasBootstrapModal()) {
+            event.preventDefault();
+            hideSearchModal(searchModal);
+        }
+    });
+})();
+</script>
+HTML;
 
         return $output;
 
@@ -1411,17 +1594,19 @@ class DatabaseObject
     {
 
         $output = "";
-        $div_class = "<div class='col-xs-4'>";
+        $div_class = "<div class='admin-crud-search__field'>";
         $value = null;
 
-        $output .= "<div class ='background_light_pink'>";
-        $output .= "<form name='form_client_search'  class='form-horizontal' method='get' action='" . h($_SERVER["PHP_SELF"] . "?page=1&class_name=" . get_called_class()) . "'>";
+        $output .= "<div class ='background_light_pink admin-crud-search'>";
+        $output .= "<form id='form_client_search' name='form_client_search'  class='form-horizontal admin-crud-search__form' method='get' action='" . h($_SERVER["PHP_SELF"]) . "'>";
+        $output .= "<input type='hidden' name='page' value='1'>";
+        $output .= "<input type='hidden' name='class_name' value='" . h(get_called_class()) . "'>";
 
         $output .= " <fieldset id='' title=''>";
-        $output .= " <legend class='text-center' style='color: #0000ff'> Search " . static::$page_name . "</legend>";
+        $output .= " <legend class='text-center admin-crud-search__legend'>Search " . h(static::$page_name) . "</legend>";
 
 
-        $output .= "<div class='row'>";
+        $output .= "<div class='admin-crud-search__grid'>";
         if (static::$db_field_search) {
             foreach (static::$db_field_search as $name_search) {
                 $output .= $div_class;
@@ -1434,16 +1619,16 @@ class DatabaseObject
 
         $output .= "</div>";
 
-        $output .= " <div class='col-sm-offset-3 col-sm-7 col-xs-3'>";
+        $output .= " <div class='admin-crud-search__submit'>";
 
-        $output .= "<button type='submit' name='submit' class='btn btn-info btn-block btn-group-lg'>" . 'Search  ' . "</button>";
+        $output .= "<button type='submit' name='submit' class='btn btn-info btn-block btn-group-lg'><i class='fa fa-search' aria-hidden='true'></i> Search</button>";
 
         $output .= "</div>";
 
 
-        $output .= "<div class='text-right ' >";
+        $output .= "<div class='text-right admin-crud-search__reset' >";
 
-        $output .= " <button type='reset'  class='btn btn-default '> 'Reset  '</button>";
+        $output .= " <a class='btn btn-default' href='" . h(clean_query_string(static::$page_manage)) . "'>Reset</a>";
 
 
         $output .= " </div>";
@@ -1474,12 +1659,12 @@ class DatabaseObject
 //            static::change_to_unique_data();
 //        }
 
-        $output = "</table>";
+        $output = "</tbody></table>";
         $output .= "</div>";
         $output .= "</div>";
         if ($edit) {
 
-            $output .= "<p class='text-right ' ><a class='button-add-form' href='" . clean_query_string(static::$page_new) . "'>Add New " . static::$page_name . "</a></p>";
+            $output .= "<div class='admin-crud-table-footer'><a class='btn btn-primary admin-crud-btn button-add-form' href='" . h(static::crud_form_link(clean_query_string(static::$page_new))) . "'" . static::crud_modal_attributes("Add " . static::$page_name) . "><i class='fa fa-plus' aria-hidden='true'></i><span>Add new " . h(static::$page_name) . "</span></a></div>";
         }
 
         return $output;
@@ -1780,9 +1965,9 @@ class DatabaseObject
         if (strtolower(static::$position_table) == "positionleft" ||
             strtolower(static::$position_table) == "positionboth") {
             if ($edit) {
-                $href = clean_query_string(static::$page_edit . "?id=" . urlencode($this->id));
+                $href = static::crud_form_link(static::$page_edit . "?id=" . urlencode($this->id));
 
-                $output .= "<td class='text-center'><a class='btn btn-primary table-btn button-edit-form' href='" . $href . "'><span class='	glyphicon glyphicon-pencil'></span></a></td>";
+                $output .= "<td class='text-center admin-crud-table__action-cell'><a class='btn btn-primary table-btn button-edit-form admin-crud-table__action' href='" . h($href) . "'" . static::crud_modal_attributes("Edit " . static::$page_name . " #" . $this->id) . " title='Edit ID " . h($this->id) . "' aria-label='Edit ID " . h($this->id) . "'><span class='glyphicon glyphicon-pencil' aria-hidden='true'></span></a></td>";
 
                 if (get_called_class() == "User") {
                     $onclick = "onclick=\"return confirm('Are you sure you want to delete ID {$this->id}?');\"";
@@ -1792,8 +1977,8 @@ class DatabaseObject
 
                 }
 
-                $href = clean_query_string(static::$page_delete . "?id=" . urlencode($this->id));
-                $output .= "<td class='text-center'><a {$onclick} class='btn btn-danger table-btn button-delete-form'  href='" . $href . "'><span class='glyphicon glyphicon-remove'></span></a></td>";
+                $href = append_query_param(clean_query_string(static::$page_delete . "?id=" . urlencode($this->id)), 'return_to', current_request_uri());
+                $output .= "<td class='text-center admin-crud-table__action-cell'><a {$onclick} class='btn btn-danger table-btn button-delete-form admin-crud-table__action'  href='" . h(clean_query_string($href)) . "' title='Delete ID " . h($this->id) . "' aria-label='Delete ID " . h($this->id) . "'><span class='glyphicon glyphicon-remove' aria-hidden='true'></span></a></td>";
             }
         }
 
@@ -1821,7 +2006,8 @@ class DatabaseObject
                     $output .= "<td><span $style class='text-right'>" . number_format($this->$fieldname, 2) . "</span></td>";
                 } else {
                     if ($fieldname == "id") {
-                        $a = "<a href='/public/admin/crud/ajax/edit_ajax.php?class_name=" . get_called_class() . "&id={$this->$fieldname}'>{$this->$fieldname}</a>";
+                        $id_href = static::crud_form_link(static::$page_edit . "?id=" . urlencode($this->$fieldname));
+                        $a = "<a class='admin-crud-id-link button-edit-form'" . static::crud_modal_attributes("Edit " . static::$page_name . " #" . $this->$fieldname) . " href='" . h($id_href) . "'>" . h($this->$fieldname) . "</a>";
                         $output .= "<td  class='text-center'>" . $a . "</td>";
 
                     } else {
@@ -1836,8 +2022,8 @@ class DatabaseObject
         if (strtolower(static::$position_table) == "positionright" ||
             strtolower(static::$position_table) == "positionboth") {
             if ($edit) {
-                $href = clean_query_string(static::$page_edit . "?id=" . urlencode($this->id));
-                $output .= "<td class='text-center'><a class='btn btn-primary table-btn button-edit-form' href='" . $href . "'>Edit</a></td>";
+                $href = static::crud_form_link(static::$page_edit . "?id=" . urlencode($this->id));
+                $output .= "<td class='text-center admin-crud-table__action-cell'><a class='btn btn-primary table-btn button-edit-form admin-crud-table__action' href='" . h($href) . "'" . static::crud_modal_attributes("Edit " . static::$page_name . " #" . $this->id) . " title='Edit ID " . h($this->id) . "'><i class='fa fa-pencil' aria-hidden='true'></i><span>Edit</span></a></td>";
 
                 if (get_called_class() == "User") {
                     $onclick = "onclick=\"return confirm('Are you sure you want to delete ID {$this->id}?');\"";
@@ -1846,8 +2032,8 @@ class DatabaseObject
                 }
 
 
-                $href = clean_query_string(static::$page_delete . "?id=" . urlencode($this->id));
-                $output .= "<td class='text-center'><a {$onclick} class='btn btn-danger table-btn button-delete-form' href='" . $href . "'>Delete</a></td>";
+                $href = append_query_param(clean_query_string(static::$page_delete . "?id=" . urlencode($this->id)), 'return_to', current_request_uri());
+                $output .= "<td class='text-center admin-crud-table__action-cell'><a {$onclick} class='btn btn-danger table-btn button-delete-form admin-crud-table__action' href='" . h(clean_query_string($href)) . "' title='Delete ID " . h($this->id) . "'><i class='fa fa-trash' aria-hidden='true'></i><span>Delete</span></a></td>";
             }
         }
 

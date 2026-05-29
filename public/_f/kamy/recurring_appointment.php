@@ -574,7 +574,6 @@ $output .= "
        <input type='hidden' name='dayNumber' value='" . h($dayNumberCertifMedical) . "'>
        <button type='submit' name='sendEmailCertifMedical' value='true' class='btn btn-purple'>Email Certif Med " . h("$dayNameMonthCertifMedical $dayNumberCertifMedicalFormat") . "</button>
        </form>
-       <a href='" . h('recurring_appointment_email.php') . "' class='btn btn-chromewhite'>Go to Email Certificat Medical</a>
     ";
 
 $output .= "";

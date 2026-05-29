@@ -10,6 +10,7 @@ $class_name = MyClasses::allowed_class_from_request();
 MyClasses::require_class_access($class_name);
 call_user_func_array([$class_name, 'change_to_unique_data'], ['ajax']);
 $is_data = true;
+$crud_modal_frame = !empty($_GET['crud_modal']) || !empty($_POST['crud_modal']);
 
 $requested_id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT, ['options' => ['min_range' => 1]]);
 if ($requested_id === false || $requested_id === null) {
@@ -113,11 +114,13 @@ if (request_is_post() && request_is_same_domain()) {
 <?php $active_menu = "admin"; ?>
 <?php $stylesheets = ""; ?>
 <?php $fluid_view = true; ?>
+<?php $body_class = $crud_modal_frame ? "crud-modal-body" : ""; ?>
 <?php $javascript = ""; ?>
 <?php $incl_message_error = true; ?>
 <?php //include_layout_template('header_2.php'); ?>
 <?php include(SITE_ROOT . DS . 'public' . DS . 'layouts' . DS . "header.php") ?>
-<?php include(SITE_ROOT . DS . 'public' . DS . 'layouts' . DS . "nav.php") ?>
+<?php if (!$crud_modal_frame) { include(SITE_ROOT . DS . 'public' . DS . 'layouts' . DS . "nav.php"); } ?>
+<?php if ($crud_modal_frame) { echo "<main class='admin-crud-modal-frame'>"; } ?>
 
 <?php echo isset($valid) ? $valid->form_errors() : "" ?>
 <?php echo isset($valid) ? $valid->form_warnings() : "" ?>
@@ -132,15 +135,16 @@ if (request_is_post() && request_is_same_domain()) {
 <?php checking(false); ?>
 
 
-<div class="col-md-7 col-md-offset-2 col-lg-7 col-lg-offset-2">
+<div class="<?php echo $crud_modal_frame ? 'col-md-12 col-lg-12' : 'col-md-7 col-md-offset-2 col-lg-7 col-lg-offset-2'; ?>">
 
-    <?php echo call_user_func_array([$class_name, 'get_form_new_href'], [$class_name::$form_class_dependency]); ?>
+    <?php if (!$crud_modal_frame) { echo call_user_func_array([$class_name, 'get_form_new_href'], [$class_name::$form_class_dependency]); } ?>
 
     <?php echo call_user_func([$class_name, 'Create_form']); ?>
 
 
 </div>
 
+<?php if ($crud_modal_frame) { echo "</main>"; } ?>
 
 <?php include(SITE_ROOT . DS . 'public' . DS . 'layouts' . DS . "footer.php") ?>
 

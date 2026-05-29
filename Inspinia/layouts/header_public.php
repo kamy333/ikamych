@@ -17,7 +17,7 @@
     <link href="font-awesome/css/font-awesome.css" rel="stylesheet">
     <link href="css/animate.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
-    <link href="css/style_personal.css" rel="stylesheet">
+    <link href="css/style_personal.css?v=<?php echo filemtime(SITE_ROOT . DS . $folder_project_name . DS . 'css' . DS . 'style_personal.css'); ?>" rel="stylesheet">
 
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet"/>
 

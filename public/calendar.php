@@ -119,7 +119,6 @@ $layout_context = "public"; ?>
     if (User::is_admin()) {
 
         $btnRecur = "<a class='ikamy-calendar-page__action ikamy-calendar-page__action--neutral' href='" . h(SITE_URL . "/public/_f/kamy/recurring_appointment.php") . "'><i class='fa fa-repeat' aria-hidden='true'></i> Recurring</a>";
-        $btnCert = "<a class='ikamy-calendar-page__action ikamy-calendar-page__action--secondary' href='" . h(SITE_URL . "/public/email_script/appointment.php") . "'><i class='fa fa-envelope-o' aria-hidden='true'></i> Medical email</a>";
         $btn = "<a class='ikamy-calendar-page__action ikamy-calendar-page__action--primary' href='" . h(SITE_URL . "/public/admin/crud/ajax/new_ajax.php?class_name=Calendar") . "' data-ikamy-modal-target='#ikamy-calendar-modal'><i class='fa fa-calendar-plus-o' aria-hidden='true'></i> Add date</a>";
     }
 
@@ -167,7 +166,6 @@ $layout_context = "public"; ?>
 
 
 <?php
-//redirect_to('public/email_script/appointment.php');
 //?>
 
 <?php include(SITE_ROOT . DS . 'public' . DS . 'layouts' . DS . "footer.php") ?>

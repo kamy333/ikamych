@@ -107,6 +107,32 @@ class Form extends DatabaseObject
 
     }
 
+    private function required_label($label)
+    {
+        $output = $label;
+        if ($this->required) {
+            $output .= "<span class='ikamy-required-star' aria-hidden='true'>*</span>";
+        }
+        return $output;
+    }
+
+    private function radio_value_matches($option, $current_value)
+    {
+        if ((string)$current_value === (string)$option['value']) {
+            return true;
+        }
+
+        if (!empty($option['match_values']) && is_array($option['match_values'])) {
+            foreach ($option['match_values'] as $match_value) {
+                if ((string)$current_value === (string)$match_value) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
     public function radio()
     {
         $output = "";
@@ -127,23 +153,34 @@ class Form extends DatabaseObject
             } else {
                 $output .= "class='sr-only'";
             }
-            $output .= ">{$this->radio[0][1]['label_all']}</label>";
+            $output .= ">" . $this->required_label($this->radio[0][1]['label_all']) . "</label>";
 
 
             for ($i = 0; $i < count($this->radio); $i++) {
+                if (!isset($has_checked)) {
+                    $has_checked = false;
+                }
                 $output .= " <div class='radio radio-primary radio-inline'>";
                 $output .= "    <input type='radio' name='{$this->radio[$i][1]['name']}' value='{$this->radio[$i][1]['value']}'";
+                if ($this->required) {
+                    $output .= " required";
+                }
 
 
                 if (isset($_POST[$this->radio[$i][1]['name']])) {
-                    if ($_POST[$this->radio[$i][1]['name']] == $this->radio[$i][1]['value']) {
+                    if ($this->radio_value_matches($this->radio[$i][1], $_POST[$this->radio[$i][1]['name']])) {
                         $output .= " checked ";
+                        $has_checked = true;
                     }
                 } else {
                     if (isset($this->value)) {
-                        if ((int)$this->value == (int)$this->radio[$i][1]['value']) {
+                        if ($this->radio_value_matches($this->radio[$i][1], $this->value)) {
                             $output .= " checked";
+                            $has_checked = true;
                         }
+                    } elseif (!$has_checked && !empty($this->radio[$i][1]['default'])) {
+                        $output .= " checked";
+                        $has_checked = true;
 
                     }
                 }
@@ -203,7 +240,7 @@ class Form extends DatabaseObject
 
             }
 
-            $output .= ">{$this->label_text}</label>";
+            $output .= ">" . $this->required_label($this->label_text) . "</label>";
 
             if ($this->form_format_type == self::FORM_HORIZONTAL) {
                 $output .= "<div class='{$this->col_sm_input}'>";
@@ -368,7 +405,7 @@ class Form extends DatabaseObject
 
             $output .= ">";
 
-            $output .= "{$this->label_text}</label>";
+            $output .= $this->required_label($this->label_text) . "</label>";
 
             if ($this->form_format_type == self::FORM_HORIZONTAL) {
                 $output .= "<div class='{$this->col_sm_input}'>";
@@ -523,7 +560,7 @@ class Form extends DatabaseObject
 
             $output .= ">";
 
-            $output .= "{$this->label_text}</label>";
+            $output .= $this->required_label($this->label_text) . "</label>";
 
             if ($this->form_format_type == self::FORM_HORIZONTAL) {
                 $output .= "<div class='{$this->col_sm_input}'>";
@@ -624,7 +661,7 @@ class Form extends DatabaseObject
             } else {
                 $output .= "class='sr-only'";
             }
-            $output .= ">{$this->checkboxinline[0][1]['label_all']}</label>";
+            $output .= ">" . $this->required_label($this->checkboxinline[0][1]['label_all']) . "</label>";
 
 //            echo "<pre>";
 //
@@ -697,7 +734,7 @@ class Form extends DatabaseObject
             $output .= "for='{$this->name}' ";
 
         }
-        $output .= " >$this->label_text</label>";
+        $output .= " >" . $this->required_label($this->label_text) . "</label>";
 
 
         if ($this->form_format_type == self::FORM_HORIZONTAL) {

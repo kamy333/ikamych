@@ -43,6 +43,7 @@ if ($view_full_table == 1) {
 <?php $view_full_table == 1 ? $fluid_view = true : $fluid_view = false; ?>
 <?php $javascript = "" ?>
 <?php $sub_menu = false ?>
+<?php $body_class = "admin-crud-manage-body" ?>
 <?php include(SITE_ROOT . DS . 'public' . DS . 'layouts' . DS . "header.php") ?>
 <?php include(SITE_ROOT . DS . 'public' . DS . 'layouts' . DS . "nav.php") ?>
 <?php echo isset($valid) ? $valid->form_errors() : "" ?>
@@ -89,7 +90,7 @@ echo call_user_func_array([$class_name, 'table_nav'], [$page_link_view, $page_li
 
     <?php
     echo "<div class=\"row\">";
-    echo "<div class=\"col-md-12 {$offset}\" id='pagination' >";
+    echo "<div class=\"col-md-12 {$offset} admin-crud-pagination-wrap\" id='pagination' >";
     echo call_user_func_array([$class_name, 'display_pagination'], []);
     echo "</div>";
     echo "</div>";

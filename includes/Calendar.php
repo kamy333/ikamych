@@ -88,6 +88,7 @@ class Calendar extends DatabaseObject
 
 
         'is_birthday' => ["type" => "radio",
+            "required" => true,
             [0,
                 [
                     "label_all" => "Birthday",
@@ -106,20 +107,23 @@ class Calendar extends DatabaseObject
                     "default" => false]],
         ],
         "person" => ["type" => "radio",
+            "required" => true,
             [0,
                 [
                     "label_all" => "Person",
                     "name" => "person",
                     "label_radio" => "Kamy",
-                    "value" => "0",
+                    "value" => "Kamy",
+                    "match_values" => ["0", "Kamy", "kamy"],
                     "id" => "kamy",
-                    "default" => false]],
+                    "default" => true]],
             [1,
                 [
                     "label_all" => "Person",
                     "name" => "person",
                     "label_radio" => "Mum",
-                    "value" => "1",
+                    "value" => "Mum",
+                    "match_values" => ["1", "Mum", "mum"],
                     "id" => "mum",
                     "default" => false]],
         ],
@@ -161,7 +165,7 @@ class Calendar extends DatabaseObject
                     "label_radio" => "oui",
                     "value" => "Yes",
                     "id" => "visible_yes",
-                    "default" => true]],
+                    "default" => false]],
         ],
 
     ];
@@ -604,12 +608,8 @@ class Calendar extends DatabaseObject
 
     public static function table_nav_additional()
     {
-        $output = "</a><span>&nbsp;</span>";
-        $output .= "<a  class=\"btn btn-primary\"  href=\"" . "/public/calendar.php" . "\">Calendar.php " . " </a><span>&nbsp;</span>";
-        $output .= "<a  class=\"btn btn-primary\"  href=\"" . "/public/_f/kamy/recurring_appointment.php" . "\">Recurring RDV " . " </a><span>&nbsp;</span>";
-        $output .= "<a  class=\"btn btn-info\"  href=\"" . "/public/email_script/appointment.php" . "\">Recurring RDV email " . " </a><span>&nbsp;</span>";
-        $output .= "<a  class=\"btn btn-primary\"  href=\"" . "/public/admin/notes.php" . "\">Notes " . " </a><span>&nbsp;</span>";
-        $output .= "<a  class=\"btn btn-primary\"  href=\"" . "/public/admin/crud/ajax/new_ajax.php?class_name=Note" . "\">New Notes " . " </a><span>&nbsp;</span>";
+        $output = "";
+        $output .= "<a class=\"btn btn-primary admin-crud-btn\" href=\"/public/_f/kamy/recurring_appointment.php\"><i class=\"fa fa-repeat\" aria-hidden=\"true\"></i><span>Recurring RDV</span></a>";
 //        $output .= "<a  class=\"btn btn-primary\"  href=\"" . MyExpenseType::$page_new . "\">Add New Type " . " </a></a><span>&nbsp;</span>";
 //        $output .= "<a  class=\"btn btn-primary\"  href=\"" . MyExpensePerson::$page_manage . "\">View Person " . " </a><span>&nbsp;</span>";
 //        $output .= "<a  class=\"btn btn-primary\"  href=\"" . MyExpenseType::$page_manage . "\">View Type " . " </a>";

@@ -99,6 +99,27 @@ function modal_form_return_url($fallback, $class_name, $status, $record_id = nul
 {
     $return_to = $_POST['return_to'] ?? '';
     $modal = $_POST['ikamy_modal'] ?? '';
+
+    if ($modal === 'crud' && !empty($_POST['crud_modal'])) {
+        if (!is_safe_local_redirect($return_to)) {
+            return $fallback;
+        }
+
+        $url = remove_query_params_from_url($return_to, [
+            'crud_modal_status',
+            'crud_modal_class',
+            'crud_modal_id',
+        ]);
+        $url = append_query_param($url, 'crud_modal_status', $status);
+        $url = append_query_param($url, 'crud_modal_class', $class_name);
+
+        if ($record_id !== null && $record_id !== '') {
+            $url = append_query_param($url, 'crud_modal_id', (string)$record_id);
+        }
+
+        return $url;
+    }
+
     $allowed_modals = [
         'Calendar' => 'calendar',
         'Note' => 'note',
@@ -801,7 +822,7 @@ function clean_query_string($text_qry_str)
         $qry_str_part2 = str_replace("?&", "&", $qry_str_part2, $count);
 
 //        echo $text_qry_str; echo "\n";
-        $new_url = $qry_str_part1 . str_replace("?", "&", $qry_str_part2, $count) . "\n";
+        $new_url = $qry_str_part1 . str_replace("?", "&", $qry_str_part2, $count);
 
         return $new_url;
     } else {
