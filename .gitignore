@@ -59,6 +59,10 @@ $RECYCLE.BIN/
 *.jpg
 *.bmp
 *.png
+!/public/favicon.png
+!/public/favicon-32x32.png
+!/public/favicon-16x16.png
+!/public/apple-touch-icon.png
 *.gif
 *.mp4
 *.mov
@@ -86,6 +90,7 @@ vendor
 !/public/img/logo/ikamy-logo-blue-1.png
 !/public/img/logo/ikamy-logo-blue-2.png
 !/public/img/logo/ikamy-logo-blue-4.png
+!/public/img/logo/logo square blue.png
 test2.sql
 Inspinia/css/patterns/
 Inspinia/css/plugins/images/
