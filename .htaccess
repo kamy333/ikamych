@@ -12,6 +12,7 @@ RedirectMatch 404 /\.git
 # already S:\ikamych. Production links are root-based; this is only for local
 # bookmarks or generated links that still include the old /ikamych/... prefix.
 RewriteEngine On
+RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
 RewriteCond %{HTTP_HOST} ^(ikamy\.local|localhost|127\.0\.0\.1)$ [NC]
 RewriteRule ^ikamych/(.*)$ /$1 [R=302,L]
 

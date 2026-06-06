@@ -169,6 +169,7 @@ require_once(LIB_PATH . DS . 'Upload.php');
 require_once(LIB_PATH . DS . 'SetUp.php');
 
 require_once(LIB_PATH . DS . 'user.php');
+require_once(LIB_PATH . DS . 'UserApiToken.php');
 require_once(LIB_PATH . DS . 'UserType.php');
 require_once(LIB_PATH . DS . 'FailedLogin.php');
 require_once(LIB_PATH . DS . 'BlacklistIp.php');
@@ -182,6 +183,7 @@ require_once(LIB_PATH . DS . 'Category.php');
 
 require_once(LIB_PATH . DS . 'Client.php');
 require_once(LIB_PATH . DS . 'Calendar.php');
+require_once(LIB_PATH . DS . 'SavedLink.php');
 
 require_once(LIB_PATH . DS . 'InvoiceActual.php');
 require_once(LIB_PATH . DS . 'InvoiceSend.php');
