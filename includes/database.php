@@ -9,6 +9,7 @@ class MySQLDatabase
 
 
     private $connection;
+    private $last_affected_rows = null;
     public $last_query;
 
     function __construct()
@@ -35,6 +36,7 @@ class MySQLDatabase
     public function query($sql)
     {
         $this->last_query = $sql;
+        $this->last_affected_rows = null;
         $result = mysqli_query($this->connection, $sql);
         $this->confirm_query($result);
         return $result;
@@ -43,6 +45,7 @@ class MySQLDatabase
     public function query_prepared($sql, array $params = [], $types = "")
     {
         $this->last_query = $sql;
+        $this->last_affected_rows = null;
         $stmt = mysqli_prepare($this->connection, $sql);
         if (!$stmt) {
             $this->confirm_query(false);
@@ -97,6 +100,7 @@ class MySQLDatabase
 
         $result = mysqli_stmt_execute($stmt);
         $this->confirm_query($result);
+        $this->last_affected_rows = mysqli_stmt_affected_rows($stmt);
         mysqli_stmt_close($stmt);
 
         return $result;
@@ -142,6 +146,10 @@ class MySQLDatabase
 
     public function affected_rows()
     {
+        if ($this->last_affected_rows !== null) {
+            return $this->last_affected_rows;
+        }
+
         return mysqli_affected_rows($this->connection);
     }
 
