@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Ikamych URL Saver Options</title>
+  <link rel="stylesheet" href="options.css">
+</head>
+<body>
+  <main class="options-shell">
+    <header>
+      <h1>Ikamych URL Saver</h1>
+      <p>Chrome extension settings</p>
+    </header>
+
+    <form id="options-form" class="options-panel">
+      <label for="api-endpoint">API endpoint</label>
+      <input id="api-endpoint" name="apiEndpoint" type="url" required>
+
+      <label for="saved-links-url">Saved links page</label>
+      <input id="saved-links-url" name="savedLinksUrl" type="url" required>
+
+      <label for="token">API token</label>
+      <input id="token" name="token" type="password" autocomplete="off">
+
+      <div class="options-actions">
+        <button type="submit">Save</button>
+        <button type="button" id="test-connection">Test</button>
+        <a id="open-saved-links" href="#" target="_blank" rel="noopener noreferrer">Open saved links</a>
+      </div>
+    </form>
+
+    <p id="status" class="status" role="status"></p>
+  </main>
+
+  <script src="options.js"></script>
+</body>
+</html>
