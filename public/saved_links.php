@@ -7,9 +7,10 @@ if (!User::is_kamy() && !User::is_admin()) {
 
 $user_id = (int)$session->user_id;
 $page_url = '/public/saved_links.php';
+$saved_links_csrf_id = 'saved_links';
 
 if (request_is_post()) {
-    if (!request_is_same_domain() || !csrf_token_is_valid() || !csrf_token_is_recent()) {
+    if (!request_is_same_domain() || !csrf_token_is_valid($saved_links_csrf_id) || !csrf_token_is_recent($saved_links_csrf_id)) {
         $session->message('Security token expired. Please try again.');
         redirect_to($page_url);
     }
@@ -93,6 +94,7 @@ $links = SavedLink::allForUser($user_id, [
 $counts = SavedLink::countsForUser($user_id);
 $tokens = UserApiToken::tokensForUser($user_id);
 $api_endpoint = SITE_URL . '/public/api/v1/saved-links.php';
+$saved_links_csrf_token = create_csrf_token($saved_links_csrf_id);
 ?>
 <?php $layout_context = 'public'; ?>
 <?php $active_menu = 'saved_links'; ?>
@@ -607,7 +609,7 @@ $api_endpoint = SITE_URL . '/public/api/v1/saved-links.php';
                 <?php } ?>
 
                 <form method="post" action="<?php echo h($page_url); ?>" class="saved-links-token-grid">
-                    <?php echo csrf_token_tag(); ?>
+                    <input type="hidden" name="csrf_token<?php echo h($saved_links_csrf_id); ?>" value="<?php echo h($saved_links_csrf_token); ?>">
                     <input type="hidden" name="action" value="generate_token">
                     <div class="saved-links-field">
                         <label for="token-name">Token name</label>
@@ -641,7 +643,7 @@ $api_endpoint = SITE_URL . '/public/api/v1/saved-links.php';
                                 </div>
                                 <?php if (empty($token['revoked_at'])) { ?>
                                     <form method="post" action="<?php echo h($page_url); ?>">
-                                        <?php echo csrf_token_tag(); ?>
+                                        <input type="hidden" name="csrf_token<?php echo h($saved_links_csrf_id); ?>" value="<?php echo h($saved_links_csrf_token); ?>">
                                         <input type="hidden" name="action" value="revoke_token">
                                         <input type="hidden" name="id" value="<?php echo h($token['id']); ?>">
                                         <button class="saved-links-btn saved-links-btn--danger" type="submit">
@@ -746,7 +748,7 @@ $api_endpoint = SITE_URL . '/public/api/v1/saved-links.php';
                                 <i class="fa fa-external-link" aria-hidden="true"></i>
                             </a>
                             <form method="post" action="<?php echo h($page_url); ?>">
-                                <?php echo csrf_token_tag(); ?>
+                                <input type="hidden" name="csrf_token<?php echo h($saved_links_csrf_id); ?>" value="<?php echo h($saved_links_csrf_token); ?>">
                                 <input type="hidden" name="action" value="set_status">
                                 <input type="hidden" name="id" value="<?php echo h($link['id']); ?>">
                                 <input type="hidden" name="status" value="kept">
@@ -755,7 +757,7 @@ $api_endpoint = SITE_URL . '/public/api/v1/saved-links.php';
                                 </button>
                             </form>
                             <form method="post" action="<?php echo h($page_url); ?>" onsubmit="return confirm('Delete this saved link?');">
-                                <?php echo csrf_token_tag(); ?>
+                                <input type="hidden" name="csrf_token<?php echo h($saved_links_csrf_id); ?>" value="<?php echo h($saved_links_csrf_token); ?>">
                                 <input type="hidden" name="action" value="delete_link">
                                 <input type="hidden" name="id" value="<?php echo h($link['id']); ?>">
                                 <button class="saved-links-btn saved-links-btn--danger saved-link-icon-btn" type="submit" title="Delete link" aria-label="Delete link">
@@ -771,7 +773,7 @@ $api_endpoint = SITE_URL . '/public/api/v1/saved-links.php';
                         </div>
 
                         <form method="post" action="<?php echo h($page_url); ?>" class="saved-link-form">
-                            <?php echo csrf_token_tag(); ?>
+                            <input type="hidden" name="csrf_token<?php echo h($saved_links_csrf_id); ?>" value="<?php echo h($saved_links_csrf_token); ?>">
                             <input type="hidden" name="action" value="update_link">
                             <input type="hidden" name="id" value="<?php echo h($link['id']); ?>">
 
@@ -811,7 +813,7 @@ $api_endpoint = SITE_URL . '/public/api/v1/saved-links.php';
                         <div class="saved-link-actions">
                             <?php if ($link['status'] !== 'archived') { ?>
                                 <form method="post" action="<?php echo h($page_url); ?>">
-                                    <?php echo csrf_token_tag(); ?>
+                                    <input type="hidden" name="csrf_token<?php echo h($saved_links_csrf_id); ?>" value="<?php echo h($saved_links_csrf_token); ?>">
                                     <input type="hidden" name="action" value="set_status">
                                     <input type="hidden" name="id" value="<?php echo h($link['id']); ?>">
                                     <input type="hidden" name="status" value="archived">
