@@ -1,0 +1,29 @@
+{
+  "id": "/public/index.php",
+  "name": "ikamy.ch",
+  "short_name": "ikamy",
+  "description": "ikamy.ch as an installable mobile app.",
+  "start_url": "/public/index.php",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#f4f7fb",
+  "theme_color": "#0b8fcb",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/public/pwa-icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/public/favicon.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    },
+    {
+      "src": "/public/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    }
+  ]
+}

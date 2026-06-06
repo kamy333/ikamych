@@ -8,6 +8,8 @@
 RedirectMatch 404 /\.git
 # SECTION END GIT PROTECTION
 
+AddType application/manifest+json .webmanifest
+
 # Backward compatibility for old local URLs when the vhost document root is
 # already S:\ikamych. Production links are root-based; this is only for local
 # bookmarks or generated links that still include the old /ikamych/... prefix.

@@ -37,6 +37,12 @@
     <link rel="icon" type="image/png" sizes="32x32" href="/public/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/public/favicon-16x16.png">
     <link rel="apple-touch-icon" sizes="180x180" href="/public/apple-touch-icon.png">
+    <link rel="manifest" href="/public/manifest.webmanifest">
+    <meta name="theme-color" content="#0b8fcb">
+    <meta name="application-name" content="ikamy.ch">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-title" content="ikamy">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
 
     <link rel="stylesheet" type="text/css" href="<?php echo $Nav->path_public; ?>css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="<?php echo $Nav->path_public; ?>js/flatpickr/flatpickr.min.css">

@@ -1282,6 +1282,23 @@ $(document).ready(function () {
 
 <script src="<?php echo $Nav->path_public; ?>js/test_tooltips.js"></script>
 
+<script>
+    (function () {
+        if (!('serviceWorker' in navigator)) {
+            return;
+        }
+
+        if (!window.isSecureContext && !/^localhost$|^127(?:\.\d{1,3}){3}$/.test(window.location.hostname)) {
+            return;
+        }
+
+        window.addEventListener('load', function () {
+            navigator.serviceWorker.register('/service-worker.js', {scope: '/'}).catch(function () {
+            });
+        });
+    })();
+</script>
+
 </body>
 
 

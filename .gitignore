@@ -63,6 +63,7 @@ $RECYCLE.BIN/
 !/public/favicon-32x32.png
 !/public/favicon-16x16.png
 !/public/apple-touch-icon.png
+!/public/pwa-icon-192.png
 *.gif
 *.mp4
 *.mov
