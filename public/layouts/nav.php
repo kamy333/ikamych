@@ -112,6 +112,14 @@ if ($layout_context == "public") {
                     } ?>
                 ><a href="<?php echo $path_public; ?>myLinks.php?category=Others">Links</a></li>
 
+                <?php if (isset($_SESSION["user_id"]) && User::is_kamy()) { ?>
+                    <li
+                        <?php if (isset($active_menu) && $active_menu == "saved_links") {
+                            echo "class=\"active\"";
+                        } ?>
+                    ><a href="<?php echo $path_public; ?>saved_links.php">Saved links</a></li>
+                <?php } ?>
+
                 <li
                     <?php if (isset($active_menu) && $active_menu == "contact") {
                         echo "class=\"active\"";
@@ -304,6 +312,7 @@ if ($layout_context == "public") {
                         </li>
 
                         <li class="dropdown-header">Links</li>
+                        <?php echo $management_link('Saved links', 'saved_links.php', 'Open saved URLs', 'fa-bookmark'); ?>
                         <?php echo $management_item('Links', 'Links'); ?>
                         <?php echo $management_item('LinksCategory', 'Links Category'); ?>
                     </ul>
