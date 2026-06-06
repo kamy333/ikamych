@@ -154,11 +154,79 @@ $api_endpoint = SITE_URL . '/public/api/v1/saved-links.php';
         padding: 18px;
     }
 
+    details.saved-links-panel {
+        padding: 0;
+    }
+
     .saved-links-panel h2 {
         color: #163f63;
         font-size: 18px;
         font-weight: 800;
         margin: 0 0 14px;
+    }
+
+    .saved-links-panel__summary {
+        align-items: center;
+        cursor: pointer;
+        display: flex;
+        gap: 12px;
+        justify-content: space-between;
+        list-style: none;
+        padding: 18px;
+    }
+
+    .saved-links-panel__summary::-webkit-details-marker {
+        display: none;
+    }
+
+    .saved-links-panel__summary h2 {
+        margin: 0;
+    }
+
+    .saved-links-panel__summary i {
+        color: #31556f;
+        transition: transform 0.16s ease;
+    }
+
+    details[open] > .saved-links-panel__summary i {
+        transform: rotate(180deg);
+    }
+
+    .saved-links-panel__body {
+        border-top: 1px solid #e5edf5;
+        padding: 18px;
+    }
+
+    .saved-links-help {
+        color: #41566d;
+    }
+
+    .saved-links-help h3 {
+        color: #173f63;
+        font-size: 15px;
+        font-weight: 800;
+        margin: 18px 0 8px;
+    }
+
+    .saved-links-help h3:first-child {
+        margin-top: 0;
+    }
+
+    .saved-links-help ol,
+    .saved-links-help ul {
+        margin-bottom: 0;
+        padding-left: 22px;
+    }
+
+    .saved-links-help li {
+        margin-bottom: 6px;
+    }
+
+    .saved-links-help code {
+        background: #edf4fa;
+        border-radius: 4px;
+        color: #173f63;
+        padding: 2px 5px;
     }
 
     .saved-links-token-grid,
@@ -305,13 +373,8 @@ $api_endpoint = SITE_URL . '/public/api/v1/saved-links.php';
         overflow: hidden;
     }
 
-    .saved-link-details {
-        display: block;
-    }
-
-    .saved-link-summary {
+    .saved-link-row {
         align-items: center;
-        cursor: pointer;
         display: grid;
         gap: 12px;
         grid-template-columns: minmax(0, 1fr) auto auto;
@@ -320,18 +383,29 @@ $api_endpoint = SITE_URL . '/public/api/v1/saved-links.php';
         padding: 12px 14px;
     }
 
-    .saved-link-summary::-webkit-details-marker {
-        display: none;
-    }
-
-    .saved-link-summary:hover,
-    .saved-link-summary:focus {
+    .saved-link-row:hover {
         background: #f6f9fc;
-        outline: none;
     }
 
     .saved-link-summary__main {
         min-width: 0;
+    }
+
+    .saved-link-toggle {
+        background: transparent;
+        border: 0;
+        color: inherit;
+        cursor: pointer;
+        display: block;
+        min-width: 0;
+        padding: 0;
+        text-align: left;
+        width: 100%;
+    }
+
+    .saved-link-toggle:focus {
+        outline: 3px solid rgba(14, 143, 203, 0.25);
+        outline-offset: 4px;
     }
 
     .saved-link-summary__title {
@@ -364,7 +438,7 @@ $api_endpoint = SITE_URL . '/public/api/v1/saved-links.php';
         margin-top: 10px;
     }
 
-    .saved-link-summary__toggle {
+    .saved-link-toggle__hint {
         align-items: center;
         color: #31556f;
         display: inline-flex;
@@ -372,20 +446,25 @@ $api_endpoint = SITE_URL . '/public/api/v1/saved-links.php';
         font-weight: 800;
         gap: 6px;
         justify-content: center;
+        margin-top: 5px;
         min-width: 76px;
     }
 
-    .saved-link-summary__toggle i {
+    .saved-link-toggle__hint i {
         transition: transform 0.16s ease;
     }
 
-    .saved-link-details[open] .saved-link-summary__toggle i {
+    .saved-link-toggle[aria-expanded="true"] .saved-link-toggle__hint i {
         transform: rotate(180deg);
     }
 
     .saved-link-details__panel {
         border-top: 1px solid #e5edf5;
         padding: 14px;
+    }
+
+    .saved-link-details__panel[hidden] {
+        display: none;
     }
 
     .saved-link-status {
@@ -429,6 +508,30 @@ $api_endpoint = SITE_URL . '/public/api/v1/saved-links.php';
         margin-top: 10px;
     }
 
+    .saved-link-row-actions {
+        align-items: center;
+        display: flex;
+        flex-wrap: nowrap;
+        gap: 6px;
+        justify-content: flex-end;
+    }
+
+    .saved-link-row-actions form {
+        margin: 0;
+    }
+
+    .saved-link-icon-btn {
+        min-height: 38px;
+        min-width: 38px;
+        padding: 0;
+        width: 38px;
+    }
+
+    .saved-link-icon-btn[disabled] {
+        cursor: default;
+        opacity: 0.72;
+    }
+
     .saved-links-empty {
         color: #53677c;
         padding: 24px;
@@ -437,7 +540,7 @@ $api_endpoint = SITE_URL . '/public/api/v1/saved-links.php';
 
     @media (max-width: 760px) {
         .saved-links-header,
-        .saved-link-summary,
+        .saved-link-row,
         .saved-links-token-grid,
         .saved-links-filter,
         .saved-links-token-row,
@@ -455,12 +558,20 @@ $api_endpoint = SITE_URL . '/public/api/v1/saved-links.php';
         }
 
         .saved-link-status,
-        .saved-link-summary__toggle {
+        .saved-link-toggle__hint {
             justify-self: start;
+        }
+
+        .saved-link-row-actions {
+            justify-content: flex-start;
         }
 
         .saved-links-btn {
             width: 100%;
+        }
+
+        .saved-link-icon-btn {
+            width: 38px;
         }
     }
 </style>
@@ -480,67 +591,112 @@ $api_endpoint = SITE_URL . '/public/api/v1/saved-links.php';
 
         <?php echo $session->message(); ?>
 
-        <section class="saved-links-panel">
-            <h2>Chrome extension token</h2>
-
-            <?php if ($new_token !== '') { ?>
-                <div class="saved-links-token">
-                    <div class="saved-links-field">
-                        <label for="saved-links-new-token">New token</label>
-                        <input id="saved-links-new-token" type="text" value="<?php echo h($new_token); ?>" readonly>
+        <details class="saved-links-panel" <?php echo $new_token !== '' ? 'open' : ''; ?>>
+            <summary class="saved-links-panel__summary">
+                <h2>Chrome extension token</h2>
+                <i class="fa fa-chevron-down" aria-hidden="true"></i>
+            </summary>
+            <div class="saved-links-panel__body">
+                <?php if ($new_token !== '') { ?>
+                    <div class="saved-links-token">
+                        <div class="saved-links-field">
+                            <label for="saved-links-new-token">New token</label>
+                            <input id="saved-links-new-token" type="text" value="<?php echo h($new_token); ?>" readonly>
+                        </div>
                     </div>
+                <?php } ?>
+
+                <form method="post" action="<?php echo h($page_url); ?>" class="saved-links-token-grid">
+                    <?php echo csrf_token_tag(); ?>
+                    <input type="hidden" name="action" value="generate_token">
+                    <div class="saved-links-field">
+                        <label for="token-name">Token name</label>
+                        <input id="token-name" name="token_name" type="text" value="Chrome URL Saver">
+                    </div>
+                    <button class="saved-links-btn saved-links-btn--primary" type="submit">
+                        <i class="fa fa-key" aria-hidden="true"></i>
+                        Generate token
+                    </button>
+                </form>
+
+                <div class="saved-links-field" style="margin-top: 12px;">
+                    <label for="saved-links-api-endpoint">API endpoint</label>
+                    <input id="saved-links-api-endpoint" type="text" value="<?php echo h($api_endpoint); ?>" readonly>
                 </div>
-            <?php } ?>
 
-            <form method="post" action="<?php echo h($page_url); ?>" class="saved-links-token-grid">
-                <?php echo csrf_token_tag(); ?>
-                <input type="hidden" name="action" value="generate_token">
-                <div class="saved-links-field">
-                    <label for="token-name">Token name</label>
-                    <input id="token-name" name="token_name" type="text" value="Chrome URL Saver">
-                </div>
-                <button class="saved-links-btn saved-links-btn--primary" type="submit">
-                    <i class="fa fa-key" aria-hidden="true"></i>
-                    Generate token
-                </button>
-            </form>
-
-            <div class="saved-links-field" style="margin-top: 12px;">
-                <label for="saved-links-api-endpoint">API endpoint</label>
-                <input id="saved-links-api-endpoint" type="text" value="<?php echo h($api_endpoint); ?>" readonly>
-            </div>
-
-            <?php if (!empty($tokens)) { ?>
-                <div class="saved-links-token-list">
-                    <?php foreach ($tokens as $token) { ?>
-                        <div class="saved-links-token-row">
-                            <div>
-                                <strong><?php echo h($token['name']); ?></strong>
-                                <span>Prefix <?php echo h($token['token_prefix']); ?></span>
-                                <span>Created <?php echo h($token['created_at']); ?></span>
-                                <?php if (!empty($token['last_used_at'])) { ?>
-                                    <span>Used <?php echo h($token['last_used_at']); ?></span>
-                                <?php } ?>
-                                <?php if (!empty($token['revoked_at'])) { ?>
-                                    <span>Revoked <?php echo h($token['revoked_at']); ?></span>
+                <?php if (!empty($tokens)) { ?>
+                    <div class="saved-links-token-list">
+                        <?php foreach ($tokens as $token) { ?>
+                            <div class="saved-links-token-row">
+                                <div>
+                                    <strong><?php echo h($token['name']); ?></strong>
+                                    <span>Prefix <?php echo h($token['token_prefix']); ?></span>
+                                    <span>Created <?php echo h($token['created_at']); ?></span>
+                                    <?php if (!empty($token['last_used_at'])) { ?>
+                                        <span>Used <?php echo h($token['last_used_at']); ?></span>
+                                    <?php } ?>
+                                    <?php if (!empty($token['revoked_at'])) { ?>
+                                        <span>Revoked <?php echo h($token['revoked_at']); ?></span>
+                                    <?php } ?>
+                                </div>
+                                <?php if (empty($token['revoked_at'])) { ?>
+                                    <form method="post" action="<?php echo h($page_url); ?>">
+                                        <?php echo csrf_token_tag(); ?>
+                                        <input type="hidden" name="action" value="revoke_token">
+                                        <input type="hidden" name="id" value="<?php echo h($token['id']); ?>">
+                                        <button class="saved-links-btn saved-links-btn--danger" type="submit">
+                                            <i class="fa fa-ban" aria-hidden="true"></i>
+                                            Revoke
+                                        </button>
+                                    </form>
                                 <?php } ?>
                             </div>
-                            <?php if (empty($token['revoked_at'])) { ?>
-                                <form method="post" action="<?php echo h($page_url); ?>">
-                                    <?php echo csrf_token_tag(); ?>
-                                    <input type="hidden" name="action" value="revoke_token">
-                                    <input type="hidden" name="id" value="<?php echo h($token['id']); ?>">
-                                    <button class="saved-links-btn saved-links-btn--danger" type="submit">
-                                        <i class="fa fa-ban" aria-hidden="true"></i>
-                                        Revoke
-                                    </button>
-                                </form>
-                            <?php } ?>
-                        </div>
-                    <?php } ?>
-                </div>
-            <?php } ?>
-        </section>
+                        <?php } ?>
+                    </div>
+                <?php } ?>
+            </div>
+        </details>
+
+        <details class="saved-links-panel">
+            <summary class="saved-links-panel__summary">
+                <h2>Chrome extension setup help</h2>
+                <i class="fa fa-chevron-down" aria-hidden="true"></i>
+            </summary>
+            <div class="saved-links-panel__body saved-links-help">
+                <h3>Install on this computer</h3>
+                <ol>
+                    <li>Open <code>chrome://extensions</code> in Chrome.</li>
+                    <li>Enable <strong>Developer mode</strong>.</li>
+                    <li>Click <strong>Load unpacked</strong>.</li>
+                    <li>Select <code>S:\ikamych\chrome-extension\ikamych-url-saver</code>.</li>
+                    <li>Open the extension options.</li>
+                    <li>Generate a token here, paste it into <strong>API token</strong>, then click <strong>Save</strong> and <strong>Test</strong>.</li>
+                </ol>
+
+                <h3>Install after reinstalling Chrome or on another computer</h3>
+                <ol>
+                    <li>Make sure this project folder, including <code>chrome-extension\ikamych-url-saver</code>, exists on that computer.</li>
+                    <li>Load the folder again from <code>chrome://extensions</code>.</li>
+                    <li>Generate a new token from this page and paste it into the extension options.</li>
+                    <li>Use production URLs for the live site, or local URLs when testing with <code>ikamy.local</code>.</li>
+                </ol>
+
+                <h3>Endpoint values</h3>
+                <ul>
+                    <li>Production API: <code>https://www.ikamy.ch/public/api/v1/saved-links.php</code></li>
+                    <li>Production page: <code>https://www.ikamy.ch/public/saved_links.php</code></li>
+                    <li>Local API: <code>http://ikamy.local/public/api/v1/saved-links.php</code></li>
+                    <li>Local page: <code>http://ikamy.local/public/saved_links.php</code></li>
+                </ul>
+
+                <h3>Token safety</h3>
+                <ul>
+                    <li>The token starts with <code>iks_</code> and is shown only when generated.</li>
+                    <li>Generate one token per computer when possible.</li>
+                    <li>Revoke old tokens from this page when a computer is replaced or lost.</li>
+                </ul>
+            </div>
+        </details>
 
         <section class="saved-links-panel">
             <form method="get" action="<?php echo h($page_url); ?>" class="saved-links-filter">
@@ -569,108 +725,127 @@ $api_endpoint = SITE_URL . '/public/api/v1/saved-links.php';
 
             <?php foreach ($links as $link) { ?>
                 <article class="saved-link-item">
-                    <details class="saved-link-details">
-                        <summary class="saved-link-summary">
+                    <div class="saved-link-row">
+                        <button class="saved-link-toggle" type="button" aria-expanded="false" aria-controls="saved-link-panel-<?php echo h($link['id']); ?>" data-saved-link-toggle>
                             <span class="saved-link-summary__main">
                                 <span class="saved-link-summary__title"><?php echo h($link['title']); ?></span>
                                 <span class="saved-link-summary__url"><?php echo h($link['url']); ?></span>
+                                <span class="saved-link-toggle__hint">
+                                    <i class="fa fa-chevron-down" aria-hidden="true"></i>
+                                    Details
+                                </span>
                             </span>
-                            <span class="saved-link-status saved-link-status--<?php echo h($link['status']); ?>">
-                                <?php echo h($link['status']); ?>
-                            </span>
-                            <span class="saved-link-summary__toggle">
-                                <i class="fa fa-chevron-down" aria-hidden="true"></i>
-                                Details
-                            </span>
-                        </summary>
+                        </button>
 
-                        <div class="saved-link-details__panel">
-                            <div class="saved-link-item__meta">
-                                Saved <?php echo h($link['saved_at']); ?> from <?php echo h($link['source']); ?>
+                        <span class="saved-link-status saved-link-status--<?php echo h($link['status']); ?>">
+                            <?php echo h($link['status']); ?>
+                        </span>
+
+                        <div class="saved-link-row-actions" aria-label="Saved link shortcuts">
+                            <a class="saved-links-btn saved-links-btn--neutral saved-link-icon-btn" href="<?php echo h($link['url']); ?>" target="_blank" rel="noopener noreferrer" title="Open link" aria-label="Open link">
+                                <i class="fa fa-external-link" aria-hidden="true"></i>
+                            </a>
+                            <form method="post" action="<?php echo h($page_url); ?>">
+                                <?php echo csrf_token_tag(); ?>
+                                <input type="hidden" name="action" value="set_status">
+                                <input type="hidden" name="id" value="<?php echo h($link['id']); ?>">
+                                <input type="hidden" name="status" value="kept">
+                                <button class="saved-links-btn saved-links-btn--success saved-link-icon-btn" type="submit" title="<?php echo $link['status'] === 'kept' ? 'Already kept' : 'Keep link'; ?>" aria-label="<?php echo $link['status'] === 'kept' ? 'Already kept' : 'Keep link'; ?>" <?php echo $link['status'] === 'kept' ? 'disabled' : ''; ?>>
+                                    <i class="fa fa-save" aria-hidden="true"></i>
+                                </button>
+                            </form>
+                            <form method="post" action="<?php echo h($page_url); ?>" onsubmit="return confirm('Delete this saved link?');">
+                                <?php echo csrf_token_tag(); ?>
+                                <input type="hidden" name="action" value="delete_link">
+                                <input type="hidden" name="id" value="<?php echo h($link['id']); ?>">
+                                <button class="saved-links-btn saved-links-btn--danger saved-link-icon-btn" type="submit" title="Delete link" aria-label="Delete link">
+                                    <i class="fa fa-trash" aria-hidden="true"></i>
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+
+                    <div class="saved-link-details__panel" id="saved-link-panel-<?php echo h($link['id']); ?>" hidden>
+                        <div class="saved-link-item__meta">
+                            Saved <?php echo h($link['saved_at']); ?> from <?php echo h($link['source']); ?>
+                        </div>
+
+                        <form method="post" action="<?php echo h($page_url); ?>" class="saved-link-form">
+                            <?php echo csrf_token_tag(); ?>
+                            <input type="hidden" name="action" value="update_link">
+                            <input type="hidden" name="id" value="<?php echo h($link['id']); ?>">
+
+                            <div class="saved-links-field">
+                                <label for="saved-link-title-<?php echo h($link['id']); ?>">Title</label>
+                                <input id="saved-link-title-<?php echo h($link['id']); ?>" name="title" type="text" value="<?php echo h($link['title']); ?>" required>
                             </div>
 
-                            <form method="post" action="<?php echo h($page_url); ?>" class="saved-link-form">
-                                <?php echo csrf_token_tag(); ?>
-                                <input type="hidden" name="action" value="update_link">
-                                <input type="hidden" name="id" value="<?php echo h($link['id']); ?>">
+                            <div class="saved-links-field">
+                                <label for="saved-link-status-<?php echo h($link['id']); ?>">Status</label>
+                                <select id="saved-link-status-<?php echo h($link['id']); ?>" name="status">
+                                    <?php foreach (SavedLink::statusOptions() as $status) { ?>
+                                        <option value="<?php echo h($status); ?>" <?php echo $link['status'] === $status ? 'selected' : ''; ?>>
+                                            <?php echo h(ucfirst($status)); ?>
+                                        </option>
+                                    <?php } ?>
+                                </select>
+                            </div>
 
-                                <div class="saved-links-field">
-                                    <label for="saved-link-title-<?php echo h($link['id']); ?>">Title</label>
-                                    <input id="saved-link-title-<?php echo h($link['id']); ?>" name="title" type="text" value="<?php echo h($link['title']); ?>" required>
-                                </div>
+                            <div class="saved-links-field saved-links-field--wide">
+                                <label for="saved-link-note-<?php echo h($link['id']); ?>">Note</label>
+                                <textarea id="saved-link-note-<?php echo h($link['id']); ?>" name="note"><?php echo h($link['note']); ?></textarea>
+                            </div>
 
-                                <div class="saved-links-field">
-                                    <label for="saved-link-status-<?php echo h($link['id']); ?>">Status</label>
-                                    <select id="saved-link-status-<?php echo h($link['id']); ?>" name="status">
-                                        <?php foreach (SavedLink::statusOptions() as $status) { ?>
-                                            <option value="<?php echo h($status); ?>" <?php echo $link['status'] === $status ? 'selected' : ''; ?>>
-                                                <?php echo h(ucfirst($status)); ?>
-                                            </option>
-                                        <?php } ?>
-                                    </select>
-                                </div>
+                            <div class="saved-link-actions saved-links-field--wide">
+                                <a class="saved-links-btn saved-links-btn--neutral" href="<?php echo h($link['url']); ?>" target="_blank" rel="noopener noreferrer">
+                                    <i class="fa fa-external-link" aria-hidden="true"></i>
+                                    Open
+                                </a>
+                                <button class="saved-links-btn saved-links-btn--success" type="submit">
+                                    <i class="fa fa-save" aria-hidden="true"></i>
+                                    Save
+                                </button>
+                            </div>
+                        </form>
 
-                                <div class="saved-links-field saved-links-field--wide">
-                                    <label for="saved-link-note-<?php echo h($link['id']); ?>">Note</label>
-                                    <textarea id="saved-link-note-<?php echo h($link['id']); ?>" name="note"><?php echo h($link['note']); ?></textarea>
-                                </div>
-
-                                <div class="saved-link-actions saved-links-field--wide">
-                                    <a class="saved-links-btn saved-links-btn--neutral" href="<?php echo h($link['url']); ?>" target="_blank" rel="noopener noreferrer">
-                                        <i class="fa fa-external-link" aria-hidden="true"></i>
-                                        Open
-                                    </a>
-                                    <button class="saved-links-btn saved-links-btn--success" type="submit">
-                                        <i class="fa fa-save" aria-hidden="true"></i>
-                                        Save
-                                    </button>
-                                </div>
-                            </form>
-
-                            <div class="saved-link-actions">
-                                <?php if ($link['status'] !== 'kept') { ?>
-                                    <form method="post" action="<?php echo h($page_url); ?>">
-                                        <?php echo csrf_token_tag(); ?>
-                                        <input type="hidden" name="action" value="set_status">
-                                        <input type="hidden" name="id" value="<?php echo h($link['id']); ?>">
-                                        <input type="hidden" name="status" value="kept">
-                                        <button class="saved-links-btn saved-links-btn--neutral" type="submit">
-                                            <i class="fa fa-thumb-tack" aria-hidden="true"></i>
-                                            Keep
-                                        </button>
-                                    </form>
-                                <?php } ?>
-
-                                <?php if ($link['status'] !== 'archived') { ?>
-                                    <form method="post" action="<?php echo h($page_url); ?>">
-                                        <?php echo csrf_token_tag(); ?>
-                                        <input type="hidden" name="action" value="set_status">
-                                        <input type="hidden" name="id" value="<?php echo h($link['id']); ?>">
-                                        <input type="hidden" name="status" value="archived">
-                                        <button class="saved-links-btn saved-links-btn--neutral" type="submit">
-                                            <i class="fa fa-archive" aria-hidden="true"></i>
-                                            Archive
-                                        </button>
-                                    </form>
-                                <?php } ?>
-
-                                <form method="post" action="<?php echo h($page_url); ?>" onsubmit="return confirm('Delete this saved link?');">
+                        <div class="saved-link-actions">
+                            <?php if ($link['status'] !== 'archived') { ?>
+                                <form method="post" action="<?php echo h($page_url); ?>">
                                     <?php echo csrf_token_tag(); ?>
-                                    <input type="hidden" name="action" value="delete_link">
+                                    <input type="hidden" name="action" value="set_status">
                                     <input type="hidden" name="id" value="<?php echo h($link['id']); ?>">
-                                    <button class="saved-links-btn saved-links-btn--danger" type="submit">
-                                        <i class="fa fa-trash" aria-hidden="true"></i>
-                                        Delete
+                                    <input type="hidden" name="status" value="archived">
+                                    <button class="saved-links-btn saved-links-btn--neutral" type="submit">
+                                        <i class="fa fa-archive" aria-hidden="true"></i>
+                                        Archive
                                     </button>
                                 </form>
-                            </div>
+                            <?php } ?>
                         </div>
-                    </details>
+                    </div>
                 </article>
             <?php } ?>
         </section>
     </div>
 </main>
+
+<script>
+    (function() {
+        document.querySelectorAll('[data-saved-link-toggle]').forEach(function(toggle) {
+            toggle.addEventListener('click', function() {
+                var panel = document.getElementById(toggle.getAttribute('aria-controls'));
+                var expanded = toggle.getAttribute('aria-expanded') === 'true';
+
+                if (!panel) {
+                    return;
+                }
+
+                toggle.setAttribute('aria-expanded', expanded ? 'false' : 'true');
+                panel.hidden = expanded;
+            });
+        });
+    })();
+</script>
 
 <?php include(SITE_ROOT . DS . 'public' . DS . 'layouts' . DS . 'footer.php'); ?>
 
