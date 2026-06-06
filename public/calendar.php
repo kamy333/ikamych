@@ -120,6 +120,7 @@ $layout_context = "public"; ?>
 
         $btnRecur = "<a class='ikamy-calendar-page__action ikamy-calendar-page__action--neutral' href='" . h(SITE_URL . "/public/_f/kamy/recurring_appointment.php") . "'><i class='fa fa-repeat' aria-hidden='true'></i> Recurring</a>";
         $btn = "<a class='ikamy-calendar-page__action ikamy-calendar-page__action--primary' href='" . h(SITE_URL . "/public/admin/crud/ajax/new_ajax.php?class_name=Calendar") . "' data-ikamy-modal-target='#ikamy-calendar-modal'><i class='fa fa-calendar-plus-o' aria-hidden='true'></i> Add date</a>";
+        $btnFloating = "<a class='ikamy-calendar-floating-add' href='" . h(SITE_URL . "/public/admin/crud/ajax/new_ajax.php?class_name=Calendar") . "' data-ikamy-modal-target='#ikamy-calendar-modal' title='Add date' aria-label='Add date'><i class='fa fa-calendar-plus-o' aria-hidden='true'></i><span>Add date</span></a>";
     }
 
 
@@ -145,6 +146,8 @@ $layout_context = "public"; ?>
     <?php } ?>
 
     <?php echo $session->message(); ?>
+
+    <?php echo $btnFloating ?? ""; ?>
 
 
     <div class="row ikamy-calendar-page__grid">

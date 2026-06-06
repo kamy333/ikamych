@@ -144,6 +144,15 @@
             setInputValue(form, 'input[name="return_to"]', modalReturnTo());
         };
 
+        var setCalendarModalReturnTo = function(form) {
+            if (/\/public\/calendar\.php$/.test(window.location.pathname)) {
+                setModalReturnTo(form);
+                return;
+            }
+
+            setInputValue(form, 'input[name="return_to"]', '/public/calendar.php');
+        };
+
         var setCalendarModalMode = function(modal, triggerElement) {
             var form = modal.querySelector('form.ikamy-create-modal__form');
 
@@ -159,7 +168,7 @@
             var submit = modal.querySelector('.ikamy-create-modal__submit');
             var idInput = form.querySelector('input[name="id"]');
 
-            setModalReturnTo(form);
+            setCalendarModalReturnTo(form);
             setModalStatus(modal, '', 'success');
 
             if (isEdit) {
@@ -973,6 +982,46 @@
             return String(value).replace(/\\/g, '\\\\').replace(/"/g, '\\"');
         };
 
+        var cleanReturnedModalUrl = function() {
+            try {
+                var cleanUrl = new URL(window.location.href);
+                cleanUrl.searchParams.delete('ikamy_modal');
+                cleanUrl.searchParams.delete('ikamy_modal_status');
+                cleanUrl.searchParams.delete('ikamy_modal_id');
+                window.history.replaceState({}, document.title, cleanUrl.pathname + cleanUrl.search);
+            } catch (error) {
+            }
+        };
+
+        var scrollToCalendarCard = function(recordId) {
+            if (!recordId) {
+                return false;
+            }
+
+            var card = document.getElementById('calendar-card-' + recordId) ||
+                document.querySelector('.ikamy-calendar-card[data-calendar-id="' + cssAttributeValue(recordId) + '"]');
+
+            if (!card) {
+                return false;
+            }
+
+            card.scrollIntoView({
+                behavior: 'smooth',
+                block: 'center'
+            });
+            card.classList.remove('ikamy-calendar-card--recent');
+
+            window.setTimeout(function() {
+                card.classList.add('ikamy-calendar-card--recent');
+            }, 150);
+
+            window.setTimeout(function() {
+                card.classList.remove('ikamy-calendar-card--recent');
+            }, 3300);
+
+            return true;
+        };
+
         var autoOpenReturnedModal = function() {
             var params;
 
@@ -987,6 +1036,13 @@
             var recordId = params.get('ikamy_modal_id') || '';
 
             if (!modalName || !status) {
+                return;
+            }
+
+            if (modalName === 'calendar' && status !== 'error') {
+                scrollToCalendarCard(recordId);
+                cleanReturnedModalUrl();
+
                 return;
             }
 
@@ -1019,14 +1075,7 @@
             setModalStatus(modal, noun + ' ' + verb + '.', type);
             showModal(modal);
 
-            try {
-                var cleanUrl = new URL(window.location.href);
-                cleanUrl.searchParams.delete('ikamy_modal');
-                cleanUrl.searchParams.delete('ikamy_modal_status');
-                cleanUrl.searchParams.delete('ikamy_modal_id');
-                window.history.replaceState({}, document.title, cleanUrl.pathname + cleanUrl.search);
-            } catch (error) {
-            }
+            cleanReturnedModalUrl();
         };
 
         autoOpenReturnedModal();

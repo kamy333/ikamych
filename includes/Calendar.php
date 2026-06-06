@@ -436,10 +436,10 @@ class Calendar extends DatabaseObject
             }
 
             $person_class = ($person === "Mum") ? "mum" : "kamy";
-            $msg .= "<article lang='fr' class='ikamy-calendar-card ikamy-calendar-card--{$person_class}'>";
+            $appointment_id = (int) $appointment->id;
+            $msg .= "<article id='calendar-card-{$appointment_id}' data-calendar-id='{$appointment_id}' lang='fr' class='ikamy-calendar-card ikamy-calendar-card--{$person_class}'>";
             $mail .= "<div lang='fr' style='color:$bcolor_mail '>";
 
-            $appointment_id = (int) $appointment->id;
             $appointment_person = h($person);
             $edit_url = SITE_URL . "/public/admin/crud/ajax/edit_ajax.php?class_name=Calendar&id=" . u($appointment_id);
             $delete_url = SITE_URL . "/public/admin/crud/ajax/delete_ajax.php?class_name=Calendar&id=" . u($appointment_id) . "&return_to=" . u(current_request_uri());

@@ -949,6 +949,41 @@ body.crud-modal-body::-webkit-scrollbar {
     color: #44403c;
 }
 
+.ikamy-calendar-floating-add {
+    position: fixed;
+    right: 24px;
+    bottom: 70px;
+    z-index: 1025;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-width: 132px;
+    min-height: 48px;
+    padding: 12px 16px;
+    border: 1px solid #0284c7;
+    border-radius: 6px;
+    background: #0ea5e9;
+    box-shadow: 0 12px 28px rgba(14, 116, 144, 0.3);
+    color: #ffffff;
+    font-size: 15px;
+    font-weight: 800;
+    line-height: 1;
+    text-decoration: none;
+}
+
+.ikamy-calendar-floating-add:hover,
+.ikamy-calendar-floating-add:focus {
+    background: #0284c7;
+    color: #ffffff;
+    text-decoration: none;
+}
+
+.ikamy-calendar-floating-add:focus {
+    outline: 3px solid rgba(14, 165, 233, 0.35);
+    outline-offset: 3px;
+}
+
 .ikamy-calendar-page__grid {
     max-width: 1180px;
     margin-right: auto;
@@ -1277,6 +1312,25 @@ body.crud-modal-body::-webkit-scrollbar {
     background: #f65aa8;
 }
 
+.ikamy-calendar-card--recent {
+    animation: ikamy-calendar-card-highlight 3s ease-out;
+}
+
+@keyframes ikamy-calendar-card-highlight {
+    0%,
+    18% {
+        box-shadow: 0 0 0 5px rgba(250, 204, 21, 0.95), 0 22px 46px rgba(15, 23, 42, 0.24);
+        filter: brightness(1.18) saturate(1.12);
+        transform: translateY(-2px);
+    }
+
+    100% {
+        box-shadow: 0 12px 28px rgba(15, 23, 42, 0.08);
+        filter: none;
+        transform: translateY(0);
+    }
+}
+
 .ikamy-calendar-card__top {
     display: flex;
     align-items: flex-start;
@@ -1408,6 +1462,15 @@ body.crud-modal-body::-webkit-scrollbar {
         padding-right: 10px;
         padding-left: 10px;
         font-size: 13px;
+    }
+
+    .ikamy-calendar-floating-add {
+        right: 14px;
+        bottom: 14px;
+        min-width: 112px;
+        min-height: 44px;
+        padding: 10px 13px;
+        font-size: 14px;
     }
 
     .ikamy-notes-page {
