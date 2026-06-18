@@ -111,6 +111,7 @@ if (!function_exists('public_links_render_page')) {
         $title = $config['title'] ?? 'A sharper link library.';
         $copy = $config['copy'] ?? 'A compact public board for saved references, tools, and study material.';
         $category_html = $config['category_html'] ?? '';
+        $pin_controls = $config['pin_controls'] ?? '';
         $sections = $config['sections'] ?? [];
         $static_sections = $config['static_sections'] ?? [];
         $columns = (int)($config['columns'] ?? 3);
@@ -299,6 +300,102 @@ if (!function_exists('public_links_render_page')) {
         font-size: 13px;
         font-weight: 900;
         text-transform: uppercase;
+    }
+
+    .links-pin-panel {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        align-items: center;
+        margin-top: 10px;
+        padding: 10px 12px;
+        border: 1px solid rgba(33, 105, 211, 0.16);
+        border-radius: 8px;
+        background: rgba(255, 255, 255, 0.94);
+        box-shadow: 0 12px 30px rgba(16, 55, 116, 0.08);
+    }
+
+    .links-pin-panel__label,
+    .links-pin-panel__note {
+        color: #234a76;
+        font-size: 13px;
+        font-weight: 800;
+    }
+
+    .links-pin-panel form {
+        margin: 0;
+    }
+
+    .links-pin-panel__button,
+    .links-pin-panel__status,
+    .links-pin-panel__manage {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+        min-height: 34px;
+        padding: 7px 11px;
+        border: 0;
+        border-radius: 6px;
+        font-size: 13px;
+        font-weight: 900;
+        line-height: 1.1;
+        text-decoration: none;
+    }
+
+    .links-pin-panel__button {
+        background: #006edb;
+        color: #fff;
+    }
+
+    .links-pin-panel__status {
+        background: #dff6ff;
+        color: #05346b;
+    }
+
+    .links-pin-panel__manage {
+        background: #edf5ff;
+        color: #21476f;
+    }
+
+    .links-pin-panel__button:hover,
+    .links-pin-panel__button:focus,
+    .links-pin-panel__manage:hover,
+    .links-pin-panel__manage:focus {
+        filter: brightness(0.96);
+        text-decoration: none;
+    }
+
+    .links-pinned-column {
+        position: relative;
+    }
+
+    .links-pinned-column__unpin {
+        position: absolute;
+        top: 7px;
+        right: 9px;
+        z-index: 2;
+        margin: 0;
+    }
+
+    .links-pinned-column__unpin button {
+        display: inline-flex;
+        width: 26px;
+        height: 26px;
+        align-items: center;
+        justify-content: center;
+        border: 0;
+        border-radius: 50%;
+        background: #e8eef5;
+        color: #34516f;
+        font-size: 12px;
+        line-height: 1;
+    }
+
+    .links-pinned-column__unpin button:hover,
+    .links-pinned-column__unpin button:focus {
+        background: #dc2626;
+        color: #fff;
     }
 
     .gemini-links-grid,
@@ -995,6 +1092,8 @@ if (!function_exists('public_links_render_page')) {
         <nav class="gemini-links-tabs" aria-label="Link categories">
             <?php echo $category_html; ?>
         </nav>
+
+        <?php echo $pin_controls; ?>
 
         <h2 class="gemini-links-section-title"><?php echo h($config['section_title'] ?? 'Saved links'); ?></h2>
         <section class="gemini-links-grid" style="--gemini-links-columns: <?php echo h((string)$columns); ?>;" aria-label="Saved links">

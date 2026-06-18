@@ -563,13 +563,7 @@ class Links extends DatabaseObject
             //todo chk $moodal
 //            $modal="";
 
-            If (!$name_category) {
-                $output .= "<td class='text-center'>" . $href . "&nbsp;&nbsp; " . $modal . "</td>";
-
-            } else {
-                $output .= "<td class='text-center'>" . $href . "&nbsp;&nbsp; " . "</td>";
-
-            }
+            $output .= "<td class='text-center'>" . $href . "&nbsp;&nbsp; " . $modal . "</td>";
 
 
 
@@ -727,7 +721,9 @@ class Links extends DatabaseObject
         $output .= "                    <a class='links-modal-btn links-modal-btn--edit btn btn-primary' href='{$p_edit}" . urlencode($link_id) . "' data-link-action='edit' data-link-action-title='Edit link' data-link-submit-url='{$p_edit}" . urlencode($link_id) . "'{$link_data} onclick='return window.linksOpenActionModal ? window.linksOpenActionModal(this) : true;'><i class='fa fa-pencil' aria-hidden='true'></i> Edit</a>";
         $output .= "                    <a class='links-modal-btn links-modal-btn--copy btn btn-success' href='{$p_copy}" . urlencode($link_id) . "&duplicate_record=1' data-link-action='copy' data-link-action-title='Copy link' data-link-submit-url='{$p_new}'{$link_data} onclick='return window.linksOpenActionModal ? window.linksOpenActionModal(this) : true;'><i class='fa fa-clone' aria-hidden='true'></i> Copy</a>";
         $output .= "                    <a class='links-modal-btn links-modal-btn--add btn btn-info' href='{$p_new}' data-link-action='new' data-link-action-title='New link' data-link-submit-url='{$p_new}' onclick='return window.linksOpenActionModal ? window.linksOpenActionModal(this) : true;'><i class='fa fa-plus' aria-hidden='true'></i> New</a>";
-        $output .= "                    <a class='links-modal-btn links-modal-btn--delete btn btn-danger' href='{$p_del}" . urlencode($link_id) . "' data-link-action='delete' data-link-action-title='Delete link' data-link-name=\"" . self::html($link->name) . "\" onclick='return window.linksOpenActionModal ? window.linksOpenActionModal(this) : true;'><i class='fa fa-trash' aria-hidden='true'></i> Delete</a>";
+        $delete_url = append_query_param($p_del . urlencode($link_id), 'return_to', current_request_uri());
+        $delete_confirm = "return confirm(" . j("Are you sure you want to delete " . $link->name . "?") . ");";
+        $output .= "                    <a class='links-modal-btn links-modal-btn--delete btn btn-danger' href='" . h($delete_url) . "' onclick='" . h($delete_confirm) . "'><i class='fa fa-trash' aria-hidden='true'></i> Delete</a>";
         $output .= "                    <button type='button' class='links-modal-btn links-modal-btn--close btn btn-info' data-dismiss='modal' onclick='return window.linksCloseModalButton ? window.linksCloseModalButton(this) : true;'><i class='fa fa-times' aria-hidden='true'></i> Close</button>";
         $output .= "                </div>";
 

@@ -1,5 +1,6 @@
 <?php require_once('../includes/initialize.php'); ?>
 <?php require_once('links_public_hub_view.php'); ?>
+<?php LinksPinnedColumn::handle_public_request('category'); ?>
 
 <?php
 $class_name = "Links";
@@ -21,16 +22,10 @@ public_links_render_page([
     'copy' => 'Saved references, tools, and study links in a compact blue workspace built around the Blue Remini identity.',
     'messages' => $session->message() . (isset($valid) ? $valid->form_errors() : ''),
     'category_html' => Links::get_search_category(),
+    'pin_controls' => LinksPinnedColumn::pin_controls('category'),
     'section_title' => 'Saved categories',
     'columns' => 3,
-    'sections' => [
-        Links::output_links(),
-        Links::output_links('C#'),
-        Links::output_links('C#_2'),
-        Links::output_links('C#_3'),
-        Links::output_links('Xamarin'),
-        Links::output_links('SQLServer'),
-    ],
+    'sections' => LinksPinnedColumn::public_sections('category'),
     'static_title' => 'Pinned links',
     'static_sections' => public_links_quick_sections(),
 ]);

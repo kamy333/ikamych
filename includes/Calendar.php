@@ -292,7 +292,13 @@ class Calendar extends DatabaseObject
             }
         }
 
-        static::send_email($mail, $subject);
+        // Legacy calendar email disabled; public/calendar.php now sends only the styled calendar email.
+        // static::send_email($mail, $subject);
+
+        // New styled calendar email.
+        if (class_exists('CalendarEmail')) {
+            CalendarEmail::send_current_planning();
+        }
 
         $msg = CollapseAll($msg, 2);;
         return $msg;
