@@ -536,6 +536,10 @@ class Links extends DatabaseObject
             $category = $name_category;
         }
 
+        if (empty($link_set) && !$name_category && isset($_GET['category'])) {
+            return "";
+        }
+
         $output = "";
 
         $output .= "<div class='table-responsive'>";
