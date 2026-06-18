@@ -1,6 +1,7 @@
 <?php require_once('../includes/initialize.php'); ?>
 <?php require_once('links_public_hub_view.php'); ?>
 <?php LinksCategoryVisibility::handle_public_request(); ?>
+<?php LinksQuickLink::handle_public_request(); ?>
 <?php LinksPinnedColumn::handle_public_request('category'); ?>
 
 <?php

@@ -40,10 +40,13 @@ if (!function_exists('public_links_static_card')) {
                 continue;
             }
 
+            $output .= "<div class='gemini-links-static-item'>";
             $output .= "<a class='gemini-links-static-link' target='_blank' rel='noopener noreferrer' href='" . h($href) . "'>";
             $output .= "<span class='gemini-links-static-link__name'>" . h($label) . "</span>";
             $output .= "<span class='gemini-links-static-link__host'>" . h(public_links_host_label($href)) . "</span>";
             $output .= "</a>";
+            $output .= LinksQuickLink::render_modal_link($link);
+            $output .= "</div>";
         }
 
         $output .= "</div>";
@@ -53,8 +56,8 @@ if (!function_exists('public_links_static_card')) {
     }
 }
 
-if (!function_exists('public_links_quick_sections')) {
-    function public_links_quick_sections()
+if (!function_exists('public_links_default_quick_sections')) {
+    function public_links_default_quick_sections()
     {
         return [
             [
@@ -101,6 +104,13 @@ if (!function_exists('public_links_quick_sections')) {
                 ],
             ],
         ];
+    }
+}
+
+if (!function_exists('public_links_quick_sections')) {
+    function public_links_quick_sections()
+    {
+        return LinksQuickLink::public_sections(public_links_default_quick_sections());
     }
 }
 
@@ -586,8 +596,16 @@ if (!function_exists('public_links_render_page')) {
         text-decoration: none;
     }
 
+    .gemini-links-static-item {
+        position: relative;
+    }
+
+    .gemini-links-static-item .gemini-links-static-link {
+        padding-right: 82px;
+    }
+
     .gemini-links-page table.table tr:nth-child(2) td > a[target],
-    .gemini-links-card__body .gemini-links-static-link:first-child {
+    .gemini-links-card__body .gemini-links-static-item:first-child .gemini-links-static-link {
         border-top: 0;
     }
 
@@ -599,6 +617,10 @@ if (!function_exists('public_links_render_page')) {
         color: #0077e6;
         font-family: FontAwesome;
         font-weight: normal;
+    }
+
+    .gemini-links-static-item .gemini-links-static-link:after {
+        right: 48px;
     }
 
     .gemini-links-page table.table td > a[target]:hover,
@@ -616,7 +638,15 @@ if (!function_exists('public_links_render_page')) {
         right: 9px;
     }
 
-    .gemini-links-page table.table td > small a {
+    .gemini-links-static-link__info {
+        position: absolute;
+        top: 7px;
+        right: 9px;
+        z-index: 2;
+    }
+
+    .gemini-links-page table.table td > small a,
+    .gemini-links-static-link__info a {
         display: inline-flex;
         width: 32px;
         height: 32px;
@@ -630,7 +660,8 @@ if (!function_exists('public_links_render_page')) {
         text-decoration: none;
     }
 
-    .gemini-links-page table.table td > small .glyphicon {
+    .gemini-links-page table.table td > small .glyphicon,
+    .gemini-links-static-link__info .glyphicon {
         color: #0369c6 !important;
     }
 
@@ -773,6 +804,16 @@ if (!function_exists('public_links_render_page')) {
         display: grid;
         grid-template-columns: repeat(5, minmax(0, 1fr));
         gap: 10px;
+    }
+
+    .gemini-links-page .links-modal-actions--quick,
+    .modal[id^="quickLinkModal"] .links-modal-actions--quick {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+
+    .gemini-links-page .links-modal-actions form,
+    .modal[id^="quickLinkModal"] .links-modal-actions form {
+        margin: 0;
     }
 
     .gemini-links-page .links-modal-btn,

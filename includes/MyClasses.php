@@ -12,7 +12,7 @@ class MyClasses
     public static $all_class = [
         'SetUp','HeurePresence', 'Note', 'ToDoList', 'Message', 'Chat', 'ChatFriend', 'Notification',
         'User', 'UserType', 'Article', 'ArticleSubject', 'Book', 'BookCategory',
-        'Links', 'LinksCategory', 'LinksPinnedColumn', 'LinksCategoryVisibility', 'Category1', 'Category2',
+        'Links', 'LinksCategory', 'LinksPinnedColumn', 'LinksCategoryVisibility', 'LinksQuickLink', 'Category1', 'Category2',
         'Project', 'InvoiceActual', 'InvoiceSend', 'Category', 'InvoiceEstimate', 'Currency',
         'MyCigarette',
         'Calendar',
