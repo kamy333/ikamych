@@ -194,7 +194,7 @@ class LinksPinnedColumn extends DatabaseObject
             $output .= "<span class='links-pin-panel__status'><i class='fa fa-thumb-tack' aria-hidden='true'></i> Pinned</span>";
         } else {
             $output .= "<form method='post' action='" . h(current_request_uri()) . "'>";
-            $output .= csrf_token_tag('links_pin');
+            $output .= static::links_pin_csrf_token_tag();
             $output .= "<input type='hidden' name='links_pin_action' value='pin'>";
             $output .= "<input type='hidden' name='source_field' value='" . h($source_field) . "'>";
             $output .= "<input type='hidden' name='source_value' value='" . h($selected) . "'>";
@@ -220,7 +220,7 @@ class LinksPinnedColumn extends DatabaseObject
 
         $output = "<div class='links-pinned-column'>";
         $output .= "<form class='links-pinned-column__unpin' method='post' action='" . h(current_request_uri()) . "'>";
-        $output .= csrf_token_tag('links_pin');
+        $output .= static::links_pin_csrf_token_tag();
         $output .= "<input type='hidden' name='links_pin_action' value='unpin'>";
         $output .= "<input type='hidden' name='id' value='" . h($column->id) . "'>";
         $output .= "<button type='submit' title='Remove pinned column' aria-label='Remove pinned column'><i class='fa fa-times' aria-hidden='true'></i></button>";
@@ -262,6 +262,19 @@ class LinksPinnedColumn extends DatabaseObject
             [$source_field, $source_value, $source_value, $rank, $username],
             "sssis"
         );
+    }
+
+    private static function links_pin_csrf_token_tag()
+    {
+        $id = 'links_pin';
+
+        if (!isset($_SESSION['csrf_token' . $id]) || !csrf_token_is_recent($id)) {
+            $token = create_csrf_token($id);
+        } else {
+            $token = $_SESSION['csrf_token' . $id];
+        }
+
+        return "<input type=\"hidden\" name=\"csrf_token{$id}\" value=\"" . h($token) . "\">";
     }
 
     private static function unpin($id)

@@ -192,6 +192,7 @@ require_once(LIB_PATH . DS . 'InvoiceEstimate.php');
 require_once(LIB_PATH . DS . 'Links.php');
 require_once(LIB_PATH . DS . 'LinksCategory.php');
 require_once(LIB_PATH . DS . 'LinksPinnedColumn.php');
+require_once(LIB_PATH . DS . 'LinksCategoryVisibility.php');
 require_once(LIB_PATH . DS . 'HeurePresence.php');
 
 require_once(LIB_PATH . DS . 'MyCigarette.php');

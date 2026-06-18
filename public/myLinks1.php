@@ -1,5 +1,6 @@
 <?php require_once('../includes/initialize.php'); ?>
 <?php require_once('links_public_hub_view.php'); ?>
+<?php LinksCategoryVisibility::handle_public_request(); ?>
 
 <?php
 $class_name = "Links";
@@ -21,6 +22,7 @@ public_links_render_page([
     'copy' => 'The first subcategory view, cleaned up with the same compact Blue Remini card system.',
     'messages' => $session->message() . (isset($valid) ? $valid->form_errors() : ''),
     'category_html' => Links::get_search_category(true),
+    'visibility_controls' => LinksCategoryVisibility::controls(),
     'section_title' => 'Sub category 1 links',
     'columns' => 2,
     'sections' => [

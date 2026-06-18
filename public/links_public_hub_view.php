@@ -112,6 +112,7 @@ if (!function_exists('public_links_render_page')) {
         $copy = $config['copy'] ?? 'A compact public board for saved references, tools, and study material.';
         $category_html = $config['category_html'] ?? '';
         $pin_controls = $config['pin_controls'] ?? '';
+        $visibility_controls = $config['visibility_controls'] ?? '';
         $sections = $config['sections'] ?? [];
         $static_sections = $config['static_sections'] ?? [];
         $columns = (int)($config['columns'] ?? 3);
@@ -364,6 +365,110 @@ if (!function_exists('public_links_render_page')) {
     .links-pin-panel__manage:focus {
         filter: brightness(0.96);
         text-decoration: none;
+    }
+
+    .links-visibility-panel {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        align-items: center;
+        margin-top: 10px;
+    }
+
+    .links-visibility-panel__button,
+    .links-visibility-panel__manage {
+        display: inline-flex;
+        min-height: 34px;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+        padding: 7px 11px;
+        border: 0;
+        border-radius: 6px;
+        font-size: 13px;
+        font-weight: 900;
+        line-height: 1.1;
+        text-decoration: none;
+    }
+
+    .links-visibility-panel__button {
+        background: #05346b;
+        color: #fff;
+    }
+
+    .links-visibility-panel__manage {
+        background: #edf5ff;
+        color: #21476f;
+    }
+
+    .links-visibility-panel__button:hover,
+    .links-visibility-panel__button:focus,
+    .links-visibility-panel__manage:hover,
+    .links-visibility-panel__manage:focus {
+        filter: brightness(0.96);
+        text-decoration: none;
+    }
+
+    .links-visibility-modal .modal-body {
+        padding: 18px;
+    }
+
+    .links-visibility-modal__intro {
+        margin: 0 0 14px;
+        color: #34516f;
+        font-size: 13px;
+        font-weight: 800;
+    }
+
+    .links-visibility-modal__grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 12px;
+    }
+
+    .links-visibility-modal__group {
+        min-width: 0;
+        max-height: 48vh;
+        overflow: auto;
+        padding: 10px;
+        border: 1px solid #dbeafe;
+        border-radius: 8px;
+        background: #f8fbff;
+    }
+
+    .links-visibility-modal__group h6 {
+        margin: 0 0 8px;
+        color: #082b61;
+        font-size: 13px;
+        font-weight: 900;
+        text-transform: uppercase;
+    }
+
+    .links-visibility-choice {
+        display: flex;
+        gap: 8px;
+        align-items: flex-start;
+        margin: 0;
+        padding: 7px 4px;
+        border-top: 1px solid #eaf3ff;
+        color: #071a35;
+        font-size: 13px;
+        font-weight: 800;
+        line-height: 1.25;
+    }
+
+    .links-visibility-choice:first-of-type {
+        border-top: 0;
+    }
+
+    .links-visibility-choice input {
+        margin-top: 1px;
+    }
+
+    .links-visibility-modal__footer {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
     }
 
     .links-pinned-column {
@@ -1038,8 +1143,14 @@ if (!function_exists('public_links_render_page')) {
         .modal[id^="myLinkprogram"] .modal-body dl,
         .gemini-links-page .links-modal-actions,
         .modal[id^="myLinkprogram"] .links-modal-actions,
-        .links-delete-modal .modal-footer {
+        .links-delete-modal .modal-footer,
+        .links-visibility-modal__grid,
+        .links-visibility-modal__footer {
             grid-template-columns: 1fr;
+        }
+
+        .links-visibility-modal__group {
+            max-height: none;
         }
 
         .links-action-modal .modal-dialog {
@@ -1094,6 +1205,7 @@ if (!function_exists('public_links_render_page')) {
         </nav>
 
         <?php echo $pin_controls; ?>
+        <?php echo $visibility_controls; ?>
 
         <h2 class="gemini-links-section-title"><?php echo h($config['section_title'] ?? 'Saved links'); ?></h2>
         <section class="gemini-links-grid" style="--gemini-links-columns: <?php echo h((string)$columns); ?>;" aria-label="Saved links">

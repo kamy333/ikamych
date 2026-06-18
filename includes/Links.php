@@ -421,6 +421,17 @@ class Links extends DatabaseObject
                 continue;
             }
 
+            $source_field = 'category';
+            if ($category_1) {
+                $source_field = 'sub_category_1';
+            } elseif ($category_2) {
+                $source_field = 'sub_category_2';
+            }
+
+            if (class_exists('LinksCategoryVisibility') && LinksCategoryVisibility::is_hidden($source_field, $categ)) {
+                continue;
+            }
+
             if (isset($_GET['category']) && $_GET['category'] == $categ) {
                 $active = "active";
             } else {
