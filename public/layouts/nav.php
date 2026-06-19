@@ -315,6 +315,8 @@ if ($layout_context == "public") {
                         <?php echo $management_link('Saved links', 'saved_links.php', 'Open saved URLs', 'fa-bookmark'); ?>
                         <?php echo $management_item('Links', 'Links'); ?>
                         <?php echo $management_item('LinksCategory', 'Links Category'); ?>
+                        <?php echo $management_item('Category1', 'Category 1'); ?>
+                        <?php echo $management_item('Category2', 'Category 2'); ?>
                     </ul>
                 </li>
 

@@ -7,6 +7,7 @@ if (!User::is_kamy() && !User::is_admin()) {
 
 $user_id = (int)$session->user_id;
 $page_url = '/public/saved_links.php';
+$saved_links_return_to = current_request_uri();
 $saved_links_csrf_id = 'saved_links';
 
 if (request_is_post()) {
@@ -71,9 +72,42 @@ if (request_is_post()) {
             }
             redirect_to($page_url);
         }
+
+        if ($action === 'import_to_links') {
+            $id = saved_links_post_id('id');
+            $saved_link = SavedLink::findForUserById($user_id, $id);
+            if (!$saved_link) {
+                throw new InvalidArgumentException('Saved link was not found.');
+            }
+
+            $links_category = saved_links_resolve_links_category(
+                (int)($_POST['links_category_id'] ?? 0),
+                $_POST['new_links_category'] ?? ''
+            );
+            $rank = filter_input(INPUT_POST, 'rank', FILTER_VALIDATE_INT, ['options' => ['min_range' => 0]]);
+            if ($rank === false || $rank === null) {
+                $rank = 10;
+            }
+
+            $new_link_id = saved_links_import_to_links($user_id, $saved_link, [
+                'category_id' => $links_category['id'],
+                'category' => $links_category['category'],
+                'sub_category_1' => $_POST['sub_category_1'] ?? '',
+                'sub_category_2' => $_POST['sub_category_2'] ?? '',
+                'rank' => $rank,
+            ]);
+
+            if (!empty($_POST['archive_saved_link'])) {
+                SavedLink::setStatusForUser($user_id, $id, 'archived');
+            }
+
+            $session->message('Saved link added to MyLinks as ID ' . $new_link_id . '.');
+            $session->ok(true);
+            redirect_to(saved_links_safe_return_url($page_url));
+        }
     } catch (Throwable $exception) {
         $session->message($exception->getMessage());
-        redirect_to($page_url);
+        redirect_to(saved_links_safe_return_url($page_url));
     }
 }
 
@@ -93,6 +127,7 @@ $links = SavedLink::allForUser($user_id, [
 ]);
 $counts = SavedLink::countsForUser($user_id);
 $tokens = UserApiToken::tokensForUser($user_id);
+$link_categories = saved_links_link_categories();
 $api_endpoint = SITE_URL . '/public/api/v1/saved-links.php';
 $saved_links_csrf_token = create_csrf_token($saved_links_csrf_id);
 ?>
@@ -498,6 +533,40 @@ $saved_links_csrf_token = create_csrf_token($saved_links_csrf_id);
         grid-template-columns: minmax(0, 1.4fr) minmax(180px, 0.45fr);
     }
 
+    .saved-link-import {
+        background: #f5fbff;
+        border: 1px solid #c9e2f5;
+        border-radius: 8px;
+        margin-top: 14px;
+        padding: 14px;
+    }
+
+    .saved-link-import h3 {
+        color: #0b4778;
+        font-size: 16px;
+        font-weight: 900;
+        margin: 0 0 12px;
+    }
+
+    .saved-link-import__grid {
+        display: grid;
+        gap: 10px;
+        grid-template-columns: minmax(190px, 1fr) minmax(160px, 0.7fr) minmax(160px, 0.7fr) 110px;
+    }
+
+    .saved-link-import__grid .saved-links-field--wide {
+        grid-column: 1 / -1;
+    }
+
+    .saved-link-import__archive {
+        align-items: center;
+        color: #254158;
+        display: inline-flex;
+        font-weight: 800;
+        gap: 8px;
+        margin: 12px 0 0;
+    }
+
     .saved-link-form .saved-links-field--wide {
         grid-column: 1 / -1;
     }
@@ -546,7 +615,8 @@ $saved_links_csrf_token = create_csrf_token($saved_links_csrf_id);
         .saved-links-token-grid,
         .saved-links-filter,
         .saved-links-token-row,
-        .saved-link-form {
+        .saved-link-form,
+        .saved-link-import__grid {
             grid-template-columns: 1fr;
         }
 
@@ -747,6 +817,9 @@ $saved_links_csrf_token = create_csrf_token($saved_links_csrf_id);
                             <a class="saved-links-btn saved-links-btn--neutral saved-link-icon-btn" href="<?php echo h($link['url']); ?>" target="_blank" rel="noopener noreferrer" title="Open link" aria-label="Open link">
                                 <i class="fa fa-external-link" aria-hidden="true"></i>
                             </a>
+                            <button class="saved-links-btn saved-links-btn--primary saved-link-icon-btn" type="button" title="Add to MyLinks" aria-label="Add to MyLinks" data-saved-link-open-import="saved-link-panel-<?php echo h($link['id']); ?>">
+                                <i class="fa fa-plus" aria-hidden="true"></i>
+                            </button>
                             <form method="post" action="<?php echo h($page_url); ?>">
                                 <input type="hidden" name="csrf_token<?php echo h($saved_links_csrf_id); ?>" value="<?php echo h($saved_links_csrf_token); ?>">
                                 <input type="hidden" name="action" value="set_status">
@@ -824,6 +897,59 @@ $saved_links_csrf_token = create_csrf_token($saved_links_csrf_id);
                                 </form>
                             <?php } ?>
                         </div>
+
+                        <form method="post" action="<?php echo h($page_url); ?>" class="saved-link-import" id="saved-link-import-<?php echo h($link['id']); ?>">
+                            <input type="hidden" name="csrf_token<?php echo h($saved_links_csrf_id); ?>" value="<?php echo h($saved_links_csrf_token); ?>">
+                            <input type="hidden" name="action" value="import_to_links">
+                            <input type="hidden" name="id" value="<?php echo h($link['id']); ?>">
+                            <input type="hidden" name="return_to" value="<?php echo h($saved_links_return_to); ?>">
+
+                            <h3>Add to MyLinks</h3>
+                            <div class="saved-link-import__grid">
+                                <div class="saved-links-field">
+                                    <label for="saved-link-category-<?php echo h($link['id']); ?>">Category</label>
+                                    <select id="saved-link-category-<?php echo h($link['id']); ?>" name="links_category_id">
+                                        <?php foreach ($link_categories as $category) { ?>
+                                            <option value="<?php echo h((string)$category['id']); ?>" <?php echo strcasecmp($category['category'], 'Others') === 0 ? 'selected' : ''; ?>>
+                                                <?php echo h($category['category']); ?>
+                                            </option>
+                                        <?php } ?>
+                                    </select>
+                                </div>
+
+                                <div class="saved-links-field">
+                                    <label for="saved-link-sub-category-1-<?php echo h($link['id']); ?>">Sub category 1</label>
+                                    <input id="saved-link-sub-category-1-<?php echo h($link['id']); ?>" name="sub_category_1" type="text" value="">
+                                </div>
+
+                                <div class="saved-links-field">
+                                    <label for="saved-link-sub-category-2-<?php echo h($link['id']); ?>">Sub category 2</label>
+                                    <input id="saved-link-sub-category-2-<?php echo h($link['id']); ?>" name="sub_category_2" type="text" value="">
+                                </div>
+
+                                <div class="saved-links-field">
+                                    <label for="saved-link-rank-<?php echo h($link['id']); ?>">Rank</label>
+                                    <input id="saved-link-rank-<?php echo h($link['id']); ?>" name="rank" type="number" min="0" value="10">
+                                </div>
+
+                                <div class="saved-links-field saved-links-field--wide">
+                                    <label for="saved-link-new-category-<?php echo h($link['id']); ?>">Or new category</label>
+                                    <input id="saved-link-new-category-<?php echo h($link['id']); ?>" name="new_links_category" type="text" value="" placeholder="Leave empty to use selected category">
+                                </div>
+                            </div>
+
+                            <label class="saved-link-import__archive" for="saved-link-archive-<?php echo h($link['id']); ?>">
+                                <input id="saved-link-archive-<?php echo h($link['id']); ?>" name="archive_saved_link" type="checkbox" value="1" checked>
+                                Archive this saved link after adding it to MyLinks
+                            </label>
+
+                            <div class="saved-link-actions">
+                                <button class="saved-links-btn saved-links-btn--primary" type="submit">
+                                    <i class="fa fa-plus" aria-hidden="true"></i>
+                                    Add to MyLinks
+                                </button>
+                            </div>
+                        </form>
                     </div>
                 </article>
             <?php } ?>
@@ -844,6 +970,28 @@ $saved_links_csrf_token = create_csrf_token($saved_links_csrf_id);
 
                 toggle.setAttribute('aria-expanded', expanded ? 'false' : 'true');
                 panel.hidden = expanded;
+            });
+        });
+
+        document.querySelectorAll('[data-saved-link-open-import]').forEach(function(button) {
+            button.addEventListener('click', function() {
+                var panel = document.getElementById(button.getAttribute('data-saved-link-open-import'));
+                var toggle = document.querySelector('[aria-controls="' + button.getAttribute('data-saved-link-open-import') + '"]');
+                var category;
+
+                if (!panel) {
+                    return;
+                }
+
+                panel.hidden = false;
+                if (toggle) {
+                    toggle.setAttribute('aria-expanded', 'true');
+                }
+
+                category = panel.querySelector('select[name="links_category_id"]');
+                if (category) {
+                    category.focus();
+                }
             });
         });
     })();
@@ -884,5 +1032,139 @@ function saved_links_status_tab(string $label, string $status, string $active_st
     }
 
     return "<a class='saved-links-tab{$active}' href='" . h($href) . "'>" . h($label) . " <span>" . h((string)$count) . "</span></a>";
+}
+
+function saved_links_safe_return_url(string $fallback): string
+{
+    $return_to = $_POST['return_to'] ?? '';
+
+    return is_safe_local_redirect($return_to) ? $return_to : $fallback;
+}
+
+function saved_links_link_categories(): array
+{
+    global $database;
+
+    $result = $database->query("SELECT id, category FROM links_category ORDER BY `rank` ASC, category ASC");
+    $categories = [];
+
+    while ($row = $database->fetch_array($result)) {
+        $categories[] = [
+            'id' => (int)$row['id'],
+            'category' => (string)$row['category'],
+        ];
+    }
+
+    $database->free_result($result);
+
+    return $categories;
+}
+
+function saved_links_resolve_links_category(int $category_id, string $new_category): array
+{
+    global $database;
+
+    $new_category = saved_links_clean_text($new_category, 80);
+    if ($new_category !== '') {
+        $result = $database->query_prepared(
+            "SELECT id, category FROM links_category WHERE LOWER(category) = LOWER(?) LIMIT 1",
+            [$new_category],
+            "s"
+        );
+        $row = $database->fetch_array($result);
+        $database->free_result($result);
+
+        if ($row) {
+            return ['id' => (int)$row['id'], 'category' => (string)$row['category']];
+        }
+
+        $rank_result = $database->query("SELECT COALESCE(MAX(`rank`), 0) + 10 AS next_rank FROM links_category");
+        $rank_row = $database->fetch_array($rank_result);
+        $database->free_result($rank_result);
+        $rank = (int)($rank_row['next_rank'] ?? 10);
+
+        $database->execute_prepared(
+            "INSERT INTO links_category (category, `rank`) VALUES (?, ?)",
+            [$new_category, $rank],
+            "si"
+        );
+
+        return ['id' => (int)$database->insert_id(), 'category' => $new_category];
+    }
+
+    if ($category_id < 1) {
+        throw new InvalidArgumentException('Choose a MyLinks category or enter a new one.');
+    }
+
+    $result = $database->query_prepared(
+        "SELECT id, category FROM links_category WHERE id = ? LIMIT 1",
+        [$category_id],
+        "i"
+    );
+    $row = $database->fetch_array($result);
+    $database->free_result($result);
+
+    if (!$row) {
+        throw new InvalidArgumentException('Selected MyLinks category was not found.');
+    }
+
+    return ['id' => (int)$row['id'], 'category' => (string)$row['category']];
+}
+
+function saved_links_import_to_links(int $user_id, array $saved_link, array $options): int
+{
+    global $database;
+
+    $title = saved_links_clean_text($saved_link['title'] ?? '', 80);
+    if ($title === '') {
+        $host = parse_url((string)$saved_link['url'], PHP_URL_HOST);
+        $title = $host ? saved_links_clean_text((string)$host, 80) : 'Saved link';
+    }
+
+    $description = saved_links_clean_text($saved_link['note'] ?? '', 4000);
+    $sub_category_1 = saved_links_clean_text($options['sub_category_1'] ?? '', 120);
+    $sub_category_2 = saved_links_clean_text($options['sub_category_2'] ?? '', 120);
+    $rank = (int)($options['rank'] ?? 10);
+    $username = saved_links_current_username($user_id);
+
+    $database->execute_prepared(
+        "INSERT INTO links (name, web_address, description, category_id, category, sub_category_1, sub_category_2, privacy, `rank`, username) VALUES (?, ?, ?, ?, ?, ?, ?, 0, ?, ?)",
+        [
+            $title,
+            (string)$saved_link['url'],
+            $description,
+            (int)$options['category_id'],
+            (string)$options['category'],
+            $sub_category_1,
+            $sub_category_2,
+            $rank,
+            $username,
+        ],
+        "sssisssis"
+    );
+
+    return (int)$database->insert_id();
+}
+
+function saved_links_current_username(int $user_id): string
+{
+    $user = User::find_by_id($user_id);
+
+    if ($user && isset($user->username) && trim((string)$user->username) !== '') {
+        return (string)$user->username;
+    }
+
+    return 'kamy';
+}
+
+function saved_links_clean_text($value, int $length): string
+{
+    $value = trim((string)$value);
+
+    if (function_exists('mb_substr')) {
+        return mb_substr($value, 0, $length, 'UTF-8');
+    }
+
+    return substr($value, 0, $length);
 }
 ?>

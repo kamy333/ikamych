@@ -38,18 +38,39 @@ function delete_return_url($fallback)
 }
 
 $delete_return_to = delete_return_url($class_name::$page_manage);
+
+function delete_ajax_response($ok, $message, $id, $return_to, $status = 200)
+{
+    if (!is_ajax_request()) {
+        return false;
+    }
+
+    http_response_code($status);
+    header('Content-Type: application/json; charset=utf-8');
+    echo json_encode([
+        'ok' => (bool)$ok,
+        'message' => $message,
+        'id' => $id,
+        'return_to' => $return_to,
+    ]);
+    exit;
+}
 ?>
 <?php
 $id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT, ['options' => ['min_range' => 1]]);
 if ($id === false || $id === null) {
-    $session->message('Sorry, a valid record ID is required for deletion.');
+    $message = 'Sorry, a valid record ID is required for deletion.';
+    $session->message($message);
+    delete_ajax_response(false, $message, null, $delete_return_to, 400);
     redirect_to($delete_return_to);
 } else {
 
     $class_found = $class_name::find_by_id($id);
 
     if (!$class_found) {
-        $session->message("Record ID (" . h($id) . ") was not found.");
+        $message = "Record ID (" . h($id) . ") was not found.";
+        $session->message($message);
+        delete_ajax_response(false, $message, $id, $delete_return_to, 404);
         redirect_to($delete_return_to);
     }
 
@@ -66,12 +87,16 @@ if ($id === false || $id === null) {
 
     if ($class_found->delete()) {
         $deleted_label = isset($class_found->pseudo) ? $class_found->pseudo : $class_name . " ID (" . h($id) . ")";
-        $session->message($deleted_label . " successfully deleted");
+        $message = $deleted_label . " successfully deleted";
+        $session->message($message);
         $session->ok(true);
+        delete_ajax_response(true, $message, $id, $delete_return_to);
         redirect_to($delete_return_to);
     } else {
         $deleted_label = isset($class_found->pseudo) ? $class_found->pseudo : $class_name . " ID (" . h($id) . ")";
-        $session->message($deleted_label . " deletion failed ");
+        $message = $deleted_label . " deletion failed ";
+        $session->message($message);
+        delete_ajax_response(false, $message, $id, $delete_return_to, 500);
         redirect_to($delete_return_to);
     }
 

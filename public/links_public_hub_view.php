@@ -432,15 +432,15 @@ if (!function_exists('public_links_render_page')) {
 
     .links-visibility-modal__grid {
         display: grid;
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-        gap: 12px;
+        grid-template-columns: minmax(260px, 1fr) minmax(300px, 1fr) minmax(260px, 1fr);
+        gap: 16px;
     }
 
     .links-visibility-modal__group {
         min-width: 0;
-        max-height: 48vh;
+        max-height: 52vh;
         overflow: auto;
-        padding: 10px;
+        padding: 12px;
         border: 1px solid #dbeafe;
         border-radius: 8px;
         background: #f8fbff;
@@ -455,11 +455,12 @@ if (!function_exists('public_links_render_page')) {
     }
 
     .links-visibility-choice {
-        display: flex;
-        gap: 8px;
-        align-items: flex-start;
+        display: grid;
+        grid-template-columns: 18px minmax(0, 1fr) 74px;
+        gap: 9px;
+        align-items: center;
         margin: 0;
-        padding: 7px 4px;
+        padding: 8px 4px;
         border-top: 1px solid #eaf3ff;
         color: #071a35;
         font-size: 13px;
@@ -467,18 +468,42 @@ if (!function_exists('public_links_render_page')) {
         line-height: 1.25;
     }
 
+    .links-visibility-choice span {
+        min-width: 0;
+        overflow-wrap: anywhere;
+    }
+
+    .links-visibility-choice__rank {
+        width: 74px;
+        min-height: 28px;
+        padding: 3px 6px;
+        border: 1px solid #cfe2f7;
+        border-radius: 6px;
+        background: #fff;
+        color: #082b61;
+        font-size: 12px;
+        font-weight: 900;
+        text-align: center;
+    }
+
     .links-visibility-choice:first-of-type {
         border-top: 0;
     }
 
-    .links-visibility-choice input {
-        margin-top: 1px;
+    .links-visibility-choice input[type="checkbox"] {
+        margin: 0;
     }
 
     .links-visibility-modal__footer {
         display: grid;
         grid-template-columns: 1fr 1fr;
         gap: 10px;
+    }
+
+    .links-visibility-modal__footer:before,
+    .links-visibility-modal__footer:after {
+        content: none;
+        display: none;
     }
 
     .links-pinned-column {
@@ -797,6 +822,17 @@ if (!function_exists('public_links_render_page')) {
     .modal[id^="myLinkprogram"] .modal-footer {
         border-top: 1px solid #dbeafe;
         background: #f8fbff;
+    }
+
+    .links-visibility-modal .modal-dialog {
+        width: min(1080px, calc(100vw - 40px)) !important;
+        max-width: calc(100vw - 40px) !important;
+        margin-top: 52px;
+    }
+
+    .links-visibility-modal .modal-body {
+        max-height: calc(100vh - 205px);
+        padding: 20px 22px;
     }
 
     .gemini-links-page .links-modal-actions,
@@ -1130,6 +1166,17 @@ if (!function_exists('public_links_render_page')) {
         }
     }
 
+    @media (max-width: 1020px) {
+        .links-visibility-modal__grid,
+        .links-visibility-modal__footer {
+            grid-template-columns: 1fr;
+        }
+
+        .links-visibility-modal__group {
+            max-height: none;
+        }
+    }
+
     @media (max-width: 720px) {
         .gemini-links-page {
             padding: 0 0 84px;
@@ -1455,8 +1502,103 @@ if (!function_exists('public_links_render_page')) {
         }
 
         function addReturnUrl(url) {
+            var cleanUrl = url.replace(/([?&])return_to=[^&]*&?/g, '$1').replace(/[?&]$/, '');
+            var glue = cleanUrl.indexOf('?') === -1 ? '?' : '&';
+            return cleanUrl + glue + 'return_to=' + encodeURIComponent(window.location.pathname + window.location.search);
+        }
+
+        function addAjaxFlag(url) {
             var glue = url.indexOf('?') === -1 ? '?' : '&';
-            return url + glue + 'return_to=' + encodeURIComponent(window.location.pathname + window.location.search);
+            return url + glue + 'ajax=1';
+        }
+
+        function showLinksMessage(message, isOk) {
+            var target = document.querySelector('.gemini-links-messages');
+            var alert;
+            var close;
+
+            if (!target || !message) {
+                return;
+            }
+
+            alert = document.createElement('div');
+            alert.className = 'alert alert-' + (isOk ? 'success' : 'danger') + ' fade in';
+            alert.setAttribute('role', 'alert');
+            close = document.createElement('a');
+            close.href = '#';
+            close.className = 'close';
+            close.setAttribute('data-dismiss', 'alert');
+            close.innerHTML = '&times;';
+            alert.appendChild(close);
+            alert.appendChild(document.createTextNode(' ' + message));
+            target.innerHTML = '';
+            target.appendChild(alert);
+        }
+
+        function removeDeletedLink(recordId) {
+            var row = document.querySelector('[data-link-row-id="' + recordId + '"]');
+            var modal = document.querySelector('[data-link-modal-id="' + recordId + '"]');
+
+            if (row && row.parentNode) {
+                row.parentNode.removeChild(row);
+            }
+
+            if (modal && modal.parentNode) {
+                modal.parentNode.removeChild(modal);
+            }
+        }
+
+        function deleteLinkFromModal(trigger) {
+            var recordId = trigger.getAttribute('data-link-id') || '';
+            var scrollX = window.pageXOffset || document.documentElement.scrollLeft || 0;
+            var scrollY = window.pageYOffset || document.documentElement.scrollTop || 0;
+            var originalText = trigger.innerHTML;
+
+            if (!recordId || !window.fetch) {
+                return true;
+            }
+
+            if (trigger.getAttribute('aria-disabled') === 'true') {
+                return false;
+            }
+
+            trigger.setAttribute('aria-disabled', 'true');
+            trigger.innerHTML = '<i class="fa fa-spinner fa-spin" aria-hidden="true"></i> Deleting';
+
+            window.fetch(addAjaxFlag(trigger.href), {
+                method: 'GET',
+                credentials: 'same-origin',
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest',
+                    'Accept': 'application/json'
+                }
+            }).then(function(response) {
+                return response.text().then(function(text) {
+                    var data;
+
+                    try {
+                        data = JSON.parse(text);
+                    } catch (error) {
+                        throw new Error('Delete did not finish. Please check that you are still logged in.');
+                    }
+
+                    if (!response.ok || !data.ok) {
+                        throw new Error(data.message || 'Delete failed.');
+                    }
+
+                    removeDeletedLink(recordId);
+                    closeVisibleLinksModals();
+                    showLinksMessage(data.message || 'Link deleted.', true);
+                    window.scrollTo(scrollX, scrollY);
+                });
+            }).catch(function(error) {
+                trigger.removeAttribute('aria-disabled');
+                trigger.innerHTML = originalText;
+                showLinksMessage(error.message || 'Delete failed.', false);
+                window.scrollTo(scrollX, scrollY);
+            });
+
+            return false;
         }
 
         function setField(form, name, value) {
@@ -1527,6 +1669,18 @@ if (!function_exists('public_links_render_page')) {
         function openActionFromTrigger(trigger) {
             var sourceModal = closest(trigger, '.modal');
             var action = trigger.getAttribute('data-link-action');
+            var deleteConfirm;
+
+            if (action === 'delete') {
+                deleteConfirm = trigger.getAttribute('data-link-delete-confirm') || 'Delete this link?';
+
+                if (!window.confirm(deleteConfirm)) {
+                    return;
+                }
+
+                deleteLinkFromModal(trigger);
+                return;
+            }
 
             if (sourceModal) {
                 hideModal(sourceModal);
@@ -1535,17 +1689,6 @@ if (!function_exists('public_links_render_page')) {
             removeLinksBackdrops();
 
             window.setTimeout(function() {
-                if (action === 'delete') {
-                    var deleteModal = document.getElementById('links-delete-modal');
-                    var deleteLink = deleteModal.querySelector('.links-modal-btn--delete');
-                    var nameTarget = deleteModal.querySelector('.links-delete-modal__name');
-
-                    deleteLink.href = addReturnUrl(trigger.href);
-                    nameTarget.textContent = trigger.getAttribute('data-link-name') || 'Selected link';
-                    showModal(deleteModal);
-                    return;
-                }
-
                 var actionModal = document.getElementById('links-action-modal');
                 fillActionForm(trigger);
                 showModal(actionModal);
@@ -1606,6 +1749,14 @@ if (!function_exists('public_links_render_page')) {
             var trigger = closest(event.target, '.modal[id^="myLinkprogram"] .links-modal-btn[data-link-action], .gemini-links-action[data-link-action]');
 
             if (!trigger) {
+                trigger = closest(event.target, '#links-delete-modal .links-modal-btn--delete[data-link-id]');
+
+                if (trigger) {
+                    event.preventDefault();
+                    event.stopImmediatePropagation();
+                    deleteLinkFromModal(trigger);
+                }
+
                 return;
             }
 

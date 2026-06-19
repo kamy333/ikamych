@@ -406,9 +406,15 @@ class Links extends DatabaseObject
         $output .= "<ul class='nav nav-pills '>";
 
 
+        $source_field = 'category';
+        if ($category_1) {
+            $source_field = 'sub_category_1';
+        } elseif ($category_2) {
+            $source_field = 'sub_category_2';
+        }
+
+        $category_values = [];
         foreach ($category_set as $category) {
-
-
             if ($category_1) {
                 $categ = $category->sub_category_1;
             } elseif ($category_2) {
@@ -417,21 +423,30 @@ class Links extends DatabaseObject
                 $categ = $category->category;
             }
 
+            $categ = trim((string)$categ);
+
             if (self::is_retired_link_category($categ)) {
                 continue;
-            }
-
-            $source_field = 'category';
-            if ($category_1) {
-                $source_field = 'sub_category_1';
-            } elseif ($category_2) {
-                $source_field = 'sub_category_2';
             }
 
             if (class_exists('LinksCategoryVisibility') && LinksCategoryVisibility::is_hidden($source_field, $categ)) {
                 continue;
             }
 
+            if ($categ === '') {
+                continue;
+            }
+
+            $category_values[$categ] = $categ;
+        }
+
+        if (class_exists('LinksCategoryVisibility')) {
+            $category_values = LinksCategoryVisibility::sort_values($source_field, array_values($category_values));
+        } else {
+            natcasesort($category_values);
+        }
+
+        foreach ($category_values as $categ) {
             if (isset($_GET['category']) && $_GET['category'] == $categ) {
                 $active = "active";
             } else {
@@ -573,7 +588,7 @@ class Links extends DatabaseObject
                 $modal = "";
             }
 
-            $output .= "<tr>";
+            $output .= "<tr data-link-row-id='" . self::html($link_id) . "'>";
 
             //todo chk $moodal
 //            $modal="";
@@ -692,7 +707,7 @@ class Links extends DatabaseObject
 
 
 // below is modal mode not shown (hidden)
-        $output .= "<div class='modal fade' id='{$div_id}' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true'>";
+        $output .= "<div class='modal fade' id='{$div_id}' data-link-modal-id='" . self::html($link_id) . "' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true'>";
         $output .= "    <div class='modal-dialog'>";
         $output .= "        <div class='modal-content'>";
         $output .= "            <div class='modal-header'>";
@@ -737,8 +752,8 @@ class Links extends DatabaseObject
         $output .= "                    <a class='links-modal-btn links-modal-btn--copy btn btn-success' href='{$p_copy}" . urlencode($link_id) . "&duplicate_record=1' data-link-action='copy' data-link-action-title='Copy link' data-link-submit-url='{$p_new}'{$link_data} onclick='return window.linksOpenActionModal ? window.linksOpenActionModal(this) : true;'><i class='fa fa-clone' aria-hidden='true'></i> Copy</a>";
         $output .= "                    <a class='links-modal-btn links-modal-btn--add btn btn-info' href='{$p_new}' data-link-action='new' data-link-action-title='New link' data-link-submit-url='{$p_new}' onclick='return window.linksOpenActionModal ? window.linksOpenActionModal(this) : true;'><i class='fa fa-plus' aria-hidden='true'></i> New</a>";
         $delete_url = append_query_param($p_del . urlencode($link_id), 'return_to', current_request_uri());
-        $delete_confirm = "return confirm(" . j("Are you sure you want to delete " . $link->name . "?") . ");";
-        $output .= "                    <a class='links-modal-btn links-modal-btn--delete btn btn-danger' href='" . h($delete_url) . "' onclick='" . h($delete_confirm) . "'><i class='fa fa-trash' aria-hidden='true'></i> Delete</a>";
+        $delete_confirm = "Are you sure you want to delete " . $link->name . "?";
+        $output .= "                    <a class='links-modal-btn links-modal-btn--delete btn btn-danger' href='" . h($delete_url) . "' data-link-action='delete' data-link-delete-confirm='" . self::html($delete_confirm) . "'{$link_data} onclick='return window.linksOpenActionModal ? window.linksOpenActionModal(this) : confirm(" . h(j($delete_confirm)) . ");'><i class='fa fa-trash' aria-hidden='true'></i> Delete</a>";
         $output .= "                    <button type='button' class='links-modal-btn links-modal-btn--close btn btn-info' data-dismiss='modal' onclick='return window.linksCloseModalButton ? window.linksCloseModalButton(this) : true;'><i class='fa fa-times' aria-hidden='true'></i> Close</button>";
         $output .= "                </div>";
 
