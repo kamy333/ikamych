@@ -425,6 +425,24 @@ $cat = MyExpense::loan_category_filter_from_request();
 $cat_name = MyExpense::get_category_name($cat);
 $show_doc = ($_GET["show_hide_doc"] ?? "show_doc") === "show_doc";
 $search = trim((string) ($_GET["q"] ?? ""));
+$amount_filter = (string) ($_GET["amount_filter"] ?? "any");
+$amount_filter = in_array($amount_filter, ["any", "negative", "range"], true) ? $amount_filter : "any";
+$amount_min_input = trim((string) ($_GET["amount_min"] ?? ""));
+$amount_max_input = trim((string) ($_GET["amount_max"] ?? ""));
+$amount_min = loan_exp_decimal($amount_min_input);
+$amount_max = loan_exp_decimal($amount_max_input);
+$date_period = (string) ($_GET["date_period"] ?? "any");
+$date_period = in_array($date_period, ["any", "year", "month"], true) ? $date_period : "any";
+$date_year_input = trim((string) ($_GET["date_year"] ?? ""));
+$date_year = filter_var($date_year_input, FILTER_VALIDATE_INT, [
+    "options" => ["min_range" => 1900, "max_range" => 2100],
+]);
+$date_year = $date_year === false ? null : (int) $date_year;
+$date_month_input = trim((string) ($_GET["date_month"] ?? ""));
+$date_month = DateTime::createFromFormat('!Y-m', $date_month_input);
+if (!$date_month || $date_month->format('Y-m') !== $date_month_input) {
+    $date_month = null;
+}
 $page = loan_exp_int($_GET["page"] ?? 1, 1);
 $per_page = loan_exp_int($_GET["per_page"] ?? 25, 25);
 $per_page = in_array($per_page, [10, 25, 50, 100], true) ? $per_page : 25;
@@ -442,6 +460,54 @@ $types = "i";
 if ($cat !== "All") {
     $where .= " AND t1.expense_type_id IN ($cat) ";
 }
+
+if ($amount_filter === "negative") {
+    $where .= " AND t1.amount < 0 ";
+} elseif ($amount_filter === "range") {
+    if ($amount_min !== null) {
+        $where .= " AND t1.amount >= ? ";
+        $params[] = $amount_min;
+        $types .= "d";
+    }
+    if ($amount_max !== null) {
+        $where .= " AND t1.amount <= ? ";
+        $params[] = $amount_max;
+        $types .= "d";
+    }
+}
+
+if ($date_period === "year" && $date_year !== null) {
+    $where .= " AND t1.expense_date >= ? AND t1.expense_date < ? ";
+    $params[] = sprintf('%04d-01-01', $date_year);
+    $params[] = sprintf('%04d-01-01', $date_year + 1);
+    $types .= "ss";
+} elseif ($date_period === "month" && $date_month !== null) {
+    $month_start = $date_month->format('Y-m-01');
+    $month_end = (clone $date_month)->modify('+1 month')->format('Y-m-01');
+    $where .= " AND t1.expense_date >= ? AND t1.expense_date < ? ";
+    $params[] = $month_start;
+    $params[] = $month_end;
+    $types .= "ss";
+}
+
+$advanced_filter_labels = [];
+if ($amount_filter === "negative") {
+    $advanced_filter_labels[] = "Amount < 0";
+} elseif ($amount_filter === "range" && ($amount_min !== null || $amount_max !== null)) {
+    if ($amount_min !== null && $amount_max !== null) {
+        $advanced_filter_labels[] = "Amount " . number_format($amount_min, 2) . " to " . number_format($amount_max, 2);
+    } elseif ($amount_min !== null) {
+        $advanced_filter_labels[] = "Amount >= " . number_format($amount_min, 2);
+    } else {
+        $advanced_filter_labels[] = "Amount <= " . number_format($amount_max, 2);
+    }
+}
+if ($date_period === "year" && $date_year !== null) {
+    $advanced_filter_labels[] = "Year " . $date_year;
+} elseif ($date_period === "month" && $date_month !== null) {
+    $advanced_filter_labels[] = $date_month->format('F Y');
+}
+$advanced_filter_count = count($advanced_filter_labels);
 
 $summary_where = $where;
 $summary_params = $params;
@@ -629,6 +695,26 @@ $status_messages = [
         flex: 0 0 auto;
     }
 
+    .loan-exp-advanced-trigger {
+        position: relative;
+        white-space: nowrap;
+    }
+
+    .loan-exp-filter-count {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 20px;
+        height: 20px;
+        margin-left: 5px;
+        padding: 0 6px;
+        border-radius: 999px;
+        background: #ffffff;
+        color: #075da8;
+        font-size: 11px;
+        font-weight: 900;
+    }
+
     .loan-exp-search-status {
         position: absolute;
         top: 100%;
@@ -638,6 +724,29 @@ $status_messages = [
         font-size: 11px;
         font-weight: 700;
         line-height: 1.2;
+    }
+
+    .loan-exp-active-filters {
+        flex: 1 0 100%;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 7px;
+        padding-top: 2px;
+        color: #475569;
+        font-size: 12px;
+        font-weight: 700;
+    }
+
+    .loan-exp-active-filter {
+        display: inline-flex;
+        align-items: center;
+        min-height: 27px;
+        padding: 4px 9px;
+        border: 1px solid #bfdbfe;
+        border-radius: 999px;
+        background: #eff6ff;
+        color: #1e3a8a;
     }
 
     .loan-exp-table-card {
@@ -996,6 +1105,73 @@ $status_messages = [
         color: #ffffff;
     }
 
+    .loan-exp-filter-modal > .modal-dialog {
+        width: 680px !important;
+    }
+
+    .loan-exp-filter-modal .modal-body {
+        padding-bottom: 8px;
+    }
+
+    .loan-exp-filter-section {
+        margin-bottom: 16px;
+        padding: 16px;
+        border: 1px solid #dbe4ee;
+        border-radius: 8px;
+        background: #f8fafc;
+    }
+
+    .loan-exp-filter-section__title {
+        margin: 0 0 12px;
+        color: #0f172a;
+        font-size: 14px;
+        font-weight: 900;
+    }
+
+    .loan-exp-filter-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
+    }
+
+    .loan-exp-filter-grid .form-group {
+        margin-bottom: 0;
+    }
+
+    .loan-exp-filter-help {
+        margin: 8px 0 0;
+        color: #64748b;
+        font-size: 12px;
+    }
+
+    .loan-exp-filter-error-summary {
+        margin-bottom: 14px;
+        padding: 10px 12px;
+        border: 1px solid #fecaca;
+        border-radius: 6px;
+        background: #fef2f2;
+        color: #991b1b;
+        font-size: 13px;
+        font-weight: 700;
+    }
+
+    .loan-exp-inline-error {
+        display: block;
+        margin-top: 5px;
+        color: #b91c1c;
+        font-size: 12px;
+        font-weight: 700;
+    }
+
+    .loan-exp-filter-modal .has-error .form-control {
+        border-color: #dc2626;
+        box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.1);
+    }
+
+    .loan-exp-filter-field[hidden] {
+        display: none !important;
+    }
+
     @media (max-width: 767px) {
         .loan-exp-page {
             width: 100%;
@@ -1044,6 +1220,10 @@ $status_messages = [
         .loan-exp-search-row .btn {
             width: 100%;
             margin-top: 8px;
+        }
+
+        .loan-exp-filter-grid {
+            grid-template-columns: 1fr;
         }
 
         .loan-exp-modal > .modal-dialog {
@@ -1487,6 +1667,12 @@ $status_messages = [
 
         <input type="hidden" name="order_by" value="<?php echo h($order_by); ?>">
         <input type="hidden" name="sort" value="<?php echo h($sort); ?>">
+        <input type="hidden" name="amount_filter" value="<?php echo h($amount_filter); ?>">
+        <input type="hidden" name="amount_min" value="<?php echo h($amount_min_input); ?>">
+        <input type="hidden" name="amount_max" value="<?php echo h($amount_max_input); ?>">
+        <input type="hidden" name="date_period" value="<?php echo h($date_period); ?>">
+        <input type="hidden" name="date_year" value="<?php echo h($date_year_input); ?>">
+        <input type="hidden" name="date_month" value="<?php echo h($date_month_input); ?>">
 
         <div class="form-group loan-exp-filter--documents">
             <label for="loan-doc">Documents</label>
@@ -1511,10 +1697,27 @@ $status_messages = [
             <div class="loan-exp-search-row">
                 <input id="loan-search" class="form-control" type="search" name="q" value="<?php echo h($search); ?>" placeholder="Type 2 letters to search" autocomplete="off">
                 <button class="btn btn-primary" id="loan-search-submit" type="submit"><i class="fa fa-search" aria-hidden="true"></i> Search</button>
+                <button class="btn btn-info loan-exp-advanced-trigger" type="button"
+                        data-toggle="modal" data-target="#loanExpenseFilterModal"
+                        data-loan-exp-target="#loanExpenseFilterModal"
+                        onclick="return window.loanExpOpenModalFallback ? window.loanExpOpenModalFallback('#loanExpenseFilterModal') : true;">
+                    <i class="fa fa-sliders" aria-hidden="true"></i> Advanced
+                    <?php if ($advanced_filter_count > 0) { ?>
+                        <span class="loan-exp-filter-count" aria-label="<?php echo h($advanced_filter_count); ?> active advanced filters"><?php echo h($advanced_filter_count); ?></span>
+                    <?php } ?>
+                </button>
                 <a class="btn btn-default" href="<?php echo h(loan_exp_current_url(["q" => null, "page" => 1, "loan_status" => null])); ?>">Clear</a>
             </div>
             <div class="loan-exp-search-status" id="loan-search-status" aria-live="polite"></div>
         </div>
+        <?php if ($advanced_filter_count > 0) { ?>
+            <div class="loan-exp-active-filters" aria-label="Active advanced filters">
+                <span>Advanced filters:</span>
+                <?php foreach ($advanced_filter_labels as $filter_label) { ?>
+                    <span class="loan-exp-active-filter"><?php echo h($filter_label); ?></span>
+                <?php } ?>
+            </div>
+        <?php } ?>
     </form>
 
     <section class="loan-exp-table-card">
@@ -1608,6 +1811,92 @@ $status_messages = [
         <?php echo loan_exp_pagination_html($page, $total_pages, $total_count, $offset, $per_page, "bottom"); ?>
     </section>
 </main>
+
+<div class="modal fade loan-exp-modal loan-exp-filter-modal" id="loanExpenseFilterModal" tabindex="-1" role="dialog" aria-labelledby="loanExpenseFilterTitle" aria-describedby="loanExpenseFilterDescription">
+    <div class="modal-dialog" role="document">
+        <form class="modal-content" id="loan-exp-filter-form" method="get" action="<?php echo h($_SERVER['PHP_SELF']); ?>" novalidate>
+            <input type="hidden" name="person_id" value="<?php echo h($p_id); ?>">
+            <input type="hidden" name="type_category" value="<?php echo h($cat); ?>">
+            <input type="hidden" name="show_hide_doc" value="<?php echo $show_doc ? "show_doc" : "hide_doc"; ?>">
+            <input type="hidden" name="per_page" value="<?php echo h($per_page); ?>">
+            <input type="hidden" name="order_by" value="<?php echo h($order_by); ?>">
+            <input type="hidden" name="sort" value="<?php echo h($sort); ?>">
+            <?php if ($search !== "") { ?>
+                <input type="hidden" name="q" value="<?php echo h($search); ?>">
+            <?php } ?>
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="return window.loanExpCloseButton ? window.loanExpCloseButton(this) : true;"><span aria-hidden="true">&times;</span></button>
+                <p class="loan-exp-modal__eyebrow">Search</p>
+                <h4 class="modal-title" id="loanExpenseFilterTitle">Advanced filters</h4>
+                <p class="loan-exp-filter-help" id="loanExpenseFilterDescription">Combine an amount condition with a year or a specific month.</p>
+            </div>
+            <div class="modal-body">
+                <div class="loan-exp-filter-error-summary" id="loan-filter-error-summary" role="alert" hidden>Please correct the highlighted filters.</div>
+
+                <section class="loan-exp-filter-section" aria-labelledby="loanAmountFilterTitle">
+                    <h5 class="loan-exp-filter-section__title" id="loanAmountFilterTitle">Amount (Amount CCY column)</h5>
+                    <div class="form-group">
+                        <label for="loan-filter-amount-mode">Condition</label>
+                        <select class="form-control" id="loan-filter-amount-mode" name="amount_filter">
+                            <option value="any"<?php echo $amount_filter === "any" ? " selected" : ""; ?>>Any amount</option>
+                            <option value="negative"<?php echo $amount_filter === "negative" ? " selected" : ""; ?>>Negative amounts (less than 0)</option>
+                            <option value="range"<?php echo $amount_filter === "range" ? " selected" : ""; ?>>Custom range</option>
+                        </select>
+                    </div>
+                    <div class="loan-exp-filter-grid loan-exp-filter-field" id="loan-filter-amount-range"<?php echo $amount_filter === "range" ? "" : " hidden"; ?>>
+                        <div class="form-group">
+                            <label for="loan-filter-amount-min">Minimum amount</label>
+                            <input class="form-control" id="loan-filter-amount-min" name="amount_min" type="number" step="0.01" value="<?php echo h($amount_min_input); ?>" placeholder="e.g. -500">
+                            <span class="loan-exp-inline-error" id="loan-filter-amount-min-error"></span>
+                        </div>
+                        <div class="form-group">
+                            <label for="loan-filter-amount-max">Maximum amount</label>
+                            <input class="form-control" id="loan-filter-amount-max" name="amount_max" type="number" step="0.01" value="<?php echo h($amount_max_input); ?>" placeholder="e.g. 250">
+                            <span class="loan-exp-inline-error" id="loan-filter-amount-max-error"></span>
+                        </div>
+                    </div>
+                    <p class="loan-exp-filter-help">For a range, enter at least one boundary.</p>
+                </section>
+
+                <section class="loan-exp-filter-section" aria-labelledby="loanDateFilterTitle">
+                    <h5 class="loan-exp-filter-section__title" id="loanDateFilterTitle">Expense date</h5>
+                    <div class="form-group">
+                        <label for="loan-filter-date-mode">Period</label>
+                        <select class="form-control" id="loan-filter-date-mode" name="date_period">
+                            <option value="any"<?php echo $date_period === "any" ? " selected" : ""; ?>>Any date</option>
+                            <option value="year"<?php echo $date_period === "year" ? " selected" : ""; ?>>A whole year</option>
+                            <option value="month"<?php echo $date_period === "month" ? " selected" : ""; ?>>A specific month</option>
+                        </select>
+                    </div>
+                    <div class="form-group loan-exp-filter-field" id="loan-filter-year-field"<?php echo $date_period === "year" ? "" : " hidden"; ?>>
+                        <label for="loan-filter-year">Year</label>
+                        <input class="form-control" id="loan-filter-year" name="date_year" type="number" min="1900" max="2100" step="1" value="<?php echo h($date_year_input !== "" ? $date_year_input : date('Y')); ?>" placeholder="<?php echo h(date('Y')); ?>">
+                        <span class="loan-exp-inline-error" id="loan-filter-year-error"></span>
+                    </div>
+                    <div class="form-group loan-exp-filter-field" id="loan-filter-month-field"<?php echo $date_period === "month" ? "" : " hidden"; ?>>
+                        <label for="loan-filter-month">Month and year</label>
+                        <input class="form-control" id="loan-filter-month" name="date_month" type="month" min="1900-01" max="2100-12" value="<?php echo h($date_month_input !== "" ? $date_month_input : date('Y-m')); ?>">
+                        <span class="loan-exp-inline-error" id="loan-filter-month-error"></span>
+                    </div>
+                </section>
+            </div>
+            <div class="modal-footer">
+                <a class="btn btn-default" href="<?php echo h(loan_exp_current_url([
+                    "amount_filter" => null,
+                    "amount_min" => null,
+                    "amount_max" => null,
+                    "date_period" => null,
+                    "date_year" => null,
+                    "date_month" => null,
+                    "page" => 1,
+                    "loan_status" => null,
+                ])); ?>">Clear advanced filters</a>
+                <button type="button" class="btn btn-default" data-dismiss="modal" onclick="return window.loanExpCloseButton ? window.loanExpCloseButton(this) : true;">Cancel</button>
+                <button type="submit" class="btn btn-primary"><i class="fa fa-filter" aria-hidden="true"></i> Apply filters</button>
+            </div>
+        </form>
+    </div>
+</div>
 
 <?php if (User::is_admin()) { ?>
     <div class="modal fade loan-exp-modal" id="loanExpenseCreateModal" tabindex="-1" role="dialog" aria-labelledby="loanExpenseCreateTitle">
@@ -1851,7 +2140,173 @@ $status_messages = [
 <?php } ?>
 
 <script>
+    window.loanExpShowModalFallback = window.loanExpShowModalFallback || function(modal) {
+        modal.style.display = 'block';
+        modal.removeAttribute('aria-hidden');
+        modal.setAttribute('aria-modal', 'true');
+        modal.classList.add('in');
+        document.body.classList.add('modal-open');
+
+        if (!document.querySelector('.modal-backdrop[data-loan-exp-fallback="1"]')) {
+            var backdrop = document.createElement('div');
+            backdrop.className = 'modal-backdrop fade in';
+            backdrop.setAttribute('data-loan-exp-fallback', '1');
+            document.body.appendChild(backdrop);
+        }
+    };
+
+    window.loanExpHideModalFallback = window.loanExpHideModalFallback || function(modal) {
+        modal.style.display = 'none';
+        modal.setAttribute('aria-hidden', 'true');
+        modal.removeAttribute('aria-modal');
+        modal.classList.remove('in');
+        document.body.classList.remove('modal-open');
+        document.querySelectorAll('.modal-backdrop[data-loan-exp-fallback="1"]').forEach(function(backdrop) {
+            backdrop.parentNode.removeChild(backdrop);
+        });
+    };
+
+    window.loanExpOpenModalFallback = window.loanExpOpenModalFallback || function(target) {
+        var modal = target ? document.querySelector(target) : null;
+        if (!modal) {
+            return true;
+        }
+        window.loanExpShowModalFallback(modal);
+        return false;
+    };
+
+    window.loanExpCloseButton = window.loanExpCloseButton || function(button) {
+        var modal = button ? button.closest('.loan-exp-modal') : null;
+        if (!modal) {
+            return true;
+        }
+        window.loanExpHideModalFallback(modal);
+        return false;
+    };
+
     document.addEventListener('DOMContentLoaded', function() {
+        var filterForm = document.getElementById('loan-exp-filter-form');
+
+        if (filterForm) {
+            var amountMode = document.getElementById('loan-filter-amount-mode');
+            var amountRange = document.getElementById('loan-filter-amount-range');
+            var amountMin = document.getElementById('loan-filter-amount-min');
+            var amountMax = document.getElementById('loan-filter-amount-max');
+            var dateMode = document.getElementById('loan-filter-date-mode');
+            var yearField = document.getElementById('loan-filter-year-field');
+            var yearInput = document.getElementById('loan-filter-year');
+            var monthField = document.getElementById('loan-filter-month-field');
+            var monthInput = document.getElementById('loan-filter-month');
+            var filterSummary = document.getElementById('loan-filter-error-summary');
+
+            var toggleFilterFields = function() {
+                amountRange.hidden = amountMode.value !== 'range';
+                yearField.hidden = dateMode.value !== 'year';
+                monthField.hidden = dateMode.value !== 'month';
+            };
+
+            var clearFilterErrors = function() {
+                filterForm.querySelectorAll('.has-error').forEach(function(group) {
+                    group.classList.remove('has-error');
+                });
+                filterForm.querySelectorAll('.loan-exp-inline-error').forEach(function(error) {
+                    error.textContent = '';
+                });
+                filterSummary.hidden = true;
+            };
+
+            var setFilterError = function(input, message) {
+                var group = input.closest('.form-group');
+                var error = document.getElementById(input.id + '-error');
+                if (group) {
+                    group.classList.add('has-error');
+                }
+                if (error) {
+                    error.textContent = message;
+                }
+            };
+
+            amountMode.addEventListener('change', function() {
+                clearFilterErrors();
+                toggleFilterFields();
+            });
+            dateMode.addEventListener('change', function() {
+                clearFilterErrors();
+                toggleFilterFields();
+            });
+
+            [amountMin, amountMax, yearInput, monthInput].forEach(function(input) {
+                input.addEventListener('input', function() {
+                    var group = input.closest('.form-group');
+                    var error = document.getElementById(input.id + '-error');
+                    if (group) {
+                        group.classList.remove('has-error');
+                    }
+                    if (error) {
+                        error.textContent = '';
+                    }
+                });
+            });
+
+            filterForm.addEventListener('submit', function(event) {
+                clearFilterErrors();
+                var firstInvalid = null;
+
+                if (amountMode.value === 'range') {
+                    var minText = amountMin.value.trim();
+                    var maxText = amountMax.value.trim();
+                    var minValue = minText === '' ? null : Number(minText);
+                    var maxValue = maxText === '' ? null : Number(maxText);
+
+                    if (minValue === null && maxValue === null) {
+                        setFilterError(amountMin, 'Enter a minimum or maximum amount.');
+                        setFilterError(amountMax, 'Enter a minimum or maximum amount.');
+                        firstInvalid = amountMin;
+                    } else if ((minValue !== null && !Number.isFinite(minValue)) || (maxValue !== null && !Number.isFinite(maxValue))) {
+                        if (minValue !== null && !Number.isFinite(minValue)) {
+                            setFilterError(amountMin, 'Enter a valid number.');
+                            firstInvalid = firstInvalid || amountMin;
+                        }
+                        if (maxValue !== null && !Number.isFinite(maxValue)) {
+                            setFilterError(amountMax, 'Enter a valid number.');
+                            firstInvalid = firstInvalid || amountMax;
+                        }
+                    } else if (minValue !== null && maxValue !== null && minValue > maxValue) {
+                        setFilterError(amountMin, 'The minimum must not exceed the maximum.');
+                        setFilterError(amountMax, 'The maximum must be at least the minimum.');
+                        firstInvalid = amountMin;
+                    }
+                }
+
+                if (dateMode.value === 'year') {
+                    var yearValue = Number(yearInput.value);
+                    if (!yearInput.value.trim() || !Number.isInteger(yearValue) || yearValue < 1900 || yearValue > 2100) {
+                        setFilterError(yearInput, 'Enter a year between 1900 and 2100.');
+                        firstInvalid = firstInvalid || yearInput;
+                    }
+                }
+
+                if (dateMode.value === 'month' && !/^\d{4}-(0[1-9]|1[0-2])$/.test(monthInput.value)) {
+                    setFilterError(monthInput, 'Choose a valid month and year.');
+                    firstInvalid = firstInvalid || monthInput;
+                }
+
+                if (firstInvalid) {
+                    event.preventDefault();
+                    filterSummary.hidden = false;
+                    firstInvalid.focus();
+                    firstInvalid.scrollIntoView({behavior: 'smooth', block: 'center'});
+                } else {
+                    amountMin.disabled = amountMode.value !== 'range';
+                    amountMax.disabled = amountMode.value !== 'range';
+                    yearInput.disabled = dateMode.value !== 'year';
+                    monthInput.disabled = dateMode.value !== 'month';
+                }
+            });
+
+            toggleFilterFields();
+        }
+
         var toast = document.getElementById('loan-exp-toast');
         if (toast) {
             window.setTimeout(function() {
