@@ -1,0 +1,13 @@
+Options -Indexes
+
+# Documents in this folder must never be served directly. Authenticated
+# access is handled by /public/expense_document.php after an admin password
+# confirmation.
+<IfModule mod_authz_core.c>
+    Require all denied
+</IfModule>
+
+<IfModule !mod_authz_core.c>
+    Order allow,deny
+    Deny from all
+</IfModule>

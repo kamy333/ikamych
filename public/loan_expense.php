@@ -289,16 +289,16 @@ if (!function_exists('loan_exp_int')) {
         return array_shift($row);
     }
 
-    function loan_exp_document_links($document)
+    function loan_exp_document_links($document, $expenseId)
     {
         $document = trim((string) $document);
-        if ($document === "") {
+        $expenseId = loan_exp_int($expenseId, 0);
+        if ($document === "" || $expenseId < 1 || !User::is_admin()) {
             return "";
         }
 
         $links = "";
         $folder = "/public/img/maman_document/";
-        $viewer = "/Inspinia/loan_exp_viewer.php";
         $documents = explode(",", $document);
 
         foreach ($documents as $file) {
@@ -316,11 +316,15 @@ if (!function_exists('loan_exp_int')) {
             }
 
             $safe_title = h($file);
+            $securePath = ExpenseDocumentVault::documentUrl('expense', $expenseId, $file);
+            if ($securePath === '') {
+                continue;
+            }
+
             if ($extension === "pdf") {
-                $links .= "<a href='" . h($full_path) . "' target='_blank' rel='noopener noreferrer'><button type='button' class='btn btn-danger btn-xs' data-toggle='tooltip' data-placement='left' title='{$safe_title}'><i class='fa fa-file-pdf-o'></i></button></a> ";
+                $links .= "<a href='" . h($securePath) . "' target='_blank' rel='noopener noreferrer'><button type='button' class='btn btn-danger btn-xs' data-toggle='tooltip' data-placement='left' title='{$safe_title}'><i class='fa fa-file-pdf-o'></i></button></a> ";
             } elseif (in_array($extension, ["jpg", "jpeg", "png"], true)) {
-                $href = $viewer . "?url=" . u($full_path);
-                $links .= "<a href='" . h($href) . "' target='_blank' rel='noopener noreferrer'><button type='button' class='btn btn-info btn-xs' data-toggle='tooltip' data-placement='left' title='{$safe_title}'><i class='fa fa-file-photo-o'></i></button></a> ";
+                $links .= "<a href='" . h($securePath) . "' target='_blank' rel='noopener noreferrer'><button type='button' class='btn btn-info btn-xs' data-toggle='tooltip' data-placement='left' title='{$safe_title}'><i class='fa fa-file-photo-o'></i></button></a> ";
             }
         }
 
@@ -838,7 +842,8 @@ $status_messages = [
         margin-bottom: 5px;
     }
 
-    .loan-exp-manage-people-trigger {
+    .loan-exp-manage-people-trigger,
+    .loan-exp-document-vault-trigger {
         padding: 0;
         border: 0;
         background: transparent;
@@ -849,9 +854,15 @@ $status_messages = [
     }
 
     .loan-exp-manage-people-trigger:hover,
-    .loan-exp-manage-people-trigger:focus {
+    .loan-exp-manage-people-trigger:focus,
+    .loan-exp-document-vault-trigger:hover,
+    .loan-exp-document-vault-trigger:focus {
         color: #075985;
         text-decoration: underline;
+    }
+
+    .loan-exp-document-vault-trigger.is-unlocked {
+        color: #15803d;
     }
 
     .loan-exp-compact-check {
@@ -1758,7 +1769,7 @@ $status_messages = [
 
     .loan-exp-page--public .loan-exp-toolbar {
         display: grid;
-        grid-template-columns: minmax(180px, 250px) minmax(140px, 180px) minmax(120px, 150px) minmax(110px, 130px) minmax(170px, 1fr);
+        grid-template-columns: minmax(180px, 250px) minmax(140px, 180px) minmax(120px, 150px) minmax(110px, 130px) minmax(170px, 190px) minmax(0, 1fr);
         gap: 14px;
         align-items: end;
         margin-bottom: 16px;
@@ -1875,7 +1886,7 @@ $status_messages = [
 
     @media (max-width: 1120px) {
         .loan-exp-page--public .loan-exp-toolbar {
-            grid-template-columns: minmax(160px, 1.4fr) repeat(3, minmax(110px, 1fr)) minmax(170px, 1.1fr);
+            grid-template-columns: minmax(160px, 1.4fr) repeat(3, minmax(110px, 1fr)) minmax(170px, 190px) minmax(0, 1fr);
         }
 
         .loan-exp-page--public .loan-exp-toolbar__search {
@@ -2050,7 +2061,18 @@ $status_messages = [
         <input type="hidden" name="date_month" value="<?php echo h($date_month_input); ?>">
 
         <div class="form-group loan-exp-filter--documents">
-            <label for="loan-doc">Documents</label>
+            <?php if (User::is_admin()) { ?>
+                <div class="loan-exp-filter-heading">
+                    <label for="loan-doc">Documents</label>
+                    <a class="loan-exp-document-vault-trigger<?php echo ExpenseDocumentVault::isUnlocked() ? " is-unlocked" : ""; ?>"
+                       href="<?php echo h(ExpenseDocumentVault::accessUrl(loan_exp_current_url(["loan_status" => null]))); ?>">
+                        <i class="fa <?php echo ExpenseDocumentVault::isUnlocked() ? "fa-unlock" : "fa-lock"; ?>" aria-hidden="true"></i>
+                        <?php echo ExpenseDocumentVault::isUnlocked() ? "Unlocked" : "Unlock"; ?>
+                    </a>
+                </div>
+            <?php } else { ?>
+                <label for="loan-doc">Documents</label>
+            <?php } ?>
             <select id="loan-doc" class="form-control" name="show_hide_doc">
                 <option<?php echo !$show_doc ? " selected" : ""; ?> value="hide_doc">Hide</option>
                 <option<?php echo $show_doc ? " selected" : ""; ?> value="show_doc">Show</option>
@@ -2174,7 +2196,7 @@ $status_messages = [
                             <td class="text-center"><?php echo (int) $row["cash"] === 1 ? "<strong><i class='fa fa-check' aria-hidden='true'></i></strong>" : "-"; ?></td>
                             <td><?php echo h($row["expense_type"]); ?></td>
                             <td><?php echo h($row["category"]); ?></td>
-                            <?php if ($show_doc) { ?><td><?php echo loan_exp_document_links($row["document"]); ?></td><?php } ?>
+                            <?php if ($show_doc) { ?><td><?php echo loan_exp_document_links($row["document"], $row["id"]); ?></td><?php } ?>
                             <?php if (User::is_admin()) { ?>
                                 <td class="text-center">
                                     <div class="loan-exp-row-actions">

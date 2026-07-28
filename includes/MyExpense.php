@@ -1004,14 +1004,18 @@ GROUP BY expense_type_id;";
     {
 
 //        $folder = "/public/img/maman_document/";
-        $href_img = "/Inspinia/loan_exp_viewer.php";
         $lnk = "";
 
-        if ($this->document) {
+        if ($this->document && User::is_admin()) {
             $file = trim($this->document);
 //            $full_path = $folder . $file;
 //            $full_path2 =$_SERVER["DOCUMENT_ROOT"]. $folder . $file;
             $documents = explode(",", $this->document);
+            $documentSource = ExpenseDocumentVault::sourceForExpense($this);
+
+            if ($documentSource === null) {
+                return '';
+            }
 
             $nbsp = str_repeat("&nbsp;", 1);
 
@@ -1030,17 +1034,20 @@ GROUP BY expense_type_id;";
 
                 if (file_exists($full_path2)) {
                     $safe_document = h($document);
-                    if ($ext == "pdf") {
-                        $safe_full_path = h($full_path);
+                    $secureDocumentUrl = ExpenseDocumentVault::documentUrl($documentSource, $this->id, $document);
 
-                        $lnk .= "<a href='{$safe_full_path}' target='_blank' rel='noopener noreferrer'><button type='button' class='btn btn-danger' data-toggle='tooltip' data-placement='left' title='{$safe_document}'><i class='fa fa-file-pdf-o'></i></button></a>";
+                    if ($secureDocumentUrl === '') {
+                        continue;
+                    }
+
+                    if ($ext == "pdf") {
+                        $safe_document_url = h($secureDocumentUrl);
+                        $lnk .= "<a href='{$safe_document_url}' target='_blank' rel='noopener noreferrer'><button type='button' class='btn btn-danger' data-toggle='tooltip' data-placement='left' title='{$safe_document}'><i class='fa fa-file-pdf-o'></i></button></a>";
 
 
                     } elseif ($ext == "jpg" || $ext == "jpeg" || $ext == "png") {
-                        $href = $href_img . "?url=" . u($folder . $document);
-                        $safe_href = h($href);
-
-                        $lnk .= "<a href='{$safe_href}' target='_blank' rel='noopener noreferrer'><button type='button' class='btn btn-info' data-toggle='tooltip' data-placement='left' title='{$safe_document}'><i class='fa fa-file-photo-o'></i></button></a>";
+                        $safe_document_url = h($secureDocumentUrl);
+                        $lnk .= "<a href='{$safe_document_url}' target='_blank' rel='noopener noreferrer'><button type='button' class='btn btn-info' data-toggle='tooltip' data-placement='left' title='{$safe_document}'><i class='fa fa-file-photo-o'></i></button></a>";
 
                     }
 

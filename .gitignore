@@ -92,6 +92,9 @@ vendor
 !/public/img/logo/ikamy-logo-blue-2.png
 !/public/img/logo/ikamy-logo-blue-4.png
 !/public/img/logo/logo square blue.png
+!/public/img/maman_document/
+/public/img/maman_document/*
+!/public/img/maman_document/.htaccess
 test2.sql
 Inspinia/css/patterns/
 Inspinia/css/plugins/images/
