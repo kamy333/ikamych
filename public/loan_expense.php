@@ -409,6 +409,49 @@ if (!function_exists('loan_exp_int')) {
         $database->query("DELETE FROM myexpense WHERE id='" . $database->escape_value($id) . "' LIMIT 1");
         return $database->affected_rows() === 1;
     }
+
+    function loan_exp_update_person_visibility($visiblePersonIds)
+    {
+        global $database;
+
+        if (!is_array($visiblePersonIds)) {
+            return false;
+        }
+
+        $requestedIds = [];
+        foreach ($visiblePersonIds as $personId) {
+            $personId = loan_exp_int($personId, 0);
+            if ($personId > 0) {
+                $requestedIds[$personId] = true;
+            }
+        }
+
+        if (!$requestedIds) {
+            return false;
+        }
+
+        $people = MyExpensePerson::find_all();
+        $knownIds = [];
+        foreach ($people as $personOption) {
+            $knownIds[(int) $personOption->id] = true;
+        }
+
+        $visibleIds = array_intersect_key($requestedIds, $knownIds);
+        if (!$visibleIds) {
+            return false;
+        }
+
+        foreach ($knownIds as $personId => $_known) {
+            $isClosed = isset($visibleIds[$personId]) ? 0 : 1;
+            $database->execute_prepared(
+                "UPDATE myexpense_person SET close_person=? WHERE id=? LIMIT 1",
+                [$isClosed, $personId],
+                "ii"
+            );
+        }
+
+        return true;
+    }
 }
 
 if (request_is_post() && isset($_POST["loan_exp_action"])) {
@@ -430,6 +473,8 @@ if (request_is_post() && isset($_POST["loan_exp_action"])) {
         $ok = loan_exp_save_expense($_POST, $actionId);
     } elseif ($action === "delete") {
         $ok = loan_exp_delete_expense($actionId);
+    } elseif ($action === "update_people_visibility") {
+        $ok = loan_exp_update_person_visibility($_POST["visible_person_ids"] ?? []);
     }
 
     loan_exp_redirect_back($ok ? $action . "_success" : $action . "_error", $_POST["return_to"] ?? null, $actionId ?: null);
@@ -498,7 +543,7 @@ $person_balances = [];
 
 if (User::is_admin()) {
     $person_balance_rows = loan_exp_fetch_rows(
-        "SELECT t2.id, t2.person_name, t2.`rank`,
+        "SELECT t2.id, t2.person_name, t2.`rank`, t2.close_person,
             COALESCE(SUM(
                 CASE
                     WHEN t1.id IS NULL THEN 0
@@ -509,7 +554,7 @@ if (User::is_admin()) {
         FROM myexpense_person AS t2
         LEFT JOIN myexpense AS t1 ON t1.person_id = t2.id {$person_balance_filters}
         LEFT JOIN currency AS t4 ON t1.ccy_id = t4.id
-        GROUP BY t2.id, t2.person_name, t2.`rank`
+        GROUP BY t2.id, t2.person_name, t2.`rank`, t2.close_person
         ORDER BY t2.`rank` ASC, t2.person_name ASC",
         $person_balance_params,
         $person_balance_types
@@ -519,9 +564,27 @@ if (User::is_admin()) {
         $person_balances[(int) $person_balance_row["id"]] = (float) $person_balance_row["balance_chf"];
     }
 
+    $currentPersonIsVisible = false;
+    $firstVisiblePersonId = null;
+    foreach ($person_balance_rows as $person_balance_row) {
+        if ((int) $person_balance_row["close_person"] === 0) {
+            $firstVisiblePersonId = $firstVisiblePersonId ?? (int) $person_balance_row["id"];
+            if ((int) $person_balance_row["id"] === (int) $p_id) {
+                $currentPersonIsVisible = true;
+            }
+        }
+    }
+
+    if (!$currentPersonIsVisible && $firstVisiblePersonId !== null) {
+        redirect_to(loan_exp_current_url([
+            "person_id" => $firstVisiblePersonId,
+            "page" => 1,
+        ]));
+    }
+
     if ($zero_balance_mode === "exclude" && round($person_balances[$p_id] ?? 0, 2) == 0.0) {
         foreach ($person_balance_rows as $person_balance_row) {
-            if (round((float) $person_balance_row["balance_chf"], 2) != 0.0) {
+            if ((int) $person_balance_row["close_person"] === 0 && round((float) $person_balance_row["balance_chf"], 2) != 0.0) {
                 redirect_to(loan_exp_current_url([
                     "person_id" => (int) $person_balance_row["id"],
                     "page" => 1,
@@ -655,6 +718,8 @@ $status_messages = [
     "update_error" => ["danger", $status_id ? "Could not edit ID {$status_id}. Please check the required fields." : "Expense item could not be updated. Please check the required fields."],
     "delete_success" => ["success", $status_id ? "Deleted ID {$status_id}." : "Expense item deleted."],
     "delete_error" => ["danger", $status_id ? "Could not delete ID {$status_id}." : "Expense item could not be deleted."],
+    "update_people_visibility_success" => ["success", "Expense person visibility updated."],
+    "update_people_visibility_error" => ["danger", "Choose at least one visible expense person."],
     "csrf" => ["danger", "Security token expired. Please try again."],
     "forbidden" => ["danger", "You do not have permission to save expense items."],
 ];
@@ -750,13 +815,90 @@ $status_messages = [
     }
 
     .loan-exp-filter--category,
-    .loan-exp-filter--documents,
-    .loan-exp-filter--zero-balance {
+    .loan-exp-filter--documents {
         flex: 0 0 150px;
     }
 
     .loan-exp-filter--per-page {
         flex: 0 0 115px;
+    }
+
+    .loan-exp-filter--zero-balance {
+        flex: 0 0 190px;
+    }
+
+    .loan-exp-filter-heading {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 8px;
+    }
+
+    .loan-exp-filter-heading label {
+        margin-bottom: 5px;
+    }
+
+    .loan-exp-manage-people-trigger {
+        padding: 0;
+        border: 0;
+        background: transparent;
+        color: #087f8c;
+        font-size: 11px;
+        font-weight: 800;
+        text-transform: none;
+    }
+
+    .loan-exp-manage-people-trigger:hover,
+    .loan-exp-manage-people-trigger:focus {
+        color: #075985;
+        text-decoration: underline;
+    }
+
+    .loan-exp-compact-check {
+        display: flex !important;
+        align-items: center;
+        gap: 9px;
+        min-height: 40px;
+        padding: 8px 11px;
+        margin: 0 !important;
+        border: 1px solid #cbd5e1;
+        border-radius: 6px;
+        background: #ffffff;
+        color: #334155 !important;
+        font-size: 12px !important;
+        line-height: 1.2;
+        text-transform: none !important;
+        cursor: pointer;
+    }
+
+    .loan-exp-compact-check input {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        opacity: 0;
+    }
+
+    .loan-exp-compact-check__box {
+        display: inline-flex;
+        flex: 0 0 20px;
+        align-items: center;
+        justify-content: center;
+        width: 20px;
+        height: 20px;
+        border: 2px solid #94a3b8;
+        border-radius: 5px;
+        background: #ffffff;
+        color: transparent;
+    }
+
+    .loan-exp-compact-check input:checked + .loan-exp-compact-check__box {
+        border-color: #0f766e;
+        background: #0f766e;
+        color: #ffffff;
+    }
+
+    .loan-exp-compact-check input:focus + .loan-exp-compact-check__box {
+        box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.18);
     }
 
     .loan-exp-toolbar__search {
@@ -1215,6 +1357,99 @@ $status_messages = [
         width: 680px !important;
     }
 
+    .loan-exp-people-modal > .modal-dialog {
+        width: 760px !important;
+    }
+
+    .loan-exp-people-modal .modal-body {
+        padding-bottom: 8px;
+    }
+
+    .loan-exp-people-intro {
+        margin: 0 0 14px;
+        color: #64748b;
+        font-size: 13px;
+        line-height: 1.5;
+    }
+
+    .loan-exp-people-list {
+        overflow: hidden;
+        border: 1px solid #dbe4ee;
+        border-radius: 8px;
+    }
+
+    .loan-exp-people-list.has-error {
+        border-color: #dc2626;
+        box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.1);
+    }
+
+    .loan-exp-person-row {
+        display: grid;
+        grid-template-columns: minmax(220px, 1fr) minmax(150px, auto) 84px;
+        align-items: center;
+        gap: 14px;
+        min-height: 50px;
+        padding: 9px 13px;
+        border-bottom: 1px solid #e2e8f0;
+        background: #ffffff;
+    }
+
+    .loan-exp-person-row:last-child {
+        border-bottom: 0;
+    }
+
+    .loan-exp-person-visibility {
+        display: flex !important;
+        align-items: center;
+        gap: 10px;
+        margin: 0 !important;
+        color: #0f172a !important;
+        font-size: 13px !important;
+        line-height: 1.25;
+        text-transform: none !important;
+        cursor: pointer;
+    }
+
+    .loan-exp-person-visibility input {
+        width: 18px;
+        height: 18px;
+        margin: 0;
+        accent-color: #0f766e;
+    }
+
+    .loan-exp-person-balance {
+        color: #334155;
+        font-variant-numeric: tabular-nums;
+        font-weight: 800;
+        text-align: right;
+        white-space: nowrap;
+    }
+
+    .loan-exp-person-state {
+        padding: 4px 8px;
+        border-radius: 999px;
+        background: #f1f5f9;
+        color: #64748b;
+        font-size: 11px;
+        font-weight: 800;
+        text-align: center;
+    }
+
+    .loan-exp-person-state.is-visible {
+        background: #dcfce7;
+        color: #166534;
+    }
+
+    .loan-exp-people-modal .modal-footer {
+        justify-content: space-between;
+    }
+
+    .loan-exp-people-modal__actions {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
     .loan-exp-filter-modal .modal-body {
         padding-bottom: 8px;
     }
@@ -1330,6 +1565,19 @@ $status_messages = [
 
         .loan-exp-filter-grid {
             grid-template-columns: 1fr;
+        }
+
+        .loan-exp-person-row {
+            grid-template-columns: 1fr auto;
+        }
+
+        .loan-exp-person-state {
+            display: none;
+        }
+
+        .loan-exp-people-modal .modal-footer,
+        .loan-exp-people-modal__actions {
+            display: block;
         }
 
         .loan-exp-modal > .modal-dialog {
@@ -1510,7 +1758,7 @@ $status_messages = [
 
     .loan-exp-page--public .loan-exp-toolbar {
         display: grid;
-        grid-template-columns: minmax(180px, 250px) minmax(140px, 180px) minmax(120px, 150px) minmax(110px, 130px) minmax(280px, 1fr);
+        grid-template-columns: minmax(180px, 250px) minmax(140px, 180px) minmax(120px, 150px) minmax(110px, 130px) minmax(170px, 1fr);
         gap: 14px;
         align-items: end;
         margin-bottom: 16px;
@@ -1548,6 +1796,7 @@ $status_messages = [
 
     .loan-exp-page--public .loan-exp-toolbar__search {
         position: relative;
+        grid-column: 1 / -1;
     }
 
     .loan-exp-page--public .loan-exp-search-row {
@@ -1626,7 +1875,7 @@ $status_messages = [
 
     @media (max-width: 1120px) {
         .loan-exp-page--public .loan-exp-toolbar {
-            grid-template-columns: repeat(4, minmax(0, 1fr));
+            grid-template-columns: minmax(160px, 1.4fr) repeat(3, minmax(110px, 1fr)) minmax(170px, 1.1fr);
         }
 
         .loan-exp-page--public .loan-exp-toolbar__search {
@@ -1755,9 +2004,20 @@ $status_messages = [
     <form class="loan-exp-toolbar" method="get" action="<?php echo h($_SERVER['PHP_SELF']); ?>">
         <?php if (User::is_admin()) { ?>
             <div class="form-group loan-exp-filter--person">
-                <label for="loan-person">Person</label>
+                <div class="loan-exp-filter-heading">
+                    <label for="loan-person">Person</label>
+                    <button class="loan-exp-manage-people-trigger" type="button"
+                            data-toggle="modal" data-target="#loanExpensePeopleModal"
+                            data-loan-exp-target="#loanExpensePeopleModal"
+                            onclick="return window.loanExpOpenModalFallback ? window.loanExpOpenModalFallback('#loanExpensePeopleModal') : true;">
+                        <i class="fa fa-users" aria-hidden="true"></i> Manage
+                    </button>
+                </div>
                 <select id="loan-person" class="form-control" name="person_id" onchange="this.form.submit();">
                     <?php foreach ($person_balance_rows as $person_balance_row) {
+                        if ((int) $person_balance_row["close_person"] !== 0) {
+                            continue;
+                        }
                         $person_balance = (float) $person_balance_row["balance_chf"];
                         if ($zero_balance_mode === "exclude" && round($person_balance, 2) == 0.0) {
                             continue;
@@ -1766,13 +2026,6 @@ $status_messages = [
                         $person_option_label = $person_balance_row["person_name"] . " — CHF " . number_format($person_balance, 2);
                         echo "<option{$selected} value='" . h($person_balance_row["id"]) . "'>" . h($person_option_label) . "</option>";
                     } ?>
-                </select>
-            </div>
-            <div class="form-group loan-exp-filter--zero-balance">
-                <label for="loan-zero-balance">Zero balances</label>
-                <select id="loan-zero-balance" class="form-control" name="zero_balance" onchange="this.form.submit();">
-                    <option value="include"<?php echo $zero_balance_mode === "include" ? " selected" : ""; ?>>Include</option>
-                    <option value="exclude"<?php echo $zero_balance_mode === "exclude" ? " selected" : ""; ?>>Exclude</option>
                 </select>
             </div>
         <?php } ?>
@@ -1813,6 +2066,18 @@ $status_messages = [
                 } ?>
             </select>
         </div>
+
+        <?php if (User::is_admin()) { ?>
+            <div class="form-group loan-exp-filter--zero-balance">
+                <label for="loan-zero-balance">Accounts</label>
+                <label class="loan-exp-compact-check" for="loan-zero-balance">
+                    <input id="loan-zero-balance" type="checkbox" name="zero_balance" value="exclude"
+                           onchange="this.form.submit();"<?php echo $zero_balance_mode === "exclude" ? " checked" : ""; ?>>
+                    <span class="loan-exp-compact-check__box" aria-hidden="true"><i class="fa fa-check"></i></span>
+                    <span>Hide zero balances</span>
+                </label>
+            </div>
+        <?php } ?>
 
         <div class="form-group loan-exp-toolbar__search">
             <label for="loan-search">Search</label>
@@ -2043,6 +2308,50 @@ $status_messages = [
 </div>
 
 <?php if (User::is_admin()) { ?>
+    <div class="modal fade loan-exp-modal loan-exp-people-modal" id="loanExpensePeopleModal" tabindex="-1" role="dialog" aria-labelledby="loanExpensePeopleTitle" aria-describedby="loanExpensePeopleDescription">
+        <div class="modal-dialog" role="document">
+            <form class="modal-content" id="loan-exp-people-form" method="post" action="<?php echo h($_SERVER['PHP_SELF']); ?>" novalidate>
+                <input type="hidden" name="csrf_tokenloan_exp" value="<?php echo h($csrf_token_loan_exp); ?>">
+                <input type="hidden" name="loan_exp_action" value="update_people_visibility">
+                <input type="hidden" name="return_to" value="<?php echo h(loan_exp_current_url(["loan_status" => null])); ?>">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="return window.loanExpCloseButton ? window.loanExpCloseButton(this) : true;"><span aria-hidden="true">&times;</span></button>
+                    <p class="loan-exp-modal__eyebrow">Expense people</p>
+                    <h4 class="modal-title" id="loanExpensePeopleTitle">Choose who appears</h4>
+                </div>
+                <div class="modal-body">
+                    <p class="loan-exp-people-intro" id="loanExpensePeopleDescription">Uncheck old or closed accounts to remove them from the Person list. Their expenses and history are not deleted.</p>
+                    <div class="loan-exp-filter-error-summary" id="loan-exp-people-error-summary" role="alert" hidden>Please keep at least one person visible.</div>
+                    <div class="loan-exp-people-list" id="loan-exp-people-list">
+                        <?php foreach ($person_balance_rows as $person_balance_row) {
+                            $personIsVisible = (int) $person_balance_row["close_person"] === 0;
+                            $personBalance = (float) $person_balance_row["balance_chf"];
+                        ?>
+                            <div class="loan-exp-person-row">
+                                <label class="loan-exp-person-visibility">
+                                    <input class="loan-exp-person-visibility-input" type="checkbox" name="visible_person_ids[]" value="<?php echo h($person_balance_row["id"]); ?>"<?php echo $personIsVisible ? " checked" : ""; ?>>
+                                    <span><?php echo h($person_balance_row["person_name"]); ?></span>
+                                </label>
+                                <span class="loan-exp-person-balance <?php echo $personBalance < 0 ? "loan-exp-negative" : ($personBalance > 0 ? "loan-exp-positive" : ""); ?>">CHF <?php echo h(number_format($personBalance, 2)); ?></span>
+                                <span class="loan-exp-person-state<?php echo $personIsVisible ? " is-visible" : ""; ?>" data-visible-label="Visible" data-hidden-label="Hidden"><?php echo $personIsVisible ? "Visible" : "Hidden"; ?></span>
+                            </div>
+                        <?php } ?>
+                    </div>
+                    <span class="loan-exp-inline-error" id="loan-exp-people-error"></span>
+                </div>
+                <div class="modal-footer">
+                    <a class="btn btn-default" href="/public/admin/crud/ajax/manage_ajax.php?class_name=MyExpensePerson">
+                        <i class="fa fa-table" aria-hidden="true"></i> Open full table
+                    </a>
+                    <div class="loan-exp-people-modal__actions">
+                        <button type="button" class="btn btn-default" data-dismiss="modal" onclick="return window.loanExpCloseButton ? window.loanExpCloseButton(this) : true;">Cancel</button>
+                        <button type="submit" class="btn btn-primary"><i class="fa fa-check" aria-hidden="true"></i> Save visibility</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <div class="modal fade loan-exp-modal" id="loanExpenseCreateModal" tabindex="-1" role="dialog" aria-labelledby="loanExpenseCreateTitle">
         <div class="modal-dialog" role="document">
             <form class="modal-content" method="post" action="<?php echo h($_SERVER['PHP_SELF']); ?>">
@@ -2182,6 +2491,58 @@ $status_messages = [
                 url.hash = fragment || '';
                 return url.pathname + url.search + url.hash;
             };
+
+            var peopleForm = document.getElementById('loan-exp-people-form');
+            if (peopleForm) {
+                var peopleList = document.getElementById('loan-exp-people-list');
+                var peopleSummary = document.getElementById('loan-exp-people-error-summary');
+                var peopleError = document.getElementById('loan-exp-people-error');
+                var peopleCheckboxes = Array.prototype.slice.call(peopleForm.querySelectorAll('.loan-exp-person-visibility-input'));
+
+                var refreshPeopleStates = function() {
+                    peopleCheckboxes.forEach(function(checkbox) {
+                        var row = checkbox.closest('.loan-exp-person-row');
+                        var state = row ? row.querySelector('.loan-exp-person-state') : null;
+                        if (!state) {
+                            return;
+                        }
+                        state.textContent = checkbox.checked ? state.dataset.visibleLabel : state.dataset.hiddenLabel;
+                        state.classList.toggle('is-visible', checkbox.checked);
+                    });
+                };
+
+                var clearPeopleError = function() {
+                    peopleList.classList.remove('has-error');
+                    peopleSummary.hidden = true;
+                    peopleError.textContent = '';
+                };
+
+                peopleCheckboxes.forEach(function(checkbox) {
+                    checkbox.addEventListener('change', function() {
+                        clearPeopleError();
+                        refreshPeopleStates();
+                    });
+                });
+
+                peopleForm.addEventListener('submit', function(event) {
+                    clearPeopleError();
+                    var firstVisible = peopleCheckboxes.some(function(checkbox) {
+                        return checkbox.checked;
+                    });
+
+                    if (!firstVisible) {
+                        event.preventDefault();
+                        peopleList.classList.add('has-error');
+                        peopleSummary.hidden = false;
+                        peopleError.textContent = 'Select at least one person to keep in the expense list.';
+                        if (peopleCheckboxes[0]) {
+                            peopleCheckboxes[0].focus();
+                        }
+                    }
+                });
+
+                refreshPeopleStates();
+            }
 
             document.querySelectorAll('.js-loan-exp-edit').forEach(function(button) {
                 button.addEventListener('click', function(event) {
