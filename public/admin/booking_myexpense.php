@@ -26,9 +26,43 @@ try {
     $document = trim((string) ($_GET['document'] ?? ''));
     $person_name = trim((string) ($_GET['personName'] ?? ''));
     $expense_type_name = trim((string) ($_GET['expensetype'] ?? ''));
-    $ccy_name = strtoupper(trim((string) ($_GET['ccy'] ?? 'CHF')));
+    // MODIFICATION : accepte l'ancien paramètre "ccy" ainsi que le paramètre
+    // "currency" envoyé par l'application Kamy Utility.
+    $ccy_name = strtoupper(trim((string) (
+        $_GET['ccy'] ?? $_GET['currency'] ?? 'CHF'
+    )));
     $rate = isset($_GET['rate']) ? (float) $_GET['rate'] : 1;
 
+    // MODIFICATION : lit et valide le toggle Kamy/MAM envoyé par l'application.
+    // 0 dirige vers MyExpense (Kamy) ; 1 vers MyExpenseMumPost (MAM).
+    $is_mum_kamy = filter_var(
+        $_GET['isMumKamy'] ?? null,
+        FILTER_VALIDATE_INT
+    );
+
+    if (
+        $is_mum_kamy === false ||
+        !in_array($is_mum_kamy, [0, 1], true)
+    ) {
+        throw new Exception("Invalid isMumKamy value.");
+    }
+
+    // MODIFICATION : utilise la date choisie dans Kamy Utility au lieu de la
+    // remplacer silencieusement par la date actuelle du serveur.
+    $expense_date_raw = trim((string) ($_GET['expense_date'] ?? ''));
+    $expense_date = DateTimeImmutable::createFromFormat(
+        '!Y-m-d',
+        $expense_date_raw
+    );
+
+    if (
+        $expense_date === false ||
+        $expense_date->format('Y-m-d') !== $expense_date_raw
+    ) {
+        throw new Exception(
+            "Invalid expense_date; expected YYYY-MM-DD."
+        );
+    }
     if ($person_name === '' || $expense_type_name === '' || $amount <= 0) {
         throw new Exception("Missing or invalid required parameters (personName, expensetype, amount).");
     }
@@ -60,7 +94,16 @@ try {
     }
     $ccy_id = $currency->id;
 
-    $expense = new MyExpense();
+    // MODIFICATION : choisit le modèle de base de données selon le toggle.
+    // MyExpense écrit dans "myexpense" ; MyExpenseMumPost écrit dans
+    // "myexpensemumpost".
+    if ($is_mum_kamy === 1) {
+        $expense = new MyExpenseMumPost();
+        $target_account = 'mum_post';
+    } else {
+        $expense = new MyExpense();
+        $target_account = 'kamy';
+    }
     $expense->amount = $amount;
     $expense->cash = $is_cash;
     $expense->comment = $comment;
@@ -69,14 +112,22 @@ try {
     $expense->expense_type_id = $expense_type_id;
     $expense->ccy_id = $ccy_id;
     $expense->rate = $rate;
-    $expense->expense_date = date('Y-m-d H:i:s');
+    // MODIFICATION : enregistre la date validée choisie dans l'application.
+    // Le "!" du format initialise l'heure à 00:00:00.
+    $expense->expense_date = $expense_date->format('Y-m-d H:i:s');
     $expense->modification_time = date('Y-m-d H:i:s');
 
     if ($expense->save()) {
         http_response_code(200);
         $response['status'] = 'success';
         $response['message'] = 'Booking created successfully.';
-        $response['data'] = ['id' => $expense->id];
+        // MODIFICATION : renvoie le compte et la date utilisés afin de
+        // faciliter leur vérification depuis Kamy Utility.
+        $response['data'] = [
+            'id' => $expense->id,
+            'account' => $target_account,
+            'expense_date' => $expense->expense_date
+        ];
     } else {
         throw new Exception("Failed to save the data to the database.");
     }

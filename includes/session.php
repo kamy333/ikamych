@@ -40,19 +40,22 @@ class Session
     function __construct()
     {
         // Set session parameters
-        ini_set('session.cookie_lifetime', 86400); // 24 hours in seconds
-        ini_set('session.gc_maxlifetime', 86400);  // 24 hours in seconds
+        // ini_set('session.cookie_lifetime', 86400); // 24 hours in seconds
+        // ini_set('session.gc_maxlifetime', 86400);  // 24 hours in seconds
+
+        // Lines 43–44
+        ini_set('session.cookie_lifetime', 1209600);
+        ini_set('session.gc_maxlifetime', 1209600);
 
 
-//      session_save_path(SESSION_PATH);
-//      session_name('rajah');
+        //      session_save_path(SESSION_PATH);
+        //      session_name('rajah');
         session_start();
         $this->visitor_count();
         $this->check_message();
         $this->check_login();
         $this->check_info();
         $this->set_referrer();
-
     }
 
 
@@ -77,17 +80,17 @@ class Session
         $this->last_login = null;
         $this->logged_in = false;
         $_SESSION = [];
-//        if (isset($_COOKIE[session_name()])) {
-//            session_set_cookie_params(session_name(), '', time() - 4200, '/');
-//        }
+        //        if (isset($_COOKIE[session_name()])) {
+        //            session_set_cookie_params(session_name(), '', time() - 4200, '/');
+        //        }
 
-//        new in php8
-//        $params = session_get_cookie_params();
-//        $params['lifetime'] = time() - 4200;
-//        $params['path'] = '/';
-//        $params['secure'] = false;
-//        $params['httponly'] = false;
-//        session_set_cookie_params($params['lifetime'], $params['path'], $params['domain'], $params['secure'], $params['httponly']);
+        //        new in php8
+        //        $params = session_get_cookie_params();
+        //        $params['lifetime'] = time() - 4200;
+        //        $params['path'] = '/';
+        //        $params['secure'] = false;
+        //        $params['httponly'] = false;
+        //        session_set_cookie_params($params['lifetime'], $params['path'], $params['domain'], $params['secure'], $params['httponly']);
 
 
 
@@ -125,10 +128,11 @@ class Session
         }
     }
 
-// Has too much time passed since the last login?
+    // Has too much time passed since the last login?
     private function last_login_is_recent()
     {
-        $max_elapsed = 60 * 60 * 24; // 1 day
+        // $max_elapsed = 60 * 60 * 24; // 1 day
+        $max_elapsed = 60 * 60 * 24 * 14; // 14 days
         // return false if value is not set
         if (!isset($_SESSION['last_login'])) {
             return false;
@@ -140,7 +144,7 @@ class Session
         }
     }
 
-// Should the session be considered valid?
+    // Should the session be considered valid?
     private function is_session_valid()
     {
         $check_ip = true;
@@ -169,8 +173,8 @@ class Session
     {
         // database should find user based on username/password
         if ($user) {
-//      $this->user_id = $_SESSION['user_id'] = $user->id;
-//      $this->logged_in = true;
+            //      $this->user_id = $_SESSION['user_id'] = $user->id;
+            //      $this->logged_in = true;
 
             // Regenerate session ID to invalidate the old one.
             // Super important to prevent session hijacking/fixation.
@@ -184,7 +188,6 @@ class Session
             $this->ip = $_SESSION['ip'] = $_SERVER['REMOTE_ADDR'];
             $this->user_agent = $_SESSION['user_agent'] = $_SERVER['HTTP_USER_AGENT'];
             $this->last_login = $_SESSION['last_login'] = time();
-
         }
     }
 
@@ -243,7 +246,6 @@ class Session
         } else {
             $this->message = "";
         }
-
     }
 
 
@@ -276,7 +278,6 @@ class Session
         } else {
             $this->last_login = null;
         }
-
     }
     /*	private function check_message() {
             // Is there a message stored in the session?
@@ -306,7 +307,7 @@ class Session
     }
 
 
-// If session is not valid, end and redirect to login page.
+    // If session is not valid, end and redirect to login page.
     function confirm_session_is_valid()
     {
         global $Nav;
@@ -322,16 +323,13 @@ class Session
     }
 
     // Actions to preform before giving access to any
-// access-restricted page.
+    // access-restricted page.
     function confirmation_protected_page()
     {
         $this->confirm_user_logged_in();
         $this->confirm_session_is_valid();
     }
-
 }
 
 $session = new Session();
 $message = $session->message();
-
-?>
