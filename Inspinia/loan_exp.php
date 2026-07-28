@@ -27,6 +27,44 @@ if (!function_exists('loan_exp_int')) {
         return (float) $value;
     }
 
+    function loan_exp_sql_filters($alias, $category, $amountFilter, $amountMin, $amountMax, $datePeriod, $dateYear, $dateMonth, array &$params, &$types)
+    {
+        $sql = "";
+
+        if ($category !== "All") {
+            $sql .= " AND {$alias}.expense_type_id IN ($category) ";
+        }
+
+        if ($amountFilter === "negative") {
+            $sql .= " AND {$alias}.amount < 0 ";
+        } elseif ($amountFilter === "range") {
+            if ($amountMin !== null) {
+                $sql .= " AND {$alias}.amount >= ? ";
+                $params[] = $amountMin;
+                $types .= "d";
+            }
+            if ($amountMax !== null) {
+                $sql .= " AND {$alias}.amount <= ? ";
+                $params[] = $amountMax;
+                $types .= "d";
+            }
+        }
+
+        if ($datePeriod === "year" && $dateYear !== null) {
+            $sql .= " AND {$alias}.expense_date >= ? AND {$alias}.expense_date < ? ";
+            $params[] = sprintf('%04d-01-01', $dateYear);
+            $params[] = sprintf('%04d-01-01', $dateYear + 1);
+            $types .= "ss";
+        } elseif ($datePeriod === "month" && $dateMonth instanceof DateTime) {
+            $params[] = $dateMonth->format('Y-m-01');
+            $params[] = (clone $dateMonth)->modify('+1 month')->format('Y-m-01');
+            $sql .= " AND {$alias}.expense_date >= ? AND {$alias}.expense_date < ? ";
+            $types .= "ss";
+        }
+
+        return $sql;
+    }
+
     function loan_exp_clean_text($value, $max = 1000)
     {
         return substr(trim((string) $value), 0, $max);
@@ -410,13 +448,6 @@ foreach ($persons as $person_option) {
     }
 }
 
-$myperson = MyExpensePerson::find_by_id($p_id);
-if (!$myperson) {
-    $session->message("Requested expense person was not found.");
-    redirect_to('../index.php');
-}
-
-$person = $myperson->person_name;
 $sort = MyExpense::normalize_sort_direction($_GET["sort"] ?? "DESC");
 $order_by = loan_exp_order_value($_GET["order_by"] ?? "id");
 $order_options = loan_exp_order_options();
@@ -443,6 +474,68 @@ $date_month = DateTime::createFromFormat('!Y-m', $date_month_input);
 if (!$date_month || $date_month->format('Y-m') !== $date_month_input) {
     $date_month = null;
 }
+$zero_balance_mode = (string) ($_GET["zero_balance"] ?? "include");
+$zero_balance_mode = User::is_admin() && $zero_balance_mode === "exclude" ? "exclude" : "include";
+
+$person_balance_params = [];
+$person_balance_types = "";
+$person_balance_filters = loan_exp_sql_filters(
+    "t1",
+    $cat,
+    $amount_filter,
+    $amount_min,
+    $amount_max,
+    $date_period,
+    $date_year,
+    $date_month,
+    $person_balance_params,
+    $person_balance_types
+);
+$person_balance_rows = [];
+$person_balances = [];
+
+if (User::is_admin()) {
+    $person_balance_rows = loan_exp_fetch_rows(
+        "SELECT t2.id, t2.person_name, t2.`rank`,
+            COALESCE(SUM(
+                CASE
+                    WHEN t1.id IS NULL THEN 0
+                    WHEN t4.rate_side = 'Multiply' THEN t1.amount * t1.rate
+                    ELSE t1.amount / t1.rate
+                END
+            ), 0) AS balance_chf
+        FROM myexpense_person AS t2
+        LEFT JOIN myexpense AS t1 ON t1.person_id = t2.id {$person_balance_filters}
+        LEFT JOIN currency AS t4 ON t1.ccy_id = t4.id
+        GROUP BY t2.id, t2.person_name, t2.`rank`
+        ORDER BY t2.`rank` ASC, t2.person_name ASC",
+        $person_balance_params,
+        $person_balance_types
+    );
+
+    foreach ($person_balance_rows as $person_balance_row) {
+        $person_balances[(int) $person_balance_row["id"]] = (float) $person_balance_row["balance_chf"];
+    }
+
+    if ($zero_balance_mode === "exclude" && round($person_balances[$p_id] ?? 0, 2) == 0.0) {
+        foreach ($person_balance_rows as $person_balance_row) {
+            if (round((float) $person_balance_row["balance_chf"], 2) != 0.0) {
+                redirect_to(loan_exp_current_url([
+                    "person_id" => (int) $person_balance_row["id"],
+                    "page" => 1,
+                ]));
+            }
+        }
+    }
+}
+
+$myperson = MyExpensePerson::find_by_id($p_id);
+if (!$myperson) {
+    $session->message("Requested expense person was not found.");
+    redirect_to('../index.php');
+}
+
+$person = $myperson->person_name;
 $page = loan_exp_int($_GET["page"] ?? 1, 1);
 $per_page = loan_exp_int($_GET["per_page"] ?? 25, 25);
 $per_page = in_array($per_page, [10, 25, 50, 100], true) ? $per_page : 25;
@@ -456,39 +549,18 @@ $expense_types = MyExpenseType::find_by_sql("SELECT * FROM myexpense_type ORDER 
 $where = " WHERE t1.person_id=? ";
 $params = [$p_id];
 $types = "i";
-
-if ($cat !== "All") {
-    $where .= " AND t1.expense_type_id IN ($cat) ";
-}
-
-if ($amount_filter === "negative") {
-    $where .= " AND t1.amount < 0 ";
-} elseif ($amount_filter === "range") {
-    if ($amount_min !== null) {
-        $where .= " AND t1.amount >= ? ";
-        $params[] = $amount_min;
-        $types .= "d";
-    }
-    if ($amount_max !== null) {
-        $where .= " AND t1.amount <= ? ";
-        $params[] = $amount_max;
-        $types .= "d";
-    }
-}
-
-if ($date_period === "year" && $date_year !== null) {
-    $where .= " AND t1.expense_date >= ? AND t1.expense_date < ? ";
-    $params[] = sprintf('%04d-01-01', $date_year);
-    $params[] = sprintf('%04d-01-01', $date_year + 1);
-    $types .= "ss";
-} elseif ($date_period === "month" && $date_month !== null) {
-    $month_start = $date_month->format('Y-m-01');
-    $month_end = (clone $date_month)->modify('+1 month')->format('Y-m-01');
-    $where .= " AND t1.expense_date >= ? AND t1.expense_date < ? ";
-    $params[] = $month_start;
-    $params[] = $month_end;
-    $types .= "ss";
-}
+$where .= loan_exp_sql_filters(
+    "t1",
+    $cat,
+    $amount_filter,
+    $amount_min,
+    $amount_max,
+    $date_period,
+    $date_year,
+    $date_month,
+    $params,
+    $types
+);
 
 $advanced_filter_labels = [];
 if ($amount_filter === "negative") {
@@ -587,6 +659,18 @@ $status_messages = [
 ?>
 
 <style>
+    html {
+        height: 100% !important;
+        min-height: 100%;
+    }
+
+    body:not(.modal-open) {
+        height: auto !important;
+        min-height: 100%;
+        overflow-x: clip !important;
+        overflow-y: visible !important;
+    }
+
     .loan-exp-page {
         width: calc(100vw - 56px);
         max-width: 1760px;
@@ -664,7 +748,8 @@ $status_messages = [
     }
 
     .loan-exp-filter--category,
-    .loan-exp-filter--documents {
+    .loan-exp-filter--documents,
+    .loan-exp-filter--zero-balance {
         flex: 0 0 150px;
     }
 
@@ -747,6 +832,22 @@ $status_messages = [
         border-radius: 999px;
         background: #eff6ff;
         color: #1e3a8a;
+    }
+
+    .loan-exp-clear-advanced {
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        min-height: 27px;
+        color: #b91c1c;
+        font-weight: 800;
+        text-decoration: none;
+    }
+
+    .loan-exp-clear-advanced:hover,
+    .loan-exp-clear-advanced:focus {
+        color: #7f1d1d;
+        text-decoration: underline;
     }
 
     .loan-exp-table-card {
@@ -1432,6 +1533,7 @@ $status_messages = [
     .loan-exp-page--public .loan-exp-filter--person,
     .loan-exp-page--public .loan-exp-filter--category,
     .loan-exp-page--public .loan-exp-filter--documents,
+    .loan-exp-page--public .loan-exp-filter--zero-balance,
     .loan-exp-page--public .loan-exp-filter--per-page,
     .loan-exp-page--public .loan-exp-toolbar__search {
         flex: none;
@@ -1649,8 +1751,23 @@ $status_messages = [
         <?php if (User::is_admin()) { ?>
             <div class="form-group loan-exp-filter--person">
                 <label for="loan-person">Person</label>
-                <select id="loan-person" class="form-control" name="person_id">
-                    <?php echo loan_exp_select_options($expense_people, "id", "person_name", $p_id); ?>
+                <select id="loan-person" class="form-control" name="person_id" onchange="this.form.submit();">
+                    <?php foreach ($person_balance_rows as $person_balance_row) {
+                        $person_balance = (float) $person_balance_row["balance_chf"];
+                        if ($zero_balance_mode === "exclude" && round($person_balance, 2) == 0.0) {
+                            continue;
+                        }
+                        $selected = (int) $person_balance_row["id"] === (int) $p_id ? " selected" : "";
+                        $person_option_label = $person_balance_row["person_name"] . " — CHF " . number_format($person_balance, 2);
+                        echo "<option{$selected} value='" . h($person_balance_row["id"]) . "'>" . h($person_option_label) . "</option>";
+                    } ?>
+                </select>
+            </div>
+            <div class="form-group loan-exp-filter--zero-balance">
+                <label for="loan-zero-balance">Zero balances</label>
+                <select id="loan-zero-balance" class="form-control" name="zero_balance" onchange="this.form.submit();">
+                    <option value="include"<?php echo $zero_balance_mode === "include" ? " selected" : ""; ?>>Include</option>
+                    <option value="exclude"<?php echo $zero_balance_mode === "exclude" ? " selected" : ""; ?>>Exclude</option>
                 </select>
             </div>
         <?php } ?>
@@ -1706,7 +1823,18 @@ $status_messages = [
                         <span class="loan-exp-filter-count" aria-label="<?php echo h($advanced_filter_count); ?> active advanced filters"><?php echo h($advanced_filter_count); ?></span>
                     <?php } ?>
                 </button>
-                <a class="btn btn-default" href="<?php echo h(loan_exp_current_url(["q" => null, "page" => 1, "loan_status" => null])); ?>">Clear</a>
+                <a class="btn btn-default" href="<?php echo h(loan_exp_current_url([
+                    "q" => null,
+                    "amount_filter" => null,
+                    "amount_min" => null,
+                    "amount_max" => null,
+                    "date_period" => null,
+                    "date_year" => null,
+                    "date_month" => null,
+                    "zero_balance" => null,
+                    "page" => 1,
+                    "loan_status" => null,
+                ])); ?>"><i class="fa fa-times" aria-hidden="true"></i> Clear filters</a>
             </div>
             <div class="loan-exp-search-status" id="loan-search-status" aria-live="polite"></div>
         </div>
@@ -1716,6 +1844,16 @@ $status_messages = [
                 <?php foreach ($advanced_filter_labels as $filter_label) { ?>
                     <span class="loan-exp-active-filter"><?php echo h($filter_label); ?></span>
                 <?php } ?>
+                <a class="loan-exp-clear-advanced" href="<?php echo h(loan_exp_current_url([
+                    "amount_filter" => null,
+                    "amount_min" => null,
+                    "amount_max" => null,
+                    "date_period" => null,
+                    "date_year" => null,
+                    "date_month" => null,
+                    "page" => 1,
+                    "loan_status" => null,
+                ])); ?>"><i class="fa fa-times-circle" aria-hidden="true"></i> Remove advanced filters</a>
             </div>
         <?php } ?>
     </form>
@@ -1821,6 +1959,7 @@ $status_messages = [
             <input type="hidden" name="per_page" value="<?php echo h($per_page); ?>">
             <input type="hidden" name="order_by" value="<?php echo h($order_by); ?>">
             <input type="hidden" name="sort" value="<?php echo h($sort); ?>">
+            <input type="hidden" name="zero_balance" value="<?php echo h($zero_balance_mode); ?>">
             <?php if ($search !== "") { ?>
                 <input type="hidden" name="q" value="<?php echo h($search); ?>">
             <?php } ?>
@@ -2185,6 +2324,35 @@ $status_messages = [
     };
 
     document.addEventListener('DOMContentLoaded', function() {
+        var expensePage = document.querySelector('.loan-exp-page');
+
+        if (expensePage) {
+            expensePage.addEventListener('wheel', function(event) {
+                if (event.ctrlKey || event.metaKey || document.body.classList.contains('modal-open')) {
+                    return;
+                }
+
+                var delta = event.deltaY;
+                if (!delta || Math.abs(delta) < Math.abs(event.deltaX)) {
+                    return;
+                }
+
+                if (event.deltaMode === 1) {
+                    delta *= 16;
+                } else if (event.deltaMode === 2) {
+                    delta *= window.innerHeight;
+                }
+
+                var maxScroll = Math.max(document.documentElement.scrollHeight - window.innerHeight, 0);
+                if (maxScroll <= 1) {
+                    return;
+                }
+
+                event.preventDefault();
+                window.scrollTo(0, Math.max(0, Math.min(maxScroll, window.scrollY + delta)));
+            }, {passive: false});
+        }
+
         var filterForm = document.getElementById('loan-exp-filter-form');
 
         if (filterForm) {
