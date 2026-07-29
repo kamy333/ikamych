@@ -39,6 +39,10 @@ if (!function_exists('loan_exp_int')) {
 
         if ($amountFilter === "negative") {
             $sql .= " AND {$alias}.amount < 0 ";
+        } elseif ($amountFilter === "positive") {
+            $sql .= " AND {$alias}.amount > 0 ";
+        } elseif ($amountFilter === "zero") {
+            $sql .= " AND {$alias}.amount = 0 ";
         } elseif ($amountFilter === "range") {
             if ($amountMin !== null) {
                 $sql .= " AND {$alias}.amount >= ? ";
@@ -508,7 +512,7 @@ $cat_name = MyExpense::get_category_name($cat);
 $show_doc = ($_GET["show_hide_doc"] ?? "show_doc") === "show_doc";
 $search = trim((string) ($_GET["q"] ?? ""));
 $amount_filter = (string) ($_GET["amount_filter"] ?? "any");
-$amount_filter = in_array($amount_filter, ["any", "negative", "range"], true) ? $amount_filter : "any";
+$amount_filter = in_array($amount_filter, ["any", "positive", "negative", "zero", "range"], true) ? $amount_filter : "any";
 $amount_min_input = trim((string) ($_GET["amount_min"] ?? ""));
 $amount_max_input = trim((string) ($_GET["amount_max"] ?? ""));
 $amount_min = loan_exp_decimal($amount_min_input);
@@ -632,8 +636,12 @@ $where .= loan_exp_sql_filters(
 );
 
 $advanced_filter_labels = [];
-if ($amount_filter === "negative") {
+if ($amount_filter === "positive") {
+    $advanced_filter_labels[] = "Amount > 0";
+} elseif ($amount_filter === "negative") {
     $advanced_filter_labels[] = "Amount < 0";
+} elseif ($amount_filter === "zero") {
+    $advanced_filter_labels[] = "Amount = 0";
 } elseif ($amount_filter === "range" && ($amount_min !== null || $amount_max !== null)) {
     if ($amount_min !== null && $amount_max !== null) {
         $advanced_filter_labels[] = "Amount " . number_format($amount_min, 2) . " to " . number_format($amount_max, 2);
@@ -2270,7 +2278,9 @@ $status_messages = [
                         <label for="loan-filter-amount-mode">Condition</label>
                         <select class="form-control" id="loan-filter-amount-mode" name="amount_filter">
                             <option value="any"<?php echo $amount_filter === "any" ? " selected" : ""; ?>>Any amount</option>
+                            <option value="positive"<?php echo $amount_filter === "positive" ? " selected" : ""; ?>>Positive amounts (greater than 0)</option>
                             <option value="negative"<?php echo $amount_filter === "negative" ? " selected" : ""; ?>>Negative amounts (less than 0)</option>
+                            <option value="zero"<?php echo $amount_filter === "zero" ? " selected" : ""; ?>>Zero amounts (equal to 0)</option>
                             <option value="range"<?php echo $amount_filter === "range" ? " selected" : ""; ?>>Custom range</option>
                         </select>
                     </div>

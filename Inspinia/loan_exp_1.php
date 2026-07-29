@@ -20,6 +20,18 @@ if (!User::is_caroline()) {
 <?php include_once(NAV_PUBLIC) ?>
 
 <style>
+    html {
+        height: 100% !important;
+        min-height: 100%;
+    }
+
+    body:not(.modal-open) {
+        height: auto !important;
+        min-height: 100%;
+        overflow-x: clip !important;
+        overflow-y: visible !important;
+    }
+
     .loan-exp-inspinia {
         padding-bottom: 36px;
     }
@@ -238,6 +250,41 @@ if (!User::is_caroline()) {
 </div>
 </div>
 
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var summaryPage = document.querySelector('.loan-exp-inspinia');
+
+        if (!summaryPage) {
+            return;
+        }
+
+        summaryPage.addEventListener('wheel', function(event) {
+            if (event.ctrlKey || event.metaKey || document.body.classList.contains('modal-open')) {
+                return;
+            }
+
+            var delta = event.deltaY;
+            if (!delta || Math.abs(delta) < Math.abs(event.deltaX)) {
+                return;
+            }
+
+            if (event.deltaMode === 1) {
+                delta *= 16;
+            } else if (event.deltaMode === 2) {
+                delta *= window.innerHeight;
+            }
+
+            var scrollingElement = document.scrollingElement || document.documentElement;
+            var maxScroll = Math.max(scrollingElement.scrollHeight - window.innerHeight, 0);
+            if (maxScroll <= 1) {
+                return;
+            }
+
+            event.preventDefault();
+            window.scrollTo(0, Math.max(0, Math.min(maxScroll, window.scrollY + delta)));
+        }, {passive: false});
+    });
+</script>
 
 <?php include(FOOTER_PUBLIC); ?>
 <?php //include(FOOTER) ?>
