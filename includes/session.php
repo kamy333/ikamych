@@ -147,7 +147,7 @@ class Session
     // Should the session be considered valid?
     private function is_session_valid()
     {
-        $check_ip = true;
+        $check_ip = false;
         $check_user_agent = true;
         $check_last_login = true;
 

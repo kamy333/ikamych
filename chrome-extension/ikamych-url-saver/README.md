@@ -2,6 +2,8 @@
 
 Private Chrome extension for saving the current page or a right-clicked link to Ikamych.
 
+When saving the current page, the extension also saves the page's public title and description when available. Selected text from the context menu takes priority over the description. Some sites, especially Facebook, may not expose readable metadata; the title and note can still be edited on the Saved links page.
+
 ## Install locally
 
 1. Open `chrome://extensions`.
