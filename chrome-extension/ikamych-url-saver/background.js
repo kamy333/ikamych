@@ -31,7 +31,7 @@ chrome.action.onClicked.addListener((tab) => {
   savePageFromTab(tab);
 });
 
-chrome.contextMenus.onClicked.addListener((info, tab) => {
+chrome.contextMenus.onClicked.addListener(async (info, tab) => {
   if (info.menuItemId === "save-link" && info.linkUrl) {
     saveLink({
       url: info.linkUrl,
@@ -43,22 +43,46 @@ chrome.contextMenus.onClicked.addListener((info, tab) => {
   }
 
   if (info.menuItemId === "save-page") {
+    const metadata = await readPageMetadata(tab);
     saveLink({
       url: tab && tab.url ? tab.url : "",
-      title: tab && tab.title ? tab.title : "",
-      note: info.selectionText ? truncate(info.selectionText, 1000) : "",
+      title: metadata.title || (tab && tab.title ? tab.title : ""),
+      note: info.selectionText ? truncate(info.selectionText, 1000) : metadata.description,
       tab
     });
   }
 });
 
 async function savePageFromTab(tab) {
+  const metadata = await readPageMetadata(tab);
   await saveLink({
     url: tab && tab.url ? tab.url : "",
-    title: tab && tab.title ? tab.title : "",
-    note: "",
+    title: metadata.title || (tab && tab.title ? tab.title : ""),
+    note: metadata.description,
     tab
   });
+}
+
+async function readPageMetadata(tab) {
+  if (!tab || !tab.id || !normalizeHttpUrl(tab.url)) {
+    return { title: "", description: "" };
+  }
+
+  try {
+    const results = await chrome.scripting.executeScript({
+      target: { tabId: tab.id },
+      func: () => {
+        const meta = (selector) => document.querySelector(selector)?.content?.trim() || "";
+        return {
+          title: meta('meta[property="og:title"]') || meta('meta[name="twitter:title"]') || document.title,
+          description: meta('meta[property="og:description"]') || meta('meta[name="description"]') || meta('meta[name="twitter:description"]') || ""
+        };
+      }
+    });
+    return results[0]?.result || { title: "", description: "" };
+  } catch (error) {
+    return { title: "", description: "" };
+  }
 }
 
 async function saveLink(payload) {

@@ -51,7 +51,7 @@ if (request_is_post()) {
             ]);
             $session->message('Saved link updated.');
             $session->ok(true);
-            redirect_to($page_url);
+            redirect_to(saved_links_safe_return_url($page_url));
         }
 
         if ($action === 'set_status') {
@@ -59,7 +59,7 @@ if (request_is_post()) {
             SavedLink::setStatusForUser($user_id, $id, $_POST['status'] ?? 'inbox');
             $session->message('Saved link status updated.');
             $session->ok(true);
-            redirect_to($page_url);
+            redirect_to(saved_links_safe_return_url($page_url));
         }
 
         if ($action === 'delete_link') {
@@ -70,7 +70,7 @@ if (request_is_post()) {
             } else {
                 $session->message('Saved link could not be deleted.');
             }
-            redirect_to($page_url);
+            redirect_to(saved_links_safe_return_url($page_url));
         }
 
         if ($action === 'import_to_links') {
@@ -120,12 +120,39 @@ if ($status_filter !== '' && !in_array($status_filter, SavedLink::statusOptions(
 }
 
 $search = trim((string)($_GET['search'] ?? ''));
+$view = ($_GET['view'] ?? '') === 'gallery' ? 'gallery' : 'list';
+$type_filter = trim((string)($_GET['type'] ?? ''));
+if (!array_key_exists($type_filter, saved_links_content_types())) {
+    $type_filter = '';
+}
 $links = SavedLink::allForUser($user_id, [
     'status' => $status_filter,
     'search' => $search,
     'limit' => 200,
 ]);
+$links = array_map(function (array $link): array {
+    $link['content_type'] = saved_links_classify($link);
+    $link['embed_url'] = saved_links_embed_url($link);
+    $link['thumbnail_url'] = saved_links_thumbnail_url($link);
+    $link['play_on_facebook'] = saved_links_play_on_facebook($link);
+    return $link;
+}, $links);
+if ($type_filter !== '') {
+    $links = array_values(array_filter($links, function (array $link) use ($type_filter): bool {
+        return $link['content_type'] === $type_filter;
+    }));
+}
 $counts = SavedLink::countsForUser($user_id);
+$display_counts = $counts;
+if ($type_filter !== '') {
+    $display_counts = ['all' => 0, 'inbox' => 0, 'kept' => 0, 'archived' => 0];
+    foreach (SavedLink::allForUser($user_id, ['search' => $search, 'limit' => 500]) as $candidate) {
+        if (saved_links_classify($candidate) === $type_filter) {
+            $display_counts['all']++;
+            $display_counts[$candidate['status']]++;
+        }
+    }
+}
 $tokens = UserApiToken::tokensForUser($user_id);
 $link_categories = saved_links_link_categories();
 $api_endpoint = SITE_URL . '/public/api/v1/saved-links.php';
@@ -406,6 +433,145 @@ $saved_links_csrf_token = create_csrf_token($saved_links_csrf_id);
         gap: 12px;
     }
 
+    .saved-links-view-switch {
+        display: flex;
+        gap: 8px;
+        margin-bottom: 14px;
+    }
+
+    .saved-links-list--gallery {
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        align-items: start;
+    }
+
+    .saved-links-list--gallery .saved-link-row {
+        display: flex;
+        align-items: stretch;
+        flex-direction: column;
+        min-height: 0;
+    }
+
+    .saved-link-cover {
+        align-items: center;
+        aspect-ratio: 16 / 9;
+        background: linear-gradient(135deg, #dbeaf5, #eff6fb);
+        color: #31556f;
+        display: none;
+        justify-content: center;
+        overflow: hidden;
+        position: relative;
+    }
+
+    .saved-links-list--gallery .saved-link-cover {
+        display: flex;
+    }
+
+    .saved-link-cover img {
+        height: 100%;
+        object-fit: cover;
+        width: 100%;
+    }
+
+    .saved-link-cover i {
+        font-size: 46px;
+    }
+
+    .saved-link-type {
+        background: #e8eef5;
+        border-radius: 999px;
+        color: #254158;
+        display: none;
+        font-size: 12px;
+        font-weight: 800;
+        padding: 5px 9px;
+        width: fit-content;
+    }
+
+    .saved-links-list--gallery .saved-link-type {
+        display: inline-flex;
+    }
+
+    .saved-links-list--gallery .saved-link-summary__title,
+    .saved-links-list--gallery .saved-link-summary__url {
+        white-space: normal;
+    }
+
+    .saved-link-description {
+        color: #43566b;
+        display: none;
+        font-size: 13px;
+        line-height: 1.4;
+        margin: 8px 0 0;
+        max-height: 5.6em;
+        overflow: hidden;
+        overflow-wrap: anywhere;
+        white-space: pre-line;
+    }
+
+    .saved-links-list--gallery .saved-link-description {
+        display: block;
+    }
+
+    .saved-links-video-dialog {
+        background: #fff;
+        border: 0;
+        border-radius: 12px;
+        box-shadow: 0 24px 80px rgba(9, 28, 48, 0.35);
+        color: #162033;
+        max-height: calc(100dvh - 32px);
+        padding: 0;
+        width: min(960px, calc(100vw - 32px));
+    }
+
+    .saved-links-video-dialog::backdrop {
+        background: rgba(9, 28, 48, 0.76);
+    }
+
+    .saved-links-video-dialog__header,
+    .saved-links-video-dialog__footer {
+        align-items: center;
+        display: flex;
+        gap: 12px;
+        justify-content: space-between;
+        padding: 12px 16px;
+    }
+
+    .saved-links-video-dialog__header h2 {
+        color: #173f63;
+        font-size: 18px;
+        line-height: 1.35;
+        margin: 0;
+        overflow-wrap: anywhere;
+    }
+
+    .saved-links-video-dialog__close {
+        background: #e8eef5;
+        border: 0;
+        border-radius: 6px;
+        color: #254158;
+        cursor: pointer;
+        flex: 0 0 38px;
+        font-size: 22px;
+        height: 38px;
+    }
+
+    .saved-links-video-dialog__body {
+        background: #162033;
+    }
+
+    .saved-links-video-dialog__body iframe {
+        aspect-ratio: 16 / 9;
+        border: 0;
+        display: block;
+        width: 100%;
+    }
+
+    .saved-links-video-dialog__footer p {
+        color: #52667c;
+        font-size: 13px;
+        margin: 0;
+    }
+
     .saved-link-item {
         overflow: hidden;
     }
@@ -642,6 +808,10 @@ $saved_links_csrf_token = create_csrf_token($saved_links_csrf_id);
             width: 100%;
         }
 
+        .saved-links-view-switch .saved-links-btn {
+            width: auto;
+        }
+
         .saved-link-icon-btn {
             width: 38px;
         }
@@ -772,6 +942,9 @@ $saved_links_csrf_token = create_csrf_token($saved_links_csrf_id);
 
         <section class="saved-links-panel">
             <form method="get" action="<?php echo h($page_url); ?>" class="saved-links-filter">
+                <input type="hidden" name="view" value="<?php echo h($view); ?>">
+                <?php if ($status_filter !== '') { ?><input type="hidden" name="status" value="<?php echo h($status_filter); ?>"><?php } ?>
+                <?php if ($type_filter !== '') { ?><input type="hidden" name="type" value="<?php echo h($type_filter); ?>"><?php } ?>
                 <div class="saved-links-field">
                     <label for="saved-links-search">Search</label>
                     <input id="saved-links-search" name="search" type="search" value="<?php echo h($search); ?>">
@@ -784,13 +957,24 @@ $saved_links_csrf_token = create_csrf_token($saved_links_csrf_id);
         </section>
 
         <nav class="saved-links-tabs" aria-label="Saved link status">
-            <?php echo saved_links_status_tab('All', '', $status_filter, $counts['all'], $search); ?>
-            <?php echo saved_links_status_tab('Inbox', 'inbox', $status_filter, $counts['inbox'], $search); ?>
-            <?php echo saved_links_status_tab('Kept', 'kept', $status_filter, $counts['kept'], $search); ?>
-            <?php echo saved_links_status_tab('Archived', 'archived', $status_filter, $counts['archived'], $search); ?>
+            <?php echo saved_links_status_tab('All', '', $status_filter, $display_counts['all'], $search, $view, $type_filter); ?>
+            <?php echo saved_links_status_tab('Inbox', 'inbox', $status_filter, $display_counts['inbox'], $search, $view, $type_filter); ?>
+            <?php echo saved_links_status_tab('Kept', 'kept', $status_filter, $display_counts['kept'], $search, $view, $type_filter); ?>
+            <?php echo saved_links_status_tab('Archived', 'archived', $status_filter, $display_counts['archived'], $search, $view, $type_filter); ?>
         </nav>
 
-        <section class="saved-links-list" aria-label="Saved URLs">
+        <nav class="saved-links-tabs" aria-label="Content type">
+            <?php foreach (saved_links_content_types() as $type => $label) { ?>
+                <a class="saved-links-tab<?php echo $type_filter === $type ? ' saved-links-tab--active' : ''; ?>" href="<?php echo h(saved_links_url(['status' => $status_filter, 'search' => $search, 'view' => $view, 'type' => $type])); ?>"><?php echo h($label); ?></a>
+            <?php } ?>
+        </nav>
+
+        <nav class="saved-links-view-switch" aria-label="Display mode">
+            <a class="saved-links-tab<?php echo $view === 'list' ? ' saved-links-tab--active' : ''; ?>" href="<?php echo h(saved_links_url(['status' => $status_filter, 'search' => $search, 'type' => $type_filter])); ?>">List</a>
+            <a class="saved-links-tab<?php echo $view === 'gallery' ? ' saved-links-tab--active' : ''; ?>" href="<?php echo h(saved_links_url(['status' => $status_filter, 'search' => $search, 'type' => $type_filter, 'view' => 'gallery'])); ?>">Gallery</a>
+        </nav>
+
+        <section class="saved-links-list<?php echo $view === 'gallery' ? ' saved-links-list--gallery' : ''; ?>" aria-label="Saved URLs">
             <?php if (empty($links)) { ?>
                 <div class="saved-links-panel saved-links-empty">No saved links found.</div>
             <?php } ?>
@@ -798,10 +982,18 @@ $saved_links_csrf_token = create_csrf_token($saved_links_csrf_id);
             <?php foreach ($links as $link) { ?>
                 <article class="saved-link-item">
                     <div class="saved-link-row">
+                        <div class="saved-link-cover" aria-hidden="true">
+                            <?php if ($link['thumbnail_url'] !== '') { ?>
+                                <img src="<?php echo h($link['thumbnail_url']); ?>" alt="" loading="lazy">
+                            <?php } else { ?>
+                                <i class="fa <?php echo h(saved_links_type_icon($link['content_type'])); ?>"></i>
+                            <?php } ?>
+                        </div>
                         <button class="saved-link-toggle" type="button" aria-expanded="false" aria-controls="saved-link-panel-<?php echo h($link['id']); ?>" data-saved-link-toggle>
                             <span class="saved-link-summary__main">
                                 <span class="saved-link-summary__title"><?php echo h($link['title']); ?></span>
                                 <span class="saved-link-summary__url"><?php echo h($link['url']); ?></span>
+                                <span class="saved-link-description"><?php echo h(trim((string)$link['note']) !== '' ? $link['note'] : 'No description saved yet.'); ?></span>
                                 <span class="saved-link-toggle__hint">
                                     <i class="fa fa-chevron-down" aria-hidden="true"></i>
                                     Details
@@ -813,15 +1005,29 @@ $saved_links_csrf_token = create_csrf_token($saved_links_csrf_id);
                             <?php echo h($link['status']); ?>
                         </span>
 
+                        <span class="saved-link-type"><?php echo h(saved_links_content_types()[$link['content_type']]); ?></span>
+
                         <div class="saved-link-row-actions" aria-label="Saved link shortcuts">
+                            <?php if ($link['play_on_facebook']) { ?>
+                                <a class="saved-links-btn saved-links-btn--neutral saved-link-icon-btn" href="<?php echo h($link['url']); ?>" target="_blank" rel="noopener noreferrer" title="Play on Facebook" aria-label="Play on Facebook">
+                                    <i class="fa fa-play" aria-hidden="true"></i>
+                                </a>
+                            <?php } elseif ($link['embed_url'] !== '') { ?>
+                                <button class="saved-links-btn saved-links-btn--neutral saved-link-icon-btn" type="button" title="Watch here" aria-label="Watch here" data-saved-link-play data-embed-url="<?php echo h($link['embed_url']); ?>" data-link-url="<?php echo h($link['url']); ?>" data-video-title="<?php echo h($link['title']); ?>">
+                                    <i class="fa fa-play" aria-hidden="true"></i>
+                                </button>
+                            <?php } ?>
+                            <?php if (!$link['play_on_facebook']) { ?>
                             <a class="saved-links-btn saved-links-btn--neutral saved-link-icon-btn" href="<?php echo h($link['url']); ?>" target="_blank" rel="noopener noreferrer" title="Open link" aria-label="Open link">
                                 <i class="fa fa-external-link" aria-hidden="true"></i>
                             </a>
+                            <?php } ?>
                             <button class="saved-links-btn saved-links-btn--primary saved-link-icon-btn" type="button" title="Add to MyLinks" aria-label="Add to MyLinks" data-saved-link-open-import="saved-link-panel-<?php echo h($link['id']); ?>">
                                 <i class="fa fa-plus" aria-hidden="true"></i>
                             </button>
                             <form method="post" action="<?php echo h($page_url); ?>">
                                 <input type="hidden" name="csrf_token<?php echo h($saved_links_csrf_id); ?>" value="<?php echo h($saved_links_csrf_token); ?>">
+                                <input type="hidden" name="return_to" value="<?php echo h($saved_links_return_to); ?>">
                                 <input type="hidden" name="action" value="set_status">
                                 <input type="hidden" name="id" value="<?php echo h($link['id']); ?>">
                                 <input type="hidden" name="status" value="kept">
@@ -831,6 +1037,7 @@ $saved_links_csrf_token = create_csrf_token($saved_links_csrf_id);
                             </form>
                             <form method="post" action="<?php echo h($page_url); ?>" onsubmit="return confirm('Delete this saved link?');">
                                 <input type="hidden" name="csrf_token<?php echo h($saved_links_csrf_id); ?>" value="<?php echo h($saved_links_csrf_token); ?>">
+                                <input type="hidden" name="return_to" value="<?php echo h($saved_links_return_to); ?>">
                                 <input type="hidden" name="action" value="delete_link">
                                 <input type="hidden" name="id" value="<?php echo h($link['id']); ?>">
                                 <button class="saved-links-btn saved-links-btn--danger saved-link-icon-btn" type="submit" title="Delete link" aria-label="Delete link">
@@ -847,6 +1054,7 @@ $saved_links_csrf_token = create_csrf_token($saved_links_csrf_id);
 
                         <form method="post" action="<?php echo h($page_url); ?>" class="saved-link-form">
                             <input type="hidden" name="csrf_token<?php echo h($saved_links_csrf_id); ?>" value="<?php echo h($saved_links_csrf_token); ?>">
+                            <input type="hidden" name="return_to" value="<?php echo h($saved_links_return_to); ?>">
                             <input type="hidden" name="action" value="update_link">
                             <input type="hidden" name="id" value="<?php echo h($link['id']); ?>">
 
@@ -955,6 +1163,18 @@ $saved_links_csrf_token = create_csrf_token($saved_links_csrf_id);
             <?php } ?>
         </section>
     </div>
+
+    <dialog class="saved-links-video-dialog" id="saved-links-video-dialog" aria-labelledby="saved-links-video-title">
+        <div class="saved-links-video-dialog__header">
+            <h2 id="saved-links-video-title">Video</h2>
+            <button class="saved-links-video-dialog__close" type="button" aria-label="Close video" data-saved-video-close>&times;</button>
+        </div>
+        <div class="saved-links-video-dialog__body" id="saved-links-video-body"></div>
+        <div class="saved-links-video-dialog__footer">
+            <p>If the video is unavailable here, open it on its original site.</p>
+            <a class="saved-links-btn saved-links-btn--neutral" id="saved-links-video-open" href="#" target="_blank" rel="noopener noreferrer">Open link</a>
+        </div>
+    </dialog>
 </main>
 
 <script>
@@ -994,6 +1214,51 @@ $saved_links_csrf_token = create_csrf_token($saved_links_csrf_id);
                 }
             });
         });
+
+        var videoDialog = document.getElementById('saved-links-video-dialog');
+        var videoBody = document.getElementById('saved-links-video-body');
+        var videoTitle = document.getElementById('saved-links-video-title');
+        var videoOpen = document.getElementById('saved-links-video-open');
+        var videoTrigger = null;
+
+        document.querySelectorAll('[data-saved-link-play]').forEach(function(button) {
+            button.addEventListener('click', function() {
+                var embedUrl = button.getAttribute('data-embed-url');
+                if (!videoDialog || !embedUrl) {
+                    return;
+                }
+                videoTrigger = button;
+                videoTitle.textContent = button.getAttribute('data-video-title') || 'Video';
+                videoOpen.href = button.getAttribute('data-link-url') || '#';
+                videoBody.replaceChildren();
+                videoDialog.showModal();
+
+                var frame = document.createElement('iframe');
+                frame.src = embedUrl;
+                frame.title = videoTitle.textContent;
+                frame.allow = 'autoplay; encrypted-media; picture-in-picture';
+                frame.allowFullscreen = true;
+                videoBody.appendChild(frame);
+            });
+        });
+
+        document.querySelector('[data-saved-video-close]').addEventListener('click', function() {
+            videoDialog.close();
+        });
+
+        videoDialog.addEventListener('click', function(event) {
+            if (event.target === videoDialog) {
+                videoDialog.close();
+            }
+        });
+
+        videoDialog.addEventListener('close', function() {
+            videoBody.replaceChildren();
+            if (videoTrigger) {
+                videoTrigger.focus();
+                videoTrigger = null;
+            }
+        });
     })();
 </script>
 
@@ -1011,20 +1276,9 @@ function saved_links_post_id(string $key): int
     return (int)$id;
 }
 
-function saved_links_status_tab(string $label, string $status, string $active_status, int $count, string $search): string
+function saved_links_status_tab(string $label, string $status, string $active_status, int $count, string $search, string $view, string $type): string
 {
-    $params = [];
-    if ($status !== '') {
-        $params['status'] = $status;
-    }
-    if ($search !== '') {
-        $params['search'] = $search;
-    }
-
-    $href = '/public/saved_links.php';
-    if (!empty($params)) {
-        $href .= '?' . http_build_query($params);
-    }
+    $href = saved_links_url(['status' => $status, 'search' => $search, 'view' => $view, 'type' => $type]);
 
     $active = $status === $active_status ? ' saved-links-tab--active' : '';
     if ($status === '' && $active_status === '') {
@@ -1032,6 +1286,103 @@ function saved_links_status_tab(string $label, string $status, string $active_st
     }
 
     return "<a class='saved-links-tab{$active}' href='" . h($href) . "'>" . h($label) . " <span>" . h((string)$count) . "</span></a>";
+}
+
+function saved_links_url(array $params = []): string
+{
+    $params = array_filter($params, function ($value): bool { return $value !== ''; });
+    return '/public/saved_links.php' . ($params ? '?' . http_build_query($params) : '');
+}
+
+function saved_links_content_types(): array
+{
+    return [
+        '' => 'All types',
+        'reel' => 'Reels',
+        'video' => 'Videos',
+        'facebook_post' => 'Facebook posts',
+        'text' => 'Texts',
+        'website' => 'Websites',
+    ];
+}
+
+function saved_links_classify(array $link): string
+{
+    $url = strtolower((string)($link['url'] ?? ''));
+    $host = strtolower((string)parse_url($url, PHP_URL_HOST));
+    $path = strtolower((string)parse_url($url, PHP_URL_PATH));
+    $is_facebook = $host === 'facebook.com' || $host === 'www.facebook.com' || $host === 'm.facebook.com' || $host === 'fb.watch';
+    $is_youtube = in_array($host, ['youtube.com', 'www.youtube.com', 'm.youtube.com', 'youtu.be'], true);
+
+    if (($is_facebook && preg_match('~/(reel|reels)/~', $path)) || ($is_youtube && strpos($path, '/shorts/') === 0)) {
+        return 'reel';
+    }
+    if (($is_facebook && (preg_match('~/(videos|watch)/~', $path) || $host === 'fb.watch'))
+        || ($is_youtube && ($host === 'youtu.be' || $path === '/watch' || strpos($path, '/live/') === 0))
+        || in_array($host, ['vimeo.com', 'www.vimeo.com', 'dailymotion.com', 'www.dailymotion.com'], true)
+        || preg_match('~\.(mp4|webm|mov)$~', $path)) {
+        return 'video';
+    }
+    if ($is_facebook) {
+        return 'facebook_post';
+    }
+    if (trim((string)($link['note'] ?? '')) !== ''
+        || preg_match('~/(article|articles|blog|blogs|news|docs|documentation|stories)/~', $path)
+        || in_array($host, ['medium.com', 'www.medium.com', 'substack.com', 'www.substack.com', 'wikipedia.org', 'en.wikipedia.org', 'fr.wikipedia.org'], true)) {
+        return 'text';
+    }
+    return 'website';
+}
+
+function saved_links_youtube_id(string $url): string
+{
+    $host = strtolower((string)parse_url($url, PHP_URL_HOST));
+    $path = (string)parse_url($url, PHP_URL_PATH);
+    if ($host === 'youtu.be') {
+        $id = trim($path, '/');
+    } elseif (preg_match('~^/(shorts|live|embed)/([A-Za-z0-9_-]{11})~', $path, $matches)) {
+        $id = $matches[2];
+    } elseif ($path === '/watch') {
+        parse_str((string)parse_url($url, PHP_URL_QUERY), $query);
+        $id = (string)($query['v'] ?? '');
+    } else {
+        return '';
+    }
+    return preg_match('/^[A-Za-z0-9_-]{11}$/', $id) ? $id : '';
+}
+
+function saved_links_thumbnail_url(array $link): string
+{
+    $id = saved_links_youtube_id((string)$link['url']);
+    return $id !== '' ? 'https://i.ytimg.com/vi/' . $id . '/hqdefault.jpg' : '';
+}
+
+function saved_links_embed_url(array $link): string
+{
+    $url = (string)$link['url'];
+    $id = saved_links_youtube_id($url);
+    if ($id !== '') {
+        return 'https://www.youtube-nocookie.com/embed/' . $id;
+    }
+    return '';
+}
+
+function saved_links_play_on_facebook(array $link): bool
+{
+    $host = strtolower((string)parse_url((string)$link['url'], PHP_URL_HOST));
+    return in_array($link['content_type'], ['reel', 'video'], true)
+        && in_array($host, ['facebook.com', 'www.facebook.com', 'm.facebook.com', 'fb.watch'], true);
+}
+
+function saved_links_type_icon(string $type): string
+{
+    return [
+        'reel' => 'fa-film',
+        'video' => 'fa-play-circle',
+        'facebook_post' => 'fa-facebook-square',
+        'text' => 'fa-file-text-o',
+        'website' => 'fa-globe',
+    ][$type] ?? 'fa-link';
 }
 
 function saved_links_safe_return_url(string $fallback): string
