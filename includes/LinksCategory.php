@@ -12,7 +12,7 @@ class LinksCategory extends DatabaseObject {
 
     protected static $table_name="links_category";
 
-    protected static $db_fields = ['id','category','rank'];
+    protected static $db_fields = ['id','category','icon','rank'];
 
     public static $required_fields= ['category',];
 
@@ -125,6 +125,7 @@ class LinksCategory extends DatabaseObject {
 
     public $id;
     public $category;
+    public $icon = 'fa-folder-o';
     public $rank;
 
     public  function form_validation() {

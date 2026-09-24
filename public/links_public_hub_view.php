@@ -377,6 +377,420 @@ if (!function_exists('public_links_render_page')) {
         text-decoration: none;
     }
 
+    .links-pin-modal .modal-dialog {
+        max-width: 780px;
+        margin-top: 70px;
+    }
+
+    @media (min-height: 720px) {
+        .links-pin-modal {
+            overflow-y: hidden;
+        }
+    }
+
+    .gemini-links-page .links-pin-modal .modal-body {
+        max-height: none;
+        overflow: visible;
+        padding: 18px;
+    }
+
+    .links-pin-modal__intro {
+        color: #34516f;
+        font-size: 14px;
+        margin: 0 0 16px;
+    }
+
+    .links-pin-modal__new {
+        background: #f4f9ff;
+        border: 1px solid #d6e8fb;
+        border-radius: 10px;
+        margin-bottom: 20px;
+        padding: 16px;
+    }
+
+    .links-pin-modal__new summary {
+        color: #082b61;
+        cursor: pointer;
+        font-size: 15px;
+        font-weight: 900;
+        list-style: none;
+    }
+
+    .links-pin-modal__new summary::-webkit-details-marker {
+        display: none;
+    }
+
+    .links-pin-modal__new summary i {
+        margin-right: 7px;
+    }
+
+    .links-pin-modal__new form {
+        margin-top: 12px;
+    }
+
+    .links-pin-modal h6 {
+        color: #082b61;
+        font-size: 15px;
+        font-weight: 900;
+        margin: 0 0 12px;
+    }
+
+    .links-pin-modal__new form > label:first-of-type {
+        color: #234a76;
+        display: block;
+        font-size: 12px;
+        font-weight: 900;
+        margin-bottom: 6px;
+        text-transform: uppercase;
+    }
+
+    .links-pin-modal__new-row {
+        display: grid;
+        gap: 10px;
+        grid-template-columns: minmax(0, 1fr) auto;
+    }
+
+    .links-pin-modal__new-row input,
+    .links-pin-modal__list-header input {
+        background: #fff;
+        border: 1px solid #c7d9ee;
+        border-radius: 7px;
+        color: #082b61;
+        min-height: 42px;
+        padding: 8px 10px;
+        width: 100%;
+    }
+
+    .links-pin-modal__primary {
+        align-items: center;
+        background: #006edb;
+        border: 0;
+        border-radius: 7px;
+        color: #fff;
+        display: inline-flex;
+        font-weight: 900;
+        gap: 7px;
+        justify-content: center;
+        min-height: 42px;
+        padding: 8px 14px;
+    }
+
+    .links-pin-modal__error {
+        color: #b42318;
+        font-size: 13px;
+        font-weight: 800;
+        margin: 7px 0 0;
+    }
+
+    .links-pin-modal__error[hidden] {
+        display: none;
+    }
+
+    .links-pin-modal__pin-new {
+        align-items: center;
+        color: #234a76;
+        display: inline-flex;
+        font-size: 13px;
+        gap: 7px;
+        margin: 12px 0 0;
+    }
+
+    .links-pin-modal__icon-label {
+        color: #234a76;
+        display: block;
+        font-size: 12px;
+        font-weight: 900;
+        margin-top: 12px;
+        text-transform: uppercase;
+    }
+
+    .links-pin-modal__icon-select {
+        align-items: center;
+        display: flex;
+        gap: 10px;
+        margin-top: 5px;
+    }
+
+    .links-pin-modal__icon-select > i {
+        color: #0b65b5;
+        font-size: 22px;
+        width: 26px;
+    }
+
+    .links-pin-modal__icon-select select,
+    .links-pin-modal__edit-grid input,
+    .links-pin-modal__replacement select {
+        background: #fff;
+        border: 1px solid #c7d9ee;
+        border-radius: 7px;
+        color: #082b61;
+        min-height: 40px;
+        padding: 7px 10px;
+        width: 100%;
+    }
+
+    .links-pin-modal__editor,
+    .links-pin-modal__delete {
+        background: #f4f9ff;
+        border: 1px solid #d6e8fb;
+        border-radius: 10px;
+        padding: 16px;
+    }
+
+    .links-pin-modal__editor[hidden],
+    .links-pin-modal__delete[hidden],
+    .links-pin-modal__new[hidden],
+    .links-pin-modal__existing[hidden],
+    .links-pin-modal__replacement[hidden] {
+        display: none;
+    }
+
+    .links-pin-modal__edit-grid {
+        display: grid;
+        gap: 10px;
+        grid-template-columns: minmax(0, 1fr) 130px;
+    }
+
+    .links-pin-modal__edit-grid label,
+    .links-pin-modal__replacement {
+        color: #234a76;
+        display: block;
+        font-size: 12px;
+        font-weight: 900;
+        text-transform: uppercase;
+    }
+
+    .links-pin-modal__edit-grid input,
+    .links-pin-modal__replacement select {
+        margin-top: 5px;
+    }
+
+    .links-pin-modal__field-note,
+    .links-pin-modal__delete-message {
+        color: #34516f;
+        font-size: 13px;
+        margin: 10px 0;
+    }
+
+    .links-pin-modal__icons {
+        border: 0;
+        display: grid;
+        gap: 7px;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        margin: 12px 0;
+        padding: 0;
+    }
+
+    .links-pin-modal__icons legend {
+        color: #234a76;
+        font-size: 12px;
+        font-weight: 900;
+        margin-bottom: 8px;
+        text-transform: uppercase;
+    }
+
+    .links-pin-modal__icons label {
+        cursor: pointer;
+        margin: 0;
+    }
+
+    .links-pin-modal__icons input {
+        height: 1px;
+        opacity: 0;
+        position: absolute;
+        width: 1px;
+    }
+
+    .links-pin-modal__icons span {
+        align-items: center;
+        background: #fff;
+        border: 1px solid #c7d9ee;
+        border-radius: 7px;
+        color: #21476f;
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+        min-height: 58px;
+        padding: 8px 3px;
+    }
+
+    .links-pin-modal__icons i {
+        font-size: 20px;
+    }
+
+    .links-pin-modal__icons small {
+        font-size: 10px;
+        font-weight: 800;
+    }
+
+    .links-pin-modal__icons input:checked + span {
+        background: #dff1ff;
+        border-color: #006edb;
+        color: #05346b;
+    }
+
+    .links-pin-modal__icons input:focus-visible + span {
+        outline: 3px solid #ffbf47;
+        outline-offset: 2px;
+    }
+
+    .links-pin-modal__replacement {
+        margin: 15px 0;
+    }
+
+    .links-pin-modal__danger {
+        background: #b42318;
+        border: 0;
+        border-radius: 7px;
+        color: #fff;
+        font-weight: 900;
+        min-height: 40px;
+        padding: 8px 16px;
+    }
+
+    .links-pin-modal__list-header {
+        align-items: center;
+        display: flex;
+        gap: 12px;
+        justify-content: space-between;
+    }
+
+    .links-pin-modal__list-header input {
+        max-width: 240px;
+    }
+
+    .links-pin-modal__list {
+        border: 1px solid #dbeafe;
+        border-radius: 8px;
+        max-height: min(42vh, 380px);
+        overflow: auto;
+        padding: 4px 12px;
+    }
+
+    .links-pin-modal__choice {
+        align-items: center;
+        border-top: 1px solid #eaf3ff;
+        display: grid;
+        gap: 7px;
+        grid-template-columns: minmax(0, 1fr) 70px 32px 32px;
+        min-height: 45px;
+    }
+
+    .links-pin-modal__choice:first-child {
+        border-top: 0;
+    }
+
+    .links-pin-modal__choice[hidden] {
+        display: none;
+    }
+
+    .links-pin-modal__choice label {
+        align-items: center;
+        color: #163f63;
+        display: flex;
+        font-size: 14px;
+        font-weight: 800;
+        gap: 10px;
+        margin: 0;
+        min-width: 0;
+    }
+
+    .links-pin-modal__choice label span {
+        overflow-wrap: anywhere;
+    }
+
+    .links-pin-modal__choice input[type="checkbox"] {
+        height: 1px;
+        opacity: 0;
+        position: absolute;
+        width: 1px;
+    }
+
+    .links-pin-modal__switch {
+        background: #aebfd0;
+        border-radius: 999px;
+        flex: 0 0 38px;
+        height: 22px;
+        position: relative;
+        transition: background 0.15s ease;
+    }
+
+    .links-pin-modal__switch:after {
+        background: #fff;
+        border-radius: 50%;
+        content: '';
+        height: 16px;
+        left: 3px;
+        position: absolute;
+        top: 3px;
+        transition: transform 0.15s ease;
+        width: 16px;
+    }
+
+    .links-pin-modal__choice input:checked + .links-pin-modal__switch {
+        background: #0b8fcb;
+    }
+
+    .links-pin-modal__choice input:checked + .links-pin-modal__switch:after {
+        transform: translateX(16px);
+    }
+
+    .links-pin-modal__choice input:focus-visible + .links-pin-modal__switch {
+        outline: 3px solid #ffbf47;
+        outline-offset: 2px;
+    }
+
+    .links-pin-modal__choice input[type="number"] {
+        border: 1px solid #cfe2f7;
+        border-radius: 6px;
+        color: #082b61;
+        padding: 5px 6px;
+        text-align: center;
+        width: 70px;
+    }
+
+    .links-pin-modal__row-action {
+        background: #e8f1fc;
+        border: 0;
+        border-radius: 6px;
+        color: #21476f;
+        height: 31px;
+        width: 32px;
+    }
+
+    .links-pin-modal__row-action--delete {
+        background: #fff0f0;
+        color: #b42318;
+    }
+
+    .links-pin-modal__row-action:disabled {
+        cursor: not-allowed;
+        opacity: 0.4;
+    }
+
+    .links-pin-modal__count {
+        color: #52667c;
+        font-size: 12px;
+        margin: 8px 0 14px;
+    }
+
+    .links-pin-modal__actions {
+        display: flex;
+        gap: 10px;
+        justify-content: flex-end;
+    }
+
+    .links-pin-modal__actions .links-modal-btn {
+        align-items: center;
+        border: 0;
+        border-radius: 7px;
+        display: inline-flex;
+        gap: 7px;
+        justify-content: center;
+        min-height: 40px;
+        padding: 8px 16px;
+    }
+
     .links-visibility-panel {
         display: flex;
         flex-wrap: wrap;
@@ -596,6 +1010,13 @@ if (!function_exists('public_links_render_page')) {
         margin: 0;
         font-size: 15px;
         font-weight: 900;
+    }
+
+    .links-category-heading-icon {
+        color: #0b65b5;
+        display: inline-block;
+        font-size: 0.95em;
+        margin-right: 8px;
     }
 
     .gemini-links-page table.table td {
@@ -1178,6 +1599,28 @@ if (!function_exists('public_links_render_page')) {
     }
 
     @media (max-width: 720px) {
+        .links-pin-modal__new-row,
+        .links-pin-modal__edit-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .links-pin-modal__list-header {
+            align-items: stretch;
+            flex-direction: column;
+        }
+
+        .links-pin-modal__list-header input {
+            max-width: none;
+        }
+
+        .links-pin-modal__icons {
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
+
+        .links-pin-modal__actions {
+            flex-direction: column;
+        }
+
         .gemini-links-page {
             padding: 0 0 84px;
         }
@@ -1770,6 +2213,254 @@ if (!function_exists('public_links_render_page')) {
             document.addEventListener('DOMContentLoaded', initLinksModalController);
         } else {
             initLinksModalController();
+        }
+    })();
+</script>
+<script>
+    (function() {
+        function initPinModal() {
+            var modal = document.getElementById('links-pin-modal');
+            if (!modal) {
+                return;
+            }
+
+            var nameInput = document.getElementById('links-pin-category-name');
+            var nameError = document.getElementById('links-pin-name-error');
+            var actionError = document.getElementById('links-pin-action-error');
+            var search = document.getElementById('links-pin-search');
+            var count = modal.querySelector('.links-pin-modal__count');
+            var rows = Array.prototype.slice.call(modal.querySelectorAll('[data-pin-category]'));
+            var createForm = modal.querySelector('[data-links-pin-create]');
+            var token = createForm.querySelector('input[name="csrf_tokenlinks_pin"]').value;
+            var iconSelect = document.getElementById('links-pin-new-icon');
+            var iconPreview = document.getElementById('links-pin-new-icon-preview');
+            var intro = modal.querySelector('.links-pin-modal__intro');
+            var newSection = modal.querySelector('.links-pin-modal__new');
+            var existingSection = modal.querySelector('.links-pin-modal__existing');
+            var editor = document.getElementById('links-pin-editor');
+            var deleteSection = document.getElementById('links-pin-delete');
+            var editForm = modal.querySelector('[data-pin-edit-form]');
+            var deleteForm = modal.querySelector('[data-pin-delete-form]');
+            var editError = modal.querySelector('[data-pin-edit-error]');
+            var deleteError = modal.querySelector('[data-pin-delete-error]');
+            var changed = false;
+
+            function updateCount() {
+                var total = modal.querySelectorAll('[data-pin-toggle]:checked').length;
+                count.textContent = total + (total === 1 ? ' category pinned' : ' categories pinned');
+            }
+
+            function showError(target, message) {
+                target.textContent = message;
+                target.hidden = !message;
+            }
+
+            function showPanel(panel) {
+                var isMain = panel === 'main';
+                if (isMain) {
+                    newSection.open = false;
+                }
+                intro.hidden = !isMain;
+                newSection.hidden = !isMain;
+                existingSection.hidden = !isMain;
+                editor.hidden = panel !== 'edit';
+                deleteSection.hidden = panel !== 'delete';
+            }
+
+            newSection.addEventListener('toggle', function() {
+                if (!editor.hidden || !deleteSection.hidden) {
+                    return;
+                }
+                intro.hidden = newSection.open;
+                existingSection.hidden = newSection.open;
+            });
+
+            function submitCategoryForm(form, errorTarget) {
+                var submit = form.querySelector('[type="submit"]');
+                var body = new URLSearchParams(new FormData(form));
+                body.set('links_pin_ajax', '1');
+                submit.disabled = true;
+                showError(errorTarget, '');
+                fetch(window.location.pathname + window.location.search, {
+                    method: 'POST',
+                    credentials: 'same-origin',
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                    body: body.toString()
+                }).then(function(response) {
+                    return response.json().then(function(data) {
+                        if (!response.ok || !data.redirect) {
+                            throw new Error(data.error || 'The category could not be saved.');
+                        }
+                        return data;
+                    });
+                }).then(function(data) {
+                    window.location.href = data.redirect;
+                }).catch(function(error) {
+                    showError(errorTarget, error.message || 'The category could not be saved.');
+                    submit.disabled = false;
+                });
+            }
+
+            iconSelect.addEventListener('change', function() {
+                iconPreview.className = 'fa ' + iconSelect.value;
+            });
+
+            modal.querySelectorAll('[data-pin-edit-button]').forEach(function(button) {
+                button.addEventListener('click', function() {
+                    var row = button.closest('[data-pin-category]');
+                    editForm.elements.category_id.value = row.getAttribute('data-id');
+                    editForm.elements.category_name.value = row.getAttribute('data-name');
+                    editForm.elements.category_rank.value = row.getAttribute('data-category-rank');
+                    var icon = row.getAttribute('data-icon');
+                    editForm.querySelectorAll('input[name="category_icon"]').forEach(function(input) {
+                        input.checked = input.value === icon;
+                    });
+                    showError(editError, '');
+                    showPanel('edit');
+                    editForm.elements.category_name.focus();
+                });
+            });
+
+            modal.querySelectorAll('[data-pin-delete-button]').forEach(function(button) {
+                button.addEventListener('click', function() {
+                    var row = button.closest('[data-pin-category]');
+                    var linkCount = Number(row.getAttribute('data-link-count')) || 0;
+                    var replacement = deleteForm.elements.replacement_category_id;
+                    deleteForm.elements.category_id.value = row.getAttribute('data-id');
+                    deleteSection.querySelector('.links-pin-modal__delete-message').textContent = linkCount
+                        ? 'Delete “' + row.getAttribute('data-name') + '” and move its ' + linkCount + ' link(s) to another category.'
+                        : 'Delete “' + row.getAttribute('data-name') + '”?';
+                    deleteSection.querySelector('.links-pin-modal__replacement').hidden = linkCount === 0;
+                    replacement.required = linkCount > 0;
+                    replacement.value = '';
+                    Array.prototype.forEach.call(replacement.options, function(option) {
+                        option.disabled = option.value === row.getAttribute('data-id');
+                    });
+                    showError(deleteError, '');
+                    showPanel('delete');
+                });
+            });
+
+            modal.querySelectorAll('[data-pin-back]').forEach(function(button) {
+                button.addEventListener('click', function() {
+                    showPanel('main');
+                });
+            });
+
+            editForm.addEventListener('submit', function(event) {
+                event.preventDefault();
+                var name = editForm.elements.category_name.value.trim();
+                var id = editForm.elements.category_id.value;
+                var rank = Number(editForm.elements.category_rank.value);
+                var duplicate = rows.some(function(row) {
+                    return row.getAttribute('data-id') !== id
+                        && row.getAttribute('data-name').toLocaleLowerCase() === name.toLocaleLowerCase();
+                });
+                if (!name || name.length > 20 || duplicate || !Number.isInteger(rank) || rank < 0) {
+                    showError(editError, duplicate ? 'This category name is already in use.' : 'Enter a valid name and order.');
+                    return;
+                }
+                editForm.elements.category_name.value = name;
+                submitCategoryForm(editForm, editError);
+            });
+
+            deleteForm.addEventListener('submit', function(event) {
+                event.preventDefault();
+                if (deleteForm.elements.replacement_category_id.required
+                    && !deleteForm.elements.replacement_category_id.value) {
+                    showError(deleteError, 'Choose another category for the existing links.');
+                    return;
+                }
+                submitCategoryForm(deleteForm, deleteError);
+            });
+
+            search.addEventListener('input', function() {
+                var query = search.value.trim().toLocaleLowerCase();
+                rows.forEach(function(row) {
+                    row.hidden = row.getAttribute('data-name').toLocaleLowerCase().indexOf(query) === -1;
+                });
+            });
+
+            nameInput.addEventListener('input', function() {
+                showError(nameError, '');
+            });
+
+            createForm.addEventListener('submit', function(event) {
+                var name = nameInput.value.trim();
+                var duplicate = rows.some(function(row) {
+                    return row.getAttribute('data-name').toLocaleLowerCase() === name.toLocaleLowerCase();
+                });
+                if (!name || name.length > 20) {
+                    event.preventDefault();
+                    showError(nameError, 'Enter a category name of up to 20 characters.');
+                    nameInput.focus();
+                } else if (duplicate) {
+                    event.preventDefault();
+                    showError(nameError, 'This category already exists. Use its switch below.');
+                    nameInput.focus();
+                } else {
+                    nameInput.value = name;
+                }
+            });
+
+            modal.querySelectorAll('[data-pin-toggle]').forEach(function(input) {
+                input.addEventListener('change', function() {
+                    var active = input.checked;
+                    var body = new URLSearchParams();
+                    body.set('links_pin_action', 'toggle_category');
+                    body.set('links_pin_ajax', '1');
+                    body.set('category_id', input.value);
+                    body.set('active', active ? '1' : '0');
+                    body.set('csrf_tokenlinks_pin', token);
+                    input.disabled = true;
+                    showError(actionError, '');
+
+                    fetch(window.location.pathname + window.location.search, {
+                        method: 'POST',
+                        credentials: 'same-origin',
+                        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                        body: body.toString()
+                    }).then(function(response) {
+                        return response.json().then(function(data) {
+                            if (!response.ok || typeof data.active !== 'boolean') {
+                                throw new Error(data.error || 'The category could not be updated.');
+                            }
+                            return data;
+                        });
+                    }).then(function(data) {
+                        input.checked = data.active;
+                        changed = true;
+                        updateCount();
+                    }).catch(function(error) {
+                        input.checked = !active;
+                        showError(actionError, error.message || 'The category could not be updated.');
+                    }).finally(function() {
+                        input.disabled = false;
+                    });
+                });
+            });
+
+            if (window.jQuery && window.jQuery.fn.modal) {
+                window.jQuery(modal).on('hidden.bs.modal', function() {
+                    if (changed) {
+                        window.location.reload();
+                    }
+                });
+            }
+
+            updateCount();
+            if (!nameError.hidden) {
+                var opener = document.querySelector('.links-pin-panel__manage');
+                if (opener) {
+                    opener.click();
+                }
+            }
+        }
+
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initPinModal);
+        } else {
+            initPinModal();
         }
     })();
 </script>

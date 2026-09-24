@@ -414,6 +414,12 @@ class Links extends DatabaseObject
         }
 
         $category_values = [];
+        $category_icons = [];
+        if (!$category_1 && !$category_2) {
+            foreach (LinksCategory::find_all() as $saved_category) {
+                $category_icons[(string)$saved_category->category] = (string)($saved_category->icon ?? 'fa-folder-o');
+            }
+        }
         foreach ($category_set as $category) {
             if ($category_1) {
                 $categ = $category->sub_category_1;
@@ -440,6 +446,16 @@ class Links extends DatabaseObject
             $category_values[$categ] = $categ;
         }
 
+        if (!$category_1 && !$category_2 && class_exists('LinksPinnedColumn')) {
+            foreach (LinksPinnedColumn::active_category_values() as $pinned_category) {
+                if (isset($category_icons[$pinned_category])
+                    && !self::is_retired_link_category($pinned_category)
+                    && (!class_exists('LinksCategoryVisibility') || !LinksCategoryVisibility::is_hidden('category', $pinned_category))) {
+                    $category_values[$pinned_category] = $pinned_category;
+                }
+            }
+        }
+
         if (class_exists('LinksCategoryVisibility')) {
             $category_values = LinksCategoryVisibility::sort_values($source_field, array_values($category_values));
         } else {
@@ -457,7 +473,11 @@ class Links extends DatabaseObject
             $output .= $current_page;
             $output .= "?category=";
             $output .= rawurlencode((string)$categ);
-            $output .= "\">" . self::html($categ) . "</a></li>";
+            $icon = $category_icons[$categ] ?? 'fa-folder-o';
+            $icon_html = $icon !== 'fa-folder-o' && preg_match('/^fa-[a-z0-9-]+$/', $icon)
+                ? "<i class='fa " . self::html($icon) . "' aria-hidden='true'></i> "
+                : '';
+            $output .= "\">" . $icon_html . self::html($categ) . "</a></li>";
 
 
         }
@@ -562,7 +582,25 @@ class Links extends DatabaseObject
 
 
         $output .= "<tr>";
-        $output .= "<th class='text-center' style='vertical-align:middle;'>" . self::html($category) . "</th>";
+        $heading_icon = '';
+        if (!$category_1 && !$category_2 && $category !== 'All') {
+            static $category_icons = null;
+            if ($category_icons === null) {
+                $category_icons = [];
+                foreach (LinksCategory::find_all() as $saved_category) {
+                    $key = function_exists('mb_strtolower')
+                        ? mb_strtolower((string)$saved_category->category, 'UTF-8')
+                        : strtolower((string)$saved_category->category);
+                    $category_icons[$key] = (string)($saved_category->icon ?? 'fa-folder-o');
+                }
+            }
+            $key = function_exists('mb_strtolower') ? mb_strtolower((string)$category, 'UTF-8') : strtolower((string)$category);
+            $icon = $category_icons[$key] ?? 'fa-folder-o';
+            if ($icon !== 'fa-folder-o' && array_key_exists($icon, LinksPinnedColumn::category_icon_options())) {
+                $heading_icon = "<i class='fa " . self::html($icon) . " links-category-heading-icon' aria-hidden='true'></i>";
+            }
+        }
+        $output .= "<th class='text-center' style='vertical-align:middle;'>" . $heading_icon . self::html($category) . "</th>";
 
 
         $output .= "</tr>";
