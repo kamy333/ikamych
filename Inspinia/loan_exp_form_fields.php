@@ -47,6 +47,7 @@ $loan_exp_document = $loan_exp_form_values["document"] ?? "";
         <div class="form-group">
             <label class="control-label" for="<?php echo h($loan_exp_form_prefix); ?>person-id">Person<span class="loan-exp-required-star" aria-hidden="true">*</span></label>
             <select id="<?php echo h($loan_exp_form_prefix); ?>person-id" class="form-control" name="person_id" required>
+                <option value="">Choose a person</option>
                 <?php echo loan_exp_select_options($expense_people, "id", "person_name", $loan_exp_person_id); ?>
             </select>
         </div>

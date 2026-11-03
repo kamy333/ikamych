@@ -1,0 +1,21 @@
+.loan-exp-toolbar .loan-exp-filter--person { position: relative; }
+.loan-exp-page--public .loan-exp-toolbar { align-items: start; }
+.loan-people-help { margin: 6px 0 0; color: #52677c; font-size: 11px; line-height: 1.4; }
+.loan-people-picker { margin-top: 7px; }
+.loan-people-picker summary { color: #075985; font-size: 12px; font-weight: 700; cursor: pointer; }
+.loan-people-picker summary span { display: inline-block; min-width: 20px; padding: 1px 5px; border-radius: 10px; background: #e0f2fe; text-align: center; }
+.loan-people-picker__panel { position: absolute; top: 100%; left: 0; z-index: 20; width: 420px; max-width: calc(100vw - 64px); margin-top: 5px; padding: 14px; border: 1px solid #cbd8e3; border-radius: 8px; background: #fff; box-shadow: 0 12px 28px rgba(15, 23, 42, .18); }
+.loan-people-picker__actions { display: flex; justify-content: space-between; gap: 12px; margin: 8px 0; }
+.loan-people-picker__actions button { padding: 3px 0; border: 0; background: transparent; color: #075985; font-size: 12px; text-decoration: underline; }
+.loan-people-picker__list { max-height: 260px; overflow-y: auto; border: 0; margin: 0 0 12px; padding: 0; }
+.loan-exp-toolbar label.loan-people-picker__option { display: flex; align-items: center; gap: 9px; margin: 0; padding: 8px 2px; border-bottom: 1px solid #edf2f7; font-size: 12px; font-weight: 500; text-transform: none; cursor: pointer; }
+.loan-people-picker__option input { flex: 0 0 auto; width: 16px; height: 16px; accent-color: #0284c7; }
+.loan-people-picker__option small { display: block; color: #64748b; font-size: 10px; }
+.loan-people-picker__balance { margin-left: auto; text-align: right; white-space: nowrap; font-variant-numeric: tabular-nums; }
+.loan-people-picker__error { color: #b91c1c; font-size: 12px; }
+.loan-people-picker__footer { display: flex; justify-content: flex-end; gap: 8px; }
+.loan-people-picker.has-error .loan-people-picker__list { outline: 1px solid #b91c1c; }
+.loan-people-picker[hidden], .loan-people-help[hidden], .loan-people-picker__error[hidden] { display: none !important; }
+@media (max-width: 767px) {
+    .loan-people-picker__panel { position: static; width: 100%; max-width: none; box-shadow: none; }
+}

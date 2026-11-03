@@ -440,36 +440,156 @@ $saved_links_csrf_token = create_csrf_token($saved_links_csrf_id);
     }
 
     .saved-links-list--gallery {
-        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-        align-items: start;
+        grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+        align-items: stretch;
+        padding-inline: 36px;
+    }
+
+    .saved-links-row-nav {
+        display: grid;
+        gap: 10px;
+        position: fixed;
+        top: 50%;
+        transform: translateY(-50%);
+        z-index: 1000;
+    }
+
+    .saved-links-row-nav--left {
+        left: 6px;
+    }
+
+    .saved-links-row-nav--right {
+        right: 6px;
+    }
+
+    .saved-links-row-nav button {
+        align-items: center;
+        background: #fff;
+        border: 2px solid #0b8fcb;
+        border-radius: 12px;
+        box-shadow: 0 5px 18px rgba(9, 28, 48, 0.22);
+        color: #0b4778;
+        cursor: pointer;
+        display: inline-flex;
+        font-size: 21px;
+        justify-content: center;
+        min-height: 48px;
+        min-width: 48px;
+        padding: 0;
+    }
+
+    .saved-links-row-nav button:hover,
+    .saved-links-row-nav button:focus-visible {
+        background: #dff4ff;
+        outline: 3px solid #0b4778;
+        outline-offset: 2px;
+    }
+
+    .saved-links-row-nav button:disabled {
+        cursor: default;
+        opacity: 0.45;
+    }
+
+    .saved-links-row-nav__status {
+        clip: rect(0, 0, 0, 0);
+        clip-path: inset(50%);
+        height: 1px;
+        overflow: hidden;
+        position: absolute;
+        white-space: nowrap;
+        width: 1px;
+    }
+
+    .saved-links-list--gallery .saved-link-item {
+        display: flex;
+        flex-direction: column;
     }
 
     .saved-links-list--gallery .saved-link-row {
         display: flex;
         align-items: stretch;
         flex-direction: column;
+        flex: 1;
         min-height: 0;
     }
 
     .saved-link-cover {
         align-items: center;
-        aspect-ratio: 16 / 9;
+        aspect-ratio: 4 / 3;
         background: linear-gradient(135deg, #dbeaf5, #eff6fb);
+        border: 0;
         color: #31556f;
         display: none;
         justify-content: center;
         overflow: hidden;
+        padding: 0;
         position: relative;
+        width: 100%;
     }
 
     .saved-links-list--gallery .saved-link-cover {
         display: flex;
     }
 
-    .saved-link-cover img {
+    .saved-link-cover__image {
+        inset: 0;
         height: 100%;
         object-fit: cover;
+        position: absolute;
+        transition: transform 0.2s ease;
         width: 100%;
+    }
+
+    .saved-links-list--gallery .saved-link-cover--portrait {
+        aspect-ratio: 1;
+        background: #142739;
+    }
+
+    .saved-link-cover--portrait .saved-link-cover__image {
+        object-position: center 28%;
+    }
+
+    button.saved-link-cover {
+        cursor: zoom-in;
+    }
+
+    button.saved-link-cover:hover .saved-link-cover__image,
+    button.saved-link-cover:focus-visible .saved-link-cover__image {
+        transform: scale(1.04);
+    }
+
+    button.saved-link-cover:focus-visible {
+        outline: 3px solid #0b8fcb;
+        outline-offset: 3px;
+    }
+
+    .saved-link-cover__hint {
+        align-items: center;
+        background: rgba(13, 30, 48, 0.82);
+        border-radius: 999px;
+        bottom: 10px;
+        color: #fff;
+        display: inline-flex;
+        font-size: 12px;
+        font-weight: 800;
+        gap: 5px;
+        opacity: 0;
+        padding: 7px 10px;
+        position: absolute;
+        right: 10px;
+        transition: opacity 0.2s ease;
+        z-index: 1;
+    }
+
+    button.saved-link-cover:hover .saved-link-cover__hint,
+    button.saved-link-cover:focus-visible .saved-link-cover__hint {
+        opacity: 1;
+    }
+
+    @media (hover: none) {
+        .saved-link-cover__hint {
+            opacity: 1;
+        }
     }
 
     .saved-link-cover i {
@@ -489,11 +609,27 @@ $saved_links_csrf_token = create_csrf_token($saved_links_csrf_id);
 
     .saved-links-list--gallery .saved-link-type {
         display: inline-flex;
+        flex: none;
+        margin-top: 1px;
     }
 
-    .saved-links-list--gallery .saved-link-summary__title,
+    .saved-links-list--gallery .saved-link-summary__heading {
+        align-items: flex-start;
+        display: flex;
+        gap: 8px;
+    }
+
+    .saved-links-list--gallery .saved-link-summary__title {
+        display: block;
+        flex: 1;
+        min-width: 0;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
     .saved-links-list--gallery .saved-link-summary__url {
-        white-space: normal;
+        display: none;
     }
 
     .saved-link-description {
@@ -510,6 +646,160 @@ $saved_links_csrf_token = create_csrf_token($saved_links_csrf_id);
 
     .saved-links-list--gallery .saved-link-description {
         display: block;
+        height: auto;
+        max-height: none;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .saved-link-text-preview {
+        background: #fff;
+        border: 1px solid #c9d7e5;
+        border-radius: 8px;
+        box-shadow: 0 12px 32px rgba(9, 28, 48, 0.24);
+        color: #20344c;
+        font-size: 14px;
+        line-height: 1.5;
+        max-height: min(70vh, 500px);
+        overflow: auto;
+        overflow-wrap: anywhere;
+        padding: 12px 14px;
+        position: fixed;
+        white-space: pre-line;
+        width: min(440px, calc(100vw - 24px));
+        z-index: 2000;
+    }
+
+    .saved-link-text-preview[hidden] {
+        display: none;
+    }
+
+    .saved-link-text-preview__notice {
+        border-top: 1px solid #e5edf5;
+        color: #52667c;
+        font-size: 12px;
+        margin: 10px 0 0;
+        padding-top: 8px;
+    }
+
+    .saved-links-list--gallery .saved-link-toggle__hint {
+        display: none;
+    }
+
+    .saved-link-state-row {
+        display: flex;
+        min-width: 0;
+    }
+
+    .saved-links-list--gallery .saved-link-state-row {
+        align-items: center;
+        gap: 8px;
+    }
+
+    .saved-links-list--gallery .saved-link-status {
+        flex: 1;
+        min-width: 0;
+    }
+
+    .saved-link-details-trigger {
+        align-items: center;
+        background: transparent;
+        border: 0;
+        border-radius: 6px;
+        color: #31556f;
+        cursor: pointer;
+        display: none;
+        font-size: 13px;
+        font-weight: 800;
+        gap: 6px;
+        min-height: 30px;
+        padding: 4px 6px;
+        white-space: nowrap;
+    }
+
+    .saved-links-list--gallery .saved-link-details-trigger {
+        display: inline-flex;
+    }
+
+    .saved-link-details-trigger:focus-visible {
+        outline: 3px solid rgba(14, 143, 203, 0.35);
+    }
+
+    .saved-link-details-trigger i {
+        transition: transform 0.16s ease;
+    }
+
+    .saved-link-details-trigger[aria-expanded="true"] i {
+        transform: rotate(180deg);
+    }
+
+    .saved-links-list--gallery .saved-link-row-actions {
+        margin-top: auto;
+    }
+
+    .saved-link-details__url {
+        color: #52667c;
+        font-size: 13px;
+        margin: 10px 0;
+        overflow-wrap: anywhere;
+    }
+
+    .saved-link-details__url strong {
+        display: block;
+        font-size: 11px;
+        text-transform: uppercase;
+    }
+
+    .saved-links-image-dialog {
+        background: #fff;
+        border: 0;
+        border-radius: 12px;
+        box-shadow: 0 24px 80px rgba(9, 28, 48, 0.35);
+        color: #162033;
+        max-height: calc(100dvh - 32px);
+        padding: 0;
+        width: min(900px, calc(100vw - 32px));
+    }
+
+    .saved-links-image-dialog::backdrop {
+        background: rgba(9, 28, 48, 0.82);
+    }
+
+    .saved-links-image-dialog__header {
+        align-items: center;
+        display: flex;
+        gap: 12px;
+        justify-content: space-between;
+        padding: 12px 16px;
+    }
+
+    .saved-links-image-dialog__header h2 {
+        color: #173f63;
+        font-size: 18px;
+        line-height: 1.35;
+        margin: 0;
+        overflow-wrap: anywhere;
+    }
+
+    .saved-links-image-dialog__body {
+        align-items: center;
+        background: #102338;
+        display: flex;
+        justify-content: center;
+        min-height: 180px;
+    }
+
+    .saved-links-image-dialog__body img {
+        display: block;
+        max-height: calc(100dvh - 170px);
+        max-width: 100%;
+        object-fit: contain;
+    }
+
+    .saved-links-image-dialog__footer {
+        display: flex;
+        justify-content: flex-end;
+        padding: 12px 16px;
     }
 
     .saved-links-video-dialog {
@@ -720,6 +1010,10 @@ $saved_links_csrf_token = create_csrf_token($saved_links_csrf_id);
         grid-template-columns: minmax(190px, 1fr) minmax(160px, 0.7fr) minmax(160px, 0.7fr) 110px;
     }
 
+    .saved-links-list--gallery .saved-link-import__grid {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
     .saved-link-import__grid .saved-links-field--wide {
         grid-column: 1 / -1;
     }
@@ -743,6 +1037,22 @@ $saved_links_csrf_token = create_csrf_token($saved_links_csrf_id);
         gap: 8px;
         justify-content: flex-end;
         margin-top: 10px;
+    }
+
+    .saved-link-details-actions {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+    }
+
+    .saved-link-details-actions .saved-links-btn,
+    .saved-link-details-actions form {
+        width: 100%;
+    }
+
+    @media (max-width: 480px) {
+        .saved-links-list--gallery .saved-link-details-actions form {
+            grid-column: 1 / -1;
+        }
     }
 
     .saved-link-row-actions {
@@ -776,6 +1086,15 @@ $saved_links_csrf_token = create_csrf_token($saved_links_csrf_id);
     }
 
     @media (max-width: 760px) {
+        .saved-links-list--gallery {
+            grid-template-columns: minmax(0, 1fr);
+            padding-inline: 0 50px;
+        }
+
+        .saved-links-row-nav--left {
+            display: none;
+        }
+
         .saved-links-header,
         .saved-link-row,
         .saved-links-token-grid,
@@ -982,18 +1301,23 @@ $saved_links_csrf_token = create_csrf_token($saved_links_csrf_id);
             <?php foreach ($links as $link) { ?>
                 <article class="saved-link-item">
                     <div class="saved-link-row">
-                        <div class="saved-link-cover" aria-hidden="true">
-                            <?php if ($link['thumbnail_url'] !== '') { ?>
-                                <img src="<?php echo h($link['thumbnail_url']); ?>" alt="" loading="lazy">
-                            <?php } else { ?>
-                                <i class="fa <?php echo h(saved_links_type_icon($link['content_type'])); ?>"></i>
-                            <?php } ?>
-                        </div>
+                        <?php if ($link['thumbnail_url'] !== '') { ?>
+                            <button class="saved-link-cover" type="button" aria-label="Enlarge image for <?php echo h($link['title']); ?>" data-saved-preview-open data-preview-src="<?php echo h($link['thumbnail_url']); ?>" data-preview-title="<?php echo h($link['title']); ?>" data-preview-link="<?php echo h($link['url']); ?>">
+                                <i class="fa <?php echo h(saved_links_type_icon($link['content_type'])); ?>" aria-hidden="true"></i>
+                                <img class="saved-link-cover__image" src="<?php echo h($link['thumbnail_url']); ?>" alt="" loading="lazy">
+                                <span class="saved-link-cover__hint" aria-hidden="true"><i class="fa fa-search-plus"></i> Enlarge</span>
+                            </button>
+                        <?php } else { ?>
+                            <div class="saved-link-cover" aria-hidden="true"><i class="fa <?php echo h(saved_links_type_icon($link['content_type'])); ?>"></i></div>
+                        <?php } ?>
                         <button class="saved-link-toggle" type="button" aria-expanded="false" aria-controls="saved-link-panel-<?php echo h($link['id']); ?>" data-saved-link-toggle>
                             <span class="saved-link-summary__main">
-                                <span class="saved-link-summary__title"><?php echo h($link['title']); ?></span>
+                                <span class="saved-link-summary__heading">
+                                    <span class="saved-link-summary__title" title="<?php echo h($link['title']); ?>"><?php echo h($link['title']); ?></span>
+                                    <span class="saved-link-type"><?php echo h(saved_links_content_types()[$link['content_type']]); ?></span>
+                                </span>
                                 <span class="saved-link-summary__url"><?php echo h($link['url']); ?></span>
-                                <span class="saved-link-description"><?php echo h(trim((string)$link['note']) !== '' ? $link['note'] : 'No description saved yet.'); ?></span>
+                                <span class="saved-link-description" data-saved-link-note-preview><?php echo h(trim((string)$link['note']) !== '' ? $link['note'] : 'No description saved yet.'); ?></span>
                                 <span class="saved-link-toggle__hint">
                                     <i class="fa fa-chevron-down" aria-hidden="true"></i>
                                     Details
@@ -1001,11 +1325,14 @@ $saved_links_csrf_token = create_csrf_token($saved_links_csrf_id);
                             </span>
                         </button>
 
-                        <span class="saved-link-status saved-link-status--<?php echo h($link['status']); ?>">
-                            <?php echo h($link['status']); ?>
-                        </span>
-
-                        <span class="saved-link-type"><?php echo h(saved_links_content_types()[$link['content_type']]); ?></span>
+                        <div class="saved-link-state-row">
+                            <span class="saved-link-status saved-link-status--<?php echo h($link['status']); ?>">
+                                <?php echo h($link['status']); ?>
+                            </span>
+                            <button class="saved-link-details-trigger" type="button" aria-expanded="false" aria-controls="saved-link-panel-<?php echo h($link['id']); ?>" data-saved-link-toggle>
+                                <i class="fa fa-chevron-down" aria-hidden="true"></i> Details
+                            </button>
+                        </div>
 
                         <div class="saved-link-row-actions" aria-label="Saved link shortcuts">
                             <?php if ($link['play_on_facebook']) { ?>
@@ -1051,8 +1378,9 @@ $saved_links_csrf_token = create_csrf_token($saved_links_csrf_id);
                         <div class="saved-link-item__meta">
                             Saved <?php echo h($link['saved_at']); ?> from <?php echo h($link['source']); ?>
                         </div>
+                        <div class="saved-link-details__url"><strong>URL</strong><a href="<?php echo h($link['url']); ?>" target="_blank" rel="noopener noreferrer"><?php echo h($link['url']); ?></a></div>
 
-                        <form method="post" action="<?php echo h($page_url); ?>" class="saved-link-form">
+                        <form method="post" action="<?php echo h($page_url); ?>" class="saved-link-form" id="saved-link-update-<?php echo h($link['id']); ?>">
                             <input type="hidden" name="csrf_token<?php echo h($saved_links_csrf_id); ?>" value="<?php echo h($saved_links_csrf_token); ?>">
                             <input type="hidden" name="return_to" value="<?php echo h($saved_links_return_to); ?>">
                             <input type="hidden" name="action" value="update_link">
@@ -1079,19 +1407,17 @@ $saved_links_csrf_token = create_csrf_token($saved_links_csrf_id);
                                 <textarea id="saved-link-note-<?php echo h($link['id']); ?>" name="note"><?php echo h($link['note']); ?></textarea>
                             </div>
 
-                            <div class="saved-link-actions saved-links-field--wide">
-                                <a class="saved-links-btn saved-links-btn--neutral" href="<?php echo h($link['url']); ?>" target="_blank" rel="noopener noreferrer">
-                                    <i class="fa fa-external-link" aria-hidden="true"></i>
-                                    Open
-                                </a>
-                                <button class="saved-links-btn saved-links-btn--success" type="submit">
-                                    <i class="fa fa-save" aria-hidden="true"></i>
-                                    Save
-                                </button>
-                            </div>
                         </form>
 
-                        <div class="saved-link-actions">
+                        <div class="saved-link-actions saved-link-details-actions">
+                            <a class="saved-links-btn saved-links-btn--neutral" href="<?php echo h($link['url']); ?>" target="_blank" rel="noopener noreferrer">
+                                <i class="fa fa-external-link" aria-hidden="true"></i>
+                                Open
+                            </a>
+                            <button class="saved-links-btn saved-links-btn--success" type="submit" form="saved-link-update-<?php echo h($link['id']); ?>">
+                                <i class="fa fa-save" aria-hidden="true"></i>
+                                Save
+                            </button>
                             <?php if ($link['status'] !== 'archived') { ?>
                                 <form method="post" action="<?php echo h($page_url); ?>">
                                     <input type="hidden" name="csrf_token<?php echo h($saved_links_csrf_id); ?>" value="<?php echo h($saved_links_csrf_token); ?>">
@@ -1175,10 +1501,204 @@ $saved_links_csrf_token = create_csrf_token($saved_links_csrf_id);
             <a class="saved-links-btn saved-links-btn--neutral" id="saved-links-video-open" href="#" target="_blank" rel="noopener noreferrer">Open link</a>
         </div>
     </dialog>
+
+    <dialog class="saved-links-image-dialog" id="saved-links-image-dialog" aria-labelledby="saved-links-image-title">
+        <div class="saved-links-image-dialog__header">
+            <h2 id="saved-links-image-title">Preview image</h2>
+            <button class="saved-links-video-dialog__close" type="button" aria-label="Close image" data-saved-image-close>&times;</button>
+        </div>
+        <div class="saved-links-image-dialog__body"><img id="saved-links-image-full" alt=""></div>
+        <div class="saved-links-image-dialog__footer"><a class="saved-links-btn saved-links-btn--neutral" id="saved-links-image-open" href="#" target="_blank" rel="noopener noreferrer">Open link</a></div>
+    </dialog>
 </main>
+
+<?php if ($view === 'gallery' && !empty($links)) { ?>
+    <nav class="saved-links-row-nav saved-links-row-nav--left" aria-label="Gallery rows, left side">
+        <button type="button" data-gallery-row-direction="-1" aria-label="Previous row" title="Previous row"><i class="fa fa-chevron-up" aria-hidden="true"></i></button>
+        <button type="button" data-gallery-row-direction="1" aria-label="Next row" title="Next row"><i class="fa fa-chevron-down" aria-hidden="true"></i></button>
+    </nav>
+    <nav class="saved-links-row-nav saved-links-row-nav--right" aria-label="Gallery rows, right side">
+        <button type="button" data-gallery-row-direction="-1" aria-label="Previous row" title="Previous row"><i class="fa fa-chevron-up" aria-hidden="true"></i></button>
+        <button type="button" data-gallery-row-direction="1" aria-label="Next row" title="Next row"><i class="fa fa-chevron-down" aria-hidden="true"></i></button>
+    </nav>
+    <div class="saved-links-row-nav__status" id="saved-links-row-nav-status" role="status" aria-live="polite"></div>
+<?php } ?>
+
+<div class="saved-link-text-preview" id="saved-link-text-preview" role="tooltip" hidden></div>
 
 <script>
     (function() {
+        var gallery = document.querySelector('.saved-links-list--gallery');
+        var rowButtons = document.querySelectorAll('[data-gallery-row-direction]');
+        var rowStatus = document.getElementById('saved-links-row-nav-status');
+
+        function galleryRowPositions() {
+            var positions = [];
+            if (!gallery) return positions;
+            gallery.querySelectorAll('.saved-link-item').forEach(function(card) {
+                var top = Math.round(card.getBoundingClientRect().top + window.scrollY);
+                if (!positions.length || Math.abs(top - positions[positions.length - 1]) > 3) {
+                    positions.push(top);
+                }
+            });
+            return positions;
+        }
+
+        function currentGalleryRow(positions) {
+            if (window.scrollY + window.innerHeight >= document.documentElement.scrollHeight - 2) {
+                return positions.length - 1;
+            }
+            var current = -1;
+            var threshold = window.scrollY + 76;
+            positions.forEach(function(top, index) {
+                if (top <= threshold) current = index;
+            });
+            return current;
+        }
+
+        function updateGalleryRowButtons() {
+            if (!gallery || !rowButtons.length) return;
+            var positions = galleryRowPositions();
+            var current = currentGalleryRow(positions);
+            rowButtons.forEach(function(button) {
+                button.disabled = button.getAttribute('data-gallery-row-direction') === '-1'
+                    ? current <= 0
+                    : current >= positions.length - 1;
+            });
+        }
+
+        rowButtons.forEach(function(button) {
+            button.addEventListener('click', function() {
+                var positions = galleryRowPositions();
+                var current = currentGalleryRow(positions);
+                var direction = Number(button.getAttribute('data-gallery-row-direction'));
+                var next = Math.max(0, Math.min(positions.length - 1, current + direction));
+                if (!positions.length || next === current) return;
+                window.scrollTo({ top: Math.max(0, positions[next] - 72), behavior: 'auto' });
+                rowStatus.textContent = 'Row ' + (next + 1) + ' of ' + positions.length;
+                updateGalleryRowButtons();
+            });
+        });
+        if (gallery) {
+            window.addEventListener('scroll', updateGalleryRowButtons, { passive: true });
+            window.addEventListener('resize', updateGalleryRowButtons);
+            new ResizeObserver(updateGalleryRowButtons).observe(gallery);
+            updateGalleryRowButtons();
+        }
+
+        var textPreview = document.getElementById('saved-link-text-preview');
+        var previewHideTimer;
+        var previewFocusTimer;
+
+        function hideTextPreview() {
+            clearTimeout(previewHideTimer);
+            clearTimeout(previewFocusTimer);
+            textPreview.hidden = true;
+        }
+
+        function scheduleTextPreviewHide() {
+            clearTimeout(previewHideTimer);
+            clearTimeout(previewFocusTimer);
+            previewHideTimer = setTimeout(hideTextPreview, 150);
+        }
+
+        function showTextPreview(note) {
+            var rect = note.getBoundingClientRect();
+            var availableBelow = window.innerHeight - rect.bottom;
+            var savedText = note.textContent.trim();
+            clearTimeout(previewHideTimer);
+            textPreview.replaceChildren(document.createTextNode(savedText));
+            if (/(?:…|\.\.\.)(?:\s*See more)?\s*$/i.test(savedText)) {
+                var notice = document.createElement('p');
+                notice.className = 'saved-link-text-preview__notice';
+                notice.textContent = 'The saved description ends here. Open the original link to read more.';
+                textPreview.appendChild(notice);
+            }
+            textPreview.hidden = false;
+            textPreview.style.left = Math.max(12, Math.min(rect.left, window.innerWidth - textPreview.offsetWidth - 12)) + 'px';
+            textPreview.style.top = (availableBelow >= Math.min(textPreview.offsetHeight, 260) + 12
+                ? rect.bottom + 8
+                : Math.max(12, rect.top - textPreview.offsetHeight - 8)) + 'px';
+        }
+
+        document.querySelectorAll('.saved-links-list--gallery [data-saved-link-note-preview]').forEach(function(note) {
+            note.addEventListener('mouseenter', function() { showTextPreview(note); });
+            note.addEventListener('mouseleave', scheduleTextPreviewHide);
+            var toggle = note.closest('.saved-link-toggle');
+            toggle.addEventListener('focus', function() {
+                previewFocusTimer = setTimeout(function() { showTextPreview(note); }, 0);
+            });
+            toggle.addEventListener('blur', scheduleTextPreviewHide);
+            toggle.addEventListener('click', hideTextPreview);
+        });
+        textPreview.addEventListener('mouseenter', function() { clearTimeout(previewHideTimer); });
+        textPreview.addEventListener('mouseleave', scheduleTextPreviewHide);
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') hideTextPreview();
+        });
+        window.addEventListener('scroll', function(event) {
+            if (!textPreview.contains(event.target)) hideTextPreview();
+        }, true);
+
+        document.querySelectorAll('.saved-link-cover__image').forEach(function(image) {
+            var cover = image.closest('.saved-link-cover');
+            function fitImage() {
+                if (image.naturalWidth && image.naturalHeight > image.naturalWidth * 1.15) {
+                    cover.classList.add('saved-link-cover--portrait');
+                }
+            }
+            image.addEventListener('load', fitImage);
+            image.addEventListener('error', function() {
+                if (cover.matches('button')) {
+                    cover.disabled = true;
+                    cover.removeAttribute('data-saved-preview-open');
+                    var hint = cover.querySelector('.saved-link-cover__hint');
+                    if (hint) {
+                        hint.remove();
+                    }
+                }
+                image.remove();
+            });
+            if (image.complete && image.naturalWidth) {
+                fitImage();
+            }
+        });
+
+        var imageDialog = document.getElementById('saved-links-image-dialog');
+        var imageTitle = document.getElementById('saved-links-image-title');
+        var imageFull = document.getElementById('saved-links-image-full');
+        var imageOpen = document.getElementById('saved-links-image-open');
+        var imageTrigger = null;
+
+        document.querySelectorAll('[data-saved-preview-open]').forEach(function(button) {
+            button.addEventListener('click', function() {
+                imageTrigger = button;
+                imageTitle.textContent = button.getAttribute('data-preview-title') || 'Preview image';
+                imageFull.alt = imageTitle.textContent;
+                imageFull.src = button.getAttribute('data-preview-src') || '';
+                imageOpen.href = button.getAttribute('data-preview-link') || '#';
+                imageDialog.showModal();
+            });
+        });
+
+        document.querySelector('[data-saved-image-close]').addEventListener('click', function() {
+            imageDialog.close();
+        });
+
+        imageDialog.addEventListener('click', function(event) {
+            if (event.target === imageDialog) {
+                imageDialog.close();
+            }
+        });
+
+        imageDialog.addEventListener('close', function() {
+            imageFull.removeAttribute('src');
+            if (imageTrigger) {
+                imageTrigger.focus();
+                imageTrigger = null;
+            }
+        });
+
         document.querySelectorAll('[data-saved-link-toggle]').forEach(function(toggle) {
             toggle.addEventListener('click', function() {
                 var panel = document.getElementById(toggle.getAttribute('aria-controls'));
@@ -1188,7 +1708,9 @@ $saved_links_csrf_token = create_csrf_token($saved_links_csrf_id);
                     return;
                 }
 
-                toggle.setAttribute('aria-expanded', expanded ? 'false' : 'true');
+                document.querySelectorAll('[data-saved-link-toggle][aria-controls="' + panel.id + '"]').forEach(function(control) {
+                    control.setAttribute('aria-expanded', expanded ? 'false' : 'true');
+                });
                 panel.hidden = expanded;
             });
         });
@@ -1196,7 +1718,6 @@ $saved_links_csrf_token = create_csrf_token($saved_links_csrf_id);
         document.querySelectorAll('[data-saved-link-open-import]').forEach(function(button) {
             button.addEventListener('click', function() {
                 var panel = document.getElementById(button.getAttribute('data-saved-link-open-import'));
-                var toggle = document.querySelector('[aria-controls="' + button.getAttribute('data-saved-link-open-import') + '"]');
                 var category;
 
                 if (!panel) {
@@ -1204,9 +1725,9 @@ $saved_links_csrf_token = create_csrf_token($saved_links_csrf_id);
                 }
 
                 panel.hidden = false;
-                if (toggle) {
-                    toggle.setAttribute('aria-expanded', 'true');
-                }
+                document.querySelectorAll('[data-saved-link-toggle][aria-controls="' + panel.id + '"]').forEach(function(control) {
+                    control.setAttribute('aria-expanded', 'true');
+                });
 
                 category = panel.querySelector('select[name="links_category_id"]');
                 if (category) {
@@ -1353,6 +1874,11 @@ function saved_links_youtube_id(string $url): string
 
 function saved_links_thumbnail_url(array $link): string
 {
+    $stored = trim((string)($link['thumbnail_url'] ?? ''));
+    if (strpos($stored, '/public/img/saved-link-thumbnails/') === 0
+        || (strpos($stored, 'https://') === 0 && filter_var($stored, FILTER_VALIDATE_URL))) {
+        return $stored;
+    }
     $id = saved_links_youtube_id((string)$link['url']);
     return $id !== '' ? 'https://i.ytimg.com/vi/' . $id . '/hqdefault.jpg' : '';
 }

@@ -1,5 +1,6 @@
 <?php require_once('../includes/initialize.php');
 $session->confirmation_protected_page();
+require_once __DIR__ . '/../includes/loan_exp_people.php';
 
 if (!User::is_caroline() && !User::is_weslley()) {
     redirect_to('../index.php');
@@ -490,7 +491,7 @@ $user = isset($_SESSION["user_id"]) ? User::find_by_id($_SESSION['user_id']) : n
 $p_id = MyExpense::positive_int_or_default($_GET["person_id"] ?? 2, 2);
 $persons = MyExpensePerson::find_all();
 
-foreach ($persons as $person_option) {
+foreach (User::is_admin() ? [] : $persons as $person_option) {
     if ($person_option->authorized_user) {
         $auth_users = explode(",", $person_option->authorized_user);
         foreach ($auth_users as $auth_user) {
@@ -569,7 +570,11 @@ if (User::is_admin()) {
     foreach ($person_balance_rows as $person_balance_row) {
         $person_balances[(int) $person_balance_row["id"]] = (float) $person_balance_row["balance_chf"];
     }
+}
 
+$people_selection = loan_exp_people_selection($_GET, $person_balance_rows, User::is_admin(), $p_id);
+
+if (User::is_admin() && $people_selection['mode'] === 'single') {
     $currentPersonIsVisible = false;
     $firstVisiblePersonId = null;
     foreach ($person_balance_rows as $person_balance_row) {
@@ -600,13 +605,24 @@ if (User::is_admin()) {
     }
 }
 
-$myperson = MyExpensePerson::find_by_id($p_id);
-if (!$myperson) {
-    $session->message("Requested expense person was not found.");
-    redirect_to('../index.php');
+if ($people_selection['mode'] === 'single') {
+    $myperson = MyExpensePerson::find_by_id($p_id);
+    if (!$myperson) {
+        $session->message("Requested expense person was not found.");
+        redirect_to('/public/index.php');
+    }
+    $loan_people_title = $myperson->person_name;
+} else {
+    $loan_people_title = $people_selection['title'] ?: 'Selected people';
+    // A combined view must not silently attribute a new expense to one account.
+    $p_id = count($people_selection['ids']) === 1 ? $people_selection['ids'][0] : 0;
 }
-
-$person = $myperson->person_name;
+$_GET['person_id'] = $people_selection['value'];
+if ($people_selection['mode'] === 'selected') {
+    $_GET['person_ids'] = $people_selection['ids'];
+} else {
+    unset($_GET['person_ids']);
+}
 $page = loan_exp_int($_GET["page"] ?? 1, 1);
 $per_page = loan_exp_int($_GET["per_page"] ?? 25, 25);
 $per_page = in_array($per_page, [10, 25, 50, 100], true) ? $per_page : 25;
@@ -617,9 +633,9 @@ $currencies = Currency::find_by_sql("SELECT * FROM currency ORDER BY `rank` ASC,
 $expense_people = MyExpensePerson::find_by_sql("SELECT * FROM myexpense_person ORDER BY `rank` ASC, person_name ASC");
 $expense_types = MyExpenseType::find_by_sql("SELECT * FROM myexpense_type ORDER BY `rank` ASC, expense_type ASC");
 
-$where = " WHERE t1.person_id=? ";
-$params = [$p_id];
-$types = "i";
+$params = [];
+$types = "";
+$where = loan_exp_people_where($people_selection, $person_balances, $zero_balance_mode === 'exclude', $params, $types);
 $where .= loan_exp_sql_filters(
     "t1",
     $cat,
@@ -1965,6 +1981,8 @@ $status_messages = [
     }
 
 </style>
+<link rel="stylesheet" href="/public/css/loan_exp_people.css?v=<?php echo filemtime(SITE_ROOT . '/public/css/loan_exp_people.css'); ?>">
+<script src="/public/js/loan_exp_people.js?v=<?php echo filemtime(SITE_ROOT . '/public/js/loan_exp_people.js'); ?>" defer></script>
 
 <main class="loan-exp-page loan-exp-page--public">
     <?php if (isset($_GET["loan_status"], $status_messages[$_GET["loan_status"]])) {
@@ -1976,10 +1994,12 @@ $status_messages = [
     <section class="loan-exp-header">
         <div class="loan-exp-header-main">
             <p class="loan-exp-kicker">Loan expenses</p>
-            <h1 class="loan-exp-title"><?php echo h($person); ?> - Kamran</h1>
+            <h1 class="loan-exp-title"><?php echo h($loan_people_title); ?> - Kamran</h1>
             <div class="loan-exp-summary">
-                <?php if ($sum_value < 0) { ?>
-                    <span class="loan-exp-negative"><strong><?php echo h($cat_name); ?>: Total Due in favor of <?php echo h($person); ?>:</strong></span>
+                <?php if ($people_selection['mode'] !== 'single') { ?>
+                    <span><strong><?php echo h($cat_name); ?>: Net balance of selected people:</strong></span>
+                <?php } elseif ($sum_value < 0) { ?>
+                    <span class="loan-exp-negative"><strong><?php echo h($cat_name); ?>: Total Due in favor of <?php echo h($loan_people_title); ?>:</strong></span>
                 <?php } else { ?>
                     <span class="loan-exp-positive"><strong><?php echo h($cat_name); ?>: Total Due in favor of Kamran:</strong></span>
                 <?php } ?>
@@ -2017,31 +2037,7 @@ $status_messages = [
 
     <form class="loan-exp-toolbar" method="get" action="<?php echo h($_SERVER['PHP_SELF']); ?>">
         <?php if (User::is_admin()) { ?>
-            <div class="form-group loan-exp-filter--person">
-                <div class="loan-exp-filter-heading">
-                    <label for="loan-person">Person</label>
-                    <button class="loan-exp-manage-people-trigger" type="button"
-                            data-toggle="modal" data-target="#loanExpensePeopleModal"
-                            data-loan-exp-target="#loanExpensePeopleModal"
-                            onclick="return window.loanExpOpenModalFallback ? window.loanExpOpenModalFallback('#loanExpensePeopleModal') : true;">
-                        <i class="fa fa-users" aria-hidden="true"></i> Manage
-                    </button>
-                </div>
-                <select id="loan-person" class="form-control" name="person_id" onchange="this.form.submit();">
-                    <?php foreach ($person_balance_rows as $person_balance_row) {
-                        if ((int) $person_balance_row["close_person"] !== 0) {
-                            continue;
-                        }
-                        $person_balance = (float) $person_balance_row["balance_chf"];
-                        if ($zero_balance_mode === "exclude" && round($person_balance, 2) == 0.0) {
-                            continue;
-                        }
-                        $selected = (int) $person_balance_row["id"] === (int) $p_id ? " selected" : "";
-                        $person_option_label = $person_balance_row["person_name"] . " — CHF " . number_format($person_balance, 2);
-                        echo "<option{$selected} value='" . h($person_balance_row["id"]) . "'>" . h($person_option_label) . "</option>";
-                    } ?>
-                </select>
-            </div>
+            <?php include SITE_ROOT . DS . 'includes' . DS . 'loan_exp_people_filter.php'; ?>
         <?php } ?>
 
         <div class="form-group loan-exp-filter--category">
@@ -2097,7 +2093,7 @@ $status_messages = [
                 <label for="loan-zero-balance">Accounts</label>
                 <label class="loan-exp-compact-check" for="loan-zero-balance">
                     <input id="loan-zero-balance" type="checkbox" name="zero_balance" value="exclude"
-                           onchange="this.form.submit();"<?php echo $zero_balance_mode === "exclude" ? " checked" : ""; ?>>
+                           onchange="this.form.requestSubmit();"<?php echo $zero_balance_mode === "exclude" ? " checked" : ""; ?>>
                     <span class="loan-exp-compact-check__box" aria-hidden="true"><i class="fa fa-check"></i></span>
                     <span>Hide zero balances</span>
                 </label>
@@ -2248,7 +2244,7 @@ $status_messages = [
 <div class="modal fade loan-exp-modal loan-exp-filter-modal" id="loanExpenseFilterModal" tabindex="-1" role="dialog" aria-labelledby="loanExpenseFilterTitle" aria-describedby="loanExpenseFilterDescription">
     <div class="modal-dialog" role="document">
         <form class="modal-content" id="loan-exp-filter-form" method="get" action="<?php echo h($_SERVER['PHP_SELF']); ?>" novalidate>
-            <input type="hidden" name="person_id" value="<?php echo h($p_id); ?>">
+            <?php echo loan_exp_people_hidden_inputs($people_selection); ?>
             <input type="hidden" name="type_category" value="<?php echo h($cat); ?>">
             <input type="hidden" name="show_hide_doc" value="<?php echo $show_doc ? "show_doc" : "hide_doc"; ?>">
             <input type="hidden" name="per_page" value="<?php echo h($per_page); ?>">
@@ -2721,7 +2717,7 @@ $status_messages = [
 
         if (expensePage) {
             expensePage.addEventListener('wheel', function(event) {
-                if (event.ctrlKey || event.metaKey || document.body.classList.contains('modal-open')) {
+                if (event.ctrlKey || event.metaKey || document.body.classList.contains('modal-open') || event.target.closest('.loan-people-picker__panel')) {
                     return;
                 }
 
@@ -2928,7 +2924,7 @@ $status_messages = [
             }
 
             event.preventDefault();
-            searchForm.submit();
+            searchForm.requestSubmit();
         });
 
         searchForm.addEventListener('submit', function(event) {

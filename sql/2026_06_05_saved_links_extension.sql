@@ -5,6 +5,7 @@ CREATE TABLE IF NOT EXISTS `saved_links` (
   `url_hash` char(64) NOT NULL,
   `title` varchar(500) NOT NULL DEFAULT '',
   `note` text,
+  `thumbnail_url` text,
   `status` enum('inbox','kept','archived') NOT NULL DEFAULT 'inbox',
   `source` varchar(40) NOT NULL DEFAULT 'chrome',
   `saved_at` datetime NOT NULL,
